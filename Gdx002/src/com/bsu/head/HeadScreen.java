@@ -23,6 +23,8 @@ public class HeadScreen extends CubocScreen implements Observer{
 	
 	public HeadScreen(Game game,String bp,String sp,Rectangle r) {
 		super(game);		
+//		System.out.println(bp);
+//		Gdx.app.debug("bp", bp);
 		logo = new Texture(Gdx.files.internal(bp));
 		rect = r;
 		sound = Gdx.audio.newSound(Gdx.files.internal(sp));
