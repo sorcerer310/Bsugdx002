@@ -1,5 +1,8 @@
 package com.bsu.head;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
-public class SetScreen implements Screen {
+public class SetScreen extends CubocScreen implements Observer {
 	Game mgg;
 	Stage stage;
 	Image back_image;
@@ -25,6 +28,7 @@ public class SetScreen implements Screen {
 
 	public SetScreen(Game mxg) {
 		// TODO Auto-generated constructor stub
+		super(mxg);
 		mgg = mxg;
 		TextureAtlas atlas = new TextureAtlas(
 				Gdx.files.internal("data/menu/pack")); // 根据pack文件获取所有图片
@@ -111,6 +115,12 @@ public class SetScreen implements Screen {
 	public void dispose() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

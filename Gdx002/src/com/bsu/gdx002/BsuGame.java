@@ -6,6 +6,7 @@ import java.util.Observer;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Rectangle;
 import com.bsu.head.HeadScreen;
+import com.bsu.head.SetScreen;
 
 public class BsuGame extends Game {
 	@Override
@@ -26,9 +27,16 @@ public class BsuGame extends Game {
 				BsuGame.this.setScreen(this);
 			}
 		};
+		SetScreen ss = new SetScreen(this){
+			@Override
+			public void update(Observable o,Object arg){
+				BsuGame.this.setScreen(this);
+			}
+		};
 
 		setScreen(hs_logo1);
 		hs_logo1.addObserver(hs_logo2);
 		hs_logo2.addObserver(hs_logo3);
+		hs_logo3.addObserver(ss);
 	}
 }
