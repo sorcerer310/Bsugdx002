@@ -21,7 +21,7 @@ public class BsuGame extends Game {
 				BsuGame.this.setScreen(this);
 			}
 		});
-		
+		 
 		setScreen(hs_logo1);
 	}
 
