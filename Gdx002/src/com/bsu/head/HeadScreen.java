@@ -26,7 +26,6 @@ public class HeadScreen extends CubocScreen implements Observer{
 		logo = new Texture(Gdx.files.internal(bp));
 		rect = r;
 		sound = Gdx.audio.newSound(Gdx.files.internal(sp));
-		
 	}
 	
 	@Override
