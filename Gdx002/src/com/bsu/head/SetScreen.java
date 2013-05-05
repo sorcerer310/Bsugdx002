@@ -59,7 +59,8 @@ public class SetScreen extends CubocScreen implements Observer {
 					int pointer, int button) {
 				// TODO Auto-generated method stub
 				System.out.print("back...");
-
+				setChanged();
+				notifyObservers(this);
 				super.touchUp(event, x, y, pointer, button);
 			}
 

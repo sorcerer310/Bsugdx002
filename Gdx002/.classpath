@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry excluding="data/|data/menu/" kind="src" path="src"/>
 	<classpathentry excluding="menu/" kind="src" path="src/data"/>
-	<classpathentry kind="src" path="src/data/menu"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdx.jar" sourcepath="libs/gdx-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
