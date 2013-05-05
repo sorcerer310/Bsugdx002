@@ -16,14 +16,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
-public class SetScreen extends CubocScreen implements Observer {
+public class SettingScreen extends CubocScreen implements Observer {
 	Stage stage;
 	Image back_image;
 	LabelStyle style;
 	BitmapFont font;
 	private Image backgroundImage;
 
-	public SetScreen(Game mxg) {
+	public SettingScreen(Game mxg) {
 		// TODO Auto-generated constructor stub
 		super(mxg);
 		TextureAtlas atlas = new TextureAtlas(
@@ -49,12 +49,13 @@ public class SetScreen extends CubocScreen implements Observer {
 		stage.addActor(backgroundImage);
 		stage.addActor(back_image);
 		stage.addActor(label1);
+	
 		back_image.addListener(new InputListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				// TODO Auto-generated method stub
-				System.out.print("back...");
+			
 				setChanged();
 				notifyObservers(this);
 				super.touchUp(event, x, y, pointer, button);
@@ -64,7 +65,7 @@ public class SetScreen extends CubocScreen implements Observer {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 				// TODO Auto-generated method stub
-
+			
 				return true;
 			}
 		});
@@ -87,7 +88,8 @@ public class SetScreen extends CubocScreen implements Observer {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-
+		Gdx.input.setInputProcessor(null);
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
@@ -117,7 +119,7 @@ public class SetScreen extends CubocScreen implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

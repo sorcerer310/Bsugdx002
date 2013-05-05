@@ -7,10 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-
-public class Mla extends Actor {
-	 float x;
-	 float y;
+public class Mario extends Actor {
+	float x;
+	float y;
 	private float state_time;
 
 	Texture texture;
@@ -20,7 +19,7 @@ public class Mla extends Actor {
 	Animation ani_idle_right;
 	Animation ani_left;
 	Animation ani_right;
-	
+
 	TextureRegion[][] spilt;
 	TextureRegion[][] miror;
 
@@ -30,7 +29,7 @@ public class Mla extends Actor {
 
 	STATE state;
 
-	public Mla(float x, float y) {
+	public Mario(float x, float y) {
 		this.x = x;
 		this.y = y;
 		this.state_time = 0;
@@ -44,7 +43,7 @@ public class Mla extends Actor {
 
 		state_time += Gdx.graphics.getDeltaTime();
 
-		this.update();
+		this.update_state();
 
 		this.check();
 
@@ -52,19 +51,21 @@ public class Mla extends Actor {
 
 	}
 
-	public void update() {
+	// 数据需要定义变量，数值需要讨论,控制边界,往左因为镜像翻转导致中心位置不准。
+	public void update_state() {
 		if (state == STATE.left) {
 			this.x -= 1.5f;
-			if (this.x < 20)
-				this.x = 20;
+			if (this.x < 0)
+				this.x = 0;
 		} else if (state == STATE.right) {
 			this.x += 1.5f;
-			if (this.x > Gdx.graphics.getWidth()-100)
-				this.x = Gdx.graphics.getWidth()-100;
+			if (this.x > 320 - 60)
+				this.x = 320 - 60;// not is Gdx.graphics.getWidth()????
 		}
 		this.x = x;
 	}
 
+	// 根据状态取得动画
 	public void check() {
 		if (state == STATE.left) {
 			current_frame = ani_left.getKeyFrame(state_time, true);
@@ -77,6 +78,7 @@ public class Mla extends Actor {
 		}
 	}
 
+	// 设置演员 马里奥
 	private void set_actor() {
 		texture = new Texture(Gdx.files.internal("data/mla.png"));
 		spilt = TextureRegion.split(texture, 64, 64);
@@ -108,5 +110,6 @@ public class Mla extends Actor {
 		region_idle_left[0] = miror[0][0];
 
 		ani_idle_left = new Animation(0.1f, region_idle_left);
+		this.setOrigin(getWidth()/2, getHeight()/2);
 	}
 }

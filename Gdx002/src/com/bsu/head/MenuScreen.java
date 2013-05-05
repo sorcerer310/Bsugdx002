@@ -48,9 +48,8 @@ public class MenuScreen extends CubocScreen implements Observer{
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				// TODO Auto-generated method stub
-				System.out.print("play....");
 				setChanged();
-				notifyObservers(1);
+				notifyObservers(2);
 				super.touchUp(event, x, y, pointer, button);
 			}
 
@@ -67,8 +66,9 @@ public class MenuScreen extends CubocScreen implements Observer{
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				// TODO Auto-generated method stub
-				System.out.print("setting....");
 				
+				setChanged();
+				notifyObservers(1);
 				super.touchUp(event, x, y, pointer, button);
 			}
 
@@ -99,7 +99,7 @@ public class MenuScreen extends CubocScreen implements Observer{
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-
+		Gdx.input.setInputProcessor(null);
 		Gdx.input.setInputProcessor(stage);
 	}
 
