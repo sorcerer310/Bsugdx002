@@ -5,7 +5,9 @@ import java.util.Observer;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Rectangle;
+import com.bsu.head.GameScreen;
 import com.bsu.head.HeadScreen;
+import com.bsu.head.MenuScreen;
 import com.bsu.head.SetScreen;
 
 public class BsuGame extends Game {
@@ -33,10 +35,28 @@ public class BsuGame extends Game {
 				BsuGame.this.setScreen(this);
 			}
 		};
+		GameScreen gs = new GameScreen(this){
+			@Override
+			public void update(Observable o,Object arg){
+				
+				BsuGame.this.setScreen(this);
+			}
+		};
+		MenuScreen ms = new MenuScreen(this){
+			@Override
+			public void update(Observable o,Object arg){
+				//BsuGame.this.setScreen(this);
+				System.out.print(arg+"");
+			}
+		};
 
 		setScreen(hs_logo1);
 		hs_logo1.addObserver(hs_logo2);
 		hs_logo2.addObserver(hs_logo3);
-		hs_logo3.addObserver(ss);
+		hs_logo3.addObserver(ms);
+		ms.addObserver(gs);
+		ms.addObserver(ss);
+		
+		
 	}
 }

@@ -6,59 +6,69 @@ import java.util.Observer;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.Texture;
+
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class SetScreen extends CubocScreen implements Observer {
-	Stage stage;
-	Image back_image;
-	LabelStyle style;
-	BitmapFont font;
-	private Image backgroundImage;
+public class MenuScreen extends CubocScreen implements Observer{
+	private Image backgroundImage;// backgroud
+	private Image play_image;
+	private Image set_image;
+	Stage stage; // 舞台
 
-	public SetScreen(Game mxg) {
-		// TODO Auto-generated constructor stub
+	public MenuScreen(Game mxg) {
 		super(mxg);
-		TextureAtlas atlas = new TextureAtlas(
-				Gdx.files.internal("data/menu/pack")); // 根据pack文件获取所有图片
-		backgroundImage = new Image(atlas.findRegion("bground2"));
-		back_image = new Image(atlas.findRegion("backarrow"));
-		back_image.setPosition(100, 100);
+		// TODO Auto-generated constructor stub
 		stage = new Stage(320, 480, false);
 
-		font = new BitmapFont(Gdx.files.internal("data/menu/normal.fnt"),
-				Gdx.files.internal("data/menu/normal.png"), false);
-		style = new LabelStyle(font, font.getColor());
+		TextureAtlas atlas = new TextureAtlas(
+				Gdx.files.internal("data/menu/pack")); // 根据pack文件获取所有图片
+		backgroundImage = new Image(atlas.findRegion("mainMenu")); // 获取名为mainMenu的图片，并创建一个Image对象
+		backgroundImage.setScale(0.5f, 1);
 
-		Label label1 = new Label("Hello everyone\n I am nunuge \n  Potato",
-				style);
-		label1.setAlignment(1);
-		label1.setPosition(50, 150);
+		play_image = new Image(atlas.findRegion("startButton"));
+		play_image.setPosition(100, 200);
 
-		label1.setFontScale(1);
-
-		label1.setColor(Color.GREEN);
-
+		set_image = new Image(atlas.findRegion("settingsButton"));
+		set_image.setPosition(100, 120);
 		stage.addActor(backgroundImage);
-		stage.addActor(back_image);
-		stage.addActor(label1);
-		back_image.addListener(new InputListener() {
+		stage.addActor(play_image);
+		stage.addActor(set_image);
+
+		play_image.addListener(new InputListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				// TODO Auto-generated method stub
-				System.out.print("back...");
+				System.out.print("play....");
 				setChanged();
-				notifyObservers(this);
+				notifyObservers(1);
+				super.touchUp(event, x, y, pointer, button);
+			}
+
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				// TODO Auto-generated method stub
+
+				return true;
+			}
+		});
+		set_image.addListener(new InputListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				// TODO Auto-generated method stub
+				System.out.print("setting....");
+				
 				super.touchUp(event, x, y, pointer, button);
 			}
 
@@ -90,6 +100,7 @@ public class SetScreen extends CubocScreen implements Observer {
 	public void show() {
 		// TODO Auto-generated method stub
 
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
@@ -117,7 +128,7 @@ public class SetScreen extends CubocScreen implements Observer {
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
 		
 	}
