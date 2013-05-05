@@ -1,0 +1,80 @@
+
+input1.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ufo
+  rotate: false
+  xy: 2, 2
+  size: 720, 480
+  orig: 720, 480
+  offset: 0, 0
+  index: -1
+mainMenu
+  rotate: false
+  xy: 2, 484
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+bground4
+  rotate: false
+  xy: 644, 484
+  size: 320, 480
+  orig: 320, 480
+  offset: 0, 0
+  index: -1
+settingsButton
+  rotate: false
+  xy: 724, 2
+  size: 160, 48
+  orig: 160, 48
+  offset: 0, 0
+  index: -1
+startButton
+  rotate: false
+  xy: 886, 2
+  size: 128, 48
+  orig: 128, 48
+  offset: 0, 0
+  index: -1
+scoresButton
+  rotate: false
+  xy: 724, 52
+  size: 128, 48
+  orig: 128, 48
+  offset: 0, 0
+  index: -1
+backarrow
+  rotate: false
+  xy: 854, 52
+  size: 42, 27
+  orig: 42, 27
+  offset: 0, 0
+  index: -1
+
+input2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bground3
+  rotate: false
+  xy: 2, 2
+  size: 320, 480
+  orig: 320, 480
+  offset: 0, 0
+  index: -1
+bground2
+  rotate: false
+  xy: 324, 2
+  size: 320, 480
+  orig: 320, 480
+  offset: 0, 0
+  index: -1
+bground1
+  rotate: false
+  xy: 646, 2
+  size: 320, 480
+  orig: 320, 480
+  offset: 0, 0
+  index: -1
