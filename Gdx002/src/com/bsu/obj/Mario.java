@@ -1,4 +1,4 @@
-package com.bsu.head;
+package com.bsu.obj;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,10 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.bsu.head.Collision;
 
 public class Mario extends Actor {
-	float x;
-	float y;
+	public float x;
+	public float y;
 	private float state_time;
 
 	Texture texture;
@@ -21,14 +22,14 @@ public class Mario extends Actor {
 	Animation ani_left;
 	Animation ani_right;
 
-	TextureRegion[][] spilt;
-	TextureRegion[][] miror;
+	public TextureRegion[][] spilt;
+	public TextureRegion[][] miror;
 
-	enum STATE {
+	public enum STATE {
 		idle_left, idle_right, left, right
 	};
 
-	STATE state;
+	public STATE state;
 
 	public Mario(float x, float y) {
 		this.x = x;

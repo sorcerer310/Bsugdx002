@@ -1,4 +1,4 @@
-package com.bsu.head;
+package com.bsu.screen;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.bsu.head.CubocScreen;
 
 public class SettingScreen extends CubocScreen implements Observer {
 	Stage stage;

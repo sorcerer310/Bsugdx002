@@ -1,4 +1,4 @@
-package com.bsu.head;
+package com.bsu.screen;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -22,7 +22,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.bsu.head.Mario.STATE;
+import com.bsu.head.CubocScreen;
+import com.bsu.obj.GameMap;
+import com.bsu.obj.Mario;
+import com.bsu.obj.Mario.STATE;
 
 public class GameScreen extends CubocScreen implements Observer {
 	Stage stage;

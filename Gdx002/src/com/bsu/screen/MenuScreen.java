@@ -1,4 +1,4 @@
-package com.bsu.head;
+package com.bsu.screen;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.bsu.head.CubocScreen;
 
 public class MenuScreen extends CubocScreen implements Observer{
 	private Image backgroundImage;// backgroud

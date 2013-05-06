@@ -1,4 +1,4 @@
-package com.bsu.head;
+package com.bsu.obj;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -10,10 +10,10 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledLoader;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 
 public class GameMap {
-	static TiledMap map;
+	public static TiledMap map;
 	TileAtlas atlas;
-	TileMapRenderer map_render;
-	OrthographicCamera cam;
+	public TileMapRenderer map_render;
+	public OrthographicCamera cam;
 
 	public GameMap() {
 		// TODO Auto-generated constructor stub

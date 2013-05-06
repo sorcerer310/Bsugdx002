@@ -5,10 +5,10 @@ import java.util.Observer;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Rectangle;
-import com.bsu.head.GameScreen;
 import com.bsu.head.HeadScreen;
-import com.bsu.head.MenuScreen;
-import com.bsu.head.SettingScreen;
+import com.bsu.screen.GameScreen;
+import com.bsu.screen.MenuScreen;
+import com.bsu.screen.SettingScreen;
 
 public class BsuGame extends Game {
 	@Override
@@ -23,12 +23,12 @@ public class BsuGame extends Game {
 				BsuGame.this.setScreen(this);
 			}
 		};
-		HeadScreen hs_logo3 = new HeadScreen(this,"data/BsuLogo480-320.png","data/snd/chicken.wav",rect){
-			@Override
-			public void update(Observable o, Object arg) {
-				BsuGame.this.setScreen(this);
-			}
-		};
+//		HeadScreen hs_logo3 = new HeadScreen(this,"data/BsuLogo480-320.png","data/snd/chicken.wav",rect){
+//			@Override
+//			public void update(Observable o, Object arg) {
+//				BsuGame.this.setScreen(this);
+//			}
+//		};
 		SettingScreen ss = new SettingScreen(this){
 			@Override
 			public void update(Observable o,Object arg){
@@ -53,8 +53,7 @@ public class BsuGame extends Game {
 
 		setScreen(hs_logo1);
 		hs_logo1.addObserver(hs_logo2);
-		hs_logo2.addObserver(hs_logo3);
-		hs_logo3.addObserver(ms);
+		hs_logo2.addObserver(ms);
 		ms.addObserver(gs);
 		ms.addObserver(ss);
 		ss.addObserver(ms);
