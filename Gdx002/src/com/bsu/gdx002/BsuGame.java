@@ -36,11 +36,12 @@ public class BsuGame extends Game {
 				BsuGame.this.setScreen(this);
 			}
 		};
-		GameScreen gs = new GameScreen(this){
+		 GameScreen gs = new GameScreen(this){
 			@Override
 			public void update(Observable o,Object arg){
 				if(arg.toString().equals(Configure.screen_game))
 				BsuGame.this.setScreen(this);
+				this.init_game();
 			}
 		};
 		MenuScreen ms = new MenuScreen(this){
