@@ -26,6 +26,7 @@ import com.bsu.head.CubocScreen;
 import com.bsu.obj.GameMap;
 import com.bsu.obj.Mario;
 import com.bsu.obj.Mario.STATE;
+import com.bsu.tools.Configure;
 
 public class GameScreen extends CubocScreen implements Observer {
 	Stage stage;
@@ -35,34 +36,16 @@ public class GameScreen extends CubocScreen implements Observer {
 	LabelStyle style;
 	BitmapFont font;
 	GameMap map;
+	Label label1;
 
 	public GameScreen(Game mxg) {
 		// TODO Auto-generated constructor stub
 		super(mxg);
-
-		stage = new Stage(320, 480, false);
-		mario = new Mario(100, 100);
-		map = new GameMap();
-		setMario(GameMap.map);
+		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
+		actor_init();
 		stage.addActor(mario);
-
-		buttonL = new ImageButton(new TextureRegionDrawable(mario.spilt[1][0]),
-				new TextureRegionDrawable(mario.spilt[1][1]));
-		buttonR = new ImageButton(new TextureRegionDrawable(mario.miror[1][0]),
-				new TextureRegionDrawable(mario.miror[1][1]));
-
-		buttonL.setPosition(20, 20);
-		buttonR.setPosition(100, 20);
 		stage.addActor(buttonL);
 		stage.addActor(buttonR);
-
-		font = new BitmapFont(Gdx.files.internal("data/menu/normal.fnt"),
-				Gdx.files.internal("data/menu/normal.png"), false);
-		style = new LabelStyle(font, font.getColor());
-		Label label1 = new Label("press escape to menu", style);
-		label1.setPosition(10, 300);
-		label1.setFontScale(0.6f);
-		label1.setColor(Color.RED);
 		stage.addActor(label1);
 
 		buttonL.addListener(new InputListener() {
@@ -101,8 +84,27 @@ public class GameScreen extends CubocScreen implements Observer {
 			}
 		});
 	}
-
-	public void setMario(TiledMap map) {
+	private void actor_init(){
+		mario = new Mario();
+		map = new GameMap();
+		setMario(GameMap.map);
+		buttonL = new ImageButton(new TextureRegionDrawable(mario.spilt[1][0]),
+				new TextureRegionDrawable(mario.spilt[1][1]));
+		buttonR = new ImageButton(new TextureRegionDrawable(mario.miror[1][0]),
+				new TextureRegionDrawable(mario.miror[1][1]));
+		buttonL.setPosition(20, 20);
+		buttonR.setPosition(100, 20);
+		font = new BitmapFont(Gdx.files.internal("data/menu/normal.fnt"),
+				Gdx.files.internal("data/menu/normal.png"), false);
+		style = new LabelStyle(font, font.getColor());
+		label1 = new Label("press escape to menu", style);
+		label1.setPosition(10, 300);
+		label1.setFontScale(0.6f);
+		label1.setColor(Color.RED);
+	}
+	
+	//设置角色出生地
+	private void setMario(TiledMap map) {
 		for (TiledObjectGroup group : map.objectGroups) {
 			for (TiledObject object : group.objects) {
 				if ("mario".equals(object.name)) {
@@ -143,7 +145,7 @@ public class GameScreen extends CubocScreen implements Observer {
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-
+		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override

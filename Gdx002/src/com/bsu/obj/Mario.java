@@ -31,9 +31,7 @@ public class Mario extends Actor {
 
 	public STATE state;
 
-	public Mario(float x, float y) {
-		this.x = x;
-		this.y = y;
+	public Mario() {
 		this.state_time = 0;
 		state = STATE.idle_right;
 		set_actor();

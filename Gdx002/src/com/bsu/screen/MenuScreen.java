@@ -18,28 +18,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.bsu.head.CubocScreen;
+import com.bsu.tools.Configure;
 
-public class MenuScreen extends CubocScreen implements Observer{
+public class MenuScreen extends CubocScreen implements Observer {
 	private Image backgroundImage;// backgroud
 	private Image play_image;
 	private Image set_image;
 	Stage stage; // 舞台
+	TextureAtlas atlas;
 
 	public MenuScreen(Game mxg) {
 		super(mxg);
 		// TODO Auto-generated constructor stub
-		stage = new Stage(320, 480, false);
-
-		TextureAtlas atlas = new TextureAtlas(
-				Gdx.files.internal("data/menu/pack")); // 根据pack文件获取所有图片
-		backgroundImage = new Image(atlas.findRegion("mainMenu")); // 获取名为mainMenu的图片，并创建一个Image对象
-		backgroundImage.setScale(0.5f, 1);
-
-		play_image = new Image(atlas.findRegion("startButton"));
-		play_image.setPosition(100, 200);
-
-		set_image = new Image(atlas.findRegion("settingsButton"));
-		set_image.setPosition(100, 120);
+		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
+		actor_init();
 		stage.addActor(backgroundImage);
 		stage.addActor(play_image);
 		stage.addActor(set_image);
@@ -50,7 +42,7 @@ public class MenuScreen extends CubocScreen implements Observer{
 					int pointer, int button) {
 				// TODO Auto-generated method stub
 				setChanged();
-				notifyObservers(2);
+				notifyObservers(Configure.screen_game);
 				super.touchUp(event, x, y, pointer, button);
 			}
 
@@ -67,9 +59,9 @@ public class MenuScreen extends CubocScreen implements Observer{
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				// TODO Auto-generated method stub
-				
+
 				setChanged();
-				notifyObservers(1);
+				notifyObservers(Configure.screen_setting);
 				super.touchUp(event, x, y, pointer, button);
 			}
 
@@ -81,6 +73,16 @@ public class MenuScreen extends CubocScreen implements Observer{
 				return true;
 			}
 		});
+	}
+
+	private void actor_init() {
+		atlas = new TextureAtlas(Gdx.files.internal("data/menu/pack")); // 根据pack文件获取所有图片
+		backgroundImage = new Image(atlas.findRegion("mainMenu")); // 获取名为mainMenu的图片，并创建一个Image对象
+		backgroundImage.setScale(0.5f, 1);
+		play_image = new Image(atlas.findRegion("startButton"));
+		play_image.setPosition(100, 200);
+		set_image = new Image(atlas.findRegion("settingsButton"));
+		set_image.setPosition(100, 120);
 	}
 
 	@Override
@@ -107,7 +109,7 @@ public class MenuScreen extends CubocScreen implements Observer{
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-
+		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
@@ -131,7 +133,7 @@ public class MenuScreen extends CubocScreen implements Observer{
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
