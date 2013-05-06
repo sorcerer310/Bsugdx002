@@ -77,7 +77,7 @@ public class MenuScreen extends CubocScreen implements Observer {
 
 	private void actor_init() {
 		atlas = new TextureAtlas(Gdx.files.internal("data/menu/pack")); // 根据pack文件获取所有图片
-		backgroundImage = new Image(atlas.findRegion("mainMenu")); // 获取名为mainMenu的图片，并创建一个Image对象
+		backgroundImage = new Image(atlas.findRegion("mainMenu")); 		// 获取名为mainMenu的图片，并创建一个Image对象
 		backgroundImage.setScale(0.5f, 1);
 		play_image = new Image(atlas.findRegion("startButton"));
 		play_image.setPosition(100, 200);

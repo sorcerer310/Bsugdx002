@@ -1,0 +1,1797 @@
+
+Dungeon_B1.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dungeon
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 255
+Dungeon
+  rotate: false
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 254
+Dungeon
+  rotate: false
+  xy: 70, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 253
+Dungeon
+  rotate: false
+  xy: 104, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 252
+Dungeon
+  rotate: false
+  xy: 138, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 251
+Dungeon
+  rotate: false
+  xy: 172, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 250
+Dungeon
+  rotate: false
+  xy: 206, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 249
+Dungeon
+  rotate: false
+  xy: 240, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 248
+Dungeon
+  rotate: false
+  xy: 274, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 247
+Dungeon
+  rotate: false
+  xy: 308, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 246
+Dungeon
+  rotate: false
+  xy: 342, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 245
+Dungeon
+  rotate: false
+  xy: 376, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 244
+Dungeon
+  rotate: false
+  xy: 410, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 243
+Dungeon
+  rotate: false
+  xy: 444, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 242
+Dungeon
+  rotate: false
+  xy: 478, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 241
+Dungeon
+  rotate: false
+  xy: 2, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 240
+Dungeon
+  rotate: false
+  xy: 36, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 239
+Dungeon
+  rotate: false
+  xy: 70, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 238
+Dungeon
+  rotate: false
+  xy: 104, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 237
+Dungeon
+  rotate: false
+  xy: 138, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 236
+Dungeon
+  rotate: false
+  xy: 172, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 235
+Dungeon
+  rotate: false
+  xy: 206, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 234
+Dungeon
+  rotate: false
+  xy: 240, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 233
+Dungeon
+  rotate: false
+  xy: 274, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 232
+Dungeon
+  rotate: false
+  xy: 308, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 231
+Dungeon
+  rotate: false
+  xy: 342, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 230
+Dungeon
+  rotate: false
+  xy: 376, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 229
+Dungeon
+  rotate: false
+  xy: 410, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 228
+Dungeon
+  rotate: false
+  xy: 444, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 227
+Dungeon
+  rotate: false
+  xy: 478, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 226
+Dungeon
+  rotate: false
+  xy: 2, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 225
+Dungeon
+  rotate: false
+  xy: 36, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 224
+Dungeon
+  rotate: false
+  xy: 70, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 223
+Dungeon
+  rotate: false
+  xy: 104, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 222
+Dungeon
+  rotate: false
+  xy: 138, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 221
+Dungeon
+  rotate: false
+  xy: 172, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 220
+Dungeon
+  rotate: false
+  xy: 206, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 219
+Dungeon
+  rotate: false
+  xy: 240, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 218
+Dungeon
+  rotate: false
+  xy: 274, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 217
+Dungeon
+  rotate: false
+  xy: 308, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 216
+Dungeon
+  rotate: false
+  xy: 342, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 215
+Dungeon
+  rotate: false
+  xy: 376, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 214
+Dungeon
+  rotate: false
+  xy: 410, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 213
+Dungeon
+  rotate: false
+  xy: 444, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 212
+Dungeon
+  rotate: false
+  xy: 478, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 211
+Dungeon
+  rotate: false
+  xy: 2, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 210
+Dungeon
+  rotate: false
+  xy: 36, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 209
+Dungeon
+  rotate: false
+  xy: 70, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 208
+Dungeon
+  rotate: false
+  xy: 104, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 207
+Dungeon
+  rotate: false
+  xy: 138, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 206
+Dungeon
+  rotate: false
+  xy: 172, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 205
+Dungeon
+  rotate: false
+  xy: 206, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 204
+Dungeon
+  rotate: false
+  xy: 240, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 203
+Dungeon
+  rotate: false
+  xy: 274, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 202
+Dungeon
+  rotate: false
+  xy: 308, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 201
+Dungeon
+  rotate: false
+  xy: 342, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 200
+Dungeon
+  rotate: false
+  xy: 376, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 199
+Dungeon
+  rotate: false
+  xy: 410, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 198
+Dungeon
+  rotate: false
+  xy: 444, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 197
+Dungeon
+  rotate: false
+  xy: 478, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 196
+Dungeon
+  rotate: false
+  xy: 2, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 195
+Dungeon
+  rotate: false
+  xy: 36, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 194
+Dungeon
+  rotate: false
+  xy: 70, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 193
+Dungeon
+  rotate: false
+  xy: 104, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 192
+Dungeon
+  rotate: false
+  xy: 138, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 191
+Dungeon
+  rotate: false
+  xy: 172, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 190
+Dungeon
+  rotate: false
+  xy: 206, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 189
+Dungeon
+  rotate: false
+  xy: 240, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 188
+Dungeon
+  rotate: false
+  xy: 274, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 187
+Dungeon
+  rotate: false
+  xy: 308, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 186
+Dungeon
+  rotate: false
+  xy: 342, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 185
+Dungeon
+  rotate: false
+  xy: 376, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 184
+Dungeon
+  rotate: false
+  xy: 410, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 183
+Dungeon
+  rotate: false
+  xy: 444, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 182
+Dungeon
+  rotate: false
+  xy: 478, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 181
+Dungeon
+  rotate: false
+  xy: 2, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 180
+Dungeon
+  rotate: false
+  xy: 36, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 179
+Dungeon
+  rotate: false
+  xy: 70, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 178
+Dungeon
+  rotate: false
+  xy: 104, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 177
+Dungeon
+  rotate: false
+  xy: 138, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 176
+Dungeon
+  rotate: false
+  xy: 172, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 175
+Dungeon
+  rotate: false
+  xy: 206, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 174
+Dungeon
+  rotate: false
+  xy: 240, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 173
+Dungeon
+  rotate: false
+  xy: 274, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 172
+Dungeon
+  rotate: false
+  xy: 308, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 171
+Dungeon
+  rotate: false
+  xy: 342, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 170
+Dungeon
+  rotate: false
+  xy: 376, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 169
+Dungeon
+  rotate: false
+  xy: 410, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 168
+Dungeon
+  rotate: false
+  xy: 444, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 167
+Dungeon
+  rotate: false
+  xy: 478, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 166
+Dungeon
+  rotate: false
+  xy: 2, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 165
+Dungeon
+  rotate: false
+  xy: 36, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 164
+Dungeon
+  rotate: false
+  xy: 70, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 163
+Dungeon
+  rotate: false
+  xy: 104, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 162
+Dungeon
+  rotate: false
+  xy: 138, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 161
+Dungeon
+  rotate: false
+  xy: 172, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 160
+Dungeon
+  rotate: false
+  xy: 206, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 159
+Dungeon
+  rotate: false
+  xy: 240, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 158
+Dungeon
+  rotate: false
+  xy: 274, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 157
+Dungeon
+  rotate: false
+  xy: 308, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 156
+Dungeon
+  rotate: false
+  xy: 342, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 155
+Dungeon
+  rotate: false
+  xy: 376, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 154
+Dungeon
+  rotate: false
+  xy: 410, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 153
+Dungeon
+  rotate: false
+  xy: 444, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 152
+Dungeon
+  rotate: false
+  xy: 478, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 151
+Dungeon
+  rotate: false
+  xy: 2, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 150
+Dungeon
+  rotate: false
+  xy: 36, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 149
+Dungeon
+  rotate: false
+  xy: 70, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 148
+Dungeon
+  rotate: false
+  xy: 104, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 147
+Dungeon
+  rotate: false
+  xy: 138, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 146
+Dungeon
+  rotate: false
+  xy: 172, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 145
+Dungeon
+  rotate: false
+  xy: 206, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 144
+Dungeon
+  rotate: false
+  xy: 240, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 143
+Dungeon
+  rotate: false
+  xy: 274, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 142
+Dungeon
+  rotate: false
+  xy: 308, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 141
+Dungeon
+  rotate: false
+  xy: 342, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 140
+Dungeon
+  rotate: false
+  xy: 376, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 139
+Dungeon
+  rotate: false
+  xy: 410, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 138
+Dungeon
+  rotate: false
+  xy: 444, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 137
+Dungeon
+  rotate: false
+  xy: 478, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 136
+Dungeon
+  rotate: false
+  xy: 2, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 135
+Dungeon
+  rotate: false
+  xy: 36, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 134
+Dungeon
+  rotate: false
+  xy: 70, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 133
+Dungeon
+  rotate: false
+  xy: 104, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 132
+Dungeon
+  rotate: false
+  xy: 138, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 131
+Dungeon
+  rotate: false
+  xy: 172, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 130
+Dungeon
+  rotate: false
+  xy: 206, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 129
+Dungeon
+  rotate: false
+  xy: 240, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 128
+Dungeon
+  rotate: false
+  xy: 274, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 127
+Dungeon
+  rotate: false
+  xy: 308, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 126
+Dungeon
+  rotate: false
+  xy: 342, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 125
+Dungeon
+  rotate: false
+  xy: 376, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 124
+Dungeon
+  rotate: false
+  xy: 410, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 123
+Dungeon
+  rotate: false
+  xy: 444, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 122
+Dungeon
+  rotate: false
+  xy: 478, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 121
+Dungeon
+  rotate: false
+  xy: 2, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 120
+Dungeon
+  rotate: false
+  xy: 36, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 119
+Dungeon
+  rotate: false
+  xy: 70, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 118
+Dungeon
+  rotate: false
+  xy: 104, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 117
+Dungeon
+  rotate: false
+  xy: 138, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 116
+Dungeon
+  rotate: false
+  xy: 172, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 115
+Dungeon
+  rotate: false
+  xy: 206, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 114
+Dungeon
+  rotate: false
+  xy: 240, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 113
+Dungeon
+  rotate: false
+  xy: 274, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 112
+Dungeon
+  rotate: false
+  xy: 308, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 111
+Dungeon
+  rotate: false
+  xy: 342, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 110
+Dungeon
+  rotate: false
+  xy: 376, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 109
+Dungeon
+  rotate: false
+  xy: 410, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 108
+Dungeon
+  rotate: false
+  xy: 444, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 107
+Dungeon
+  rotate: false
+  xy: 478, 308
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 106
+Dungeon
+  rotate: false
+  xy: 2, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 105
+Dungeon
+  rotate: false
+  xy: 36, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 104
+Dungeon
+  rotate: false
+  xy: 70, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 103
+Dungeon
+  rotate: false
+  xy: 104, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 102
+Dungeon
+  rotate: false
+  xy: 138, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 101
+Dungeon
+  rotate: false
+  xy: 172, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 100
+Dungeon
+  rotate: false
+  xy: 206, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 99
+Dungeon
+  rotate: false
+  xy: 240, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 98
+Dungeon
+  rotate: false
+  xy: 274, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 97
+Dungeon
+  rotate: false
+  xy: 308, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 96
+Dungeon
+  rotate: false
+  xy: 342, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 95
+Dungeon
+  rotate: false
+  xy: 376, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 94
+Dungeon
+  rotate: false
+  xy: 410, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 93
+Dungeon
+  rotate: false
+  xy: 444, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 92
+Dungeon
+  rotate: false
+  xy: 478, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 91
+Dungeon
+  rotate: false
+  xy: 2, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 90
+Dungeon
+  rotate: false
+  xy: 36, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 89
+Dungeon
+  rotate: false
+  xy: 70, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 88
+Dungeon
+  rotate: false
+  xy: 104, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 87
+Dungeon
+  rotate: false
+  xy: 138, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 86
+Dungeon
+  rotate: false
+  xy: 172, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 85
+Dungeon
+  rotate: false
+  xy: 206, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 84
+Dungeon
+  rotate: false
+  xy: 240, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 83
+Dungeon
+  rotate: false
+  xy: 274, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 82
+Dungeon
+  rotate: false
+  xy: 308, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 81
+Dungeon
+  rotate: false
+  xy: 342, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 80
+Dungeon
+  rotate: false
+  xy: 376, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 79
+Dungeon
+  rotate: false
+  xy: 410, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 78
+Dungeon
+  rotate: false
+  xy: 444, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 77
+Dungeon
+  rotate: false
+  xy: 478, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 76
+Dungeon
+  rotate: false
+  xy: 2, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 75
+Dungeon
+  rotate: false
+  xy: 36, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 74
+Dungeon
+  rotate: false
+  xy: 70, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 73
+Dungeon
+  rotate: false
+  xy: 104, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 72
+Dungeon
+  rotate: false
+  xy: 138, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 71
+Dungeon
+  rotate: false
+  xy: 172, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 70
+Dungeon
+  rotate: false
+  xy: 206, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 69
+Dungeon
+  rotate: false
+  xy: 240, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 68
+Dungeon
+  rotate: false
+  xy: 274, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 67
+Dungeon
+  rotate: false
+  xy: 308, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 66
+Dungeon
+  rotate: false
+  xy: 342, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 65
+Dungeon
+  rotate: false
+  xy: 376, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 64
+Dungeon
+  rotate: false
+  xy: 410, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 63
+Dungeon
+  rotate: false
+  xy: 444, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 62
+Dungeon
+  rotate: false
+  xy: 478, 410
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 61
+Dungeon
+  rotate: false
+  xy: 2, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 60
+Dungeon
+  rotate: false
+  xy: 36, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 59
+Dungeon
+  rotate: false
+  xy: 70, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 58
+Dungeon
+  rotate: false
+  xy: 104, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 57
+Dungeon
+  rotate: false
+  xy: 138, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 56
+Dungeon
+  rotate: false
+  xy: 172, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 55
+Dungeon
+  rotate: false
+  xy: 206, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 54
+Dungeon
+  rotate: false
+  xy: 240, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 53
+Dungeon
+  rotate: false
+  xy: 274, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 52
+Dungeon
+  rotate: false
+  xy: 308, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 51
+Dungeon
+  rotate: false
+  xy: 342, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 50
+Dungeon
+  rotate: false
+  xy: 376, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 49
+Dungeon
+  rotate: false
+  xy: 410, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 48
+Dungeon
+  rotate: false
+  xy: 444, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 47
+Dungeon
+  rotate: false
+  xy: 478, 444
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 46
+Dungeon
+  rotate: false
+  xy: 2, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 45
+Dungeon
+  rotate: false
+  xy: 36, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 44
+Dungeon
+  rotate: false
+  xy: 70, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 43
+Dungeon
+  rotate: false
+  xy: 104, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 42
+Dungeon
+  rotate: false
+  xy: 138, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 41
+Dungeon
+  rotate: false
+  xy: 172, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 40
+Dungeon
+  rotate: false
+  xy: 206, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 39
+Dungeon
+  rotate: false
+  xy: 240, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 38
+Dungeon
+  rotate: false
+  xy: 274, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 37
+Dungeon
+  rotate: false
+  xy: 308, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 36
+Dungeon
+  rotate: false
+  xy: 342, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 35
+Dungeon
+  rotate: false
+  xy: 376, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 34
+Dungeon
+  rotate: false
+  xy: 410, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 33
+Dungeon
+  rotate: false
+  xy: 444, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 32
+Dungeon
+  rotate: false
+  xy: 478, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 31
+Dungeon
+  rotate: false
+  xy: 2, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 30
+Dungeon
+  rotate: false
+  xy: 36, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 29
+Dungeon
+  rotate: false
+  xy: 70, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 28
+Dungeon
+  rotate: false
+  xy: 104, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 27
+Dungeon
+  rotate: false
+  xy: 138, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 26
+Dungeon
+  rotate: false
+  xy: 172, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 25
+Dungeon
+  rotate: false
+  xy: 206, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 24
+Dungeon
+  rotate: false
+  xy: 240, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 23
+Dungeon
+  rotate: false
+  xy: 274, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 22
+Dungeon
+  rotate: false
+  xy: 308, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 21
+Dungeon
+  rotate: false
+  xy: 342, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 20
+Dungeon
+  rotate: false
+  xy: 376, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 19
+Dungeon
+  rotate: false
+  xy: 410, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 18
+Dungeon
+  rotate: false
+  xy: 444, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 17
+Dungeon
+  rotate: false
+  xy: 478, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 16
+Dungeon
+  rotate: false
+  xy: 2, 546
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 15
+Dungeon
+  rotate: false
+  xy: 2, 580
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 14
+Dungeon
+  rotate: false
+  xy: 2, 614
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 13
+Dungeon
+  rotate: false
+  xy: 2, 648
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 12
+Dungeon
+  rotate: false
+  xy: 2, 682
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 11
+Dungeon
+  rotate: false
+  xy: 2, 716
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 10
+Dungeon
+  rotate: false
+  xy: 2, 750
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 9
+Dungeon
+  rotate: false
+  xy: 2, 784
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 8
+Dungeon
+  rotate: false
+  xy: 2, 818
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 7
+Dungeon
+  rotate: false
+  xy: 2, 852
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+Dungeon
+  rotate: false
+  xy: 2, 886
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+Dungeon
+  rotate: false
+  xy: 2, 920
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+Dungeon
+  rotate: false
+  xy: 2, 954
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+Dungeon
+  rotate: false
+  xy: 2, 988
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+Dungeon
+  rotate: false
+  xy: 36, 546
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+Dungeon
+  rotate: false
+  xy: 70, 546
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
