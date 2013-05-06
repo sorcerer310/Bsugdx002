@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.bsu.obj.Mario.STATE;
 
 
-public class MyHero extends NormalActor {
+
+public class MyHero extends Actor {
 	private float x;
 	private float y;
 	
@@ -37,7 +38,6 @@ public class MyHero extends NormalActor {
 		idle, attack_normal, move
 	};
 	public MyHero(int type, int index) {
-		super(type, index);
 		// TODO Auto-generated constructor stub
 		this.state_time = 0;
 		state = STATE.idle;
@@ -69,7 +69,6 @@ public class MyHero extends NormalActor {
 			ani_idle = new Animation(0.1f, region_idle);
 			
 			get_values(type,index);
-			Gdx.input.setInputProcessor(this);
 		}
 			//取得角色初始状态属性
 			private void get_values(int type,int index){
