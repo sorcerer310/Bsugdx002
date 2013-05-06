@@ -1,5 +1,9 @@
 package com.bsu.tools;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+
 public class Configure {
 
 	public static int rect_width=480;
@@ -15,6 +19,26 @@ public class Configure {
 	public static String screen_menu="menu";
 	public static String screen_game="game";
 	
+	public static String[] game_level_string={"marioMap","22"};
+	
 	public static String object_layer_hero="hero";
 	public static String object_layer_enemy="enemy";
+	public static String object_layer_mario="mario";
+	
+	static LabelStyle style;
+	static BitmapFont font;
+	
+	
+	
+	
+	private static BitmapFont get_font(){
+		font = new BitmapFont(Gdx.files.internal("data/menu/normal.fnt"),
+				Gdx.files.internal("data/menu/normal.png"), false);
+		return font;
+	}
+	
+	public static LabelStyle get_sytle(){
+		style = new LabelStyle(get_font(), get_font().getColor());
+		return style;
+	}
 }

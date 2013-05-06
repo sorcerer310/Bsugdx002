@@ -21,8 +21,6 @@ import com.bsu.tools.Configure;
 public class SettingScreen extends CubocScreen implements Observer {
 	Stage stage;
 	Image back_image;
-	LabelStyle style;
-	BitmapFont font;
 	Label label1;
 	TextureAtlas atlas;
 	private Image backgroundImage;
@@ -62,10 +60,7 @@ public class SettingScreen extends CubocScreen implements Observer {
 		backgroundImage = new Image(atlas.findRegion("bground2"));
 		back_image = new Image(atlas.findRegion("backarrow"));
 		back_image.setPosition(100, 100);
-		font = new BitmapFont(Gdx.files.internal("data/menu/normal.fnt"),
-				Gdx.files.internal("data/menu/normal.png"), false);
-		style = new LabelStyle(font, font.getColor());
-		label1 = new Label("Hello everyone\n I am nunuge \n  Potato", style);
+		label1 = new Label("Hello everyone\n I am nunuge \n  Potato", Configure.get_sytle());
 		label1.setAlignment(1);
 		label1.setPosition(50, 150);
 		label1.setFontScale(1);

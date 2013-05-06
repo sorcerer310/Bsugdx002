@@ -33,10 +33,8 @@ public class GameScreen extends CubocScreen implements Observer {
 	Mario mario;
 	private ImageButton buttonL;
 	private ImageButton buttonR;
-	LabelStyle style;
-	BitmapFont font;
+	
 	GameMap map;
-	Label label1;
 
 	public GameScreen(Game mxg) {
 		// TODO Auto-generated constructor stub
@@ -46,7 +44,6 @@ public class GameScreen extends CubocScreen implements Observer {
 		stage.addActor(mario);
 		stage.addActor(buttonL);
 		stage.addActor(buttonR);
-		stage.addActor(label1);
 
 		buttonL.addListener(new InputListener() {
 			@Override
@@ -86,7 +83,7 @@ public class GameScreen extends CubocScreen implements Observer {
 	}
 	private void actor_init(){
 		mario = new Mario();
-		map = new GameMap();
+		map = new GameMap(0);
 		setMario(GameMap.map);
 		buttonL = new ImageButton(new TextureRegionDrawable(mario.spilt[1][0]),
 				new TextureRegionDrawable(mario.spilt[1][1]));
@@ -94,20 +91,13 @@ public class GameScreen extends CubocScreen implements Observer {
 				new TextureRegionDrawable(mario.miror[1][1]));
 		buttonL.setPosition(20, 20);
 		buttonR.setPosition(100, 20);
-		font = new BitmapFont(Gdx.files.internal("data/menu/normal.fnt"),
-				Gdx.files.internal("data/menu/normal.png"), false);
-		style = new LabelStyle(font, font.getColor());
-		label1 = new Label("press escape to menu", style);
-		label1.setPosition(10, 300);
-		label1.setFontScale(0.6f);
-		label1.setColor(Color.RED);
 	}
 	
 	//设置角色出生地
 	private void setMario(TiledMap map) {
 		for (TiledObjectGroup group : map.objectGroups) {
 			for (TiledObject object : group.objects) {
-				if ("mario".equals(object.name)) {
+				if (Configure.object_layer_mario.equals(object.name)) {
 					mario.x = object.x;
 					mario.y = object.y;
 				}
