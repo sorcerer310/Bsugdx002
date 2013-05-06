@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><map height="15" orientation="orthogonal" tileheight="32" tilewidth="32" version="1.0" width="10"><properties><property name="blended tiles" value=""/></properties>
+ <tileset firstgid="1" name="ditu" tileheight="32" tilewidth="32">
+  <image height="128" source="ditu.png" width="96"/>
+ </tileset>
+ <tileset firstgid="13" name="ditu2" tileheight="32" tilewidth="32">
+  <image height="512" source="ditu2.png" width="512"/>
+ </tileset>
+ <layer height="15" name="块层 1" width="10">
+  <data compression="zlib" encoding="base64">
+   eJxjYBgFlABGItUMpDpiMLUBAAykABM=
+  </data>
+ </layer>
+ <layer height="15" name="块层 2" width="10">
+  <data compression="zlib" encoding="base64">
+   eJxjYBgFgxEoUVmM3gAAWGgAiQ==
+  </data>
+ </layer>
+ <objectgroup height="15" name="对象层 1" width="10">
+  <object height="14" name="mario" width="21" x="139" y="318"/>
+ </objectgroup>
+</map>

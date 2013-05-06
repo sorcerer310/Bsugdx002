@@ -11,6 +11,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -24,21 +27,20 @@ import com.bsu.head.Mario.STATE;
 public class GameScreen extends CubocScreen implements Observer {
 	Stage stage;
 	Mario mario;
-	private Image backgroundImage;
 	private ImageButton buttonL;
 	private ImageButton buttonR;
 	LabelStyle style;
 	BitmapFont font;
+	GameMap map;
 
 	public GameScreen(Game mxg) {
 		// TODO Auto-generated constructor stub
 		super(mxg);
-		TextureAtlas atlas = new TextureAtlas(
-				Gdx.files.internal("data/menu/pack")); // 根据pack文件获取所有图片
-		backgroundImage = new Image(atlas.findRegion("bground1"));
+
 		stage = new Stage(320, 480, false);
-		stage.addActor(backgroundImage);
 		mario = new Mario(100, 100);
+		map = new GameMap();
+		setMario(GameMap.map);
 		stage.addActor(mario);
 
 		buttonL = new ImageButton(new TextureRegionDrawable(mario.spilt[1][0]),
@@ -59,7 +61,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		label1.setFontScale(0.6f);
 		label1.setColor(Color.RED);
 		stage.addActor(label1);
-		
+
 		buttonL.addListener(new InputListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
@@ -97,10 +99,22 @@ public class GameScreen extends CubocScreen implements Observer {
 		});
 	}
 
+	public void setMario(TiledMap map) {
+		for (TiledObjectGroup group : map.objectGroups) {
+			for (TiledObject object : group.objects) {
+				if ("mario".equals(object.name)) {
+					mario.x = object.x;
+					mario.y = object.y;
+				}
+			}
+		}
+	}
+
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		map.map_render.render(map.cam);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 

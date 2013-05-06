@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Mario extends Actor {
@@ -53,11 +54,14 @@ public class Mario extends Actor {
 
 	// 数据需要定义变量，数值需要讨论,控制边界,往左因为镜像翻转导致中心位置不准。
 	public void update_state() {
-		if (state == STATE.left) {
+		 if(Collision.downEnable(this.x, this.y)) {
+	           this.y -=2;
+	       }
+		if ((state == STATE.left)&&Collision.leftEnable(this.x, this.y, 64, 64)) {
 			this.x -= 1.5f;
 			if (this.x < 0)
 				this.x = 0;
-		} else if (state == STATE.right) {
+		} else if ((state == STATE.right)&&Collision.rightEnable(this.x, this.y, 64, 64)) {
 			this.x += 1.5f;
 			if (this.x > 320 - 60)
 				this.x = 320 - 60;// not is Gdx.graphics.getWidth()????
@@ -110,6 +114,6 @@ public class Mario extends Actor {
 		region_idle_left[0] = miror[0][0];
 
 		ani_idle_left = new Animation(0.1f, region_idle_left);
-		this.setOrigin(getWidth()/2, getHeight()/2);
+
 	}
 }
