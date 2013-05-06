@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.bsu.head.CubocScreen;
 import com.bsu.obj.GameMap;
+import com.bsu.obj.Hero;
 import com.bsu.obj.Mario;
 import com.bsu.obj.Mario.STATE;
 import com.bsu.tools.Configure;
@@ -35,6 +36,8 @@ public class GameScreen extends CubocScreen implements Observer {
 	private ImageButton buttonR;
 	
 	GameMap map;
+	Hero hero;
+	Hero enemy;
 
 	public GameScreen(Game mxg) {
 		// TODO Auto-generated constructor stub
@@ -42,6 +45,8 @@ public class GameScreen extends CubocScreen implements Observer {
 		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
 		actor_init();
 		stage.addActor(mario);
+		stage.addActor(hero);
+		stage.addActor(enemy);
 		stage.addActor(buttonL);
 		stage.addActor(buttonR);
 
@@ -91,6 +96,11 @@ public class GameScreen extends CubocScreen implements Observer {
 				new TextureRegionDrawable(mario.miror[1][1]));
 		buttonL.setPosition(20, 20);
 		buttonR.setPosition(100, 20);
+		
+		hero=new Hero(0,2);
+		enemy=new Hero(1,3);
+		hero.set_position(100, 150);
+		enemy.set_position(300, 150);
 	}
 	
 	//设置角色出生地
