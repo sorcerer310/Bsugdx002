@@ -18,7 +18,6 @@ public class CustomerTiledAlisa extends TileAtlas {
 	}
 
 	public CustomerTiledAlisa(TiledMap map, FileHandle inputDir) {
-		super(map, inputDir);
 		// TODO Auto-generated constructor stub
 		for (TileSet set : map.tileSets) {
 			if (set.imageName == null) {
