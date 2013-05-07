@@ -44,10 +44,8 @@ public class GameScreen extends CubocScreen implements Observer {
 		map = new GameMap(0);
 		hero=new MyHero(0,2);
 		enemy=new MyHero(1,3);
-		//setBornPosition(GameMap.map,hero,Configure.object_layer_hero);
-		//setBornPosition(GameMap.map,enemy,Configure.object_layer_enemy);
-		hero.set_position(100, 160);
-		enemy.set_position(200, 160);
+		setBornPosition(GameMap.map,hero,"h2");
+		setBornPosition(GameMap.map,enemy,"n2");
 	}
 	
 	//设置角色出生地
@@ -55,7 +53,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		for (TiledObjectGroup group : map.objectGroups) {
 			for (TiledObject object : group.objects) {
 				if (s.equals(object.name)) { 
-					hero.set_position(object.x, object.y);
+					hero.set_position(object.x, this.map.map_render.getMapHeightUnits()-object.y-32);
 				}
 			}
 		}
