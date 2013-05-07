@@ -65,7 +65,7 @@ public class MyHero extends Actor {
 			regionR[2] = spilt[actor_type][actor_index + 2];
 			ani_move = new Animation(0.1f, regionR);
 
-			// 空闲idle
+			// 站立
 			TextureRegion[] region_idle = new TextureRegion[1];
 			region_idle[0] = spilt[actor_type][actor_index + 1];
 			ani_idle = new Animation(0.1f, region_idle);
@@ -88,14 +88,14 @@ public class MyHero extends Actor {
 				}
 			});
 		}
-			//取得角色初始状态属性
-			private void get_values(int type,int index){
-				life_max=100;
-				life_current=life_max;
-				attack_value=5;
-				isAttacked=false;
-				isAttackedImg=null;
-			}
+		//取得角色初始状态属性
+		private void get_values(int type,int index){
+			life_max=100;
+			life_current=life_max;
+			attack_value=5;
+			isAttacked=false;
+			isAttackedImg=null;
+		}
 		
 		@Override
 		public void draw(SpriteBatch batch, float parentAlpha) {
