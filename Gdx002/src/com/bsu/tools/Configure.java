@@ -22,7 +22,7 @@ public class Configure {
 	public static String screen_menu = "menu";
 	public static String screen_game = "game";
 
-	public static String[] game_map_path_string = { "stage1", "marioMap" };
+	public static String[] game_map_path_string = { "map1", "marioMap" };
 
 	public static String object_layer_hero = "hero";
 	public static String object_layer_enemy = "enemy";
@@ -35,7 +35,7 @@ public class Configure {
 	private static Texture isAttackedTexture;// 所有被攻击的贴图集合
 	
 	public static enum STATE {
-		idle, attack_normal, move
+		idle, attack_normal, move,attack_v,attack_h
 	};
 	
 	//取得设置好的字体

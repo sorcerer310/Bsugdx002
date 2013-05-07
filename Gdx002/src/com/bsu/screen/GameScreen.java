@@ -30,7 +30,12 @@ import com.bsu.head.CubocScreen;
 import com.bsu.obj.ButtonFactory;
 import com.bsu.obj.Commander;
 import com.bsu.obj.GameMap;
+<<<<<<< HEAD
 import com.bsu.obj.Role;
+=======
+import com.bsu.obj.HeroEffectClass;
+import com.bsu.obj.MyHero;
+>>>>>>> anmation and effects
 import com.bsu.tools.Configure;
 
 public class GameScreen extends CubocScreen implements Observer {
@@ -50,14 +55,23 @@ public class GameScreen extends CubocScreen implements Observer {
 		actor_init();
 		stage.addActor(hero);
 		stage.addActor(enemy);
+<<<<<<< HEAD
 		stage.addActor(bt_endround);
 		commander = new Commander(stage);
+=======
+>>>>>>> anmation and effects
 	}
 	
 	private void actor_init(){
 		map = new GameMap(0);
+<<<<<<< HEAD
 		hero=new Role(Role.Type.HERO,2);
 		enemy=new Role(Role.Type.ENEMY,3);
+=======
+		new HeroEffectClass();
+		hero=new MyHero(0,2);
+		enemy=new MyHero(1,3);
+>>>>>>> anmation and effects
 		setBornPosition(GameMap.map,hero,"h2");
 		setBornPosition(GameMap.map,enemy,"n2");
 		bt_endround = ButtonFactory.getInstance().getOneTextButton("end round", 10, 10);
