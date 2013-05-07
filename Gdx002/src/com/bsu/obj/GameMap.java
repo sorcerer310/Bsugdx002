@@ -23,7 +23,7 @@ public class GameMap {
 	}
 	
 	public void get_map(int level){
-		map = TiledLoader.createMap(Gdx.files.internal("data/map/"+Configure.game_level_string[level]+".tmx"));
+		map = TiledLoader.createMap(Gdx.files.internal("data/map/"+Configure.game_map_path_string[level]+".tmx"));
 		atlas = new TileAtlas(map, Gdx.files.internal("data/map/"));
 		map_render = new TileMapRenderer(map, atlas, 10, 10);
 	}

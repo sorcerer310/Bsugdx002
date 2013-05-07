@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.bsu.head.CubocScreen;
+import com.bsu.obj.GameMap;
+import com.bsu.obj.MyHero;
 import com.bsu.tools.Configure;
 
 public class MenuScreen extends CubocScreen implements Observer {
@@ -26,6 +28,7 @@ public class MenuScreen extends CubocScreen implements Observer {
 	private Image set_image;
 	Stage stage; // ÎèÌ¨
 	TextureAtlas atlas;
+	GameMap map;
 
 	public MenuScreen(Game mxg) {
 		super(mxg);

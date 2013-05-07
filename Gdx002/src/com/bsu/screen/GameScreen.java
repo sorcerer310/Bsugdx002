@@ -5,12 +5,11 @@ import java.util.Observer;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
+
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
@@ -18,21 +17,18 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.bsu.head.CubocScreen;
 import com.bsu.obj.GameMap;
 import com.bsu.obj.MyHero;
 import com.bsu.tools.Configure;
+import com.bsu.tools.Configure.STATE;
 
 public class GameScreen extends CubocScreen implements Observer {
 	Stage stage;
 	GameMap map;
 	MyHero hero;
 	MyHero enemy;
-
 	public GameScreen(Game mxg) {
 		// TODO Auto-generated constructor stub
 		super(mxg);
@@ -43,23 +39,42 @@ public class GameScreen extends CubocScreen implements Observer {
 		actor_init();
 		stage.addActor(hero);
 		stage.addActor(enemy);
+
 	}
 	
 	private void actor_init(){
 		map = new GameMap(0);
 		hero=new MyHero(0,2);
 		enemy=new MyHero(1,3);
-		setBornPosition(GameMap.map,hero,Configure.object_layer_hero);
-		setBornPosition(GameMap.map,enemy,Configure.object_layer_enemy);
+		//setBornPosition(GameMap.map,hero,Configure.object_layer_hero);
+		//setBornPosition(GameMap.map,enemy,Configure.object_layer_enemy);
 		hero.set_position(100, 150);
-		enemy.set_position(200, 150);
+		enemy.set_position(300, 150);
+		hero.addListener(new InputListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				// TODO Auto-generated method stub
+				System.out.println("seleced");
+				super.touchUp(event, x, y, pointer, button);
+			}
+
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				// TODO Auto-generated method stub
+				hero.state=STATE.move;
+				System.out.println("hero....select");
+				return true;
+			}
+		});
 	}
 	
 	//设置角色出生地
 	private void setBornPosition(TiledMap map,MyHero hero,String s) {
 		for (TiledObjectGroup group : map.objectGroups) {
 			for (TiledObject object : group.objects) {
-				if (s.equals(object.name)) {
+				if (s.equals(object.name)) { 
 					hero.set_position(object.x, object.y);
 				}
 			}

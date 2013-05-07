@@ -25,7 +25,7 @@ public class Mario extends Actor {
 	public TextureRegion[][] spilt;
 	public TextureRegion[][] miror;
 
-	public enum STATE {
+	 enum STATE {
 		idle_left, idle_right, left, right
 	};
 

@@ -1,27 +1,32 @@
 package com.bsu.obj;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.bsu.tools.Configure;
+import com.bsu.tools.Configure.STATE;
 
 
 
 public class MyHero extends Actor {
 	private float x;
 	private float y;
-	
 	private Texture texture;
 	private TextureRegion current_frame;
-	private TextureRegion[][] spilt;
+	public TextureRegion[][] spilt;
 	private TextureRegion[][] miror;
 	private Animation ani_idle;
 	private Animation ani_move;
 	private float state_time;
-	private STATE state;
+	public STATE state;
+	
 	
 	private int life_max;//生命最大值
 	private int life_current;//当前生命
@@ -31,12 +36,11 @@ public class MyHero extends Actor {
 	private int isAttackedType;//遭到什么类型的攻击
 	private Image isAttackedImg;//攻击需要播放的图片
 	
+	public Image heroImg;
 	
 	private boolean isSelected;//被选中等待操作？
 
-	private enum STATE {
-		idle, attack_normal, move
-	};
+
 	public MyHero(int type, int index) {
 		// TODO Auto-generated constructor stub
 		this.state_time = 0;
@@ -67,8 +71,9 @@ public class MyHero extends Actor {
 			TextureRegion[] region_idle = new TextureRegion[1];
 			region_idle[0] = spilt[actor_type][actor_index + 1];
 			ani_idle = new Animation(0.1f, region_idle);
-			
+	
 			get_values(type,index);
+		
 		}
 			//取得角色初始状态属性
 			private void get_values(int type,int index){
@@ -82,7 +87,6 @@ public class MyHero extends Actor {
 		@Override
 		public void draw(SpriteBatch batch, float parentAlpha) {
 			// TODO Auto-generated method stub
-
 			state_time += Gdx.graphics.getDeltaTime();
 
 			this.update_state();
@@ -90,7 +94,8 @@ public class MyHero extends Actor {
 			this.check();
 
 			batch.draw(current_frame, this.x, this.y);
-
+			this.setPosition(this.x, this.y);
+			this.setSize(32, 32);
 		}
 		public void set_selected(boolean b){
 			isSelected=b;
@@ -100,7 +105,7 @@ public class MyHero extends Actor {
 		}
 		// 根据状态做移动
 		private void update_state() {
-
+			
 		}
 
 		// 根据状态取得动画
