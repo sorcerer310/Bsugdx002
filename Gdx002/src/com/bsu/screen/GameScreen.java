@@ -53,7 +53,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		for (TiledObjectGroup group : map.objectGroups) {
 			for (TiledObject object : group.objects) {
 				if (s.equals(object.name)) { 
-					hero.set_position(object.x, this.map.map_render.getMapHeightUnits()-object.y-32);
+					hero.setPosition(object.x, this.map.map_render.getMapHeightUnits()-object.y-32);
 				}
 			}
 		}

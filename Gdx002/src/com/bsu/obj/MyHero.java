@@ -16,8 +16,6 @@ import com.bsu.tools.Configure.STATE;
 
 
 public class MyHero extends Actor {
-	private float x;
-	private float y;
 	private Texture texture;
 	private TextureRegion current_frame;
 	public TextureRegion[][] spilt;
@@ -103,13 +101,8 @@ public class MyHero extends Actor {
 		public void draw(SpriteBatch batch, float parentAlpha) {
 			// TODO Auto-generated method stub
 			state_time += Gdx.graphics.getDeltaTime();
-
-			this.update_state();
-
 			this.check();
-
-			batch.draw(current_frame, this.x, this.y);
-			this.setPosition(this.x, this.y);
+			batch.draw(current_frame,getX(),getY());
 			this.setSize(32, 32);
 		}
 		public void set_selected(boolean b){
@@ -117,10 +110,6 @@ public class MyHero extends Actor {
 		}
 		public boolean get_selected(){
 			return isSelected;
-		}
-		// 根据状态做移动
-		private void update_state() {
-			
 		}
 
 		// 根据状态取得动画
@@ -130,10 +119,5 @@ public class MyHero extends Actor {
 			} else if (state == STATE.move) {
 				current_frame = ani_move.getKeyFrame(state_time, true);
 			}
-		}
-		//设置位置
-		public void set_position(int x,int y){
-			this.x=x;
-			this.y=y;
 		}
 }
