@@ -46,26 +46,8 @@ public class GameScreen extends CubocScreen implements Observer {
 		enemy=new MyHero(1,3);
 		//setBornPosition(GameMap.map,hero,Configure.object_layer_hero);
 		//setBornPosition(GameMap.map,enemy,Configure.object_layer_enemy);
-		hero.set_position(100, 150);
-		enemy.set_position(300, 150);
-		hero.addListener(new InputListener() {
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				// TODO Auto-generated method stub
-				System.out.println("seleced");
-				super.touchUp(event, x, y, pointer, button);
-			}
-
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				// TODO Auto-generated method stub
-				hero.state=STATE.move;
-				System.out.println("hero....select");
-				return true;
-			}
-		});
+		hero.set_position(100, 160);
+		enemy.set_position(200, 160);
 	}
 	
 	//设置角色出生地

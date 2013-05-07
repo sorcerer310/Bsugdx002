@@ -22,7 +22,7 @@ public class Configure {
 	public static String screen_menu = "menu";
 	public static String screen_game = "game";
 
-	public static String[] game_map_path_string = { "stage1", "marioMap" };
+	public static String[] game_map_path_string = { "map1", "marioMap" };
 
 	public static String object_layer_hero = "hero";
 	public static String object_layer_enemy = "enemy";

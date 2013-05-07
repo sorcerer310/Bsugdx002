@@ -43,8 +43,6 @@ public class CustomerTiledAlisa extends TileAtlas {
 					textures.add(reg.getTexture());
 				}
 			}
-
-			System.out.println("textuare is ->" + textures);
 		}
 	}
 

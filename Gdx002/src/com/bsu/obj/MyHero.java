@@ -73,7 +73,22 @@ public class MyHero extends Actor {
 			ani_idle = new Animation(0.1f, region_idle);
 	
 			get_values(type,index);
-		
+			addListener(new InputListener() {
+				@Override
+				public void touchUp(InputEvent event, float x, float y,
+						int pointer, int button) {
+					// TODO Auto-generated method stub
+					super.touchUp(event, x, y, pointer, button);
+				}
+
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y,
+						int pointer, int button) {
+					// TODO Auto-generated method stub
+					state=STATE.move;
+					return true;
+				}
+			});
 		}
 			//取得角色初始状态属性
 			private void get_values(int type,int index){
