@@ -17,44 +17,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
 
-<<<<<<< HEAD:Gdx002/src/com/bsu/obj/Role.java
-<<<<<<< HEAD:Gdx002/src/com/bsu/obj/Role.java
-
-
 public class Role extends Actor {
 	private Texture texture;
-=======
-public class MyHero extends Actor {
-=======
-public class Role extends Actor {
->>>>>>> ok:Gdx002/src/com/bsu/obj/Role.java
-
->>>>>>> anmation and effects:Gdx002/src/com/bsu/obj/MyHero.java
 	private TextureRegion current_frame;
 	private float total_time;// 总时间
 	private float state_time;// 状态时间
 	private float effect_time;// 特效时间
 	public STATE state;
-<<<<<<< HEAD:Gdx002/src/com/bsu/obj/Role.java
-<<<<<<< HEAD:Gdx002/src/com/bsu/obj/Role.java
 	public static enum Type {HERO,ENEMY};
 	private Type type = null;
-	
-	private int life_max;//生命最大值
-	private int life_current;//当前生命
-	private int attack_value;//自身攻击力
-	private boolean isAttacked;//被攻击了
-	private int isAttackedValue;//受到的伤害
-	private int isAttackedType;//遭到什么类型的攻击
-	private Image isAttackedImg;//攻击需要播放的图片
-	
-	public Image heroImg;
-	
-	private boolean isSelected;//被选中等待操作？
-=======
-=======
+
 	private Animation ani_current;// 当前动画
->>>>>>> ok:Gdx002/src/com/bsu/obj/Role.java
 	private Animation ani_idle;
 	private Animation ani_move;
 	private Animation ani_attack_n;// 基本攻击
@@ -62,7 +35,6 @@ public class Role extends Actor {
 	private Animation ani_attack_h;// 纵向攻击
 	private boolean loop_flag;
 
-	int type;// 角色类型，0-->角色 1--> npc
 	int maxHp = 100; // 总血量
 	int currentHp = 30; // 当前血量
 	int attack_value;// 自身攻击力
@@ -70,7 +42,6 @@ public class Role extends Actor {
 	int attack_type;//当前攻击类型
 	private TextureRegion effect_current_frame;
 	private Animation ani_effect;
->>>>>>> anmation and effects:Gdx002/src/com/bsu/obj/MyHero.java
 
 	int margin = 2; // 血条和人物之间的间隔
 	int pixHeight = 5; // 血条高度
@@ -78,12 +49,7 @@ public class Role extends Actor {
 	TextureRegion pix;
 
 	private boolean isSelected;// 被选中等待操作？
-
-<<<<<<< HEAD:Gdx002/src/com/bsu/obj/Role.java
 	public Role(Type t, int index) {
-=======
-	public Role(int type, int index) {
->>>>>>> ok:Gdx002/src/com/bsu/obj/Role.java
 		// TODO Auto-generated constructor stub
 		type = t;
 		this.state_time = 0;
@@ -91,69 +57,11 @@ public class Role extends Actor {
 		set_actor_base(type, index);
 		set_listener();
 	}
-<<<<<<< HEAD:Gdx002/src/com/bsu/obj/Role.java
-	// type 0-->1 index 0---->4 2种类型，角色方 敌人方 每方4种
-		private void set_actor(Type type, int index) {
-			int actor_type = type == Type.HERO ? 2 : 5;
-			int actor_index = index * 3;
-
-			for (TextureRegion[] region1 : miror) {
-				for (TextureRegion region2 : region1) {
-					region2.flip(true, false);
-				}
-			}
-			// move
-			TextureRegion[] regionR = new TextureRegion[3];
-			regionR[0] = spilt[actor_type][actor_index];
-			regionR[1] = spilt[actor_type][actor_index + 1];
-			regionR[2] = spilt[actor_type][actor_index + 2];
-			ani_move = new Animation(0.1f, regionR);
-
-			// 站立
-			TextureRegion[] region_idle = new TextureRegion[1];
-			region_idle[0] = spilt[actor_type][actor_index + 1];
-			ani_idle = new Animation(0.1f, region_idle);
-	
-			get_values(type,index);
-			addListener(new InputListener() {
-				@Override
-				public void touchUp(InputEvent event, float x, float y,
-						int pointer, int button) {
-					// TODO Auto-generated method stub
-					super.touchUp(event, x, y, pointer, button);
-				}
-
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
-					// TODO Auto-generated method stub
-					state=STATE.move;
-					return true;
-				}
-			});
-		}
-		//取得角色初始状态属性
-		private void get_values(Type type,int index){
-			life_max=100;
-			life_current=life_max;
-			attack_value=5;
-			isAttacked=false;
-			isAttackedImg=null;
-		}
-		
-		@Override
-		public void draw(SpriteBatch batch, float parentAlpha) {
-			// TODO Auto-generated method stub
-			state_time += Gdx.graphics.getDeltaTime();
-			this.check();
-			batch.draw(current_frame,getX(),getY());
-			this.setSize(32, 32);
-=======
 
 	// 根据类型获得资源
-	private void set_actor_base(int type, int index) {
+	private void set_actor_base(Type type, int index) {
 		this.type = type;
-		int actor_type = type == 0 ? 2 : 5;
+		int actor_type = type == Type.HERO ? 2 : 5;
 		ani_idle = HeroAnimationClass.getAnimationIdle(actor_type, index);
 		ani_move = HeroAnimationClass.getAnimationMove(actor_type, index);
 		ani_attack_n = HeroAnimationClass
@@ -182,7 +90,7 @@ public class Role extends Actor {
 	}
 
 	// 取得角色初始状态属性
-	private void get_values(int type, int index) {
+	private void get_values(Type type, int index) {
 		currentHp = 100;
 		maxHp = 100;
 		attack_value = 5;
@@ -212,7 +120,7 @@ public class Role extends Actor {
 		if(enemy==null){
 			return;
 		}
-		if (type == 0) {
+		if (type == Type.HERO) {
 			set_attack_type(enemy.attacked_nums);
 			enemy.hero_isAttacked(attack_type, attack_value);
 		} else {
@@ -227,11 +135,6 @@ public class Role extends Actor {
 				: 0;
 		if (currentHp <= 0) {
 			this.getParent().removeActor(this);
-<<<<<<< HEAD:Gdx002/src/com/bsu/obj/Role.java
->>>>>>> anmation and effects:Gdx002/src/com/bsu/obj/MyHero.java
-=======
-			//will null problom;
->>>>>>> ok:Gdx002/src/com/bsu/obj/Role.java
 		}
 		attacked_nums++;
 	}
@@ -318,12 +221,7 @@ public class Role extends Actor {
 				// TODO Auto-generated method stub
 				super.touchUp(event, x, y, pointer, button);
 			}
-<<<<<<< HEAD:Gdx002/src/com/bsu/obj/Role.java
-		}
-		public Type getType() {
-			return type;
-		}
-=======
+		
 
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -340,5 +238,7 @@ public class Role extends Actor {
 			}
 		});
 	}
->>>>>>> anmation and effects:Gdx002/src/com/bsu/obj/MyHero.java
+	public Type getType() {
+		return type;
+	}
 }
