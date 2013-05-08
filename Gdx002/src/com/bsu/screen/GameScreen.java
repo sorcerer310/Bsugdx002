@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.head.CubocScreen;
-import com.bsu.obj.ButtonFactory;
+import com.bsu.make.ButtonFactory;
 import com.bsu.obj.Commander;
 import com.bsu.obj.GameMap;
 import com.bsu.obj.Role;
