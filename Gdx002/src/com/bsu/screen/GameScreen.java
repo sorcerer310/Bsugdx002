@@ -8,25 +8,38 @@ import com.badlogic.gdx.Gdx;
 
 import com.badlogic.gdx.Input.Keys;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.bsu.head.CubocScreen;
+import com.bsu.obj.ButtonFactory;
+import com.bsu.obj.Commander;
 import com.bsu.obj.GameMap;
-import com.bsu.obj.MyHero;
+import com.bsu.obj.Role;
 import com.bsu.tools.Configure;
-import com.bsu.tools.Configure.STATE;
 
 public class GameScreen extends CubocScreen implements Observer {
 	Stage stage;
 	GameMap map;
-	MyHero hero;
-	MyHero enemy;
+	Role hero;
+	Role enemy;
+	Commander commander;
+	TextButton bt_endround;
 	public GameScreen(Game mxg) {
 		// TODO Auto-generated constructor stub
 		super(mxg);
@@ -37,19 +50,27 @@ public class GameScreen extends CubocScreen implements Observer {
 		actor_init();
 		stage.addActor(hero);
 		stage.addActor(enemy);
-
+		stage.addActor(bt_endround);
+		commander = new Commander(stage);
 	}
 	
 	private void actor_init(){
 		map = new GameMap(0);
-		hero=new MyHero(0,2);
-		enemy=new MyHero(1,3);
+		hero=new Role(Role.Type.HERO,2);
+		enemy=new Role(Role.Type.ENEMY,3);
 		setBornPosition(GameMap.map,hero,"h2");
 		setBornPosition(GameMap.map,enemy,"n2");
+		bt_endround = ButtonFactory.getInstance().getOneTextButton("end round", 10, 10);
+		bt_endround.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				commander.roundEnd();
+			}
+		});
 	}
 	
 	//设置角色出生地
-	private void setBornPosition(TiledMap map,MyHero hero,String s) {
+	private void setBornPosition(TiledMap map,Role hero,String s) {
 		for (TiledObjectGroup group : map.objectGroups) {
 			for (TiledObject object : group.objects) {
 				if (s.equals(object.name)) { 

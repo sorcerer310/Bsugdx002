@@ -19,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.bsu.head.CubocScreen;
 import com.bsu.obj.GameMap;
-import com.bsu.obj.MyHero;
+import com.bsu.obj.Role;
 import com.bsu.tools.Configure;
 
 public class MenuScreen extends CubocScreen implements Observer {

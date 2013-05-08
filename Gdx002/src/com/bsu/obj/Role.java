@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -15,7 +16,7 @@ import com.bsu.tools.Configure.STATE;
 
 
 
-public class MyHero extends Actor {
+public class Role extends Actor {
 	private Texture texture;
 	private TextureRegion current_frame;
 	public TextureRegion[][] spilt;
@@ -24,7 +25,8 @@ public class MyHero extends Actor {
 	private Animation ani_move;
 	private float state_time;
 	public STATE state;
-	
+	public static enum Type {HERO,ENEMY};
+	private Type type = null;
 	
 	private int life_max;//生命最大值
 	private int life_current;//当前生命
@@ -39,8 +41,9 @@ public class MyHero extends Actor {
 	private boolean isSelected;//被选中等待操作？
 
 
-	public MyHero(int type, int index) {
+	public Role(Type t, int index) {
 		// TODO Auto-generated constructor stub
+		type = t;
 		this.state_time = 0;
 		state = STATE.idle;
 		texture = new Texture(Gdx.files.internal("data/hero/hero.png"));
@@ -49,8 +52,8 @@ public class MyHero extends Actor {
 		set_actor(type, index);
 	}
 	// type 0-->1 index 0---->4 2种类型，角色方 敌人方 每方4种
-		private void set_actor(int type, int index) {
-			int actor_type = type == 0 ? 2 : 5;
+		private void set_actor(Type type, int index) {
+			int actor_type = type == Type.HERO ? 2 : 5;
 			int actor_index = index * 3;
 
 			for (TextureRegion[] region1 : miror) {
@@ -89,7 +92,7 @@ public class MyHero extends Actor {
 			});
 		}
 		//取得角色初始状态属性
-		private void get_values(int type,int index){
+		private void get_values(Type type,int index){
 			life_max=100;
 			life_current=life_max;
 			attack_value=5;
@@ -119,5 +122,8 @@ public class MyHero extends Actor {
 			} else if (state == STATE.move) {
 				current_frame = ani_move.getKeyFrame(state_time, true);
 			}
+		}
+		public Type getType() {
+			return type;
 		}
 }
