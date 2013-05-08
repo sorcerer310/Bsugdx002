@@ -28,13 +28,13 @@ import com.bsu.obj.HeroEffectClass;
 import com.bsu.tools.Configure;
 
 public class GameScreen extends CubocScreen implements Observer {
-	Stage stage;
-	GameMap map;
-	Role hero;
-	Role enemy;
-	Commander commander;
-	TextButton bt_endround;
-	TextureAtlas atlas;
+	private Stage stage;
+	private GameMap map;
+	private Role hero;
+	private Role enemy;
+	private Commander commander;
+	private TextButton bt_endround;
+	private TextureAtlas atlas;
 	private Image fight_image;
 
 	public GameScreen(Game mxg) {
