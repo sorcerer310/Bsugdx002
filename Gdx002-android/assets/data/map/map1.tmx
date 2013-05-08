@@ -10,17 +10,16 @@
  </tileset>
  <layer height="15" name="块层 1" width="10">
   <data compression="zlib" encoding="base64">
-   eJxjYKAuYCYCj6ojTh0LGibGPGS1A+kPAHBDAWY=
+   eJxjYKAuYB7FVMMsaJgUPQPtdgCVbwGN
   </data>
  </layer>
  <layer height="15" name="块层 2" width="10">
   <data compression="zlib" encoding="base64">
-   eJxjYBh8QAUJgwAzEB8hgFHUMSJokJgyI6o6dMCMRqvgUIfNnSDAAsUg+xiQaHLNwwVg5qKrY0GTx6ZOBQ2zIMlTy33IAADvkxEa
+   eJxjYBjcIImROLoISE9mJExfx2LHMSxixKp7TqQ6bACbOmz+O4ZFnFj/DhQAAEFsFJg=
   </data>
  </layer>
  <objectgroup height="15" name="对象层 1" width="10">
-  <object height="7" name="h2" width="4" x="82" y="233"/>
-  <object name="h2" x="86" y="239"/>
-  <object name="n2" x="274" y="275"/>
+  <object name="h2" x="32" y="256"/>
+  <object name="n2" x="256" y="256"/>
  </objectgroup>
 </map>

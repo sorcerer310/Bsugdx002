@@ -18,17 +18,24 @@ import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
 
 <<<<<<< HEAD:Gdx002/src/com/bsu/obj/Role.java
+<<<<<<< HEAD:Gdx002/src/com/bsu/obj/Role.java
 
 
 public class Role extends Actor {
 	private Texture texture;
 =======
 public class MyHero extends Actor {
+=======
+public class Role extends Actor {
+>>>>>>> ok:Gdx002/src/com/bsu/obj/Role.java
 
 >>>>>>> anmation and effects:Gdx002/src/com/bsu/obj/MyHero.java
 	private TextureRegion current_frame;
-	private float state_time;
+	private float total_time;// 总时间
+	private float state_time;// 状态时间
+	private float effect_time;// 特效时间
 	public STATE state;
+<<<<<<< HEAD:Gdx002/src/com/bsu/obj/Role.java
 <<<<<<< HEAD:Gdx002/src/com/bsu/obj/Role.java
 	public static enum Type {HERO,ENEMY};
 	private Type type = null;
@@ -45,15 +52,22 @@ public class MyHero extends Actor {
 	
 	private boolean isSelected;//被选中等待操作？
 =======
+=======
+	private Animation ani_current;// 当前动画
+>>>>>>> ok:Gdx002/src/com/bsu/obj/Role.java
 	private Animation ani_idle;
 	private Animation ani_move;
 	private Animation ani_attack_n;// 基本攻击
 	private Animation ani_attack_v;// 横向攻击
 	private Animation ani_attack_h;// 纵向攻击
+	private boolean loop_flag;
 
+	int type;// 角色类型，0-->角色 1--> npc
 	int maxHp = 100; // 总血量
 	int currentHp = 30; // 当前血量
-	private int attack_value;// 自身攻击力
+	int attack_value;// 自身攻击力
+	int attacked_nums;// 目前被连击数值
+	int attack_type;//当前攻击类型
 	private TextureRegion effect_current_frame;
 	private Animation ani_effect;
 >>>>>>> anmation and effects:Gdx002/src/com/bsu/obj/MyHero.java
@@ -65,11 +79,14 @@ public class MyHero extends Actor {
 
 	private boolean isSelected;// 被选中等待操作？
 
+<<<<<<< HEAD:Gdx002/src/com/bsu/obj/Role.java
 	public Role(Type t, int index) {
+=======
+	public Role(int type, int index) {
+>>>>>>> ok:Gdx002/src/com/bsu/obj/Role.java
 		// TODO Auto-generated constructor stub
 		type = t;
 		this.state_time = 0;
-		state = STATE.idle;
 		get_values(type, index);
 		set_actor_base(type, index);
 		set_listener();
@@ -135,12 +152,19 @@ public class MyHero extends Actor {
 
 	// 根据类型获得资源
 	private void set_actor_base(int type, int index) {
+		this.type = type;
 		int actor_type = type == 0 ? 2 : 5;
-		ani_idle=HeroAnimationClass.getAnimationIdle(actor_type, index);
-		ani_move=HeroAnimationClass.getAnimationMove(actor_type, index);
-		ani_attack_n=HeroAnimationClass.getAnimationAttackN(actor_type, index);
-		ani_attack_v=HeroAnimationClass.getAnimationAttackV(actor_type, index);
-		ani_attack_h=HeroAnimationClass.getAnimationAttackH(actor_type, index);
+		ani_idle = HeroAnimationClass.getAnimationIdle(actor_type, index);
+		ani_move = HeroAnimationClass.getAnimationMove(actor_type, index);
+		ani_attack_n = HeroAnimationClass
+				.getAnimationAttackN(actor_type, index);
+		ani_attack_v = HeroAnimationClass
+				.getAnimationAttackV(actor_type, index);
+		ani_attack_h = HeroAnimationClass
+				.getAnimationAttackH(actor_type, index);
+		
+		state = STATE.idle;
+		set_ani_from_state();
 	}
 
 	private void show_life_display() {
@@ -162,29 +186,38 @@ public class MyHero extends Actor {
 		currentHp = 100;
 		maxHp = 100;
 		attack_value = 5;
+		attacked_nums = 0;
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
 		state_time += Gdx.graphics.getDeltaTime();
+		effect_time += Gdx.graphics.getDeltaTime();
 		this.setSize(32, 32);
-		this.check();
+		this.check_frame_finish();
 		show_life_display();
-		if (current_frame != null)
+		if (current_frame != null) {
 			batch.draw(current_frame, getX(), getY());
-		if (effect_current_frame != null) {
-			if (ani_effect.isAnimationFinished(state_time)) {
-				effect_current_frame = null;
-				set_selected(false);
-			} else {
-				batch.draw(effect_current_frame, getX(), getY());
-			}
 		}
-
+		if (effect_current_frame != null) {
+			batch.draw(effect_current_frame, getX(), getY());
+		}
 		if (isSelected)
 			batch.draw(pix, this.getX(), this.getY() + this.margin + 32); // 绘制
+	}
 
+	// 角色攻击,目前npc只有普通攻击
+	public void hero_attack_other(Role enemy) {
+		if(enemy==null){
+			return;
+		}
+		if (type == 0) {
+			set_attack_type(enemy.attacked_nums);
+			enemy.hero_isAttacked(attack_type, attack_value);
+		} else {
+			enemy.hero_isAttacked(0, attack_value);
+		}
 	}
 
 	// 被攻击类型0-3
@@ -194,8 +227,13 @@ public class MyHero extends Actor {
 				: 0;
 		if (currentHp <= 0) {
 			this.getParent().removeActor(this);
+<<<<<<< HEAD:Gdx002/src/com/bsu/obj/Role.java
 >>>>>>> anmation and effects:Gdx002/src/com/bsu/obj/MyHero.java
+=======
+			//will null problom;
+>>>>>>> ok:Gdx002/src/com/bsu/obj/Role.java
 		}
+		attacked_nums++;
 	}
 
 	public void set_selected(boolean b) {
@@ -208,40 +246,67 @@ public class MyHero extends Actor {
 
 	// **********effect ani
 	private void get_effect_state(int index) {
-		switch (index) {
+		ani_effect = HeroEffectClass.get_effect(ani_effect,index);
+		effect_time = 0;
+	}
+
+	// 根据敌人被攻击标记设置攻击类型 0-->普通 1-->1 2-->2 ;
+	private void set_attack_type(int enemy_attack_num) {
+		switch (enemy_attack_num) {
 		case 0:
-			ani_effect = HeroEffectClass.ani_effect_0;
+			state = STATE.attack_normal;
 			break;
 		case 1:
-			ani_effect = HeroEffectClass.ani_effect_1;
+			state = STATE.attack_v;
 			break;
 		case 2:
-			ani_effect = HeroEffectClass.ani_effect_2;
+			state = STATE.attack_h;
 			break;
-		case 3:
-			ani_effect = HeroEffectClass.ani_effect_3;
+		default:
+			state = STATE.attack_h;
 			break;
 		}
-		state_time = 0;
-		effect_current_frame = ani_effect.getKeyFrame(state_time, false);
+		attack_type=enemy_attack_num>3?3:enemy_attack_num;
+		set_ani_from_state();
 	}
 
 	// 根据角色状态取得角色动画
-	private void check() {
+	private void set_ani_from_state(){
+		loop_flag = false;
 		if (state == STATE.idle) {
-			current_frame = ani_idle.getKeyFrame(state_time, true);
+			ani_current = ani_idle;
+			loop_flag=true;
 		}
 		if (state == STATE.move) {
-			current_frame = ani_move.getKeyFrame(state_time, true);
+			ani_current = ani_move;
 		}
 		if (state == STATE.attack_normal) {
-			current_frame = ani_attack_n.getKeyFrame(state_time, true);
+			ani_current = ani_attack_n;
 		}
 		if (state == STATE.attack_h) {
-			current_frame = ani_attack_h.getKeyFrame(state_time, true);
+			ani_current = ani_attack_h;
 		}
 		if (state == STATE.attack_v) {
-			current_frame = ani_attack_v.getKeyFrame(state_time, true);
+			ani_current = ani_attack_v;
+		}
+		state_time = 0;
+	}
+	
+	private void check_frame_finish() {
+		current_frame = ani_current.getKeyFrame(state_time, loop_flag);
+		if (ani_current.isAnimationFinished(state_time)) {
+			state = STATE.idle;
+			set_ani_from_state();
+			set_selected(false);
+		}
+		if (ani_effect != null) {
+			effect_current_frame = ani_effect.getKeyFrame(effect_time, false);
+			if (ani_effect.isAnimationFinished(effect_time)) {
+				effect_current_frame = null;
+				ani_effect = null;
+				set_selected(false);
+			}
+			
 		}
 	}
 
@@ -269,7 +334,8 @@ public class MyHero extends Actor {
 				// state = STATE.attack_h;
 				// state = STATE.attack_v;
 				set_selected(true);
-				hero_isAttacked(2, 10);
+				// hero_isAttacked(2, 10);
+				set_ani_from_state();
 				return true;
 			}
 		});
