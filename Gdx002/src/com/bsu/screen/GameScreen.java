@@ -21,6 +21,7 @@ import com.bsu.head.CubocScreen;
 import com.bsu.make.ButtonFactory;
 import com.bsu.obj.Commander;
 import com.bsu.obj.GameMap;
+import com.bsu.obj.MapBox;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 
@@ -28,6 +29,7 @@ import com.bsu.obj.HeroEffectClass;
 import com.bsu.tools.Configure;
 
 public class GameScreen extends CubocScreen implements Observer {
+<<<<<<< HEAD
 	private Stage stage;
 	private GameMap map;
 	private Role hero;
@@ -35,6 +37,16 @@ public class GameScreen extends CubocScreen implements Observer {
 	private Commander commander;
 	private TextButton bt_endround;
 	private TextureAtlas atlas;
+=======
+	Stage stage;
+	GameMap map;
+	Role hero;
+	Role enemy;
+	Commander commander;
+	TextButton bt_endround;
+	TextureAtlas atlas;
+	MapBox mb;
+>>>>>>> TIL
 	private Image fight_image;
 
 	public GameScreen(Game mxg) {
@@ -45,40 +57,50 @@ public class GameScreen extends CubocScreen implements Observer {
 		atlas = new TextureAtlas(Gdx.files.internal("data/menu/pack")); // 根据pack文件获取所有图
 		fight_image = new Image(atlas.findRegion("startButton"));
 	}
-	public void init_game(){
+
+	public void init_game() {
 		actor_init();
 		stage.addActor(hero);
 		stage.addActor(enemy);
 		stage.addActor(bt_endround);
+		stage.addActor(bt_up);
+		stage.addActor(bt_down);
+		stage.addActor(bt_left);
+		stage.addActor(mb);
 		commander = new Commander(stage);
 		stage.addActor(fight_image);
 		this.addActorListener();
 	}
-	
-	private void actor_init(){
+
+	private void actor_init() {
 		map = new GameMap(0);
-		hero=new Role(Role.Type.HERO,2);
-		enemy=new Role(Role.Type.ENEMY,3);
+		mb = new MapBox();
+		hero = new Role(Role.Type.HERO, 2);
+		enemy = new Role(Role.Type.ENEMY, 3);
 		new HeroEffectClass();
-		hero=new Role(Type.HERO,2);
-		enemy=new Role(Type.ENEMY,3);
-		setBornPosition(GameMap.map,hero,"h2");
-		setBornPosition(GameMap.map,enemy,"n2");
-		bt_endround = ButtonFactory.getInstance().getOneTextButton("end round", 150, 10);
-		bt_endround.addListener(new ClickListener(){
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				commander.roundEnd();
-			}
-		});
+		hero = new Role(Type.HERO, 2);
+		enemy = new Role(Type.ENEMY, 3);
+		setBornPosition(GameMap.map, hero, "h2");
+		setBornPosition(GameMap.map, enemy, "n2");
+		bt_endround = ButtonFactory.getInstance().getOneTextButton("end round",
+				150, 10);
+		bt_up = ButtonFactory.getInstance().getOneTextButton("up",
+				150, 40);
+		bt_down = ButtonFactory.getInstance().getOneTextButton("down",
+				50, 70);
+		bt_left = ButtonFactory.getInstance().getOneTextButton("left",
+				150, 70);
+
 	}
-	
-	//设置角色出生地
-	private void setBornPosition(TiledMap map,Role hero,String s) {
+
+	// 设置角色出生地
+	private void setBornPosition(TiledMap map, Role hero, String s) {
 		for (TiledObjectGroup group : map.objectGroups) {
 			for (TiledObject object : group.objects) {
-				if (s.equals(object.name)) { 
-					hero.setPosition(object.x, this.map.map_render.getMapHeightUnits()-object.y-32);
+				if (s.equals(object.name)) {
+					hero.setPosition(object.x,
+							GameMap.map_render.getMapHeightUnits() - object.y
+									- 32);
 				}
 			}
 		}
@@ -88,7 +110,8 @@ public class GameScreen extends CubocScreen implements Observer {
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		map.map_render.render(map.cam);
+		GameMap.map_render.render(map.cam);
+		mb.set_pass_box(hero, enemy);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 
@@ -140,8 +163,8 @@ public class GameScreen extends CubocScreen implements Observer {
 		// TODO Auto-generated method stub
 
 	}
-	
-	private void addActorListener(){
+
+	private void addActorListener() {
 		fight_image.addListener(new InputListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
@@ -159,5 +182,33 @@ public class GameScreen extends CubocScreen implements Observer {
 				return true;
 			}
 		});
+		bt_endround.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				commander.roundEnd();
+			}
+		});
+		bt_left.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				commander.leftAction();
+			}
+		});
+		bt_down.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				commander.downAction();
+			}
+		});
+		bt_up.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				commander.upAction();
+			}
+		});
 	}
+
+	TextButton bt_up;
+	TextButton bt_down;
+	TextButton bt_left;
 }

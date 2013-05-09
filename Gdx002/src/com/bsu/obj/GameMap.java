@@ -2,7 +2,12 @@ package com.bsu.obj;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.tiled.TileAtlas;
 import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledLoader;
@@ -16,7 +21,7 @@ import com.bsu.tools.CustomerTiledAlisa;
 public class GameMap {
 	public static TiledMap map;
 	TileAtlas atlas;
-	public TileMapRenderer map_render;
+	public static TileMapRenderer map_render;
 	public OrthographicCamera cam;
 	Vector3 camDirection = new Vector3(1, 1, 0);   
     Vector2 maxCamPosition = new Vector2(0, 0);  
@@ -36,4 +41,7 @@ public class GameMap {
 		map_render = new TileMapRenderer(map, atlas, 10, 10);
 		maxCamPosition.set(map_render.getMapWidthUnits(), map_render .getMapHeightUnits());
 	}
+
+
+
 }

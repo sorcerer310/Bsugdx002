@@ -35,7 +35,7 @@ public class ButtonFactory {
 		tbs.over = skin.newDrawable("white",Color.LIGHT_GRAY);
 		tbs.font = skin.getFont("default");
 		skin.add("default", tbs);
-		TextButton tb = new TextButton("end round",skin);
+		TextButton tb = new TextButton(text,skin);
 		tb.setX(x);
 		tb.setY(y);
 		return tb;

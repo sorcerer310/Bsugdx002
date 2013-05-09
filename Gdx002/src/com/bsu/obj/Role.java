@@ -10,10 +10,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Array;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
 
@@ -70,9 +72,7 @@ public class Role extends Actor {
 				.getAnimationAttackV(actor_type, index);
 		ani_attack_h = HeroAnimationClass
 				.getAnimationAttackH(actor_type, index);
-		
-		state = STATE.idle;
-		set_ani_from_state();
+		set_ani_from_state(STATE.idle);
 	}
 
 	private void show_life_display() {
@@ -170,18 +170,20 @@ public class Role extends Actor {
 			break;
 		}
 		attack_type=enemy_attack_num>3?3:enemy_attack_num;
-		set_ani_from_state();
+		set_ani_from_state(state);
 	}
 
 	// 根据角色状态取得角色动画
-	private void set_ani_from_state(){
+	public void set_ani_from_state(STATE s){
 		loop_flag = false;
+		state=s;
 		if (state == STATE.idle) {
 			ani_current = ani_idle;
 			loop_flag=true;
 		}
 		if (state == STATE.move) {
 			ani_current = ani_move;
+			loop_flag=true;
 		}
 		if (state == STATE.attack_normal) {
 			ani_current = ani_attack_n;
@@ -193,13 +195,13 @@ public class Role extends Actor {
 			ani_current = ani_attack_v;
 		}
 		state_time = 0;
+		
 	}
 	
 	private void check_frame_finish() {
 		current_frame = ani_current.getKeyFrame(state_time, loop_flag);
 		if (ani_current.isAnimationFinished(state_time)) {
-			state = STATE.idle;
-			set_ani_from_state();
+			set_ani_from_state(STATE.idle);
 			set_selected(false);
 		}
 		if (ani_effect != null) {
@@ -227,13 +229,8 @@ public class Role extends Actor {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 				// TODO Auto-generated method stub
-				state = STATE.move;
-				// state = STATE.attack_normal;
-				// state = STATE.attack_h;
-				// state = STATE.attack_v;
 				set_selected(true);
-				// hero_isAttacked(2, 10);
-				set_ani_from_state();
+			
 				return true;
 			}
 		});
