@@ -11,6 +11,8 @@ public class Configure {
 
 	public static int rect_width = 480;
 	public static int rect_height = 320;
+	
+	public static int map_box_value=32;
 
 	public static String logo_0_texture_string = "data/logo/BsuLogo480-320.png";
 	public static String logo_0_sound_string = "data/snd/chicken.wav";
@@ -61,7 +63,7 @@ public class Configure {
 			isAttackedTexture = new Texture(
 					Gdx.files.internal("data/hero/hero.png"));
 			TextureRegion[][] spilt = TextureRegion.split(isAttackedTexture,
-					32, 32);
+					map_box_value, map_box_value);
 
 			int total_num = 0;
 			for (int i = 0; i < spilt.length; i++) {

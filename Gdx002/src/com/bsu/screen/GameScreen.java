@@ -14,11 +14,11 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.head.CubocScreen;
+import com.bsu.make.ButtonFactory;
 import com.bsu.obj.Commander;
 import com.bsu.obj.GameMap;
 import com.bsu.obj.MapBox;
@@ -27,6 +27,7 @@ import com.bsu.obj.Role.Type;
 
 import com.bsu.obj.HeroEffectClass;
 import com.bsu.tools.Configure;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class GameScreen extends CubocScreen implements Observer {
 	Stage stage;
@@ -35,17 +36,17 @@ public class GameScreen extends CubocScreen implements Observer {
 	Role enemy;
 	Commander commander;
 	TextButton bt_endround;
-	TextureAtlas atlas;
+	TextButton bt_up;
+	TextButton bt_down;
+	TextButton bt_left;
+	TextButton bt_attack;
 	MapBox mb;
-	private Image fight_image;
 
 	public GameScreen(Game mxg) {
 		// TODO Auto-generated constructor stub
 		super(mxg);
 		new HeroEffectClass();
 		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
-		atlas = new TextureAtlas(Gdx.files.internal("data/menu/pack")); // 根据pack文件获取所有图
-		fight_image = new Image(atlas.findRegion("startButton"));
 	}
 
 	public void init_game() {
@@ -58,22 +59,25 @@ public class GameScreen extends CubocScreen implements Observer {
 		stage.addActor(bt_left);
 		stage.addActor(mb);
 		commander = new Commander(stage);
-		stage.addActor(fight_image);
+		stage.addActor(bt_attack);
 		this.addActorListener();
 	}
 
 	private void actor_init() {
 		map = new GameMap(0);
 		mb = new MapBox();
-		hero = new Role(Role.Type.HERO, 2);
-		enemy = new Role(Role.Type.ENEMY, 3);
 		new HeroEffectClass();
 		hero = new Role(Type.HERO, 2);
 		enemy = new Role(Type.ENEMY, 3);
 		setBornPosition(GameMap.map, hero, "h2");
 		setBornPosition(GameMap.map, enemy, "n2");
-	
-
+		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,
+				50);
+		bt_up = ButtonFactory.getInstance().getOneTextButton("up--", 150, 80);
+		bt_down = ButtonFactory.getInstance().getOneTextButton("down", 150, 10);
+		bt_left = ButtonFactory.getInstance().getOneTextButton("left", 100, 50);
+		bt_attack = ButtonFactory.getInstance().getOneTextButton("attack", 150,
+				50);
 	}
 
 	// 设置角色出生地
@@ -83,7 +87,7 @@ public class GameScreen extends CubocScreen implements Observer {
 				if (s.equals(object.name)) {
 					hero.setPosition(object.x,
 							GameMap.map_render.getMapHeightUnits() - object.y
-									- 32);
+									- Configure.map_box_value);
 				}
 			}
 		}
@@ -148,23 +152,13 @@ public class GameScreen extends CubocScreen implements Observer {
 	}
 
 	private void addActorListener() {
-		fight_image.addListener(new InputListener() {
+		bt_attack.addListener(new ClickListener() {
 			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				// TODO Auto-generated method stub
+			public void clicked(InputEvent event, float x, float y) {
 				hero.hero_attack_other(enemy);
-				super.touchUp(event, x, y, pointer, button);
-			}
-
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				// TODO Auto-generated method stub
-
-				return true;
 			}
 		});
+
 		bt_endround.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -174,24 +168,40 @@ public class GameScreen extends CubocScreen implements Observer {
 		bt_left.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				commander.leftAction();
+				commander.moveAction(moveBy(-Configure.map_box_value, 0, 1));
 			}
 		});
 		bt_down.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				commander.downAction();
+				commander.moveAction(moveBy(0, -Configure.map_box_value, 1));
 			}
 		});
 		bt_up.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				commander.upAction();
+				commander.moveAction(moveBy(0, Configure.map_box_value, 1));
+			}
+		});
+		stage.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				int mx = (int) (x / Configure.map_box_value);
+				int my = (int) (y / Configure.map_box_value);
+				for (int i = 0; i < MapBox.pass_array.size; i++) {
+					int mbc = MapBox.pass_array.get(i).getColl();
+					int mbr = MapBox.pass_array.get(i).getRaw();
+					if ((mx == mbc) && (my == mbr)) {
+						commander.moveAction(
+								moveBy(0,
+										my * Configure.map_box_value
+												- hero.getY(), 1),
+								moveBy(mx * Configure.map_box_value
+										- hero.getX(), 0, 1));
+						break;
+					}
+				}
 			}
 		});
 	}
-
-	TextButton bt_up;
-	TextButton bt_down;
-	TextButton bt_left;
 }
