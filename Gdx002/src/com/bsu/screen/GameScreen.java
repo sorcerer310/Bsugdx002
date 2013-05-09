@@ -14,11 +14,11 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.head.CubocScreen;
-import com.bsu.make.ButtonFactory;
 import com.bsu.obj.Commander;
 import com.bsu.obj.GameMap;
 import com.bsu.obj.MapBox;
@@ -29,15 +29,6 @@ import com.bsu.obj.HeroEffectClass;
 import com.bsu.tools.Configure;
 
 public class GameScreen extends CubocScreen implements Observer {
-<<<<<<< HEAD
-	private Stage stage;
-	private GameMap map;
-	private Role hero;
-	private Role enemy;
-	private Commander commander;
-	private TextButton bt_endround;
-	private TextureAtlas atlas;
-=======
 	Stage stage;
 	GameMap map;
 	Role hero;
@@ -46,7 +37,6 @@ public class GameScreen extends CubocScreen implements Observer {
 	TextButton bt_endround;
 	TextureAtlas atlas;
 	MapBox mb;
->>>>>>> TIL
 	private Image fight_image;
 
 	public GameScreen(Game mxg) {
@@ -82,14 +72,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		enemy = new Role(Type.ENEMY, 3);
 		setBornPosition(GameMap.map, hero, "h2");
 		setBornPosition(GameMap.map, enemy, "n2");
-		bt_endround = ButtonFactory.getInstance().getOneTextButton("end round",
-				150, 10);
-		bt_up = ButtonFactory.getInstance().getOneTextButton("up",
-				150, 40);
-		bt_down = ButtonFactory.getInstance().getOneTextButton("down",
-				50, 70);
-		bt_left = ButtonFactory.getInstance().getOneTextButton("left",
-				150, 70);
+	
 
 	}
 
