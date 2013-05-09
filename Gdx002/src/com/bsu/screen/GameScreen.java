@@ -11,12 +11,17 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.ButtonFactory;
 import com.bsu.obj.Commander;
@@ -168,19 +173,35 @@ public class GameScreen extends CubocScreen implements Observer {
 		bt_left.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				commander.moveAction(moveBy(-Configure.map_box_value, 0, 1));
+				Array<MoveByAction> a = new Array<MoveByAction>();
+				MoveByAction action = Actions.action(MoveByAction.class);
+				action.setAmount(-Configure.map_box_value, 0);
+				action.setDuration(1);
+				a.add(action);
+				commander.moveAction(a);
 			}
 		});
 		bt_down.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				commander.moveAction(moveBy(0, -Configure.map_box_value, 1));
+				Array<MoveByAction> a = new Array<MoveByAction>();
+				MoveByAction action = Actions.action(MoveByAction.class);
+				action.setAmount(0, -Configure.map_box_value);
+				action.setDuration(1);
+				a.add(action);
+				commander.moveAction(a);
 			}
 		});
 		bt_up.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				commander.moveAction(moveBy(0, Configure.map_box_value, 1));
+				Array<MoveByAction> a = new Array<MoveByAction>();
+				MoveByAction action = Actions.action(MoveByAction.class);
+				action.setAmount(0, Configure.map_box_value);
+				action.setDuration(1);
+
+				a.add(action);
+				commander.moveAction(a);
 			}
 		});
 		stage.addListener(new ClickListener() {
@@ -188,16 +209,36 @@ public class GameScreen extends CubocScreen implements Observer {
 			public void clicked(InputEvent event, float x, float y) {
 				int mx = (int) (x / Configure.map_box_value);
 				int my = (int) (y / Configure.map_box_value);
+				int hero_x = (int) ((hero.getX() + 10) / Configure.map_box_value);
+				int hero_y = (int) ((hero.getY() + 10) / Configure.map_box_value);
+				if(mx==hero_x){
+					if(my==hero_y){
+						return;
+					}
+				}
 				for (int i = 0; i < MapBox.pass_array.size; i++) {
 					int mbc = MapBox.pass_array.get(i).getColl();
 					int mbr = MapBox.pass_array.get(i).getRaw();
 					if ((mx == mbc) && (my == mbr)) {
-						commander.moveAction(
-								moveBy(0,
-										my * Configure.map_box_value
-												- hero.getY(), 1),
-								moveBy(mx * Configure.map_box_value
-										- hero.getX(), 0, 1));
+						Array<MoveByAction> a = new Array<MoveByAction>();
+
+						if (hero_y != my) {
+							MoveByAction action = Actions
+									.action(MoveByAction.class);
+							action.setAmount(0, (my - hero_y)
+									* Configure.map_box_value);
+							action.setDuration(Math.abs(my-hero_y));
+							a.add(action);
+						}
+						if (hero_x != mx) {
+							MoveByAction action = Actions
+									.action(MoveByAction.class);
+							action.setAmount((mx - hero_x)
+									* Configure.map_box_value, 0);
+							action.setDuration(Math.abs(mx - hero_x));
+							a.add(action);
+						}
+						commander.moveAction(a);
 						break;
 					}
 				}

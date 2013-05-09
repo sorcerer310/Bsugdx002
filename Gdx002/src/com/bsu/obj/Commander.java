@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.tools.Configure.STATE;
+import com.sun.tools.internal.xjc.reader.gbind.Sequence;
+
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 /**
@@ -36,7 +38,7 @@ public class Commander {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
 				if (r.getType() == Role.Type.HERO) {
-					r.state = STATE.move;
+					r.set_ani_from_state(STATE.move);
 
 					// 此种写法需要引入静态包import static
 					// com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
@@ -74,24 +76,35 @@ public class Commander {
 	/**
 	 * 回合结束，命令所有的角色行动
 	 */
-	public void moveAction(Action...arg) {
+	public void moveAction(final Array<MoveByAction> a) {
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
 				if (r.getType() == Role.Type.HERO) {
 					r.set_ani_from_state(STATE.move);
-					r.addAction(sequence(arg[0],arg[arg.length-1], rotateBy(10),
-							run(new Runnable() {
-								@Override
-								public void run() {
-									r.set_ani_from_state(STATE.idle);
-								}
-							})));
+					final int index = 0;
+					this.act_action_group(r, index, a.size, a);
 				} else if (r.getType() == Role.Type.ENEMY) {
 
 				}
 			}
 		}
+	}
+
+	private void act_action_group(final Role r, final int current_index,
+			final int max_length, final Array<MoveByAction> action) {
+		r.addAction(sequence(action.get(current_index), rotateBy(10),
+				run(new Runnable() {
+					@Override
+					public void run() {
+						if (current_index < max_length - 1) {
+							act_action_group(r, current_index + 1, max_length,
+									action);
+						} else {
+							r.set_ani_from_state(STATE.idle);
+						}
+					}
+				})));
 	}
 
 }
