@@ -50,16 +50,6 @@ public class Commander {
 										r.set_ani_from_state(STATE.idle);
 									}
 								})));
-						// 另一种写法，此处不用引入静态包
-						// Action:{
-						// r.addAction(sequence(moveBy(32,0,1),rotateBy(10),run(new
-						// Runnable(){
-						// @Override
-						// public void run() {
-						// System.out.println("Action is completed");
-						// }
-						// })));
-						// }
 					//}
 				} else if (r.getType() == Role.Type.ENEMY) {
 					//if (!MapBox.blocked(r)) {
