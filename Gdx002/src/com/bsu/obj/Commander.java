@@ -38,7 +38,7 @@ public class Commander {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
 				if (r.getType() == Role.Type.HERO) {
-					if (!MapBox.blocked(r)) {
+					//if (!MapBox.blocked(r)) {
 						r.set_ani_from_state(STATE.move);
 						// 此种写法需要引入静态包import static
 						// com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
@@ -46,7 +46,7 @@ public class Commander {
 								run(new Runnable() {
 									@Override
 									public void run() {
-
+										r.set_ani_from_state(STATE.idle);
 									}
 								})));
 						// 另一种写法，此处不用引入静态包
@@ -59,9 +59,9 @@ public class Commander {
 						// }
 						// })));
 						// }
-					}
+					//}
 				} else if (r.getType() == Role.Type.ENEMY) {
-					if (!MapBox.blocked(r)) {
+					//if (!MapBox.blocked(r)) {
 						r.set_ani_from_state(STATE.move);
 						r.addAction(sequence(moveBy(-32, 0, 1), rotateBy(10),
 								run(new Runnable() {
@@ -70,7 +70,7 @@ public class Commander {
 										r.set_ani_from_state(STATE.idle);
 									}
 								})));
-					}
+					//}
 				}
 			}
 		}

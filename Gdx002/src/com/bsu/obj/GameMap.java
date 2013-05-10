@@ -39,7 +39,7 @@ public class GameMap {
 		FileHandle packages=Gdx.files.internal("data/map");   
         atlas = new CustomerTiledAlisa(map, packages); 
 		map_render = new TileMapRenderer(map, atlas, 10, 10);
-		maxCamPosition.set(map_render.getMapWidthUnits(), map_render .getMapHeightUnits());
+		//maxCamPosition.set(map_render.getMapWidthUnits(), map_render .getMapHeightUnits());
 	}
 
 

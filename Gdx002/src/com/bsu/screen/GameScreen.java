@@ -55,13 +55,14 @@ public class GameScreen extends CubocScreen implements Observer {
 
 	public void init_game() {
 		actor_init();
+		stage.addActor(mb);
 		stage.addActor(hero);
 		stage.addActor(enemy);
 		stage.addActor(bt_endround);
 		stage.addActor(bt_up);
 		stage.addActor(bt_down);
 		stage.addActor(bt_left);
-		stage.addActor(mb);
+		
 		commander = new Commander(stage);
 		stage.addActor(bt_attack);
 		this.addActorListener();
@@ -211,14 +212,7 @@ public class GameScreen extends CubocScreen implements Observer {
 					int mbr = MapBox.pass_array.get(i).getRaw();
 					if ((mx == mbc) && (my == mbr)) {
 						Array<Action> a = new Array<Action>();
-						if (hero_x != mx) {
-							MoveByAction action = Actions
-									.action(MoveByAction.class);
-							action.setAmount((mx - hero_x)
-									* Configure.map_box_value, 0);
-							action.setDuration(Math.abs(mx - hero_x));
-							a.add(action);
-						}
+					
 						if (hero_y != my) {
 							MoveByAction action = Actions
 									.action(MoveByAction.class);
@@ -227,7 +221,14 @@ public class GameScreen extends CubocScreen implements Observer {
 							action.setDuration(Math.abs(my - hero_y));
 							a.add(action);
 						}
-
+						if (hero_x != mx) {
+							MoveByAction action = Actions
+									.action(MoveByAction.class);
+							action.setAmount((mx - hero_x)
+									* Configure.map_box_value, 0);
+							action.setDuration(Math.abs(mx - hero_x));
+							a.add(action);
+						}
 						commander.moveAction(a);
 						break;
 					}
