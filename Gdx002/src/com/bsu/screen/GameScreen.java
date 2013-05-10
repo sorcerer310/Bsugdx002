@@ -47,6 +47,7 @@ public class GameScreen extends CubocScreen implements Observer {
 	TextButton bt_up;
 	TextButton bt_down;
 	TextButton bt_left;
+	TextButton bt_right;
 	TextButton bt_attack;
 	MapBox mb;
 
@@ -65,6 +66,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		stage.addActor(bt_up);
 		stage.addActor(bt_down);
 		stage.addActor(bt_left);
+		stage.addActor(bt_right);
 		
 		commander = new Commander(stage);
 		stage.addActor(bt_attack);
@@ -81,14 +83,15 @@ public class GameScreen extends CubocScreen implements Observer {
 		enemy3 = RoleFactory.getInstance().getEnemyRole("enemy3");
 		setBornPosition(GameMap.map, hero, "h2");
 		setBornPosition(GameMap.map, enemy1, "n2");
-		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,50);
-		bt_up = ButtonFactory.getInstance().getOneTextButton("up--", 150, 80);
+		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,80);
+		bt_up = ButtonFactory.getInstance().getOneTextButton("up", 150, 80);
 		bt_down = ButtonFactory.getInstance().getOneTextButton("down", 150, 10);
 		bt_left = ButtonFactory.getInstance().getOneTextButton("left", 100, 50);
+		bt_right = ButtonFactory.getInstance().getOneTextButton("right", 200, 50);
 		bt_attack = ButtonFactory.getInstance().getOneTextButton("attack", 150,50);
 	}
 
-	// ���ý�ɫ�����
+	// 设置出生点
 	private void setBornPosition(TiledMap map, Role hero, String s) {
 		for (TiledObjectGroup group : map.objectGroups) {
 			for (TiledObject object : group.objects) {
@@ -168,6 +171,12 @@ public class GameScreen extends CubocScreen implements Observer {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				commander.leftAction(r);
+			}
+		});
+		bt_right.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				commander.rightAction(r);
 			}
 		});
 		bt_down.addListener(new ClickListener() {
