@@ -24,17 +24,17 @@ public class MapBox extends Actor {
 	public static Array<MapBoxValue> enemy_array;
 	public static Array<MapBoxValue> hero_array;
 
-	private int raw_max = 7;// ¶¥²¿×î´óÖµ
-	private int raw_min = 3;// ¶¥²¿×îÐ¡Öµ
-	private int coll_max = 14;// ÓÒ·½×î´óÖµ
-	private int coll_min = 0;// ×ó·½¿ÉÒÔÒÆ¶¯µÄ×îÐ¡Öµ
-	private static int extra_value = 10;// ÅÐ¶ÏÎ»ÖÃÊ±¶îÍâÔö¼ÓµÄ¾àÀë£¬ÎªÁË·ÀÖ¹ÅÐ¶ÏÊ§Îó¡£
+	private int raw_max = 7;// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+	private int raw_min = 3;// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Öµ
+	private int coll_max = 14;// ï¿½Ò·ï¿½ï¿½ï¿½ï¿½Öµ
+	private int coll_min = 0;// ï¿½ó·½¿ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Öµ
+	private static int extra_value = 10;// ï¿½Ð¶ï¿½Î»ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓµÄ¾ï¿½ï¿½ë£¬Îªï¿½Ë·ï¿½Ö¹ï¿½Ð¶ï¿½Ê§ï¿½ï¿½
 
 	public static enum BOX {
 		PASS, BLOCK
 	};
 
-	// ´¦ÀíµØÍ¼ÏÔÊ¾Ð§¹û£¬ÊÇ·ñ¿ÉÒÔÒÆ¶¯£¬²»¿ÉÒÆ¶¯
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½Ê¾Ð§ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
 	public MapBox() {
 		// TODO Auto-generated constructor stub
 		draw_map_box(BOX.PASS);
@@ -85,7 +85,7 @@ public class MapBox extends Actor {
 		for (int i = 0; i < pass_array.size; i++) {
 			batch.draw(map_pass, pass_array.get(i).getColl()
 					* Configure.map_box_value, (pass_array.get(i).getRaw())
-					* Configure.map_box_value); // »æÖÆ
+					* Configure.map_box_value); // ï¿½ï¿½ï¿½ï¿½
 		}
 		for (int i = 0; i < block_array.size; i++) {
 			batch.draw(map_block, block_array.get(i).getColl()
@@ -105,16 +105,16 @@ public class MapBox extends Actor {
 		temp_c.a = 0.8f;
 		Pixmap pixmap;
 		pixmap = new Pixmap(Configure.map_box_value, Configure.map_box_value,
-				Format.RGBA8888); // Éú³ÉÒ»ÕÅ64*8µÄÍ¼Æ¬
-		pixmap.setColor(Color.BLACK); // ÉèÖÃÑÕÉ«
+				Format.RGBA8888); // ï¿½ï¿½ï¿½Ò»ï¿½ï¿½64*8ï¿½ï¿½Í¼Æ¬
+		pixmap.setColor(Color.BLACK); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
 		pixmap.drawRectangle(0, 0, Configure.map_box_value,
 				Configure.map_box_value);
-		pixmap.setColor(temp_c); // ÉèÖÃÑÕÉ«
+		pixmap.setColor(temp_c); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
 		pixmap.fillRectangle(1, 1, Configure.map_box_value - 2,
 				Configure.map_box_value - 2);
-		Texture pixmaptex = new Texture(pixmap); // Éú³ÉÍ¼Æ¬
+		Texture pixmaptex = new Texture(pixmap); // ï¿½ï¿½ï¿½Í¼Æ¬
 		temp_box = new TextureRegion(pixmaptex, Configure.map_box_value,
-				Configure.map_box_value); // ÇÐ¸îÍ¼Æ¬
+				Configure.map_box_value); // ï¿½Ð¸ï¿½Í¼Æ¬
 		if (box == BOX.PASS) {
 			map_pass = temp_box;
 		} else {
@@ -142,8 +142,7 @@ public class MapBox extends Actor {
 		return mbv;
 	}
 
-	private Array<MapBoxValue> get_role_block(Role role,
-			Array<MapBoxValue> mbv) {
+	private Array<MapBoxValue> get_role_block(Role role, Array<MapBoxValue> mbv) {
 		if (mbv == null) {
 			mbv = new Array<MapBoxValue>();
 		}
@@ -175,7 +174,7 @@ public class MapBox extends Actor {
 	public static boolean blocked(Role r) {
 		int raw = (int) ((r.getY() + extra_value) / Configure.map_box_value);
 		int coll = (int) ((r.getX() + extra_value) / Configure.map_box_value);
-	
+
 		if (r.getType() == Type.HERO) {
 			for (int i = 0; i < block_array.size; i++) {
 				if (raw == block_array.get(i).getRaw()) {
@@ -191,7 +190,7 @@ public class MapBox extends Actor {
 					}
 				}
 			}
-		}else{
+		} else {
 			for (int i = 0; i < block_array.size; i++) {
 				if (raw == block_array.get(i).getRaw()) {
 					if (coll <= block_array.get(i).getColl() + 1) {
@@ -201,9 +200,9 @@ public class MapBox extends Actor {
 			}
 			for (int i = 0; i < hero_array.size; i++) {
 				if (raw == hero_array.get(i).getRaw()) {
-					
+
 					if (coll <= hero_array.get(i).getColl() + 1) {
-						
+
 						return true;
 					}
 				}
@@ -211,5 +210,4 @@ public class MapBox extends Actor {
 		}
 		return false;
 	}
-
 }
