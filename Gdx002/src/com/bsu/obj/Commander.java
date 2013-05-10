@@ -10,13 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
 import com.sun.tools.internal.xjc.reader.gbind.Sequence;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 /**
- * ָ�ӹٶ�������ָ��stage�����еĽ�ɫ
+ * 指挥官对象，用来指挥stage上所有的角色
  * 
  * @author fengchong
  * 
@@ -31,7 +32,7 @@ public class Commander {
 	}
 
 	/**
-	 * �غϽ������������еĽ�ɫ�ж�
+	 * 回合结束，命令所有的角色行动
 	 */
 	public void roundEnd() {
 		for (Actor act : lactor) {
@@ -40,7 +41,7 @@ public class Commander {
 				if (r.getType() == Role.Type.HERO) {
 					//if (!MapBox.blocked(r)) {
 						r.set_ani_from_state(STATE.move);
-						// ����д����Ҫ���뾲̬��import static
+						// 此种写法需要引入静态包import static
 						// com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 						r.addAction(sequence(moveBy(32, 0, 1), rotateBy(10),
 								run(new Runnable() {
@@ -49,7 +50,7 @@ public class Commander {
 										r.set_ani_from_state(STATE.idle);
 									}
 								})));
-						// ��һ��д�����˴��������뾲̬��
+						// 另一种写法，此处不用引入静态包
 						// Action:{
 						// r.addAction(sequence(moveBy(32,0,1),rotateBy(10),run(new
 						// Runnable(){
@@ -75,9 +76,67 @@ public class Commander {
 			}
 		}
 	}
-
 	/**
-	 * ��role���������������ƶ�
+	 * 指定角色向左移动
+	 * @param r	要移动的角色，移动结束后将角色的状态转为站立状态
+	 */
+	public void leftAction(final Role r){
+		r.set_ani_from_state(STATE.move);
+		r.addAction(sequence(moveBy(Configure.map_box_value,0,1),
+				run(new Runnable(){
+					@Override
+					public void run(){
+						r.set_ani_from_state(STATE.idle);
+					}
+				})));
+	}
+	/**
+	 * 指定角色向右移动
+	 * @param r	要移动的角色，移动结束后将角色的状态转为站立状态 
+	 */
+	public void rightAction(final Role r){
+		r.set_ani_from_state(STATE.move);
+		r.addAction(sequence(moveBy(-Configure.map_box_value,0,1),
+				run(new Runnable(){
+					@Override
+					public void run() {
+						r.set_ani_from_state(STATE.idle);
+					}
+				})));
+	}
+	/**
+	 * 指定角色向上移动
+	 * @param r	要移动的角色，移动结束后将角色的状态转为站立状态 
+	 */
+	public void upAction(final Role r){
+		r.set_ani_from_state(STATE.move);
+		r.addAction(sequence(moveBy(0,Configure.map_box_value,1),
+				run(new Runnable(){
+					@Override
+					public void run() {
+						r.set_ani_from_state(STATE.idle);
+					}
+				})));
+	}
+	
+	/**
+	 * 指定角色向下移动
+	 * @param r	要移动的角色，移动结束后将角色的状态转为站立状态 
+	 */
+	public void downAction(final Role r){
+		r.set_ani_from_state(STATE.move);
+		r.addAction(sequence(moveBy(0,-Configure.map_box_value,1),
+				run(new Runnable(){
+					@Override
+					public void run() {
+						r.set_ani_from_state(STATE.idle);
+					}
+				})));
+	}
+	
+	
+	/**
+	 * 向role下命令，命令其如何移动
 	 */
 	public void moveAction(final Array<Action> a) {
 		for (Actor act : lactor) {

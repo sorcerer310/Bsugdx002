@@ -20,40 +20,40 @@ import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
 
 public class Role extends Actor {
-	private String name = "";						//¼ÇÂ¼Õâ¸ö½ÇÉ«µÄÃû×Ö
+	private String name = "";						//è®°å½•è¿™ä¸ªè§’è‰²çš„åå­—
 	private TextureRegion current_frame;
-	private float state_time;						// ×´Ì¬Ê±¼ä
-	private float effect_time;						// ÌØĞ§Ê±¼ä
+	private float state_time;						//çŠ¶æ€æ—¶é—´
+	private float effect_time;						//ç‰¹æ•ˆæ—¶é—´
 	public STATE state;
-	public static enum Type {HERO,ENEMY};			//Ó¢ĞÛ»¹ÊÇNPC
-	private Type type = null;						//Ö¸¶¨µ±Ç°½ÇÉ«ÊÇÓ¢ĞÛ»¹ÊÇNPC
+	public static enum Type {HERO,ENEMY};			//è‹±é›„è¿˜æ˜¯NPC
+	private Type type = null;						//Ö¸æŒ‡å®šå½“å‰è§’è‰²æ˜¯è‹±é›„è¿˜æ˜¯ NPC
 
-	private Animation ani_current;					// µ±Ç°¶¯»­
-	private Animation ani_idle;						//Õ¾Á¢¶¯»­
-	private Animation ani_move;						//ÒÆ¶¯¶¯»­
-	private Animation ani_attack_n;					// »ù±¾¹¥»÷
-	private Animation ani_attack_v;					// ºáÏò¹¥»÷
-	private Animation ani_attack_h;					// ×İÏò¹¥»÷
+	private Animation ani_current;					//å½“å‰åŠ¨ç”»
+	private Animation ani_idle;						//ç«™ç«‹åŠ¨ç”» 
+	private Animation ani_move;						//ç§»åŠ¨åŠ¨ç”»
+	private Animation ani_attack_n;					//åŸºæœ¬æ”»å‡» 
+	private Animation ani_attack_v;					//æ¨ªå‘æ”»å‡»
+	private Animation ani_attack_h;					//çºµå‘æ”»å‡»
 	private boolean loop_flag;
 
-	int maxHp = 100; 								// ×ÜÑªÁ¿
-	int currentHp = 30; 							// µ±Ç°ÑªÁ¿
-	int attack_value;								// ×ÔÉí¹¥»÷Á¦
-	int attacked_nums;								// Ä¿Ç°±»Á¬»÷ÊıÖµ
-	int attack_type;								//µ±Ç°¹¥»÷ÀàĞÍ
+	int maxHp = 100; 								//æ€»è¡€é‡
+	int currentHp = 30; 							//å½“å‰è¡€é‡
+	int attack_value;								//è‡ªèº«æ”»å‡»åŠ›
+	int attacked_nums;								//ç›®å‰è¢«è¿å‡»æ•°é‡Öµ
+	int attack_type;								//å½“å‰æ”»å‡»ç±»å‹
 	private TextureRegion effect_current_frame;
 	private Animation ani_effect;
 
-	int margin = 2; 								// ÑªÌõºÍÈËÎïÖ®¼äµÄ¼ä¸ô
-	int pixHeight = 5; 								// ÑªÌõ¸ß¶È
+	int margin = 2; 								//è¡€æ¡å’Œäººç‰©ä¹‹é—´çš„é—´éš”
+	int pixHeight = 5; 								//è¡€æ¡é«˜åº¦
 	int titleWidth = 32;
 	TextureRegion pix;
 
-	private boolean isSelected;						// ±»Ñ¡ÖĞµÈ´ı²Ù×÷£¿
+	private boolean isSelected;						//è¢«é€‰ä¸­ç­‰å¾…æ“ä½œï¼Ÿ
 	/**
-	 * ½ÇÉ«³õÊ¼»¯
-	 * @param t		±íÊ¾µ±Ç°½ÇÉ«µÄÀàĞÍ
-	 * @param index	
+	 * è§’è‰²åˆå§‹åŒ–
+	 * @param t		è¡¨ç¤ºå½“å‰è§’è‰²çš„ç±»å‹
+	 * @param name	è¯¥è§’è‰²çš„åå­—
 	 */
 	public Role(Type t,String name) {
 		// TODO Auto-generated constructor stub
@@ -64,7 +64,10 @@ public class Role extends Actor {
 		set_listener();
 	}
 
-	// ¸ù¾İÀàĞÍ»ñµÃ×ÊÔ´
+	/**
+	 * æ ¹æ®ç±»å‹è·å¾—èµ„æº 
+	 * @param type
+	 */
 	private void set_actor_base(Type type ) {
 		this.type = type;
 		int actor_type = type == Type.HERO ? 2 : 5;
@@ -82,18 +85,21 @@ public class Role extends Actor {
 	private void show_life_display() {
 		pix = null;
 		Pixmap pixmap;
-		pixmap = new Pixmap(64, 8, Format.RGBA8888); // Éú³ÉÒ»ÕÅ64*8µÄÍ¼Æ¬
-		pixmap.setColor(Color.BLACK); // ÉèÖÃÑÕÉ«ÎªºÚÉ«
+		pixmap = new Pixmap(64, 8, Format.RGBA8888); 		//ç”Ÿæˆä¸€å¼ 64*8çš„å›¾ç‰‡
+		pixmap.setColor(Color.BLACK); 						//è®¾ç½®é¢œè‰²ä¸ºé»‘è‰²ã€‚
 		pixmap.drawRectangle(0, 0, titleWidth, pixHeight);
-		pixmap.setColor(Color.RED); // ÉèÖÃÑÕÉ«ÎªºìÉ«
+		pixmap.setColor(Color.RED); 						//è®¾ç½®ä¸ºé»‘è‰²
 		pixmap.fillRectangle(0, 1, titleWidth * currentHp / maxHp,
-				pixHeight - 2); // »æÖÆÑªÌõ
-		Texture pixmaptex = new Texture(pixmap); // Éú³ÉÍ¼Æ¬
-		pix = new TextureRegion(pixmaptex, titleWidth, pixHeight); // ÇĞ¸îÍ¼Æ¬
+				pixHeight - 2); 
+		Texture pixmaptex = new Texture(pixmap); 
+		pix = new TextureRegion(pixmaptex, titleWidth, pixHeight); 
 		pixmap.dispose();
 	}
 
-	// È¡µÃ½ÇÉ«³õÊ¼×´Ì¬ÊôĞÔ
+	/**
+	 * å–å¾—è§’è‰²åˆå§‹çŠ¶æ€å±æ€§
+	 * @param type	è§’è‰²ç±»å‹
+	 */
 	private void get_values(Type type) {
 		currentHp = 100;
 		maxHp = 100;
@@ -116,10 +122,13 @@ public class Role extends Actor {
 			batch.draw(effect_current_frame, getX(), getY());
 		}
 		if (isSelected)
-			batch.draw(pix, this.getX(), this.getY() + this.margin + 32); // »æÖÆ
+			batch.draw(pix, this.getX(), this.getY() + this.margin + 32); // ï¿½ï¿½ï¿½ï¿½
 	}
 
-	// ½ÇÉ«¹¥»÷,Ä¿Ç°npcÖ»ÓĞÆÕÍ¨¹¥»÷
+	/**
+	 * è§’è‰²æ”»å‡»ï¼Œç›®å‰npcåªæœ‰æ™®é€šæ”»å‡»
+	 * @param enemy	æ”»å‡»åŠ¨ä½œçš„è§’è‰²
+	 */
 	public void hero_attack_other(Role enemy) {
 		if(enemy==null){
 			return;
@@ -132,7 +141,7 @@ public class Role extends Actor {
 		}
 	}
 
-	// ±»¹¥»÷ÀàĞÍ0-3
+	// è¢«æ”»å‡»ç±»å‹0-3
 	public void hero_isAttacked(int attack_type, int damage_value) {
 		get_effect_state(attack_type);
 		currentHp = currentHp - damage_value >= 0 ? currentHp - damage_value
@@ -157,7 +166,7 @@ public class Role extends Actor {
 		effect_time = 0;
 	}
 
-	// ¸ù¾İµĞÈË±»¹¥»÷±ê¼ÇÉèÖÃ¹¥»÷ÀàĞÍ 0-->ÆÕÍ¨ 1-->1 2-->2 ;
+	// æ ¹æ®æ•Œäººè¢«æ”»å‡»æ ‡è®°è®¾ç½®æ”»å‡»ç±»å‹ 0-->æ™®é€š 1-->1 2-->2 ;
 	private void set_attack_type(int enemy_attack_num) {
 		switch (enemy_attack_num) {
 		case 0:
@@ -177,7 +186,7 @@ public class Role extends Actor {
 		set_ani_from_state(state);
 	}
 
-	// ¸ù¾İ½ÇÉ«×´Ì¬È¡µÃ½ÇÉ«¶¯»­
+	// æ ¹æ®è§’è‰²çŠ¶æ€å–å¾—è§’è‰²åŠ¨ç”»
 	public void set_ani_from_state(STATE s){
 		loop_flag = false;
 		state=s;
@@ -227,8 +236,6 @@ public class Role extends Actor {
 				// TODO Auto-generated method stub
 				super.touchUp(event, x, y, pointer, button);
 			}
-		
-
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {

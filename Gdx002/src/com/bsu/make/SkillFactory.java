@@ -12,5 +12,5 @@ public class SkillFactory {
 			instance = new SkillFactory();
 		return instance;
 	}
-	private HashMap<String,Skill> store = new HashMap<String,Skill>();			//´æ´¢ËùÓĞµÄ¼¼ÄÜÀà
+	private HashMap<String,Skill> store = new HashMap<String,Skill>();			//ä¿å­˜æ‰€æœ‰çš„æŠ€èƒ½å¯¹è±¡
 }

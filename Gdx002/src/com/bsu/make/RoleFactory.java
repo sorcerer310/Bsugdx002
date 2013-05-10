@@ -3,7 +3,7 @@ package com.bsu.make;
 import com.bsu.obj.Role;
 
 /**
- * ½ÇÉ«¹¤³§£¬ÓÃÓÚÉú³É¼º·½Ó¢ĞÛ»òµĞÈËNPC
+ * ç”¨æ¥ç”Ÿæˆè§’è‰²ï¼Œç°åœ¨åªæœ‰è‹±é›„å’ŒNPCè§’è‰²
  * @author fengchong
  *
  */
@@ -16,19 +16,19 @@ public class RoleFactory {
 		return instance;
 	}
 	/**
-	 * »ñµÃÒ»¸öÓ¢ĞÛÀàĞÍµÄRole,¿ÉÒÔÔÚº¯ÊıÖĞ¶ÔHero½øĞĞÒ»Ğ©³õÊ¼»¯¹¤×÷
-	 * @param n	Ó¢ĞÛµÄÃû³Æ
-	 * @return	·µ»ØÓ¢ĞÛ¶ÔÏó
+	 * è·å¾—ä¸€ä¸ªè‹±é›„ç±»å‹çš„è§’è‰²
+	 * @param n	æ”¹è‹±é›„çš„åå­—
+	 * @return	è¿”å›è‹±é›„ç±»å‹çš„è§’è‰²å¯¹è±¡
 	 */
 	public Role getHeroRole(String n){
 		Role r = new Role(Role.Type.HERO,n);
-		//×öÒ»Ğ©Ó¢ĞÛ³õÊ¼»¯µÄ¹¤×÷
+		//åˆå§‹åŒ–è‹±é›„ç±»å‹è§’è‰²è¦åšçš„äº‹å†™åœ¨è¿™é‡Œã€‚
 		return r;
 	}
 	
 	public Role getEnemyRole(String n){
 		Role r = new Role(Role.Type.ENEMY,n);
-		//×öÒ»Ğ©µĞÈË³õÊ¼»¯µÄ¹¤×÷
+		//åˆå§‹åŒ–æ•Œäººç±»å‹è§’è‰²è¦åšçš„äº‹å†™åœ¨è¿™é‡Œ
 		
 		return r;
 	}

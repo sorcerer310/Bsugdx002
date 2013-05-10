@@ -33,10 +33,10 @@ public class HeadScreen extends CubocScreen implements Observer{
 	@Override
 	public void show() {
 			//此处的rect尺寸一定要转成int型，否则图像不能正确显示
-			intro = new TextureRegion(logo,(int)rect.x,(int)rect.y,(int)rect.width,(int)rect.height);
-			batch = new SpriteBatch();
-			batch.getProjectionMatrix().setToOrtho2D(rect.x, rect.y, rect.width, rect.height);
-			sound.play();
+		intro = new TextureRegion(logo,(int)rect.x,(int)rect.y,(int)rect.width,(int)rect.height);
+		batch = new SpriteBatch();
+		batch.getProjectionMatrix().setToOrtho2D(rect.x, rect.y, rect.width, rect.height);
+		sound.play();
 	}
 
 	@Override

@@ -15,7 +15,6 @@ public class BsuGame extends Game {
 	public void create() {
 
 		Rectangle rect = new Rectangle(0,0,Configure.rect_width,Configure.rect_height);
-		//定义第一个界面
 		HeadScreen hs_logo1 = new HeadScreen(this,Configure.logo_0_texture_string,Configure.logo_0_sound_string,rect);
 		HeadScreen hs_logo2 = new HeadScreen(this,Configure.logo_1_texture_string,Configure.logo_1_sound_string,rect){
 			@Override

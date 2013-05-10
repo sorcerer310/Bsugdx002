@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.ButtonFactory;
+import com.bsu.make.RoleFactory;
 import com.bsu.obj.Commander;
 import com.bsu.obj.GameMap;
 import com.bsu.obj.MapBox;
@@ -38,7 +39,9 @@ public class GameScreen extends CubocScreen implements Observer {
 	Stage stage;
 	GameMap map;
 	Role hero;
-	Role enemy;
+	Role enemy1;
+	Role enemy2;
+	Role enemy3;
 	Commander commander;
 	TextButton bt_endround;
 	TextButton bt_up;
@@ -57,7 +60,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		actor_init();
 		stage.addActor(mb);
 		stage.addActor(hero);
-		stage.addActor(enemy);
+		stage.addActor(enemy1);
 		stage.addActor(bt_endround);
 		stage.addActor(bt_up);
 		stage.addActor(bt_down);
@@ -72,20 +75,20 @@ public class GameScreen extends CubocScreen implements Observer {
 		map = new GameMap(0);
 		mb = new MapBox();
 		new HeroEffectClass();
-		hero = new Role(Type.HERO, "hero1");
-		enemy = new Role(Type.ENEMY, "hero2");
+		hero = RoleFactory.getInstance().getHeroRole("hero1");
+		enemy1 = RoleFactory.getInstance().getEnemyRole("enemy1");
+		enemy2 = RoleFactory.getInstance().getEnemyRole("enemy2");
+		enemy3 = RoleFactory.getInstance().getEnemyRole("enemy3");
 		setBornPosition(GameMap.map, hero, "h2");
-		setBornPosition(GameMap.map, enemy, "n2");
-		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,
-				50);
+		setBornPosition(GameMap.map, enemy1, "n2");
+		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,50);
 		bt_up = ButtonFactory.getInstance().getOneTextButton("up--", 150, 80);
 		bt_down = ButtonFactory.getInstance().getOneTextButton("down", 150, 10);
 		bt_left = ButtonFactory.getInstance().getOneTextButton("left", 100, 50);
-		bt_attack = ButtonFactory.getInstance().getOneTextButton("attack", 150,
-				50);
+		bt_attack = ButtonFactory.getInstance().getOneTextButton("attack", 150,50);
 	}
 
-	// ÉèÖÃ½ÇÉ«³öÉúµØ
+	// ï¿½ï¿½ï¿½Ã½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½
 	private void setBornPosition(TiledMap map, Role hero, String s) {
 		for (TiledObjectGroup group : map.objectGroups) {
 			for (TiledObject object : group.objects) {
@@ -101,7 +104,7 @@ public class GameScreen extends CubocScreen implements Observer {
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		GameMap.map_render.render(map.cam);
-		mb.set_hero_pass_box(hero,enemy);
+		mb.set_hero_pass_box(hero,enemy1);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 
@@ -151,10 +154,10 @@ public class GameScreen extends CubocScreen implements Observer {
 		bt_attack.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				hero.hero_attack_other(enemy);
+				hero.hero_attack_other(enemy1);
 			}
 		});
-
+		final Role r = hero;
 		bt_endround.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -164,35 +167,19 @@ public class GameScreen extends CubocScreen implements Observer {
 		bt_left.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Array<Action> a = new Array<Action>();
-				MoveByAction action = Actions.action(MoveByAction.class);
-				action.setAmount(-Configure.map_box_value, 0);
-				action.setDuration(1);
-				a.add(action);
-				commander.moveAction(a);
+				commander.leftAction(r);
 			}
 		});
 		bt_down.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Array<Action> a = new Array<Action>();
-				MoveByAction action = Actions.action(MoveByAction.class);
-				action.setAmount(0, -Configure.map_box_value);
-				action.setDuration(1);
-				a.add(action);
-				commander.moveAction(a);
+				commander.downAction(r);
 			}
 		});
 		bt_up.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Array<Action> a = new Array<Action>();
-				MoveByAction action = Actions.action(MoveByAction.class);
-				action.setAmount(0, Configure.map_box_value);
-				action.setDuration(1);
-
-				a.add(action);
-				commander.moveAction(a);
+				commander.upAction(r);
 			}
 		});
 		stage.addListener(new ClickListener() {
