@@ -24,7 +24,6 @@ public class HeroAnimationClass {
 					region2.flip(true, false);
 				}
 			}
-			
 		}
 	}
 	/**
