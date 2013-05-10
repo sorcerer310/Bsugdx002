@@ -14,7 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role.Type;
 import com.bsu.tools.Configure;
-
+/**
+ * 地图上所有带属性的块
+ * @author fengchong
+ *
+ */
 public class MapBox extends Actor {
 
 	private TextureRegion map_pass;						// 人物移动显示的图像
