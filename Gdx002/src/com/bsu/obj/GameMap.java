@@ -25,21 +25,26 @@ public class GameMap {
 	public static TileMapRenderer map_render;
 	public OrthographicCamera cam;  
 	private Vector2 maxCamPosition = new Vector2(0, 0);  
-  
+  /**
+   * 
+   * @param level 关卡索引，根据索引加载不同地图
+   */
 	public GameMap(int level) {
 		// TODO Auto-generated constructor stub
 		get_map(level);
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, Configure.rect_width, Configure.rect_height);
 	}
-	
+	/**
+	 * 
+	 * @param level 关卡索引，此方法不使用packfield
+	 */
 	public void get_map(int level){
 		FileHandle mapHandle = Gdx.files.internal("data/map/"+Configure.game_map_path_string[level]+".tmx");
 		map = TiledLoader.createMap(mapHandle);
 		FileHandle packages=Gdx.files.internal("data/map");   
         atlas = new CustomerTiledAlisa(map, packages); 
 		map_render = new TileMapRenderer(map, atlas, 10, 10);
-		//maxCamPosition.set(map_render.getMapWidthUnits(), map_render .getMapHeightUnits());
 	}
 
 

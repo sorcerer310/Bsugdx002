@@ -5,7 +5,11 @@ public class MapBoxValue {
 	int coll;
 
 	int raw;
-
+	/**
+	 * 
+	 * @param coll 所在格子横列
+	 * @param raw 所在格子纵列
+	 */
 	public MapBoxValue(int coll, int raw) {
 		// TODO Auto-generated constructor stub
 		this.coll = coll;

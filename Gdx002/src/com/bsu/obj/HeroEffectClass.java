@@ -14,6 +14,9 @@ public class HeroEffectClass {
 	private static Animation ani_effect_2;
 	private static Animation ani_effect_3;
 
+	/**
+	 * 角色攻击动作类型攻击目标后的特效效果类
+	 */
 	public HeroEffectClass() {
 		// TODO Auto-generated constructor stub
 		init_effect_base();

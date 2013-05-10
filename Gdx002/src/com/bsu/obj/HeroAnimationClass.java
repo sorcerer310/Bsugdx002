@@ -11,7 +11,9 @@ public class HeroAnimationClass {
 	private static TextureRegion[][] spilt;
 	private static TextureRegion[][] miror;
 
-
+	/**
+	 * 初始化Role图形Texture,并进行分割，翻转，正向的是角色方，翻转的是NPC方
+	 */
 	private static void init_animation_base() {
 		if (hero_texture == null) {
 			hero_texture = new Texture(Gdx.files.internal("data/hero/hero.png"));
@@ -25,6 +27,11 @@ public class HeroAnimationClass {
 			
 		}
 	}
+	/**
+	 * 根据Role取得空闲动画，
+	 * @param actor_type Role类型
+	 * @return
+	 */
 	public static Animation getAnimationIdle(int actor_type){
 		init_animation_base();
 		TextureRegion[] region_idle = new TextureRegion[1];
@@ -32,6 +39,11 @@ public class HeroAnimationClass {
 		Animation ani_idle = new Animation(0.1f, region_idle);
 		return ani_idle;
 	}
+	/**
+	 * 根据Role取得空闲动画，
+	 * @param actor_type Role类型
+	 * @return
+	 */
 	public static Animation getAnimationMove(int actor_type){
 		init_animation_base();
 		TextureRegion[] region_move = new TextureRegion[3];
@@ -41,6 +53,11 @@ public class HeroAnimationClass {
 		Animation ani_move= new Animation(0.1f, region_move);
 		return ani_move;
 	}
+	/**
+	 * 根据Role取得普通攻击动画，
+	 * @param actor_type Role类型
+	 * @return
+	 */
 	public static Animation getAnimationAttackN(int actor_type){
 		init_animation_base();
 		TextureRegion[] region_attack_normal = new TextureRegion[3];
@@ -50,6 +67,11 @@ public class HeroAnimationClass {
 		Animation ani_attack_n = new Animation(0.1f, region_attack_normal);
 		return ani_attack_n;
 	}
+	/**
+	 * 根据Role取得竖直攻击动画，
+	 * @param actor_type Role类型
+	 * @return
+	 */
 	public static Animation getAnimationAttackV(int actor_type){
 		init_animation_base();
 		TextureRegion[] region_attack_v = new TextureRegion[3];
@@ -59,6 +81,11 @@ public class HeroAnimationClass {
 		Animation ani_attack_v = new Animation(0.1f, region_attack_v);
 		return ani_attack_v;
 	}
+	/**
+	 * 根据Role取得攻击动画，水平攻击（）
+	 * @param actor_type Role类型
+	 * @return
+	 */
 	public static Animation getAnimationAttackH(int actor_type){
 		init_animation_base();
 		TextureRegion[]  region_attack_h = new TextureRegion[3];

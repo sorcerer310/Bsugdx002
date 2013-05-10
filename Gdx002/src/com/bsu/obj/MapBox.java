@@ -16,25 +16,27 @@ import com.bsu.tools.Configure;
 
 public class MapBox extends Actor {
 
-	private TextureRegion map_pass;
-	private TextureRegion map_block;
+	private TextureRegion map_pass;// 人物移动显示的图像
+	private TextureRegion map_block;// 地图上障碍图像
 
-	public static Array<MapBoxValue> pass_array;
-	public static Array<MapBoxValue> block_array;
-	public static Array<MapBoxValue> enemy_array;
-	public static Array<MapBoxValue> hero_array;
+	public static Array<MapBoxValue> pass_array;// 人物可以移动的格子数组
+	public static Array<MapBoxValue> block_array;// 地图上障碍格子数组
+	public static Array<MapBoxValue> enemy_array;// 地图上所有NPC所在位置的格子数组
+	public static Array<MapBoxValue> hero_array;// 角色人物所在格子数组
 
-	private int raw_max = 7;// �������ֵ
-	private int raw_min = 3;// ������Сֵ
-	private int coll_max = 14;// �ҷ����ֵ
-	private int coll_min = 0;// �󷽿����ƶ�����Сֵ
-	private static int extra_value = 10;// �ж�λ��ʱ�������ӵľ��룬Ϊ�˷�ֹ�ж�ʧ��
-
+	private int raw_max = 7;// 可以移动的最高格子数，应该定义在MAP TXM文件里，以下同
+	private int raw_min = 3;// 可以移动的最低格子数，靠近屏幕下方
+	private int coll_max = 14;// 可以移动的最远格子数，屏幕右侧
+	private int coll_min = 0;// 可以移动的最左格子数
+	private static int extra_value = 10;// 根据坐标判断人物所在格子的额外数值，以免出现格子错误，因为太接近了。
+	
 	public static enum BOX {
 		PASS, BLOCK
 	};
 
-	// �����ͼ��ʾЧ���Ƿ�����ƶ��������ƶ�
+	/**
+	 * 地图格子类，处理地图上所有格子，包括动态的Role所在格子，障碍格子等
+	 */
 	public MapBox() {
 		// TODO Auto-generated constructor stub
 		draw_map_box(BOX.PASS);
@@ -42,7 +44,11 @@ public class MapBox extends Actor {
 		pass_array = new Array<MapBoxValue>();
 		block_array = this.get_box_value(Configure.map_type_block, block_array);
 	}
-
+	/**
+	 * 根据角色及NPC判断，生成PASS数组，2层循环先处理纵向
+	 * @param hero 角色方当前被选定操作角色
+	 * @param enemy NPC角色，理论应该为NPC数组集合，目前为单体。
+	 */
 	public void set_hero_pass_box(Role hero, Role enemy) {
 		pass_array.clear();
 		enemy_array = this.get_role_block(enemy, enemy_array);
@@ -60,7 +66,11 @@ public class MapBox extends Actor {
 			}
 		}
 	}
-
+	/**
+	 * 根据行数列数判断是否可以移动，可以则加入到PASS数组，里面循环处理横向
+	 * @param index 格子行数
+	 * @param coll 格子列数
+	 */
 	private void set_h(int index, int coll) {
 
 		for (int i = 0; i < 5; i++) {
@@ -77,7 +87,10 @@ public class MapBox extends Actor {
 			}
 		}
 	}
-
+	/**
+	 * draw方法，一个是绘画人物选定可以移动的图像
+	 * 一个是绘画障碍物
+	 */
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
@@ -93,7 +106,10 @@ public class MapBox extends Actor {
 					* Configure.map_box_value);
 		}
 	}
-
+	/**
+	 * 绘画可以移动图像，障碍图像（障碍图像以后应该要使用图片）
+	 * @param box 所属类型，pass 或者 block
+	 */
 	private void draw_map_box(BOX box) {
 		TextureRegion temp_box = null;
 		Color temp_c;
@@ -105,16 +121,16 @@ public class MapBox extends Actor {
 		temp_c.a = 0.8f;
 		Pixmap pixmap;
 		pixmap = new Pixmap(Configure.map_box_value, Configure.map_box_value,
-				Format.RGBA8888); // ���һ��64*8��ͼƬ
-		pixmap.setColor(Color.BLACK); // ������ɫ
+				Format.RGBA8888); 
+		pixmap.setColor(Color.BLACK); 
 		pixmap.drawRectangle(0, 0, Configure.map_box_value,
 				Configure.map_box_value);
-		pixmap.setColor(temp_c); // ������ɫ
+		pixmap.setColor(temp_c); 
 		pixmap.fillRectangle(1, 1, Configure.map_box_value - 2,
 				Configure.map_box_value - 2);
-		Texture pixmaptex = new Texture(pixmap); // ���ͼƬ
+		Texture pixmaptex = new Texture(pixmap); 
 		temp_box = new TextureRegion(pixmaptex, Configure.map_box_value,
-				Configure.map_box_value); // �и�ͼƬ
+				Configure.map_box_value); 
 		if (box == BOX.PASS) {
 			map_pass = temp_box;
 		} else {
@@ -122,7 +138,12 @@ public class MapBox extends Actor {
 		}
 		pixmap.dispose();
 	}
-
+	/**取得地图图层中对象元素，并返回给目标数组
+	 * 
+	 * @param s 类型名称
+	 * @param mbv 目标数组
+	 * @return
+	 */
 	private Array<MapBoxValue> get_box_value(String s, Array<MapBoxValue> mbv) {
 		if (mbv == null) {
 			mbv = new Array<MapBoxValue>();
@@ -141,7 +162,13 @@ public class MapBox extends Actor {
 		}
 		return mbv;
 	}
-
+	
+	/**根据角色方位置，返回角色行数列数的格子数组
+	 * 
+	 * @param role 需要取得位置的角色
+	 * @param mbv 角色格子数组集合
+	 * @return
+	 */
 	private Array<MapBoxValue> get_role_block(Role role, Array<MapBoxValue> mbv) {
 		if (mbv == null) {
 			mbv = new Array<MapBoxValue>();
@@ -152,7 +179,12 @@ public class MapBox extends Actor {
 		mbv.add(new MapBoxValue(role_coll, role_raw));
 		return mbv;
 	}
-
+	/**
+	 * 传入行数，列数，与BLOCK数组，ENEMY数组进行，判断此格子是否可以移动，此方法仅使用角色方，需调用多次
+	 * @param raw
+	 * @param coll
+	 * @return
+	 */
 	private boolean blocked(int raw, int coll) {
 		for (int i = 0; i < block_array.size; i++) {
 			if (raw == block_array.get(i).getRaw()) {
@@ -170,7 +202,11 @@ public class MapBox extends Actor {
 		}
 		return false;
 	}
-
+	/**
+	 * 判断角色是否可以移动，其中根据类型需要与BLOCK数组，ENEMY数组，HERO数组来进行多次判断
+	 * @param r 需要移动的角色
+	 * @return
+	 */
 	public static boolean blocked(Role r) {
 		int raw = (int) ((r.getY() + extra_value) / Configure.map_box_value);
 		int coll = (int) ((r.getX() + extra_value) / Configure.map_box_value);

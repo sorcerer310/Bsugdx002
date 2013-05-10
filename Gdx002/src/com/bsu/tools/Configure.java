@@ -8,39 +8,38 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 public class Configure {
-	//black  pass false
-	//buff type best bad  addLife 10
-	public static int rect_width = 480;
-	public static int rect_height = 320;
-	
-	public static int map_box_value=32;
 
-	public static String logo_0_texture_string = "data/logo/BsuLogo480-320.png";
-	public static String logo_0_sound_string = "data/snd/chicken.wav";
+	public static int rect_width = 480;//å±å¹•å®½
+	public static int rect_height = 320;//å±å¹•é«˜
+	
+	public static int map_box_value=32;//åœ°å›¾åŸºæœ¬å®½é«˜
+
+	public static String logo_0_texture_string = "data/logo/BsuLogo480-320.png";//logoâ€”â€”0è·¯å¾„
+	public static String logo_0_sound_string = "data/snd/chicken.wav";//logo_0 å£°éŸ³
 
 	public static String logo_1_texture_string = "data/logo/intro.png";
 	public static String logo_1_sound_string = "data/snd/highjump.wav";
 
-	public static String screen_setting = "setting";
+	public static String screen_setting = "setting";//è®¾ç½®String
 	public static String screen_menu = "menu";
 	public static String screen_game = "game";
 
-	public static String[] game_map_path_string = { "map1", "marioMap" };
+	public static String[] game_map_path_string = { "map1", "marioMap" };//åœ°å›¾å…³å¡åç§°ï¼ˆè·¯å¾„ï¼‰
 
-	public static String object_layer_hero = "hero";
+	public static String object_layer_hero = "hero";//åœ°å›¾å…ƒç´ ä¸­å¯¹è±¡å±‚è§’è‰²æ–¹åç§°
 	public static String object_layer_enemy = "enemy";
 	public static String object_layer_mario = "mario";
 
-	static LabelStyle style;
-	static BitmapFont font;
+	static LabelStyle style;//æ–‡å­—æ ·å¼
+	static BitmapFont font;//font
 
-	public static Image[] isAttackedImgGroup;// ËùÓĞ±»¹¥»÷µÄĞ§¹ûÍ¼Æ¬
-	private static Texture isAttackedTexture;// ËùÓĞ±»¹¥»÷µÄÌùÍ¼¼¯ºÏ
+	public static Image[] isAttackedImgGroup;// Roleæ‰€æœ‰è¢«æ”»å‡»çš„ç‰¹æ•ˆå›¾åƒæ•°ç»„
+	private static Texture isAttackedTexture;// Roleè¢«æ”»å‡»ç‰¹æ•ˆå›¾å½¢
 	
-	public static String map_type_block="block";//µØÍ¼¶ÔÏó¿éÀàĞÍ
-	public static String map_type_buff="buff";
-	public static String map_value_hp_rarise="hpRaise";//µØÍ¼¶ÔÏó¿éÔö¼ÓÉúÃü
-	public static String map_value_hp_reduce="hpReduce";//µØÍ¼¶ÔÏó¿éÔö¼ÓÉúÃü
+	public static String map_type_block="block";//åœ°å›¾å¯¹è±¡å±‚ç±»å‹-->éšœç¢
+	public static String map_type_buff="buff";//åœ°å›¾å¯¹è±¡å±‚ç±»å‹-->BUFF
+	public static String map_value_hp_rarise="hpRaise";////åœ°å›¾å¯¹è±¡å±‚ç±»å‹å±æ€§-->å¢åŠ HP
+	public static String map_value_hp_reduce="hpReduce";//åœ°å›¾å¯¹è±¡å±‚ç±»å‹å±æ€§-->å‡å°‘HP
 	
 
 	
@@ -48,7 +47,10 @@ public class Configure {
 		idle, attack_normal, move,attack_v,attack_h
 	};
 	
-	//È¡µÃÉèÖÃºÃµÄ×ÖÌå
+	/**
+	 * å–å¾—FONT
+	 * @return
+	 */
 	private static BitmapFont get_font() {
 		if (font == null) {
 			font = new BitmapFont(Gdx.files.internal("data/menu/normal.fnt"),
@@ -57,7 +59,10 @@ public class Configure {
 		return font;
 	}
 	
-	//È¡µÃÎÄ±¾ÑùÊ½
+	/**
+	 * å–å¾—æ ·å¼
+	 * @return
+	 */
 	public static LabelStyle get_sytle() {
 		if (style == null) {
 			style = new LabelStyle(get_font(), get_font().getColor());
@@ -65,7 +70,10 @@ public class Configure {
 		return style;
 	}
 
-	// È¡µÃËùÓĞµÄ±»¹¥»÷Ğ§¹ûÍ¼Æ¬
+	/**
+	 * å–å¾—æ‰€æœ‰è¢«æ”»å‡»ç‰¹æ•ˆIMG
+	 * @return
+	 */
 	public static Image[] get_isAttackedImg() {
 		if (isAttackedImgGroup == null) {
 			isAttackedTexture = new Texture(
