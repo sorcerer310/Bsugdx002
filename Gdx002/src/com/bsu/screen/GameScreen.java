@@ -67,7 +67,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		stage.addActor(bt_down);
 		stage.addActor(bt_left);
 		stage.addActor(bt_right);
-		
+
 		commander = new Commander(stage);
 		stage.addActor(bt_attack);
 		this.addActorListener();
@@ -83,20 +83,26 @@ public class GameScreen extends CubocScreen implements Observer {
 		enemy3 = RoleFactory.getInstance().getEnemyRole("enemy3");
 		setBornPosition(GameMap.map, hero, "h2");
 		setBornPosition(GameMap.map, enemy1, "n2");
-		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,80);
+		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,
+				80);
 		bt_up = ButtonFactory.getInstance().getOneTextButton("up", 150, 80);
 		bt_down = ButtonFactory.getInstance().getOneTextButton("down", 150, 10);
 		bt_left = ButtonFactory.getInstance().getOneTextButton("left", 100, 50);
-		bt_right = ButtonFactory.getInstance().getOneTextButton("right", 200, 50);
-		bt_attack = ButtonFactory.getInstance().getOneTextButton("attack", 150,50);
+		bt_right = ButtonFactory.getInstance().getOneTextButton("right", 200,
+				50);
+		bt_attack = ButtonFactory.getInstance().getOneTextButton("attack", 150,
+				50);
 	}
-
 
 	/**
 	 * 设置出生点
-	 * @param map 地图对象
-	 * @param hero 要设置的角色对象
-	 * @param s 地图对象层出生点名称
+	 * 
+	 * @param map
+	 *            地图对象
+	 * @param hero
+	 *            要设置的角色对象
+	 * @param s
+	 *            地图对象层出生点名称
 	 */
 
 	private void setBornPosition(TiledMap map, Role hero, String s) {
@@ -104,7 +110,8 @@ public class GameScreen extends CubocScreen implements Observer {
 			for (TiledObject object : group.objects) {
 				if (s.equals(object.name)) {
 					hero.setPosition(object.x,
-							GameMap.map_render.getMapHeightUnits()-Configure.map_box_value - object.y);
+							GameMap.map_render.getMapHeightUnits()
+									- Configure.map_box_value - object.y);
 				}
 			}
 		}
@@ -114,7 +121,7 @@ public class GameScreen extends CubocScreen implements Observer {
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		GameMap.map_render.render(map.cam);
-		mb.set_hero_pass_box(hero,enemy1);
+		mb.set_hero_pass_box(hero, enemy1);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 
@@ -180,7 +187,7 @@ public class GameScreen extends CubocScreen implements Observer {
 				commander.leftAction(r);
 			}
 		});
-		bt_right.addListener(new ClickListener(){
+		bt_right.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				commander.rightAction(r);
@@ -211,26 +218,16 @@ public class GameScreen extends CubocScreen implements Observer {
 					}
 				}
 				for (int i = 0; i < MapBox.pass_array.size; i++) {
-					int mbc = (int)MapBox.pass_array.get(i).x;
+					int mbc = (int) MapBox.pass_array.get(i).x;
 					int mbr = (int) MapBox.pass_array.get(i).y;
 					if ((mx == mbc) && (my == mbr)) {
 						Array<Action> a = new Array<Action>();
-					
-						if (hero_y != my) {
-							MoveByAction action = Actions
-									.action(MoveByAction.class);
-							action.setAmount(0, (my - hero_y)
-									* Configure.map_box_value);
-							action.setDuration(Math.abs(my - hero_y));
-							a.add(action);
-						}
-						if (hero_x != mx) {
-							MoveByAction action = Actions
-									.action(MoveByAction.class);
-							action.setAmount((mx - hero_x)
-									* Configure.map_box_value, 0);
-							action.setDuration(Math.abs(mx - hero_x));
-							a.add(action);
+						if (hero_x > mbc) {
+							addAction(0, mx, hero_x, a);
+							addAction(1, my, hero_y, a);
+						} else {
+							addAction(1, my, hero_y, a);
+							addAction(0, mx, hero_x, a);
 						}
 						commander.moveAction(a);
 						break;
@@ -238,5 +235,25 @@ public class GameScreen extends CubocScreen implements Observer {
 				}
 			}
 		});
+	}
+
+	/**
+	 * 根据类型几2个位置讲MoveByAction加入到制定的ActionArray index 0或者1 0代表加入水平先走，1代表先走竖直
+	 */
+	private void addAction(int index, int first, int second, Array<Action> mba) {
+		if (first == second) {
+			return;
+		}
+		int ax=0;
+		int ay=0;
+		if(index==0){
+			ax=(first - second) * Configure.map_box_value;
+		}else{
+			ay=(first - second) * Configure.map_box_value;
+		}
+		MoveByAction action = Actions.action(MoveByAction.class);
+		action.setAmount(ax, ay);
+		action.setDuration(Math.abs(first - second));
+		mba.add(action);
 	}
 }
