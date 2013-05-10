@@ -1,9 +1,12 @@
 package com.bsu.obj;
-
+/**
+ * 将MapBoxValue替换为Vector2,暂时没用了
+ * @author fengchong
+ *
+ */
 public class MapBoxValue {
 
 	int coll;
-
 	int raw;
 	/**
 	 * 

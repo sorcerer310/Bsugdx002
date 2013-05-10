@@ -9,11 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 public class Configure {
 
-	public static int rect_width = 480;//屏幕宽
-	public static int rect_height = 320;//屏幕高
+	public static int rect_width = 480;						//屏幕宽
+	public static int rect_height = 320;					//屏幕高
 	
 	public static int map_box_value=32;
-	public static float duration = 0.5f;		//移动一格需要的时间				
+	public static float duration = 0.5f;					//移动一格需要的时间				
 	
 	public static String logo_0_texture_string = "data/logo/BsuLogo480-320.png";
 	public static String logo_0_sound_string = "data/snd/chicken.wav";
@@ -21,27 +21,27 @@ public class Configure {
 	public static String logo_1_texture_string = "data/logo/intro.png";
 	public static String logo_1_sound_string = "data/snd/highjump.wav";
 
-	public static String screen_setting = "setting";//设置String
+	public static String screen_setting = "setting";		//设置String
 	public static String screen_menu = "menu";
 	public static String screen_game = "game";
 
 	public static String[] game_map_path_string = { "map1", "marioMap" };//地图关卡名称（路径）
 
-	public static String object_layer_hero = "hero";//地图元素中对象层角色方名称
+	public static String object_layer_hero = "hero";		//地图元素中对象层角色方名称
 	public static String object_layer_enemy = "enemy";
 	public static String object_layer_mario = "mario";
 
-	static LabelStyle style;//文字样式
-	static BitmapFont font;//font
+	static LabelStyle style;								//文字样式
+	static BitmapFont font;									//font
 
-	public static Image[] isAttackedImgGroup;// Role所有被攻击的特效图像数组
-	private static Texture isAttackedTexture;// Role被攻击特效图形
+	public static Image[] isAttackedImgGroup;				// Role所有被攻击的特效图像数组
+	private static Texture isAttackedTexture;				// Role被攻击特效图形
 	
-	public static String map_type_block="block";//地图对象层类型-->障碍
-	public static String map_type_buff="buff";//地图对象层类型-->BUFF
-	public static String map_value_hp_rarise="hpRaise";////地图对象层类型属性-->增加HP
-	public static String map_value_hp_reduce="hpReduce";//地图对象层类型属性-->减少HP
-
+	public static String map_type_block="block";			//地图对象层类型-->障碍
+	public static String map_type_buff="buff";				//地图对象层类型-->BUFF
+	public static String map_type_hp_rarise="hpRaise";		//地图对象层类型属性-->增加HP
+	public static String map_type_hp_reduce="hpReduce";		//地图对象层类型属性-->减少HP
+	public static String map_type_box = "box";				//地图对象层类型-->宝箱
 	
 
 	

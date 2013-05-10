@@ -195,8 +195,8 @@ public class GameScreen extends CubocScreen implements Observer {
 					}
 				}
 				for (int i = 0; i < MapBox.pass_array.size; i++) {
-					int mbc = MapBox.pass_array.get(i).getColl();
-					int mbr = MapBox.pass_array.get(i).getRaw();
+					int mbc = (int)MapBox.pass_array.get(i).x;
+					int mbr = (int) MapBox.pass_array.get(i).y;
 					if ((mx == mbc) && (my == mbr)) {
 						Array<Action> a = new Array<Action>();
 					

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role.Type;
@@ -16,22 +17,25 @@ import com.bsu.tools.Configure;
 
 public class MapBox extends Actor {
 
-	private TextureRegion map_pass;// 人物移动显示的图像
-	private TextureRegion map_block;// 地图上障碍图像
+	private TextureRegion map_pass;						// 人物移动显示的图像
+	private TextureRegion map_block;					// 地图上障碍图像
 
-	public static Array<MapBoxValue> pass_array;// 人物可以移动的格子数组
-	public static Array<MapBoxValue> block_array;// 地图上障碍格子数组
-	public static Array<MapBoxValue> enemy_array;// 地图上所有NPC所在位置的格子数组
-	public static Array<MapBoxValue> hero_array;// 角色人物所在格子数组
+	public static Array<Vector2> pass_array = new Array<Vector2>();				// 人物可以移动的格子数组
+	public static Array<Vector2> block_array = new Array<Vector2>();			// 地图上障碍格子数组
+	public static Array<Vector2> box_array = new Array<Vector2>();				// 宝箱格子
+	public static Array<Vector2> hpRaise_array = new Array<Vector2>();			// 加血格子
+	public static Array<Vector2> enemy_array = new Array<Vector2>();			// 地图上所有NPC所在位置的格子数组
+	public static Array<Vector2> hero_array = new Array<Vector2>();				// 角色人物所在格子数组
+	
 
-	private int raw_max = 7;// 可以移动的最高格子数，应该定义在MAP TXM文件里，以下同
-	private int raw_min = 3;// 可以移动的最低格子数，靠近屏幕下方
-	private int coll_max = 14;// 可以移动的最远格子数，屏幕右侧
-	private int coll_min = 0;// 可以移动的最左格子数
-	private static int extra_value = 10;// 根据坐标判断人物所在格子的额外数值，以免出现格子错误，因为太接近了。
+	private int raw_max = 7;							// 可以移动的最高格子数，应该定义在MAP TXM文件里，以下同
+	private int raw_min = 3;							// 可以移动的最低格子数，靠近屏幕下方
+	private int coll_max = 14;							// 可以移动的最远格子数，屏幕右侧
+	private int coll_min = 0;							// 可以移动的最左格子数
+	private static int extra_value = 10;				// 根据坐标判断人物所在格子的额外数值，以免出现格子错误，因为太接近了。
 	
 	public static enum BOX {
-		PASS, BLOCK
+		PASS, BLOCK,EVENT
 	};
 
 	/**
@@ -41,8 +45,8 @@ public class MapBox extends Actor {
 		// TODO Auto-generated constructor stub
 		draw_map_box(BOX.PASS);
 		draw_map_box(BOX.BLOCK);
-		pass_array = new Array<MapBoxValue>();
-		block_array = this.get_box_value(Configure.map_type_block, block_array);
+		pass_array = new Array<Vector2>();
+		get_box_value();
 	}
 	/**
 	 * 根据角色及NPC判断，生成PASS数组，2层循环先处理纵向
@@ -80,7 +84,7 @@ public class MapBox extends Actor {
 				if (blocked(index, temp_index)) {
 					break;
 				}
-				pass_array.add(new MapBoxValue(temp_index, index));
+				pass_array.add(new Vector2(temp_index, index));
 				if (temp_index >= coll_max) {
 					break;
 				}
@@ -96,13 +100,13 @@ public class MapBox extends Actor {
 		// TODO Auto-generated method stub
 
 		for (int i = 0; i < pass_array.size; i++) {
-			batch.draw(map_pass, pass_array.get(i).getColl()
-					* Configure.map_box_value, (pass_array.get(i).getRaw())
+			batch.draw(map_pass, pass_array.get(i).x
+					* Configure.map_box_value, (pass_array.get(i).y)
 					* Configure.map_box_value); // ����
 		}
 		for (int i = 0; i < block_array.size; i++) {
-			batch.draw(map_block, block_array.get(i).getColl()
-					* Configure.map_box_value, (block_array.get(i).getRaw())
+			batch.draw(map_block, block_array.get(i).x
+					* Configure.map_box_value, (block_array.get(i).y)
 					* Configure.map_box_value);
 		}
 	}
@@ -138,29 +142,24 @@ public class MapBox extends Actor {
 		}
 		pixmap.dispose();
 	}
-	/**取得地图图层中对象元素，并返回给目标数组
-	 * 
-	 * @param s 类型名称
-	 * @param mbv 目标数组
+	/**
+	 * 取得地图图层中对象元素，并返回给目标数组
 	 * @return
 	 */
-	private Array<MapBoxValue> get_box_value(String s, Array<MapBoxValue> mbv) {
-		if (mbv == null) {
-			mbv = new Array<MapBoxValue>();
-		}
-		mbv.clear();
+	private void get_box_value(){ 
 		for (TiledObjectGroup group : GameMap.map.objectGroups) {
 			for (TiledObject object : group.objects) {
-				if (s.equals(object.type)) {
-					mbv.add(new MapBoxValue((object.x)
-							/ Configure.map_box_value,
-							(GameMap.map_render.getMapHeightUnits()
-									- Configure.map_box_value - object.y)
-									/ Configure.map_box_value));
-				}
+				int x = (object.x)/Configure.map_box_value;
+				int y = (GameMap.map_render.getMapHeightUnits()-Configure.map_box_value - object.y)/Configure.map_box_value;
+				Vector2 v = new Vector2(x,y);
+				if(object.type.equals(Configure.map_type_block))
+					block_array.add(v);
+				else if(object.type.equals(Configure.map_type_box))
+					box_array.add(v);
+				else if(object.type.equals(Configure.map_type_hp_rarise))
+					hpRaise_array.add(v);
 			}
 		}
-		return mbv;
 	}
 	
 	/**根据角色方位置，返回角色行数列数的格子数组
@@ -169,14 +168,14 @@ public class MapBox extends Actor {
 	 * @param mbv 角色格子数组集合
 	 * @return
 	 */
-	private Array<MapBoxValue> get_role_block(Role role, Array<MapBoxValue> mbv) {
+	private Array<Vector2> get_role_block(Role role, Array<Vector2> mbv) {
 		if (mbv == null) {
-			mbv = new Array<MapBoxValue>();
+			mbv = new Array<Vector2>();
 		}
 		mbv.clear();
 		int role_coll = (int) ((role.getX() + extra_value) / Configure.map_box_value);
 		int role_raw = (int) ((role.getY() + extra_value) / Configure.map_box_value);
-		mbv.add(new MapBoxValue(role_coll, role_raw));
+		mbv.add(new Vector2(role_coll, role_raw));
 		return mbv;
 	}
 	/**
@@ -187,15 +186,15 @@ public class MapBox extends Actor {
 	 */
 	private boolean blocked(int raw, int coll) {
 		for (int i = 0; i < block_array.size; i++) {
-			if (raw == block_array.get(i).getRaw()) {
-				if (coll >= block_array.get(i).getColl()) {
+			if (raw == block_array.get(i).y) {
+				if (coll >= block_array.get(i).x) {
 					return true;
 				}
 			}
 		}
 		for (int i = 0; i < enemy_array.size; i++) {
-			if (raw == enemy_array.get(i).getRaw()) {
-				if (coll >= enemy_array.get(i).getColl()) {
+			if (raw == enemy_array.get(i).y) {
+				if (coll >= enemy_array.get(i).x) {
 					return true;
 				}
 			}
@@ -213,31 +212,31 @@ public class MapBox extends Actor {
 
 		if (r.getType() == Type.HERO) {
 			for (int i = 0; i < block_array.size; i++) {
-				if (raw == block_array.get(i).getRaw()) {
-					if (coll >= block_array.get(i).getColl() - 1) {
+				if (raw == block_array.get(i).y) {
+					if (coll >= block_array.get(i).x - 1) {
 						return true;
 					}
 				}
 			}
 			for (int i = 0; i < enemy_array.size; i++) {
-				if (raw == enemy_array.get(i).getRaw()) {
-					if (coll >= enemy_array.get(i).getColl() - 1) {
+				if (raw == enemy_array.get(i).y) {
+					if (coll >= enemy_array.get(i).x - 1) {
 						return true;
 					}
 				}
 			}
 		} else {
 			for (int i = 0; i < block_array.size; i++) {
-				if (raw == block_array.get(i).getRaw()) {
-					if (coll <= block_array.get(i).getColl() + 1) {
+				if (raw == block_array.get(i).y) {
+					if (coll <= block_array.get(i).x + 1) {
 						return true;
 					}
 				}
 			}
 			for (int i = 0; i < hero_array.size; i++) {
-				if (raw == hero_array.get(i).getRaw()) {
+				if (raw == hero_array.get(i).y) {
 
-					if (coll <= hero_array.get(i).getColl() + 1) {
+					if (coll <= hero_array.get(i).x + 1) {
 
 						return true;
 					}
