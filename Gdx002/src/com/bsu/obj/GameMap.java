@@ -14,17 +14,18 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledLoader;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.bsu.tools.Configure;
 import com.bsu.tools.CustomerTiledAlisa;
 
 
 public class GameMap {
 	public static TiledMap map;
-	TileAtlas atlas;
+	private TileAtlas atlas;
 	public static TileMapRenderer map_render;
-	public OrthographicCamera cam;
-	Vector3 camDirection = new Vector3(1, 1, 0);   
-    Vector2 maxCamPosition = new Vector2(0, 0);  
+	public OrthographicCamera cam;  
+	private Vector2 maxCamPosition = new Vector2(0, 0);  
+  
 	public GameMap(int level) {
 		// TODO Auto-generated constructor stub
 		get_map(level);
@@ -37,7 +38,6 @@ public class GameMap {
 		map = TiledLoader.createMap(mapHandle);
 		FileHandle packages=Gdx.files.internal("data/map");   
         atlas = new CustomerTiledAlisa(map, packages); 
-		//atlas = new TileAtlas(map, Gdx.files.internal("data/map/"));
 		map_render = new TileMapRenderer(map, atlas, 10, 10);
 		maxCamPosition.set(map_render.getMapWidthUnits(), map_render .getMapHeightUnits());
 	}

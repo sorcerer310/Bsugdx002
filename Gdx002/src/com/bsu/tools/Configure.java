@@ -8,7 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 public class Configure {
-
+	//black  pass false
+	//buff type best bad  addLife 10
 	public static int rect_width = 480;
 	public static int rect_height = 320;
 	
@@ -35,6 +36,13 @@ public class Configure {
 
 	public static Image[] isAttackedImgGroup;// 所有被攻击的效果图片
 	private static Texture isAttackedTexture;// 所有被攻击的贴图集合
+	
+	public static String map_type_block="block";//地图对象块类型
+	public static String map_type_buff="buff";
+	public static String map_value_hp_rarise="hpRaise";//地图对象块增加生命
+	public static String map_value_hp_reduce="hpReduce";//地图对象块增加生命
+	
+
 	
 	public static enum STATE {
 		idle, attack_normal, move,attack_v,attack_h

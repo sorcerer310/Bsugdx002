@@ -38,36 +38,39 @@ public class Commander {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
 				if (r.getType() == Role.Type.HERO) {
-					r.set_ani_from_state(STATE.move);
+					if (!MapBox.blocked(r)) {
+						r.set_ani_from_state(STATE.move);
+						// 此种写法需要引入静态包import static
+						// com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+						r.addAction(sequence(moveBy(32, 0, 1), rotateBy(10),
+								run(new Runnable() {
+									@Override
+									public void run() {
 
-					// 此种写法需要引入静态包import static
-					// com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-					r.addAction(sequence(moveBy(32, 0, 1), rotateBy(10),
-							run(new Runnable() {
-								@Override
-								public void run() {
-
-								}
-							})));
-					// 另一种写法，此处不用引入静态包
-					// Action:{
-					// r.addAction(sequence(moveBy(32,0,1),rotateBy(10),run(new
-					// Runnable(){
-					// @Override
-					// public void run() {
-					// System.out.println("Action is completed");
-					// }
-					// })));
-					// }
+									}
+								})));
+						// 另一种写法，此处不用引入静态包
+						// Action:{
+						// r.addAction(sequence(moveBy(32,0,1),rotateBy(10),run(new
+						// Runnable(){
+						// @Override
+						// public void run() {
+						// System.out.println("Action is completed");
+						// }
+						// })));
+						// }
+					}
 				} else if (r.getType() == Role.Type.ENEMY) {
-					r.set_ani_from_state(STATE.move);
-					r.addAction(sequence(moveBy(-32, 0, 1), rotateBy(10),
-							run(new Runnable() {
-								@Override
-								public void run() {
-									r.set_ani_from_state(STATE.idle);
-								}
-							})));
+					if (!MapBox.blocked(r)) {
+						r.set_ani_from_state(STATE.move);
+						r.addAction(sequence(moveBy(-32, 0, 1), rotateBy(10),
+								run(new Runnable() {
+									@Override
+									public void run() {
+										r.set_ani_from_state(STATE.idle);
+									}
+								})));
+					}
 				}
 			}
 		}
@@ -76,7 +79,7 @@ public class Commander {
 	/**
 	 * 回合结束，命令所有的角色行动
 	 */
-	public void moveAction(final Array<MoveByAction> a) {
+	public void moveAction(final Array<Action> a) {
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
@@ -92,7 +95,7 @@ public class Commander {
 	}
 
 	private void act_action_group(final Role r, final int current_index,
-			final int max_length, final Array<MoveByAction> action) {
+			final int max_length, final Array<Action> action) {
 		r.addAction(sequence(action.get(current_index), rotateBy(10),
 				run(new Runnable() {
 					@Override
