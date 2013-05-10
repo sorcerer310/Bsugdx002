@@ -91,16 +91,14 @@ public class GameScreen extends CubocScreen implements Observer {
 		bt_attack = ButtonFactory.getInstance().getOneTextButton("attack", 150,50);
 	}
 
-<<<<<<< HEAD
-	// 设置出生点
-=======
+
 	/**
 	 * 设置出生点
 	 * @param map 地图对象
 	 * @param hero 要设置的角色对象
 	 * @param s 地图对象层出生点名称
 	 */
->>>>>>> 。。。
+
 	private void setBornPosition(TiledMap map, Role hero, String s) {
 		for (TiledObjectGroup group : map.objectGroups) {
 			for (TiledObject object : group.objects) {

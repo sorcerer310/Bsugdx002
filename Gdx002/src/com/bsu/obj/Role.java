@@ -120,16 +120,16 @@ public class Role extends Actor {
 		effect_time += Gdx.graphics.getDeltaTime();
 		this.setSize(32, 32);
 		draw_life_display();
-		current_frame = ani_current.getKeyFrame(state_time, loop_flag);
+		check_frame_finish();
+	
 		if (current_frame != null) {
 			batch.draw(current_frame, getX(), getY());
 		}
-		if (ani_effect != null) {
-			effect_current_frame = ani_effect.getKeyFrame(effect_time, false);
+	
 			if (effect_current_frame != null) {
 				batch.draw(effect_current_frame, getX(), getY());
 			}
-		}
+		
 		if (isSelected)
 			batch.draw(pix, this.getX(), this.getY() + this.margin + 32); // 画血条
 	}
@@ -265,7 +265,22 @@ public class Role extends Actor {
 			}
 		});
 	}
-
+	private void check_frame_finish() {
+		current_frame = ani_current.getKeyFrame(state_time, loop_flag);
+		if (ani_current.isAnimationFinished(state_time)) {
+			set_ani_from_state(STATE.idle);
+			set_selected(false);
+		}
+		if (ani_effect != null) {
+			effect_current_frame = ani_effect.getKeyFrame(effect_time, false);
+			if (ani_effect.isAnimationFinished(effect_time)) {
+				effect_current_frame = null;
+				ani_effect = null;
+				set_selected(false);
+			}
+			
+		}
+	}
 	public Type getType() {
 		return type;
 	}
