@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
 
 public class Role extends Actor {
@@ -283,5 +284,19 @@ public class Role extends Actor {
 	}
 	public Type getType() {
 		return type;
+	}
+	/**
+	 * 获得以32*32方格为单位的x坐标
+	 * @return
+	 */
+	public int getBoxX(){
+		return (int) ((this.getX() + Configure.extra_value) / Configure.map_box_value);
+	}
+	/**
+	 * 获得以32*32方格为单位的y坐标
+	 * @return
+	 */
+	public int getBoxY(){
+		return (int) ((this.getY() + Configure.extra_value) / Configure.map_box_value);
 	}
 }

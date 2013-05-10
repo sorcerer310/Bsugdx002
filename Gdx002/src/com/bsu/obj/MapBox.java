@@ -36,7 +36,6 @@ public class MapBox extends Actor {
 	private int raw_min = 3;							// 可以移动的最低格子数，靠近屏幕下方
 	private int coll_max = 14;							// 可以移动的最远格子数，屏幕右侧
 	private int coll_min = 0;							// 可以移动的最左格子数
-	private static int extra_value = 10;				// 根据坐标判断人物所在格子的额外数值，以免出现格子错误，因为太接近了。
 	
 	public static enum BOX {
 		PASS, BLOCK,EVENT
@@ -61,8 +60,8 @@ public class MapBox extends Actor {
 		pass_array.clear();
 		enemy_array = this.get_role_block(enemy, enemy_array);
 		hero_array = this.get_role_block(hero, hero_array);
-		int hero_coll = (int) ((hero.getX() + extra_value) / Configure.map_box_value);
-		int hero_raw = (int) ((hero.getY() + extra_value) / Configure.map_box_value);
+		int hero_coll = hero.getBoxX();
+		int hero_raw = hero.getBoxY();
 		for (int i = 0; i < 5; i++) {
 			if (i + hero_raw - 2 >= raw_min) {
 				int temp_index = MathUtils.clamp(i + hero_raw - 2, raw_min,
@@ -179,8 +178,8 @@ public class MapBox extends Actor {
 			mbv = new Array<Vector2>();
 		}
 		mbv.clear();
-		int role_coll = (int) ((role.getX() + extra_value) / Configure.map_box_value);
-		int role_raw = (int) ((role.getY() + extra_value) / Configure.map_box_value);
+		int role_coll = role.getBoxX();
+		int role_raw = role.getBoxY();
 		mbv.add(new Vector2(role_coll, role_raw));
 		return mbv;
 	}
@@ -213,8 +212,8 @@ public class MapBox extends Actor {
 	 * @return
 	 */
 	public static boolean blocked(Role r) {
-		int raw = (int) ((r.getY() + extra_value) / Configure.map_box_value);
-		int coll = (int) ((r.getX() + extra_value) / Configure.map_box_value);
+		int raw = r.getBoxY();
+		int coll = r.getBoxX();
 
 		if (r.getType() == Type.HERO) {
 			for (int i = 0; i < block_array.size; i++) {
