@@ -1,7 +1,6 @@
 package com.bsu.obj;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -9,14 +8,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.Array;
-import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
 
 public class Role extends Actor {
@@ -24,7 +18,7 @@ public class Role extends Actor {
 	private TextureRegion current_frame;
 	private float state_time;						//状态时间
 	private float effect_time;						//特效时间
-	public STATE state;
+	public STATE state;								//英雄的当前状态
 	public static enum Type {HERO,ENEMY};			//英雄还是NPC
 	private Type type = null;						//ָ指定当前角色是英雄还是 NPC
 
@@ -53,10 +47,11 @@ public class Role extends Actor {
 	/**
 	 * 角色初始化
 	 * @param t		表示当前角色的类型
-	 * @param name	该角色的名字
+	 * @param n		该角色的名字
 	 */
-	public Role(Type t,String name) {
+	public Role(Type t,String n) {
 		// TODO Auto-generated constructor stub
+		name = n;
 		type = t;
 		this.state_time = 0;
 		get_values(type);
@@ -186,7 +181,10 @@ public class Role extends Actor {
 		set_ani_from_state(state);
 	}
 
-	// 根据角色状态取得角色动画
+	/**
+	 * 根据角色状态取得角色动画
+	 * @param s	状态值
+	 */
 	public void set_ani_from_state(STATE s){
 		loop_flag = false;
 		state=s;
@@ -208,7 +206,12 @@ public class Role extends Actor {
 			ani_current = ani_attack_v;
 		}
 		state_time = 0;
-		
+	}
+	/**
+	 * 返回角色状态
+	 */
+	public STATE get_ani_from_state(){
+		return state;
 	}
 	
 	private void check_frame_finish() {

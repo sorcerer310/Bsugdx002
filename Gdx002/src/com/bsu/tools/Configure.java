@@ -12,10 +12,11 @@ public class Configure {
 	public static int rect_width = 480;//屏幕宽
 	public static int rect_height = 320;//屏幕高
 	
-	public static int map_box_value=32;//地图基本宽高
-
-	public static String logo_0_texture_string = "data/logo/BsuLogo480-320.png";//logo——0路径
-	public static String logo_0_sound_string = "data/snd/chicken.wav";//logo_0 声音
+	public static int map_box_value=32;
+	public static float duration = 0.5f;		//移动一格需要的时间				
+	
+	public static String logo_0_texture_string = "data/logo/BsuLogo480-320.png";
+	public static String logo_0_sound_string = "data/snd/chicken.wav";
 
 	public static String logo_1_texture_string = "data/logo/intro.png";
 	public static String logo_1_sound_string = "data/snd/highjump.wav";
@@ -40,6 +41,7 @@ public class Configure {
 	public static String map_type_buff="buff";//地图对象层类型-->BUFF
 	public static String map_value_hp_rarise="hpRaise";////地图对象层类型属性-->增加HP
 	public static String map_value_hp_reduce="hpReduce";//地图对象层类型属性-->减少HP
+
 	
 
 	

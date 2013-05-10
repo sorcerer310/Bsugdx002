@@ -43,7 +43,7 @@ public class Commander {
 						r.set_ani_from_state(STATE.move);
 						// 此种写法需要引入静态包import static
 						// com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-						r.addAction(sequence(moveBy(32, 0, 1), rotateBy(10),
+						r.addAction(sequence(moveBy(Configure.map_box_value, 0, Configure.duration), rotateBy(10),
 								run(new Runnable() {
 									@Override
 									public void run() {
@@ -64,7 +64,7 @@ public class Commander {
 				} else if (r.getType() == Role.Type.ENEMY) {
 					//if (!MapBox.blocked(r)) {
 						r.set_ani_from_state(STATE.move);
-						r.addAction(sequence(moveBy(-32, 0, 1), rotateBy(10),
+						r.addAction(sequence(moveBy(-Configure.map_box_value, 0, Configure.duration), rotateBy(10),
 								run(new Runnable() {
 									@Override
 									public void run() {
@@ -81,8 +81,10 @@ public class Commander {
 	 * @param r	要移动的角色，移动结束后将角色的状态转为站立状态
 	 */
 	public void leftAction(final Role r){
+		if(r.get_ani_from_state()!=STATE.idle)
+			return;
 		r.set_ani_from_state(STATE.move);
-		r.addAction(sequence(moveBy(Configure.map_box_value,0,1),
+		r.addAction(sequence(moveBy(-Configure.map_box_value,0,Configure.duration),
 				run(new Runnable(){
 					@Override
 					public void run(){
@@ -95,8 +97,10 @@ public class Commander {
 	 * @param r	要移动的角色，移动结束后将角色的状态转为站立状态 
 	 */
 	public void rightAction(final Role r){
+		if(r.get_ani_from_state()!=STATE.idle)
+			return;
 		r.set_ani_from_state(STATE.move);
-		r.addAction(sequence(moveBy(-Configure.map_box_value,0,1),
+		r.addAction(sequence(moveBy(Configure.map_box_value,0,Configure.duration),
 				run(new Runnable(){
 					@Override
 					public void run() {
@@ -109,8 +113,10 @@ public class Commander {
 	 * @param r	要移动的角色，移动结束后将角色的状态转为站立状态 
 	 */
 	public void upAction(final Role r){
+		if(r.get_ani_from_state()!=STATE.idle)
+			return;
 		r.set_ani_from_state(STATE.move);
-		r.addAction(sequence(moveBy(0,Configure.map_box_value,1),
+		r.addAction(sequence(moveBy(0,Configure.map_box_value,Configure.duration),
 				run(new Runnable(){
 					@Override
 					public void run() {
@@ -124,8 +130,10 @@ public class Commander {
 	 * @param r	要移动的角色，移动结束后将角色的状态转为站立状态 
 	 */
 	public void downAction(final Role r){
+		if(r.get_ani_from_state()!=STATE.idle)
+			return;
 		r.set_ani_from_state(STATE.move);
-		r.addAction(sequence(moveBy(0,-Configure.map_box_value,1),
+		r.addAction(sequence(moveBy(0,-Configure.map_box_value,Configure.duration),
 				run(new Runnable(){
 					@Override
 					public void run() {
