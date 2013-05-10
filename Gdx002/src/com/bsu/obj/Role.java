@@ -20,58 +20,62 @@ import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
 
 public class Role extends Actor {
-	private Texture texture;
+	private String name = "";						//记录这个角色的名字
 	private TextureRegion current_frame;
-	private float total_time;// 总时间
-	private float state_time;// 状态时间
-	private float effect_time;// 特效时间
+	private float state_time;						// 状态时间
+	private float effect_time;						// 特效时间
 	public STATE state;
-	public static enum Type {HERO,ENEMY};
-	private Type type = null;
+	public static enum Type {HERO,ENEMY};			//英雄还是NPC
+	private Type type = null;						//指定当前角色是英雄还是NPC
 
-	private Animation ani_current;// 当前动画
-	private Animation ani_idle;
-	private Animation ani_move;
-	private Animation ani_attack_n;// 基本攻击
-	private Animation ani_attack_v;// 横向攻击
-	private Animation ani_attack_h;// 纵向攻击
+	private Animation ani_current;					// 当前动画
+	private Animation ani_idle;						//站立动画
+	private Animation ani_move;						//移动动画
+	private Animation ani_attack_n;					// 基本攻击
+	private Animation ani_attack_v;					// 横向攻击
+	private Animation ani_attack_h;					// 纵向攻击
 	private boolean loop_flag;
 
-	int maxHp = 100; // 总血量
-	int currentHp = 30; // 当前血量
-	int attack_value;// 自身攻击力
-	int attacked_nums;// 目前被连击数值
-	int attack_type;//当前攻击类型
+	int maxHp = 100; 								// 总血量
+	int currentHp = 30; 							// 当前血量
+	int attack_value;								// 自身攻击力
+	int attacked_nums;								// 目前被连击数值
+	int attack_type;								//当前攻击类型
 	private TextureRegion effect_current_frame;
 	private Animation ani_effect;
 
-	int margin = 2; // 血条和人物之间的间隔
-	int pixHeight = 5; // 血条高度
+	int margin = 2; 								// 血条和人物之间的间隔
+	int pixHeight = 5; 								// 血条高度
 	int titleWidth = 32;
 	TextureRegion pix;
 
-	private boolean isSelected;// 被选中等待操作？
-	public Role(Type t, int index) {
+	private boolean isSelected;						// 被选中等待操作？
+	/**
+	 * 角色初始化
+	 * @param t		表示当前角色的类型
+	 * @param index	
+	 */
+	public Role(Type t,String name) {
 		// TODO Auto-generated constructor stub
 		type = t;
 		this.state_time = 0;
-		get_values(type, index);
-		set_actor_base(type, index);
+		get_values(type);
+		set_actor_base(type);
 		set_listener();
 	}
 
 	// 根据类型获得资源
-	private void set_actor_base(Type type, int index) {
+	private void set_actor_base(Type type ) {
 		this.type = type;
 		int actor_type = type == Type.HERO ? 2 : 5;
-		ani_idle = HeroAnimationClass.getAnimationIdle(actor_type, index);
-		ani_move = HeroAnimationClass.getAnimationMove(actor_type, index);
+		ani_idle = HeroAnimationClass.getAnimationIdle(actor_type);
+		ani_move = HeroAnimationClass.getAnimationMove(actor_type);
 		ani_attack_n = HeroAnimationClass
-				.getAnimationAttackN(actor_type, index);
+				.getAnimationAttackN(actor_type);
 		ani_attack_v = HeroAnimationClass
-				.getAnimationAttackV(actor_type, index);
+				.getAnimationAttackV(actor_type);
 		ani_attack_h = HeroAnimationClass
-				.getAnimationAttackH(actor_type, index);
+				.getAnimationAttackH(actor_type);
 		set_ani_from_state(STATE.idle);
 	}
 
@@ -90,7 +94,7 @@ public class Role extends Actor {
 	}
 
 	// 取得角色初始状态属性
-	private void get_values(Type type, int index) {
+	private void get_values(Type type) {
 		currentHp = 100;
 		maxHp = 100;
 		attack_value = 5;

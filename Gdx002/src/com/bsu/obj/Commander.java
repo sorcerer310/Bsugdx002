@@ -77,7 +77,7 @@ public class Commander {
 	}
 
 	/**
-	 * 回合结束，命令所有的角色行动
+	 * 向role下命令，命令其如何移动
 	 */
 	public void moveAction(final Array<Action> a) {
 		for (Actor act : lactor) {

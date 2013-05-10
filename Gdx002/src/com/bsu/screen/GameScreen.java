@@ -71,8 +71,8 @@ public class GameScreen extends CubocScreen implements Observer {
 		map = new GameMap(0);
 		mb = new MapBox();
 		new HeroEffectClass();
-		hero = new Role(Type.HERO, 2);
-		enemy = new Role(Type.ENEMY, 3);
+		hero = new Role(Type.HERO, "hero1");
+		enemy = new Role(Type.ENEMY, "hero2");
 		setBornPosition(GameMap.map, hero, "h2");
 		setBornPosition(GameMap.map, enemy, "n2");
 		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,
