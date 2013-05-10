@@ -149,6 +149,8 @@ public class MapBox extends Actor {
 	private void get_box_value(){ 
 		for (TiledObjectGroup group : GameMap.map.objectGroups) {
 			for (TiledObject object : group.objects) {
+				if(object.type==null)
+					continue;
 				int x = (object.x)/Configure.map_box_value;
 				int y = (GameMap.map_render.getMapHeightUnits()-Configure.map_box_value - object.y)/Configure.map_box_value;
 				Vector2 v = new Vector2(x,y);

@@ -25,12 +25,14 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
  */
 public class Commander {
 	private Stage stage = null;
-	private Array<Actor> lactor = null;
-	private Array<Actor> heros = null;
-	private Array<Actor> npcs = null;
+	private Array<Actor> lactor = new Array<Actor>();
+	private Array<Actor> heros = new Array<Actor>();
+	private Array<Actor> npcs = new Array<Actor>();
 	public Commander(Stage s) {
 		stage = s;
 		lactor = stage.getActors();
+		heros.clear();
+		npcs.clear();
 		//此处区分处英雄与敌人npc
 		for(Actor act:lactor){
 			if(act instanceof Role){
