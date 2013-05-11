@@ -201,7 +201,7 @@ public class Commander {
 			if(atkrs.size==0)
 				continue;
 			for(Role e:atkrs)
-				r.hero_attack_other(e,SkillFactory.getInstance().getSkillByName("atk"));
+				r.hero_attack_other(e,r.cskill);
 		}
 		//攻击范围内没有敌人的英雄向前前进一步
 		

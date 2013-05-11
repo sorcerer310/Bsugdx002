@@ -10,8 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillFactory;
 import com.bsu.tools.Configure;
@@ -23,6 +21,7 @@ public class Role extends Actor {
 	public float time_effect; 				// 特效时间
 	public STATE state; 					// 英雄的当前状态
 	public Skill cskill;					//英雄当前的攻击技能
+	public Array<Skill> array_skill = new Array<Skill>();	//英雄拥有的技能
 	
 	public static enum Type {
 		HERO, ENEMY
@@ -36,11 +35,11 @@ public class Role extends Actor {
 	private Animation ani_move; // 移动动画
 	private boolean loop_flag;
 
-	int maxHp = 100; 								// 总血量
-	int currentHp = 30; 							// 当前血量
-	int attack_value; 								// 自身攻击力
-	int attacked_nums; 								// 目前被连击数量ֵ
-	int attack_type; 								// 当前攻击类型
+	private int maxHp = 100; 								// 总血量
+	private int currentHp = 30; 							// 当前血量
+	private int attack_value; 								// 自身攻击力
+	private int attacked_nums; 								// 目前被连击数量ֵ
+	private int attack_type; 								// 当前攻击类型
 	private TextureRegion current_frame_effect;
 	private Animation ani_effect;
 
@@ -61,7 +60,8 @@ public class Role extends Actor {
 		name = n;
 		type = t;
 		time_state = 0;
-		cskill = SkillFactory.getInstance().getSkillByName("atk");
+		array_skill.add(SkillFactory.getInstance().getSkillByName("atk"));
+		cskill = array_skill.get(0);
 		get_values(type);
 		set_actor_base(type);
 	}
