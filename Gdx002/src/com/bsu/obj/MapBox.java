@@ -61,10 +61,10 @@ public class MapBox extends Actor {
 	 * @param enemy
 	 *            NPC角色，理论应该为NPC数组集合，目前为单体。
 	 */
-	public	static void set_hero_pass_box(Role hero) {
+	public	static void set_hero_pass_box(Role hero,Array<Actor> enemyArray,Array<Actor> heroArray) {
 		pass_array.clear();
-		// enemy_array = this.get_role_block(enemy, enemy_array);
-		// hero_array = this.get_role_block(hero, hero_array);
+		 enemy_array = get_role_block(enemyArray, enemy_array);
+		 hero_array = get_role_block(heroArray, hero_array);
 		int hero_coll = hero.getBoxX();
 		int hero_raw = hero.getBoxY();
 		for (int i = 0; i < 5; i++) {
@@ -191,7 +191,7 @@ public class MapBox extends Actor {
 	 *            角色格子数组集合
 	 * @return
 	 */
-	public Array<Vector2> get_role_block1(Array<Actor> role, Array<Vector2> mbv) {
+	public static Array<Vector2> get_role_block(Array<Actor> role, Array<Vector2> mbv) {
 		if (mbv == null) {
 			mbv = new Array<Vector2>();
 		}
@@ -205,7 +205,7 @@ public class MapBox extends Actor {
 		}
 		return mbv;
 	}
-
+/*
 	private Array<Vector2> get_role_block(Role role, Array<Vector2> mbv) {
 		if (mbv == null) {
 			mbv = new Array<Vector2>();
@@ -216,7 +216,7 @@ public class MapBox extends Actor {
 		mbv.add(new Vector2(role_coll, role_raw));
 		return mbv;
 	}
-
+/*
 	/**
 	 * 传入行数，列数，与BLOCK数组，ENEMY数组进行，判断此格子是否可以移动，此方法仅使用角色方，需调用多次
 	 * 

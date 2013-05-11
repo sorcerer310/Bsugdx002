@@ -26,8 +26,8 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 public class Commander {
 	private Stage stage = null;
 	private static Array<Actor> lactor = new Array<Actor>();
-	private Array<Actor> heros = new Array<Actor>();
-	private Array<Actor> npcs = new Array<Actor>();
+	private static Array<Actor> heros = new Array<Actor>();
+	private static Array<Actor> npcs = new Array<Actor>();
 
 	public Commander(Stage s) {
 		stage = s;
@@ -191,7 +191,7 @@ public class Commander {
 	}
 
 	/**
-	 * 向role下命令，命令其如何移动
+	 * 向role下命令，命令其如何移动,只针对hero方
 	 */
 	public void moveAction(final Array<Action> a) {
 		for (Actor act : lactor) {
@@ -201,8 +201,6 @@ public class Commander {
 					r.set_ani_from_state(STATE.move);
 					final int index = 0;
 					this.act_action_group(r, index, a.size, a);
-				} else if (r.getType() == Role.Type.ENEMY) {
-
 				}
 			}
 		}
@@ -265,7 +263,7 @@ public class Commander {
 				final Role r = (Role) act;
 				if (r.getType() == Type.HERO) {
 					if(r.get_selected()){
-						MapBox.set_hero_pass_box(r);
+						MapBox.set_hero_pass_box(r,npcs,heros);
 					}
 				}
 			}
