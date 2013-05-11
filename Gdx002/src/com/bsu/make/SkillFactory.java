@@ -24,11 +24,12 @@ public class SkillFactory {
 	 * 初始化所有技能，并保存到hashmap中，此处数据全部为配置数据，不能再改变
 	 */
 	private SkillFactory(){
-		Array<Vector2> r = new Array<Vector2>();
-		r.add(new Vector2(1,0));
-		r.add(new Vector2(2,0));
-		final Skill k = new Skill("攻击",Skill.Type.ATK,20.0f,HeroEffectClass.get_effect(0),HeroEffectClass.get_effect(1),"普通攻击，没什么稀奇的。",r);
-		store.put("atk", k);
+		//普通攻击
+		store.put("atk", 
+				new Skill("攻击",Skill.Type.ATK,20.0f,HeroEffectClass.get_effect(0),HeroEffectClass.get_effect(1),
+						"普通攻击，没什么稀奇的。",new Vector2[]{new Vector2(1,0),new Vector2(2,0)}
+				)
+		);
 	}
 	
 	/**
@@ -38,9 +39,5 @@ public class SkillFactory {
 	 */
 	public Skill getSkillByName(String k){
 		return store.get(k);
-//		Array<Vector2> r = new Array<Vector2>();
-//		r.add(new Vector2(1,0));
-//		r.add(new Vector2(2,0));
-//		return new Skill("攻击",Skill.Type.ATK,20.0f,HeroEffectClass.get_effect(0),HeroEffectClass.get_effect(1),"普通攻击，没什么稀奇的。",r);
 	}
 }

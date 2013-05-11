@@ -33,14 +33,14 @@ public class Skill {
 	 * @param i		技能描述信息
 	 * @param r		技能攻击范围
 	 */
-	public Skill(String n,Type t,float v,Animation as,Animation ao,String i,Array<Vector2> r){
+	public Skill(String n,Type t,float v,Animation as,Animation ao,String i,Vector2[] r){
 		name = n;
 		type = t;
 		val = v;
 		ani_self = as;
 		ani_object = ao;
 		info = i;
-		range = r;
+		range.addAll(r);
 	}
 
 	public Array<Vector2> getRange() {
