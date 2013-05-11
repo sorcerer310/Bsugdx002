@@ -121,7 +121,7 @@ public class GameScreen extends CubocScreen implements Observer {
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		GameMap.map_render.render(map.cam);
-		mb.set_hero_pass_box(hero, enemy1);
+		//mb.set_hero_pass_box(hero);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 

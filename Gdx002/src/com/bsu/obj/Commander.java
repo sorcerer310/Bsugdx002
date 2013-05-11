@@ -28,17 +28,18 @@ public class Commander {
 	private Array<Actor> lactor = new Array<Actor>();
 	private Array<Actor> heros = new Array<Actor>();
 	private Array<Actor> npcs = new Array<Actor>();
+
 	public Commander(Stage s) {
 		stage = s;
 		lactor = stage.getActors();
 		heros.clear();
 		npcs.clear();
-		//此处区分处英雄与敌人npc
-		for(Actor act:lactor){
-			if(act instanceof Role){
-				if(((Role) act).getType()==Type.HERO)
+		// 此处区分处英雄与敌人npc
+		for (Actor act : lactor) {
+			if (act instanceof Role) {
+				if (((Role) act).getType() == Type.HERO)
 					heros.add(act);
-				else if(((Role) act).getType()==Type.ENEMY)
+				else if (((Role) act).getType() == Type.ENEMY)
 					npcs.add(act);
 			}
 		}
@@ -48,126 +49,146 @@ public class Commander {
 	 * 回合结束，命令所有的角色行动
 	 */
 	public void roundEnd() {
-		mapEvent();								//地图事件
-		commandHeros();							//命令英雄
-		commandNpcs();							//命令NPC
-		
-//		for (Actor act : lactor) {
-//			if (act instanceof Role) {
-//				final Role r = (Role) act;
-//				if (r.getType() == Role.Type.HERO) {
-//					//if (!MapBox.blocked(r)) {
-//						r.set_ani_from_state(STATE.move);
-//						// 此种写法需要引入静态包import static
-//						// com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-//						r.addAction(sequence(moveBy(Configure.map_box_value, 0, Configure.duration), rotateBy(10),
-//								run(new Runnable() {
-//									@Override
-//									public void run() {
-//										r.set_ani_from_state(STATE.idle);
-//									}
-//								})));
-//					//}
-//				} else if (r.getType() == Role.Type.ENEMY) {
-//					//if (!MapBox.blocked(r)) {
-//						r.set_ani_from_state(STATE.move);
-//						r.addAction(sequence(moveBy(-Configure.map_box_value, 0, Configure.duration), rotateBy(10),
-//								run(new Runnable() {
-//									@Override
-//									public void run() {
-//										r.set_ani_from_state(STATE.idle);
-//									}
-//								})));
-//					//}
-//				}
-//			}
-//		}
+		mapEvent(); // 地图事件
+		commandHeros(); // 命令英雄
+		commandNpcs(); // 命令NPC
+
+		// for (Actor act : lactor) {
+		// if (act instanceof Role) {
+		// final Role r = (Role) act;
+		// if (r.getType() == Role.Type.HERO) {
+		// //if (!MapBox.blocked(r)) {
+		// r.set_ani_from_state(STATE.move);
+		// // 此种写法需要引入静态包import static
+		// // com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+		// r.addAction(sequence(moveBy(Configure.map_box_value, 0,
+		// Configure.duration), rotateBy(10),
+		// run(new Runnable() {
+		// @Override
+		// public void run() {
+		// r.set_ani_from_state(STATE.idle);
+		// }
+		// })));
+		// //}
+		// } else if (r.getType() == Role.Type.ENEMY) {
+		// //if (!MapBox.blocked(r)) {
+		// r.set_ani_from_state(STATE.move);
+		// r.addAction(sequence(moveBy(-Configure.map_box_value, 0,
+		// Configure.duration), rotateBy(10),
+		// run(new Runnable() {
+		// @Override
+		// public void run() {
+		// r.set_ani_from_state(STATE.idle);
+		// }
+		// })));
+		// //}
+		// }
+		// }
+		// }
 	}
+
 	/**
 	 * 指定角色向左移动
-	 * @param r	要移动的角色，移动结束后将角色的状态转为站立状态
+	 * 
+	 * @param r
+	 *            要移动的角色，移动结束后将角色的状态转为站立状态
 	 */
-	public void leftAction(final Role r){
-		if(r.get_ani_from_state()!=STATE.idle)
+	public void leftAction(final Role r) {
+		if (r.get_ani_from_state() != STATE.idle)
 			return;
 		r.set_ani_from_state(STATE.move);
-		r.addAction(sequence(moveBy(-Configure.map_box_value,0,Configure.duration),
-				run(new Runnable(){
+		r.addAction(sequence(
+				moveBy(-Configure.map_box_value, 0, Configure.duration),
+				run(new Runnable() {
 					@Override
-					public void run(){
+					public void run() {
 						r.set_ani_from_state(STATE.idle);
 					}
 				})));
 	}
+
 	/**
 	 * 指定角色向右移动
-	 * @param r	要移动的角色，移动结束后将角色的状态转为站立状态 
+	 * 
+	 * @param r
+	 *            要移动的角色，移动结束后将角色的状态转为站立状态 
 	 */
-	public void rightAction(final Role r){
-		if(r.get_ani_from_state()!=STATE.idle)
+	public void rightAction(final Role r) {
+		if (r.get_ani_from_state() != STATE.idle)
 			return;
 		r.set_ani_from_state(STATE.move);
-		r.addAction(sequence(moveBy(Configure.map_box_value,0,Configure.duration),
-				run(new Runnable(){
+		r.addAction(sequence(
+				moveBy(Configure.map_box_value, 0, Configure.duration),
+				run(new Runnable() {
 					@Override
 					public void run() {
 						r.set_ani_from_state(STATE.idle);
 					}
 				})));
 	}
+
 	/**
 	 * 指定角色向上移动
-	 * @param r	要移动的角色，移动结束后将角色的状态转为站立状态 
+	 * 
+	 * @param r
+	 *            要移动的角色，移动结束后将角色的状态转为站立状态 
 	 */
-	public void upAction(final Role r){
-		if(r.get_ani_from_state()!=STATE.idle)
+	public void upAction(final Role r) {
+		if (r.get_ani_from_state() != STATE.idle)
 			return;
 		r.set_ani_from_state(STATE.move);
-		r.addAction(sequence(moveBy(0,Configure.map_box_value,Configure.duration),
-				run(new Runnable(){
+		r.addAction(sequence(
+				moveBy(0, Configure.map_box_value, Configure.duration),
+				run(new Runnable() {
 					@Override
 					public void run() {
 						r.set_ani_from_state(STATE.idle);
 					}
 				})));
 	}
-	
+
 	/**
 	 * 指定角色向下移动
-	 * @param r	要移动的角色，移动结束后将角色的状态转为站立状态 
+	 * 
+	 * @param r
+	 *            要移动的角色，移动结束后将角色的状态转为站立状态 
 	 */
-	public void downAction(final Role r){
-		if(r.get_ani_from_state()!=STATE.idle)
+	public void downAction(final Role r) {
+		if (r.get_ani_from_state() != STATE.idle)
 			return;
 		r.set_ani_from_state(STATE.move);
-		r.addAction(sequence(moveBy(0,-Configure.map_box_value,Configure.duration),
-				run(new Runnable(){
+		r.addAction(sequence(
+				moveBy(0, -Configure.map_box_value, Configure.duration),
+				run(new Runnable() {
 					@Override
 					public void run() {
 						r.set_ani_from_state(STATE.idle);
 					}
 				})));
 	}
+
 	/**
-	 * 处理地图块事件，检查地图上特殊属性的块是否有Role在
-	 * 有则对Role对象进行处理
+	 * 处理地图块事件，检查地图上特殊属性的块是否有Role在 有则对Role对象进行处理
 	 */
-	private void mapEvent(){
-	
+	private void mapEvent() {
+
 	}
+
 	/**
 	 * 指挥英雄们进行行动
 	 */
-	private void commandHeros(){
+	private void commandHeros() {
 		checkAttackAction(Type.HERO);
+		
 	}
+
 	/**
 	 * 指挥敌人们进行行动
 	 */
-	private void commandNpcs(){
-		
+	private void commandNpcs() {
+		checkAttackAction(Type.ENEMY);
 	}
-	
+
 	/**
 	 * 向role下命令，命令其如何移动
 	 */
@@ -201,13 +222,16 @@ public class Commander {
 					}
 				})));
 	}
+
 	/**
 	 * 向Role下命令，命令其攻击
+	 * 
 	 * @param r
 	 */
-	private void attackAction(Role r){
+	private void attackAction(Role r) {
 		r.set_ani_from_state(STATE.attack_normal);
 	}
+
 	/**
 	 * 判断Role是否可以攻击
 	 */
@@ -215,9 +239,33 @@ public class Commander {
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
-				if(r.getType()==type){
-					if(r.canAttack()){
+				if (r.getType() == type) {
+					if (r.canAttack()) {
 						attackAction(r);
+					} else {
+						if (type == Type.HERO) {
+							rightAction(r);
+						} else {
+							leftAction(r);
+						}
+					}
+				}
+			}
+		}
+	}
+/**
+ * 用来检查角色是否被本轮选择移动，如果被选择，则计算可移动范围，地图MAPBOX是第一个加载的 所以索引是0
+ * 我写在这里的方法可以随意删除，仅为个人测试用
+ * @author 张永臣
+ */
+	private void checkHeroSelect() {
+		for (Actor act : lactor) {
+			if (act instanceof Role) {
+				final Role r = (Role) act;
+				if (r.getType() == Type.HERO) {
+					if(r.get_selected()){
+						MapBox mb=(MapBox) stage.getActors().get(0);
+						mb.set_hero_pass_box(r);
 					}
 				}
 			}
