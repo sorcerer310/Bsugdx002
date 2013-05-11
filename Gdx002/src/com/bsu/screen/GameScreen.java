@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -50,6 +51,7 @@ public class GameScreen extends CubocScreen implements Observer {
 	TextButton bt_right;
 	TextButton bt_attack;
 	MapBox mb;
+	public static boolean control_start = true;
 
 	public GameScreen(Game mxg) {
 		super(mxg);
@@ -69,6 +71,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		stage.addActor(bt_right);
 
 		commander = new Commander(stage);
+		addActorsListener(Commander.heros);
 		stage.addActor(bt_attack);
 		this.addActorListener();
 	}
@@ -121,7 +124,7 @@ public class GameScreen extends CubocScreen implements Observer {
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		GameMap.map_render.render(map.cam);
-		//mb.set_hero_pass_box(hero);
+		// mb.set_hero_pass_box(hero);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 
@@ -244,16 +247,46 @@ public class GameScreen extends CubocScreen implements Observer {
 		if (first == second) {
 			return;
 		}
-		int ax=0;
-		int ay=0;
-		if(index==0){
-			ax=(first - second) * Configure.map_box_value;
-		}else{
-			ay=(first - second) * Configure.map_box_value;
+		int ax = 0;
+		int ay = 0;
+		if (index == 0) {
+			ax = (first - second) * Configure.map_box_value;
+		} else {
+			ay = (first - second) * Configure.map_box_value;
 		}
 		MoveByAction action = Actions.action(MoveByAction.class);
 		action.setAmount(ax, ay);
-		action.setDuration(Math.abs((first - second)*Configure.duration));
+		action.setDuration(Math.abs((first - second) * Configure.duration));
 		mba.add(action);
+	}
+
+	/**
+	 * 监听Role
+	 * 
+	 * @param actor
+	 */
+	private void addActorsListener(Array<Actor> actor) {
+		for (int i = 0; i < actor.size; i++) {
+			final Role r = (Role) actor.get(i);
+			r.addListener(new InputListener() {
+				@Override
+				public void touchUp(InputEvent event, float x, float y,
+						int pointer, int button) {
+					if (control_start&&(!r.get_selected())) {
+						r.set_selected(true);
+						Commander.checkHeroSelect();
+					}
+					// TODO Auto-generated method stub
+					super.touchUp(event, x, y, pointer, button);
+				}
+
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y,
+						int pointer, int button) {
+					// TODO Auto-generated method stu
+					return true;
+				}
+			});
+		}
 	}
 }

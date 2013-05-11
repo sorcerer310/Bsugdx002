@@ -26,7 +26,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 public class Commander {
 	private Stage stage = null;
 	private static Array<Actor> lactor = new Array<Actor>();
-	private static Array<Actor> heros = new Array<Actor>();
+	public static Array<Actor> heros = new Array<Actor>();
 	private static Array<Actor> npcs = new Array<Actor>();
 
 	public Commander(Stage s) {

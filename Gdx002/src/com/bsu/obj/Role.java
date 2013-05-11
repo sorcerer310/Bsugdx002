@@ -67,7 +67,6 @@ public class Role extends Actor {
 		this.state_time = 0;
 		get_values(type);
 		set_actor_base(type);
-		set_listener();
 	}
 
 	/**
@@ -248,26 +247,6 @@ public class Role extends Actor {
 	 */
 	public STATE get_ani_from_state() {
 		return state;
-	}
-
-	private void set_listener() {
-		addListener(new InputListener() {
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				// TODO Auto-generated method stub
-				super.touchUp(event, x, y, pointer, button);
-			}
-
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				// TODO Auto-generated method stub
-				set_selected(true);
-				Commander.checkHeroSelect();
-				return true;
-			}
-		});
 	}
 
 	private void check_frame_finish() {
