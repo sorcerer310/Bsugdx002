@@ -25,7 +25,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
  */
 public class Commander {
 	private Stage stage = null;
-	private Array<Actor> lactor = new Array<Actor>();
+	private static Array<Actor> lactor = new Array<Actor>();
 	private Array<Actor> heros = new Array<Actor>();
 	private Array<Actor> npcs = new Array<Actor>();
 
@@ -49,6 +49,7 @@ public class Commander {
 	 * 回合结束，命令所有的角色行动
 	 */
 	public void roundEnd() {
+		resetHeroSelect();
 		mapEvent(); // 地图事件
 		commandHeros(); // 命令英雄
 		commandNpcs(); // 命令NPC
@@ -254,19 +255,32 @@ public class Commander {
 		}
 	}
 /**
- * 用来检查角色是否被本轮选择移动，如果被选择，则计算可移动范围，地图MAPBOX是第一个加载的 所以索引是0
+ * 用来检查角色是否被本轮选择移动，如果被选择，则计算可移动范围
  * 我写在这里的方法可以随意删除，仅为个人测试用
  * @author 张永臣
  */
-	private void checkHeroSelect() {
+	public static void checkHeroSelect() {
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
 				if (r.getType() == Type.HERO) {
 					if(r.get_selected()){
-						MapBox mb=(MapBox) stage.getActors().get(0);
-						mb.set_hero_pass_box(r);
+						MapBox.set_hero_pass_box(r);
 					}
+				}
+			}
+		}
+	}
+	/**
+	 * 每轮操作结束后，清空角色方可移动数组
+	 */
+	private static void resetHeroSelect(){
+		for (Actor act : lactor) {
+			if (act instanceof Role) {
+				final Role r = (Role) act;
+				if (r.getType() == Type.HERO) {
+					r.set_selected(false);
+					MapBox.pass_array.clear();
 				}
 			}
 		}

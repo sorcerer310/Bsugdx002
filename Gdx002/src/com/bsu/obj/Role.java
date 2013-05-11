@@ -264,6 +264,7 @@ public class Role extends Actor {
 					int pointer, int button) {
 				// TODO Auto-generated method stub
 				set_selected(true);
+				Commander.checkHeroSelect();
 				return true;
 			}
 		});

@@ -33,10 +33,10 @@ public class MapBox extends Actor {
 	public static Array<Vector2> enemy_array = new Array<Vector2>(); // 地图上所有NPC所在位置的格子数组
 	public static Array<Vector2> hero_array = new Array<Vector2>(); // 角色人物所在格子数组
 
-	private int raw_max = 7; // 可以移动的最高格子数，应该定义在MAP TXM文件里，以下同
-	private int raw_min = 3; // 可以移动的最低格子数，靠近屏幕下方
-	private int coll_max = 14; // 可以移动的最远格子数，屏幕右侧
-	private int coll_min = 0; // 可以移动的最左格子数
+	private static int raw_max = 7; // 可以移动的最高格子数，应该定义在MAP TXM文件里，以下同
+	private static int raw_min = 3; // 可以移动的最低格子数，靠近屏幕下方
+	private static int coll_max = 14; // 可以移动的最远格子数，屏幕右侧
+	private static int coll_min = 0; // 可以移动的最左格子数
 
 	public static enum BOX {
 		PASS, BLOCK, EVENT
@@ -61,7 +61,7 @@ public class MapBox extends Actor {
 	 * @param enemy
 	 *            NPC角色，理论应该为NPC数组集合，目前为单体。
 	 */
-	public void set_hero_pass_box(Role hero) {
+	public	static void set_hero_pass_box(Role hero) {
 		pass_array.clear();
 		// enemy_array = this.get_role_block(enemy, enemy_array);
 		// hero_array = this.get_role_block(hero, hero_array);
@@ -87,7 +87,7 @@ public class MapBox extends Actor {
 	 * @param coll
 	 *            格子列数
 	 */
-	private void set_h(int index, int coll) {
+	private static void set_h(int index, int coll) {
 
 		for (int i = 0; i < 5; i++) {
 			if (i + coll - 2 >= coll_min) {
@@ -224,7 +224,7 @@ public class MapBox extends Actor {
 	 * @param coll
 	 * @return
 	 */
-	private boolean blocked(int raw, int coll) {
+	private static boolean blocked(int raw, int coll) {
 		for (int i = 0; i < block_array.size; i++) {
 			if (raw == block_array.get(i).y) {
 				if (coll >= block_array.get(i).x) {
