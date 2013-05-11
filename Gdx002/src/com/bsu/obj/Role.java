@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.utils.Array;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
 
@@ -122,15 +124,15 @@ public class Role extends Actor {
 		this.setSize(32, 32);
 		draw_life_display();
 		check_frame_finish();
-	
+
 		if (current_frame != null) {
 			batch.draw(current_frame, getX(), getY());
 		}
-	
-			if (effect_current_frame != null) {
-				batch.draw(effect_current_frame, getX(), getY());
-			}
-		
+
+		if (effect_current_frame != null) {
+			batch.draw(effect_current_frame, getX(), getY());
+		}
+
 		if (isSelected)
 			batch.draw(pix, this.getX(), this.getY() + this.margin + 32); // 画血条
 	}
@@ -266,6 +268,7 @@ public class Role extends Actor {
 			}
 		});
 	}
+
 	private void check_frame_finish() {
 		current_frame = ani_current.getKeyFrame(state_time, loop_flag);
 		if (ani_current.isAnimationFinished(state_time)) {
@@ -279,24 +282,77 @@ public class Role extends Actor {
 				ani_effect = null;
 				set_selected(false);
 			}
-			
+
 		}
 	}
+
 	public Type getType() {
 		return type;
 	}
+
 	/**
 	 * 获得以32*32方格为单位的x坐标
+	 * 
 	 * @return
 	 */
-	public int getBoxX(){
+	public int getBoxX() {
 		return (int) ((this.getX() + Configure.extra_value) / Configure.map_box_value);
 	}
+
 	/**
 	 * 获得以32*32方格为单位的y坐标
+	 * 
 	 * @return
 	 */
-	public int getBoxY(){
+	public int getBoxY() {
 		return (int) ((this.getY() + Configure.extra_value) / Configure.map_box_value);
+	}
+
+	private int attack_distance = 1;// Role可以攻击的距离
+	private Array<Role> attacked_array = new Array<Role>();
+
+	/**
+	 * 判断角色攻击范围内是否存在可以攻击的目标
+	 * 
+	 * @return
+	 */
+	public boolean canAttack() {
+		attacked_array.clear();
+		if (type == Type.HERO) {
+			if (isTargetInDistance(MapBox.enemy_array, attack_distance)) {
+				System.out.println("hero_can_attack_block");
+			}
+			if (isTargetInDistance(MapBox.block_array, attack_distance)) {
+				System.out.println("hero_can_attack_enemy");
+			}
+		} else {
+			if (isTargetInDistance(MapBox.hero_array, -attack_distance)) {
+				System.out.println("enemy_can_attack");
+			}
+		}
+		return false;
+
+	}
+
+	/**
+	 * 根据攻击距离，与各个数组进行判断，返回是否可以对指定类型进行攻击
+	 * 
+	 * @param av
+	 *            指定类型，hero enemy block(考虑取消vector2数组，使用Role数组，方便取得Role对象)
+	 * @param num
+	 *            攻击距离；
+	 * @return
+	 */
+	private boolean isTargetInDistance(Array<Vector2> av, int num) {
+		for (int i = 0; i < av.size; i++) {
+			if (getBoxY() == av.get(i).y) {
+				if (Math.abs(getBoxX() - av.get(i).x)<=num) {
+					//attacked_array.add(value;)
+				}
+				return true;
+			}
+		}
+		return false;
+
 	}
 }

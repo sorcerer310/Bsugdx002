@@ -253,7 +253,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		}
 		MoveByAction action = Actions.action(MoveByAction.class);
 		action.setAmount(ax, ay);
-		action.setDuration(Math.abs(first - second));
+		action.setDuration(Math.abs((first - second)*Configure.duration));
 		mba.add(action);
 	}
 }

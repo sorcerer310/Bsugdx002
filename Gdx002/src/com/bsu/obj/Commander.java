@@ -153,13 +153,13 @@ public class Commander {
 	 * 有则对Role对象进行处理
 	 */
 	private void mapEvent(){
-		
+	
 	}
 	/**
 	 * 指挥英雄们进行行动
 	 */
 	private void commandHeros(){
-		
+		checkAttackAction(Type.HERO);
 	}
 	/**
 	 * 指挥敌人们进行行动
@@ -201,5 +201,26 @@ public class Commander {
 					}
 				})));
 	}
-
+	/**
+	 * 向Role下命令，命令其攻击
+	 * @param r
+	 */
+	private void attackAction(Role r){
+		r.set_ani_from_state(STATE.attack_normal);
+	}
+	/**
+	 * 判断Role是否可以攻击
+	 */
+	public void checkAttackAction(Type type) {
+		for (Actor act : lactor) {
+			if (act instanceof Role) {
+				final Role r = (Role) act;
+				if(r.getType()==type){
+					if(r.canAttack()){
+						attackAction(r);
+					}
+				}
+			}
+		}
+	}
 }
