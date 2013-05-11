@@ -1,5 +1,6 @@
 package com.bsu.obj;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.make.SkillFactory;
 import com.bsu.obj.Role.Type;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
@@ -25,22 +27,21 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
  */
 public class Commander {
 	private Stage stage = null;
-	private static Array<Actor> lactor = new Array<Actor>();
-	public static Array<Actor> heros = new Array<Actor>();
-	private static Array<Actor> npcs = new Array<Actor>();
-
+	private Array<Actor> lactor = null;
+	private Array<Role> heros = new Array<Role>();
+	private Array<Role> npcs = new Array<Role>();
 	public Commander(Stage s) {
 		stage = s;
 		lactor = stage.getActors();
 		heros.clear();
 		npcs.clear();
-		// 此处区分处英雄与敌人npc
-		for (Actor act : lactor) {
-			if (act instanceof Role) {
-				if (((Role) act).getType() == Type.HERO)
-					heros.add(act);
-				else if (((Role) act).getType() == Type.ENEMY)
-					npcs.add(act);
+		//此处区分处英雄与敌人npc
+		for(Actor act:lactor){
+			if(act instanceof Role){
+				if(((Role) act).getType()==Type.HERO)
+					heros.add((Role) act);
+				else if(((Role) act).getType()==Type.ENEMY)
+					npcs.add((Role) act);
 			}
 		}
 	}
@@ -171,25 +172,68 @@ public class Commander {
 	/**
 	 * 处理地图块事件，检查地图上特殊属性的块是否有Role在 有则对Role对象进行处理
 	 */
-	private void mapEvent() {
 
+	private void mapEvent(){
+		//从stage中获得mb
+		Array<Actor> acts = stage.getActors();
+		MapBox mb = null;
+		for(Actor act:acts){
+			if(act instanceof MapBox){
+				mb = (MapBox) act;
+				break;
+			}
+		}
+		if(mb==null)
+			return;
+		
+		//处理一些地图块事件
 	}
 
 	/**
 	 * 指挥英雄们进行行动
 	 */
-	private void commandHeros() {
-		checkAttackAction(Type.HERO);
+
+	private void commandHeros(){
+		//判断攻击范围内是否有敌人,有则攻击敌人
+		for(Role h:heros){
+			Role r = (Role)h;
+			Array<Vector2> vs = r.getCurrSkillRange();				//获得当前技能的攻击范围
+			Array<Role> atkrs = getRolsInSkillRange(vs,npcs);		//获得攻击范围内的作用目标
+			//如果坐标目标数量为0，进行下一循环，对下一英雄进行判断
+			if(atkrs.size==0)
+				continue;
+			for(Role e:atkrs)
+				r.hero_attack_other(e,SkillFactory.getInstance().getSkillByName("atk"));
+		}
+		//攻击范围内没有敌人的英雄向前前进一步
 		
 	}
 
 	/**
 	 * 指挥敌人们进行行动
 	 */
-	private void commandNpcs() {
-		checkAttackAction(Type.ENEMY);
+	private void commandNpcs(){
+		//判断攻击范围内是否有英雄，有则攻击英雄
+		
+		//攻击范围内没有英雄的敌人向前前进一步
+		
 	}
-
+	/**
+	 * 获得技能范围内是否有Role存在
+	 * @param v	技能范围
+	 * @return	返回符合类型的所有Role
+	 */
+	private Array<Role> getRolsInSkillRange(Array<Vector2> vs, Array<Role> rs){
+		Array<Role> retrs = new Array<Role>();
+		for(Vector2 v:vs){
+			for(Role r:rs){
+				if(v.x == r.getBoxX() && v.y == r.getBoxY())
+					retrs.add(r);
+			}
+		}
+		return retrs;
+	}
+	
 	/**
 	 * 向role下命令，命令其如何移动,只针对hero方
 	 */

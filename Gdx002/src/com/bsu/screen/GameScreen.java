@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.ButtonFactory;
 import com.bsu.make.RoleFactory;
+import com.bsu.make.SkillFactory;
 import com.bsu.obj.Commander;
 import com.bsu.obj.GameMap;
 import com.bsu.obj.MapBox;
@@ -174,7 +175,8 @@ public class GameScreen extends CubocScreen implements Observer {
 		bt_attack.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				hero.hero_attack_other(enemy1);
+				hero.hero_attack_other(enemy1,SkillFactory.getInstance().getSkillByName("atk"));
+				//hero.cskill = SkillFactory.getInstance().getSkillByName("");
 			}
 		});
 		final Role r = hero;

@@ -1,41 +1,54 @@
 package com.bsu.obj;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
+import com.badlogic.gdx.utils.Array;
+/**
+ * æŠ€èƒ½å¯¹è±¡
+ * @author fengchong
+ *
+ */
 public class Skill {
-	public static enum Type {ATK,HP};		//¼¼ÄÜÀàĞÍ£¬Ôİ¶¨¹¥»÷ºÍ¼ÓÑª¼¼ÄÜ
-	private Type type = Type.ATK;			//¼¼ÄÜÀàĞÍ±äÁ¿
-	private String name = "";				//¼¼ÄÜÃü
-	private float val = 0;					//¼¼ÄÜĞ§¹ûÖµ
-	private Animation ani_self = null;		//×ÔÉí¶¯»­
-	private Animation ani_object = null;	//ÊÍ·Å¶ÔÏó¶¯»­
-	private String info = "";				//¼¼ÄÜ½éÉÜĞÅÏ¢
+	public static enum Type {ATK,HP};						//å½“å‰æŠ€èƒ½ç±»å‹æ˜¯æ”»å‡»ç±»å‹è¿˜æ˜¯å›å¤HPç±»å‹
+	private Type type = Type.ATK;							//è®¾ç½®é»˜è®¤ç±»å‹ä¸ºæ”»å‡»ç±»å‹
+	private String name = "";								//æŠ€èƒ½åç§°
+	private float val = 0;									//æŠ€èƒ½æ•ˆæœå€¼Öµ
+	public Animation ani_self = null;						//æŠ€èƒ½è‡ªèº«åŠ¨ç”»æ•ˆæœ
+	public Animation ani_object = null;						//æŠ€èƒ½ç›®æ ‡åŠ¨ç”»æ•ˆæœ
+	private String info = "";								//æŠ€èƒ½æè¿°
+	private Array<Vector2> range = new Array<Vector2>();	//æŠ€èƒ½é‡Šæ”¾èŒƒå›´
 	
-	public Skill(String n,Type t,float v,Animation as,Animation ao,String i){
+
+	/**
+	 * æŠ€èƒ½åˆå§‹åŒ–æ„é€ å‡½æ•°
+	 * @param n		æŠ€èƒ½åå­—
+	 * @param t		æŠ€èƒ½ç±»å‹
+	 * @param v		æŠ€èƒ½å€¼
+	 * @param as	æŠ€èƒ½è‡ªèº«åŠ¨ç”»
+	 * @param ao	æŠ€èƒ½ç›®æ ‡åŠ¨ç”»
+	 * @param i		æŠ€èƒ½æè¿°ä¿¡æ¯
+	 * @param r		æŠ€èƒ½æ”»å‡»èŒƒå›´
+	 */
+	public Skill(String n,Type t,float v,Animation as,Animation ao,String i,Array<Vector2> r){
 		name = n;
 		type = t;
 		val = v;
 		ani_self = as;
 		ani_object = ao;
 		info = i;
-	}
-	/**
-	 * ²¥·Å¼¼ÄÜ×ÔÉí¶¯»­
-	 * @param a		¼¼ÄÜÊÍ·ÅÕß
-	 */
-	public void playSelfAni(Actor a){
-		float x = a.getX();
-		float y = a.getY();
-		
-	}
-	/**
-	 * ²¥·Å¼¼ÄÜÄ¿±ê¶¯»­ 
-	 * @param a		¼¼ÄÜ½ÓÊÜÕß
-	 */
-	public void playObjAni(Actor a){
-		float x = a.getX();
-		float y = a.getY();
+		range = r;
 	}
 
+	public Array<Vector2> getRange() {
+		return range;
+	}
+
+
+	public float getVal() {
+		return val;
+	}
 }

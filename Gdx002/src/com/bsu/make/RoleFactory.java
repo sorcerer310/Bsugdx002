@@ -22,6 +22,7 @@ public class RoleFactory {
 	 */
 	public Role getHeroRole(String n){
 		Role r = new Role(Role.Type.HERO,n);
+		r.cskill = SkillFactory.getInstance().getSkillByName("atk");
 		//初始化英雄类型角色要做的事写在这里。
 		return r;
 	}

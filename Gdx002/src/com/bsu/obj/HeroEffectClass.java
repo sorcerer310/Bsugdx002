@@ -31,7 +31,7 @@ public class HeroEffectClass {
 		region_effect_0[0] = effect_spilt[0][0];
 		region_effect_0[1] = effect_spilt[0][1];
 		region_effect_0[2] = effect_spilt[0][2];
-		ani_effect_0 = new Animation(0.2f, region_effect_0);
+		ani_effect_0 = new Animation(0.4f, region_effect_0);
 
 		// effect_1
 		TextureRegion[] region_effect_1 = new TextureRegion[3];
@@ -55,6 +55,28 @@ public class HeroEffectClass {
 		ani_effect_3 = new Animation(0.2f, region_effect_3);
 	}
 
+	public static Animation get_effect(int index){
+		Animation ani = null;
+		switch(index){
+			case 0:
+				ani = ani_effect_0;
+				break;
+	
+			case 1:
+				ani = ani_effect_1;
+				break;
+	
+			case 2:
+				ani = ani_effect_2;
+				break;
+	
+			case 3:
+				ani = ani_effect_3;
+				break;
+		}
+		return ani;
+	}
+	
 	public static Animation get_effect(Animation ani, int index) {
 		switch (index) {
 		case 0:
