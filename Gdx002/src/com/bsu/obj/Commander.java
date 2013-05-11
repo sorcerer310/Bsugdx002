@@ -15,8 +15,6 @@ import com.bsu.make.SkillFactory;
 import com.bsu.obj.Role.Type;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
-import com.sun.tools.internal.xjc.reader.gbind.Sequence;
-
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 /**
@@ -301,7 +299,7 @@ public class Commander {
  * 我写在这里的方法可以随意删除，仅为个人测试用
  * @author 张永臣
  */
-	public static void checkHeroSelect() {
+	public void checkHeroSelect() {
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
@@ -316,7 +314,7 @@ public class Commander {
 	/**
 	 * 每轮操作结束后，清空角色方可移动数组
 	 */
-	private static void resetHeroSelect(){
+	private void resetHeroSelect(){
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
@@ -326,5 +324,9 @@ public class Commander {
 				}
 			}
 		}
+	}
+
+	public Array<Role> getHeros() {
+		return heros;
 	}
 }

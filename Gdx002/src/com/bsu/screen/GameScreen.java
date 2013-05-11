@@ -72,7 +72,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		stage.addActor(bt_right);
 
 		commander = new Commander(stage);
-		addActorsListener(Commander.heros);
+		addActorsListener(commander.getHeros());
 		stage.addActor(bt_attack);
 		this.addActorListener();
 	}
@@ -267,7 +267,7 @@ public class GameScreen extends CubocScreen implements Observer {
 	 * 
 	 * @param actor
 	 */
-	private void addActorsListener(Array<Actor> actor) {
+	private void addActorsListener(Array<Role> actor) {
 		for (int i = 0; i < actor.size; i++) {
 			final Role r = (Role) actor.get(i);
 			r.addListener(new InputListener() {
@@ -276,7 +276,7 @@ public class GameScreen extends CubocScreen implements Observer {
 						int pointer, int button) {
 					if (control_start&&(!r.get_selected())) {
 						r.set_selected(true);
-						Commander.checkHeroSelect();
+						commander.checkHeroSelect();
 					}
 					// TODO Auto-generated method stub
 					super.touchUp(event, x, y, pointer, button);

@@ -61,7 +61,7 @@ public class MapBox extends Actor {
 	 * @param enemy
 	 *            NPC角色，理论应该为NPC数组集合，目前为单体。
 	 */
-	public	static void set_hero_pass_box(Role hero,Array<Actor> enemyArray,Array<Actor> heroArray) {
+	public	static void set_hero_pass_box(Role hero,Array<Role> enemyArray,Array<Role> heroArray) {
 		pass_array.clear();
 		 enemy_array = get_role_block(enemyArray, enemy_array);
 		 hero_array = get_role_block(heroArray, hero_array);
@@ -191,7 +191,7 @@ public class MapBox extends Actor {
 	 *            角色格子数组集合
 	 * @return
 	 */
-	public static Array<Vector2> get_role_block(Array<Actor> role, Array<Vector2> mbv) {
+	public static Array<Vector2> get_role_block(Array<Role> role, Array<Vector2> mbv) {
 		if (mbv == null) {
 			mbv = new Array<Vector2>();
 		}
