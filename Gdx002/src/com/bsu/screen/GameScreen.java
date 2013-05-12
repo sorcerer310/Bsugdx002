@@ -229,14 +229,14 @@ public class GameScreen extends CubocScreen implements Observer {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (isControlled()) {
-					int mx = (int) (x / Configure.map_box_value);
-					int my = (int) (y / Configure.map_box_value);
+					int input_x = (int) (x / Configure.map_box_value);
+					int input_y = (int) (y / Configure.map_box_value);
 
 					for (Actor act : stage.getActors()) {
 						if (act instanceof Role) {
 							Role r = (Role) act;
 							if (r.getType() == Role.Type.HERO) {
-								hero_controll_rule(mx, my, r);
+								hero_controll_rule(input_x, input_y, r);
 							}
 						}
 					}
@@ -280,26 +280,26 @@ public class GameScreen extends CubocScreen implements Observer {
 				return;
 			}
 		}
-		if(!r.isSelected()){
-			return;
-		}
-		for (int i = 0; i < r.getPass_array().size; i++) {
-			int mbc = (int) r.getPass_array().get(i).x;
-			int mbr = (int) r.getPass_array().get(i).y;
-			if ((mx == mbc) && (my == mbr)) {
+		if (r.isSelected()) {
+			if(commander.isOtherHero(mx, my)){
+				return;
+			}
+			for (int i = 0; i < r.getPass_array().size; i++) {
+				int mbc = (int) r.getPass_array().get(i).x;
+				int mbr = (int) r.getPass_array().get(i).y;
+				if ((mx == mbc) && (my == mbr)) {
 
-				Array<Action> a = new Array<Action>();
-				if (hero_x > mbc) {
-					addAction(0, mx, hero_x, a);
-					addAction(1, my, hero_y, a);
-				} else {
-					addAction(1, my, hero_y, a);
-					addAction(0, mx, hero_x, a);
+					Array<Action> a = new Array<Action>();
+					if (hero_x > mbc) {
+						addAction(0, mx, hero_x, a);
+						addAction(1, my, hero_y, a);
+					} else {
+						addAction(1, my, hero_y, a);
+						addAction(0, mx, hero_x, a);
+					}
+					commander.moveAction(r, a);
+					break;
 				}
-
-				commander.moveAction(r, a);
-				break;
-
 			}
 		}
 	}

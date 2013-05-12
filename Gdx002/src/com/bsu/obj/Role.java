@@ -166,7 +166,6 @@ public class Role extends Actor {
 		draw_life_display();
 		check_frame_finish();
 		if (selected) {
-
 			for (int i = 0; i < pass_array.size; i++) {
 				batch.draw(map_pass, pass_array.get(i).x
 						* Configure.map_box_value, (pass_array.get(i).y)
@@ -181,7 +180,6 @@ public class Role extends Actor {
 		if (current_frame_effect != null) {
 			batch.draw(current_frame_effect, getX(), getY());
 		}
-
 	}
 
 	/**

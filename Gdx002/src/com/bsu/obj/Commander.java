@@ -279,29 +279,47 @@ public class Commander {
 	 * @author 张永臣
 	 */
 	public void heroSelected(Role hero) {
-		
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
 				if (r.getType() == Type.HERO) {
-					if(hero==r){
+					r.setSelected(false);
+					if (hero == r) {
 						hero.setSelected(true);
-					}else{
-						r.setSelected(false);
+
 					}
 				}
 			}
 		}
 	}
+
 	/**
-	 * 用来检查角色是否被本轮选择操作，如果第一次选择，则计算可移动范围 
+	 * 判断此可移动方块是否有人存在
+	 * 
+	 * @param r
+	 *            被选要移动的人
+	 * @return
+	 */
+	public boolean isOtherHero(int inputX, int inputY) {
+
+		for (Role hr : heros) {
+			Vector2 hv = new Vector2(hr.getBoxX(), hr.getBoxY());
+			if ((inputX == hv.x) && (inputY == hv.y)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 用来检查角色是否被本轮选择操作，如果第一次选择，则计算可移动范围
 	 * 
 	 * @author 张永臣
 	 */
 	public void heroControllor(Role r) {
 		r.setControlled(true);
 		if (r.getType() == Type.HERO) {
-			r.setPass_array(MapBox.set_hero_pass_box(r, npcs, heros));
+			r.setPass_array(MapBox.set_hero_pass_box(r, npcs));
 		}
 	}
 

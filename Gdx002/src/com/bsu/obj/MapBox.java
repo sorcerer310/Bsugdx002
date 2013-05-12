@@ -60,10 +60,9 @@ public class MapBox extends Actor {
 	 *            NPC角色，理论应该为NPC数组集合，目前为单体。
 	 */
 	public static Array<Vector2> set_hero_pass_box(Role hero,
-			Array<Role> enemyArray, Array<Role> heroArray) {
+			Array<Role> enemyArray) {
 		Array<Vector2> pass_array = new Array<Vector2>();
 		enemy_array = get_role_block(enemyArray, enemy_array);
-		hero_array = get_role_block(heroArray, hero_array);
 		int hero_coll = hero.getBoxX();
 		int hero_raw = hero.getBoxY();
 		for (int i = 0; i < 5; i++) {
@@ -203,17 +202,10 @@ public class MapBox extends Actor {
 		return mbv;
 	}
 
-	/*
-	 * private Array<Vector2> get_role_block(Role role, Array<Vector2> mbv) { if
-	 * (mbv == null) { mbv = new Array<Vector2>(); } mbv.clear(); int role_coll
-	 * = role.getBoxX(); int role_raw = role.getBoxY(); mbv.add(new
-	 * Vector2(role_coll, role_raw)); return mbv; } /* /**
-	 * 传入行数，列数，与BLOCK数组，ENEMY数组进行，判断此格子是否可以移动，此方法仅使用角色方，需调用多次
-	 * 
+	/**
+	 * 判断hero角色是否可以向前移动
 	 * @param raw
-	 * 
 	 * @param coll
-	 * 
 	 * @return
 	 */
 	private static boolean blocked(int raw, int coll) {
@@ -228,53 +220,6 @@ public class MapBox extends Actor {
 			if (raw == enemy_array.get(i).y) {
 				if (coll >= enemy_array.get(i).x) {
 					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * 判断角色是否可以移动，其中根据类型需要与BLOCK数组，ENEMY数组，HERO数组来进行多次判断
-	 * 
-	 * @param r
-	 *            需要移动的角色
-	 * @return
-	 */
-	public static boolean blocked(Role r) {
-		int raw = r.getBoxY();
-		int coll = r.getBoxX();
-
-		if (r.getType() == Type.HERO) {
-			for (int i = 0; i < block_array.size; i++) {
-				if (raw == block_array.get(i).y) {
-					if (coll >= block_array.get(i).x - 1) {
-						return true;
-					}
-				}
-			}
-			for (int i = 0; i < enemy_array.size; i++) {
-				if (raw == enemy_array.get(i).y) {
-					if (coll >= enemy_array.get(i).x - 1) {
-						return true;
-					}
-				}
-			}
-		} else {
-			for (int i = 0; i < block_array.size; i++) {
-				if (raw == block_array.get(i).y) {
-					if (coll <= block_array.get(i).x + 1) {
-						return true;
-					}
-				}
-			}
-			for (int i = 0; i < hero_array.size; i++) {
-				if (raw == hero_array.get(i).y) {
-
-					if (coll <= hero_array.get(i).x + 1) {
-
-						return true;
-					}
 				}
 			}
 		}
