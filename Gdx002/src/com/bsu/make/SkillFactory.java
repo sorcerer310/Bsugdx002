@@ -26,7 +26,7 @@ public class SkillFactory {
 	private SkillFactory(){
 		//普通攻击
 		store.put("atk", 
-				new Skill("攻击",Skill.Type.ATK,20.0f,HeroEffectClass.get_effect(0),HeroEffectClass.get_effect(1),
+				new Skill("攻击",Skill.Type.ATK,10.0f,HeroEffectClass.get_effect(0),HeroEffectClass.get_effect(1),
 						"普通攻击，没什么稀奇的。",new Vector2[]{new Vector2(1,0),new Vector2(2,0)}
 				)
 		);

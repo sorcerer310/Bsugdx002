@@ -169,10 +169,10 @@ public class Role extends Actor {
 			for (int i = 0; i < pass_array.size; i++) {
 				batch.draw(map_pass, pass_array.get(i).x
 						* Configure.map_box_value, (pass_array.get(i).y)
-						* Configure.map_box_value); //
-				batch.draw(pix, this.getX(), this.getY() + this.margin); // 画血条
+						* Configure.map_box_value); 
 			}
 		}
+		
 		if (current_frame != null) {
 			batch.draw(current_frame, getX(), getY());
 		}
@@ -180,6 +180,7 @@ public class Role extends Actor {
 		if (current_frame_effect != null) {
 			batch.draw(current_frame_effect, getX(), getY());
 		}
+		batch.draw(pix, this.getX(), this.getY() + this.margin); // 画血条
 	}
 
 	/**
