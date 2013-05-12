@@ -154,7 +154,7 @@ public class Role extends Actor {
 		currentHp = (int) (currentHp - damage_value >= 0 ? currentHp - damage_value
 				: 0);
 		if (currentHp <= 0) {
-			this.getParent().removeActor(this);
+			//this.getParent().removeActor(this);
 		}
 		attacked_nums++;
 	}
@@ -234,53 +234,6 @@ public class Role extends Actor {
 	}
 
 
-	private int attack_distance = 1;// Role可以攻击的距离
-	private Array<Role> attacked_array = new Array<Role>();
-
-	/**
-	 * 判断角色攻击范围内是否存在可以攻击的目标
-	 * 
-	 * @return
-	 */
-	public boolean canAttack() {
-		attacked_array.clear();
-		if (type == Type.HERO) {
-			if (isTargetInDistance(MapBox.enemy_array, attack_distance)) {
-				System.out.println("hero_can_attack_block");
-			}
-			if (isTargetInDistance(MapBox.block_array, attack_distance)) {
-				System.out.println("hero_can_attack_enemy");
-			}
-		} else {
-			if (isTargetInDistance(MapBox.hero_array, -attack_distance)) {
-				System.out.println("enemy_can_attack");
-			}
-		}
-		return false;
-
-	}
-
-	/**
-	 * 根据攻击距离，与各个数组进行判断，返回是否可以对指定类型进行攻击
-	 * 
-	 * @param av
-	 *            指定类型，hero enemy block(考虑取消vector2数组，使用Role数组，方便取得Role对象)
-	 * @param num
-	 *            攻击距离；
-	 * @return
-	 */
-	private boolean isTargetInDistance(Array<Vector2> av, int num) {
-		for (int i = 0; i < av.size; i++) {
-			if (getBoxY() == av.get(i).y) {
-				if (Math.abs(getBoxX() - av.get(i).x)<=num) {
-					//attacked_array.add(value;)
-				}
-				return true;
-			}
-		}
-		return false;
-
-	}
 	/**
 	 * 根据角色的位置获得地图上实际的技能范围
 	 * @return	

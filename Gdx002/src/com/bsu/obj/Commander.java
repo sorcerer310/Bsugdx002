@@ -28,17 +28,18 @@ public class Commander {
 	private Array<Actor> lactor = null;
 	private Array<Role> heros = new Array<Role>();
 	private Array<Role> npcs = new Array<Role>();
+
 	public Commander(Stage s) {
 		stage = s;
 		lactor = stage.getActors();
 		heros.clear();
 		npcs.clear();
-		//此处区分处英雄与敌人npc
-		for(Actor act:lactor){
-			if(act instanceof Role){
-				if(((Role) act).getType()==Type.HERO)
+		// 此处区分处英雄与敌人npc
+		for (Actor act : lactor) {
+			if (act instanceof Role) {
+				if (((Role) act).getType() == Type.HERO)
 					heros.add((Role) act);
-				else if(((Role) act).getType()==Type.ENEMY)
+				else if (((Role) act).getType() == Type.ENEMY)
 					npcs.add((Role) act);
 			}
 		}
@@ -171,67 +172,76 @@ public class Commander {
 	 * 处理地图块事件，检查地图上特殊属性的块是否有Role在 有则对Role对象进行处理
 	 */
 
-	private void mapEvent(){
-		//从stage中获得mb
+	private void mapEvent() {
+		// 从stage中获得mb
 		Array<Actor> acts = stage.getActors();
 		MapBox mb = null;
-		for(Actor act:acts){
-			if(act instanceof MapBox){
+		for (Actor act : acts) {
+			if (act instanceof MapBox) {
 				mb = (MapBox) act;
 				break;
 			}
 		}
-		if(mb==null)
+		if (mb == null)
 			return;
-		
-		//处理一些地图块事件
+
+		// 处理一些地图块事件
 	}
 
 	/**
 	 * 指挥英雄们进行行动
 	 */
 
-	private void commandHeros(){
-		//判断攻击范围内是否有敌人,有则攻击敌人
-		for(Role h:heros){
-			Role r = (Role)h;
-			Array<Vector2> vs = r.getCurrSkillRange();				//获得当前技能的攻击范围
-			Array<Role> atkrs = getRolsInSkillRange(vs,npcs);		//获得攻击范围内的作用目标
-			//如果坐标目标数量为0，进行下一循环，对下一英雄进行判断
-			if(atkrs.size==0)
+	private void commandHeros() {
+		// 判断攻击范围内是否有敌人,有则攻击敌人
+		for (Role h : heros) {
+			Role r = (Role) h;
+			Array<Vector2> vs = r.getCurrSkillRange(); // 获得当前技能的攻击范围
+			Array<Role> atkrs = getRolsInSkillRange(vs, npcs); // 获得攻击范围内的作用目标
+			// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断
+			if (atkrs.size == 0)
 				continue;
+
 			for(Role e:atkrs)
 				r.hero_attack_other(e,r.cskill);
+
+			for (Role e : atkrs)
+				r.hero_attack_other(e, SkillFactory.getInstance()
+						.getSkillByName("atk"));
+
 		}
-		//攻击范围内没有敌人的英雄向前前进一步
-		
+		// 攻击范围内没有敌人的英雄向前前进一步
+
 	}
 
 	/**
 	 * 指挥敌人们进行行动
 	 */
-	private void commandNpcs(){
-		//判断攻击范围内是否有英雄，有则攻击英雄
-		
-		//攻击范围内没有英雄的敌人向前前进一步
-		
+	private void commandNpcs() {
+		// 判断攻击范围内是否有英雄，有则攻击英雄
+
+		// 攻击范围内没有英雄的敌人向前前进一步
+
 	}
+
 	/**
 	 * 获得技能范围内是否有Role存在
-	 * @param v	技能范围
-	 * @return	返回符合类型的所有Role
+	 * 
+	 * @param v
+	 *            技能范围
+	 * @return 返回符合类型的所有Role
 	 */
-	private Array<Role> getRolsInSkillRange(Array<Vector2> vs, Array<Role> rs){
+	private Array<Role> getRolsInSkillRange(Array<Vector2> vs, Array<Role> rs) {
 		Array<Role> retrs = new Array<Role>();
-		for(Vector2 v:vs){
-			for(Role r:rs){
-				if(v.x == r.getBoxX() && v.y == r.getBoxY())
+		for (Vector2 v : vs) {
+			for (Role r : rs) {
+				if (v.x == r.getBoxX() && v.y == r.getBoxY())
 					retrs.add(r);
 			}
 		}
 		return retrs;
 	}
-	
+
 	/**
 	 * 向role下命令，命令其如何移动,只针对hero方
 	 */
@@ -265,56 +275,27 @@ public class Commander {
 	}
 
 	/**
-	 * 向Role下命令，命令其攻击
+	 * 用来检查角色是否被本轮选择移动，如果被选择，则计算可移动范围 我写在这里的方法可以随意删除，仅为个人测试用
 	 * 
-	 * @param r
+	 * @author 张永臣
 	 */
-	private void attackAction(Role r) {
-		r.set_ani_from_state(STATE.attack_normal);
-	}
-
-	/**
-	 * 判断Role是否可以攻击
-	 */
-	public void checkAttackAction(Type type) {
-		for (Actor act : lactor) {
-			if (act instanceof Role) {
-				final Role r = (Role) act;
-				if (r.getType() == type) {
-					if (r.canAttack()) {
-						attackAction(r);
-					} else {
-						if (type == Type.HERO) {
-							rightAction(r);
-						} else {
-							leftAction(r);
-						}
-					}
-				}
-			}
-		}
-	}
-/**
- * 用来检查角色是否被本轮选择移动，如果被选择，则计算可移动范围
- * 我写在这里的方法可以随意删除，仅为个人测试用
- * @author 张永臣
- */
 	public void checkHeroSelect() {
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
 				if (r.getType() == Type.HERO) {
-					if(r.get_selected()){
-						MapBox.set_hero_pass_box(r,npcs,heros);
+					if (r.get_selected()) {
+						MapBox.set_hero_pass_box(r, npcs, heros);
 					}
 				}
 			}
 		}
 	}
+
 	/**
 	 * 每轮操作结束后，清空角色方可移动数组
 	 */
-	private void resetHeroSelect(){
+	private void resetHeroSelect() {
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
