@@ -180,14 +180,14 @@ public class GameScreen extends CubocScreen implements Observer {
 	}
 
 	private void addActorListener() {
-		bt_attack.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				hero.hero_attack_other(enemy1, SkillFactory.getInstance()
-						.getSkillByName("atk"),new BsuEvent());
-				// hero.cskill = SkillFactory.getInstance().getSkillByName("");
-			}
-		});
+//		bt_attack.addListener(new ClickListener() {
+//			@Override
+//			public void clicked(InputEvent event, float x, float y) {
+//				hero.hero_attack_other(enemy1, SkillFactory.getInstance()
+//						.getSkillByName("atk"),new BsuEvent());
+//				// hero.cskill = SkillFactory.getInstance().getSkillByName("");
+//			}
+//		});
 		final Role r = hero;
 		bt_endround.addListener(new ClickListener() {
 			@Override
