@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillFactory;
 import com.bsu.obj.Role.Type;
 import com.bsu.screen.GameScreen;
+import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
@@ -192,25 +193,46 @@ public class Commander {
 	/**
 	 * 指挥英雄们进行行动
 	 */
-
+	boolean flag = false;
 	private void commandHeros() {
-		// 判断攻击范围内是否有敌人,有则攻击敌人
-		for (Role h : heros) {
-			Role r = (Role) h;
-			Array<Vector2> vs = r.getCurrSkillRange(); // 获得当前技能的攻击范围
-			Array<Role> atkrs = getRolsInSkillRange(vs, npcs); // 获得攻击范围内的作用目标
-			// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断
-			if (atkrs.size == 0)
-				continue;
+		final Array<Role> moveRole = new Array<Role>(); // 不进行攻击，准备移动的英雄
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					for (Role h : heros) {
+						flag = false;										//初始化等待循环flag为false
+						Role r = (Role) h;
+						Array<Vector2> vs = r.getCurrSkillRange(); 			// 获得当前技能的攻击范围
+						Array<Role> atkrs = getRolsInSkillRange(vs, npcs); 	// 获得攻击范围内的作用目标
+						// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断
+						if (atkrs.size == 0) {
+							moveRole.add(r);
+							continue;
+						}
+						for (Role e : atkrs)
+							r.hero_attack_other(e, r.cskill,new BsuEvent(){
+								@Override
+								public void notify(Object obj, String msg) {
+									System.out.println("true");
+									flag = true;
+								}
+							});
+						//循环中等待
+						flagwait: if (flag){
+							continue;
+						}
+						else {
+							Thread.sleep(500);
+							break flagwait;
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
 
-			for (Role e : atkrs)
-				r.hero_attack_other(e, r.cskill);
-
-			for (Role e : atkrs)
-				r.hero_attack_other(e, SkillFactory.getInstance()
-						.getSkillByName("atk"));
-
-		}
 		// 攻击范围内没有敌人的英雄向前前进一步
 
 	}
@@ -286,7 +308,6 @@ public class Commander {
 					r.setSelected(false);
 					if (hero == r) {
 						hero.setSelected(true);
-
 					}
 				}
 			}

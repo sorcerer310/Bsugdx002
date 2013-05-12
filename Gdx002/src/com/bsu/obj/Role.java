@@ -12,10 +12,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillFactory;
+import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
 
 public class Role extends Actor {
+	private BsuEvent bevent = null;							//用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
 	private float time_state; // 状态时间
 	public float time_effect; // 特效时间
@@ -189,9 +191,10 @@ public class Role extends Actor {
 	 * @param enemy
 	 *            攻击动作的角色
 	 */
-	public void hero_attack_other(Role enemy, Skill skl) {
+	public void hero_attack_other(Role enemy, Skill skl,BsuEvent be) {
 		if (enemy == null)
 			return;
+		bevent = be;
 		this.ani_effect = skl.ani_self;
 		time_effect = 0; // 此处一定要设置time_effect为0，否则动画不会重新开始
 		enemy.hero_isAttacked(skl.ani_object, skl.getVal());
@@ -254,6 +257,11 @@ public class Role extends Actor {
 				current_frame_effect = null;
 				ani_effect = null;
 				setSelected(false);
+				//如果event对象不为空，执行函数通知完成
+				if(bevent!=null){
+					System.out.println("skill_effect_completed");
+					bevent.notify(this, "skill_effect_completed");
+				}
 			}
 		}
 	}

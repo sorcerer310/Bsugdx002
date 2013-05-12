@@ -34,6 +34,7 @@ import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 
 import com.bsu.obj.HeroEffectClass;
+import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
 
@@ -81,6 +82,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		stage.addActor(hero);
 		stage.addActor(hero1);
 		stage.addActor(enemy1);
+		stage.addActor(enemy2);
 		stage.addActor(bt_endround);
 		commander = new Commander(stage);
 		this.addActorListener();
@@ -93,13 +95,14 @@ public class GameScreen extends CubocScreen implements Observer {
 		setAction_start(true);
 		setControlled(true);
 		hero = RoleFactory.getInstance().getHeroRole("hero1");
-		hero1 = RoleFactory.getInstance().getHeroRole("hero2");
+		hero1 = RoleFactory.getInstance().getHeroRole2("hero2");
 		enemy1 = RoleFactory.getInstance().getEnemyRole("enemy1");
 		enemy2 = RoleFactory.getInstance().getEnemyRole("enemy2");
 		enemy3 = RoleFactory.getInstance().getEnemyRole("enemy3");
 		setBornPosition(GameMap.map, hero, "h2");
 		setBornPosition(GameMap.map, enemy1, "n2");
-		hero1.setPosition(128, 224);
+		enemy2.setPosition(256, 224);
+		hero1.setPosition(224, 224);
 		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,
 				80);
 	}
@@ -177,6 +180,14 @@ public class GameScreen extends CubocScreen implements Observer {
 	}
 
 	private void addActorListener() {
+		bt_attack.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				hero.hero_attack_other(enemy1, SkillFactory.getInstance()
+						.getSkillByName("atk"),new BsuEvent());
+				// hero.cskill = SkillFactory.getInstance().getSkillByName("");
+			}
+		});
 		final Role r = hero;
 		bt_endround.addListener(new ClickListener() {
 			@Override

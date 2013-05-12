@@ -24,9 +24,15 @@ public class SkillFactory {
 	 * 初始化所有技能，并保存到hashmap中，此处数据全部为配置数据，不能再改变
 	 */
 	private SkillFactory(){
-		//普通攻击
+		//普通攻击1
 		store.put("atk", 
 				new Skill("攻击",Skill.Type.ATK,10.0f,HeroEffectClass.get_effect(0),HeroEffectClass.get_effect(1),
+						"普通攻击，没什么稀奇的。",new Vector2[]{new Vector2(1,0),new Vector2(2,0)}
+				)
+		);
+		//普通攻击2
+		store.put("atk2",
+				new Skill("攻击",Skill.Type.ATK,20.0f,HeroEffectClass.get_effect(0),HeroEffectClass.get_effect(2),
 						"普通攻击，没什么稀奇的。",new Vector2[]{new Vector2(1,0),new Vector2(2,0)}
 				)
 		);

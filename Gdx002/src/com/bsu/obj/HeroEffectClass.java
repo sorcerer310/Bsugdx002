@@ -38,14 +38,14 @@ public class HeroEffectClass {
 		region_effect_1[0] = effect_spilt[1][0];
 		region_effect_1[1] = effect_spilt[1][1];
 		region_effect_1[2] = effect_spilt[1][2];
-		ani_effect_1 = new Animation(0.2f, region_effect_1);
+		ani_effect_1 = new Animation(0.4f, region_effect_1);
 
 		// effect_2
 		TextureRegion[] region_effect_2 = new TextureRegion[3];
 		region_effect_2[0] = effect_spilt[4][0];
 		region_effect_2[1] = effect_spilt[4][1];
 		region_effect_2[2] = effect_spilt[4][2];
-		ani_effect_2 = new Animation(0.2f, region_effect_2);
+		ani_effect_2 = new Animation(0.4f, region_effect_2);
 
 		// effect_3
 		TextureRegion[] region_effect_3 = new TextureRegion[3];
