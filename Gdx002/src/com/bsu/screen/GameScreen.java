@@ -49,20 +49,24 @@ public class GameScreen extends CubocScreen implements Observer {
 	Role enemy3;
 	Commander commander;
 	TextButton bt_endround;
-	TextButton bt_up;
-	TextButton bt_down;
-	TextButton bt_left;
-	TextButton bt_right;
-	TextButton bt_attack;
 	MapBox mb;
-	public static boolean controlled; // 是否可以被操作
+	public static boolean action_start; // 是否回合开始
+	public static boolean controlled;
 
-	public boolean isControlled() {
+	public static boolean isControlled() {
 		return controlled;
 	}
 
-	public void setControlled(boolean controlled) {
-		this.controlled = controlled;
+	public static void setControlled(boolean controlled) {
+		GameScreen.controlled = controlled;
+	}
+
+	public static boolean isAction_start() {
+		return action_start;
+	}
+
+	public static void setAction_start(boolean action_start) {
+		GameScreen.action_start = action_start;
 	}
 
 	public GameScreen(Game mxg) {
@@ -78,13 +82,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		stage.addActor(hero1);
 		stage.addActor(enemy1);
 		stage.addActor(bt_endround);
-		stage.addActor(bt_up);
-		stage.addActor(bt_down);
-		stage.addActor(bt_left);
-		stage.addActor(bt_right);
-
 		commander = new Commander(stage);
-		stage.addActor(bt_attack);
 		this.addActorListener();
 	}
 
@@ -92,6 +90,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		map = new GameMap(0);
 		mb = new MapBox();
 		new HeroEffectClass();
+		setAction_start(true);
 		setControlled(true);
 		hero = RoleFactory.getInstance().getHeroRole("hero1");
 		hero1 = RoleFactory.getInstance().getHeroRole("hero2");
@@ -103,13 +102,6 @@ public class GameScreen extends CubocScreen implements Observer {
 		hero1.setPosition(128, 224);
 		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,
 				80);
-		bt_up = ButtonFactory.getInstance().getOneTextButton("up", 150, 80);
-		bt_down = ButtonFactory.getInstance().getOneTextButton("down", 150, 10);
-		bt_left = ButtonFactory.getInstance().getOneTextButton("left", 100, 50);
-		bt_right = ButtonFactory.getInstance().getOneTextButton("right", 200,
-				50);
-		bt_attack = ButtonFactory.getInstance().getOneTextButton("attack", 150,
-				50);
 	}
 
 	/**
@@ -139,7 +131,6 @@ public class GameScreen extends CubocScreen implements Observer {
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		GameMap.map_render.render(map.cam);
-		// mb.set_hero_pass_box(hero);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 
@@ -186,49 +177,19 @@ public class GameScreen extends CubocScreen implements Observer {
 	}
 
 	private void addActorListener() {
-		bt_attack.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				hero.hero_attack_other(enemy1, SkillFactory.getInstance()
-						.getSkillByName("atk"));
-				// hero.cskill = SkillFactory.getInstance().getSkillByName("");
-			}
-		});
 		final Role r = hero;
 		bt_endround.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				commander.roundEnd();
-			}
-		});
-		bt_left.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				commander.leftAction(r);
-			}
-		});
-		bt_right.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				commander.rightAction(r);
-			}
-		});
-		bt_down.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				commander.downAction(r);
-			}
-		});
-		bt_up.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				commander.upAction(r);
+				if (isControlled()) {
+					commander.roundEnd();
+				}
 			}
 		});
 		stage.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (isControlled()) {
+				if (isAction_start() && (isControlled())) {
 					int input_x = (int) (x / Configure.map_box_value);
 					int input_y = (int) (y / Configure.map_box_value);
 
@@ -240,7 +201,6 @@ public class GameScreen extends CubocScreen implements Observer {
 							}
 						}
 					}
-
 				}
 			}
 		});
@@ -281,7 +241,7 @@ public class GameScreen extends CubocScreen implements Observer {
 			}
 		}
 		if (r.isSelected()) {
-			if(commander.isOtherHero(mx, my)){
+			if (commander.isOtherHero(mx, my)) {
 				return;
 			}
 			for (int i = 0; i < r.getPass_array().size; i++) {
