@@ -30,7 +30,7 @@ public class Role extends Actor {
 	private Type type = null; // ָ指定当前角色是英雄还是 NPC
 
 	private Animation ani_current; // 当前动画
-	private TextureRegion current_frame;
+	private TextureRegion current_frame;//当前动画所对应的TextureRegion
 	private Animation ani_idle; // 站立动画
 	private Animation ani_move; // 移动动画
 	private boolean loop_flag;
@@ -39,13 +39,12 @@ public class Role extends Actor {
 	private int currentHp = 30; 							// 当前血量
 	private int attack_value; 								// 自身攻击力
 	private int attacked_nums; 								// 目前被连击数量ֵ
-	private int attack_type; 								// 当前攻击类型
+	private int attack_range; 								// 当前可攻击距离
 	private TextureRegion current_frame_effect;
 	private Animation ani_effect;
 
 	int margin = 2; 								// 血条和人物之间的间隔
 	int pixHeight = 5; 								// 血条高度
-	int titleWidth = 32;
 	TextureRegion pix;
 
 	private boolean isSelected; 					// 被选中等待操作？
@@ -86,12 +85,12 @@ public class Role extends Actor {
 		Pixmap pixmap;
 		pixmap = new Pixmap(64, 8, Format.RGBA8888); // 生成一张64*8的图片
 		pixmap.setColor(Color.BLACK); // 设置颜色为黑色。
-		pixmap.drawRectangle(0, 0, titleWidth, pixHeight);
+		pixmap.drawRectangle(0, 0, Configure.map_box_value, Configure.map_box_value);
 		pixmap.setColor(Color.RED); // 设置为黑色
-		pixmap.fillRectangle(0, 1, titleWidth * currentHp / maxHp,
-				pixHeight - 2);
+		pixmap.fillRectangle(0, 1, Configure.map_box_value * currentHp / maxHp,
+				Configure.map_box_value - 2);
 		Texture pixmaptex = new Texture(pixmap);
-		pix = new TextureRegion(pixmaptex, titleWidth, pixHeight);
+		pix = new TextureRegion(pixmaptex, Configure.map_box_value, Configure.map_box_value);
 		pixmap.dispose();
 	}
 
@@ -113,7 +112,7 @@ public class Role extends Actor {
 		// TODO Auto-generated method stub
 		time_state += Gdx.graphics.getDeltaTime();
 		time_effect += Gdx.graphics.getDeltaTime();
-		this.setSize(32, 32);
+		this.setSize(Configure.map_box_value, Configure.map_box_value);
 		draw_life_display();
 		check_frame_finish();
 
@@ -126,7 +125,7 @@ public class Role extends Actor {
 		}
 		
 		if (isSelected)
-			batch.draw(pix, this.getX(), this.getY() + this.margin + 32); // 画血条
+			batch.draw(pix, this.getX(), this.getY() + this.margin + Configure.map_box_value); // 画血条
 	}
 
 	/**
