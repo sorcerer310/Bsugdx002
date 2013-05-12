@@ -259,8 +259,8 @@ public class Role extends Actor {
 				setSelected(false);
 				//如果event对象不为空，执行函数通知完成
 				if(bevent!=null){
-					System.out.println("skill_effect_completed");
-					bevent.notify(this, "skill_effect_completed");
+					System.out.println(this.name+"skill_effect_completed");
+					bevent.notify(this, this.name);
 				}
 			}
 		}

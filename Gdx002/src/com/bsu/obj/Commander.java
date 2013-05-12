@@ -6,18 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 //import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
-import com.bsu.make.SkillFactory;
 import com.bsu.obj.Role.Type;
 import com.bsu.screen.GameScreen;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 /**
  * 指挥官对象，用来指挥stage上所有的角色
@@ -193,40 +187,46 @@ public class Commander {
 	/**
 	 * 指挥英雄们进行行动
 	 */
-	boolean flag = false;
+	boolean waitflag = false; // 等待标示，用来标记是否继续循环对下一英雄进行操作
+
 	private void commandHeros() {
-		final Array<Role> moveRole = new Array<Role>(); // 不进行攻击，准备移动的英雄
 		new Thread() {
 			@Override
 			public void run() {
 				try {
+					Array<Role> moveRole = new Array<Role>(); // 不进行攻击，准备移动的英雄
+					// 第一步所有人都进攻
 					for (Role h : heros) {
-						flag = false;										//初始化等待循环flag为false
-						Role r = (Role) h;
-						Array<Vector2> vs = r.getCurrSkillRange(); 			// 获得当前技能的攻击范围
-						Array<Role> atkrs = getRolsInSkillRange(vs, npcs); 	// 获得攻击范围内的作用目标
-						// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断
+						waitflag = true; // 初始化等待循环flag为false
+						Role r = (Role) h; // 当前操作的英雄
+						Array<Vector2> vs = r.getCurrSkillRange(); // 获得当前技能的攻击范围
+						Array<Role> atkrs = getRolsInSkillRange(vs, npcs); // 获得攻击范围内的作用目标
+						// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
 						if (atkrs.size == 0) {
 							moveRole.add(r);
 							continue;
 						}
-						for (Role e : atkrs)
-							r.hero_attack_other(e, r.cskill,new BsuEvent(){
+						// 命令当前英雄进攻所有范围内的敌人
+						for (Role e : atkrs) {
+							r.hero_attack_other(e, r.cskill, new BsuEvent() {
 								@Override
 								public void notify(Object obj, String msg) {
-									System.out.println("true");
-									flag = true;
+									System.out.println(msg);
+									// 收到消息设置等待标示为true
+									if (((Role) obj).name.equals(msg))
+										waitflag = false;
 								}
 							});
-						//循环中等待
-						flagwait: if (flag){
-							continue;
 						}
-						else {
-							Thread.sleep(500);
-							break flagwait;
+						// 循环中等待
+						while (waitflag) {	
+							Thread.sleep(200);
 						}
 					}
+					// 第二部没进攻的人向前一步
+					for (Role h : moveRole)
+						Commander.this.rightAction(h);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
