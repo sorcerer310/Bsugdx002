@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillFactory;
 import com.bsu.obj.Role.Type;
+import com.bsu.screen.GameScreen;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.STATE;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
@@ -202,8 +203,8 @@ public class Commander {
 			if (atkrs.size == 0)
 				continue;
 
-			for(Role e:atkrs)
-				r.hero_attack_other(e,r.cskill);
+			for (Role e : atkrs)
+				r.hero_attack_other(e, r.cskill);
 
 			for (Role e : atkrs)
 				r.hero_attack_other(e, SkillFactory.getInstance()
@@ -245,16 +246,13 @@ public class Commander {
 	/**
 	 * 向role下命令，命令其如何移动,只针对hero方
 	 */
-	public void moveAction(final Array<Action> a) {
-		for (Actor act : lactor) {
-			if (act instanceof Role) {
-				final Role r = (Role) act;
-				if (r.getType() == Role.Type.HERO) {
-					r.set_ani_from_state(STATE.move);
-					final int index = 0;
-					this.act_action_group(r, index, a.size, a);
-				}
-			}
+	public void moveAction(Role r, final Array<Action> a) {
+		GameScreen.controlled = false;
+		if (r.getType() == Role.Type.HERO) {
+			r.set_ani_from_state(STATE.move);
+			final int index = 0;
+			this.act_action_group(r, index, a.size, a);
+
 		}
 	}
 
@@ -269,26 +267,41 @@ public class Commander {
 									action);
 						} else {
 							r.set_ani_from_state(STATE.idle);
+							GameScreen.controlled = true;
 						}
 					}
 				})));
 	}
 
 	/**
-	 * 用来检查角色是否被本轮选择移动，如果被选择，则计算可移动范围 我写在这里的方法可以随意删除，仅为个人测试用
+	 * 用来检查角色是否被本轮选择，若被选择，则其他不被选择，
 	 * 
 	 * @author 张永臣
 	 */
-	public void checkHeroSelect() {
+	public void heroSelected(Role hero) {
+		
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
 				if (r.getType() == Type.HERO) {
-					if (r.get_selected()) {
-						MapBox.set_hero_pass_box(r, npcs, heros);
+					if(hero==r){
+						hero.setSelected(true);
+					}else{
+						r.setSelected(false);
 					}
 				}
 			}
+		}
+	}
+	/**
+	 * 用来检查角色是否被本轮选择操作，如果第一次选择，则计算可移动范围 
+	 * 
+	 * @author 张永臣
+	 */
+	public void heroControllor(Role r) {
+		r.setControlled(true);
+		if (r.getType() == Type.HERO) {
+			r.setPass_array(MapBox.set_hero_pass_box(r, npcs, heros));
 		}
 	}
 
@@ -300,8 +313,9 @@ public class Commander {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
 				if (r.getType() == Type.HERO) {
-					r.set_selected(false);
-					MapBox.pass_array.clear();
+					r.setSelected(false);
+					r.setControlled(false);
+					r.getPass_array().clear();
 				}
 			}
 		}

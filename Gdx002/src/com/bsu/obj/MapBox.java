@@ -23,10 +23,8 @@ import com.bsu.tools.Configure;
  */
 public class MapBox extends Actor {
 
-	private TextureRegion map_pass; // 人物移动显示的图像
 	private TextureRegion map_block; // 地图上障碍图像
 
-	public static Array<Vector2> pass_array = new Array<Vector2>(); // 人物可以移动的格子数组
 	public static Array<Vector2> block_array = new Array<Vector2>(); // 地图上障碍格子数组
 	public static Array<Vector2> box_array = new Array<Vector2>(); // 宝箱格子
 	public static Array<Vector2> hpRaise_array = new Array<Vector2>(); // 加血格子
@@ -49,7 +47,7 @@ public class MapBox extends Actor {
 		// TODO Auto-generated constructor stub
 		draw_map_box(BOX.PASS);
 		draw_map_box(BOX.BLOCK);
-		pass_array = new Array<Vector2>();
+
 		get_box_value();
 	}
 
@@ -61,22 +59,24 @@ public class MapBox extends Actor {
 	 * @param enemy
 	 *            NPC角色，理论应该为NPC数组集合，目前为单体。
 	 */
-	public	static void set_hero_pass_box(Role hero,Array<Role> enemyArray,Array<Role> heroArray) {
-		pass_array.clear();
-		 enemy_array = get_role_block(enemyArray, enemy_array);
-		 hero_array = get_role_block(heroArray, hero_array);
+	public static Array<Vector2> set_hero_pass_box(Role hero,
+			Array<Role> enemyArray, Array<Role> heroArray) {
+		Array<Vector2> pass_array = new Array<Vector2>();
+		enemy_array = get_role_block(enemyArray, enemy_array);
+		hero_array = get_role_block(heroArray, hero_array);
 		int hero_coll = hero.getBoxX();
 		int hero_raw = hero.getBoxY();
 		for (int i = 0; i < 5; i++) {
 			if (i + hero_raw - 2 >= raw_min) {
 				int temp_index = MathUtils.clamp(i + hero_raw - 2, raw_min,
 						raw_max);
-				set_h(temp_index, hero_coll);
+				set_h(temp_index, hero_coll,pass_array);
 				if (temp_index >= raw_max) {
 					break;
 				}
 			}
 		}
+		return pass_array;
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class MapBox extends Actor {
 	 * @param coll
 	 *            格子列数
 	 */
-	private static void set_h(int index, int coll) {
+	private static void set_h(int index, int coll,Array<Vector2> pass_array) {
 
 		for (int i = 0; i < 5; i++) {
 			if (i + coll - 2 >= coll_min) {
@@ -111,10 +111,6 @@ public class MapBox extends Actor {
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
 
-		for (int i = 0; i < pass_array.size; i++) {
-			batch.draw(map_pass, pass_array.get(i).x * Configure.map_box_value,
-					(pass_array.get(i).y) * Configure.map_box_value); // ����
-		}
 		for (int i = 0; i < block_array.size; i++) {
 			batch.draw(map_block, block_array.get(i).x
 					* Configure.map_box_value, (block_array.get(i).y)
@@ -150,7 +146,7 @@ public class MapBox extends Actor {
 		temp_box = new TextureRegion(pixmaptex, Configure.map_box_value,
 				Configure.map_box_value);
 		if (box == BOX.PASS) {
-			map_pass = temp_box;
+
 		} else {
 			map_block = temp_box;
 		}
@@ -191,7 +187,8 @@ public class MapBox extends Actor {
 	 *            角色格子数组集合
 	 * @return
 	 */
-	public static Array<Vector2> get_role_block(Array<Role> role, Array<Vector2> mbv) {
+	public static Array<Vector2> get_role_block(Array<Role> role,
+			Array<Vector2> mbv) {
 		if (mbv == null) {
 			mbv = new Array<Vector2>();
 		}
@@ -205,23 +202,18 @@ public class MapBox extends Actor {
 		}
 		return mbv;
 	}
-/*
-	private Array<Vector2> get_role_block(Role role, Array<Vector2> mbv) {
-		if (mbv == null) {
-			mbv = new Array<Vector2>();
-		}
-		mbv.clear();
-		int role_coll = role.getBoxX();
-		int role_raw = role.getBoxY();
-		mbv.add(new Vector2(role_coll, role_raw));
-		return mbv;
-	}
-/*
-	/**
+
+	/*
+	 * private Array<Vector2> get_role_block(Role role, Array<Vector2> mbv) { if
+	 * (mbv == null) { mbv = new Array<Vector2>(); } mbv.clear(); int role_coll
+	 * = role.getBoxX(); int role_raw = role.getBoxY(); mbv.add(new
+	 * Vector2(role_coll, role_raw)); return mbv; } /* /**
 	 * 传入行数，列数，与BLOCK数组，ENEMY数组进行，判断此格子是否可以移动，此方法仅使用角色方，需调用多次
 	 * 
 	 * @param raw
+	 * 
 	 * @param coll
+	 * 
 	 * @return
 	 */
 	private static boolean blocked(int raw, int coll) {

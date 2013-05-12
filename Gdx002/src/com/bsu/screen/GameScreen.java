@@ -35,12 +35,15 @@ import com.bsu.obj.Role.Type;
 
 import com.bsu.obj.HeroEffectClass;
 import com.bsu.tools.Configure;
+import com.bsu.tools.Configure.STATE;
+
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class GameScreen extends CubocScreen implements Observer {
 	Stage stage;
 	GameMap map;
 	Role hero;
+	Role hero1;
 	Role enemy1;
 	Role enemy2;
 	Role enemy3;
@@ -52,7 +55,15 @@ public class GameScreen extends CubocScreen implements Observer {
 	TextButton bt_right;
 	TextButton bt_attack;
 	MapBox mb;
-	public static boolean control_start = true;
+	public static boolean controlled; // 是否可以被操作
+
+	public boolean isControlled() {
+		return controlled;
+	}
+
+	public void setControlled(boolean controlled) {
+		this.controlled = controlled;
+	}
 
 	public GameScreen(Game mxg) {
 		super(mxg);
@@ -64,6 +75,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		actor_init();
 		stage.addActor(mb);
 		stage.addActor(hero);
+		stage.addActor(hero1);
 		stage.addActor(enemy1);
 		stage.addActor(bt_endround);
 		stage.addActor(bt_up);
@@ -72,7 +84,6 @@ public class GameScreen extends CubocScreen implements Observer {
 		stage.addActor(bt_right);
 
 		commander = new Commander(stage);
-		addActorsListener(commander.getHeros());
 		stage.addActor(bt_attack);
 		this.addActorListener();
 	}
@@ -81,12 +92,15 @@ public class GameScreen extends CubocScreen implements Observer {
 		map = new GameMap(0);
 		mb = new MapBox();
 		new HeroEffectClass();
+		setControlled(true);
 		hero = RoleFactory.getInstance().getHeroRole("hero1");
+		hero1 = RoleFactory.getInstance().getHeroRole("hero2");
 		enemy1 = RoleFactory.getInstance().getEnemyRole("enemy1");
 		enemy2 = RoleFactory.getInstance().getEnemyRole("enemy2");
 		enemy3 = RoleFactory.getInstance().getEnemyRole("enemy3");
 		setBornPosition(GameMap.map, hero, "h2");
 		setBornPosition(GameMap.map, enemy1, "n2");
+		hero1.setPosition(128, 224);
 		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,
 				80);
 		bt_up = ButtonFactory.getInstance().getOneTextButton("up", 150, 80);
@@ -175,8 +189,9 @@ public class GameScreen extends CubocScreen implements Observer {
 		bt_attack.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				hero.hero_attack_other(enemy1,SkillFactory.getInstance().getSkillByName("atk"));
-				//hero.cskill = SkillFactory.getInstance().getSkillByName("");
+				hero.hero_attack_other(enemy1, SkillFactory.getInstance()
+						.getSkillByName("atk"));
+				// hero.cskill = SkillFactory.getInstance().getSkillByName("");
 			}
 		});
 		final Role r = hero;
@@ -213,30 +228,19 @@ public class GameScreen extends CubocScreen implements Observer {
 		stage.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				int mx = (int) (x / Configure.map_box_value);
-				int my = (int) (y / Configure.map_box_value);
-				int hero_x = (int) ((hero.getX() + 10) / Configure.map_box_value);
-				int hero_y = (int) ((hero.getY() + 10) / Configure.map_box_value);
-				if (mx == hero_x) {
-					if (my == hero_y) {
-						return;
-					}
-				}
-				for (int i = 0; i < MapBox.pass_array.size; i++) {
-					int mbc = (int) MapBox.pass_array.get(i).x;
-					int mbr = (int) MapBox.pass_array.get(i).y;
-					if ((mx == mbc) && (my == mbr)) {
-						Array<Action> a = new Array<Action>();
-						if (hero_x > mbc) {
-							addAction(0, mx, hero_x, a);
-							addAction(1, my, hero_y, a);
-						} else {
-							addAction(1, my, hero_y, a);
-							addAction(0, mx, hero_x, a);
+				if (isControlled()) {
+					int mx = (int) (x / Configure.map_box_value);
+					int my = (int) (y / Configure.map_box_value);
+
+					for (Actor act : stage.getActors()) {
+						if (act instanceof Role) {
+							Role r = (Role) act;
+							if (r.getType() == Role.Type.HERO) {
+								hero_controll_rule(mx, my, r);
+							}
 						}
-						commander.moveAction(a);
-						break;
 					}
+
 				}
 			}
 		});
@@ -262,33 +266,41 @@ public class GameScreen extends CubocScreen implements Observer {
 		mba.add(action);
 	}
 
-	/**
-	 * 监听Role
-	 * 
-	 * @param actor
-	 */
-	private void addActorsListener(Array<Role> actor) {
-		for (int i = 0; i < actor.size; i++) {
-			final Role r = (Role) actor.get(i);
-			r.addListener(new InputListener() {
-				@Override
-				public void touchUp(InputEvent event, float x, float y,
-						int pointer, int button) {
-					if (control_start&&(!r.get_selected())) {
-						r.set_selected(true);
-						commander.checkHeroSelect();
+	private void hero_controll_rule(int mx, int my, Role r) {
+		int hero_x = r.getBoxX();
+		int hero_y = r.getBoxY();
+		if (mx == hero_x) {
+			if (my == hero_y) {
+				if (!r.isSelected()) {
+					commander.heroSelected(r);
+					if (!r.isControlled()) {
+						commander.heroControllor(r);
 					}
-					// TODO Auto-generated method stub
-					super.touchUp(event, x, y, pointer, button);
+				}
+				return;
+			}
+		}
+		if(!r.isSelected()){
+			return;
+		}
+		for (int i = 0; i < r.getPass_array().size; i++) {
+			int mbc = (int) r.getPass_array().get(i).x;
+			int mbr = (int) r.getPass_array().get(i).y;
+			if ((mx == mbc) && (my == mbr)) {
+
+				Array<Action> a = new Array<Action>();
+				if (hero_x > mbc) {
+					addAction(0, mx, hero_x, a);
+					addAction(1, my, hero_y, a);
+				} else {
+					addAction(1, my, hero_y, a);
+					addAction(0, mx, hero_x, a);
 				}
 
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
-					// TODO Auto-generated method stu
-					return true;
-				}
-			});
+				commander.moveAction(r, a);
+				break;
+
+			}
 		}
 	}
 }
