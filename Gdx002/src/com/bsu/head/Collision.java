@@ -2,7 +2,7 @@ package com.bsu.head;
 
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.math.MathUtils;
-import com.bsu.obj.GameMap;
+import com.bsu.tools.GameMap;
 
 public class Collision {
 

@@ -1,4 +1,4 @@
-package com.bsu.obj;
+package com.bsu.tools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -73,27 +73,6 @@ public class HeroEffectClass {
 			case 3:
 				ani = ani_effect_3;
 				break;
-		}
-		return ani;
-	}
-	
-	public static Animation get_effect(Animation ani, int index) {
-		switch (index) {
-		case 0:
-			ani = ani_effect_0;
-			break;
-
-		case 1:
-			ani = ani_effect_1;
-			break;
-
-		case 2:
-			ani = ani_effect_2;
-			break;
-
-		case 3:
-			ani = ani_effect_3;
-			break;
 		}
 		return ani;
 	}

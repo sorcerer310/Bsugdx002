@@ -28,14 +28,14 @@ import com.bsu.make.ButtonFactory;
 import com.bsu.make.RoleFactory;
 import com.bsu.make.SkillFactory;
 import com.bsu.obj.Commander;
-import com.bsu.obj.GameMap;
 import com.bsu.obj.MapBox;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 
-import com.bsu.obj.HeroEffectClass;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
+import com.bsu.tools.GameMap;
+import com.bsu.tools.HeroEffectClass;
 import com.bsu.tools.Configure.STATE;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
@@ -180,15 +180,6 @@ public class GameScreen extends CubocScreen implements Observer {
 	}
 
 	private void addActorListener() {
-//		bt_attack.addListener(new ClickListener() {
-//			@Override
-//			public void clicked(InputEvent event, float x, float y) {
-//				hero.hero_attack_other(enemy1, SkillFactory.getInstance()
-//						.getSkillByName("atk"),new BsuEvent());
-//				// hero.cskill = SkillFactory.getInstance().getSkillByName("");
-//			}
-//		});
-		final Role r = hero;
 		bt_endround.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {

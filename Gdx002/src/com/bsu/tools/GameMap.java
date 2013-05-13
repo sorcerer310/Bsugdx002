@@ -1,4 +1,4 @@
-package com.bsu.obj;
+package com.bsu.tools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -15,8 +15,6 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.bsu.tools.Configure;
-import com.bsu.tools.CustomerTiledAlisa;
 
 
 public class GameMap {

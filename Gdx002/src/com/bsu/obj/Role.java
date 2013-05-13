@@ -14,14 +14,15 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillFactory;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
+import com.bsu.tools.HeroAnimationClass;
 import com.bsu.tools.Configure.FACE;
 import com.bsu.tools.Configure.STATE;
 
 public class Role extends Actor {
 	private BsuEvent bevent = null; // 用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
-	private float time_state; // 状态时间
-	public float time_effect; // 特效时间
+	private float time_state; // 行动状态时间
+	public float time_effect; // 技能特效时间
 	public STATE state; // 英雄的当前状态
 	public FACE face; // 人物朝向
 	private Skill cskill; // 英雄当前的攻击技能
@@ -32,9 +33,6 @@ public class Role extends Actor {
 	}; // 英雄还是NPC
 
 	private Type type = null; // ָ指定当前角色是英雄还是 NPC
-
-	private Animation ani_current; // 当前动画
-	private TextureRegion current_frame;// 当前动画所对应的TextureRegion
 	private Animation ani_idle; // 站立动画
 	private Animation ani_move; // 移动动画
 	private boolean loop_flag;
@@ -42,10 +40,11 @@ public class Role extends Actor {
 	private int maxHp = 100; // 总血量
 	private int currentHp = 30; // 当前血量
 	private int attack_value; // 自身攻击力
-	private int attacked_nums; // 目前被连击数量ֵ
-	private int attack_range; // 当前可攻击距离
-	private TextureRegion current_frame_effect;
-	private Animation ani_effect;
+
+	private Animation ani_current; // 当前人物动画
+	private TextureRegion current_action_frame;// 当前人物动画所对应的TextureRegion
+	private Animation ani_effect;	//效果动画
+	private TextureRegion current_effect_frame;		//当前效果动画对应的某一帧
 
 	int margin = 2; // 血条和人物之间的间隔
 	int pixHeight = 5; // 血条高度
@@ -96,7 +95,9 @@ public class Role extends Actor {
 		time_state = 0;
 		array_skill.add(SkillFactory.getInstance().getSkillByName("atk"));
 		cskill = array_skill.get(0);
-		get_values(type);
+		currentHp = 100;
+		maxHp = 100;
+		attack_value = 5;
 		set_actor_base(type);
 	}
 
@@ -148,19 +149,6 @@ public class Role extends Actor {
 		pixmap_pass.dispose();
 	}
 
-	/**
-	 * 取得角色初始状态属性
-	 * 
-	 * @param type
-	 *            角色类型
-	 */
-	private void get_values(Type type) {
-		currentHp = 100;
-		maxHp = 100;
-		attack_value = 5;
-		attacked_nums = 0;
-	}
-
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
@@ -177,12 +165,12 @@ public class Role extends Actor {
 			}
 		}
 
-		if (current_frame != null) {
-			batch.draw(current_frame, getX(), getY());
+		if (current_action_frame != null) {
+			batch.draw(current_action_frame, getX(), getY());
 		}
 
-		if (current_frame_effect != null) {
-			batch.draw(current_frame_effect, getX(), getY());
+		if (current_effect_frame != null) {
+			batch.draw(current_effect_frame, getX(), getY());
 		}
 		batch.draw(pix, this.getX(), this.getY() + this.margin); // 画血条
 	}
@@ -215,7 +203,6 @@ public class Role extends Actor {
 		if (currentHp <= 0) {
 			// this.getParent().removeActor(this);
 		}
-		attacked_nums++;
 	}
 
 	/**
@@ -247,16 +234,16 @@ public class Role extends Actor {
 
 	private void check_frame_finish() {
 
-		current_frame = ani_current.getKeyFrame(time_state, loop_flag);
+		current_action_frame = ani_current.getKeyFrame(time_state, loop_flag);
 		if (ani_current.isAnimationFinished(time_state)) {
 			set_ani_from_state(STATE.idle);
 			setSelected(false);
 		}
 
 		if (ani_effect != null) {
-			current_frame_effect = ani_effect.getKeyFrame(time_effect, false);
+			current_effect_frame = ani_effect.getKeyFrame(time_effect, false);
 			if (ani_effect.isAnimationFinished(time_effect)) {
-				current_frame_effect = null;
+				current_effect_frame = null;
 				ani_effect = null;
 				setSelected(false);
 				// 如果event对象不为空，执行函数通知完成

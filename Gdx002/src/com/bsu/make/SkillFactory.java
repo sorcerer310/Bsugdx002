@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.bsu.obj.HeroEffectClass;
 import com.bsu.obj.Skill;
+import com.bsu.tools.HeroEffectClass;
 /**
  * 技能工厂，用来初始化所有技能，并保存在hashmap中
  * @author fengchong

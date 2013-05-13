@@ -13,7 +13,6 @@ import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.DIRECTION;
 import com.bsu.tools.Configure.STATE;
-import com.bsu.tools.U;
 
 /**
  * 指挥官对象，用来指挥stage上所有的角色
@@ -47,7 +46,6 @@ public class Commander {
 	 * 回合结束，命令所有的角色行动
 	 */
 	boolean waitNextCommand = true;
-
 	public void roundEnd() {
 		resetHeroSelect();
 		new Thread() {
@@ -146,7 +144,6 @@ public class Commander {
 	 * 指挥英雄们进行行动
 	 */
 	boolean waitRoleFlag = false; // 等待标示，用来标记是否继续循环对下一英雄进行操作
-
 	private void commandHeros(BsuEvent be) throws InterruptedException {
 		// 第一步所有人都进攻
 		for (Role h : heros) {

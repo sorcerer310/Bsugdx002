@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role.Type;
 import com.bsu.tools.Configure;
+import com.bsu.tools.GameMap;
 
 /**
  * 地图上所有带属性的块

@@ -1,4 +1,4 @@
-package com.bsu.obj;
+package com.bsu.tools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

@@ -13,14 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.head.CubocScreen;
-import com.bsu.obj.GameMap;
 import com.bsu.tools.Configure;
+import com.bsu.tools.GameMap;
 
 public class MenuScreen extends CubocScreen implements Observer {
 	private Image backgroundImage;// backgroud
 	private Image play_image;
 	private Image set_image;
-	Stage stage; // ÎèÌ¨
+	Stage stage; // ï¿½ï¿½Ì¨
 	TextureAtlas atlas;
 	GameMap map;
 
@@ -73,8 +73,8 @@ public class MenuScreen extends CubocScreen implements Observer {
 	}
 
 	private void actor_init() {
-		atlas = new TextureAtlas(Gdx.files.internal("data/menu/pack")); // ¸ù¾ÝpackÎÄ¼þ»ñÈ¡ËùÓÐÍ¼Æ¬
-		backgroundImage = new Image(atlas.findRegion("mainMenu")); 		// »ñÈ¡ÃûÎªmainMenuµÄÍ¼Æ¬£¬²¢´´½¨Ò»¸öImage¶ÔÏó
+		atlas = new TextureAtlas(Gdx.files.internal("data/menu/pack")); // ï¿½ï¿½ï¿½packï¿½Ä¼ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
+		backgroundImage = new Image(atlas.findRegion("mainMenu")); 		// ï¿½ï¿½È¡ï¿½ï¿½ÎªmainMenuï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Imageï¿½ï¿½ï¿½ï¿½
 		backgroundImage.setScale(0.5f, 1);
 		play_image = new Image(atlas.findRegion("startButton"));
 		play_image.setPosition(100, 200);
