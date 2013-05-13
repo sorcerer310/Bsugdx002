@@ -87,9 +87,13 @@ public class Commander {
 
 	/**
 	 * 移动动作
-	 * @param r		要移动的Role
-	 * @param d		移动方向
-	 * @param be	移动动作结束后从这里获得结束的消息
+	 * 
+	 * @param r
+	 *            要移动的Role
+	 * @param d
+	 *            移动方向
+	 * @param be
+	 *            移动动作结束后从这里获得结束的消息
 	 */
 	public void directAction(final Role r, DIRECTION d, final BsuEvent be) {
 		if (r.get_ani_from_state() != STATE.idle)
@@ -116,8 +120,9 @@ public class Commander {
 				})));
 	}
 
-	/**
+	/** 
 	 * 处理地图块事件，检查地图上特殊属性的块是否有Role在 有则对Role对象进行处理
+	 * @param be	地图操作完成事件
 	 */
 	private void mapEvent(BsuEvent be) {
 		// 从stage中获得mb
