@@ -14,15 +14,17 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillFactory;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
+import com.bsu.tools.Configure.FACE;
 import com.bsu.tools.Configure.STATE;
 
 public class Role extends Actor {
-	private BsuEvent bevent = null;							//用来通知一些消息
+	private BsuEvent bevent = null; // 用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
 	private float time_state; // 状态时间
 	public float time_effect; // 特效时间
 	public STATE state; // 英雄的当前状态
-	public Skill cskill; // 英雄当前的攻击技能
+	public FACE face; // 人物朝向
+	private Skill cskill; // 英雄当前的攻击技能
 	public Array<Skill> array_skill = new Array<Skill>(); // 英雄拥有的技能
 
 	public static enum Type {
@@ -51,7 +53,7 @@ public class Role extends Actor {
 	private TextureRegion map_pass; // 人物可移动显示的图像
 
 	private boolean selected; // 被选中等待操作？
-	private boolean controlled;//此轮是否被操作过
+	private boolean controlled;// 此轮是否被操作过
 
 	public boolean isControlled() {
 		return controlled;
@@ -171,10 +173,10 @@ public class Role extends Actor {
 			for (int i = 0; i < pass_array.size; i++) {
 				batch.draw(map_pass, pass_array.get(i).x
 						* Configure.map_box_value, (pass_array.get(i).y)
-						* Configure.map_box_value); 
+						* Configure.map_box_value);
 			}
 		}
-		
+
 		if (current_frame != null) {
 			batch.draw(current_frame, getX(), getY());
 		}
@@ -191,7 +193,7 @@ public class Role extends Actor {
 	 * @param enemy
 	 *            攻击动作的角色
 	 */
-	public void hero_attack_other(Role enemy, Skill skl,BsuEvent be) {
+	public void hero_attack_other(Role enemy, Skill skl, BsuEvent be) {
 		if (enemy == null)
 			return;
 		bevent = be;
@@ -257,9 +259,9 @@ public class Role extends Actor {
 				current_frame_effect = null;
 				ani_effect = null;
 				setSelected(false);
-				//如果event对象不为空，执行函数通知完成
-				if(bevent!=null){
-					System.out.println(this.name+"skill_effect_completed");
+				// 如果event对象不为空，执行函数通知完成
+				if (bevent != null) {
+					System.out.println(this.name + "skill_effect_completed");
 					bevent.notify(this, this.name);
 				}
 			}
@@ -295,12 +297,28 @@ public class Role extends Actor {
 	 */
 	private Array<Vector2> realrange = new Array<Vector2>();
 
+	/**
+	 * 获得英雄当前技能的作用范围
+	 * 
+	 * @return 返回坐标数组
+	 */
 	public Array<Vector2> getCurrSkillRange() {
 		realrange.clear();
 		Array<Vector2> rs = cskill.getRange();
-		for (Vector2 v : rs)
-			realrange.add(new Vector2(v.x + this.getBoxX(), v.y
+		for (Vector2 v : rs) {
+			realrange.add(new Vector2(this.getBoxX() + v.x, v.y
 					+ this.getBoxY()));
+		}
 		return realrange;
+	}
+
+	public Skill getCskill() {
+		return cskill;
+	}
+
+	public void setCskill(Skill cskill) {
+		this.cskill = cskill;
+		if (face == FACE.left)
+			cskill.flip();
 	}
 }

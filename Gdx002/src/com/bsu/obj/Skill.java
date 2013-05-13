@@ -51,4 +51,13 @@ public class Skill {
 	public float getVal() {
 		return val;
 	}
+	/**
+	 * 水平翻转技能作用范围
+	 */
+	public void flip(){
+		Array<Vector2> retv = new Array<Vector2>();
+		for(Vector2 v:range)
+			retv.add(new Vector2(-v.x,v.y));
+		range = retv;
+	}
 }

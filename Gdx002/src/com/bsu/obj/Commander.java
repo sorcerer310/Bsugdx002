@@ -11,7 +11,9 @@ import com.bsu.obj.Role.Type;
 import com.bsu.screen.GameScreen;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
+import com.bsu.tools.Configure.DIRECTION;
 import com.bsu.tools.Configure.STATE;
+import com.bsu.tools.U;
 
 /**
  * 指挥官对象，用来指挥stage上所有的角色
@@ -44,122 +46,72 @@ public class Commander {
 	/**
 	 * 回合结束，命令所有的角色行动
 	 */
+	boolean waitNextCommand = true;
+
 	public void roundEnd() {
 		resetHeroSelect();
-		mapEvent(); // 地图事件
-		commandHeros(); // 命令英雄
-		commandNpcs(); // 命令NPC
-
-		// for (Actor act : lactor) {
-		// if (act instanceof Role) {
-		// final Role r = (Role) act;
-		// if (r.getType() == Role.Type.HERO) {
-		// //if (!MapBox.blocked(r)) {
-		// r.set_ani_from_state(STATE.move);
-		// // 此种写法需要引入静态包import static
-		// // com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-		// r.addAction(sequence(moveBy(Configure.map_box_value, 0,
-		// Configure.duration), rotateBy(10),
-		// run(new Runnable() {
-		// @Override
-		// public void run() {
-		// r.set_ani_from_state(STATE.idle);
-		// }
-		// })));
-		// //}
-		// } else if (r.getType() == Role.Type.ENEMY) {
-		// //if (!MapBox.blocked(r)) {
-		// r.set_ani_from_state(STATE.move);
-		// r.addAction(sequence(moveBy(-Configure.map_box_value, 0,
-		// Configure.duration), rotateBy(10),
-		// run(new Runnable() {
-		// @Override
-		// public void run() {
-		// r.set_ani_from_state(STATE.idle);
-		// }
-		// })));
-		// //}
-		// }
-		// }
-		// }
-	}
-
-	/**
-	 * 指定角色向左移动
-	 * 
-	 * @param r
-	 *            要移动的角色，移动结束后将角色的状态转为站立状态
-	 */
-	public void leftAction(final Role r) {
-		if (r.get_ani_from_state() != STATE.idle)
-			return;
-		r.set_ani_from_state(STATE.move);
-		r.addAction(sequence(
-				moveBy(-Configure.map_box_value, 0, Configure.duration),
-				run(new Runnable() {
-					@Override
-					public void run() {
-						r.set_ani_from_state(STATE.idle);
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					mapEvent(new BsuEvent() {
+						@Override
+						public void notify(Object obj, String msg) {
+							waitNextCommand = false;
+						}
+					}); // 地图事件
+					while (waitNextCommand) {
+						Thread.sleep(200);
 					}
-				})));
-	}
+					waitNextCommand = true;
 
-	/**
-	 * 指定角色向右移动
-	 * 
-	 * @param r
-	 *            要移动的角色，移动结束后将角色的状态转为站立状态 
-	 */
-	public void rightAction(final Role r) {
-		if (r.get_ani_from_state() != STATE.idle)
-			return;
-		r.set_ani_from_state(STATE.move);
-		r.addAction(sequence(
-				moveBy(Configure.map_box_value, 0, Configure.duration),
-				run(new Runnable() {
-					@Override
-					public void run() {
-						r.set_ani_from_state(STATE.idle);
+					commandHeros(new BsuEvent() {
+						@Override
+						public void notify(Object obj, String msg) {
+							waitNextCommand = false;
+						}
+					}); // 命令英雄
+					while (waitNextCommand) {
+						Thread.sleep(200);
 					}
-				})));
+					waitNextCommand = true;
+
+					commandNpcs(); // 命令NPC
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
+
 	}
 
 	/**
-	 * 指定角色向上移动
-	 * 
-	 * @param r
-	 *            要移动的角色，移动结束后将角色的状态转为站立状态 
+	 * 移动动作
+	 * @param r		要移动的Role
+	 * @param d		移动方向
+	 * @param be	移动动作结束后从这里获得结束的消息
 	 */
-	public void upAction(final Role r) {
+	public void directAction(final Role r, DIRECTION d, final BsuEvent be) {
 		if (r.get_ani_from_state() != STATE.idle)
 			return;
 		r.set_ani_from_state(STATE.move);
-		r.addAction(sequence(
-				moveBy(0, Configure.map_box_value, Configure.duration),
+		int x = 0, y = 0;
+		if (d == DIRECTION.left)
+			x = -Configure.map_box_value;
+		else if (d == DIRECTION.right)
+			x = Configure.map_box_value;
+		else if (d == DIRECTION.up)
+			y = Configure.map_box_value;
+		else if (d == DIRECTION.down)
+			y = -Configure.map_box_value;
+
+		r.addAction(sequence(moveBy(x, y, Configure.duration),
 				run(new Runnable() {
 					@Override
 					public void run() {
 						r.set_ani_from_state(STATE.idle);
-					}
-				})));
-	}
-
-	/**
-	 * 指定角色向下移动
-	 * 
-	 * @param r
-	 *            要移动的角色，移动结束后将角色的状态转为站立状态 
-	 */
-	public void downAction(final Role r) {
-		if (r.get_ani_from_state() != STATE.idle)
-			return;
-		r.set_ani_from_state(STATE.move);
-		r.addAction(sequence(
-				moveBy(0, -Configure.map_box_value, Configure.duration),
-				run(new Runnable() {
-					@Override
-					public void run() {
-						r.set_ani_from_state(STATE.idle);
+						if (be != null)
+							be.notify(r, r.name);
 					}
 				})));
 	}
@@ -167,8 +119,7 @@ public class Commander {
 	/**
 	 * 处理地图块事件，检查地图上特殊属性的块是否有Role在 有则对Role对象进行处理
 	 */
-
-	private void mapEvent() {
+	private void mapEvent(BsuEvent be) {
 		// 从stage中获得mb
 		Array<Actor> acts = stage.getActors();
 		MapBox mb = null;
@@ -182,69 +133,94 @@ public class Commander {
 			return;
 
 		// 处理一些地图块事件
+
+		be.notify(this, "map_event_completed");
 	}
 
 	/**
 	 * 指挥英雄们进行行动
 	 */
-	boolean waitflag = false; // 等待标示，用来标记是否继续循环对下一英雄进行操作
+	boolean waitRoleFlag = false; // 等待标示，用来标记是否继续循环对下一英雄进行操作
 
-	private void commandHeros() {
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					Array<Role> moveRole = new Array<Role>(); // 不进行攻击，准备移动的英雄
-					// 第一步所有人都进攻
-					for (Role h : heros) {
-						waitflag = true; // 初始化等待循环flag为false
-						Role r = (Role) h; // 当前操作的英雄
-						Array<Vector2> vs = r.getCurrSkillRange(); // 获得当前技能的攻击范围
-						Array<Role> atkrs = getRolsInSkillRange(vs, npcs); // 获得攻击范围内的作用目标
-						// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
-						if (atkrs.size == 0) {
-							moveRole.add(r);
-							continue;
-						}
-						// 命令当前英雄进攻所有范围内的敌人
-						for (Role e : atkrs) {
-							r.hero_attack_other(e, r.cskill, new BsuEvent() {
-								@Override
-								public void notify(Object obj, String msg) {
-									System.out.println(msg);
-									// 收到消息设置等待标示为true
-									if (((Role) obj).name.equals(msg))
-										waitflag = false;
-								}
-							});
-						}
-						// 循环中等待
-						while (waitflag) {	
-							Thread.sleep(200);
-						}
+	private void commandHeros(BsuEvent be) throws InterruptedException {
+		// 第一步所有人都进攻
+		for (Role h : heros) {
+			waitRoleFlag = true; // 初始化等待循环flag为true
+			Role r = (Role) h; // 当前操作的英雄
+			Array<Vector2> vs = r.getCurrSkillRange(); // 获得当前技能的攻击范围
+			Array<Role> atkrs = getRolsInSkillRange(vs, npcs); // 获得攻击范围内的作用目标
+			// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
+			if (atkrs.size == 0) {
+				Commander.this.directAction(r, DIRECTION.right, new BsuEvent() {
+					@Override
+					public void notify(Object obj, String msg) {
+						System.out.println("move:" + msg);
+						// 收到消息设置等待标示为false
+						waitRoleFlag = false;
 					}
-					// 第二部没进攻的人向前一步
-					for (Role h : moveRole)
-						Commander.this.rightAction(h);
-
-				} catch (Exception e) {
-					e.printStackTrace();
+				});
+			} else {
+				// 命令当前英雄进攻所有范围内的敌人
+				for (Role e : atkrs) {
+					r.hero_attack_other(e, r.getCskill(), new BsuEvent() {
+						@Override
+						public void notify(Object obj, String msg) {
+							System.out.println("attack:" + msg);
+							// 收到消息设置等待标示为false
+							waitRoleFlag = false;
+						}
+					});
 				}
 			}
-		}.start();
-
-		// 攻击范围内没有敌人的英雄向前前进一步
-
+			// 等待动作完成
+			while (waitRoleFlag) {
+				Thread.sleep(200);
+			}
+		}
+		be.notify(this, "command_heros_completed");
 	}
 
 	/**
 	 * 指挥敌人们进行行动
 	 */
 	private void commandNpcs() {
-		// 判断攻击范围内是否有英雄，有则攻击英雄
+		try {
+			// 第一步所有敌人都进攻
+			for (Role e : npcs) {
+				waitRoleFlag = true; // 初始化等待循环flag为false
+				Array<Vector2> vs = e.getCurrSkillRange(); // 获得当前技能的攻击范围
+				Array<Role> atkrs = getRolsInSkillRange(vs, heros); // 获得攻击范围内的作用目标
+				// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
+				if (atkrs.size == 0) {
+					Commander.this.directAction(e, DIRECTION.left,
+							new BsuEvent() {
+								@Override
+								public void notify(Object obj, String msg) {
+									// 收到消息设置等待标示为false
+									waitRoleFlag = false;
+								}
+							});
+				} else {
+					// 命令当前英雄进攻所有范围内的敌人
+					for (Role h : atkrs) {
+						e.hero_attack_other(h, e.getCskill(), new BsuEvent() {
+							@Override
+							public void notify(Object obj, String msg) {
+								if (((Role) obj).name.equals(msg))
+									waitRoleFlag = false;
+							}
+						});
+					}
+				}
+				// 循环中等待
+				while (waitRoleFlag) {
+					Thread.sleep(200);
+				}
+			}
 
-		// 攻击范围内没有英雄的敌人向前前进一步
-
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

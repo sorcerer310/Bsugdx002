@@ -52,7 +52,7 @@ public class HeroEffectClass {
 		region_effect_3[0] = effect_spilt[4][3];
 		region_effect_3[1] = effect_spilt[4][4];
 		region_effect_3[2] = effect_spilt[4][5];
-		ani_effect_3 = new Animation(0.2f, region_effect_3);
+		ani_effect_3 = new Animation(0.4f, region_effect_3);
 	}
 
 	public static Animation get_effect(int index){
