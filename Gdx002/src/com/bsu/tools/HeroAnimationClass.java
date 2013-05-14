@@ -16,7 +16,7 @@ public class HeroAnimationClass {
 	 */
 	private static void init_animation_base() {
 		if (hero_texture == null) {
-			hero_texture = new Texture(Gdx.files.internal("data/hero/hero.png"));
+			hero_texture = new Texture(Gdx.files.internal("data/game/hero/hero.png"));
 			spilt = TextureRegion.split(hero_texture, 32, 32);
 			miror = TextureRegion.split(hero_texture, 32, 32);
 			for (TextureRegion[] region1 : miror) {

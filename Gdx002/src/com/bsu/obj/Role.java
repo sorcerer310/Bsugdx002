@@ -164,7 +164,7 @@ public class Role extends Actor {
 		if (current_effect_frame != null) {
 			batch.draw(current_effect_frame, getX(), getY());
 		}
-		if(state==STATE.idle){
+		if (state == STATE.idle) {
 			batch.draw(pix, this.getX(), this.getY() + this.margin); // 画血条
 		}
 	}
@@ -342,5 +342,17 @@ public class Role extends Actor {
 		this.cskill = cskill;
 		if (face == FACE.left)
 			cskill.flip();
+	}
+
+	public boolean hasAnatherRole(Array<Role> rs) {
+		boolean has_flag = false;
+		int num = 0;
+		for (Role r : rs) {
+			num = r.getType() == Type.HERO ? 1 : -1;
+			if ((r.getBoxY() == this.getBoxY() && r.getBoxX() == this.getBoxX() + 1)) {
+				return true;
+			}
+		}
+		return has_flag;
 	}
 }

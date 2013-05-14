@@ -27,7 +27,7 @@ public class HeroEffectClass {
 	}
 
 	private void init_effect_base() {
-		effect_texture = new Texture(Gdx.files.internal("data/hero/effect.png"));
+		effect_texture = new Texture(Gdx.files.internal("data/game/hero/effect.png"));
 		effect_spilt = TextureRegion.split(effect_texture, 32, 32);
 		effect_miror = TextureRegion.split(effect_texture, 32, 32);
 		// effect_0

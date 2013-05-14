@@ -45,12 +45,13 @@ public class Commander {
 	/**
 	 * 回合结束，命令所有的角色行动
 	 */
-	boolean waitNextCommand = true;				//等待下一命令标示，为true时，表示循环等待命令完成
-	boolean roundEndCompleted = true;			//回合结束标示，为true时，表示当前回合结束
+	boolean waitNextCommand = true; // 等待下一命令标示，为true时，表示循环等待命令完成
+	boolean roundEndCompleted = true; // 回合结束标示，为true时，表示当前回合结束
+
 	public void roundEnd() {
-		if(!roundEndCompleted)
+		if (!roundEndCompleted)
 			return;
-		roundEndCompleted = false;				//回合操作开始设置完成标示为false
+		roundEndCompleted = false; // 回合操作开始设置完成标示为false
 		resetHeroValue();
 		new Thread() {
 			@Override
@@ -62,7 +63,8 @@ public class Commander {
 							waitNextCommand = false;
 						}
 					}); // 地图事件
-					while (waitNextCommand) Thread.sleep(200);
+					while (waitNextCommand)
+						Thread.sleep(200);
 					waitNextCommand = true;
 					commandHeros(new BsuEvent() {
 						@Override
@@ -70,7 +72,8 @@ public class Commander {
 							waitNextCommand = false;
 						}
 					}); // 命令英雄
-					while (waitNextCommand) Thread.sleep(200);
+					while (waitNextCommand)
+						Thread.sleep(200);
 					waitNextCommand = true;
 
 					commandNpcs(new BsuEvent() {
@@ -79,10 +82,11 @@ public class Commander {
 							waitNextCommand = false;
 						}
 					}); // 命令NPC
-					while(waitNextCommand) Thread.sleep(200);
+					while (waitNextCommand)
+						Thread.sleep(200);
 					waitNextCommand = true;
 					roundEndCompleted = true;
-					
+
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
