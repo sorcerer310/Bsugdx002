@@ -31,7 +31,7 @@ public class GameMap {
 		// TODO Auto-generated constructor stub
 		get_map(level);
 		cam = new OrthographicCamera();
-		cam.setToOrtho(false, Configure.rect_width, Configure.rect_height);
+		cam.setToOrtho(false, Configure.rect_width,Configure.rect_height);
 	}
 	/**
 	 * 
@@ -44,7 +44,4 @@ public class GameMap {
         atlas = new CustomerTiledAlisa(map, packages); 
 		map_render = new TileMapRenderer(map, atlas, 10, 10);
 	}
-
-
-
 }

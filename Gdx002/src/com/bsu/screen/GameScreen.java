@@ -84,9 +84,12 @@ public class GameScreen extends CubocScreen implements Observer {
 		stage.addActor(hero1);
 		stage.addActor(enemy1);
 		stage.addActor(enemy2);
+		stage.addActor(enemy3);
 		stage.addActor(bt_endround);
 		commander = new Commander(stage);
 		this.addActorListener();
+		setBornPosition(GameMap.map,Type.HERO, Configure.object_layer_hero);
+		setBornPosition(GameMap.map, Type.ENEMY,Configure.object_layer_enemy);
 	}
 
 	private void actor_init() {
@@ -100,12 +103,8 @@ public class GameScreen extends CubocScreen implements Observer {
 		enemy1 = RoleFactory.getInstance().getEnemyRole("enemy1");
 		enemy2 = RoleFactory.getInstance().getEnemyRole("enemy2");
 		enemy3 = RoleFactory.getInstance().getEnemyRole("enemy3");
-		setBornPosition(GameMap.map, hero, "h2");
-		setBornPosition(GameMap.map, enemy1, "n2");
-		enemy2.setPosition(256, 224);
-		hero1.setPosition(224, 224);
 		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,
-				80);
+				60);
 	}
 
 	/**
@@ -119,13 +118,26 @@ public class GameScreen extends CubocScreen implements Observer {
 	 *            地图对象层出生点名称
 	 */
 
-	private void setBornPosition(TiledMap map, Role hero, String s) {
+	private void setBornPosition(TiledMap map,Type p, String s) {
+		Array<Vector2> v = new Array<Vector2>();
 		for (TiledObjectGroup group : map.objectGroups) {
 			for (TiledObject object : group.objects) {
-				if (s.equals(object.name)) {
-					hero.setPosition(object.x,
-							GameMap.map_render.getMapHeightUnits()
-									- Configure.map_box_value - object.y);
+				if (s.equals(object.type)) {
+					Vector2 tv = new Vector2(object.x,
+							GameMap.map_render.getMapHeightUnits() - object.y
+									- Configure.map_box_value);
+					v.add(tv);
+				}
+			}
+		}
+		int index=0;
+		for (Actor act : stage.getActors()) {
+			if (act instanceof Role) {
+				Role r = (Role) act;
+				System.out.println(r.getType()+"@@@"+p);
+				if (r.getType().equals(p)) {
+					r.setPosition(v.get(index).x, v.get(index).y);
+					index++;
 				}
 			}
 		}
@@ -195,7 +207,6 @@ public class GameScreen extends CubocScreen implements Observer {
 				if (isAction_start() && (isControlled())) {
 					int input_x = (int) (x / Configure.map_box_value);
 					int input_y = (int) (y / Configure.map_box_value);
-
 					for (Actor act : stage.getActors()) {
 						if (act instanceof Role) {
 							Role r = (Role) act;
@@ -211,7 +222,8 @@ public class GameScreen extends CubocScreen implements Observer {
 
 	/**
 	 * 角色控制规则，判断是不是有角色在此位置，然后处理选择，设置角色pass，attack数组
-	 * @param mx 
+	 * 
+	 * @param mx
 	 * @param my
 	 * @param r
 	 */
@@ -238,21 +250,22 @@ public class GameScreen extends CubocScreen implements Observer {
 				int mbc = (int) r.getPass_array().get(i).x;
 				int mbr = (int) r.getPass_array().get(i).y;
 				if ((mx == mbc) && (my == mbr)) {
-					commander.moveAction(r, mx,my);
+					commander.moveAction(r, mx, my);
 					break;
 				}
 			}
 		}
 	}
+
 	/*
 	 * 根据Role对象，设置相应的MapBox的pass数组
 	 */
-	private void set_map_value(Role r){
+	private void set_map_value(Role r) {
 		MapBox.pass_array.clear();
-		for(Vector2 v:r.getPass_array()){
-			Vector2 tempV=new Vector2();
-			tempV.x=v.x;
-			tempV.y=v.y;
+		for (Vector2 v : r.getPass_array()) {
+			Vector2 tempV = new Vector2();
+			tempV.x = v.x;
+			tempV.y = v.y;
 			MapBox.pass_array.add(tempV);
 		}
 	}

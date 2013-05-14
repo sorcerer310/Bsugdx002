@@ -15,6 +15,8 @@ public class HeroEffectClass {
 	private static Animation ani_effect_3;
 	private static Animation ani_effect_disapper;
 	private static Animation ani_effect_apper;
+	private static Animation ani_hero_home;
+	private static Animation ani_enemy_home;
 
 	/**
 	 * 角色攻击动作类型攻击目标后的特效效果类
@@ -71,6 +73,22 @@ public class HeroEffectClass {
 		region_effect_disapper[2] = effect_spilt[5][6];
 		region_effect_disapper[3] = effect_spilt[4][6];
 		ani_effect_disapper = new Animation(0.1f, region_effect_disapper);
+
+		// effect_hero_home
+		TextureRegion[] region_hero_home = new TextureRegion[4];
+		region_hero_home[0] = effect_spilt[7][6];
+		region_hero_home[1] = effect_spilt[6][6];
+		region_hero_home[2] = effect_spilt[5][6];
+		region_hero_home[3] = effect_spilt[4][6];
+		ani_hero_home = new Animation(0.1f, region_hero_home);
+
+		// effect_disapper
+		TextureRegion[] region_enemy_home = new TextureRegion[4];
+		region_enemy_home[0] = effect_spilt[7][6];
+		region_enemy_home[1] = effect_spilt[6][6];
+		region_enemy_home[2] = effect_spilt[5][6];
+		region_enemy_home[3] = effect_spilt[4][6];
+		ani_enemy_home = new Animation(0.1f, region_enemy_home);
 	}
 
 	public static Animation get_effect(int index) {
@@ -89,6 +107,12 @@ public class HeroEffectClass {
 
 		case 3:
 			ani = ani_effect_3;
+			break;
+		case 89:
+			ani = ani_hero_home;
+			break;
+		case 88:
+			ani = ani_enemy_home;
 			break;
 		case 99:
 			ani = ani_effect_disapper;

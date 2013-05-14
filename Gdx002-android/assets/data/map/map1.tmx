@@ -10,18 +10,17 @@
  </tileset>
  <layer height="10" name="块层 1" width="15">
   <data compression="zlib" encoding="base64">
-   eJxjZmBgYB5imIUCPNBuHykYACxKAdI=
+   eJxjZmBgYB5imIUCPNBuJwcPRQAA+7cBSw==
   </data>
  </layer>
  <layer height="10" name="块层 2" width="15">
   <data compression="zlib" encoding="base64">
-   eJxjYCAftDAyMJgAsSIjdrY5DnEQexQQD5qA4WUGDTdsbHMc4gMZzgBvrwjF
+   eJw7xMDAcIhMPAqIBxcpwEMRAACOmRee
   </data>
  </layer>
  <objectgroup height="10" name="对象层 1" width="15">
-  <object name="h2" x="32" y="160"/>
-  <object name="n2" x="384" y="128"/>
-  <object type="block" x="128" y="160">
+  <object type="enemy" x="384" y="96"/>
+  <object type="block" x="192" y="96">
    <properties>
     <property name="pass" value="false"/>
    </properties>
@@ -36,5 +35,33 @@
     <property name="hpRaise" value="10"/>
    </properties>
   </object>
+  <object type="map_value" x="0" y="0">
+   <properties>
+    <property name="coll_max" value="14"/>
+    <property name="coll_min" value="0"/>
+    <property name="raw_max" value="5"/>
+    <property name="raw_min" value="1"/>
+   </properties>
+  </object>
+  <object type="hero_home" x="0" y="64"/>
+  <object type="hero_home" x="0" y="96"/>
+  <object type="hero_home" x="0" y="128"/>
+  <object type="hero_home" x="0" y="160"/>
+  <object type="hero_home" x="0" y="32"/>
+  <object type="hero" x="64" y="32"/>
+  <object type="hero" x="64" y="64"/>
+  <object type="hero" x="64" y="160"/>
+  <object type="hero" x="64" y="96"/>
+  <object type="hero" x="64" y="128"/>
+  <object type="enemy" x="384" y="128"/>
+  <object type="enemy" x="384" y="160"/>
+  <object type="enemy" x="384" y="64"/>
+  <object type="enemy" x="384" y="32"/>
+  <object height="1" x="465" y="42"/>
+  <object type="enemy_home" x="448" y="32"/>
+  <object type="enemy_home" x="448" y="64"/>
+  <object type="enemy_home" x="448" y="96"/>
+  <object type="enemy_home" x="448" y="128"/>
+  <object type="enemy_home" x="448" y="160"/>
  </objectgroup>
 </map>
