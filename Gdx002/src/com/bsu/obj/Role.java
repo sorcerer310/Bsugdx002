@@ -17,6 +17,7 @@ import com.bsu.tools.Configure;
 import com.bsu.tools.HeroAnimationClass;
 import com.bsu.tools.Configure.FACE;
 import com.bsu.tools.Configure.STATE;
+import com.bsu.tools.HeroEffectClass;
 
 public class Role extends Actor {
 	private BsuEvent bevent = null; // 用来通知一些消息
@@ -35,6 +36,8 @@ public class Role extends Actor {
 	private Type type = null; // ָ指定当前角色是英雄还是 NPC
 	private Animation ani_idle; // 站立动画
 	private Animation ani_move; // 移动动画
+	private Animation ani_disapper;// 角色消失
+	private Animation ani_apper;// 角色出现
 	private boolean loop_flag;
 
 	private int maxHp = 100; // 总血量
@@ -43,13 +46,12 @@ public class Role extends Actor {
 
 	private Animation ani_current; // 当前人物动画
 	private TextureRegion current_action_frame;// 当前人物动画所对应的TextureRegion
-	private Animation ani_effect;	//效果动画
-	private TextureRegion current_effect_frame;		//当前效果动画对应的某一帧
+	private Animation ani_effect; // 效果动画
+	private TextureRegion current_effect_frame; // 当前效果动画对应的某一帧
 
 	int margin = 2; // 血条和人物之间的间隔
 	int pixHeight = 5; // 血条高度
 	TextureRegion pix;
-	private TextureRegion map_pass; // 人物可移动显示的图像
 
 	private boolean selected; // 被选中等待操作？
 	private boolean controlled;// 此轮是否被操作过
@@ -68,8 +70,25 @@ public class Role extends Actor {
 		return pass_array;
 	}
 
-	public void setPass_array(Array<Vector2> pass_array) {
-		this.pass_array = pass_array;
+	public void setPass_array(Array<Vector2> array) {
+		this.pass_array.clear();
+		for (Vector2 v : array) {
+			Vector2 tempV = new Vector2();
+			tempV.x = v.x;
+			tempV.y = v.y;
+			this.pass_array.add(tempV);
+		}
+	}
+
+	private Array<Vector2> attack_array = new Array<Vector2>();
+
+	public Array<Vector2> getAttack_array() {
+		attack_array.clear();
+		Array<Vector2> vs = this.getCurrSkillRange();
+		for (Vector2 v : vs) {
+			attack_array.add(v);
+		}
+		return attack_array;
 	}
 
 	public boolean isSelected() {
@@ -111,13 +130,15 @@ public class Role extends Actor {
 		int actor_type = type == Type.HERO ? 2 : 5;
 		ani_idle = HeroAnimationClass.getAnimationIdle(actor_type);
 		ani_move = HeroAnimationClass.getAnimationMove(actor_type);
+		ani_disapper = HeroEffectClass.get_effect(99);
+		ani_apper = HeroEffectClass.get_effect(98);
 		set_ani_from_state(STATE.idle);
 	}
 
 	/**
 	 * 设置人物生命血条
 	 */
-	private void draw_life_display() {
+	private void set_life_display() {
 		pix = null;
 		Pixmap pixmap;
 		pixmap = new Pixmap(64, 8, Format.RGBA8888); // 生成一张64*8的图片
@@ -130,41 +151,12 @@ public class Role extends Actor {
 		pix = new TextureRegion(pixmaptex, Configure.map_box_value,
 				Configure.map_box_value);
 		pixmap.dispose();
-
-		Color temp_c = Color.GREEN;
-		;
-		temp_c.a = 0.8f;
-		Pixmap pixmap_pass;
-		pixmap_pass = new Pixmap(Configure.map_box_value,
-				Configure.map_box_value, Format.RGBA8888);
-		pixmap_pass.setColor(Color.BLACK);
-		pixmap_pass.drawRectangle(0, 0, Configure.map_box_value,
-				Configure.map_box_value);
-		pixmap_pass.setColor(temp_c);
-		pixmap_pass.fillRectangle(1, 1, Configure.map_box_value - 2,
-				Configure.map_box_value - 2);
-		Texture pixmaptex1 = new Texture(pixmap_pass);
-		map_pass = new TextureRegion(pixmaptex1, Configure.map_box_value,
-				Configure.map_box_value);
-		pixmap_pass.dispose();
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
-		time_state += Gdx.graphics.getDeltaTime();
-		time_effect += Gdx.graphics.getDeltaTime();
-		this.setSize(Configure.map_box_value, Configure.map_box_value);
-		draw_life_display();
-		check_frame_finish();
-		if (selected) {
-			for (int i = 0; i < pass_array.size; i++) {
-				batch.draw(map_pass, pass_array.get(i).x
-						* Configure.map_box_value, (pass_array.get(i).y)
-						* Configure.map_box_value);
-			}
-		}
-
+		Role_logic();
 		if (current_action_frame != null) {
 			batch.draw(current_action_frame, getX(), getY());
 		}
@@ -172,7 +164,20 @@ public class Role extends Actor {
 		if (current_effect_frame != null) {
 			batch.draw(current_effect_frame, getX(), getY());
 		}
-		batch.draw(pix, this.getX(), this.getY() + this.margin); // 画血条
+		if(state==STATE.idle){
+			batch.draw(pix, this.getX(), this.getY() + this.margin); // 画血条
+		}
+	}
+
+	public void hero_disapper(BsuEvent be) {
+		set_ani_from_state(STATE.disapper);
+		bevent = be;
+	}
+
+	public void hero_apper(int mx, int my, BsuEvent be) {
+		set_ani_from_state(STATE.apper);
+		setPosition(mx * Configure.map_box_value, my * Configure.map_box_value);
+		bevent = be;
 	}
 
 	/**
@@ -191,8 +196,6 @@ public class Role extends Actor {
 	}
 
 	/**
-	 * 被攻击类型0-3 Role被技能作用后数值变化
-	 * 
 	 * @param damage_value
 	 */
 	public void hero_isAttacked(Animation ani, float damage_value) {
@@ -222,6 +225,14 @@ public class Role extends Actor {
 			ani_current = ani_move;
 			loop_flag = true;
 		}
+		if (state == STATE.apper) {
+			ani_current = ani_apper;
+			loop_flag = false;
+		}
+		if (state == STATE.disapper) {
+			ani_current = ani_disapper;
+			loop_flag = false;
+		}
 		time_state = 0;
 	}
 
@@ -232,12 +243,24 @@ public class Role extends Actor {
 		return state;
 	}
 
-	private void check_frame_finish() {
+	/*
+	 * Role 逻辑判断
+	 */
+	private void Role_logic() {
+		time_state += Gdx.graphics.getDeltaTime();
+		time_effect += Gdx.graphics.getDeltaTime();
+		this.setSize(Configure.map_box_value, Configure.map_box_value);
+		set_life_display();
 
 		current_action_frame = ani_current.getKeyFrame(time_state, loop_flag);
 		if (ani_current.isAnimationFinished(time_state)) {
-			set_ani_from_state(STATE.idle);
-			setSelected(false);
+			if (ani_current == ani_move) {
+				set_ani_from_state(STATE.idle);
+			}
+			if (bevent != null) {
+				set_ani_from_state(STATE.idle);
+				bevent.notify(this, this.name);
+			}
 		}
 
 		if (ani_effect != null) {
@@ -245,12 +268,24 @@ public class Role extends Actor {
 			if (ani_effect.isAnimationFinished(time_effect)) {
 				current_effect_frame = null;
 				ani_effect = null;
-				setSelected(false);
 				// 如果event对象不为空，执行函数通知完成
 				if (bevent != null) {
 					System.out.println(this.name + "skill_effect_completed");
 					bevent.notify(this, this.name);
 				}
+			}
+		}
+		if (isSelected()) {
+			if (state == STATE.idle) {
+				MapBox.attack_array.clear();
+				for (Vector2 v : getAttack_array()) {
+					Vector2 tempV = new Vector2();
+					tempV.x = v.x;
+					tempV.y = v.y;
+					MapBox.attack_array.add(tempV);
+				}
+			} else {
+				MapBox.attack_array.clear();
 			}
 		}
 	}

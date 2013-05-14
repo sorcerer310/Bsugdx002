@@ -13,6 +13,8 @@ public class HeroEffectClass {
 	private static Animation ani_effect_1;
 	private static Animation ani_effect_2;
 	private static Animation ani_effect_3;
+	private static Animation ani_effect_disapper;
+	private static Animation ani_effect_apper;
 
 	/**
 	 * 角色攻击动作类型攻击目标后的特效效果类
@@ -53,26 +55,47 @@ public class HeroEffectClass {
 		region_effect_3[1] = effect_spilt[4][4];
 		region_effect_3[2] = effect_spilt[4][5];
 		ani_effect_3 = new Animation(0.4f, region_effect_3);
+
+		// effect_apper
+		TextureRegion[] region_effect_apper = new TextureRegion[4];
+		region_effect_apper[0] = effect_spilt[4][6];
+		region_effect_apper[1] = effect_spilt[5][6];
+		region_effect_apper[2] = effect_spilt[6][6];
+		region_effect_apper[3] = effect_spilt[7][6];
+		ani_effect_apper = new Animation(0.1f, region_effect_apper);
+
+		// effect_disapper
+		TextureRegion[] region_effect_disapper = new TextureRegion[4];
+		region_effect_disapper[0] = effect_spilt[7][6];
+		region_effect_disapper[1] = effect_spilt[6][6];
+		region_effect_disapper[2] = effect_spilt[5][6];
+		region_effect_disapper[3] = effect_spilt[4][6];
+		ani_effect_disapper = new Animation(0.1f, region_effect_disapper);
 	}
 
-	public static Animation get_effect(int index){
+	public static Animation get_effect(int index) {
 		Animation ani = null;
-		switch(index){
-			case 0:
-				ani = ani_effect_0;
-				break;
-	
-			case 1:
-				ani = ani_effect_1;
-				break;
-	
-			case 2:
-				ani = ani_effect_2;
-				break;
-	
-			case 3:
-				ani = ani_effect_3;
-				break;
+		switch (index) {
+		case 0:
+			ani = ani_effect_0;
+			break;
+		case 1:
+			ani = ani_effect_1;
+			break;
+
+		case 2:
+			ani = ani_effect_2;
+			break;
+
+		case 3:
+			ani = ani_effect_3;
+			break;
+		case 99:
+			ani = ani_effect_disapper;
+			break;
+		case 98:
+			ani = ani_effect_apper;
+			break;
 		}
 		return ani;
 	}

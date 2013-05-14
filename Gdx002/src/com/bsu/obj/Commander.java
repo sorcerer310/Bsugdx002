@@ -46,8 +46,9 @@ public class Commander {
 	 * 回合结束，命令所有的角色行动
 	 */
 	boolean waitNextCommand = true;
+
 	public void roundEnd() {
-		resetHeroSelect();
+		resetHeroValue();
 		new Thread() {
 			@Override
 			public void run() {
@@ -118,9 +119,11 @@ public class Commander {
 				})));
 	}
 
-	/** 
+	/**
 	 * 处理地图块事件，检查地图上特殊属性的块是否有Role在 有则对Role对象进行处理
-	 * @param be	地图操作完成事件
+	 * 
+	 * @param be
+	 *            地图操作完成事件
 	 */
 	private void mapEvent(BsuEvent be) {
 		// 从stage中获得mb
@@ -144,6 +147,7 @@ public class Commander {
 	 * 指挥英雄们进行行动
 	 */
 	boolean waitRoleFlag = false; // 等待标示，用来标记是否继续循环对下一英雄进行操作
+
 	private void commandHeros(BsuEvent be) throws InterruptedException {
 		// 第一步所有人都进攻
 		for (Role h : heros) {
@@ -245,32 +249,62 @@ public class Commander {
 
 	/**
 	 * 向role下命令，命令其如何移动,只针对hero方
+	 * 
+	 * @param mx
+	 * @param my
 	 */
-	public void moveAction(Role r, final Array<Action> a) {
-		GameScreen.controlled = false;
-		if (r.getType() == Role.Type.HERO) {
-			r.set_ani_from_state(STATE.move);
-			final int index = 0;
-			this.act_action_group(r, index, a.size, a);
-
+	public void moveAction(final Role r, final int mx, final int my) {
+		GameScreen.setControlled(false);
+		waitRoleFlag = true;
+		boolean disapperFlag = true;// 默认闪现出现到指定位置
+		DIRECTION d = null;
+		if (mx == r.getBoxX()) {
+			if (my - r.getBoxY() == 1) {
+				d = DIRECTION.up;
+				disapperFlag = false;
+			}
+			if (my - r.getBoxY() == -1) {
+				d = DIRECTION.down;
+				disapperFlag = false;
+			}
 		}
-	}
-
-	private void act_action_group(final Role r, final int current_index,
-			final int max_length, final Array<Action> action) {
-		r.addAction(sequence(action.get(current_index), rotateBy(10),
-				run(new Runnable() {
-					@Override
-					public void run() {
-						if (current_index < max_length - 1) {
-							act_action_group(r, current_index + 1, max_length,
-									action);
-						} else {
-							r.set_ani_from_state(STATE.idle);
-							GameScreen.controlled = true;
-						}
+		if (my == r.getBoxY()) {
+			if (mx - r.getBoxX() == 1) {
+				d = DIRECTION.right;
+				disapperFlag = false;
+			}
+			if (mx - r.getBoxX() == -1) {
+				d = DIRECTION.left;
+				disapperFlag = false;
+			}
+		}
+		if (!disapperFlag) {
+			this.directAction(r, d, new BsuEvent() {
+				@Override
+				public void notify(Object obj, String msg) {
+					// 收到消息设置等待标示为false
+					r.set_ani_from_state(STATE.idle);
+					GameScreen.setControlled(true);
+				}
+			});
+		} else {
+			r.hero_disapper(new BsuEvent() {
+				@Override
+				public void notify(Object obj, String msg) {
+					if (((Role) obj).name.equals(msg)) {
+						r.hero_apper(mx,my,new BsuEvent() {
+							@Override
+							public void notify(Object obj, String msg) {
+								if (((Role) obj).name.equals(msg)) {
+									r.set_ani_from_state(STATE.idle);
+									GameScreen.setControlled(true);
+								}
+							}
+						});
 					}
-				})));
+				}
+			});
+		}
 	}
 
 	/**
@@ -325,7 +359,7 @@ public class Commander {
 	/**
 	 * 每轮操作结束后，清空角色方可移动数组
 	 */
-	private void resetHeroSelect() {
+	private void resetHeroValue() {
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
 				final Role r = (Role) act;
@@ -333,6 +367,9 @@ public class Commander {
 					r.setSelected(false);
 					r.setControlled(false);
 					r.getPass_array().clear();
+					r.getAttack_array().clear();
+					MapBox.pass_array.clear();
+					MapBox.attack_array.clear();
 				}
 			}
 		}

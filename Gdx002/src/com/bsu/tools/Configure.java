@@ -45,7 +45,7 @@ public class Configure {
 	public static String map_type_box = "box"; // 地图对象层类型-->宝箱
 
 	public static enum STATE { // 人物状态
-		idle, attack_normal, move, attack_v, attack_h
+		idle, attack_normal, move, attack_v, attack_h,disapper,apper
 	};
 
 	public static enum FACE {

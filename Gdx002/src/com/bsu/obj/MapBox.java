@@ -1,3 +1,4 @@
+
 package com.bsu.obj;
 
 import com.badlogic.gdx.graphics.Color;
@@ -25,7 +26,10 @@ import com.bsu.tools.GameMap;
 public class MapBox extends Actor {
 
 	private TextureRegion map_block; // 地图上障碍图像
-
+	private TextureRegion map_pass; // 人物可移动显示的图像
+	private TextureRegion map_attack;//人物攻击显示的图像
+	public static Array<Vector2> pass_array = new Array<Vector2>();//选择人物后，显示地图上可移动范围
+	public static Array<Vector2> attack_array=new Array<Vector2>();//选择人物后，显示人物可攻击范围
 	public static Array<Vector2> block_array = new Array<Vector2>(); // 地图上障碍格子数组
 	public static Array<Vector2> box_array = new Array<Vector2>(); // 宝箱格子
 	public static Array<Vector2> hpRaise_array = new Array<Vector2>(); // 加血格子
@@ -38,7 +42,7 @@ public class MapBox extends Actor {
 	private static int coll_min = 0; // 可以移动的最左格子数
 
 	public static enum BOX {
-		PASS, BLOCK, EVENT
+		PASS, BLOCK, EVENT,ATTACK
 	};
 
 	/**
@@ -48,7 +52,7 @@ public class MapBox extends Actor {
 		// TODO Auto-generated constructor stub
 		draw_map_box(BOX.PASS);
 		draw_map_box(BOX.BLOCK);
-
+		draw_map_box(BOX.ATTACK);
 		get_box_value();
 	}
 
@@ -62,7 +66,7 @@ public class MapBox extends Actor {
 	 */
 	public static Array<Vector2> set_hero_pass_box(Role hero,
 			Array<Role> enemyArray) {
-		Array<Vector2> pass_array = new Array<Vector2>();
+		pass_array.clear();
 		enemy_array = get_role_block(enemyArray, enemy_array);
 		int hero_coll = hero.getBoxX();
 		int hero_raw = hero.getBoxY();
@@ -87,7 +91,7 @@ public class MapBox extends Actor {
 	 * @param coll
 	 *            格子列数
 	 */
-	private static void set_h(int index, int coll,Array<Vector2> pass_array) {
+	private static void set_h(int index, int coll,Array<Vector2> array) {
 
 		for (int i = 0; i < 5; i++) {
 			if (i + coll - 2 >= coll_min) {
@@ -96,7 +100,7 @@ public class MapBox extends Actor {
 				if (blocked(index, temp_index)) {
 					break;
 				}
-				pass_array.add(new Vector2(temp_index, index));
+				array.add(new Vector2(temp_index, index));
 				if (temp_index >= coll_max) {
 					break;
 				}
@@ -116,6 +120,16 @@ public class MapBox extends Actor {
 					* Configure.map_box_value, (block_array.get(i).y)
 					* Configure.map_box_value);
 		}
+		for (int i = 0; i < pass_array.size; i++) {
+			batch.draw(map_pass, pass_array.get(i).x
+					* Configure.map_box_value, (pass_array.get(i).y)
+					* Configure.map_box_value);
+		}
+		for (int i = 0; i < attack_array.size; i++) {
+			batch.draw(map_attack, attack_array.get(i).x
+					* Configure.map_box_value, (attack_array.get(i).y)
+					* Configure.map_box_value);
+		}
 	}
 
 	/**
@@ -126,13 +140,20 @@ public class MapBox extends Actor {
 	 */
 	private void draw_map_box(BOX box) {
 		TextureRegion temp_box = null;
-		Color temp_c;
+		Color temp_c = null;
 		if (box == BOX.PASS) {
 			temp_c = Color.GREEN;
-		} else {
+			temp_c.a = 0.8f;
+		} 
+		if(box==BOX.BLOCK){
 			temp_c = Color.RED;
+			temp_c.a = 0.8f;
 		}
-		temp_c.a = 0.8f;
+		if(box==BOX.ATTACK){
+			temp_c = Color.BLUE;
+			temp_c.a = 0.4f;
+		}
+		
 		Pixmap pixmap;
 		pixmap = new Pixmap(Configure.map_box_value, Configure.map_box_value,
 				Format.RGBA8888);
@@ -146,9 +167,13 @@ public class MapBox extends Actor {
 		temp_box = new TextureRegion(pixmaptex, Configure.map_box_value,
 				Configure.map_box_value);
 		if (box == BOX.PASS) {
-
-		} else {
+			map_pass=temp_box;
+		}
+		if(box==BOX.BLOCK){
 			map_block = temp_box;
+		}
+		if(box==BOX.ATTACK){
+			map_attack = temp_box;
 		}
 		pixmap.dispose();
 	}

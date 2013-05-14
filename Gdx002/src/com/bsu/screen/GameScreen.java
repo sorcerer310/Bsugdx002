@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -51,8 +52,8 @@ public class GameScreen extends CubocScreen implements Observer {
 	Commander commander;
 	TextButton bt_endround;
 	MapBox mb;
-	public static boolean action_start; // 是否回合开始
-	public static boolean controlled;
+	private static boolean action_start; // 是否回合开始
+	private static boolean controlled;
 
 	public static boolean isControlled() {
 		return controlled;
@@ -209,25 +210,11 @@ public class GameScreen extends CubocScreen implements Observer {
 	}
 
 	/**
-	 * 根据类型几2个位置讲MoveByAction加入到制定的ActionArray index 0或者1 0代表加入水平先走，1代表先走竖直
+	 * 角色控制规则，判断是不是有角色在此位置，然后处理选择，设置角色pass，attack数组
+	 * @param mx 
+	 * @param my
+	 * @param r
 	 */
-	private void addAction(int index, int first, int second, Array<Action> mba) {
-		if (first == second) {
-			return;
-		}
-		int ax = 0;
-		int ay = 0;
-		if (index == 0) {
-			ax = (first - second) * Configure.map_box_value;
-		} else {
-			ay = (first - second) * Configure.map_box_value;
-		}
-		MoveByAction action = Actions.action(MoveByAction.class);
-		action.setAmount(ax, ay);
-		action.setDuration(Math.abs((first - second) * Configure.duration));
-		mba.add(action);
-	}
-
 	private void hero_controll_rule(int mx, int my, Role r) {
 		int hero_x = r.getBoxX();
 		int hero_y = r.getBoxY();
@@ -239,6 +226,7 @@ public class GameScreen extends CubocScreen implements Observer {
 						commander.heroControllor(r);
 					}
 				}
+				set_map_value(r);
 				return;
 			}
 		}
@@ -250,19 +238,22 @@ public class GameScreen extends CubocScreen implements Observer {
 				int mbc = (int) r.getPass_array().get(i).x;
 				int mbr = (int) r.getPass_array().get(i).y;
 				if ((mx == mbc) && (my == mbr)) {
-
-					Array<Action> a = new Array<Action>();
-					if (hero_x > mbc) {
-						addAction(0, mx, hero_x, a);
-						addAction(1, my, hero_y, a);
-					} else {
-						addAction(1, my, hero_y, a);
-						addAction(0, mx, hero_x, a);
-					}
-					commander.moveAction(r, a);
+					commander.moveAction(r, mx,my);
 					break;
 				}
 			}
+		}
+	}
+	/*
+	 * 根据Role对象，设置相应的MapBox的pass数组
+	 */
+	private void set_map_value(Role r){
+		MapBox.pass_array.clear();
+		for(Vector2 v:r.getPass_array()){
+			Vector2 tempV=new Vector2();
+			tempV.x=v.x;
+			tempV.y=v.y;
+			MapBox.pass_array.add(tempV);
 		}
 	}
 }

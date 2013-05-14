@@ -94,4 +94,14 @@ public class HeroAnimationClass {
 		Animation ani_attack_h = new Animation(0.1f, region_attack_h);
 		return ani_attack_h;
 	}
+	
+	public static Animation getAnimationDisapper(int actor_type){
+		init_animation_base();
+		TextureRegion[]  region_apper = new TextureRegion[3];
+		region_apper[0] = spilt[actor_type][6];
+		region_apper[1] = spilt[actor_type][7];
+		region_apper[2] = spilt[actor_type][8];
+		Animation ani_disapper = new Animation(0.1f, region_apper);
+		return ani_disapper;
+	}
 }
