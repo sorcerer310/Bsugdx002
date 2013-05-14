@@ -9,7 +9,8 @@ public class CommandQueue implements Runnable {
 		return instance;
 	}
 	
-
+	
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
