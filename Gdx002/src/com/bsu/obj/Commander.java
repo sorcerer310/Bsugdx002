@@ -64,7 +64,6 @@ public class Commander {
 					}); // 地图事件
 					while (waitNextCommand) Thread.sleep(200);
 					waitNextCommand = true;
-
 					commandHeros(new BsuEvent() {
 						@Override
 						public void notify(Object obj, String msg) {

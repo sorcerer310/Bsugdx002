@@ -118,7 +118,6 @@ public class GameScreen extends CubocScreen implements Observer {
 		for (Actor act : stage.getActors()) {
 			if (act instanceof Role) {
 				Role r = (Role) act;
-				System.out.println(r.getType()+"@@@"+p);
 				if (r.getType().equals(p)) {
 					r.setPosition(v.get(index).x, v.get(index).y);
 					index++;
