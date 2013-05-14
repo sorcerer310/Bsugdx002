@@ -53,7 +53,7 @@ public class Commander {
 			return;
 		roundEndCompleted = false; // 回合操作开始设置完成标示为false
 		resetHeroValue();
-		new Thread() {
+		Thread t = new Thread() {
 			@Override
 			public void run() {
 				try {
@@ -91,8 +91,9 @@ public class Commander {
 					e.printStackTrace();
 				}
 			}
-		}.start();
-
+		};
+		t.start();
+		
 	}
 
 	/**
