@@ -343,13 +343,17 @@ public class Role extends Actor {
 		if (face == FACE.left)
 			cskill.flip();
 	}
-
+	/**
+	 * 判断移动路径上是否有自己人阻挡
+	 * @param rs
+	 * @return
+	 */
 	public boolean hasAnatherRole(Array<Role> rs) {
 		boolean has_flag = false;
 		int num = 0;
 		for (Role r : rs) {
 			num = r.getType() == Type.HERO ? 1 : -1;
-			if ((r.getBoxY() == this.getBoxY() && r.getBoxX() == this.getBoxX() + 1)) {
+			if ((r.getBoxY() == this.getBoxY() && r.getBoxX() == this.getBoxX() + num)) {
 				return true;
 			}
 		}
