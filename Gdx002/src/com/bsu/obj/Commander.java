@@ -1,7 +1,6 @@
 package com.bsu.obj;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 //import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -93,7 +92,7 @@ public class Commander {
 			}
 		};
 		t.start();
-		
+
 	}
 
 	/**
@@ -168,15 +167,21 @@ public class Commander {
 			Array<Vector2> vs = r.getCurrSkillRange(); // 获得当前技能的攻击范围
 			Array<Role> atkrs = getRolsInSkillRange(vs, npcs); // 获得攻击范围内的作用目标
 			// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
-			if (atkrs.size == 0) {
-				Commander.this.directAction(r, DIRECTION.right, new BsuEvent() {
-					@Override
-					public void notify(Object obj, String msg) {
-						System.out.println("move:" + msg);
-						// 收到消息设置等待标示为false
-						waitRoleFlag = false;
-					}
-				});
+			if (atkrs.size == 0) { 
+				if (!r.hasAnatherRole(heros)) {
+					Commander.this.directAction(r, DIRECTION.right,
+							new BsuEvent() {
+								@Override
+								public void notify(Object obj, String msg) {
+									System.out.println("move:" + msg);
+									// 收到消息设置等待标示为false
+									waitRoleFlag = false;
+								}
+							});
+				} else{
+					System.out.println("hasAnatherRole");
+//					waitRoleFlag = false;
+				}
 			} else {
 				// 命令当前英雄进攻所有范围内的敌人
 				for (Role e : atkrs) {
@@ -211,13 +216,19 @@ public class Commander {
 			Array<Role> atkrs = getRolsInSkillRange(vs, heros); // 获得攻击范围内的作用目标
 			// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
 			if (atkrs.size == 0) {
-				Commander.this.directAction(e, DIRECTION.left, new BsuEvent() {
-					@Override
-					public void notify(Object obj, String msg) {
-						// 收到消息设置等待标示为false
-						waitRoleFlag = false;
-					}
-				});
+				if (!e.hasAnatherRole(npcs)) {
+					Commander.this.directAction(e, DIRECTION.left,
+							new BsuEvent() {
+								@Override
+								public void notify(Object obj, String msg) {
+									// 收到消息设置等待标示为false
+									waitRoleFlag = false;
+								}
+							});
+					
+				}else {
+					waitRoleFlag = false;
+				}
 			} else {
 				// 命令当前英雄进攻所有范围内的敌人
 				for (Role h : atkrs) {
