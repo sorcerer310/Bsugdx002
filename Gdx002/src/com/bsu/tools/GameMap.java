@@ -20,9 +20,7 @@ import com.badlogic.gdx.utils.Array;
 public class GameMap {
 	public static TiledMap map;
 	private TileAtlas atlas;
-	public static TileMapRenderer map_render;
-	public OrthographicCamera cam;  
-	private Vector2 maxCamPosition = new Vector2(0, 0);  
+	public static TileMapRenderer map_render; 
   /**
    * 
    * @param level 关卡索引，根据索引加载不同地图
@@ -30,8 +28,6 @@ public class GameMap {
 	public GameMap(int level) {
 		// TODO Auto-generated constructor stub
 		get_map(level);
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false, Configure.rect_width,Configure.rect_height);
 	}
 	/**
 	 * 

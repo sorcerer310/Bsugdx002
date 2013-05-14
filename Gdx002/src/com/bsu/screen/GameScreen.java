@@ -5,11 +5,14 @@ import java.util.Observer;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -30,6 +33,7 @@ import com.bsu.tools.HeroEffectClass;
 
 public class GameScreen extends CubocScreen implements Observer {
 	Stage stage;
+	Stage UIStage;
 	GameMap map;
 	Role hero;
 	Role hero1;
@@ -37,9 +41,9 @@ public class GameScreen extends CubocScreen implements Observer {
 	Role enemy2;
 	Role enemy3;
 	Commander commander;
-	TextButton bt_endround;
 	MapBox mb;
 	GameFightUI gfu;
+	OrthographicCamera c;
 	private static boolean action_start; // 是否回合开始
 	private static boolean controlled;
 
@@ -63,6 +67,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		super(mxg);
 		new HeroEffectClass();
 		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
+		UIStage=new Stage(Configure.rect_width, Configure.rect_height, false);
 	}
 
 	public void init_game() {
@@ -73,12 +78,12 @@ public class GameScreen extends CubocScreen implements Observer {
 		stage.addActor(enemy1);
 		stage.addActor(enemy2);
 		stage.addActor(enemy3);
-		stage.addActor(bt_endround);
 		commander = new Commander(stage);
 		this.addActorListener();
 		setBornPosition(GameMap.map,Type.HERO, Configure.object_layer_hero);
 		setBornPosition(GameMap.map, Type.ENEMY,Configure.object_layer_enemy);
-		gfu=new GameFightUI(stage);
+		gfu=new GameFightUI(UIStage,commander);
+		c = (OrthographicCamera) stage.getCamera(); 
 	}
 
 	private void actor_init() {
@@ -92,8 +97,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		enemy1 = RoleFactory.getInstance().getEnemyRole("enemy1");
 		enemy2 = RoleFactory.getInstance().getEnemyRole("enemy2");
 		enemy3 = RoleFactory.getInstance().getEnemyRole("enemy3");
-		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,
-				60);
+	
 	}
 
 	/**
@@ -134,10 +138,12 @@ public class GameScreen extends CubocScreen implements Observer {
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		GameMap.map_render.render(map.cam);
+		//c.position.add(new Vector3(1,0,0));
+		GameMap.map_render.render(c);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
-
+		UIStage.act(Gdx.graphics.getDeltaTime());
+		UIStage.draw();
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			setChanged();
 			notifyObservers(this);
@@ -152,7 +158,10 @@ public class GameScreen extends CubocScreen implements Observer {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(null);
-		Gdx.input.setInputProcessor(stage);
+		InputMultiplexer inputMultiplexer=new InputMultiplexer();
+		inputMultiplexer.addProcessor(UIStage);//必须先加这个。。。。
+		inputMultiplexer.addProcessor(stage); 
+		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 
 	@Override
@@ -181,14 +190,6 @@ public class GameScreen extends CubocScreen implements Observer {
 	}
 
 	private void addActorListener() {
-		bt_endround.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				if (isControlled()) {
-					commander.roundEnd();
-				}
-			}
-		});
 		stage.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
