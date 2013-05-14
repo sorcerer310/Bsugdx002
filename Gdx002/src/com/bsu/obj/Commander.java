@@ -45,9 +45,12 @@ public class Commander {
 	/**
 	 * 回合结束，命令所有的角色行动
 	 */
-	boolean waitNextCommand = true;
-
+	boolean waitNextCommand = true;				//等待下一命令标示，为true时，表示循环等待命令完成
+	boolean roundEndCompleted = true;			//回合结束标示，为true时，表示当前回合结束
 	public void roundEnd() {
+		if(!roundEndCompleted)
+			return;
+		roundEndCompleted = false;				//回合操作开始设置完成标示为false
 		resetHeroValue();
 		new Thread() {
 			@Override
@@ -59,9 +62,7 @@ public class Commander {
 							waitNextCommand = false;
 						}
 					}); // 地图事件
-					while (waitNextCommand) {
-						Thread.sleep(200);
-					}
+					while (waitNextCommand) Thread.sleep(200);
 					waitNextCommand = true;
 
 					commandHeros(new BsuEvent() {
@@ -70,12 +71,19 @@ public class Commander {
 							waitNextCommand = false;
 						}
 					}); // 命令英雄
-					while (waitNextCommand) {
-						Thread.sleep(200);
-					}
+					while (waitNextCommand) Thread.sleep(200);
 					waitNextCommand = true;
 
-					commandNpcs(); // 命令NPC
+					commandNpcs(new BsuEvent() {
+						@Override
+						public void notify(Object obj, String msg) {
+							waitNextCommand = false;
+						}
+					}); // 命令NPC
+					while(waitNextCommand) Thread.sleep(200);
+					waitNextCommand = true;
+					roundEndCompleted = true;
+					
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -188,45 +196,42 @@ public class Commander {
 
 	/**
 	 * 指挥敌人们进行行动
+	 * 
+	 * @throws InterruptedException
 	 */
-	private void commandNpcs() {
-		try {
-			// 第一步所有敌人都进攻
-			for (Role e : npcs) {
-				waitRoleFlag = true; // 初始化等待循环flag为false
-				Array<Vector2> vs = e.getCurrSkillRange(); // 获得当前技能的攻击范围
-				Array<Role> atkrs = getRolsInSkillRange(vs, heros); // 获得攻击范围内的作用目标
-				// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
-				if (atkrs.size == 0) {
-					Commander.this.directAction(e, DIRECTION.left,
-							new BsuEvent() {
-								@Override
-								public void notify(Object obj, String msg) {
-									// 收到消息设置等待标示为false
-									waitRoleFlag = false;
-								}
-							});
-				} else {
-					// 命令当前英雄进攻所有范围内的敌人
-					for (Role h : atkrs) {
-						e.hero_attack_other(h, e.getCskill(), new BsuEvent() {
-							@Override
-							public void notify(Object obj, String msg) {
-								if (((Role) obj).name.equals(msg))
-									waitRoleFlag = false;
-							}
-						});
+	private void commandNpcs(BsuEvent be) throws InterruptedException {
+		// 第一步所有敌人都进攻
+		for (Role e : npcs) {
+			waitRoleFlag = true; // 初始化等待循环flag为false
+			Array<Vector2> vs = e.getCurrSkillRange(); // 获得当前技能的攻击范围
+			Array<Role> atkrs = getRolsInSkillRange(vs, heros); // 获得攻击范围内的作用目标
+			// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
+			if (atkrs.size == 0) {
+				Commander.this.directAction(e, DIRECTION.left, new BsuEvent() {
+					@Override
+					public void notify(Object obj, String msg) {
+						// 收到消息设置等待标示为false
+						waitRoleFlag = false;
 					}
-				}
-				// 循环中等待
-				while (waitRoleFlag) {
-					Thread.sleep(200);
+				});
+			} else {
+				// 命令当前英雄进攻所有范围内的敌人
+				for (Role h : atkrs) {
+					e.hero_attack_other(h, e.getCskill(), new BsuEvent() {
+						@Override
+						public void notify(Object obj, String msg) {
+							if (((Role) obj).name.equals(msg))
+								waitRoleFlag = false;
+						}
+					});
 				}
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
+			// 循环中等待
+			while (waitRoleFlag) {
+				Thread.sleep(200);
+			}
 		}
+		be.notify(this, "command_npcs_completed");
 	}
 
 	/**
@@ -292,7 +297,7 @@ public class Commander {
 				@Override
 				public void notify(Object obj, String msg) {
 					if (((Role) obj).name.equals(msg)) {
-						r.hero_apper(mx,my,new BsuEvent() {
+						r.hero_apper(mx, my, new BsuEvent() {
 							@Override
 							public void notify(Object obj, String msg) {
 								if (((Role) obj).name.equals(msg)) {
