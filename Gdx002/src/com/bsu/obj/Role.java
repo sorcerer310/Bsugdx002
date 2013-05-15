@@ -18,6 +18,7 @@ import com.bsu.tools.HeroAnimationClass;
 import com.bsu.tools.Configure.FACE;
 import com.bsu.tools.Configure.STATE;
 import com.bsu.tools.HeroEffectClass;
+import com.bsu.tools.RoleHP;
 
 public class Role extends Actor {
 	private BsuEvent bevent = null; // 用来通知一些消息
@@ -50,11 +51,12 @@ public class Role extends Actor {
 	private TextureRegion current_effect_frame; // 当前效果动画对应的某一帧
 
 	int margin = 2; // 血条和人物之间的间隔
-	int pixHeight = 5; // 血条高度
-	TextureRegion pix;
+	TextureRegion role_hp_back,role_hp_face;//血条背面，血条
 
 	private boolean selected; // 被选中等待操作？
 	private boolean controlled;// 此轮是否被操作过
+	
+	RoleHP rhp;//血条类对象
 
 	public boolean isControlled() {
 		return controlled;
@@ -118,6 +120,9 @@ public class Role extends Actor {
 		maxHp = 100;
 		attack_value = 5;
 		set_actor_base(type);
+		rhp=new RoleHP();
+		role_hp_back=rhp.get_role_hp(com.bsu.tools.RoleHP.Type.BACK);
+		role_hp_face=rhp.get_role_hp(com.bsu.tools.RoleHP.Type.FACE);
 	}
 
 	/**
@@ -135,23 +140,6 @@ public class Role extends Actor {
 		set_ani_from_state(STATE.idle);
 	}
 
-	/**
-	 * 设置人物生命血条
-	 */
-//	private void set_life_display() {
-//		pix = null;
-//		Pixmap pixmap;
-//		pixmap = new Pixmap(64, 8, Format.RGBA8888); // 生成一张64*8的图片
-//		pixmap.setColor(Color.BLACK); // 设置颜色为黑色。
-//		pixmap.drawRectangle(0, 0, Configure.map_box_value, pixHeight);
-//		pixmap.setColor(Color.RED); // 设置为红色
-//		pixmap.fillRectangle(0, 1, Configure.map_box_value * currentHp / maxHp,
-//				pixHeight - 2);
-//		Texture pixmaptex = new Texture(pixmap);
-//		pix = new TextureRegion(pixmaptex, Configure.map_box_value,
-//				Configure.map_box_value);
-//		pixmap.dispose();
-//	}
 
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
@@ -165,7 +153,10 @@ public class Role extends Actor {
 			batch.draw(current_effect_frame, getX(), getY());
 		}
 		if (state == STATE.idle) {
-			//batch.draw(pix, this.getX(), this.getY() + this.margin); // 画血条
+
+			batch.draw(role_hp_back, this.getX(), this.getY() + this.margin); // 画血条
+			batch.draw(role_hp_face, this.getX(), this.getY() + this.margin); // 画血条
+
 		}
 	}
 
@@ -201,11 +192,12 @@ public class Role extends Actor {
 	public void hero_isAttacked(Animation ani, float damage_value) {
 		time_effect = 0;
 		ani_effect = ani;
-//		currentHp = (int) (currentHp - damage_value >= 0 ? currentHp
-//				- damage_value : 0);
-//		if (currentHp <= 0) {
-//			// this.getParent().removeActor(this);
-//		}
+		currentHp = (int) (currentHp - damage_value >= 0 ? currentHp
+				- damage_value : 0);
+		role_hp_face.setRegionWidth(rhp.get_role(currentHp, maxHp));
+		if (currentHp <= 0) {
+			// this.getParent().removeActor(this);
+		}
 	}
 
 	/**
@@ -250,8 +242,6 @@ public class Role extends Actor {
 		time_state += Gdx.graphics.getDeltaTime();
 		time_effect += Gdx.graphics.getDeltaTime();
 		this.setSize(Configure.map_box_value, Configure.map_box_value);
-//		set_life_display();
-
 		current_action_frame = ani_current.getKeyFrame(time_state, loop_flag);
 		if (ani_current.isAnimationFinished(time_state)) {
 			if (ani_current == ani_move) {

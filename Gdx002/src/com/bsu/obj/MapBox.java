@@ -124,6 +124,7 @@ public class MapBox extends Actor {
 		// TODO Auto-generated method stub
 		hero_home_time += Gdx.graphics.getDeltaTime();
 		enemy_home_time += Gdx.graphics.getDeltaTime();
+	
 		for (int i = 0; i < block_array.size; i++) {
 			batch.draw(map_block, block_array.get(i).x
 					* Configure.map_box_value, (block_array.get(i).y)

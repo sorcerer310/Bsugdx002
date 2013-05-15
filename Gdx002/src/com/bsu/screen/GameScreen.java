@@ -12,8 +12,10 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
@@ -206,6 +208,28 @@ public class GameScreen extends CubocScreen implements Observer {
 				}
 			}
 		});
+		stage.addListener(new InputListener(){
+			@Override
+			public void touchDragged(InputEvent event, float x, float y,
+					int pointer) {
+				// TODO Auto-generated method stub
+	        	 // c.position.add(new Vector3(x-c.position.x,y-c.position.y,0));
+				super.touchDragged(event, x, y, pointer);
+			}
+			@Override
+	           public void touchUp(InputEvent event, float x, float y,
+	                   int pointer, int button) {
+	               // TODO Auto-generated method stub
+	               super.touchUp(event, x, y, pointer, button);
+	           }
+	           @Override
+	           public boolean touchDown(InputEvent event, float x, float y,
+	                   int pointer, int button) {
+	               // TODO Auto-generated method stub
+	            
+	               return true;
+	           }
+	       });
 	}
 
 	/**

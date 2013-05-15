@@ -44,7 +44,6 @@ public class GameFightUI{
 		bt_endround.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("@@@@");
 				c.roundEnd();
 			}
 		});
