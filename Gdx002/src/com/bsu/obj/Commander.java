@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role.Type;
 import com.bsu.screen.GameScreen;
 import com.bsu.tools.BsuEvent;
+import com.bsu.tools.CommandQueue;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.DIRECTION;
 import com.bsu.tools.Configure.STATE;
@@ -20,12 +21,19 @@ import com.bsu.tools.Configure.STATE;
  * 
  */
 public class Commander {
+	private static Commander instance = null;
+	public static Commander getInstance(Stage s){
+		if(instance==null)
+			instance = new Commander(s);
+		return instance;
+	}
+	
 	private Stage stage = null;
 	private Array<Actor> lactor = null;
 	private Array<Role> heros = new Array<Role>();
 	private Array<Role> npcs = new Array<Role>();
 
-	public Commander(Stage s) {
+	private Commander(Stage s) {
 		stage = s;
 		lactor = stage.getActors();
 		heros.clear();
@@ -39,6 +47,17 @@ public class Commander {
 					npcs.add((Role) act);
 			}
 		}
+		
+		/**
+		 * 单独启动个线程，监视任务队列执行任务
+		 */
+		new Thread(){
+			@Override
+			public void run() {
+				while(true)
+					CommandQueue.getInstance().runTask();
+			}
+		}.start();
 	}
 
 	/**
@@ -52,46 +71,79 @@ public class Commander {
 			return;
 		roundEndCompleted = false; // 回合操作开始设置完成标示为false
 		resetHeroValue();
-		Thread t = new Thread() {
+		
+		CommandQueue.getInstance().put(new CommandTask(){
 			@Override
-			public void run() {
+			public void opTask(BsuEvent be) {
+				System.out.println("map event optask");
+				mapEvent(be);
+			}
+		});
+		
+		CommandQueue.getInstance().put(new CommandTask(){
+			@Override
+			public void opTask(BsuEvent be){
 				try {
-					mapEvent(new BsuEvent() {
-						@Override
-						public void notify(Object obj, String msg) {
-							waitNextCommand = false;
-						}
-					}); // 地图事件
-					while (waitNextCommand)
-						Thread.sleep(200);
-					waitNextCommand = true;
-					commandHeros(new BsuEvent() {
-						@Override
-						public void notify(Object obj, String msg) {
-							waitNextCommand = false;
-						}
-					}); // 命令英雄
-					while (waitNextCommand)
-						Thread.sleep(200);
-					waitNextCommand = true;
-
-					commandNpcs(new BsuEvent() {
-						@Override
-						public void notify(Object obj, String msg) {
-							waitNextCommand = false;
-						}
-					}); // 命令NPC
-					while (waitNextCommand)
-						Thread.sleep(200);
-					waitNextCommand = true;
-					roundEndCompleted = true;
-
+					commandHeros(be);
 				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-		};
-		t.start();
+		});
+		
+		CommandQueue.getInstance().put(new CommandTask(){
+			@Override
+			public void opTask(BsuEvent be){
+				try {
+					commandNpcs(be);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
+//		Thread t = new Thread() {
+//			@Override
+//			public void run() {
+//				try {
+//					mapEvent(new BsuEvent() {
+//						@Override
+//						public void notify(Object obj, String msg) {
+//							waitNextCommand = false;
+//						}
+//					}); // 地图事件
+//					while (waitNextCommand)
+//						Thread.sleep(200);
+//					waitNextCommand = true;
+//					commandHeros(new BsuEvent() {
+//						@Override
+//						public void notify(Object obj, String msg) {
+//							waitNextCommand = false;
+//						}
+//					}); // 命令英雄
+//					while (waitNextCommand)
+//						Thread.sleep(200);
+//					waitNextCommand = true;
+//
+//					commandNpcs(new BsuEvent() {
+//						@Override
+//						public void notify(Object obj, String msg) {
+//							waitNextCommand = false;
+//						}
+//					}); // 命令NPC
+//					while (waitNextCommand)
+//						Thread.sleep(200);
+//					waitNextCommand = true;
+//					roundEndCompleted = true;
+//
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		};
+//		t.start();
 
 	}
 
@@ -150,7 +202,7 @@ public class Commander {
 			return;
 
 		// 处理一些地图块事件
-
+		System.out.println("map_event_completed");
 		be.notify(this, "map_event_completed");
 	}
 
@@ -168,7 +220,7 @@ public class Commander {
 			Array<Role> atkrs = getRolsInSkillRange(vs, npcs); // 获得攻击范围内的作用目标
 			// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
 			if (atkrs.size == 0) { 
-				if (!r.hasAnatherRole(heros)) {
+//				if (!r.hasAnatherRole(heros)) {
 					Commander.this.directAction(r, DIRECTION.right,
 							new BsuEvent() {
 								@Override
@@ -178,10 +230,10 @@ public class Commander {
 									waitRoleFlag = false;
 								}
 							});
-				} else{
-					System.out.println("hasAnatherRole");
-//					waitRoleFlag = false;
-				}
+//				} else{
+//					System.out.println("hasAnatherRole");
+////					waitRoleFlag = false;
+//				}
 			} else {
 				// 命令当前英雄进攻所有范围内的敌人
 				for (Role e : atkrs) {
@@ -216,7 +268,7 @@ public class Commander {
 			Array<Role> atkrs = getRolsInSkillRange(vs, heros); // 获得攻击范围内的作用目标
 			// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
 			if (atkrs.size == 0) {
-				if (!e.hasAnatherRole(npcs)) {
+//				if (!e.hasAnatherRole(npcs)) {
 					Commander.this.directAction(e, DIRECTION.left,
 							new BsuEvent() {
 								@Override
@@ -226,9 +278,9 @@ public class Commander {
 								}
 							});
 					
-				}else {
-					waitRoleFlag = false;
-				}
+//				}else {
+//					waitRoleFlag = false;
+//				}
 			} else {
 				// 命令当前英雄进攻所有范围内的敌人
 				for (Role h : atkrs) {
@@ -247,6 +299,7 @@ public class Commander {
 			}
 		}
 		be.notify(this, "command_npcs_completed");
+		roundEndCompleted = true;
 	}
 
 	/**

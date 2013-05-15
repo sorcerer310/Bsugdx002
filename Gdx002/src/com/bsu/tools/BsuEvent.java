@@ -4,6 +4,6 @@ package com.bsu.tools;
  * @author fengchong
  *
  */
-public class BsuEvent {
-	public void notify(Object obj,String msg){};
+public abstract class BsuEvent {
+	public abstract void notify(Object obj,String msg);
 }
