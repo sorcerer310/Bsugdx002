@@ -22,7 +22,6 @@ public class CommandQueue {
 	
 	boolean taskCompleted = true;
 	public void runTask(){
-		System.out.println("runTask");
 		//当任务队列中有任务，或上一任务完成了，继续下一个任务
 		if(queue.isEmpty() || !taskCompleted)
 			return;
