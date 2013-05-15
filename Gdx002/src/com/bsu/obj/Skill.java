@@ -16,7 +16,7 @@ public class Skill {
 	public static enum Type {ATK,HP};						//当前技能类型是攻击类型还是回复HP类型
 	private Type type = Type.ATK;							//设置默认类型为攻击类型
 	private String name = "";								//技能名称
-	private float val = 0;									//技能效果值ֵ
+	private int val = 0;									//技能效果值ֵ
 	public Animation ani_self = null;						//技能自身动画效果
 	public Animation ani_object = null;						//技能目标动画效果
 	private String info = "";								//技能描述
@@ -33,7 +33,7 @@ public class Skill {
 	 * @param i		技能描述信息
 	 * @param r		技能攻击范围
 	 */
-	public Skill(String n,Type t,float v,Animation as,Animation ao,String i,Vector2[] r){
+	public Skill(String n,Type t,int v,Animation as,Animation ao,String i,Vector2[] r){
 		name = n;
 		type = t;
 		val = v;
@@ -48,7 +48,7 @@ public class Skill {
 	}
 
 
-	public float getVal() {
+	public int getVal() {
 		return val;
 	}
 	/**

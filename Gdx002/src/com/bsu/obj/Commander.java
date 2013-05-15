@@ -66,8 +66,7 @@ public class Commander {
 				}
 
 			}
-		};
-//		}.start();
+		}.start();
 	}
 
 	/**
@@ -113,48 +112,6 @@ public class Commander {
 				}
 			}
 		});
-
-		// Thread t = new Thread() {
-		// @Override
-		// public void run() {
-		// try {
-		// mapEvent(new BsuEvent() {
-		// @Override
-		// public void notify(Object obj, String msg) {
-		// waitNextCommand = false;
-		// }
-		// }); // 地图事件
-		// while (waitNextCommand)
-		// Thread.sleep(200);
-		// waitNextCommand = true;
-		// commandHeros(new BsuEvent() {
-		// @Override
-		// public void notify(Object obj, String msg) {
-		// waitNextCommand = false;
-		// }
-		// }); // 命令英雄
-		// while (waitNextCommand)
-		// Thread.sleep(200);
-		// waitNextCommand = true;
-		//
-		// commandNpcs(new BsuEvent() {
-		// @Override
-		// public void notify(Object obj, String msg) {
-		// waitNextCommand = false;
-		// }
-		// }); // 命令NPC
-		// while (waitNextCommand)
-		// Thread.sleep(200);
-		// waitNextCommand = true;
-		// roundEndCompleted = true;
-		//
-		// } catch (InterruptedException e) {
-		// e.printStackTrace();
-		// }
-		// }
-		// };
-		// t.start();
-
 	}
 
 	/**
@@ -222,31 +179,32 @@ public class Commander {
 	boolean waitRoleFlag = false; // 等待标示，用来标记是否继续循环对下一英雄进行操作
 
 	private void commandHeros(BsuEvent be) throws InterruptedException {
-		// 第一步所有人都进攻
-		for (Role h : heros) {
+//		for (Role h : heros) {
+		for(int i=0;i<heros.size;i++){
+			Role h = heros.get(i);
 			waitRoleFlag = true; // 初始化等待循环flag为true
-			Role r = (Role) h; // 当前操作的英雄
-			Array<Vector2> vs = r.getCurrSkillRange(); // 获得当前技能的攻击范围
+			Array<Vector2> vs = h.getCurrSkillRange(); // 获得当前技能的攻击范围
 			Array<Role> atkrs = getRolsInSkillRange(vs, npcs); // 获得攻击范围内的作用目标
 			// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
 			if (atkrs.size == 0) {
-				// if (!r.hasAnatherRole(heros)) {
-				Commander.this.directAction(r, DIRECTION.right, new BsuEvent() {
-					@Override
-					public void notify(Object obj, String msg) {
-						System.out.println("move:" + msg);
-						// 收到消息设置等待标示为false
-						waitRoleFlag = false;
-					}
-				});
-				// } else{
-				// System.out.println("hasAnatherRole");
-				// // waitRoleFlag = false;
-				// }
+				if (!h.hasAnatherRole(heros)) {
+					Commander.this.directAction(h, DIRECTION.right,
+							new BsuEvent() {
+								@Override
+								public void notify(Object obj, String msg) {
+									System.out.println("move:" + msg);
+									// 收到消息设置等待标示为false
+									waitRoleFlag = false;
+								}
+							});
+				} else {
+					System.out.println("hasAnatherRole");
+					waitRoleFlag = false;
+				}
 			} else {
 				// 命令当前英雄进攻所有范围内的敌人
 				for (Role e : atkrs) {
-					r.hero_attack_other(e, r.getCskill(), new BsuEvent() {
+					h.hero_attack(e, h.getCskill(), new BsuEvent() {
 						@Override
 						public void notify(Object obj, String msg) {
 							System.out.println("attack:" + msg);
@@ -254,6 +212,14 @@ public class Commander {
 							waitRoleFlag = false;
 						}
 					});
+					// 如果敌人血量为0，从npcs数组中移除该敌人
+					e.currentHp = (int) (e.currentHp - h.getCskill().getVal() >= 0 ? e.currentHp
+							- h.getCskill().getVal()
+							: 0);
+					if (e.currentHp == 0) {
+						npcs.removeValue(e, true); // 从Commander逻辑计算队列中移除
+						e.getParent().removeActor(e); // 从父Actor中移除该Actor节点
+					}
 				}
 			}
 			// 等待动作完成
@@ -271,7 +237,9 @@ public class Commander {
 	 */
 	private void commandNpcs(BsuEvent be) throws InterruptedException {
 		// 第一步所有敌人都进攻
-		for (Role e : npcs) {
+//		for (Role e : npcs) {
+		for(int i=0;i<npcs.size;i++){
+			Role e = npcs.get(i);
 			waitRoleFlag = true; // 初始化等待循环flag为false
 			Array<Vector2> vs = e.getCurrSkillRange(); // 获得当前技能的攻击范围
 			Array<Role> atkrs = getRolsInSkillRange(vs, heros); // 获得攻击范围内的作用目标
@@ -292,13 +260,22 @@ public class Commander {
 			} else {
 				// 命令当前英雄进攻所有范围内的敌人
 				for (Role h : atkrs) {
-					e.hero_attack_other(h, e.getCskill(), new BsuEvent() {
+					e.hero_attack(h, e.getCskill(), new BsuEvent() {
 						@Override
 						public void notify(Object obj, String msg) {
 							if (((Role) obj).name.equals(msg))
 								waitRoleFlag = false;
 						}
 					});
+
+					// 如果英雄血量为0，从heros数组中移除该敌人
+					h.currentHp = (int) (h.currentHp - e.getCskill().getVal() >= 0 ? h.currentHp
+							- e.getCskill().getVal()
+							: 0);
+					if (h.currentHp == 0) {
+						heros.removeValue(h, true); // 从Commander逻辑计算队列中移除
+						h.getParent().removeActor(h); // 从父Actor中移除该Actor节点
+					}
 				}
 			}
 			// 循环中等待

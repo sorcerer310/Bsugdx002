@@ -41,7 +41,7 @@ public class Role extends Actor {
 	private boolean loop_flag;
 
 	private int maxHp = 100; // 总血量
-	private int currentHp = 30; // 当前血量
+	public int currentHp = 30; // 当前血量
 	private int attack_value; // 自身攻击力
 
 	private Animation ani_current; // 当前人物动画
@@ -138,20 +138,20 @@ public class Role extends Actor {
 	/**
 	 * 设置人物生命血条
 	 */
-	private void set_life_display() {
-		pix = null;
-		Pixmap pixmap;
-		pixmap = new Pixmap(64, 8, Format.RGBA8888); // 生成一张64*8的图片
-		pixmap.setColor(Color.BLACK); // 设置颜色为黑色。
-		pixmap.drawRectangle(0, 0, Configure.map_box_value, pixHeight);
-		pixmap.setColor(Color.RED); // 设置为红色
-		pixmap.fillRectangle(0, 1, Configure.map_box_value * currentHp / maxHp,
-				pixHeight - 2);
-		Texture pixmaptex = new Texture(pixmap);
-		pix = new TextureRegion(pixmaptex, Configure.map_box_value,
-				Configure.map_box_value);
-		pixmap.dispose();
-	}
+//	private void set_life_display() {
+//		pix = null;
+//		Pixmap pixmap;
+//		pixmap = new Pixmap(64, 8, Format.RGBA8888); // 生成一张64*8的图片
+//		pixmap.setColor(Color.BLACK); // 设置颜色为黑色。
+//		pixmap.drawRectangle(0, 0, Configure.map_box_value, pixHeight);
+//		pixmap.setColor(Color.RED); // 设置为红色
+//		pixmap.fillRectangle(0, 1, Configure.map_box_value * currentHp / maxHp,
+//				pixHeight - 2);
+//		Texture pixmaptex = new Texture(pixmap);
+//		pix = new TextureRegion(pixmaptex, Configure.map_box_value,
+//				Configure.map_box_value);
+//		pixmap.dispose();
+//	}
 
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
@@ -165,7 +165,7 @@ public class Role extends Actor {
 			batch.draw(current_effect_frame, getX(), getY());
 		}
 		if (state == STATE.idle) {
-			batch.draw(pix, this.getX(), this.getY() + this.margin); // 画血条
+			//batch.draw(pix, this.getX(), this.getY() + this.margin); // 画血条
 		}
 	}
 
@@ -186,12 +186,12 @@ public class Role extends Actor {
 	 * @param enemy
 	 *            攻击动作的角色
 	 */
-	public void hero_attack_other(Role enemy, Skill skl, BsuEvent be) {
+	public void hero_attack(Role enemy, Skill skl, BsuEvent be) {
 		if (enemy == null)
 			return;
 		bevent = be;
-		this.ani_effect = skl.ani_self;
 		time_effect = 0; // 此处一定要设置time_effect为0，否则动画不会重新开始
+		ani_effect = skl.ani_self;
 		enemy.hero_isAttacked(skl.ani_object, skl.getVal());
 	}
 
@@ -201,11 +201,11 @@ public class Role extends Actor {
 	public void hero_isAttacked(Animation ani, float damage_value) {
 		time_effect = 0;
 		ani_effect = ani;
-		currentHp = (int) (currentHp - damage_value >= 0 ? currentHp
-				- damage_value : 0);
-		if (currentHp <= 0) {
-			// this.getParent().removeActor(this);
-		}
+//		currentHp = (int) (currentHp - damage_value >= 0 ? currentHp
+//				- damage_value : 0);
+//		if (currentHp <= 0) {
+//			// this.getParent().removeActor(this);
+//		}
 	}
 
 	/**
@@ -250,7 +250,7 @@ public class Role extends Actor {
 		time_state += Gdx.graphics.getDeltaTime();
 		time_effect += Gdx.graphics.getDeltaTime();
 		this.setSize(Configure.map_box_value, Configure.map_box_value);
-		set_life_display();
+//		set_life_display();
 
 		current_action_frame = ani_current.getKeyFrame(time_state, loop_flag);
 		if (ani_current.isAnimationFinished(time_state)) {

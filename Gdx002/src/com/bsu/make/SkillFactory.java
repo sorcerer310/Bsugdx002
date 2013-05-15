@@ -26,19 +26,19 @@ public class SkillFactory {
 	private SkillFactory(){
 		//普通攻击1
 		store.put("atk", 
-				new Skill("攻击",Skill.Type.ATK,10.0f,HeroEffectClass.get_effect(0),HeroEffectClass.get_effect(1),
+				new Skill("攻击",Skill.Type.ATK,10,HeroEffectClass.get_effect(0),HeroEffectClass.get_effect(1),
 						"普通攻击，没什么稀奇的。",new Vector2[]{new Vector2(1,0),new Vector2(2,0)}
 				)
 		);
 		//普通攻击2
 		store.put("atk2",
-				new Skill("攻击",Skill.Type.ATK,20.0f,HeroEffectClass.get_effect(0),HeroEffectClass.get_effect(2),
+				new Skill("攻击",Skill.Type.ATK,20,HeroEffectClass.get_effect(0),HeroEffectClass.get_effect(2),
 						"普通攻击，没什么稀奇的。",new Vector2[]{new Vector2(1,0),new Vector2(2,0)}
 				)
 		);
 		//普通攻击3
 		store.put("atk3",
-				new Skill("攻击",Skill.Type.ATK,20.0f,HeroEffectClass.get_effect(0),HeroEffectClass.get_effect(3),
+				new Skill("攻击",Skill.Type.ATK,20,HeroEffectClass.get_effect(0),HeroEffectClass.get_effect(3),
 						"普通攻击，没什么稀奇的。",new Vector2[]{new Vector2(1,0),new Vector2(2,0)}
 				)
 		);
