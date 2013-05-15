@@ -66,9 +66,10 @@ public class GameScreen extends CubocScreen implements Observer {
 		new HeroEffectClass();
 		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
 		UIStage=new Stage(Configure.rect_width, Configure.rect_height, false);
+		init_game();
 	}
 
-	public void init_game() {
+	private void init_game() {
 		actor_init();
 		stage.addActor(mb);
 		stage.addActor(hero);
