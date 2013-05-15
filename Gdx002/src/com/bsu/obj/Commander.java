@@ -66,7 +66,8 @@ public class Commander {
 				}
 
 			}
-		}.start();
+		};
+//		}.start();
 	}
 
 	/**
