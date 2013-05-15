@@ -32,20 +32,20 @@ import com.bsu.tools.GameMap;
 import com.bsu.tools.HeroEffectClass;
 
 public class GameScreen extends CubocScreen implements Observer {
-	Stage stage;
-	Stage UIStage;
-	GameMap map;
-	Role hero;
+	Stage stage;							//场景对象
+	Stage UIStage;							//UI场景对象
+	GameMap map;							//游戏地图
+	Role hero;								
 	Role hero1;
 	Role enemy1;
 	Role enemy2;
 	Role enemy3;
-	Commander commander;
-	MapBox mb;
-	GameFightUI gfu;
+	Commander commander;					//指挥官对象，指挥所有对象交互
+	MapBox mb;								//地图块对象
+	GameFightUI gfu;						
 	OrthographicCamera c;
-	private static boolean action_start; // 是否回合开始
-	private static boolean controlled;
+	private static boolean action_start; 	// 是否回合开始
+	private static boolean controlled;		
 
 	public static boolean isControlled() {
 		return controlled;
