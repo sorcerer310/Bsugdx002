@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -27,9 +29,8 @@ import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameMap;
-import com.bsu.tools.HeroEffectClass;
 
-public class GameScreen extends CubocScreen implements Observer {
+public class GameScreen extends CubocScreen implements Observer,GestureListener {
 	private Stage stage; // 场景对象
 	private Stage UIStage; // UI场景对象
 //	private GameMap gmap; // 游戏地图
@@ -39,6 +40,7 @@ public class GameScreen extends CubocScreen implements Observer {
 	private OrthographicCamera c;
 	private boolean action_start; // 是否回合开始
 	private boolean controlled;
+	private int clingX,clingY;// 地图移动位移
 
 	public GameScreen(Game mxg) {
 		super(mxg);
@@ -105,7 +107,14 @@ public class GameScreen extends CubocScreen implements Observer {
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		// c.position.add(new Vector3(1,0,0));
+		if(clingX!=0){
+			int mx=clingX>0?-1:1;
+			int maxW=GameMap.map_render.getMapWidthUnits()-Configure.rect_width;
+			int w=Configure.rect_width/2;
+			if(c.position.x+mx>=w&&c.position.x+mx<=maxW+w){
+				c.position.x+=mx;
+			}
+		}
 		GameMap.map_render.render(c);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
@@ -128,6 +137,7 @@ public class GameScreen extends CubocScreen implements Observer {
 		InputMultiplexer inputMultiplexer = new InputMultiplexer();
 		inputMultiplexer.addProcessor(UIStage);// 必须先加这个。。。。
 		inputMultiplexer.addProcessor(stage);
+		inputMultiplexer.addProcessor(new GestureDetector(this));
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 
@@ -172,30 +182,6 @@ public class GameScreen extends CubocScreen implements Observer {
 						}
 					}
 				}
-			}
-		});
-		stage.addListener(new InputListener() {
-			@Override
-			public void touchDragged(InputEvent event, float x, float y,
-					int pointer) {
-				// TODO Auto-generated method stub
-				// c.position.add(new Vector3(x-c.position.x,y-c.position.y,0));
-				super.touchDragged(event, x, y, pointer);
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				// TODO Auto-generated method stub
-				super.touchUp(event, x, y, pointer, button);
-			}
-
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				// TODO Auto-generated method stub
-
-				return true;
 			}
 		});
 	}
@@ -264,5 +250,49 @@ public class GameScreen extends CubocScreen implements Observer {
 
 	public void setAction_start(boolean as) {
 		action_start = as;
+	}
+
+	@Override
+	public boolean touchDown(float x, float y, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean tap(float x, float y, int count, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean longPress(float x, float y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean fling(float velocityX, float velocityY, int button) {
+		// TODO Auto-generated method stub
+		clingX=velocityX>0?Configure.rect_width/2:-Configure.rect_width/2;
+		return false;
+	}
+
+	@Override
+	public boolean pan(float x, float y, float deltaX, float deltaY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean zoom(float initialDistance, float distance) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2,
+			Vector2 pointer1, Vector2 pointer2) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
