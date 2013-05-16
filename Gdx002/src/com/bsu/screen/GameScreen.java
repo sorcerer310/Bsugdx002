@@ -33,10 +33,10 @@ import com.bsu.tools.GameMap;
 public class GameScreen extends CubocScreen implements Observer,GestureListener {
 	private Stage stage; // 场景对象
 	private Stage UIStage; // UI场景对象
-//	private GameMap gmap; // 游戏地图
+	//	private GameMap gmap; // 游戏地图
 	private Commander commander; // 指挥官对象，指挥所有对象交互
 	private MapBox mb; // 地图块对象
-	private GameFightUI gfu;
+	private GameFightUI fightUI;
 	private OrthographicCamera c;
 	private boolean action_start; // 是否回合开始
 	private boolean controlled;
@@ -65,7 +65,7 @@ public class GameScreen extends CubocScreen implements Observer,GestureListener 
 		this.addActorListener();
 		setBornPosition(GameMap.map, Type.HERO, Configure.object_layer_hero);
 		setBornPosition(GameMap.map, Type.ENEMY, Configure.object_layer_enemy);
-		gfu = new GameFightUI(UIStage, commander);
+		fightUI = new GameFightUI(UIStage);
 		c = (OrthographicCamera) stage.getCamera();
 	}
 
@@ -294,5 +294,9 @@ public class GameScreen extends CubocScreen implements Observer,GestureListener 
 			Vector2 pointer1, Vector2 pointer2) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public GameFightUI getFightUI() {
+		return fightUI;
 	}
 }

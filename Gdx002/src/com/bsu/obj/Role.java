@@ -37,7 +37,7 @@ public class Role extends Actor {
 	private Animation ani_apper;// 角色出现
 	private boolean loop_flag;
 
-	private int maxHp = 100; // 总血量
+	public int maxHp = 100; // 总血量
 	public int currentHp = 30; // 当前血量
 	private int attack_value; // 自身攻击力
 
@@ -46,13 +46,11 @@ public class Role extends Actor {
 	private Animation ani_effect; // 效果动画
 	private TextureRegion current_effect_frame; // 当前效果动画对应的某一帧
 
-	int margin = 2; // 血条和人物之间的间隔
-	TextureRegion role_hp_back,role_hp_face;//血条背面，血条
 
 	private boolean selected; // 被选中等待操作？
 	private boolean controlled;// 此轮是否被操作过
 	
-	RoleHP rhp;//血条类对象
+	
 
 	public boolean isControlled() {
 		return controlled;
@@ -116,9 +114,7 @@ public class Role extends Actor {
 		maxHp = 100;
 		attack_value = 5;
 		set_actor_base(type);
-		rhp=new RoleHP();
-		role_hp_back=rhp.get_role_hp(com.bsu.tools.RoleHP.Type.BACK);
-		role_hp_face=rhp.get_role_hp(com.bsu.tools.RoleHP.Type.FACE);
+
 	}
 
 	/**
@@ -147,12 +143,6 @@ public class Role extends Actor {
 
 		if (current_effect_frame != null) {
 			batch.draw(current_effect_frame, getX(), getY());
-		}
-		if (state == STATE.idle) {
-
-			batch.draw(role_hp_back, this.getX(), this.getY() + this.margin); // 画血条
-			batch.draw(role_hp_face, this.getX(), this.getY() + this.margin); // 画血条
-
 		}
 	}
 
@@ -188,12 +178,6 @@ public class Role extends Actor {
 	public void hero_isAttacked(Animation ani, float damage_value) {
 		time_effect = 0;
 		ani_effect = ani;
-		currentHp = (int) (currentHp - damage_value >= 0 ? currentHp
-				- damage_value : 0);
-		role_hp_face.setRegionWidth(rhp.get_role(currentHp, maxHp));
-		if (currentHp <= 0) {
-			// this.getParent().removeActor(this);
-		}
 	}
 
 	/**

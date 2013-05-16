@@ -42,5 +42,5 @@ public class RoleFactory {
 		r.face = FACE.left;
 		r.setCskill( SkillFactory.getInstance().getSkillByName("atk3"));
 		return r;
-	}
+	} 
 }

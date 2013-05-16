@@ -12,33 +12,36 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.bsu.make.ButtonFactory;
 import com.bsu.tools.Configure;
+import com.bsu.tools.FightRoleUI;
+import com.bsu.tools.RoleHP;
 
 /**
  * GAME游戏战斗场景UI
+ * 
  * @author zhangyongchen
- *
+ * 
  */
-public class GameFightUI{
+public class GameFightUI {
 
 	Stage stage;
 	Image role_photo;
 	Texture photo_texture;
 	TextButton bt_endround;
 	Commander c;
-	public GameFightUI(Stage s,Commander cm) {
+	Array<FightRoleUI> role_state_array = new Array<FightRoleUI>();
+
+	public GameFightUI(Stage s) {
 		// TODO Auto-generated constructor stub
 		stage = s;
-		c=cm;
+		c = Commander.getInstance();
 		gameUI();
+		show_hero_state();
 	}
-	private void gameUI(){
-		photo_texture=new Texture(Gdx.files.internal("data/game/ui/Actor1.png"));
-		TextureRegion tr=new TextureRegion(photo_texture,0,0,96,96);
-		role_photo=new Image(tr);
-		role_photo.setScale(0.5f);
-	
+
+	private void gameUI() {
 		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,
 				60);
 		bt_endround.addListener(new ClickListener() {
@@ -47,7 +50,23 @@ public class GameFightUI{
 				c.roundEnd();
 			}
 		});
-		stage.addActor(role_photo);
 		stage.addActor(bt_endround);
+	}
+
+	/**
+	 * 绘画每个角色状态
+	 * 
+	 * @param roleIndex
+	 */
+	private void show_hero_state() {
+		int roleIndex = 0;
+		for (Role e : c.getHeros()) {
+			role_state_array.add(new FightRoleUI(stage, e, roleIndex));
+			roleIndex++;
+		}
+	}
+
+	public Array<FightRoleUI> getRole_state_array() {
+		return role_state_array;
 	}
 }

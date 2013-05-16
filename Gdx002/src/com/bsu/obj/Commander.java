@@ -11,6 +11,7 @@ import com.bsu.screen.GameScreen;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.CommandQueue;
 import com.bsu.tools.Configure;
+import com.bsu.tools.FightRoleUI;
 import com.bsu.tools.Configure.DIRECTION;
 import com.bsu.tools.Configure.STATE;
 
@@ -23,9 +24,13 @@ import com.bsu.tools.Configure.STATE;
 public class Commander {
 	private static Commander instance = null;
 
-	public static Commander getInstance(Stage s,GameScreen gs) {
+	public static Commander getInstance(Stage s, GameScreen gs) {
 		if (instance == null)
-			instance = new Commander(s,gs);
+			instance = new Commander(s, gs);
+		return instance;
+	}
+
+	public static Commander getInstance() {
 		return instance;
 	}
 
@@ -35,7 +40,7 @@ public class Commander {
 	private Array<Role> heros = new Array<Role>();
 	private Array<Role> npcs = new Array<Role>();
 
-	private Commander(Stage s,GameScreen gs) {
+	private Commander(Stage s, GameScreen gs) {
 		gamescreen = gs;
 		stage = s;
 		lactor = stage.getActors();
@@ -181,8 +186,8 @@ public class Commander {
 	boolean waitRoleFlag = false; // 等待标示，用来标记是否继续循环对下一英雄进行操作
 
 	private void commandHeros(BsuEvent be) throws InterruptedException {
-//		for (Role h : heros) {
-		for(int i=0;i<heros.size;i++){
+		// for (Role h : heros) {
+		for (int i = 0; i < heros.size; i++) {
 			Role h = heros.get(i);
 			waitRoleFlag = true; // 初始化等待循环flag为true
 			Array<Vector2> vs = h.getCurrSkillRange(); // 获得当前技能的攻击范围
@@ -239,8 +244,8 @@ public class Commander {
 	 */
 	private void commandNpcs(BsuEvent be) throws InterruptedException {
 		// 第一步所有敌人都进攻
-//		for (Role e : npcs) {
-		for(int i=0;i<npcs.size;i++){
+		// for (Role e : npcs) {
+		for (int i = 0; i < npcs.size; i++) {
 			Role e = npcs.get(i);
 			waitRoleFlag = true; // 初始化等待循环flag为false
 			Array<Vector2> vs = e.getCurrSkillRange(); // 获得当前技能的攻击范围
@@ -274,9 +279,20 @@ public class Commander {
 					h.currentHp = (int) (h.currentHp - e.getCskill().getVal() >= 0 ? h.currentHp
 							- e.getCskill().getVal()
 							: 0);
-					if (h.currentHp == 0) {
-						heros.removeValue(h, true); // 从Commander逻辑计算队列中移除
-						h.getParent().removeActor(h); // 从父Actor中移除该Actor节点
+					for (FightRoleUI fru : gamescreen.getFightUI()
+							.getRole_state_array()) {// 设置相应血条高度
+						if (fru.role == h) {
+							fru.role_hp.setScaleY((float) h.currentHp
+									/ (float) h.maxHp);
+							if (h.currentHp == 0) {
+								fru.role_photo.setColor(
+										fru.role_photo.getColor().r,
+										fru.role_photo.getColor().g,
+										fru.role_photo.getColor().b, 0.4f);
+								heros.removeValue(h, true); // 从Commander逻辑计算队列中移除
+								h.getParent().removeActor(h); // 从父Actor中移除该Actor节点
+							}
+						}
 					}
 				}
 			}
@@ -314,7 +330,7 @@ public class Commander {
 	 * @param my
 	 */
 	public void moveAction(final Role r, final int mx, final int my) {
-//		GameScreen.setControlled(false);
+		// GameScreen.setControlled(false);
 		gamescreen.setControlled(false);
 		waitRoleFlag = true;
 		boolean disapperFlag = true;// 默认闪现出现到指定位置
@@ -345,7 +361,7 @@ public class Commander {
 				public void notify(Object obj, String msg) {
 					// 收到消息设置等待标示为false
 					r.set_ani_from_state(STATE.idle);
-//					GameScreen.setControlled(true);
+					// GameScreen.setControlled(true);
 					gamescreen.setControlled(true);
 				}
 			});
@@ -359,7 +375,7 @@ public class Commander {
 							public void notify(Object obj, String msg) {
 								if (((Role) obj).name.equals(msg)) {
 									r.set_ani_from_state(STATE.idle);
-//									GameScreen.setControlled(true);
+									// GameScreen.setControlled(true);
 									gamescreen.setControlled(true);
 								}
 							}

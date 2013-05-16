@@ -27,13 +27,6 @@ public class BsuGame extends Game {
 				BsuGame.this.setScreen(this);
 			}
 		};
-		// HeadScreen hs_logo3 = new
-		// HeadScreen(this,"data/BsuLogo480-320.png","data/snd/chicken.wav",rect){
-		// @Override
-		// public void update(Observable o, Object arg) {
-		// BsuGame.this.setScreen(this);
-		// }
-		// };
 		SettingScreen ss = new SettingScreen(this) {
 			@Override
 			public void update(Observable o, Object arg) {
