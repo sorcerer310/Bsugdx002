@@ -16,12 +16,10 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
-import com.bsu.make.RoleFactory;
 import com.bsu.obj.Commander;
 import com.bsu.obj.GameFightUI;
 import com.bsu.obj.MapBox;
@@ -33,7 +31,6 @@ import com.bsu.tools.GameMap;
 public class GameScreen extends CubocScreen implements Observer,GestureListener {
 	private Stage stage; // 场景对象
 	private Stage UIStage; // UI场景对象
-	//	private GameMap gmap; // 游戏地图
 	private Commander commander; // 指挥官对象，指挥所有对象交互
 	private MapBox mb; // 地图块对象
 	private GameFightUI fightUI;
