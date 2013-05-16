@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -26,79 +25,46 @@ import com.bsu.obj.GameFightUI;
 import com.bsu.obj.MapBox;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
-import com.bsu.tools.CommandQueue;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameMap;
 import com.bsu.tools.HeroEffectClass;
 
 public class GameScreen extends CubocScreen implements Observer {
-	Stage stage;							//场景对象
-	Stage UIStage;							//UI场景对象
-	GameMap map;							//游戏地图
-	Role hero;								
-	Role hero1;
-	Role enemy1;
-	Role enemy2;
-	Role enemy3;
-	Commander commander;					//指挥官对象，指挥所有对象交互
-	MapBox mb;								//地图块对象
-	GameFightUI gfu;						
-	OrthographicCamera c;
-	private static boolean action_start; 	// 是否回合开始
-	private static boolean controlled;		
-
-	public static boolean isControlled() {
-		return controlled;
-	}
-
-	public static void setControlled(boolean controlled) {
-		GameScreen.controlled = controlled;
-	}
-
-	public static boolean isAction_start() {
-		return action_start;
-	}
-
-	public static void setAction_start(boolean action_start) {
-		GameScreen.action_start = action_start;
-	}
+	private Stage stage; // 场景对象
+	private Stage UIStage; // UI场景对象
+//	private GameMap gmap; // 游戏地图
+	private Commander commander; // 指挥官对象，指挥所有对象交互
+	private MapBox mb; // 地图块对象
+	private GameFightUI gfu;
+	private OrthographicCamera c;
+	private boolean action_start; // 是否回合开始
+	private boolean controlled;
 
 	public GameScreen(Game mxg) {
 		super(mxg);
-		new HeroEffectClass();
 		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
-		UIStage=new Stage(Configure.rect_width, Configure.rect_height, false);
-		init_game();
+		UIStage = new Stage(Configure.rect_width, Configure.rect_height, false);
 	}
 
-	private void init_game() {
-		actor_init();
-		stage.addActor(mb);
-		stage.addActor(hero);
-		stage.addActor(hero1);
-		stage.addActor(enemy1);
-		stage.addActor(enemy2);
-		stage.addActor(enemy3);
-		commander = Commander.getInstance(stage);
-		this.addActorListener();
-		setBornPosition(GameMap.map,Type.HERO, Configure.object_layer_hero);
-		setBornPosition(GameMap.map, Type.ENEMY,Configure.object_layer_enemy);
-		gfu=new GameFightUI(UIStage,commander);
-		c = (OrthographicCamera) stage.getCamera(); 
-	}
-
-	private void actor_init() {
-		map = new GameMap(0);
-		mb = new MapBox();
-		new HeroEffectClass();
+	/**
+	 * 游戏关卡初始化
+	 * @param mindex	关卡索引数，系统会根据这个参数判断载入哪个地图
+	 * @param rols		关卡初始化英雄与敌人的数组，出生地点在地图中已经设置好
+	 */
+	public void game_init(int mindex,Array<Role> rols) {
+		GameMap.make_map(mindex);
 		setAction_start(true);
 		setControlled(true);
-		hero = RoleFactory.getInstance().getHeroRole("hero1");
-		hero1 = RoleFactory.getInstance().getHeroRole2("hero2");
-		enemy1 = RoleFactory.getInstance().getEnemyRole("enemy1");
-		enemy2 = RoleFactory.getInstance().getEnemyRole("enemy2");
-		enemy3 = RoleFactory.getInstance().getEnemyRole("enemy3");
-	
+		mb = new MapBox();
+		stage.addActor(mb); // 增加地图方格显示
+		for(int i=0;i<rols.size;i++)
+			stage.addActor(rols.get(i));
+		commander = Commander.getInstance(stage,this);
+		this.addActorListener();
+		setBornPosition(GameMap.map, Type.HERO, Configure.object_layer_hero);
+		setBornPosition(GameMap.map, Type.ENEMY, Configure.object_layer_enemy);
+		gfu = new GameFightUI(UIStage, commander);
+		c = (OrthographicCamera) stage.getCamera();
 	}
 
 	/**
@@ -112,7 +78,7 @@ public class GameScreen extends CubocScreen implements Observer {
 	 *            地图对象层出生点名称
 	 */
 
-	private void setBornPosition(TiledMap map,Type p, String s) {
+	private void setBornPosition(TiledMap map, Type p, String s) {
 		Array<Vector2> v = new Array<Vector2>();
 		for (TiledObjectGroup group : map.objectGroups) {
 			for (TiledObject object : group.objects) {
@@ -124,7 +90,7 @@ public class GameScreen extends CubocScreen implements Observer {
 				}
 			}
 		}
-		int index=0;
+		int index = 0;
 		for (Actor act : stage.getActors()) {
 			if (act instanceof Role) {
 				Role r = (Role) act;
@@ -139,7 +105,7 @@ public class GameScreen extends CubocScreen implements Observer {
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		//c.position.add(new Vector3(1,0,0));
+		// c.position.add(new Vector3(1,0,0));
 		GameMap.map_render.render(c);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
@@ -159,9 +125,9 @@ public class GameScreen extends CubocScreen implements Observer {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(null);
-		InputMultiplexer inputMultiplexer=new InputMultiplexer();
-		inputMultiplexer.addProcessor(UIStage);//必须先加这个。。。。
-		inputMultiplexer.addProcessor(stage); 
+		InputMultiplexer inputMultiplexer = new InputMultiplexer();
+		inputMultiplexer.addProcessor(UIStage);// 必须先加这个。。。。
+		inputMultiplexer.addProcessor(stage);
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 
@@ -208,28 +174,30 @@ public class GameScreen extends CubocScreen implements Observer {
 				}
 			}
 		});
-		stage.addListener(new InputListener(){
+		stage.addListener(new InputListener() {
 			@Override
 			public void touchDragged(InputEvent event, float x, float y,
 					int pointer) {
 				// TODO Auto-generated method stub
-	        	 // c.position.add(new Vector3(x-c.position.x,y-c.position.y,0));
+				// c.position.add(new Vector3(x-c.position.x,y-c.position.y,0));
 				super.touchDragged(event, x, y, pointer);
 			}
+
 			@Override
-	           public void touchUp(InputEvent event, float x, float y,
-	                   int pointer, int button) {
-	               // TODO Auto-generated method stub
-	               super.touchUp(event, x, y, pointer, button);
-	           }
-	           @Override
-	           public boolean touchDown(InputEvent event, float x, float y,
-	                   int pointer, int button) {
-	               // TODO Auto-generated method stub
-	            
-	               return true;
-	           }
-	       });
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				// TODO Auto-generated method stub
+				super.touchUp(event, x, y, pointer, button);
+			}
+
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				// TODO Auto-generated method stub
+
+				return true;
+			}
+		});
 	}
 
 	/**
@@ -280,5 +248,21 @@ public class GameScreen extends CubocScreen implements Observer {
 			tempV.y = v.y;
 			MapBox.pass_array.add(tempV);
 		}
+	}
+	
+	public boolean isControlled() {
+		return controlled;
+	}
+
+	public void setControlled(boolean c) {
+		controlled = c;
+	}
+
+	public boolean isAction_start() {
+		return action_start;
+	}
+
+	public void setAction_start(boolean as) {
+		action_start = as;
 	}
 }

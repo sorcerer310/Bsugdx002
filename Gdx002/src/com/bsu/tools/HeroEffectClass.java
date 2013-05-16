@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class HeroEffectClass {
-	private Texture effect_texture;
-	public TextureRegion[][] effect_spilt;
-	private TextureRegion[][] effect_miror;
+	private static Texture effect_texture;
+	public static TextureRegion[][] effect_spilt;
+	private static TextureRegion[][] effect_miror;
 	private static Animation ani_effect_0;
 	private static Animation ani_effect_1;
 	private static Animation ani_effect_2;
@@ -22,11 +22,9 @@ public class HeroEffectClass {
 	 * 角色攻击动作类型攻击目标后的特效效果类
 	 */
 	public HeroEffectClass() {
-		// TODO Auto-generated constructor stub
-		init_effect_base();
 	}
 
-	private void init_effect_base() {
+	static{
 		effect_texture = new Texture(Gdx.files.internal("data/game/hero/effect.png"));
 		effect_spilt = TextureRegion.split(effect_texture, 32, 32);
 		effect_miror = TextureRegion.split(effect_texture, 32, 32);
@@ -89,7 +87,7 @@ public class HeroEffectClass {
 		region_enemy_home[2] = effect_spilt[5][6];
 		region_enemy_home[3] = effect_spilt[4][6];
 		ani_enemy_home = new Animation(0.1f, region_enemy_home);
-	}
+	};
 
 	public static Animation get_effect(int index) {
 		Animation ani = null;

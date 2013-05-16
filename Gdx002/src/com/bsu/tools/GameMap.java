@@ -18,22 +18,22 @@ import com.badlogic.gdx.utils.Array;
 
 
 public class GameMap {
-	public static TiledMap map;
-	private TileAtlas atlas;
-	public static TileMapRenderer map_render; 
+	public static TiledMap map;										
+	private static TileAtlas atlas;						//
+	public static TileMapRenderer map_render; 			//
   /**
    * 
    * @param level 关卡索引，根据索引加载不同地图
    */
-	public GameMap(int level) {
-		// TODO Auto-generated constructor stub
-		get_map(level);
-	}
+//	public GameMap(int level) {
+//		// TODO Auto-generated constructor stub
+//		get_map(level);
+//	}
 	/**
 	 * 
 	 * @param level 关卡索引，此方法不使用packfield
 	 */
-	public void get_map(int level){
+	public static void make_map(int level){
 		FileHandle mapHandle = Gdx.files.internal("data/map/"+Configure.game_map_path_string[level]+".tmx");
 		map = TiledLoader.createMap(mapHandle);
 		FileHandle packages=Gdx.files.internal("data/map");   

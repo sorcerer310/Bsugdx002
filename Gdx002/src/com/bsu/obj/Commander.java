@@ -23,18 +23,20 @@ import com.bsu.tools.Configure.STATE;
 public class Commander {
 	private static Commander instance = null;
 
-	public static Commander getInstance(Stage s) {
+	public static Commander getInstance(Stage s,GameScreen gs) {
 		if (instance == null)
-			instance = new Commander(s);
+			instance = new Commander(s,gs);
 		return instance;
 	}
 
+	private GameScreen gamescreen = null;
 	private Stage stage = null;
 	private Array<Actor> lactor = null;
 	private Array<Role> heros = new Array<Role>();
 	private Array<Role> npcs = new Array<Role>();
 
-	private Commander(Stage s) {
+	private Commander(Stage s,GameScreen gs) {
+		gamescreen = gs;
 		stage = s;
 		lactor = stage.getActors();
 		heros.clear();
@@ -312,7 +314,8 @@ public class Commander {
 	 * @param my
 	 */
 	public void moveAction(final Role r, final int mx, final int my) {
-		GameScreen.setControlled(false);
+//		GameScreen.setControlled(false);
+		gamescreen.setControlled(false);
 		waitRoleFlag = true;
 		boolean disapperFlag = true;// 默认闪现出现到指定位置
 		DIRECTION d = null;
@@ -342,7 +345,8 @@ public class Commander {
 				public void notify(Object obj, String msg) {
 					// 收到消息设置等待标示为false
 					r.set_ani_from_state(STATE.idle);
-					GameScreen.setControlled(true);
+//					GameScreen.setControlled(true);
+					gamescreen.setControlled(true);
 				}
 			});
 		} else {
@@ -355,7 +359,8 @@ public class Commander {
 							public void notify(Object obj, String msg) {
 								if (((Role) obj).name.equals(msg)) {
 									r.set_ani_from_state(STATE.idle);
-									GameScreen.setControlled(true);
+//									GameScreen.setControlled(true);
+									gamescreen.setControlled(true);
 								}
 							}
 						});

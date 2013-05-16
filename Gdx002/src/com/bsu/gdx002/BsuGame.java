@@ -4,6 +4,7 @@ import java.util.Observable;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Rectangle;
 import com.bsu.head.HeadScreen;
+import com.bsu.make.GameScreenConfigure;
 import com.bsu.screen.GameScreen;
 import com.bsu.screen.MenuScreen;
 import com.bsu.screen.SettingScreen;
@@ -49,6 +50,7 @@ public class BsuGame extends Game {
 				}
 			}
 		};
+		GameScreenConfigure.getInstance().makeGameScreen1(gs);					//配置游戏关卡为第一关
 		MenuScreen ms = new MenuScreen(this) {
 			@Override
 			public void update(Observable o, Object arg) {
