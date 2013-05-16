@@ -11,8 +11,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
-import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -31,8 +29,7 @@ import com.bsu.tools.Configure;
 import com.bsu.tools.GameMap;
 import com.bsu.tools.HeroEffectClass;
 
-
-public class GameScreen extends CubocScreen implements Observer?GestureListener  {
+public class GameScreen extends CubocScreen implements Observer {
 	private Stage stage; // 场景对象
 	private Stage UIStage; // UI场景对象
 //	private GameMap gmap; // 游戏地图
@@ -47,36 +44,27 @@ public class GameScreen extends CubocScreen implements Observer?GestureListener 
 		super(mxg);
 		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
 		UIStage = new Stage(Configure.rect_width, Configure.rect_height, false);
-				init_game();
 	}
 
-	private void init_game() {
-		actor_init();
-		stage.addActor(mb);
-		stage.addActor(hero);
-		stage.addActor(hero1);
-		stage.addActor(enemy1);
-		stage.addActor(enemy2);
-		stage.addActor(enemy3);
-		commander = Commander.getInstance(stage);
+	/**
+	 * 游戏关卡初始化
+	 * @param mindex	关卡索引数，系统会根据这个参数判断载入哪个地图
+	 * @param rols		关卡初始化英雄与敌人的数组，出生地点在地图中已经设置好
+	 */
+	public void game_init(int mindex,Array<Role> rols) {
+		GameMap.make_map(mindex);
+		setAction_start(true);
+		setControlled(true);
+		mb = new MapBox();
+		stage.addActor(mb); // 增加地图方格显示
+		for(int i=0;i<rols.size;i++)
+			stage.addActor(rols.get(i));
+		commander = Commander.getInstance(stage,this);
 		this.addActorListener();
 		setBornPosition(GameMap.map, Type.HERO, Configure.object_layer_hero);
 		setBornPosition(GameMap.map, Type.ENEMY, Configure.object_layer_enemy);
 		gfu = new GameFightUI(UIStage, commander);
 		c = (OrthographicCamera) stage.getCamera();
-	}
-
-	private void actor_init() {
-		new HeroEffectClass();
-		map = new GameMap(0);
-		mb = new MapBox();
-		setAction_start(true);
-		setControlled(true);
-		hero = RoleFactory.getInstance().getHeroRole("hero1");
-		hero1 = RoleFactory.getInstance().getHeroRole2("hero2");
-		enemy1 = RoleFactory.getInstance().getEnemyRole("enemy1");
-		enemy2 = RoleFactory.getInstance().getEnemyRole("enemy2");
-		enemy3 = RoleFactory.getInstance().getEnemyRole("enemy3");
 	}
 
 	/**
@@ -119,16 +107,6 @@ public class GameScreen extends CubocScreen implements Observer?GestureListener 
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		// c.position.add(new Vector3(1,0,0));
 		GameMap.map_render.render(c);
-		if (cling_x != 0) {
-			cling_x += cling_x > 0 ? -1 : 1;
-			int cx = cling_x > 0 ? -1 : 1;
-			int max_x = map.map_render.getMapWidthUnits()
-					- Configure.rect_width;
-			if (c.position.x + cx >= Configure.rect_width / 2
-					&& c.position.x + cx <= max_x + Configure.rect_width / 2){
-				c.position.x += cx;
-			}
-		}
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		UIStage.act(Gdx.graphics.getDeltaTime());
@@ -148,9 +126,8 @@ public class GameScreen extends CubocScreen implements Observer?GestureListener 
 	public void show() {
 		Gdx.input.setInputProcessor(null);
 		InputMultiplexer inputMultiplexer = new InputMultiplexer();
-		inputMultiplexer.addProcessor(UIStage);// �
+		inputMultiplexer.addProcessor(UIStage);// 必须先加这个。。。。
 		inputMultiplexer.addProcessor(stage);
-		inputMultiplexer.addProcessor(new GestureDetector(this));
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 
@@ -195,6 +172,30 @@ public class GameScreen extends CubocScreen implements Observer?GestureListener 
 						}
 					}
 				}
+			}
+		});
+		stage.addListener(new InputListener() {
+			@Override
+			public void touchDragged(InputEvent event, float x, float y,
+					int pointer) {
+				// TODO Auto-generated method stub
+				// c.position.add(new Vector3(x-c.position.x,y-c.position.y,0));
+				super.touchDragged(event, x, y, pointer);
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				// TODO Auto-generated method stub
+				super.touchUp(event, x, y, pointer, button);
+			}
+
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				// TODO Auto-generated method stub
+
+				return true;
 			}
 		});
 	}
@@ -248,64 +249,20 @@ public class GameScreen extends CubocScreen implements Observer?GestureListener 
 			MapBox.pass_array.add(tempV);
 		}
 	}
-
-	int cling_x, cling_y;// 移动剩余数量
-
-	/**
-	 * 手势控制地图移动 ，每次移动均1/4屏幕，与手势数据无关
-	 * 
-	 * @param clingX
-	 *            水平移动量
-	 * @param clingY
-	 *            竖直移动量
-	 */
-	private void stage_camera_move(int clingX, int clingY) {
-		cling_x = clingX > 0 ? Configure.rect_width / 4
-				: -Configure.rect_width / 4;
-		cling_y = clingY;
+	
+	public boolean isControlled() {
+		return controlled;
 	}
 
-	@Override
-	public boolean touchDown(float x, float y, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
+	public void setControlled(boolean c) {
+		controlled = c;
 	}
 
-	@Override
-	public boolean tap(float x, float y, int count, int button) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isAction_start() {
+		return action_start;
 	}
 
-	@Override
-	public boolean longPress(float x, float y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean fling(float velocityX, float velocityY, int button) {
-		// TODO Auto-generated method stub
-		stage_camera_move((int) velocityX, (int) velocityY);
-		return false;
-	}
-
-	@Override
-	public boolean pan(float x, float y, float deltaX, float deltaY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean zoom(float initialDistance, float distance) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2,
-			Vector2 pointer1, Vector2 pointer2) {
-		// TODO Auto-generated method stub
-		return false;
+	public void setAction_start(boolean as) {
+		action_start = as;
 	}
 }
