@@ -17,6 +17,7 @@ public class GameScreenConfigure {
 		Array<Role>  rols = new Array<Role>();
 		rols.add(RoleFactory.getInstance().getHeroRole("hero1"));
 		rols.add(RoleFactory.getInstance().getHeroRole2("hero2"));
+		rols.add(RoleFactory.getInstance().getHeroRole2("hero3"));
 		rols.add(RoleFactory.getInstance().getEnemyRole("enemy1"));
 		rols.add(RoleFactory.getInstance().getEnemyRole("enemy2"));
 		rols.add(RoleFactory.getInstance().getEnemyRole("enemy3"));

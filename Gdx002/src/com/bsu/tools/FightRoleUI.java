@@ -42,24 +42,24 @@ public class FightRoleUI {
 		role_photo = new Image(tr);
 		skillImg0 = new Image(new Texture(
 				Gdx.files.internal("data/game/ui/jewel_dea.png")));
-		skillImg1= new Image(new Texture(
+		skillImg1 = new Image(new Texture(
 				Gdx.files.internal("data/game/ui/jewel_dead2.png")));
 		rhp = new RoleHP();
 		role_hp = rhp.get_hp_image();
+		Configure.get_sytle().font.setScale(0.5f);
 		label_name = new Label(role.name, Configure.get_sytle());
+		role_photo.setScale(0.5f);
 		show_role_state();
 	}
 
 	private void show_role_state() {
-		role_photo.setScale(0.5f);
-		label_name.setScale(0.5f);
 		stage.addActor(role_photo);
 		stage.addActor(skillImg0);
 		stage.addActor(skillImg1);
 		stage.addActor(label_name);
 		stage.addActor(role_hp);
-		skillImg0.setPosition(54+role_index*96, 0);
-		skillImg1.setPosition(54+role_index*96, 44);
+		skillImg0.setPosition(54 + role_index * 96, 0);
+		skillImg1.setPosition(54 + role_index * 96, 44);
 		role_photo.setPosition(role_index * 96, 0);
 		role_hp.setPosition(50 + role_index * 96, 0);
 		label_name.setPosition(0 + role_index * 96, 49);
