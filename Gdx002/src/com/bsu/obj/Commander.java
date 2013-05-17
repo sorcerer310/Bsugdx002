@@ -37,6 +37,11 @@ public class Commander {
 		return instance;
 	}
 
+	public static Commander getInstance(){
+		return instance;
+	}
+	
+	
 	private GameScreen gamescreen = null;
 	private Stage stage = null;
 	private Array<Actor> lactor = null;
