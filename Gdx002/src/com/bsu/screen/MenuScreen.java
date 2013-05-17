@@ -1,5 +1,9 @@
 package com.bsu.screen;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,10 +15,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.head.CubocScreen;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameMap;
+import com.bsu.tools.Configure.STATE;
 
 public class MenuScreen extends CubocScreen implements Observer {
 	private Image backgroundImage;// backgroud
@@ -32,7 +38,6 @@ public class MenuScreen extends CubocScreen implements Observer {
 		stage.addActor(backgroundImage);
 		stage.addActor(play_image);
 		stage.addActor(set_image);
-
 		play_image.addListener(new InputListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y,

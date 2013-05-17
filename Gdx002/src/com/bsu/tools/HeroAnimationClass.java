@@ -95,13 +95,25 @@ public class HeroAnimationClass {
 		return ani_attack_h;
 	}
 	
-	public static Animation getAnimationDisapper(int actor_type){
-		init_animation_base();
-		TextureRegion[]  region_apper = new TextureRegion[3];
-		region_apper[0] = spilt[actor_type][6];
-		region_apper[1] = spilt[actor_type][7];
-		region_apper[2] = spilt[actor_type][8];
-		Animation ani_disapper = new Animation(0.1f, region_apper);
-		return ani_disapper;
+	/**
+	 * 以下为卡片形式
+	 */
+	private static Texture card_texture;
+	
+	public static Animation getAnimation(int type){
+		if (card_texture == null) {
+			card_texture = new Texture(Gdx.files.internal("data/game/ui/Actor2.png"));
+			spilt = TextureRegion.split(card_texture, 32, 32);
+			miror = TextureRegion.split(card_texture, 32, 32);
+			for (TextureRegion[] region1 : miror) {
+				for (TextureRegion region2 : region1) {
+					region2.flip(true, false);
+				}
+			}
+		}
+		TextureRegion[]  region_ani = new TextureRegion[1];
+		region_ani[0] = spilt[type][0];
+		Animation ani_normal = new Animation(0.5f, region_ani);
+		return ani_normal;
 	}
 }

@@ -1,11 +1,20 @@
 package com.bsu.obj;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
+import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillFactory;
 import com.bsu.tools.BsuEvent;
@@ -15,6 +24,7 @@ import com.bsu.tools.Configure.FACE;
 import com.bsu.tools.Configure.STATE;
 import com.bsu.tools.HeroEffectClass;
 import com.bsu.tools.RoleHP;
+import com.sun.tools.internal.xjc.reader.gbind.Sequence;
 
 public class Role extends Actor {
 	private BsuEvent bevent = null; // 用来通知一些消息
@@ -114,7 +124,7 @@ public class Role extends Actor {
 		maxHp = 100;
 		attack_value = 5;
 		set_actor_base(type);
-
+		cark_box=this.card_region();
 	}
 
 	/**
@@ -124,23 +134,28 @@ public class Role extends Actor {
 	 */
 	private void set_actor_base(Type type) {
 		this.type = type;
-		int actor_type = type == Type.HERO ? 2 : 5;
+		//int actor_type = type == Type.HERO ? 2 : 5;
+		/*
 		ani_idle = HeroAnimationClass.getAnimationIdle(actor_type);
 		ani_move = HeroAnimationClass.getAnimationMove(actor_type);
+		*/
+		int actor_type = type == Type.HERO ? 0 : 1;
+		ani_idle = HeroAnimationClass.getAnimation(actor_type);
+		ani_move = HeroAnimationClass.getAnimation(actor_type);
 		ani_disapper = HeroEffectClass.get_effect(99);
 		ani_apper = HeroEffectClass.get_effect(98);
 		set_ani_from_state(STATE.idle);
 	}
-
 
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
 		Role_logic();
 		if (current_action_frame != null) {
-			batch.draw(current_action_frame, getX(), getY());
+			batch.draw(current_action_frame, getX(),getY(), getOriginX() , getOriginY() , 32, 32,
+					 getScaleX(),  getScaleY(), getRotation());
+			batch.draw(cark_box,getX(),getY());
 		}
-
 		if (current_effect_frame != null) {
 			batch.draw(current_effect_frame, getX(), getY());
 		}
@@ -221,7 +236,6 @@ public class Role extends Actor {
 	private void Role_logic() {
 		time_state += Gdx.graphics.getDeltaTime();
 		time_effect += Gdx.graphics.getDeltaTime();
-		this.setSize(Configure.map_box_value, Configure.map_box_value);
 		current_action_frame = ani_current.getKeyFrame(time_state, loop_flag);
 		if (ani_current.isAnimationFinished(time_state)) {
 			if (ani_current == ani_move) {
@@ -332,5 +346,22 @@ public class Role extends Actor {
 			}
 		}
 		return false;
+	}
+	/**
+	 * 以下卡片所涉及的方法
+	 */
+	private TextureRegion cark_box; 
+	private TextureRegion card_region() {
+		Pixmap pixmap;
+		pixmap = new Pixmap(32, 32, Format.RGBA8888); // 生成一张64*8的图片
+		pixmap.setColor(Color.GREEN); // 设置颜色为黑色。
+		pixmap.drawRectangle(0, 0, 32, 32);
+
+
+		Texture pixmaptex = new Texture(pixmap);
+		TextureRegion pix_temp = new TextureRegion(pixmaptex,
+				32, 32);
+		pixmap.dispose();
+		return pix_temp;
 	}
 }
