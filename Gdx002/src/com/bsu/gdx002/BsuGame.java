@@ -72,8 +72,8 @@ public class BsuGame extends Game {
 		hs_logo2.addObserver(ms);
 		ms.addObserver(gs);
 		ms.addObserver(ss);
-		ms.addObserver(cpms);
-//		ss.addObserver(ms);
-//		gs.addObserver(ms);
+//		ms.addObserver(cpms);
+		ss.addObserver(ms);
+		gs.addObserver(ms);
 	}
 }
