@@ -61,15 +61,17 @@ public class Configure {
 	public static enum STATE { // 人物状态
 		idle, attack_normal, move, attack_v, attack_h,disapper,apper
 	};
-
+	public static enum QUALITY{
+		normal,good,best,perfect
+	}
 	public static enum FACE {
 		left, right
 	}; // 人物朝向
-
 	public static enum DIRECTION {
 		left, right, up, down
 	};// 4方向
-
+	
+	
 	/**
 	 * 取得FONT
 	 * 

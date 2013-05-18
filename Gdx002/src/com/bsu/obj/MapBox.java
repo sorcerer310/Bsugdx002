@@ -164,11 +164,11 @@ public class MapBox extends Actor {
 		Color temp_c = null;
 		if (box == BOX.PASS) {
 			temp_c = Color.GREEN;
-			temp_c.a = 0.8f;
+			temp_c.a = 0.5f;
 		}
 		if (box == BOX.BLOCK) {
 			temp_c = Color.RED;
-			temp_c.a = 0.8f;
+			temp_c.a = 0.5f;
 		}
 		if (box == BOX.ATTACK) {
 			temp_c = Color.BLUE;
