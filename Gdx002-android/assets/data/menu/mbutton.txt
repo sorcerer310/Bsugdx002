@@ -1,0 +1,46 @@
+mbutton.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+mb_shop
+  rotate: false
+  xy: 2, 61
+  size: 158, 58
+  orig: 158, 58
+  offset: 0, 0
+  index: -1
+mb_role
+  rotate: false
+  xy: 320, 2
+  size: 158, 58
+  orig: 158, 58
+  offset: 0, 0
+  index: -1
+mb_equip
+  rotate: false
+  xy: 2, 2
+  size: 158, 58
+  orig: 158, 58
+  offset: 0, 0
+  index: -1
+mb_skill
+  rotate: false
+  xy: 161, 61
+  size: 158, 58
+  orig: 158, 58
+  offset: 0, 0
+  index: -1
+mb_update
+  rotate: false
+  xy: 320, 61
+  size: 158, 58
+  orig: 158, 58
+  offset: 0, 0
+  index: -1
+mb_fight
+  rotate: false
+  xy: 161, 2
+  size: 158, 58
+  orig: 158, 58
+  offset: 0, 0
+  index: -1

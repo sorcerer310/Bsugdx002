@@ -25,7 +25,14 @@ public class Configure {
 	public static String screen_setting = "setting"; // 设置String
 	public static String screen_menu = "menu";
 	public static String screen_game = "game";
+	
 	public static String screen_mpanel = "mpanel";
+	public static String screen_equip = "mequip";
+	public static String screen_fight = "mfight";
+	public static String screen_role = "mrole";
+	public static String screen_update = "msupdate";
+	public static String screen_skill = "mskill";
+	public static String screen_shop = "mshop";
 
 	public static String[] game_map_path_string = { "map1", "map2" };// 地图关卡名称（路径）
 

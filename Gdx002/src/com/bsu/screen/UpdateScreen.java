@@ -20,7 +20,7 @@ import com.bsu.make.ButtonFactory;
 import com.bsu.make.ImageFactory;
 import com.bsu.tools.Configure;
 
-public class CPanelMainScreen extends CubocScreen implements Observer {
+public class UpdateScreen extends CubocScreen implements Observer {
 	private Texture timg;
 	private TextureRegion intro;
 	private SpriteBatch batch;
@@ -32,10 +32,10 @@ public class CPanelMainScreen extends CubocScreen implements Observer {
 	private ImageButton ib_mb_shop;
 	private ImageButton ib_mb_skill;
 	private ImageButton ib_mb_update;
-	public CPanelMainScreen(Game game) {
+	public UpdateScreen(Game game) {
 		super(game);
 		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
-		timg = new Texture(Gdx.files.internal("data/menu/mpanel.png"));
+		timg = new Texture(Gdx.files.internal("data/menu/updatepanel.png"));
 		background = new Image(timg);
 		
 		ib_mb_update = ButtonFactory.getInstance().makeImageButton(Configure.screen_update);
@@ -98,25 +98,13 @@ public class CPanelMainScreen extends CubocScreen implements Observer {
 			}
 		});
 
-		ib_mb_shop = ButtonFactory.getInstance().makeImageButton(Configure.screen_shop);
-		ib_mb_shop.setPosition(300, 50);
-		ib_mb_shop.addListener(new InputListener(){
-			@Override
-			public boolean touchDown(InputEvent event,float x,float y,
-					int pointer,int button){
-				setChanged();
-				notifyObservers(Configure.screen_shop);
-				return super.touchDown(event, x, y, pointer, button);
-			}
-		});
-		
 		stage.addActor(background);
 		stage.addActor(ib_mb_update);
 		stage.addActor(ib_mb_equip);
 		stage.addActor(ib_mb_skill);
 		stage.addActor(ib_mb_role);
 		stage.addActor(ib_mb_fight);
-		stage.addActor(ib_mb_shop);
+		
 	}
 
 	@Override

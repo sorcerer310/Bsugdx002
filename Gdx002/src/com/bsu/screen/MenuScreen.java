@@ -44,8 +44,8 @@ public class MenuScreen extends CubocScreen implements Observer {
 					int pointer, int button) {
 				// TODO Auto-generated method stub
 				setChanged();
-				notifyObservers(Configure.screen_game);
-				//notifyObservers(Configure.screen_mpanel);
+//				notifyObservers(Configure.screen_game);
+				notifyObservers(Configure.screen_mpanel);
 				super.touchUp(event, x, y, pointer, button);
 			}
 

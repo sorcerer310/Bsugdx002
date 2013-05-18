@@ -42,7 +42,7 @@ public class GameFightUI {
 	}
 
 	private void gameUI() {
-		bt_endround = ButtonFactory.getInstance().getOneTextButton("end", 200,
+		bt_endround = ButtonFactory.getInstance().makeOneTextButton("end", 200,
 				60);
 		bt_endround.addListener(new ClickListener() {
 			@Override
