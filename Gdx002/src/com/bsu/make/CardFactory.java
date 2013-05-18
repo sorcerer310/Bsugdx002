@@ -12,53 +12,72 @@ import com.bsu.obj.Skill;
 import com.bsu.tools.AttackWeaponBase;
 import com.bsu.tools.Configure;
 import com.bsu.tools.DefendWeaponBase;
+import com.bsu.tools.GameTextureClass;
 import com.bsu.tools.RoleValue;
 import com.bsu.tools.Configure.QUALITY;
 
 public class CardFactory {
+	private static CardFactory instance = null;
+
+	public static CardFactory getInstance() {
+		if (instance == null)
+			instance = new CardFactory();
+		return instance;
+	}
+
 	public CardFactory() {
 		// TODO Auto-generated constructor stub
+		
+		tr=new TextureRegion(GameTextureClass.getInstance().getNew_role_texture(),32,32);
+		cardArrayFC.add(new RoleValue("fc",Type.HERO, tr, 100, 10, 10, SkillListBase
+				.getInstance().getValue(SUBTYPE.fc, QUALITY.normal),
+				AttackWeaponFactory.getInstance().getValue(ATTACK.sword,
+						QUALITY.normal), DefendWeaponFactory.getInstance()
+						.getValue(DEFEND.bujia, QUALITY.normal)));// 绿色(normal)
+		cardArrayFC.add(new RoleValue("fc",Type.HERO, tr, 200, 10, 10, sl, aw, dw));// 蓝色(good)
+		cardArrayFC.add(new RoleValue("fc",Type.HERO, tr, 300, 10, 10, sl, aw, dw));// 紫色(best)
+		cardArrayFC.add(new RoleValue("fc",Type.HERO, tr, 400, 10, 10, sl, aw, dw));// 橙色(perfect)
+
+		cardArrayZYC.add(new RoleValue("zyc",Type.HERO, tr, 100, 10, 10, sl, aw, dw));// 绿色(normal)
+		cardArrayZYC.add(new RoleValue("zyc",Type.HERO, tr, 200, 10, 10, sl, aw, dw));// 蓝色(good)
+		cardArrayZYC.add(new RoleValue("zyc",Type.HERO, tr, 300, 10, 10, sl, aw, dw));// 紫色(best)
+		cardArrayZYC.add(new RoleValue("zyc",Type.HERO, tr, 400, 10, 10, sl, aw, dw));// 橙色(perfect)
+	
+		cardArrayEnemy.add(new RoleValue("npc",Type.ENEMY, tr, 100, 10, 10, SkillListBase
+				.getInstance().getValue(SUBTYPE.enemy, QUALITY.normal),
+				AttackWeaponFactory.getInstance().getValue(ATTACK.sword,
+						QUALITY.normal), DefendWeaponFactory.getInstance()
+						.getValue(DEFEND.bujia, QUALITY.normal)));// 绿色(normal)
+		cardArrayEnemy.add(new RoleValue("zyc",Type.ENEMY, tr, 200, 10, 10, sl, aw, dw));// 蓝色(good)
+		cardArrayEnemy.add(new RoleValue("zyc",Type.ENEMY, tr, 300, 10, 10, sl, aw, dw));// 紫色(best)
+		cardArrayEnemy.add(new RoleValue("zyc",Type.ENEMY, tr, 400, 10, 10, sl, aw, dw));// 橙色(perfect)
 	}
 
 	public static enum SUBTYPE {
-		fc, zyc
+		fc, zyc,enemy
 	}
 
-	private static Array<RoleValue> cardArrayFC = new Array<RoleValue>();
-	private static Array<RoleValue> cardArrayZYC = new Array<RoleValue>();
-	private static Array heroArray = new Array();
+	private Array<RoleValue> cardArrayFC = new Array<RoleValue>();
+	private Array<RoleValue> cardArrayZYC = new Array<RoleValue>();
+	private Array<RoleValue> cardArrayEnemy = new Array<RoleValue>();
+	TextureRegion tr;
+	Array<Skill> sl;
+	AttackWeaponBase aw;
+	DefendWeaponBase dw;
 
-	static TextureRegion tr;
-	static Array<Skill> sl;
-	static AttackWeaponBase aw;
-	static DefendWeaponBase dw;
-	static {
-		cardArrayFC.add(new RoleValue("fc", tr, 100, 10, 10, SkillListBase
-				.getValue(SUBTYPE.fc, QUALITY.normal), AttackWeaponFactory
-				.getValue(ATTACK.sword, QUALITY.normal), DefendWeaponFactory
-				.getValue(DEFEND.bujia, QUALITY.normal)));// 绿色(normal)
-		cardArrayFC.add(new RoleValue("fc", tr, 200, 10, 10, sl, aw, dw));// 蓝色(good)
-		cardArrayFC.add(new RoleValue("fc", tr, 300, 10, 10, sl, aw, dw));// 紫色(best)
-		cardArrayFC.add(new RoleValue("fc", tr, 400, 10, 10, sl, aw, dw));// 橙色(perfect)
-
-		cardArrayZYC.add(new RoleValue("zyc", tr, 100, 10, 10, sl, aw, dw));// 绿色(normal)
-		cardArrayZYC.add(new RoleValue("zyc", tr, 200, 10, 10, sl, aw, dw));// 蓝色(good)
-		cardArrayZYC.add(new RoleValue("zyc", tr, 300, 10, 10, sl, aw, dw));// 紫色(best)
-		cardArrayZYC.add(new RoleValue("zyc", tr, 400, 10, 10, sl, aw, dw));// 橙色(perfect)
-
-		heroArray.addAll(cardArrayFC);
-		heroArray.addAll(cardArrayZYC);
-	}
-
-	public static RoleValue getValue(SUBTYPE p, QUALITY q) {
+	public RoleValue getValue(SUBTYPE p, QUALITY q) {
 		RoleValue rv = null;
-		int ax = 0;
+		Array<RoleValue> temp=null;
+
 		int ay = 0;
 		if (p == SUBTYPE.fc) {
-			ax = 0;
+			temp=cardArrayFC;
 		}
 		if (p == SUBTYPE.zyc) {
-			ax = 1;
+			temp = cardArrayZYC;
+		}
+		if(p==SUBTYPE.enemy){
+			temp=cardArrayEnemy;
 		}
 		if (q == QUALITY.normal) {
 			ay = 0;
@@ -72,7 +91,6 @@ public class CardFactory {
 		if (q == QUALITY.perfect) {
 			ay = 3;
 		}
-		Array<RoleValue> temp = (Array<RoleValue>) heroArray.get(ax);
 		rv = temp.get(ay);
 		return rv;
 	}

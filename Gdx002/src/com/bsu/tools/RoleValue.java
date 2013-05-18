@@ -3,6 +3,7 @@ package com.bsu.tools;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillListBase;
+import com.bsu.obj.Role.Type;
 import com.bsu.obj.Skill;
 
 /**
@@ -20,8 +21,9 @@ public class RoleValue {
 	public Array<Skill> skillList;// 自身的技能树
 	public AttackWeaponBase attackWeapon;// 人物武器
 	public DefendWeaponBase defendWeapon;// 人物防具
+	public Type type;
 
-	public RoleValue(String s,TextureRegion tr, int ph, int dv, int av, Array<Skill> sl,
+	public RoleValue(String s,Type p,TextureRegion tr, int ph, int dv, int av, Array<Skill> sl,
 			AttackWeaponBase aw, DefendWeaponBase dw) {
 		// TODO Auto-generated constructor stub
 		name=s;
@@ -32,5 +34,6 @@ public class RoleValue {
 		skillList=sl;
 		attackWeapon=aw;
 		defendWeapon=dw;
+		type=p;
 	}
 }

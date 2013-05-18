@@ -1,7 +1,10 @@
 package com.bsu.make;
 
+import com.bsu.make.CardFactory.SUBTYPE;
+import com.bsu.obj.Card;
 import com.bsu.obj.Role;
 import com.bsu.tools.Configure.FACE;
+import com.bsu.tools.Configure.QUALITY;
 
 /**
  * 用来生成角色，现在只有英雄和NPC角色
@@ -40,7 +43,12 @@ public class RoleFactory {
 		Role r = new Role(Role.Type.ENEMY,n);
 		//初始化敌人类型角色要做的事写在这里
 		r.face = FACE.left;
-		r.setCskill( SkillFactory.getInstance().getSkillByName("atk3"));
+		r.setCskill( SkillFactory.getInstance().getSkillByName("atk"));
 		return r;
 	} 
+	
+	public Role getRole(SUBTYPE st,QUALITY q){
+		Role r=new Role(new Card(st,q).getRoleValue());
+		return r;
+	}
 }
