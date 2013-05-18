@@ -17,7 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.bsu.head.CubocScreen;
+import com.bsu.make.ButtonFactory;
+import com.bsu.make.ImageFactory;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameMap;
 import com.bsu.tools.Configure.STATE;
@@ -26,7 +29,8 @@ public class MenuScreen extends CubocScreen implements Observer {
 	private Image backgroundImage;// backgroud
 	private Image play_image;
 	private Image set_image;
-	Stage stage; // ��̨
+	private Image fight_button;			//进入战斗场景，测试用
+	Stage stage; 
 	TextureAtlas atlas;
 	GameMap map;
 
@@ -38,6 +42,7 @@ public class MenuScreen extends CubocScreen implements Observer {
 		stage.addActor(backgroundImage);
 		stage.addActor(play_image);
 		stage.addActor(set_image);
+		stage.addActor(fight_button);
 		play_image.addListener(new InputListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
@@ -76,6 +81,23 @@ public class MenuScreen extends CubocScreen implements Observer {
 				return true;
 			}
 		});
+		fight_button.addListener(new InputListener(){
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				System.out.println("fight_button");
+				setChanged();
+				notifyObservers(Configure.screen_game);
+				super.touchUp(event, x, y, pointer, button);
+			}
+
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				// TODO Auto-generated method stub
+				return true;
+			}
+		});
 	}
 
 	private void actor_init() {
@@ -86,6 +108,9 @@ public class MenuScreen extends CubocScreen implements Observer {
 		play_image.setPosition(100, 200);
 		set_image = new Image(atlas.findRegion("settingsButton"));
 		set_image.setPosition(100, 120);
+		//fight_button = ButtonFactory.getInstance().makeOneTextButton("战斗吧！！骚年们", 100, 100);
+		fight_button = ImageFactory.getInstance().mb_fight;
+		fight_button.setPosition(100, 50);
 	}
 
 	@Override

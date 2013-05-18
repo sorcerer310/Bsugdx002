@@ -61,7 +61,8 @@ public class BsuGame extends Game {
 		MenuScreen ms = new MenuScreen(this) {
 			@Override
 			public void update(Observable o, Object arg) {
-//				if(arg.toString().equals(Configure.screen_menu))
+				System.out.println(arg.toString());
+				//				if(arg.toString().equals(Configure.screen_menu))
 					BsuGame.this.setScreen(this);
 			}
 		};
@@ -129,7 +130,7 @@ public class BsuGame extends Game {
 		ms.addObserver(ss);
 		ms.addObserver(cpms);
 //		ss.addObserver(ms);
-//		gs.addObserver(ms);
+		//gs.addObserver(ms);
 		
 		cpms.addObserver(es);
 		cpms.addObserver(fs);

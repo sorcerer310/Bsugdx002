@@ -48,8 +48,7 @@ public class ButtonFactory {
 		tbs.font = skin.getFont("default");
 		skin.add("default", tbs);
 		TextButton tb = new TextButton(text, skin);
-		tb.setX(x);
-		tb.setY(y);
+		tb.setPosition(x, y);
 		return tb;
 	}
 
