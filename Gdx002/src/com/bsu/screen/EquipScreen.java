@@ -12,16 +12,20 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.bsu.head.CubocScreen;
+import com.bsu.make.ButtonFactory;
 import com.bsu.tools.Configure;
 
 public class EquipScreen extends CubocScreen implements Observer {
 	private Texture timg;
 	private TextureRegion intro;
 	private SpriteBatch batch;
+	private ImageButton ib_back;
 	public EquipScreen(Game game) {
 		super(game);
 		timg = new Texture(Gdx.files.internal("data/menu/equippanel.png"));
+		ib_back = ButtonFactory.getInstance().makeImageButton("back");
 	}
 
 	@Override
