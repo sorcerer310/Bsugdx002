@@ -101,6 +101,13 @@ public class Role extends Actor {
 		this.skillList=rv.skillList;
 		cskill=skillList.get(0);
 		this.type=rv.type;
+<<<<<<< HEAD
+=======
+		if(rv.type==Type.ENEMY){
+			cskill.flipRange();
+			System.out.println(name+"@@"+type);
+		}
+>>>>>>> 878c94e2f2a73d1dff50b23eaddb41cf574b1189
 		set_actor_base(type);
 		cark_box = this.card_region();
 	}
@@ -289,7 +296,11 @@ public class Role extends Actor {
 	 */
 	public Array<Vector2> getCurrSkillRange() {
 		realrange.clear();
-		Array<Vector2> rs = cskill.getRange();
+		Array<Vector2> rs = null;
+		if(this.face==Configure.FACE.right)
+			rs = cskill.getRange();
+		else if(this.face==Configure.FACE.left)
+			rs = cskill.flipRange();
 		for (Vector2 v : rs) {
 			realrange.add(new Vector2(this.getBoxX() + v.x, v.y
 					+ this.getBoxY()));
@@ -303,8 +314,13 @@ public class Role extends Actor {
 
 	public void setCskill(Skill cskill) {
 		this.cskill = cskill;
+<<<<<<< HEAD
 		if (type == Type.ENEMY)
 			cskill.flip();
+=======
+//		if (face == FACE.left)
+//			cskill.flip();
+>>>>>>> 878c94e2f2a73d1dff50b23eaddb41cf574b1189
 	}
 
 	/**

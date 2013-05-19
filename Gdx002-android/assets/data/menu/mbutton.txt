@@ -3,50 +3,50 @@ format: RGBA8888
 filter: Linear,Linear
 repeat: none
 mb_shop
-  rotate: true
-  xy: 1, 347
+  rotate: false
+  xy: 475, 1
   size: 158, 58
   orig: 158, 58
   offset: 0, 0
   index: -1
 back
   rotate: false
-  xy: 1, 1
+  xy: 949, 1
   size: 94, 30
   orig: 94, 30
   offset: 0, 0
   index: -1
 mb_role
-  rotate: true
-  xy: 59, 189
+  rotate: false
+  xy: 633, 1
   size: 158, 58
   orig: 158, 58
   offset: 0, 0
   index: -1
 mb_equip
-  rotate: true
-  xy: 1, 31
+  rotate: false
+  xy: 1, 1
   size: 158, 58
   orig: 158, 58
   offset: 0, 0
   index: -1
 mb_skill
-  rotate: true
-  xy: 1, 189
+  rotate: false
+  xy: 317, 1
   size: 158, 58
   orig: 158, 58
   offset: 0, 0
   index: -1
 mb_update
-  rotate: true
-  xy: 59, 31
+  rotate: false
+  xy: 159, 1
   size: 158, 58
   orig: 158, 58
   offset: 0, 0
   index: -1
 mb_fight
-  rotate: true
-  xy: 59, 347
+  rotate: false
+  xy: 791, 1
   size: 158, 58
   orig: 158, 58
   offset: 0, 0
