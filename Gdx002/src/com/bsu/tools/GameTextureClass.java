@@ -19,31 +19,40 @@ public class GameTextureClass {
 			instance = new GameTextureClass();
 		return instance;
 	}
+
 	private Texture logoCompany;
 	private Texture logoGame;
 	private Texture logo66Rpg;
-	
-	private  Texture effect_texture;
-	private  Texture role_texture,new_role_texture;
+
+	private Texture effect_texture;
+	private Texture role_texture, new_role_texture;
+	private Texture card_texture;
 	private Texture mPanel;
 	private Texture equipPanel;
-	private Texture fightPanel,rolePanel,selectRolePanel,shopPanel,skillPanel,updatePanel;
-	
+	private Texture fightPanel, rolePanel, selectRolePanel, shopPanel,
+			skillPanel, updatePanel;
+
 	public GameTextureClass() {
 		// TODO Auto-generated constructor stub
-		role_texture = new Texture(Gdx.files.internal("data/game/hero/hero.png"));
-		effect_texture = new Texture(Gdx.files.internal("data/game/hero/effect.png"));
-		mPanel=new Texture(Gdx.files.internal("data/menu/mpanel.png"));
-		equipPanel=new Texture(Gdx.files.internal("data/menu/equippanel.png"));
-		fightPanel=new Texture(Gdx.files.internal("data/menu/fightpanel.png"));
-		rolePanel=new Texture(Gdx.files.internal("data/menu/rolespanel.png"));
-		selectRolePanel=new Texture(Gdx.files.internal("data/menu/selectrolepanel.png"));
-		shopPanel=new Texture(Gdx.files.internal("data/menu/shoppanel.png"));
-		skillPanel=new Texture(Gdx.files.internal("data/menu/skillpanel.png"));
-		updatePanel=new Texture(Gdx.files.internal("data/menu/updatepanel.png"));
-		new_role_texture = new Texture(Gdx.files.internal("data/game/ui/Actor2.png"));
+		role_texture = new Texture(
+				Gdx.files.internal("data/game/hero/hero.png"));
+		effect_texture = new Texture(
+				Gdx.files.internal("data/game/hero/effect.png"));
+		mPanel = new Texture(Gdx.files.internal("data/menu/mpanel.png"));
+		equipPanel = new Texture(Gdx.files.internal("data/menu/equippanel.png"));
+		fightPanel = new Texture(Gdx.files.internal("data/menu/fightpanel.png"));
+		rolePanel = new Texture(Gdx.files.internal("data/menu/rolespanel.png"));
+		selectRolePanel = new Texture(
+				Gdx.files.internal("data/menu/selectrolepanel.png"));
+		shopPanel = new Texture(Gdx.files.internal("data/menu/shoppanel.png"));
+		skillPanel = new Texture(Gdx.files.internal("data/menu/skillpanel.png"));
+		updatePanel = new Texture(
+				Gdx.files.internal("data/menu/updatepanel.png"));
+		new_role_texture = new Texture(
+				Gdx.files.internal("data/game/ui/Actor2.png"));
+		card_texture = new Texture(Gdx.files.internal("data/game/ui/Actor2.png"));
 	}
-	
+
 	public Texture getRole_texture() {
 		return role_texture;
 	}

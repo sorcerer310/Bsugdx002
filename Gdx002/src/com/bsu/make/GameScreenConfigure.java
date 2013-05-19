@@ -3,6 +3,7 @@ package com.bsu.make;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.CardFactory.SUBTYPE;
 import com.bsu.obj.Card;
+import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.screen.GameScreen;
 import com.bsu.tools.Configure.QUALITY;
@@ -33,7 +34,9 @@ public class GameScreenConfigure {
 
 	public void makeGameScreen2(GameScreen gs) {
 		Array<Role> rols = new Array<Role>();
-		rols.add(new Role(new Card(SUBTYPE.fc, QUALITY.normal).getRoleValue()));
+		for(Role h:Player.getInstance().getPlayerRole()){
+			rols.add(h);
+		}
 		rols.add(new Role(new Card(SUBTYPE.enemy, QUALITY.normal)
 				.getRoleValue()));
 		gs.game_init(0, rols);

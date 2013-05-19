@@ -32,7 +32,7 @@ public class SkillListBase {
 		skillArrayFC.add("atk");//
 		skillArrayFC.add("atk");//
 		skillArrayFC.add("atk");//
-		
+
 		skillArrayZYC.add("atk");// 橙色(perfect)
 		skillArrayZYC.add("atk");// 橙色(perfect)
 		skillArrayZYC.add("atk");// 橙色(perfect)
@@ -43,6 +43,7 @@ public class SkillListBase {
 		skillArrayZYC.add("atk");// 橙色(perfect)
 		skillArrayZYC.add("atk");// 橙色(perfect)
 
+		skillArrayEnemy.add("atk");//
 		skillArrayEnemy.add("atk");//
 		skillArrayEnemy.add("atk");//
 	}
@@ -51,21 +52,36 @@ public class SkillListBase {
 	private Array<String> skillArrayZYC = new Array<String>();
 	private Array<String> skillArrayEnemy = new Array<String>();
 
-
 	public Array<Skill> getValue(SUBTYPE p, QUALITY q) {
 		Array<Skill> rv = new Array<Skill>();
-		Array<String> skillV=null;
+		Array<String> skillV = null;
+		int stopNum = 0;
 		if (p == SUBTYPE.fc) {
 			skillV = skillArrayFC;
 		}
 		if (p == SUBTYPE.zyc) {
 			skillV = skillArrayZYC;
 		}
-		if (p == SUBTYPE.enemy) {
+		if (p == SUBTYPE.enemy) {//NPC 目前只有一个技能
 			skillV = skillArrayEnemy;
+			stopNum=1;
 		}
-		for(String s:skillV){
-			rv.add(SkillFactory.getInstance().getSkillByName(s));
+		if (p != SUBTYPE.enemy) {
+			if (q == QUALITY.normal) {
+				stopNum = 3;
+			}
+			if (q == QUALITY.good) {
+				stopNum = 5;
+			}
+			if (q == QUALITY.best) {
+				stopNum = 7;
+			}
+			if (q == QUALITY.perfect) {
+				stopNum = skillV.size;
+			}
+		}
+		for (int i = 0; i < stopNum; i++) {
+			rv.add(SkillFactory.getInstance().getSkillByName(skillV.get(i)));
 		}
 		return rv;
 	}
