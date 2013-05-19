@@ -26,7 +26,6 @@ public class RoleFactory {
 	 */
 	public Role getHeroRole(String n){
 		Role r = new Role(Role.Type.HERO,n);
-		r.face = FACE.right;
 		r.setCskill( SkillFactory.getInstance().getSkillByName("atk"));
 		//初始化英雄类型角色要做的事写在这里。
 		return r;
@@ -34,7 +33,6 @@ public class RoleFactory {
 	
 	public Role getHeroRole2(String n){
 		Role r = new Role(Role.Type.HERO,n);
-		r.face = FACE.right;
 		r.setCskill( SkillFactory.getInstance().getSkillByName("atk2"));
 		return r;
 	}
@@ -42,8 +40,7 @@ public class RoleFactory {
 	public Role getEnemyRole(String n){
 		Role r = new Role(Role.Type.ENEMY,n);
 		//初始化敌人类型角色要做的事写在这里
-		r.face = FACE.left;
-		r.setCskill( SkillFactory.getInstance().getSkillByName("atk"));
+		r.setCskill(SkillFactory.getInstance().getSkillByName("atk"));
 		return r;
 	} 
 	

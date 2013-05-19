@@ -48,7 +48,6 @@ public class Role extends Actor {
 	private float time_state; // 行动状态时间
 	public float time_effect; // 技能特效时间
 	public STATE state; // 英雄的当前状态
-	public FACE face; // 人物朝向
 	private Skill cskill; // 英雄当前的攻击技能
 	public Array<Skill> array_skill = new Array<Skill>(); // 英雄此关卡携带的技能
 	private Type type = null; // ָ指定当前角色是英雄还是 NPC
@@ -80,13 +79,13 @@ public class Role extends Actor {
 		name = n;
 		type = t;
 		time_state = 0;
-		array_skill.add(SkillFactory.getInstance().getSkillByName("atk"));
-		cskill = array_skill.get(0);
 		currentHp = 100;
 		maxHp = 100;
 		attack_value = 5;
 		set_actor_base(type);
 		cark_box = this.card_region();
+		//array_skill.add(SkillFactory.getInstance().getSkillByName("atk"));
+		//setCskill(SkillFactory.getInstance().getSkillByName("atk"));
 	}
 
 	public Role(RoleValue rv) {
@@ -100,12 +99,8 @@ public class Role extends Actor {
 		attack_weapon=rv.attackWeapon;
 		defend_weapon=rv.defendWeapon;
 		this.skillList=rv.skillList;
-		cskill =this.skillList.get(0);
+		cskill=skillList.get(0);
 		this.type=rv.type;
-		if(rv.type==Type.ENEMY){
-			cskill.flip();
-			System.out.println(name+"@@"+type);
-		}
 		set_actor_base(type);
 		cark_box = this.card_region();
 	}
@@ -308,7 +303,7 @@ public class Role extends Actor {
 
 	public void setCskill(Skill cskill) {
 		this.cskill = cskill;
-		if (face == FACE.left)
+		if (type == Type.ENEMY)
 			cskill.flip();
 	}
 

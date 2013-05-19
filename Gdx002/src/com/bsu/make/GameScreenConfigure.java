@@ -20,20 +20,22 @@ public class GameScreenConfigure {
 	}
 
 	public void makeGameScreen1(GameScreen gs) {
-		
-		  Array<Role> rols = new Array<Role>();
-		  rols.add(RoleFactory.getInstance().getHeroRole("hero1"));
-		  rols.add(RoleFactory.getInstance().getHeroRole2("hero2"));
-		  rols.add(RoleFactory.getInstance().getHeroRole2("hero3"));
-		  rols.add(RoleFactory.getInstance().getEnemyRole("enemy1"));
-		  rols.add(RoleFactory.getInstance().getEnemyRole("enemy2"));
-		  rols.add(RoleFactory.getInstance().getEnemyRole("enemy3"));
-		  gs.game_init(0,rols);
-		 /*
-			 * Array<Role> rols = new Array<Role>(); rols.add(new Role(new
-			 * Card(SUBTYPE.fc, QUALITY.normal).getRoleValue())); rols.add(new
-			 * Role(new Card(SUBTYPE.enemy, QUALITY.normal).getRoleValue()));
-			 * gs.game_init(0, rols);
-			 */
+
+		Array<Role> rols = new Array<Role>();
+		rols.add(RoleFactory.getInstance().getHeroRole("hero1"));
+		rols.add(RoleFactory.getInstance().getHeroRole2("hero2"));
+		rols.add(RoleFactory.getInstance().getHeroRole2("hero3"));
+		rols.add(RoleFactory.getInstance().getEnemyRole("enemy1"));
+		rols.add(RoleFactory.getInstance().getEnemyRole("enemy2"));
+		rols.add(RoleFactory.getInstance().getEnemyRole("enemy3"));
+		gs.game_init(0, rols);
+	}
+
+	public void makeGameScreen2(GameScreen gs) {
+		Array<Role> rols = new Array<Role>();
+		rols.add(new Role(new Card(SUBTYPE.fc, QUALITY.normal).getRoleValue()));
+		rols.add(new Role(new Card(SUBTYPE.enemy, QUALITY.normal)
+				.getRoleValue()));
+		gs.game_init(0, rols);
 	}
 }

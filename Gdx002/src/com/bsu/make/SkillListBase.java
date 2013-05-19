@@ -23,45 +23,49 @@ public class SkillListBase {
 	public SkillListBase() {
 		// TODO Auto-generated constructor stub
 
-		skillArrayFC.add(SkillFactory.getInstance().getSkillByName("atk"));// 橙色(perfect)
-		skillArrayFC.add(SkillFactory.getInstance().getSkillByName("atk"));//
-		skillArrayFC.add(SkillFactory.getInstance().getSkillByName("atk"));//
-		skillArrayFC.add(SkillFactory.getInstance().getSkillByName("atk"));//
-		skillArrayFC.add(SkillFactory.getInstance().getSkillByName("atk"));//
-		skillArrayFC.add(SkillFactory.getInstance().getSkillByName("atk"));//
-		skillArrayFC.add(SkillFactory.getInstance().getSkillByName("atk"));
-		skillArrayFC.add(SkillFactory.getInstance().getSkillByName("atk"));//
-		skillArrayFC.add(SkillFactory.getInstance().getSkillByName("atk"));//
+		skillArrayFC.add("atk");// 橙色(perfect)
+		skillArrayFC.add("atk");//
+		skillArrayFC.add("atk");//
+		skillArrayFC.add("atk");//
+		skillArrayFC.add("atk");//
+		skillArrayFC.add("atk");//
+		skillArrayFC.add("atk");//
+		skillArrayFC.add("atk");//
+		skillArrayFC.add("atk");//
+		
+		skillArrayZYC.add("atk");// 橙色(perfect)
+		skillArrayZYC.add("atk");// 橙色(perfect)
+		skillArrayZYC.add("atk");// 橙色(perfect)
+		skillArrayZYC.add("atk");// 橙色(perfect)
+		skillArrayZYC.add("atk");// 橙色(perfect)
+		skillArrayZYC.add("atk");// 橙色(perfect)
+		skillArrayZYC.add("atk");// 橙色(perfect)
+		skillArrayZYC.add("atk");// 橙色(perfect)
+		skillArrayZYC.add("atk");// 橙色(perfect)
 
-		skillArrayZYC.add(SkillFactory.getInstance().getSkillByName("atk"));// 橙色(perfect)
-		skillArrayZYC.add(SkillFactory.getInstance().getSkillByName("atk"));//
-		skillArrayZYC.add(SkillFactory.getInstance().getSkillByName("atk"));//
-		skillArrayZYC.add(SkillFactory.getInstance().getSkillByName("atk"));//
-		skillArrayZYC.add(SkillFactory.getInstance().getSkillByName("atk"));//
-		skillArrayZYC.add(SkillFactory.getInstance().getSkillByName("atk"));//
-		skillArrayZYC.add(SkillFactory.getInstance().getSkillByName("atk"));
-		skillArrayZYC.add(SkillFactory.getInstance().getSkillByName("atk"));//
-		skillArrayZYC.add(SkillFactory.getInstance().getSkillByName("atk"));//
-
-		skillArrayEnemy.add(SkillFactory.getInstance().getSkillByName("atk"));//
-		skillArrayEnemy.add(SkillFactory.getInstance().getSkillByName("atk"));//
+		skillArrayEnemy.add("atk");//
+		skillArrayEnemy.add("atk");//
 	}
 
-	private Array<Skill> skillArrayFC = new Array<Skill>();
-	private Array<Skill> skillArrayZYC = new Array<Skill>();
-	private Array<Skill> skillArrayEnemy = new Array<Skill>();
+	private Array<String> skillArrayFC = new Array<String>();
+	private Array<String> skillArrayZYC = new Array<String>();
+	private Array<String> skillArrayEnemy = new Array<String>();
 
 
 	public Array<Skill> getValue(SUBTYPE p, QUALITY q) {
-		Array<Skill> rv = null;
+		Array<Skill> rv = new Array<Skill>();
+		Array<String> skillV=null;
 		if (p == SUBTYPE.fc) {
-			rv = skillArrayFC;
+			skillV = skillArrayFC;
 		}
 		if (p == SUBTYPE.zyc) {
-			rv = skillArrayZYC;
+			skillV = skillArrayZYC;
 		}
 		if (p == SUBTYPE.enemy) {
-			rv = skillArrayEnemy;
+			skillV = skillArrayEnemy;
+		}
+		for(String s:skillV){
+			rv.add(SkillFactory.getInstance().getSkillByName(s));
 		}
 		return rv;
 	}
