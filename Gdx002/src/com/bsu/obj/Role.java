@@ -22,10 +22,9 @@ import com.bsu.tools.AttackWeaponBase;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
 import com.bsu.tools.DefendWeaponBase;
-import com.bsu.tools.HeroAnimationClass;
+import com.bsu.tools.GameAnimationClass;
 import com.bsu.tools.Configure.FACE;
 import com.bsu.tools.Configure.STATE;
-import com.bsu.tools.HeroEffectClass;
 import com.bsu.tools.RoleHP;
 import com.bsu.tools.RoleValue;
 import com.sun.tools.internal.xjc.reader.gbind.Sequence;
@@ -124,10 +123,10 @@ public class Role extends Actor {
 		 * = HeroAnimationClass.getAnimationMove(actor_type);
 		 */
 		int actor_type = type == Type.HERO ? 0 : 1;
-		ani_idle = HeroAnimationClass.getAnimation(actor_type);
-		ani_move = HeroAnimationClass.getAnimation(actor_type);
-		ani_disapper = HeroEffectClass.get_effect(99);
-		ani_apper = HeroEffectClass.get_effect(98);
+		ani_idle = GameAnimationClass.getInstance().getRoleAnimation();
+		ani_move = GameAnimationClass.getInstance().getRoleAnimation();
+		ani_disapper = GameAnimationClass.getInstance().getEffectDisapper();
+		ani_apper =  GameAnimationClass.getInstance().getEffectApper();
 		set_ani_from_state(STATE.idle);
 	}
 
@@ -227,7 +226,9 @@ public class Role extends Actor {
 				set_ani_from_state(STATE.idle);
 			}
 			if (bevent != null) {
-				set_ani_from_state(STATE.idle);
+				if(ani_current==ani_apper){
+					set_ani_from_state(STATE.idle);
+				}
 				bevent.notify(this, this.name);
 			}
 		}

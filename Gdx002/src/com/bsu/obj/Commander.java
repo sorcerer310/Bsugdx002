@@ -382,7 +382,6 @@ public class Commander {
 							@Override
 							public void notify(Object obj, String msg) {
 								if (((Role) obj).name.equals(msg)) {
-									r.set_ani_from_state(STATE.idle);
 									gamescreen.setControlled(true);
 								}
 							}
