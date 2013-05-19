@@ -73,7 +73,7 @@ public class ButtonFactory {
 			img_nomal = ImageFactory.getInstance().mb_skill;
 		else if(bname.equals(Configure.screen_shop))
 			img_nomal = ImageFactory.getInstance().mb_shop;
-		else if(bname.equals("back"))
+		else if(bname.equals(Configure.button_back))
 			img_nomal = ImageFactory.getInstance().mb_back;
 		ImageButton ib = new ImageButton(img_nomal.getDrawable());
 		return ib;

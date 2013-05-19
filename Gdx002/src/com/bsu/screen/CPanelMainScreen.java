@@ -7,9 +7,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,14 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.ButtonFactory;
-import com.bsu.make.ImageFactory;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameTextureClass;
 
 public class CPanelMainScreen extends CubocScreen implements Observer {
 	private Texture timg;
-	private TextureRegion intro;
-	private SpriteBatch batch;
 	private	Image background;
 	private Stage stage;
 	private ImageButton ib_mb_equip;

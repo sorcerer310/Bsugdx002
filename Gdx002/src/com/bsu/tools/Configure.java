@@ -33,6 +33,7 @@ public class Configure {
 	public static String screen_update = "msupdate";
 	public static String screen_skill = "mskill";
 	public static String screen_shop = "mshop";
+	public static String button_back = "btback";
 
 	public static String[] game_map_path_string = { "map1", "map2" };// 地图关卡名称（路径）
 

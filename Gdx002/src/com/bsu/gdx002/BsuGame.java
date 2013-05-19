@@ -71,7 +71,8 @@ public class BsuGame extends Game {
 		CPanelMainScreen cpms = new CPanelMainScreen(this){
 			@Override
 			public void update(Observable o,Object arg){
-				if(arg.toString().equals(Configure.screen_mpanel))
+				if(arg.toString().equals(Configure.screen_mpanel) 
+						|| arg.toString().equals(Configure.button_back))
 					BsuGame.this.setScreen(this);
 			}
 		};
@@ -133,11 +134,17 @@ public class BsuGame extends Game {
 //		ss.addObserver(ms);
 		//gs.addObserver(ms);
 		
-		cpms.addObserver(es);
+		cpms.addObserver(es);		//es观察cpms，如果cpms有Configure.screen_equip消息传过来则切换到es界面
+		es.addObserver(cpms);		//cpms观察es，如果es有有Configure.bt_back消息传过来则返回到cpms界面
 		cpms.addObserver(fs);
+		fs.addObserver(cpms);
 		cpms.addObserver(skls);
+		skls.addObserver(cpms);
 		cpms.addObserver(rs);
+		rs.addObserver(cpms);
 		cpms.addObserver(us);
+		us.addObserver(cpms);
 		cpms.addObserver(shops);
+		shops.addObserver(cpms);
 	}
 }

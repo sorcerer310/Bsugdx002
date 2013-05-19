@@ -39,12 +39,6 @@ public class ImageFactory {
 		mb_skill = new Image(mb_atlas.findRegion("mb_skill"));
 		mb_update = new Image(mb_atlas.findRegion("mb_update"));
 		mb_back = new Image(mb_atlas.findRegion("back"));
-//		mb_selectrole = new Image(mb_atlas.findRegion("mb_selectrole"));
-//		mb_fight = skin.get("mb_fight",Texture.class);
-//		mb_role = skin.get("mb_role",Texture.class);
-//		mb_shop = skin.get("mb_shop",Texture.class);
-//		mb_skill = skin.get("mb_skill",Texture.class);
-//		mb_update = skin.get("mb_update",Texture.class);
 	}
 
 }
