@@ -54,8 +54,9 @@ public class Commander {
 		// 此处区分处英雄与敌人npc
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
-				if (((Role) act).getType() == Type.HERO)
+				if (((Role) act).getType() == Type.HERO){
 					heros.add((Role) act);
+				}
 				else if (((Role) act).getType() == Type.ENEMY)
 					npcs.add((Role) act);
 			}
@@ -382,7 +383,6 @@ public class Commander {
 							@Override
 							public void notify(Object obj, String msg) {
 								if (((Role) obj).name.equals(msg)) {
-									r.set_ani_from_state(STATE.idle);
 									gamescreen.setControlled(true);
 								}
 							}

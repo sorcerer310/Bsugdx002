@@ -27,30 +27,33 @@ public class CardFactory {
 
 	public CardFactory() {
 		// TODO Auto-generated constructor stub
-		
-		tr=new TextureRegion(GameTextureClass.getInstance().new_role_texture,32,32);
-		cardArrayFC.add(new RoleValue("fc",Type.HERO, tr, 100, 10, 10, SkillListBase
+	
+		cardArrayFC.add(new RoleValue("fc",Type.HERO, GameTextureClass.getInstance().fc_photo, 100, 10, 10, SkillListBase
 				.getInstance().getValue(SUBTYPE.fc, QUALITY.normal),
 				AttackWeaponFactory.getInstance().getValue(ATTACK.sword,
 						QUALITY.normal), DefendWeaponFactory.getInstance()
 						.getValue(DEFEND.bujia, QUALITY.normal)));// 绿色(normal)
-		cardArrayFC.add(new RoleValue("fc",Type.HERO, tr, 200, 10, 10, sl, aw, dw));// 蓝色(good)
-		cardArrayFC.add(new RoleValue("fc",Type.HERO, tr, 300, 10, 10, sl, aw, dw));// 紫色(best)
-		cardArrayFC.add(new RoleValue("fc",Type.HERO, tr, 400, 10, 10, sl, aw, dw));// 橙色(perfect)
+		cardArrayFC.add(new RoleValue("fc",Type.HERO, GameTextureClass.getInstance().fc_photo, 200, 10, 10, sl, aw, dw));// 蓝色(good)
+		cardArrayFC.add(new RoleValue("fc",Type.HERO, GameTextureClass.getInstance().fc_photo, 300, 10, 10, sl, aw, dw));// 紫色(best)
+		cardArrayFC.add(new RoleValue("fc",Type.HERO, GameTextureClass.getInstance().fc_photo, 400, 10, 10, sl, aw, dw));// 橙色(perfect)
 
-		cardArrayZYC.add(new RoleValue("zyc",Type.HERO, tr, 100, 10, 10, sl, aw, dw));// 绿色(normal)
-		cardArrayZYC.add(new RoleValue("zyc",Type.HERO, tr, 200, 10, 10, sl, aw, dw));// 蓝色(good)
-		cardArrayZYC.add(new RoleValue("zyc",Type.HERO, tr, 300, 10, 10, sl, aw, dw));// 紫色(best)
-		cardArrayZYC.add(new RoleValue("zyc",Type.HERO, tr, 400, 10, 10, sl, aw, dw));// 橙色(perfect)
+		cardArrayZYC.add(new RoleValue("fc",Type.HERO, GameTextureClass.getInstance().zyc_photo, 100, 10, 10, SkillListBase
+				.getInstance().getValue(SUBTYPE.zyc, QUALITY.normal),
+				AttackWeaponFactory.getInstance().getValue(ATTACK.sword,
+						QUALITY.normal), DefendWeaponFactory.getInstance()
+						.getValue(DEFEND.bujia, QUALITY.normal)));// 绿色(normal)
+		cardArrayZYC.add(new RoleValue("zyc",Type.HERO, GameTextureClass.getInstance().fc_photo, 200, 10, 10, sl, aw, dw));// 蓝色(good)
+		cardArrayZYC.add(new RoleValue("zyc",Type.HERO, GameTextureClass.getInstance().fc_photo, 300, 10, 10, sl, aw, dw));// 紫色(best)
+		cardArrayZYC.add(new RoleValue("zyc",Type.HERO, GameTextureClass.getInstance().fc_photo, 400, 10, 10, sl, aw, dw));// 橙色(perfect)
 	
-		cardArrayEnemy.add(new RoleValue("npc",Type.ENEMY, tr, 100, 10, 10, SkillListBase
+		cardArrayEnemy.add(new RoleValue("npc",Type.ENEMY, GameTextureClass.getInstance().h5_photo, 100, 10, 10, SkillListBase
 				.getInstance().getValue(SUBTYPE.enemy, QUALITY.normal),
 				AttackWeaponFactory.getInstance().getValue(ATTACK.sword,
 						QUALITY.normal), DefendWeaponFactory.getInstance()
 						.getValue(DEFEND.bujia, QUALITY.normal)));// 绿色(normal)
-		cardArrayEnemy.add(new RoleValue("zyc",Type.ENEMY, tr, 200, 10, 10, sl, aw, dw));// 蓝色(good)
-		cardArrayEnemy.add(new RoleValue("zyc",Type.ENEMY, tr, 300, 10, 10, sl, aw, dw));// 紫色(best)
-		cardArrayEnemy.add(new RoleValue("zyc",Type.ENEMY, tr, 400, 10, 10, sl, aw, dw));// 橙色(perfect)
+		cardArrayEnemy.add(new RoleValue("zyc",Type.ENEMY, GameTextureClass.getInstance().h5_photo, 200, 10, 10, sl, aw, dw));// 蓝色(good)
+		cardArrayEnemy.add(new RoleValue("zyc",Type.ENEMY, GameTextureClass.getInstance().fc_photo, 300, 10, 10, sl, aw, dw));// 紫色(best)
+		cardArrayEnemy.add(new RoleValue("zyc",Type.ENEMY, GameTextureClass.getInstance().fc_photo, 400, 10, 10, sl, aw, dw));// 橙色(perfect)
 	}
 
 	public static enum SUBTYPE {
@@ -60,7 +63,6 @@ public class CardFactory {
 	private Array<RoleValue> cardArrayFC = new Array<RoleValue>();
 	private Array<RoleValue> cardArrayZYC = new Array<RoleValue>();
 	private Array<RoleValue> cardArrayEnemy = new Array<RoleValue>();
-	TextureRegion tr;
 	Array<Skill> sl;
 	AttackWeaponBase aw;
 	DefendWeaponBase dw;

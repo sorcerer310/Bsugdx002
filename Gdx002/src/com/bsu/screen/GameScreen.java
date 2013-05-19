@@ -56,8 +56,9 @@ public class GameScreen extends CubocScreen implements Observer,GestureListener 
 		setControlled(true);
 		mb = new MapBox();
 		stage.addActor(mb); // 增加地图方格显示
-		for(int i=0;i<rols.size;i++)
+		for(int i=0;i<rols.size;i++){
 			stage.addActor(rols.get(i));
+		}
 		commander = Commander.getInstance(stage,this);
 		this.addActorListener();
 		setBornPosition(GameMap.map, Type.HERO, Configure.object_layer_hero);

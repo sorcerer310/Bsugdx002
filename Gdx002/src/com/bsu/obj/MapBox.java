@@ -16,8 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role.Type;
 import com.bsu.tools.Configure;
+import com.bsu.tools.GameAnimationClass;
 import com.bsu.tools.GameMap;
-import com.bsu.tools.HeroEffectClass;
+
 
 /**
  * 地图上所有带属性的块
@@ -145,7 +146,7 @@ public class MapBox extends Actor {
 					* Configure.map_box_value, (hero_home_array.get(i).y)
 					* Configure.map_box_value);
 		}
-		current_enemy_home_frame = ani_hero_home.getKeyFrame(enemy_home_time, true);
+		current_enemy_home_frame = ani_enemy_home.getKeyFrame(enemy_home_time, true);
 		for (int i = 0; i < enemy_home_array.size; i++) {
 			batch.draw(current_enemy_home_frame, enemy_home_array.get(i).x
 					* Configure.map_box_value, (enemy_home_array.get(i).y)
@@ -208,8 +209,8 @@ public class MapBox extends Actor {
 		draw_map_box(BOX.PASS);
 		draw_map_box(BOX.BLOCK);
 		draw_map_box(BOX.ATTACK);
-		ani_enemy_home=HeroEffectClass.get_effect(88);
-		ani_hero_home=HeroEffectClass.get_effect(89);
+		ani_enemy_home=GameAnimationClass.getInstance().getEffectApper();
+		ani_hero_home=GameAnimationClass.getInstance().getEffectDisapper();
 		hero_home_time=0;
 		enemy_home_time=0;
 		for (TiledObjectGroup group : GameMap.map.objectGroups) {
