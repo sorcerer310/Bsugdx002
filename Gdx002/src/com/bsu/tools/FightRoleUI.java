@@ -37,8 +37,7 @@ public class FightRoleUI {
 		stage = s;
 		role = r;
 		role_index = index;
-		TextureRegion tr = new TextureRegion(new Texture(
-				Gdx.files.internal("data/game/ui/Actor1.png")), 0, 0, 96, 96);
+		TextureRegion tr = r.roleTexture;
 		role_photo = new Image(tr);
 		skillImg0 = new Image(new Texture(
 				Gdx.files.internal("data/game/ui/jewel_dea.png")));

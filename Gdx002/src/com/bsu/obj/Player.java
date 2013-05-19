@@ -24,6 +24,7 @@ public class Player {
 	private int money;// 玩家金钱
 	private Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
 	private Array<Card> playerCard = new Array<Card>();// 玩家拥有的卡片
+	private Array<Role> playerFightRole = new Array<Role>();// 玩家拥有的卡片
 
 	public Player() {
 		// TODO Auto-generated constructor stub
@@ -41,11 +42,38 @@ public class Player {
 		if (playerRole.size == 0) {
 			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.normal)
 					.getRoleValue()));
+			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.normal)
+					.getRoleValue()));
+			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.normal)
+					.getRoleValue()));
+			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.normal)
+					.getRoleValue()));
+			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.normal)
+					.getRoleValue()));
+			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.normal)
+					.getRoleValue()));
+			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.normal)
+					.getRoleValue()));
+			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.normal)
+					.getRoleValue()));
+			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.normal)
+					.getRoleValue()));
 		}
 		return playerRole;
 	}
 
 	public Array<Card> getPlayerCard() {
 		return playerCard;
+	}
+
+	public Array<Role> getPlayerFightRole() {
+		if (playerFightRole.size == 0) {
+			playerFightRole.add(getPlayerRole().get(0));
+			playerFightRole.add(getPlayerRole().get(1));
+			playerFightRole.add(getPlayerRole().get(2));
+			playerFightRole.add(getPlayerRole().get(3));
+			playerFightRole.add(getPlayerRole().get(4));
+		}
+		return playerFightRole;
 	}
 }

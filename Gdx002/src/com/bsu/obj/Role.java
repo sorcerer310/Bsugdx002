@@ -39,6 +39,7 @@ public class Role extends Actor {
 	
 	private BsuEvent bevent = null; // 用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
+	public TextureRegion roleTexture;
 	public int maxHp = 100; // 总血量
 	public int currentHp = 30; // 当前血量
 	private int attack_value; // 自身攻击力
@@ -92,6 +93,7 @@ public class Role extends Actor {
 		// TODO Auto-generated constructor stub
 		time_state = 0;
 		name = rv.name;
+		roleTexture=rv.roleTexture;
 		maxHp=rv.roleHp;
 		currentHp=maxHp;
 		attack_value=rv.attackValue;
@@ -117,14 +119,8 @@ public class Role extends Actor {
 	 */
 	private void set_actor_base(Type type) {
 		this.type = type;
-		// int actor_type = type == Type.HERO ? 2 : 5;
-		/*
-		 * ani_idle = HeroAnimationClass.getAnimationIdle(actor_type); ani_move
-		 * = HeroAnimationClass.getAnimationMove(actor_type);
-		 */
-		int actor_type = type == Type.HERO ? 0 : 1;
-		ani_idle = GameAnimationClass.getInstance().getRoleAnimation();
-		ani_move = GameAnimationClass.getInstance().getRoleAnimation();
+		ani_idle = GameAnimationClass.getInstance().getRoleAnimation(roleTexture);
+		ani_move = GameAnimationClass.getInstance().getRoleAnimation(roleTexture);
 		ani_disapper = GameAnimationClass.getInstance().getEffectDisapper();
 		ani_apper =  GameAnimationClass.getInstance().getEffectApper();
 		set_ani_from_state(STATE.idle);

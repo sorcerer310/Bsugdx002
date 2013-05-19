@@ -33,12 +33,12 @@ public class GameAnimationClass {
 	private void gameAnimations() {
 		effect_texture = GameTextureClass.getInstance().effect_texture;
 		effect_spilt = TextureRegion.split(effect_texture, 32, 32);
-		card_texture = GameTextureClass.getInstance().card_texture;
-		role_spilt = TextureRegion.split(card_texture, 32, 32);
+		card_texture = GameTextureClass.getInstance().role_texture;
+		role_spilt = TextureRegion.split(card_texture, 96, 96);
 	}
-	public Animation getRoleAnimation(){
+	public Animation getRoleAnimation(TextureRegion tr){
 		TextureRegion[] region_idle = new TextureRegion[1];
-		region_idle[0] = role_spilt[0][1];
+		region_idle[0] = tr;
 		Animation ani_role_idle = new Animation(0.1f, region_idle);
 		return ani_role_idle;
 	}
