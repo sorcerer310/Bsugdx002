@@ -1,12 +1,8 @@
 package com.bsu.obj;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role.Type;
@@ -150,12 +146,8 @@ public class Commander {
 			y = Configure.map_box_value;
 		else if (d == DIRECTION.down)
 			y = -Configure.map_box_value;
-		SequenceAction sequence = new SequenceAction();
-		sequence.addAction(rotateBy(30, 0.1f));
-		sequence.addAction(rotateBy(-30, 0.1f));
-		sequence.addAction(rotateBy(-10, 0.1f));
-		sequence.addAction(rotateBy(10, 0.1f));
-		r.addAction(parallel(sequence, moveBy(x, y, Configure.duration),
+		r.addAction(parallel(sequence(rotateBy(30,0.1f),rotateBy(-30,0.1f),rotateBy(-10,0.1f),rotateBy(10,0.1f))
+				, moveBy(x, y, Configure.duration),
 				run(new Runnable() {
 					@Override
 					public void run() {

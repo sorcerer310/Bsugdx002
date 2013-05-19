@@ -1,7 +1,5 @@
 package com.bsu.obj;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -12,12 +10,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
-import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillFactory;
-import com.bsu.make.SkillListBase;
 import com.bsu.tools.AttackWeaponBase;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
@@ -25,9 +19,7 @@ import com.bsu.tools.DefendWeaponBase;
 import com.bsu.tools.GameAnimationClass;
 import com.bsu.tools.Configure.FACE;
 import com.bsu.tools.Configure.STATE;
-import com.bsu.tools.RoleHP;
 import com.bsu.tools.RoleValue;
-import com.sun.tools.internal.xjc.reader.gbind.Sequence;
 
 public class Role extends Actor {
 	public static enum Type {

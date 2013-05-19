@@ -3,7 +3,6 @@ package com.bsu.obj;
 
 import com.bsu.make.CardFactory;
 import com.bsu.make.CardFactory.SUBTYPE;
-import com.bsu.obj.Role.Type;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.RoleValue;
 
