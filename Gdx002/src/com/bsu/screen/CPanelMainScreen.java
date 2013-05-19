@@ -167,8 +167,8 @@ public class CPanelMainScreen extends CubocScreen implements Observer {
 
 		stage.addActor(background);
 		stage.addActor(ib_mb_update);
-		stage.addActor(ib_mb_equip);
-		stage.addActor(ib_mb_skill);
+//		stage.addActor(ib_mb_equip);
+//		stage.addActor(ib_mb_skill);
 		stage.addActor(ib_mb_role);
 		stage.addActor(ib_mb_fight);
 		stage.addActor(ib_mb_shop);

@@ -6,15 +6,10 @@ import java.util.Observer;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.ButtonFactory;
 import com.bsu.tools.Configure;
@@ -28,7 +23,7 @@ public class EquipScreen extends CubocScreen implements Observer {
 	public EquipScreen(Game game) {
 		super(game);
 		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
-		background = new Image(GameTextureClass.getInstance().mPanel);
+		background = new Image(GameTextureClass.getInstance().equipPanel);
 		
 		ib_back = ButtonFactory.getInstance().makeImageButton(Configure.button_back);
 		ib_back.setPosition(360,262);
