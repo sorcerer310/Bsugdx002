@@ -21,15 +21,14 @@ import com.bsu.tools.Configure;
 import com.bsu.tools.GameTextureClass;
 
 public class EquipScreen extends CubocScreen implements Observer {
-	private Texture timg;
+//	private Texture timg;
 	private Image background;
 	private Stage stage;
 	private ImageButton ib_back;
 	public EquipScreen(Game game) {
 		super(game);
 		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
-		timg = GameTextureClass.getInstance().getEquipPanel();
-		background = new Image(timg);
+		background = new Image(GameTextureClass.getInstance().mPanel);
 		
 		ib_back = ButtonFactory.getInstance().makeImageButton(Configure.button_back);
 		ib_back.setPosition(360,262);

@@ -28,8 +28,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer {
 	public SelectRoleScreen(Game game) {
 		super(game);
 		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
-		timg = GameTextureClass.getInstance().getSelectRolePanel();
-		background = new Image(timg);
+		background = new Image(GameTextureClass.getInstance().selectRolePanel);
 		
 		ib_back = ButtonFactory.getInstance().makeImageButton(Configure.button_back);
 		ib_back.setPosition(380,280);

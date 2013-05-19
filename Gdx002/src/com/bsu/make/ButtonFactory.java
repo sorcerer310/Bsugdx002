@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.bsu.tools.Configure;
+import com.bsu.tools.GameTextureClass;
 
 public class ButtonFactory {
 	private static ButtonFactory instance = null;
@@ -62,19 +63,19 @@ public class ButtonFactory {
 //		TextureRegion nomal = ImageFactory.getInstance().skin.get("mb_equip",TextureRegion.class);
 		Image img_nomal = null;
 		if(bname.equals(Configure.screen_equip))
-			img_nomal = ImageFactory.getInstance().mb_equip;
+			img_nomal = GameTextureClass.getInstance().mb_equip;
 		else if(bname.equals(Configure.screen_fight))
-			img_nomal = ImageFactory.getInstance().mb_fight;
+			img_nomal = GameTextureClass.getInstance().mb_fight;
 		else if(bname.equals(Configure.screen_role))
-			img_nomal = ImageFactory.getInstance().mb_role;
+			img_nomal = GameTextureClass.getInstance().mb_role;
 		else if(bname.equals(Configure.screen_update))
-			img_nomal = ImageFactory.getInstance().mb_update;
+			img_nomal = GameTextureClass.getInstance().mb_update;
 		else if(bname.equals(Configure.screen_skill))
-			img_nomal = ImageFactory.getInstance().mb_skill;
+			img_nomal = GameTextureClass.getInstance().mb_skill;
 		else if(bname.equals(Configure.screen_shop))
-			img_nomal = ImageFactory.getInstance().mb_shop;
+			img_nomal = GameTextureClass.getInstance().mb_shop;
 		else if(bname.equals(Configure.button_back))
-			img_nomal = ImageFactory.getInstance().mb_back;
+			img_nomal = GameTextureClass.getInstance().mb_back;
 		ImageButton ib = new ImageButton(img_nomal.getDrawable());
 		return ib;
 	}

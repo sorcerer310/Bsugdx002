@@ -37,7 +37,7 @@ public class GameAnimationClass {
 	private Animation ani_enemy_home;
 
 	private void gameAnimations() {
-		effect_texture = GameTextureClass.getInstance().getEffect_texture();
+		effect_texture = GameTextureClass.getInstance().effect_texture;
 		effect_spilt = TextureRegion.split(effect_texture, 32, 32);
 
 		// effect_0

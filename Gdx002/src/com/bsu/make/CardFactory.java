@@ -28,7 +28,7 @@ public class CardFactory {
 	public CardFactory() {
 		// TODO Auto-generated constructor stub
 		
-		tr=new TextureRegion(GameTextureClass.getInstance().getNew_role_texture(),32,32);
+		tr=new TextureRegion(GameTextureClass.getInstance().new_role_texture,32,32);
 		cardArrayFC.add(new RoleValue("fc",Type.HERO, tr, 100, 10, 10, SkillListBase
 				.getInstance().getValue(SUBTYPE.fc, QUALITY.normal),
 				AttackWeaponFactory.getInstance().getValue(ATTACK.sword,

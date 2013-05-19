@@ -30,7 +30,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer {
 	public CPanelMainScreen(Game game) {
 		super(game);
 		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
-		timg = GameTextureClass.getInstance().getmPanel();
+		timg = GameTextureClass.getInstance().mPanel;
 		background = new Image(timg);
 		
 		ib_mb_update = ButtonFactory.getInstance().makeImageButton(Configure.screen_update);

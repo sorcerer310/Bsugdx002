@@ -28,8 +28,7 @@ public class RoleScreen extends CubocScreen implements Observer {
 	public RoleScreen(Game game) {
 		super(game);
 		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
-		timg = GameTextureClass.getInstance().getRolePanel();
-		background = new Image(timg);
+		background = new Image(GameTextureClass.getInstance().rolePanel);
 		
 		ib_back = ButtonFactory.getInstance().makeImageButton(Configure.button_back);
 		ib_back.setPosition(375,272);

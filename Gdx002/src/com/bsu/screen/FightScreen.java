@@ -28,8 +28,7 @@ public class FightScreen extends CubocScreen implements Observer {
 	public FightScreen(Game game) {
 		super(game);
 		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
-		timg = GameTextureClass.getInstance().getFightPanel();
-		background = new Image(timg);
+		background = new Image(GameTextureClass.getInstance().fightPanel);
 		
 		ib_back = ButtonFactory.getInstance().makeImageButton(Configure.button_back);
 		ib_back.setPosition(360,262);

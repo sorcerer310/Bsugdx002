@@ -13,9 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.head.CubocScreen;
-import com.bsu.make.ImageFactory;
+import com.bsu.make.ButtonFactory;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameMap;
+import com.bsu.tools.GameTextureClass;
 
 public class MenuScreen extends CubocScreen implements Observer {
 	private Image backgroundImage;// backgroud
@@ -100,8 +101,8 @@ public class MenuScreen extends CubocScreen implements Observer {
 		play_image.setPosition(100, 200);
 		set_image = new Image(atlas.findRegion("settingsButton"));
 		set_image.setPosition(100, 120);
-		//fight_button = ButtonFactory.getInstance().makeOneTextButton("战斗吧！！骚年们", 100, 100);
-		fight_button = ImageFactory.getInstance().mb_fight;
+//		fight_button = ButtonFactory.getInstance().makeOneTextButton("战斗吧！！骚年们", 100, 50);
+		fight_button = GameTextureClass.getInstance().mb_fight;
 		fight_button.setPosition(100, 50);
 	}
 

@@ -5,7 +5,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Rectangle;
 import com.bsu.head.HeadScreen;
 import com.bsu.make.GameScreenConfigure;
-import com.bsu.make.ImageFactory;
 import com.bsu.screen.CPanelMainScreen;
 import com.bsu.screen.EquipScreen;
 import com.bsu.screen.FightScreen;
@@ -17,12 +16,13 @@ import com.bsu.screen.ShopScreen;
 import com.bsu.screen.SkillScreen;
 import com.bsu.screen.UpdateScreen;
 import com.bsu.tools.Configure;
+import com.bsu.tools.GameTextureClass;
 
 public class BsuGame extends Game {
 	@Override
 	public void create() {
 
-		ImageFactory.getInstance().loadPack();
+		GameTextureClass.getInstance();//执行一次加载所有资源
 		Rectangle rect = new Rectangle(0, 0, Configure.rect_width,
 				Configure.rect_height);
 		//logo1界面
@@ -57,7 +57,7 @@ public class BsuGame extends Game {
 			}
 		};
 		GameScreenConfigure.getInstance().makeGameScreen2(gs);	
-		//GameScreenConfigure.getInstance().makeGameScreen1(gs);					//配置游戏关卡为第一关
+//		GameScreenConfigure.getInstance().makeGameScreen1(gs);					//配置游戏关卡为第一关
 		//菜单界面
 		MenuScreen ms = new MenuScreen(this) {
 			@Override
