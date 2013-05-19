@@ -56,8 +56,8 @@ public class BsuGame extends Game {
 				}
 			}
 		};
-		//GameScreenConfigure.getInstance().makeGameScreen2(gs);	
-		GameScreenConfigure.getInstance().makeGameScreen1(gs);					//配置游戏关卡为第一关
+		GameScreenConfigure.getInstance().makeGameScreen2(gs);	
+		//GameScreenConfigure.getInstance().makeGameScreen1(gs);					//配置游戏关卡为第一关
 		//菜单界面
 		MenuScreen ms = new MenuScreen(this) {
 			@Override

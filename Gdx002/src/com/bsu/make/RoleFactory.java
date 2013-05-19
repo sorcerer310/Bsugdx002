@@ -26,21 +26,21 @@ public class RoleFactory {
 	 */
 	public Role getHeroRole(String n){
 		Role r = new Role(Role.Type.HERO,n);
-		r.setCskill( SkillFactory.getInstance().getSkillByName("atk"));
+		r.face=FACE.right;
 		//初始化英雄类型角色要做的事写在这里。
 		return r;
 	}
 	
 	public Role getHeroRole2(String n){
 		Role r = new Role(Role.Type.HERO,n);
-		r.setCskill( SkillFactory.getInstance().getSkillByName("atk2"));
+		r.face=FACE.right;
 		return r;
 	}
 	
 	public Role getEnemyRole(String n){
 		Role r = new Role(Role.Type.ENEMY,n);
+		r.face=FACE.left;
 		//初始化敌人类型角色要做的事写在这里
-		r.setCskill(SkillFactory.getInstance().getSkillByName("atk"));
 		return r;
 	} 
 	
