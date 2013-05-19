@@ -33,8 +33,6 @@ public class Commander {
 		return instance;
 	}
 
-	
-	
 	private GameScreen gamescreen = null;
 	private Stage stage = null;
 	private Array<Actor> lactor = null;
@@ -50,10 +48,9 @@ public class Commander {
 		// 此处区分处英雄与敌人npc
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
-				if (((Role) act).getType() == Type.HERO){
+				if (((Role) act).getType() == Type.HERO) {
 					heros.add((Role) act);
-				}
-				else if (((Role) act).getType() == Type.ENEMY)
+				} else if (((Role) act).getType() == Type.ENEMY)
 					npcs.add((Role) act);
 			}
 		}
@@ -146,9 +143,10 @@ public class Commander {
 			y = Configure.map_box_value;
 		else if (d == DIRECTION.down)
 			y = -Configure.map_box_value;
-		r.addAction(parallel(sequence(rotateBy(30,0.1f),rotateBy(-30,0.1f),rotateBy(-10,0.1f),rotateBy(10,0.1f))
-				, moveBy(x, y, Configure.duration),
-				run(new Runnable() {
+		r.addAction(parallel(
+				sequence(rotateBy(30, 0.1f), rotateBy(-30, 0.1f),
+						rotateBy(-10, 0.1f), rotateBy(10, 0.1f)),
+				moveBy(x, y, Configure.duration), run(new Runnable() {
 					@Override
 					public void run() {
 						r.set_ani_from_state(STATE.idle);
@@ -188,7 +186,6 @@ public class Commander {
 	boolean waitRoleFlag = false; // 等待标示，用来标记是否继续循环对下一英雄进行操作
 
 	private void commandHeros(BsuEvent be) throws InterruptedException {
-		// for (Role h : heros) {
 		for (int i = 0; i < heros.size; i++) {
 			Role h = heros.get(i);
 			waitRoleFlag = true; // 初始化等待循环flag为true
@@ -201,7 +198,6 @@ public class Commander {
 							new BsuEvent() {
 								@Override
 								public void notify(Object obj, String msg) {
-									System.out.println("move:" + msg);
 									// 收到消息设置等待标示为false
 									waitRoleFlag = false;
 								}
@@ -254,18 +250,19 @@ public class Commander {
 			Array<Role> atkrs = getRolsInSkillRange(vs, heros); // 获得攻击范围内的作用目标
 			// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
 			if (atkrs.size == 0) {
-				// if (!e.hasAnatherRole(npcs)) {
-				Commander.this.directAction(e, DIRECTION.left, new BsuEvent() {
-					@Override
-					public void notify(Object obj, String msg) {
-						// 收到消息设置等待标示为false
-						waitRoleFlag = false;
-					}
-				});
+				if (!e.hasAnatherRole(npcs)) {
+					Commander.this.directAction(e, DIRECTION.left,
+							new BsuEvent() {
+								@Override
+								public void notify(Object obj, String msg) {
+									// 收到消息设置等待标示为false
+									waitRoleFlag = false;
+								}
+							});
 
-				// }else {
-				// waitRoleFlag = false;
-				// }
+				} else {
+					waitRoleFlag = false;
+				}
 			} else {
 				// 命令当前英雄进攻所有范围内的敌人
 				for (Role h : atkrs) {

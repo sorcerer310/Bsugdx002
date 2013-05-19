@@ -67,14 +67,17 @@ public class SkillListBase {
 			stopNum=1;
 		}
 		if (p != SUBTYPE.enemy) {
-			if (q == QUALITY.normal) {
+			if (q == QUALITY.bad) {
 				stopNum = 3;
 			}
-			if (q == QUALITY.good) {
+			if (q == QUALITY.normal) {
 				stopNum = 5;
 			}
+			if (q == QUALITY.good) {
+				stopNum = 9;
+			}
 			if (q == QUALITY.best) {
-				stopNum = 7;
+				stopNum = 11;
 			}
 			if (q == QUALITY.perfect) {
 				stopNum = skillV.size;

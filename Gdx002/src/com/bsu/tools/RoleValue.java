@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillListBase;
 import com.bsu.obj.Role.Type;
 import com.bsu.obj.Skill;
+import com.bsu.tools.Configure.QUALITY;
 
 /**
  * 卡片对应的属性。
@@ -15,6 +16,7 @@ import com.bsu.obj.Skill;
 public class RoleValue {
 	public TextureRegion roleTexture;
 	public String name;
+	public QUALITY quality;
 	public int roleHp;// 生命值
 	public int defendValue;// 防御值
 	public int attackValue;// 攻击值
@@ -23,10 +25,11 @@ public class RoleValue {
 	public DefendWeaponBase defendWeapon;// 人物防具
 	public Type type;
 
-	public RoleValue(String s,Type p,TextureRegion tr, int ph, int dv, int av, Array<Skill> sl,
+	public RoleValue(String s,QUALITY q,Type p,TextureRegion tr, int ph, int dv, int av, Array<Skill> sl,
 			AttackWeaponBase aw, DefendWeaponBase dw) {
 		// TODO Auto-generated constructor stub
 		name=s;
+		quality=q;
 		roleTexture=tr;
 		roleHp=ph;
 		defendValue=dv;

@@ -31,7 +31,6 @@ public class AttackWeaponFactory {
 		attackArrayblade.add(new AttackWeaponBase("blade", tr, 300, 10, ""));// 紫色(best)
 		attackArrayblade.add(new AttackWeaponBase("blade", tr, 400, 10, ""));// 橙色(perfect)
 
-
 	}
 
 	public static enum ATTACK {
@@ -48,22 +47,25 @@ public class AttackWeaponFactory {
 		Array<AttackWeaponBase> temp = null;
 		int ay = 0;
 		if (p == ATTACK.sword) {
-			temp=attackArraySword;
+			temp = attackArraySword;
 		}
 		if (p == ATTACK.blade) {
-			temp=attackArrayblade;
+			temp = attackArrayblade;
 		}
-		if (q == QUALITY.normal) {
+		if (q == QUALITY.bad) {
 			ay = 0;
 		}
-		if (q == QUALITY.good) {
+		if (q == QUALITY.normal) {
 			ay = 1;
 		}
-		if (q == QUALITY.best) {
+		if (q == QUALITY.good) {
 			ay = 2;
 		}
-		if (q == QUALITY.perfect) {
+		if (q == QUALITY.best) {
 			ay = 3;
+		}
+		if (q == QUALITY.perfect) {
+			ay = 4;
 		}
 		rv = temp.get(ay);
 		return rv;

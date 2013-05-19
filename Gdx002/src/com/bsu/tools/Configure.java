@@ -63,7 +63,7 @@ public class Configure {
 		idle, attack_normal, move, attack_v, attack_h,disapper,apper
 	};
 	public static enum QUALITY{
-		normal,good,best,perfect
+		bad,normal,good,best,perfect
 	}
 	public static enum FACE {
 		left, right

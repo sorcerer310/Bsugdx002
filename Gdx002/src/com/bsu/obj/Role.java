@@ -15,6 +15,7 @@ import com.bsu.make.SkillFactory;
 import com.bsu.tools.AttackWeaponBase;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
+import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.DefendWeaponBase;
 import com.bsu.tools.GameAnimationClass;
 import com.bsu.tools.Configure.FACE;
@@ -31,6 +32,7 @@ public class Role extends Actor {
 	
 	private BsuEvent bevent = null; // 用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
+	public QUALITY quality;
 	public TextureRegion roleTexture;
 	public int maxHp = 100; // 总血量
 	public int currentHp = 30; // 当前血量
@@ -75,10 +77,8 @@ public class Role extends Actor {
 		maxHp = 100;
 		attack_value = 5;
 		set_actor_base(type);
-		cark_box = this.card_region();
 		array_skill.add(SkillFactory.getInstance().getSkillByName("atk"));
 		cskill=SkillFactory.getInstance().getSkillByName("atk");
-		System.out.println(cskill);
 	}
 
 	public Role(RoleValue rv) {
@@ -86,6 +86,7 @@ public class Role extends Actor {
 		time_state = 0;
 		name = rv.name;
 		roleTexture=rv.roleTexture;
+		quality=rv.quality;
 		maxHp=rv.roleHp;
 		currentHp=maxHp;
 		attack_value=rv.attackValue;
@@ -99,9 +100,9 @@ public class Role extends Actor {
 			face=FACE.right;
 		}else{
 			face=FACE.left;
+			roleTexture.flip(true, false);
 		}
 		set_actor_base(type);
-		cark_box = this.card_region();
 	}
 
 	/**
@@ -126,7 +127,6 @@ public class Role extends Actor {
 			batch.draw(current_action_frame, getX(), getY(), getOriginX(),
 					getOriginY(), 32, 32, getScaleX(), getScaleY(),
 					getRotation());
-			batch.draw(cark_box, getX(), getY());
 		}
 		if (current_effect_frame != null) {
 			batch.draw(current_effect_frame, getX(), getY());
@@ -320,23 +320,6 @@ public class Role extends Actor {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * 以下卡片所涉及的方法
-	 */
-	private TextureRegion cark_box;
-
-	private TextureRegion card_region() {
-		Pixmap pixmap;
-		pixmap = new Pixmap(32, 32, Format.RGBA8888); // 生成一张64*8的图片
-		pixmap.setColor(Color.GREEN); // 设置颜色为黑色。
-		pixmap.drawRectangle(0, 0, 32, 32);
-
-		Texture pixmaptex = new Texture(pixmap);
-		TextureRegion pix_temp = new TextureRegion(pixmaptex, 32, 32);
-		pixmap.dispose();
-		return pix_temp;
 	}
 
 	public boolean isControlled() {

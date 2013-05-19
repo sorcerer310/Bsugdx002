@@ -50,17 +50,20 @@ public class DefendWeaponFactory {
 		if (p == DEFEND.changqun) {
 			temp=defendArrayChangqun;
 		}
-		if (q == QUALITY.normal) {
+		if (q == QUALITY.bad) {
 			ay = 0;
 		}
-		if (q == QUALITY.good) {
+		if (q == QUALITY.normal) {
 			ay = 1;
 		}
-		if (q == QUALITY.best) {
+		if (q == QUALITY.good) {
 			ay = 2;
 		}
-		if (q == QUALITY.perfect) {
+		if (q == QUALITY.best) {
 			ay = 3;
+		}
+		if (q == QUALITY.perfect) {
+			ay = 4;
 		}
 		rv = temp.get(ay);
 		return rv;
