@@ -24,7 +24,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer {
 	private Texture timg;
 	private Image background;
 	private Stage stage;
-	private ImageButton ib_back;
+	private Image ib_back;
 	public SelectRoleScreen(Game game) {
 		super(game);
 		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
@@ -36,9 +36,16 @@ public class SelectRoleScreen extends CubocScreen implements Observer {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
+				ib_back.setScale(0.95f);
+				return true;
+			}
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
 				setChanged();
 				notifyObservers(Configure.button_back);
-				return super.touchDown(event, x, y, pointer, button);
+				ib_back.setScale(1f);
+				super.touchUp(event, x, y, pointer, button);
 			}
 			
 		});

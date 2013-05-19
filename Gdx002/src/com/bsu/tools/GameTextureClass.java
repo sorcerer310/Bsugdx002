@@ -34,16 +34,16 @@ public class GameTextureClass {
 	public Texture equipPanel;
 	public Texture fightPanel, rolePanel, selectRolePanel, shopPanel,
 			skillPanel, updatePanel;
-	
-	public Skin skin;					//暂时没用上，以后准备使用
-	public Image mb_equip;				//主界面装备按钮
-	public Image mb_fight;				//主界面战斗按钮
-	public Image mb_role;				//主角色按钮 
-	public Image mb_selectrole;			//选择角色按钮
-	public Image mb_shop;				//商店按钮
-	public Image mb_skill;				//技能按钮 
-	public Image mb_update;				//升级按钮
-	public Image mb_back;				//返回按钮
+	public TextureAtlas textureatlas_mbutton;
+//	public Skin skin;					//暂时没用上，以后准备使用
+//	public Image mb_equip;				//主界面装备按钮
+//	public Image mb_fight;				//主界面战斗按钮
+//	public Image mb_role;				//主角色按钮 
+//	public Image mb_selectrole;			//选择角色按钮
+//	public Image mb_shop;				//商店按钮
+//	public Image mb_skill;				//技能按钮 
+//	public Image mb_update;				//升级按钮
+//	public Image mb_back;				//返回按钮
 	
 
 	private GameTextureClass() {
@@ -66,18 +66,14 @@ public class GameTextureClass {
 				Gdx.files.internal("data/game/ui/Actor2.png"));
 		card_texture = new Texture(Gdx.files.internal("data/game/ui/Actor2.png"));
 		
-		TextureAtlas mb_atlas = new TextureAtlas(Gdx.files.internal("data/menu/mbutton.txt"));
-		skin = new Skin();
-		skin.addRegions(mb_atlas);
-
-		mb_equip = new Image(mb_atlas.findRegion("mb_equip"));
-		mb_fight = new Image(mb_atlas.findRegion("mb_fight"));
-		mb_role = new Image(mb_atlas.findRegion("mb_role"));
-		mb_shop = new Image(mb_atlas.findRegion("mb_shop"));
-		mb_skill = new Image(mb_atlas.findRegion("mb_skill"));
-		mb_update = new Image(mb_atlas.findRegion("mb_update"));
-		mb_back = new Image(mb_atlas.findRegion("back"));
+		
+		textureatlas_mbutton = new TextureAtlas(Gdx.files.internal("data/menu/mbutton.txt"));
+//		mb_equip = new Image(mb_atlas.findRegion("mb_equip"));
+//		mb_fight = new Image(mb_atlas.findRegion("mb_fight"));
+//		mb_role = new Image(mb_atlas.findRegion("mb_role"));
+//		mb_shop = new Image(mb_atlas.findRegion("mb_shop"));
+//		mb_skill = new Image(mb_atlas.findRegion("mb_skill"));
+//		mb_update = new Image(mb_atlas.findRegion("mb_update"));
+//		mb_back = new Image(mb_atlas.findRegion("back"));
 	}
-
-	
 }

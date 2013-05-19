@@ -30,7 +30,7 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * ���һ��һ����ʽ�����ְ�ť
+	 * 创建一个文字按钮
 	 * 
 	 * @return
 	 */
@@ -52,31 +52,73 @@ public class ButtonFactory {
 		tb.setPosition(x, y);
 		return tb;
 	}
+	/**
+	 * 该函数同makeImageButton类似，只不过返回的是Image对象，可以通过一个图片控制按钮的
+	 * 两种微小调整状态
+	 * @param bname 按钮的名字
+	 * @return		返回按钮的图片
+	 */
+	Image img_nomal=null;		
+	public Image makeImageButton(String bname){
 
+		if(bname.equals(Configure.screen_equip))
+			img_nomal = new Image(GameTextureClass.getInstance().textureatlas_mbutton.findRegion("mb_equip"));
+		else if(bname.equals(Configure.screen_fight))
+			img_nomal = new Image(GameTextureClass.getInstance().textureatlas_mbutton.findRegion("mb_fight"));
+		else if(bname.equals(Configure.screen_role))
+			img_nomal = new Image(GameTextureClass.getInstance().textureatlas_mbutton.findRegion("mb_role"));
+		else if(bname.equals(Configure.screen_update))
+			img_nomal = new Image(GameTextureClass.getInstance().textureatlas_mbutton.findRegion("mb_update"));
+		else if(bname.equals(Configure.screen_skill))
+			img_nomal = new Image(GameTextureClass.getInstance().textureatlas_mbutton.findRegion("mb_skill"));
+		else if(bname.equals(Configure.screen_shop))
+			img_nomal = new Image(GameTextureClass.getInstance().textureatlas_mbutton.findRegion("mb_shop"));
+		else if(bname.equals(Configure.button_back))
+			img_nomal = new Image(GameTextureClass.getInstance().textureatlas_mbutton.findRegion("back"));
+
+		img_nomal.setOrigin(img_nomal.getWidth()/2, img_nomal.getHeight()/2);
+//		img_nomal.addListener(new InputListener(){
+//			@Override
+//			public boolean touchDown(InputEvent event, float x, float y,
+//					int pointer, int button) {
+//				
+//				img_nomal.setScale(0.95f);
+//				return super.touchDown(event, x, y, pointer, button);
+//			}
+//			@Override
+//			public void touchUp(InputEvent event, float x, float y,
+//					int pointer, int button) {
+//				img_nomal.setScale(1.0f);
+//			}
+//		});
+		return img_nomal;
+	}
+	
 	/**
 	 * 制作一个ImageButton
-	 * 
+	 * 暂时不用
 	 * @param img
 	 *            带入Image参数
 	 */
-	public ImageButton makeImageButton(String bname){
-//		TextureRegion nomal = ImageFactory.getInstance().skin.get("mb_equip",TextureRegion.class);
-		Image img_nomal = null;
-		if(bname.equals(Configure.screen_equip))
-			img_nomal = GameTextureClass.getInstance().mb_equip;
-		else if(bname.equals(Configure.screen_fight))
-			img_nomal = GameTextureClass.getInstance().mb_fight;
-		else if(bname.equals(Configure.screen_role))
-			img_nomal = GameTextureClass.getInstance().mb_role;
-		else if(bname.equals(Configure.screen_update))
-			img_nomal = GameTextureClass.getInstance().mb_update;
-		else if(bname.equals(Configure.screen_skill))
-			img_nomal = GameTextureClass.getInstance().mb_skill;
-		else if(bname.equals(Configure.screen_shop))
-			img_nomal = GameTextureClass.getInstance().mb_shop;
-		else if(bname.equals(Configure.button_back))
-			img_nomal = GameTextureClass.getInstance().mb_back;
-		ImageButton ib = new ImageButton(img_nomal.getDrawable());
-		return ib;
-	}
+//	public ImageButton makeImageButton(String bname){
+////		TextureRegion nomal = ImageFactory.getInstance().skin.get("mb_equip",TextureRegion.class);
+//		Image img_nomal = null;
+//		if(bname.equals(Configure.screen_equip))
+//			img_nomal = GameTextureClass.getInstance().mb_equip;
+//		else if(bname.equals(Configure.screen_fight))
+//			img_nomal = GameTextureClass.getInstance().mb_fight;
+//		else if(bname.equals(Configure.screen_role))
+//			img_nomal = GameTextureClass.getInstance().mb_role;
+//		else if(bname.equals(Configure.screen_update))
+//			img_nomal = GameTextureClass.getInstance().mb_update;
+//		else if(bname.equals(Configure.screen_skill))
+//			img_nomal = GameTextureClass.getInstance().mb_skill;
+//		else if(bname.equals(Configure.screen_shop))
+//			img_nomal = GameTextureClass.getInstance().mb_shop;
+//		else if(bname.equals(Configure.button_back))
+//			img_nomal = GameTextureClass.getInstance().mb_back;
+//		ImageButton ib = new ImageButton(img_nomal.getDrawable());
+//		
+//		return ib;
+//	}
 }

@@ -21,7 +21,6 @@ import com.bsu.tools.GameTextureClass;
 public class BsuGame extends Game {
 	@Override
 	public void create() {
-
 		GameTextureClass.getInstance();//执行一次加载所有资源
 		Rectangle rect = new Rectangle(0, 0, Configure.rect_width,
 				Configure.rect_height);
