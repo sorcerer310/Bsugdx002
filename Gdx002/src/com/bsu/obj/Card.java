@@ -20,7 +20,7 @@ public class Card {
 		// TODO Auto-generated constructor stub
 		type=p;
 		quality=q;
-		roleValue=CardFactory.getValue(type, quality);
+		roleValue=CardFactory.getInstance().getValue(type, quality);
 	}
 	public RoleValue getRoleValue() {
 		return roleValue;

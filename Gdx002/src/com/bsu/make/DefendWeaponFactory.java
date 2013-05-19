@@ -8,44 +8,47 @@ import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.DefendWeaponBase;
 
 public class DefendWeaponFactory {
-
+	private static DefendWeaponFactory instance = null;
+	public static DefendWeaponFactory getInstance(){
+		if(instance==null)
+			instance = new DefendWeaponFactory();
+		return instance;
+	}
 	public DefendWeaponFactory() {
 		// TODO Auto-generated constructor stub
+
+		defendArrayBujia.add(new DefendWeaponBase("布甲", tr, 1, 10, "基本的，遍地都是"));// 绿色(normal)
+		defendArrayBujia.add(new DefendWeaponBase("天禅甲", tr, 1, 20, "这个还不错"));// 蓝色(good)
+		defendArrayBujia.add(new DefendWeaponBase("软猬甲", tr, 1, 30,"真是幸运，极品"));// 紫色(best)
+		defendArrayBujia.add(new DefendWeaponBase("什么甲", tr, 1, 40, "橙色装备，无敌了"));// 橙色(perfect)
+
+		defendArrayChangqun.add(new DefendWeaponBase("blade", tr, 100, 10, ""));// 绿色(normal)
+		defendArrayChangqun.add(new DefendWeaponBase("blade", tr, 200, 10, ""));// 蓝色(good)
+		defendArrayChangqun.add(new DefendWeaponBase("blade", tr, 300, 10, ""));// 紫色(best)
+		defendArrayChangqun.add(new DefendWeaponBase("blade", tr, 400, 10, ""));// 橙色(perfect)
+
+
 	}
 	public static enum DEFEND{
 		bujia,changqun
 	}
 
-	private static Array<DefendWeaponBase> attackArraySword = new Array<DefendWeaponBase>();
-	private static Array<DefendWeaponBase> attackArrayblade = new Array<DefendWeaponBase>();
-	private static Array defendArray = new Array();
+	private  Array<DefendWeaponBase> defendArrayBujia = new Array<DefendWeaponBase>();
+	private  Array<DefendWeaponBase> defendArrayChangqun = new Array<DefendWeaponBase>();
+
 	
-	static TextureRegion tr;
-	static{
-		attackArraySword.add(new DefendWeaponBase("布甲", tr, 1, 10, "基本的，遍地都是"));// 绿色(normal)
-		attackArraySword.add(new DefendWeaponBase("天禅甲", tr, 1, 20, "这个还不错"));// 蓝色(good)
-		attackArraySword.add(new DefendWeaponBase("软猬甲", tr, 1, 30,"真是幸运，极品"));// 紫色(best)
-		attackArraySword.add(new DefendWeaponBase("什么甲", tr, 1, 40, "橙色装备，无敌了"));// 橙色(perfect)
-
-		attackArrayblade.add(new DefendWeaponBase("blade", tr, 100, 10, ""));// 绿色(normal)
-		attackArrayblade.add(new DefendWeaponBase("blade", tr, 200, 10, ""));// 蓝色(good)
-		attackArrayblade.add(new DefendWeaponBase("blade", tr, 300, 10, ""));// 紫色(best)
-		attackArrayblade.add(new DefendWeaponBase("blade", tr, 400, 10, ""));// 橙色(perfect)
-
-		defendArray.addAll(attackArraySword);
-		defendArray.addAll(attackArrayblade);
-	}
+	 TextureRegion tr;
 	
 
-	public static DefendWeaponBase getValue(DEFEND p, QUALITY q) {
+	public DefendWeaponBase getValue(DEFEND p, QUALITY q) {
 		DefendWeaponBase rv = null;
-		int ax = 0;
+		Array<DefendWeaponBase> temp=null;
 		int ay = 0;
 		if (p == DEFEND.bujia) {
-			ax = 0;
+			temp=defendArrayBujia;
 		}
 		if (p == DEFEND.changqun) {
-			ax = 1;
+			temp=defendArrayChangqun;
 		}
 		if (q == QUALITY.normal) {
 			ay = 0;
@@ -59,7 +62,6 @@ public class DefendWeaponFactory {
 		if (q == QUALITY.perfect) {
 			ay = 3;
 		}
-		Array<DefendWeaponBase> temp = (Array<DefendWeaponBase>) defendArray.get(ax);
 		rv = temp.get(ay);
 		return rv;
 	}

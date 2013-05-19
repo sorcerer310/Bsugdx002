@@ -19,6 +19,7 @@ import com.bsu.head.CubocScreen;
 import com.bsu.make.ButtonFactory;
 import com.bsu.make.ImageFactory;
 import com.bsu.tools.Configure;
+import com.bsu.tools.GameTextureClass;
 
 public class CPanelMainScreen extends CubocScreen implements Observer {
 	private Texture timg;
@@ -35,7 +36,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer {
 	public CPanelMainScreen(Game game) {
 		super(game);
 		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
-		timg = new Texture(Gdx.files.internal("data/menu/mpanel.png"));
+		timg = GameTextureClass.getInstance().getmPanel();
 		background = new Image(timg);
 		
 		ib_mb_update = ButtonFactory.getInstance().makeImageButton(Configure.screen_update);

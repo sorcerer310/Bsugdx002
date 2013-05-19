@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.head.CubocScreen;
 import com.bsu.tools.Configure;
+import com.bsu.tools.GameTextureClass;
 
 public class SelectRoleScreen extends CubocScreen implements Observer {
 	private Texture timg;
@@ -21,7 +22,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer {
 	private SpriteBatch batch;
 	public SelectRoleScreen(Game game) {
 		super(game);
-		timg = new Texture(Gdx.files.internal("data/menu/selectrolepanel.png"));
+		timg = GameTextureClass.getInstance().getSelectRolePanel();
 	}
 
 	@Override
