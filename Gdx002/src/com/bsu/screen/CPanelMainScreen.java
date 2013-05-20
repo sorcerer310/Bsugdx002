@@ -171,6 +171,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer {
 		stage.addActor(ib_mb_role);
 		stage.addActor(ib_mb_fight);
 		stage.addActor(ib_mb_shop);
+		//增加上阵英雄头像
 		Array<Role> playerRols = Player.getInstance().getPlayerFightRole();
 		for (int i = 0; i < playerRols.size; i++) {
 			Image roleImg = new Image(playerRols.get(i).roleTexture);
