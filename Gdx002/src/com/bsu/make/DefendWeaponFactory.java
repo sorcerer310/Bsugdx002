@@ -16,12 +16,12 @@ public class DefendWeaponFactory {
 	}
 	public DefendWeaponFactory() {
 		// TODO Auto-generated constructor stub
-		defendArrayBujia.add(new DefendWeaponBase("布甲", tr, 1, 10, "基本的，遍地都是"));// 绿色(normal)
+
 		defendArrayBujia.add(new DefendWeaponBase("布甲", tr, 1, 10, "基本的，遍地都是"));// 绿色(normal)
 		defendArrayBujia.add(new DefendWeaponBase("天禅甲", tr, 1, 20, "这个还不错"));// 蓝色(good)
 		defendArrayBujia.add(new DefendWeaponBase("软猬甲", tr, 1, 30,"真是幸运，极品"));// 紫色(best)
 		defendArrayBujia.add(new DefendWeaponBase("什么甲", tr, 1, 40, "橙色装备，无敌了"));// 橙色(perfect)
-		defendArrayChangqun.add(new DefendWeaponBase("blade", tr, 100, 10, ""));// 绿色(normal)
+		
 		defendArrayChangqun.add(new DefendWeaponBase("blade", tr, 100, 10, ""));// 绿色(normal)
 		defendArrayChangqun.add(new DefendWeaponBase("blade", tr, 200, 10, ""));// 蓝色(good)
 		defendArrayChangqun.add(new DefendWeaponBase("blade", tr, 300, 10, ""));// 紫色(best)
@@ -49,20 +49,17 @@ public class DefendWeaponFactory {
 		if (p == DEFEND.changqun) {
 			temp=defendArrayChangqun;
 		}
-		if (q == QUALITY.white) {
+		if (q == QUALITY.green) {
 			ay = 0;
 		}
-		if (q == QUALITY.green) {
+		if (q == QUALITY.blue) {
 			ay = 1;
 		}
-		if (q == QUALITY.blue) {
+		if (q == QUALITY.purple) {
 			ay = 2;
 		}
-		if (q == QUALITY.purple) {
-			ay = 3;
-		}
 		if (q == QUALITY.orange) {
-			ay = 4;
+			ay = 3;
 		}
 		rv = temp.get(ay);
 		return rv;

@@ -67,17 +67,14 @@ public class SkillListBase {
 			stopNum=1;
 		}
 		if (p != SUBTYPE.enemy) {
-			if (q == QUALITY.white) {
+			if (q == QUALITY.green) {
 				stopNum = 3;
 			}
-			if (q == QUALITY.green) {
+			if (q == QUALITY.blue) {
 				stopNum = 5;
 			}
-			if (q == QUALITY.blue) {
-				stopNum = 9;
-			}
 			if (q == QUALITY.purple) {
-				stopNum = 11;
+				stopNum = 7;
 			}
 			if (q == QUALITY.orange) {
 				stopNum = skillV.size;

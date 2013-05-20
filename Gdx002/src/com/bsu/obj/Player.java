@@ -23,16 +23,19 @@ public class Player {
 	}
 
 	private int money;// 玩家金钱
-	private Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
-	private Array<Role> playerWhiteRole = new Array<Role>();// 玩家拥有的role
-	private Array<Role> playerGreenRole = new Array<Role>();// 玩家拥有的role
-	private Array<Role> playerBlueRole = new Array<Role>();// 玩家拥有的role
-	private Array<Role> playerPurpleRole = new Array<Role>();// 玩家拥有的role
-	private Array<Role> playerOrangeRole = new Array<Role>();// 玩家拥有的role
-	private Array<Role> playerFightRole = new Array<Role>();// 玩家拥有的卡片
+	public Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
+	public Array<Role> playerGreenRole = new Array<Role>();// 玩家背包拥有的绿色role
+	public Array<Role> playerBlueRole = new Array<Role>();// 玩家背包拥有的蓝色role
+	public Array<Role> playerPurpleRole = new Array<Role>();// 玩家背包拥有的紫色role
+	public Array<Role> playerOrangeRole = new Array<Role>();// 玩家背包拥有的橙色role
+	public Array<Role> playerFightRole = new Array<Role>();// 玩家拥有的出战卡片
+	public Array<Role> playerIdelRole=new Array<Role>();//玩家背包中未出战卡片
 
 	public Player() {
 		// TODO Auto-generated constructor stub
+		getPlayerRole();
+		getPlayerFightRole();
+		getPlayerPackageRole();
 	}
 
 	public int getMoney() {
@@ -47,7 +50,7 @@ public class Player {
 		if (playerRole.size == 0) {
 			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.green)
 					.getRoleValue()));
-			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.white)
+			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.green)
 					.getRoleValue()));
 			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.green)
 					.getRoleValue()));
@@ -64,11 +67,6 @@ public class Player {
 			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.green)
 					.getRoleValue()));
 		}
-		RoleGetQuality(playerWhiteRole, playerRole, QUALITY.white);
-		RoleGetQuality(playerGreenRole, playerRole, QUALITY.green);
-		RoleGetQuality(playerBlueRole, playerRole, QUALITY.blue);
-		RoleGetQuality(playerPurpleRole, playerRole, QUALITY.purple);
-		RoleGetQuality(playerOrangeRole, playerRole, QUALITY.orange);
 		resetRoleArray(playerRole);
 		return playerRole;
 	}
@@ -87,6 +85,37 @@ public class Player {
 			playerFightRole.add(getPlayerRole().get(4));
 		}
 		return playerFightRole;
+	}
+	/**
+	 * 取得背包中的卡片,并将卡片分类
+	 * @return
+	 */
+	public Array<Role> getPlayerPackageRole(){
+		for(Role r:playerRole){
+			boolean flag=false;
+			for(Role e:playerFightRole){
+				if(e.equals(r)){
+					flag=true;
+					break;
+				}
+			}
+			if(!flag){
+				playerIdelRole.add(r);
+				if(r.quality==QUALITY.green){
+					playerGreenRole.add(r);
+				}
+				if(r.quality==QUALITY.blue){
+					playerBlueRole.add(r);
+				}
+				if(r.quality==QUALITY.purple){
+					playerPurpleRole.add(r);
+				}
+				if(r.quality==QUALITY.orange){
+					playerOrangeRole.add(r);
+				}
+			}
+		}
+		return playerIdelRole;
 	}
 
 	/**
@@ -114,38 +143,22 @@ public class Player {
 	}
 
 	/**
-	 * 根据role品质添加到品质数组
-	 * 
-	 * @param r
-	 */
-	private void RoleGetQuality(Array<Role> targetArray,
-			Array<Role> sourceAarray, QUALITY q) {
-		for (Role e : sourceAarray) {
-			if (e.quality == q) {
-				targetArray.add(e);
-			}
-		}
-	}
-	/**
 	 * 根据role品质返回一个int,品质越高，int 越高
 	 * @return
 	 */
 	private int QualityInde(Role r){
 		int index=0;
-		if(r.quality==QUALITY.white){
+		if(r.quality==QUALITY.green){
 			index=0;
 		}
-		if(r.quality==QUALITY.green){
+		if(r.quality==QUALITY.blue){
 			index=1;
 		}
-		if(r.quality==QUALITY.blue){
+		if(r.quality==QUALITY.purple){
 			index=2;
 		}
-		if(r.quality==QUALITY.purple){
-			index=3;
-		}
 		if(r.quality==QUALITY.orange){
-			index=4;
+			index=3;
 		}
 	
 		return index;

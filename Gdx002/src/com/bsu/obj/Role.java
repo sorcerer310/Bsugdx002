@@ -37,8 +37,8 @@ public class Role extends Actor {
 	public TextureRegion roleTexture;
 	public int maxHp = 100; // 总血量
 	public int currentHp = 30; // 当前血量
-	private int attack_value; // 自身攻击力
-	private int defend_value;//自身防御力
+	public int attack_value; // 自身攻击力
+	public int defend_value;//自身防御力
 	
 	private float time_state; // 行动状态时间
 	public float time_effect; // 技能特效时间

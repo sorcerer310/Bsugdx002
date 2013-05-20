@@ -28,15 +28,6 @@ public class CardFactory {
 	public CardFactory() {
 		// TODO Auto-generated constructor stub
 		cardArrayFC
-				.add(new RoleValue("fc", QUALITY.white, Type.HERO,
-						GameTextureClass.getInstance().fc_photo, 100, 10, 10,
-						SkillListBase.getInstance().getValue(SUBTYPE.fc,
-								QUALITY.white), AttackWeaponFactory
-								.getInstance().getValue(ATTACK.sword,
-										QUALITY.green), DefendWeaponFactory
-								.getInstance().getValue(DEFEND.bujia,
-										QUALITY.green)));// 白色(bad)
-		cardArrayFC
 				.add(new RoleValue("fc", QUALITY.green, Type.HERO,
 						GameTextureClass.getInstance().fc_photo, 100, 10, 10,
 						SkillListBase.getInstance().getValue(SUBTYPE.fc,
@@ -55,13 +46,7 @@ public class CardFactory {
 				GameTextureClass.getInstance().fc_photo, 400, 10, 10, sl, aw,
 				dw));// 橙色(perfect)
 
-		cardArrayZYC.add(new RoleValue("zyc", QUALITY.white, Type.HERO,
-				GameTextureClass.getInstance().zyc_photo, 100, 10, 10,
-				SkillListBase.getInstance()
-						.getValue(SUBTYPE.zyc, QUALITY.white),
-				AttackWeaponFactory.getInstance().getValue(ATTACK.sword,
-						QUALITY.green), DefendWeaponFactory.getInstance()
-						.getValue(DEFEND.bujia, QUALITY.green)));// 绿色(normal)
+	
 		cardArrayZYC.add(new RoleValue("zyc", QUALITY.green, Type.HERO,
 				GameTextureClass.getInstance().zyc_photo, 100, 10, 10,
 				SkillListBase.getInstance()
@@ -83,13 +68,7 @@ public class CardFactory {
 				DefendWeaponFactory.getInstance().getValue(DEFEND.bujia,
 						QUALITY.orange)));// 橙色(perfect)
 
-		cardArrayEnemy.add(new RoleValue("npc", QUALITY.white, Type.ENEMY,
-				GameTextureClass.getInstance().h5_photo, 100, 10, 10,
-				SkillListBase.getInstance().getValue(SUBTYPE.enemy,
-						QUALITY.green), AttackWeaponFactory.getInstance()
-						.getValue(ATTACK.sword, QUALITY.white),
-				DefendWeaponFactory.getInstance().getValue(DEFEND.bujia,
-						QUALITY.green)));// 绿色(normal)
+
 		cardArrayEnemy.add(new RoleValue("npc", QUALITY.orange, Type.ENEMY,
 				GameTextureClass.getInstance().h5_photo, 100, 10, 10,
 				SkillListBase.getInstance().getValue(SUBTYPE.enemy,
@@ -133,20 +112,18 @@ public class CardFactory {
 		if (p == SUBTYPE.enemy) {
 			temp = cardArrayEnemy;
 		}
-		if (q == QUALITY.white) {
+
+		if (q == QUALITY.green) {
 			ay = 0;
 		}
-		if (q == QUALITY.green) {
+		if (q == QUALITY.blue) {
 			ay = 1;
 		}
-		if (q == QUALITY.blue) {
+		if (q == QUALITY.purple) {
 			ay = 2;
 		}
-		if (q == QUALITY.purple) {
-			ay = 3;
-		}
 		if (q == QUALITY.orange) {
-			ay = 4;
+			ay = 3;
 		}
 		rv = temp.get(ay);
 		return rv;

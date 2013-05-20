@@ -166,21 +166,22 @@ public class CPanelMainScreen extends CubocScreen implements Observer {
 
 		stage.addActor(background);
 		stage.addActor(ib_mb_update);
-//		stage.addActor(ib_mb_equip);
-//		stage.addActor(ib_mb_skill);
+		// stage.addActor(ib_mb_equip);
+		// stage.addActor(ib_mb_skill);
 		stage.addActor(ib_mb_role);
 		stage.addActor(ib_mb_fight);
 		stage.addActor(ib_mb_shop);
-		//增加上阵英雄头像
+		// 增加上阵英雄头像
 		Array<Role> playerRols = Player.getInstance().getPlayerFightRole();
 		for (int i = 0; i < playerRols.size; i++) {
 			Image roleImg = new Image(playerRols.get(i).roleTexture);
-			Image backImg=ButtonFactory.getInstance().makeImageButton(Configure.Img_head_back);
+			Image backImg = ButtonFactory.getInstance().makeImageButton(
+					Configure.Img_head_back);
 			roleImg.setScale(0.5f);
 			stage.addActor(backImg);
 			stage.addActor(roleImg);
 			roleImg.setPosition(48, 246 - 55 * i);
-			backImg.setPosition(40, 240-55*i);
+			backImg.setPosition(40, 240 - 55 * i);
 			RoleImg.add(roleImg);
 			roleImg.addListener(new InputListener() {
 				@Override
@@ -192,14 +193,16 @@ public class CPanelMainScreen extends CubocScreen implements Observer {
 			});
 		}
 	}
+
 	/**
 	 * 通过点击Image取得相应的role
+	 * 
 	 * @param img
 	 */
 	private void getSelectRole(Image img) {
-		for(int i=0;i<RoleImg.size;i++){
-			if(RoleImg.get(i).equals(img)){
-				
+		for (int i = 0; i < RoleImg.size; i++) {
+			if (RoleImg.get(i).equals(img)) {
+
 			}
 		}
 	}

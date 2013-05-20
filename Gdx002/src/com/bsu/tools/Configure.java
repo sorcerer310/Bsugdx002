@@ -65,7 +65,7 @@ public class Configure {
 		idle, attack_normal, move, attack_v, attack_h,disapper,apper
 	};
 	public static enum QUALITY{
-		white,green,blue,purple,orange
+		green,blue,purple,orange
 	}
 	public static enum FACE {
 		left, right

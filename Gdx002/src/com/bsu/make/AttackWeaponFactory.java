@@ -17,8 +17,7 @@ public class AttackWeaponFactory {
 
 	public AttackWeaponFactory() {
 		// TODO Auto-generated constructor stub
-		attackArraySword.add(new AttackWeaponBase("sword", tr, 1, 10,
-				"基本的，遍地都是"));// 绿色(normal)
+		
 		attackArraySword.add(new AttackWeaponBase("sword", tr, 1, 10,
 				"基本的，遍地都是"));// 绿色(normal)
 		attackArraySword.add(new AttackWeaponBase("sword", tr, 1, 20, "这个还不错"));// 蓝色(good)
@@ -27,7 +26,7 @@ public class AttackWeaponFactory {
 		attackArraySword.add(new AttackWeaponBase("sword", tr, 1, 40,
 				"橙色装备，无敌了"));// 橙色(perfect)
 		
-		attackArrayblade.add(new AttackWeaponBase("blade", tr, 100, 10, ""));// 绿色(normal)
+		
 		attackArrayblade.add(new AttackWeaponBase("blade", tr, 100, 10, ""));// 绿色(normal)
 		attackArrayblade.add(new AttackWeaponBase("blade", tr, 200, 10, ""));// 蓝色(good)
 		attackArrayblade.add(new AttackWeaponBase("blade", tr, 300, 10, ""));// 紫色(best)
@@ -54,20 +53,18 @@ public class AttackWeaponFactory {
 		if (p == ATTACK.blade) {
 			temp = attackArrayblade;
 		}
-		if (q == QUALITY.white) {
+
+		if (q == QUALITY.green) {
 			ay = 0;
 		}
-		if (q == QUALITY.green) {
+		if (q == QUALITY.blue) {
 			ay = 1;
 		}
-		if (q == QUALITY.blue) {
+		if (q == QUALITY.purple) {
 			ay = 2;
 		}
-		if (q == QUALITY.purple) {
-			ay = 3;
-		}
 		if (q == QUALITY.orange) {
-			ay = 4;
+			ay = 3;
 		}
 		rv = temp.get(ay);
 		return rv;
