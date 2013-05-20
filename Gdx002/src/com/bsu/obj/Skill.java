@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Array;
 public class Skill {
 	public static enum Type {ATK,HP};						//当前技能类型是攻击类型还是回复HP类型
 	private Type type = Type.ATK;							//设置默认类型为攻击类型
-	private String name = "";								//技能名称
+	private String name = "";								//技能名称唯一索引
 	private int val = 0;									//技能效果值ֵ
 	public Animation ani_self = null;						//技能自身动画效果
 	public Animation ani_object = null;						//技能目标动画效果
