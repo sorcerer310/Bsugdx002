@@ -76,7 +76,6 @@ public class Configure {
 	public static enum CLASSES{
 		fighter,cleric,wizard,sorcerer,archer
 	};//人物职业，战士，牧师，元素法师，黑暗法师，射手
-	
 	/**
 	 * 取得FONT
 	 * 

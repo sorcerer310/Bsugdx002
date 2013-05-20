@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillFactory;
+import com.bsu.obj.skilltree.Skill;
+import com.bsu.obj.skilltree.SkillTree;
 import com.bsu.tools.AttackWeaponBase;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
@@ -26,10 +28,13 @@ public class Role extends Actor {
 	private AttackWeaponBase attack_weapon;//人物武器
 	private DefendWeaponBase defend_weapon;//人物护甲
 	private Array<Skill> skillList;//人物技能树
+	private SkillTree skltree;//人物技能树对象
 	
 	private BsuEvent bevent = null; // 用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
 	public QUALITY quality;//品质
+	public Type type = null; // ָ指定当前角色是英雄还是 NPC
+	public CLASSES classes = null;//指定当前人物的职业
 	public int level;//等级
 	public TextureRegion roleTexture;
 	public int maxHp = 100; // 总血量
@@ -42,8 +47,7 @@ public class Role extends Actor {
 	public STATE state; // 英雄的当前状态
 	private Skill cskill; // 英雄当前的攻击技能
 	public Array<Skill> array_skill = new Array<Skill>(); // 英雄此关卡携带的技能
-	private Type type = null; // ָ指定当前角色是英雄还是 NPC
-	private CLASSES classes = null;//指定当前人物的职业
+
 	private Animation ani_idle; // 站立动画
 	private Animation ani_move; // 移动动画
 	private Animation ani_disapper;// 角色消失
@@ -358,5 +362,19 @@ public class Role extends Actor {
 
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+	/**
+	 * 返回英雄的职业数据
+	 * @return
+	 */
+	public CLASSES getClasses() {
+		return classes;
+	}
+	/**
+	 * 返回英雄的品质 
+	 * @return
+	 */
+	public QUALITY getQuality() {
+		return quality;
 	}
 }

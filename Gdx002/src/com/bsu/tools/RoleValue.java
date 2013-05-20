@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillListBase;
 import com.bsu.obj.Role.Type;
-import com.bsu.obj.Skill;
+import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.Configure.QUALITY;
 
 /**
