@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.bsu.make.ButtonFactory;
 import com.bsu.obj.Role;
 import com.bsu.tools.Configure.STATE;
 
@@ -22,7 +23,8 @@ public class FightRoleUI {
 	public Role role;
 	int role_index;// role 所在数组索引
 	Texture photo_texture;
-
+	
+	Image roleBack;
 	public Image role_photo;// role的头像
 	Label label_name;
 	Image skillImg0;
@@ -43,6 +45,7 @@ public class FightRoleUI {
 				Gdx.files.internal("data/game/ui/jewel_dea.png")));
 		skillImg1 = new Image(new Texture(
 				Gdx.files.internal("data/game/ui/jewel_dead2.png")));
+		roleBack=ButtonFactory.getInstance().makeImageButton(Configure.Img_head_back);
 		rhp = new RoleHP();
 		role_hp = rhp.get_hp_image();
 		Configure.get_sytle().font.setScale(0.5f);
@@ -52,6 +55,7 @@ public class FightRoleUI {
 	}
 
 	private void show_role_state() {
+		stage.addActor(roleBack);
 		stage.addActor(role_photo);
 		stage.addActor(skillImg0);
 		stage.addActor(skillImg1);
@@ -62,5 +66,6 @@ public class FightRoleUI {
 		role_photo.setPosition(role_index * 96, 0);
 		role_hp.setPosition(50 + role_index * 96, 0);
 		label_name.setPosition(0 + role_index * 96, 49);
+		roleBack.setPosition(0+role_index*96, 0);
 	}
 }

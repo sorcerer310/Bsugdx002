@@ -37,7 +37,7 @@ public class GameScreenConfigure {
 		for(Role h:Player.getInstance().getPlayerFightRole()){
 			rols.add(h);
 		}
-		rols.add(new Role(new Card(SUBTYPE.enemy, QUALITY.normal)
+		rols.add(new Role(new Card(SUBTYPE.enemy, QUALITY.green)
 				.getRoleValue()));
 		gs.game_init(0, rols);
 	}

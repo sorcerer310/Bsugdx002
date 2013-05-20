@@ -34,6 +34,8 @@ public class Configure {
 	public static String screen_skill = "mskill";
 	public static String screen_shop = "mshop";
 	public static String button_back = "btback";
+	public static String Img_head_back="headback";
+	public static String Img_skill_back="skillback";
 
 	public static String[] game_map_path_string = { "map1", "map2" };// 地图关卡名称（路径）
 
@@ -63,7 +65,7 @@ public class Configure {
 		idle, attack_normal, move, attack_v, attack_h,disapper,apper
 	};
 	public static enum QUALITY{
-		bad,normal,good,best,perfect
+		white,green,blue,purple,orange
 	}
 	public static enum FACE {
 		left, right

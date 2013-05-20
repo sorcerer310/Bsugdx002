@@ -32,7 +32,8 @@ public class Role extends Actor {
 	
 	private BsuEvent bevent = null; // 用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
-	public QUALITY quality;
+	public QUALITY quality;//品质
+	public int level;//等级
 	public TextureRegion roleTexture;
 	public int maxHp = 100; // 总血量
 	public int currentHp = 30; // 当前血量

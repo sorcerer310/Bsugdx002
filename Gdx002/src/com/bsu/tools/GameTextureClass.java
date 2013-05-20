@@ -35,7 +35,6 @@ public class GameTextureClass {
 	public TextureRegion fc_photo, zyc_photo, h0_photo, h1_photo, h2_photo,
 			h3_photo, h4_photo, h5_photo;
 
-
 	private GameTextureClass() {
 		// TODO Auto-generated constructor stub
 		effect_texture = new Texture(
@@ -50,7 +49,6 @@ public class GameTextureClass {
 		skillPanel = new Texture(Gdx.files.internal("data/menu/skillpanel.png"));
 		updatePanel = new Texture(
 				Gdx.files.internal("data/menu/updatepanel.png"));
-		
 		
 		textureatlas_mbutton = new TextureAtlas(Gdx.files.internal("data/menu/mbutton.txt"));
 

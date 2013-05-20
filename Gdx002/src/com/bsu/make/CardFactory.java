@@ -27,73 +27,83 @@ public class CardFactory {
 
 	public CardFactory() {
 		// TODO Auto-generated constructor stub
-		cardArrayFC.add(new RoleValue("fc", QUALITY.bad, Type.HERO,
-				GameTextureClass.getInstance().fc_photo, 100, 10, 10,
-				SkillListBase.getInstance().getValue(SUBTYPE.fc, QUALITY.bad),
-				AttackWeaponFactory.getInstance().getValue(ATTACK.sword,
-						QUALITY.normal), DefendWeaponFactory.getInstance()
-						.getValue(DEFEND.bujia, QUALITY.normal)));// 白色(bad)
-		cardArrayFC.add(new RoleValue("fc", QUALITY.normal, Type.HERO,
-				GameTextureClass.getInstance().fc_photo, 100, 10, 10,
-				SkillListBase.getInstance()
-						.getValue(SUBTYPE.fc, QUALITY.normal),
-				AttackWeaponFactory.getInstance().getValue(ATTACK.sword,
-						QUALITY.normal), DefendWeaponFactory.getInstance()
-						.getValue(DEFEND.bujia, QUALITY.normal)));// 绿色(normal)
-		cardArrayFC.add(new RoleValue("fc", QUALITY.good, Type.HERO,
+		cardArrayFC
+				.add(new RoleValue("fc", QUALITY.white, Type.HERO,
+						GameTextureClass.getInstance().fc_photo, 100, 10, 10,
+						SkillListBase.getInstance().getValue(SUBTYPE.fc,
+								QUALITY.white), AttackWeaponFactory
+								.getInstance().getValue(ATTACK.sword,
+										QUALITY.green), DefendWeaponFactory
+								.getInstance().getValue(DEFEND.bujia,
+										QUALITY.green)));// 白色(bad)
+		cardArrayFC
+				.add(new RoleValue("fc", QUALITY.green, Type.HERO,
+						GameTextureClass.getInstance().fc_photo, 100, 10, 10,
+						SkillListBase.getInstance().getValue(SUBTYPE.fc,
+								QUALITY.green), AttackWeaponFactory
+								.getInstance().getValue(ATTACK.sword,
+										QUALITY.green), DefendWeaponFactory
+								.getInstance().getValue(DEFEND.bujia,
+										QUALITY.green)));// 绿色(normal)
+		cardArrayFC.add(new RoleValue("fc", QUALITY.blue, Type.HERO,
 				GameTextureClass.getInstance().fc_photo, 200, 10, 10, sl, aw,
 				dw));// 蓝色(good)
-		cardArrayFC.add(new RoleValue("fc", QUALITY.best, Type.HERO,
+		cardArrayFC.add(new RoleValue("fc", QUALITY.purple, Type.HERO,
 				GameTextureClass.getInstance().fc_photo, 300, 10, 10, sl, aw,
 				dw));// 紫色(best)
-		cardArrayFC.add(new RoleValue("fc", QUALITY.perfect, Type.HERO,
+		cardArrayFC.add(new RoleValue("fc", QUALITY.orange, Type.HERO,
 				GameTextureClass.getInstance().fc_photo, 400, 10, 10, sl, aw,
 				dw));// 橙色(perfect)
 
-		cardArrayZYC.add(new RoleValue("zyc", QUALITY.bad, Type.HERO,
+		cardArrayZYC.add(new RoleValue("zyc", QUALITY.white, Type.HERO,
 				GameTextureClass.getInstance().zyc_photo, 100, 10, 10,
-				SkillListBase.getInstance().getValue(SUBTYPE.zyc, QUALITY.bad),
+				SkillListBase.getInstance()
+						.getValue(SUBTYPE.zyc, QUALITY.white),
 				AttackWeaponFactory.getInstance().getValue(ATTACK.sword,
-						QUALITY.normal), DefendWeaponFactory.getInstance()
-						.getValue(DEFEND.bujia, QUALITY.normal)));// 绿色(normal)
-		cardArrayZYC.add(new RoleValue("zyc", QUALITY.normal, Type.HERO,
+						QUALITY.green), DefendWeaponFactory.getInstance()
+						.getValue(DEFEND.bujia, QUALITY.green)));// 绿色(normal)
+		cardArrayZYC.add(new RoleValue("zyc", QUALITY.green, Type.HERO,
 				GameTextureClass.getInstance().zyc_photo, 100, 10, 10,
-				SkillListBase.getInstance().getValue(SUBTYPE.zyc,
-						QUALITY.normal), AttackWeaponFactory.getInstance()
-						.getValue(ATTACK.sword, QUALITY.normal),
-				DefendWeaponFactory.getInstance().getValue(DEFEND.bujia,
-						QUALITY.normal)));// 绿色(normal)
-		cardArrayZYC.add(new RoleValue("zyc", QUALITY.good, Type.HERO,
+				SkillListBase.getInstance()
+						.getValue(SUBTYPE.zyc, QUALITY.green),
+				AttackWeaponFactory.getInstance().getValue(ATTACK.sword,
+						QUALITY.green), DefendWeaponFactory.getInstance()
+						.getValue(DEFEND.bujia, QUALITY.green)));// 绿色(normal)
+		cardArrayZYC.add(new RoleValue("zyc", QUALITY.blue, Type.HERO,
 				GameTextureClass.getInstance().fc_photo, 200, 10, 10, sl, aw,
 				dw));// 蓝色(good)
-		cardArrayZYC.add(new RoleValue("zyc", QUALITY.best, Type.HERO,
+		cardArrayZYC.add(new RoleValue("zyc", QUALITY.purple, Type.HERO,
 				GameTextureClass.getInstance().fc_photo, 300, 10, 10, sl, aw,
 				dw));// 紫色(best)
-		cardArrayZYC.add(new RoleValue("zyc", QUALITY.perfect, Type.HERO,
-				GameTextureClass.getInstance().fc_photo, 400, 10, 10, sl, aw,
-				dw));// 橙色(perfect)
-		
-		cardArrayEnemy.add(new RoleValue("npc", QUALITY.bad, Type.ENEMY,
+		cardArrayZYC.add(new RoleValue("zyc", QUALITY.orange, Type.HERO,
+				GameTextureClass.getInstance().zyc_photo, 100, 10, 10,
+				SkillListBase.getInstance().getValue(SUBTYPE.zyc,
+						QUALITY.orange), AttackWeaponFactory.getInstance()
+						.getValue(ATTACK.sword, QUALITY.orange),
+				DefendWeaponFactory.getInstance().getValue(DEFEND.bujia,
+						QUALITY.orange)));// 橙色(perfect)
+
+		cardArrayEnemy.add(new RoleValue("npc", QUALITY.white, Type.ENEMY,
 				GameTextureClass.getInstance().h5_photo, 100, 10, 10,
 				SkillListBase.getInstance().getValue(SUBTYPE.enemy,
-						QUALITY.normal), AttackWeaponFactory.getInstance()
-						.getValue(ATTACK.sword, QUALITY.bad),
+						QUALITY.green), AttackWeaponFactory.getInstance()
+						.getValue(ATTACK.sword, QUALITY.white),
 				DefendWeaponFactory.getInstance().getValue(DEFEND.bujia,
-						QUALITY.normal)));// 绿色(normal)
-		cardArrayEnemy.add(new RoleValue("npc", QUALITY.perfect, Type.ENEMY,
+						QUALITY.green)));// 绿色(normal)
+		cardArrayEnemy.add(new RoleValue("npc", QUALITY.orange, Type.ENEMY,
 				GameTextureClass.getInstance().h5_photo, 100, 10, 10,
 				SkillListBase.getInstance().getValue(SUBTYPE.enemy,
-						QUALITY.normal), AttackWeaponFactory.getInstance()
-						.getValue(ATTACK.sword, QUALITY.normal),
+						QUALITY.green), AttackWeaponFactory.getInstance()
+						.getValue(ATTACK.sword, QUALITY.green),
 				DefendWeaponFactory.getInstance().getValue(DEFEND.bujia,
-						QUALITY.normal)));// 绿色(normal)
-		cardArrayEnemy.add(new RoleValue("zyc", QUALITY.perfect, Type.ENEMY,
+						QUALITY.green)));// 绿色(normal)
+		cardArrayEnemy.add(new RoleValue("zyc", QUALITY.orange, Type.ENEMY,
 				GameTextureClass.getInstance().h5_photo, 200, 10, 10, sl, aw,
 				dw));// 蓝色(good)
-		cardArrayEnemy.add(new RoleValue("zyc", QUALITY.perfect, Type.ENEMY,
+		cardArrayEnemy.add(new RoleValue("zyc", QUALITY.orange, Type.ENEMY,
 				GameTextureClass.getInstance().fc_photo, 300, 10, 10, sl, aw,
 				dw));// 紫色(best)
-		cardArrayEnemy.add(new RoleValue("zyc", QUALITY.perfect, Type.ENEMY,
+		cardArrayEnemy.add(new RoleValue("zyc", QUALITY.orange, Type.ENEMY,
 				GameTextureClass.getInstance().fc_photo, 400, 10, 10, sl, aw,
 				dw));// 橙色(perfect)
 	}
@@ -123,19 +133,19 @@ public class CardFactory {
 		if (p == SUBTYPE.enemy) {
 			temp = cardArrayEnemy;
 		}
-		if (q == QUALITY.bad) {
+		if (q == QUALITY.white) {
 			ay = 0;
 		}
-		if (q == QUALITY.normal) {
+		if (q == QUALITY.green) {
 			ay = 1;
 		}
-		if (q == QUALITY.good) {
+		if (q == QUALITY.blue) {
 			ay = 2;
 		}
-		if (q == QUALITY.best) {
+		if (q == QUALITY.purple) {
 			ay = 3;
 		}
-		if (q == QUALITY.perfect) {
+		if (q == QUALITY.orange) {
 			ay = 4;
 		}
 		rv = temp.get(ay);

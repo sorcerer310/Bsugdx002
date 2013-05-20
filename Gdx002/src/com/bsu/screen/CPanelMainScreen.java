@@ -30,7 +30,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer {
 	private Image ib_mb_shop;
 	private Image ib_mb_skill;
 	private Image ib_mb_update;
-	private Array<Image> heroImg = new Array<Image>();
+	private Array<Image> RoleImg = new Array<Image>();
 
 	public CPanelMainScreen(Game game) {
 		super(game);
@@ -175,10 +175,13 @@ public class CPanelMainScreen extends CubocScreen implements Observer {
 		Array<Role> playerRols = Player.getInstance().getPlayerFightRole();
 		for (int i = 0; i < playerRols.size; i++) {
 			Image roleImg = new Image(playerRols.get(i).roleTexture);
+			Image backImg=ButtonFactory.getInstance().makeImageButton(Configure.Img_head_back);
 			roleImg.setScale(0.5f);
+			stage.addActor(backImg);
 			stage.addActor(roleImg);
 			roleImg.setPosition(48, 246 - 55 * i);
-			heroImg.add(roleImg);
+			backImg.setPosition(40, 240-55*i);
+			RoleImg.add(roleImg);
 			roleImg.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
@@ -194,8 +197,8 @@ public class CPanelMainScreen extends CubocScreen implements Observer {
 	 * @param img
 	 */
 	private void getSelectRole(Image img) {
-		for(int i=0;i<heroImg.size;i++){
-			if(heroImg.get(i).equals(img)){
+		for(int i=0;i<RoleImg.size;i++){
+			if(RoleImg.get(i).equals(img)){
 				
 			}
 		}

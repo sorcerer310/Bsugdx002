@@ -75,22 +75,12 @@ public class ButtonFactory {
 			img_nomal = new Image(GameTextureClass.getInstance().textureatlas_mbutton.findRegion("mb_shop"));
 		else if(bname.equals(Configure.button_back))
 			img_nomal = new Image(GameTextureClass.getInstance().textureatlas_mbutton.findRegion("back"));
+		else if(bname.equals(Configure.Img_head_back))
+			img_nomal = new Image(GameTextureClass.getInstance().textureatlas_mbutton.findRegion("frame_head"));
+		else if(bname.equals(Configure.Img_skill_back))
+			img_nomal = new Image(GameTextureClass.getInstance().textureatlas_mbutton.findRegion("frame_skill"));
 
 		img_nomal.setOrigin(img_nomal.getWidth()/2, img_nomal.getHeight()/2);
-//		img_nomal.addListener(new InputListener(){
-//			@Override
-//			public boolean touchDown(InputEvent event, float x, float y,
-//					int pointer, int button) {
-//				
-//				img_nomal.setScale(0.95f);
-//				return super.touchDown(event, x, y, pointer, button);
-//			}
-//			@Override
-//			public void touchUp(InputEvent event, float x, float y,
-//					int pointer, int button) {
-//				img_nomal.setScale(1.0f);
-//			}
-//		});
 		return img_nomal;
 	}
 	
