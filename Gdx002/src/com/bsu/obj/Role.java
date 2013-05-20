@@ -11,6 +11,7 @@ import com.bsu.make.SkillFactory;
 import com.bsu.tools.AttackWeaponBase;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
+import com.bsu.tools.Configure.CLASSES;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.DefendWeaponBase;
 import com.bsu.tools.GameAnimationClass;
@@ -42,6 +43,7 @@ public class Role extends Actor {
 	private Skill cskill; // 英雄当前的攻击技能
 	public Array<Skill> array_skill = new Array<Skill>(); // 英雄此关卡携带的技能
 	private Type type = null; // ָ指定当前角色是英雄还是 NPC
+	private CLASSES classes = null;//指定当前人物的职业
 	private Animation ani_idle; // 站立动画
 	private Animation ani_move; // 移动动画
 	private Animation ani_disapper;// 角色消失
@@ -153,7 +155,7 @@ public class Role extends Actor {
 		bevent = be;
 		time_effect = 0; // 此处一定要设置time_effect为0，否则动画不会重新开始
 		ani_effect = skl.ani_self;
-		enemy.hero_isAttacked(skl.ani_object, skl.getVal());
+		enemy.hero_isAttacked(skl.ani_object, skl.val);
 	}
 
 	/**
