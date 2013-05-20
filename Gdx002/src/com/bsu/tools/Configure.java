@@ -74,7 +74,7 @@ public class Configure {
 		left, right, up, down
 	};// 4方向
 	public static enum CLASSES{
-		fighter,cleric,wizard,sorcerer,archer
+		fighter,cleric,wizard,sorcerer,archer,all
 	};//人物职业，战士，牧师，元素法师，黑暗法师，射手
 	/**
 	 * 取得FONT
