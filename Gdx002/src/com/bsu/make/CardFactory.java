@@ -8,7 +8,7 @@ import com.bsu.make.AttackWeaponFactory.ATTACK;
 import com.bsu.make.DefendWeaponFactory.DEFEND;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
-import com.bsu.obj.Skill;
+import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.AttackWeaponBase;
 import com.bsu.tools.Configure;
 import com.bsu.tools.DefendWeaponBase;

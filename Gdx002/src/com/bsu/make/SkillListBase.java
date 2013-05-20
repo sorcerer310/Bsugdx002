@@ -2,7 +2,7 @@ package com.bsu.make;
 
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.CardFactory.SUBTYPE;
-import com.bsu.obj.Skill;
+import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.Configure.QUALITY;
 
 /**

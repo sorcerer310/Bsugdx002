@@ -218,8 +218,8 @@ public class Commander {
 						}
 					});
 					// 如果敌人血量为0，从npcs数组中移除该敌人
-					e.currentHp = (int) (e.currentHp - h.getCskill().getVal() >= 0 ? e.currentHp
-							- h.getCskill().getVal()
+					e.currentHp = (int) (e.currentHp - h.getCskill().val >= 0 ? e.currentHp
+							- h.getCskill().val
 							: 0);
 					if (e.currentHp == 0) {
 						npcs.removeValue(e, true); // 从Commander逻辑计算队列中移除
@@ -275,8 +275,8 @@ public class Commander {
 					});
 
 					// 如果英雄血量为0，从heros数组中移除该敌人
-					h.currentHp = (int) (h.currentHp - e.getCskill().getVal() >= 0 ? h.currentHp
-							- e.getCskill().getVal()
+					h.currentHp = (int) (h.currentHp - e.getCskill().val >= 0 ? h.currentHp
+							- e.getCskill().val
 							: 0);
 					for (FightRoleUI fru : gamescreen.getFightUI()
 							.getRole_state_array()) {// 设置相应血条高度

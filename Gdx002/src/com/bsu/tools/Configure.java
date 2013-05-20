@@ -66,15 +66,16 @@ public class Configure {
 	};
 	public static enum QUALITY{
 		green,blue,purple,orange
-	}
+	}//品质数据
 	public static enum FACE {
 		left, right
 	}; // 人物朝向
 	public static enum DIRECTION {
 		left, right, up, down
 	};// 4方向
-	
-	
+	public static enum CLASSES{
+		fighter,cleric,wizard,sorcerer,archer,all
+	};//人物职业，战士，牧师，元素法师，黑暗法师，射手
 	/**
 	 * 取得FONT
 	 * 
