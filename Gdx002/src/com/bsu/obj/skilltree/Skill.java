@@ -13,9 +13,9 @@ import com.bsu.tools.Configure.QUALITY;
  */
 public class Skill {
 	//技能值类型分为固定伤害，固定回血，百分比回血，攻击力倍数伤害，方格数，hp百分比，防御百分比，攻击百分比，护甲为0触发机率，致盲触发机率，通关奖励，游戏运行速度
-  	//前缀解释 f:fixed固定的，p:percent百分比,pbuff:百分比buff,prob:机率，mul:倍数，reward:奖励,mul:倍数
-	//后缀解释 damage:伤害，healing:治疗,count:数量，hp:血上限，def:防御上限，atk：攻击上限，nude:碎甲，dizzy：眩晕，blind:致盲,shifhp:转移生命,speed:游戏速度
-	public static enum Type {f_damage,f_healing,f_shifhp,p_healing,mul_damage,box_count,pbuff_hp,pbuff_healing,pbuff_atk,pbuff_def,p_hp,p_def,p_atk,prob_dizzy,prob_nude,prob_blind,reward_count,mul_speed};
+  	//前缀解释 f:fixed固定的，p:percent百分比,pbuff:百分比buff,prob:机率，mul:倍数，mul:倍数
+	//后缀解释 damage:伤害，healing:治疗,count:数量，hp:血上限，def:防御上限，atk：攻击上限，nude:碎甲，dizzy：眩晕，blind:致盲，atkbeat:造成伤害并击退，shifhp:转移生命,speed:游戏速度,reward:奖励
+	public static enum Type {f_damage,f_healing,f_shifhp,p_healing,mul_damage,mul_lucky,box_count,pbuff_hp,pbuff_healing,pbuff_atk,pbuff_def,p_hp,p_def,p_atk,p_atkbeat,prob_dizzy,prob_nude,prob_blind,mul_reward,mul_speed};
 	private int id = 0;										//技能索引
 	public String name = "";								//技能名称唯一索引
 	public QUALITY quality = QUALITY.green;					//技能品质，默认为绿色
