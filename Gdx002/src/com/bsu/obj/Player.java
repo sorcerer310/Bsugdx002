@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.make.RoleFactory;
 import com.bsu.make.CardFactory.SUBTYPE;
 import com.bsu.tools.Configure.QUALITY;
+import com.bsu.tools.Configure.QualityS;
 
 /**
  * 玩家类，封装了玩家的所有信息
@@ -23,10 +24,6 @@ public class Player {
 
 	private int money;// 玩家金钱
 	public Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
-	public Array<Role> playerGreenRole = new Array<Role>();// 玩家背包拥有的绿色role
-	public Array<Role> playerBlueRole = new Array<Role>();// 玩家背包拥有的蓝色role
-	public Array<Role> playerPurpleRole = new Array<Role>();// 玩家背包拥有的紫色role
-	public Array<Role> playerOrangeRole = new Array<Role>();// 玩家背包拥有的橙色role
 	public Array<Role> playerFightRole = new Array<Role>();// 玩家拥有的出战卡片
 	public Array<Role> playerIdelRole = new Array<Role>();// 玩家背包中未出战卡片
 
@@ -45,6 +42,11 @@ public class Player {
 		this.money = money;
 	}
 
+	/**
+	 * 取得所有卡片
+	 * 
+	 * @return
+	 */
 	private Array<Role> getPlayerRole() {
 		if (playerRole.size == 0) {
 			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.green)
@@ -99,16 +101,12 @@ public class Player {
 	}
 
 	/**
-	 * 取得背包中的卡片,并将卡片分类
+	 * 取得背包中的卡片
 	 * 
 	 * @return
 	 */
 	public Array<Role> getPlayerPackageRole() {
 		playerIdelRole.clear();
-		playerGreenRole.clear();
-		playerBlueRole.clear();
-		playerPurpleRole.clear();
-		playerOrangeRole.clear();
 		for (Role r : playerRole) {
 			boolean flag = false;
 			for (Role e : playerFightRole) {
@@ -119,21 +117,26 @@ public class Player {
 			}
 			if (!flag) {
 				playerIdelRole.add(r);
-				if (r.quality == QUALITY.green) {
-					playerGreenRole.add(r);
-				}
-				if (r.quality == QUALITY.blue) {
-					playerBlueRole.add(r);
-				}
-				if (r.quality == QUALITY.purple) {
-					playerPurpleRole.add(r);
-				}
-				if (r.quality == QUALITY.orange) {
-					playerOrangeRole.add(r);
-				}
 			}
 		}
 		return playerIdelRole;
+	}
+
+	/**
+	 * 取得某一个数组中的某一品质的card
+	 * 
+	 * @param q
+	 *            某品质
+	 * @return
+	 */
+	public Array<Role> getQualityRole(Array<Role> ar, QUALITY q) {
+		Array<Role> qa = new Array<Role>();
+		for (Role r : ar) {
+			if (r.quality == q) {
+				qa.add(r);
+			}
+		}
+		return qa;
 	}
 
 	/**

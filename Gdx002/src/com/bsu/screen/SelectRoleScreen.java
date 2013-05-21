@@ -32,7 +32,8 @@ import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.Configure.QualityS;
 import com.bsu.tools.GameTextureClass;
 
-public class SelectRoleScreen extends CubocScreen implements Observer, GestureListener {
+public class SelectRoleScreen extends CubocScreen implements Observer,
+		GestureListener {
 	private Texture timg;
 	private Image background;
 	private Stage stage;
@@ -45,21 +46,27 @@ public class SelectRoleScreen extends CubocScreen implements Observer, GestureLi
 	private TextButton purpleButton;
 	private TextButton orangeButton;
 	private Role changeRole;
-	
+
 	public SelectRoleScreen(Game game) {
 		super(game);
-		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
+		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
 		sRoleStage = new Stage(Configure.rect_width, Configure.rect_height,
 				false);
 		background = new Image(GameTextureClass.getInstance().selectRolePanel);
-		
-		ib_back = ButtonFactory.getInstance().makeImageButton(Configure.button_back);
-		ib_back.setPosition(380,280);
-		allButton=ButtonFactory.getInstance().makeOneTextButton("all", 140, 30);
-		greenButton=ButtonFactory.getInstance().makeOneTextButton("green", 180, 30);
-		blueButton=ButtonFactory.getInstance().makeOneTextButton("blue", 220, 30);
-		purpleButton=ButtonFactory.getInstance().makeOneTextButton("purple",260, 30);
-		orangeButton=ButtonFactory.getInstance().makeOneTextButton("orange", 300, 30);
+
+		ib_back = ButtonFactory.getInstance().makeImageButton(
+				Configure.button_back);
+		ib_back.setPosition(380, 280);
+		allButton = ButtonFactory.getInstance().makeOneTextButton("all", 140,
+				30);
+		greenButton = ButtonFactory.getInstance().makeOneTextButton("green",
+				180, 30);
+		blueButton = ButtonFactory.getInstance().makeOneTextButton("blue", 220,
+				30);
+		purpleButton = ButtonFactory.getInstance().makeOneTextButton("purple",
+				260, 30);
+		orangeButton = ButtonFactory.getInstance().makeOneTextButton("orange",
+				300, 30);
 		stage.addActor(background);
 		stage.addActor(ib_back);
 		stage.addActor(allButton);
@@ -67,31 +74,37 @@ public class SelectRoleScreen extends CubocScreen implements Observer, GestureLi
 		stage.addActor(blueButton);
 		stage.addActor(purpleButton);
 		stage.addActor(orangeButton);
-		quality=QualityS.allselect;
+		quality = QualityS.allselect;
 		addRoleToStage(QualityS.allselect);
 		setListener();
 	}
-	public void setChangeRole(Role r){
-		changeRole=r;
+
+	public void setChangeRole(Role r) {
+		changeRole = r;
 	}
+
 	/**
 	 * 当点击卡片按钮时添加背包中卡片到舞台，并根据当前所选类型显示
 	 */
 	private void addRoleToStage(QualityS qs) {
-		quality=qs;
+		quality = qs;
 		if (quality == QualityS.gselect) {
-			showQualityRole(Player.getInstance().playerGreenRole);
+			showQualityRole(Player.getInstance().getQualityRole(
+					Player.getInstance().playerRole, QUALITY.green));
 		}
 		if (quality == QualityS.bselect) {
-			showQualityRole(Player.getInstance().playerBlueRole);
+			showQualityRole(Player.getInstance().getQualityRole(
+					Player.getInstance().playerRole, QUALITY.blue));
 		}
 		if (quality == QualityS.pselect) {
-			showQualityRole(Player.getInstance().playerPurpleRole);
+			showQualityRole(Player.getInstance().getQualityRole(
+					Player.getInstance().playerRole, QUALITY.purple));
 		}
 		if (quality == QualityS.oselect) {
-			showQualityRole(Player.getInstance().playerOrangeRole);
+			showQualityRole(Player.getInstance().getQualityRole(
+					Player.getInstance().playerRole, QUALITY.orange));
 		}
-		if(quality==QualityS.allselect){
+		if (quality == QualityS.allselect) {
 			showQualityRole(Player.getInstance().playerIdelRole);
 		}
 	}
@@ -105,25 +118,28 @@ public class SelectRoleScreen extends CubocScreen implements Observer, GestureLi
 	private void showQualityRole(final Array<Role> roleArray) {
 		sRoleStage.clear();
 		for (int i = 0; i < roleArray.size; i++) {
-			final Role r=roleArray.get(i);
+			final Role r = roleArray.get(i);
 			Image roleImg = new Image(r.roleTexture);
 			roleImg.setScale(0.5f);
 			sRoleStage.addActor(roleImg);
 			roleImg.setPosition(140 + i % 5 * 70, 200 - i / 5 * 70);
-			roleImg.addListener(new InputListener(){
+			roleImg.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 					ib_back.setScale(0.95f);
 					return true;
 				}
+
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
-					Player.getInstance().playerFightRole.removeValue(changeRole,false);
+					Player.getInstance().playerFightRole.removeValue(
+							changeRole, false);
 					Player.getInstance().playerFightRole.add(r);
 					Player.getInstance().getPlayerPackageRole();
-					GameScreenConfigure.getInstance().setHeroRoles(Player.getInstance().playerFightRole);
+					GameScreenConfigure.getInstance().setHeroRoles(
+							Player.getInstance().playerFightRole);
 					setChanged();
 					notifyObservers(Configure.button_back);
 					ib_back.setScale(1f);
@@ -132,8 +148,9 @@ public class SelectRoleScreen extends CubocScreen implements Observer, GestureLi
 			});
 		}
 	}
+
 	@Override
-	public void show(){
+	public void show() {
 		Gdx.input.setInputProcessor(null);
 		InputMultiplexer inputMultiplexer = new InputMultiplexer();
 		inputMultiplexer.addProcessor(sRoleStage);// 必须先加这个。。。。
@@ -142,7 +159,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer, GestureLi
 		Gdx.input.setInputProcessor(inputMultiplexer);
 		addRoleToStage(QualityS.allselect);
 	}
-	
+
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
@@ -152,23 +169,24 @@ public class SelectRoleScreen extends CubocScreen implements Observer, GestureLi
 		sRoleStage.draw();
 	}
 
-	
 	@Override
-	public void hide(){
+	public void hide() {
 		Gdx.input.setInputProcessor(null);
 	}
-	
+
 	@Override
 	public void update(Observable o, Object arg) {
 	}
-	private void setListener(){
-		ib_back.addListener(new InputListener(){
+
+	private void setListener() {
+		ib_back.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 				ib_back.setScale(0.95f);
 				return true;
 			}
+
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -178,13 +196,14 @@ public class SelectRoleScreen extends CubocScreen implements Observer, GestureLi
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		purpleButton.addListener(new InputListener(){
+		purpleButton.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 				ib_back.setScale(0.95f);
 				return true;
 			}
+
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -192,14 +211,15 @@ public class SelectRoleScreen extends CubocScreen implements Observer, GestureLi
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
-		});	
-		orangeButton.addListener(new InputListener(){
+		});
+		orangeButton.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 				ib_back.setScale(0.95f);
 				return true;
 			}
+
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -208,13 +228,14 @@ public class SelectRoleScreen extends CubocScreen implements Observer, GestureLi
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		blueButton.addListener(new InputListener(){
+		blueButton.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 				ib_back.setScale(0.95f);
 				return true;
 			}
+
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -223,13 +244,14 @@ public class SelectRoleScreen extends CubocScreen implements Observer, GestureLi
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		greenButton.addListener(new InputListener(){
+		greenButton.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 				ib_back.setScale(0.95f);
 				return true;
 			}
+
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -238,52 +260,60 @@ public class SelectRoleScreen extends CubocScreen implements Observer, GestureLi
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		allButton.addListener(new InputListener(){
+		allButton.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 				ib_back.setScale(0.95f);
 				return true;
 			}
+
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {		
+					int pointer, int button) {
 				addRoleToStage(QualityS.allselect);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
 	}
+
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean tap(float x, float y, int count, int button) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean longPress(float x, float y) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean pan(float x, float y, float deltaX, float deltaY) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean zoom(float initialDistance, float distance) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2,
 			Vector2 pointer1, Vector2 pointer2) {
