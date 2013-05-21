@@ -40,13 +40,20 @@ public class CardFactory {
 				GameTextureClass.getInstance().fc_photo, 200, 10, 10, sl, aw,
 				dw));// 蓝色(good)
 		cardArrayFC.add(new RoleValue("fc", QUALITY.purple, Type.HERO,
-				GameTextureClass.getInstance().fc_photo, 300, 10, 10, sl, aw,
-				dw));// 紫色(best)
+				GameTextureClass.getInstance().fc_photo, 100, 10, 10,
+				SkillListBase.getInstance()
+						.getValue(SUBTYPE.fc, QUALITY.orange),
+				AttackWeaponFactory.getInstance().getValue(ATTACK.sword,
+						QUALITY.purple), DefendWeaponFactory.getInstance()
+						.getValue(DEFEND.bujia, QUALITY.purple)));// 紫色(best)
 		cardArrayFC.add(new RoleValue("fc", QUALITY.orange, Type.HERO,
-				GameTextureClass.getInstance().fc_photo, 400, 10, 10, sl, aw,
-				dw));// 橙色(perfect)
+				GameTextureClass.getInstance().fc_photo, 100, 10, 10,
+				SkillListBase.getInstance()
+						.getValue(SUBTYPE.fc, QUALITY.orange),
+				AttackWeaponFactory.getInstance().getValue(ATTACK.sword,
+						QUALITY.orange), DefendWeaponFactory.getInstance()
+						.getValue(DEFEND.bujia, QUALITY.orange)));// 橙色(perfect)
 
-	
 		cardArrayZYC.add(new RoleValue("zyc", QUALITY.green, Type.HERO,
 				GameTextureClass.getInstance().zyc_photo, 100, 10, 10,
 				SkillListBase.getInstance()
@@ -55,8 +62,12 @@ public class CardFactory {
 						QUALITY.green), DefendWeaponFactory.getInstance()
 						.getValue(DEFEND.bujia, QUALITY.green)));// 绿色(normal)
 		cardArrayZYC.add(new RoleValue("zyc", QUALITY.blue, Type.HERO,
-				GameTextureClass.getInstance().fc_photo, 200, 10, 10, sl, aw,
-				dw));// 蓝色(good)
+				GameTextureClass.getInstance().zyc_photo, 100, 10, 10,
+				SkillListBase.getInstance()
+						.getValue(SUBTYPE.zyc, QUALITY.blue),
+				AttackWeaponFactory.getInstance().getValue(ATTACK.sword,
+						QUALITY.green), DefendWeaponFactory.getInstance()
+						.getValue(DEFEND.bujia, QUALITY.green))); //蓝色(good)
 		cardArrayZYC.add(new RoleValue("zyc", QUALITY.purple, Type.HERO,
 				GameTextureClass.getInstance().fc_photo, 300, 10, 10, sl, aw,
 				dw));// 紫色(best)
@@ -67,7 +78,6 @@ public class CardFactory {
 						.getValue(ATTACK.sword, QUALITY.orange),
 				DefendWeaponFactory.getInstance().getValue(DEFEND.bujia,
 						QUALITY.orange)));// 橙色(perfect)
-
 
 		cardArrayEnemy.add(new RoleValue("npc", QUALITY.orange, Type.ENEMY,
 				GameTextureClass.getInstance().h5_photo, 100, 10, 10,

@@ -3,7 +3,6 @@ package com.bsu.obj;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.RoleFactory;
 import com.bsu.make.CardFactory.SUBTYPE;
-import com.bsu.screen.UpdateScreen.QualityS;
 import com.bsu.tools.Configure.QUALITY;
 
 /**
@@ -29,7 +28,7 @@ public class Player {
 	public Array<Role> playerPurpleRole = new Array<Role>();// 玩家背包拥有的紫色role
 	public Array<Role> playerOrangeRole = new Array<Role>();// 玩家背包拥有的橙色role
 	public Array<Role> playerFightRole = new Array<Role>();// 玩家拥有的出战卡片
-	public Array<Role> playerIdelRole=new Array<Role>();//玩家背包中未出战卡片
+	public Array<Role> playerIdelRole = new Array<Role>();// 玩家背包中未出战卡片
 
 	public Player() {
 		// TODO Auto-generated constructor stub
@@ -46,7 +45,7 @@ public class Player {
 		this.money = money;
 	}
 
-	public Array<Role> getPlayerRole() {
+	private Array<Role> getPlayerRole() {
 		if (playerRole.size == 0) {
 			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.green)
 					.getRoleValue()));
@@ -66,6 +65,18 @@ public class Player {
 					.getRoleValue()));
 			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.green)
 					.getRoleValue()));
+			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.orange)
+					.getRoleValue()));
+			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.blue)
+					.getRoleValue()));
+			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.blue)
+					.getRoleValue()));
+			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.blue)
+					.getRoleValue()));
+			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.green)
+					.getRoleValue()));
+			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.purple)
+					.getRoleValue()));
 		}
 		resetRoleArray(playerRole);
 		return playerRole;
@@ -76,41 +87,43 @@ public class Player {
 	 * 
 	 * @return
 	 */
-	public Array<Role> getPlayerFightRole() {
+	private Array<Role> getPlayerFightRole() {
 		if (playerFightRole.size == 0) {
-			playerFightRole.add(getPlayerRole().get(0));
-			playerFightRole.add(getPlayerRole().get(1));
-			playerFightRole.add(getPlayerRole().get(2));
-			playerFightRole.add(getPlayerRole().get(3));
-			playerFightRole.add(getPlayerRole().get(4));
+			playerFightRole.add(playerRole.get(0));
+			playerFightRole.add(playerRole.get(1));
+			playerFightRole.add(playerRole.get(2));
+			playerFightRole.add(playerRole.get(3));
+			playerFightRole.add(playerRole.get(4));
 		}
 		return playerFightRole;
 	}
+
 	/**
 	 * 取得背包中的卡片,并将卡片分类
+	 * 
 	 * @return
 	 */
-	public Array<Role> getPlayerPackageRole(){
-		for(Role r:playerRole){
-			boolean flag=false;
-			for(Role e:playerFightRole){
-				if(e.equals(r)){
-					flag=true;
+	private Array<Role> getPlayerPackageRole() {
+		for (Role r : playerRole) {
+			boolean flag = false;
+			for (Role e : playerFightRole) {
+				if (e.equals(r)) {
+					flag = true;
 					break;
 				}
 			}
-			if(!flag){
+			if (!flag) {
 				playerIdelRole.add(r);
-				if(r.quality==QUALITY.green){
+				if (r.quality == QUALITY.green) {
 					playerGreenRole.add(r);
 				}
-				if(r.quality==QUALITY.blue){
+				if (r.quality == QUALITY.blue) {
 					playerBlueRole.add(r);
 				}
-				if(r.quality==QUALITY.purple){
+				if (r.quality == QUALITY.purple) {
 					playerPurpleRole.add(r);
 				}
-				if(r.quality==QUALITY.orange){
+				if (r.quality == QUALITY.orange) {
 					playerOrangeRole.add(r);
 				}
 			}
@@ -130,11 +143,12 @@ public class Player {
 			for (j = 0; j < roles.size - i - 1; j++) {
 				if (QualityInde(roles.get(j)) < QualityInde(roles.get(j + 1))) {
 					// 如果第j个元素比它后面的相邻的元素小的话就交换
-					roles.swap(j, j+1);
-				}else{
-					if (QualityInde(roles.get(j)) == QualityInde(roles.get(j + 1))) {
-						if(roles.get(j).level<roles.get(j+1).level){
-							roles.swap(j, j+1);
+					roles.swap(j, j + 1);
+				} else {
+					if (QualityInde(roles.get(j)) == QualityInde(roles
+							.get(j + 1))) {
+						if (roles.get(j).level < roles.get(j + 1).level) {
+							roles.swap(j, j + 1);
 						}
 					}
 				}
@@ -144,23 +158,24 @@ public class Player {
 
 	/**
 	 * 根据role品质返回一个int,品质越高，int 越高
+	 * 
 	 * @return
 	 */
-	private int QualityInde(Role r){
-		int index=0;
-		if(r.quality==QUALITY.green){
-			index=0;
+	private int QualityInde(Role r) {
+		int index = 0;
+		if (r.quality == QUALITY.green) {
+			index = 0;
 		}
-		if(r.quality==QUALITY.blue){
-			index=1;
+		if (r.quality == QUALITY.blue) {
+			index = 1;
 		}
-		if(r.quality==QUALITY.purple){
-			index=2;
+		if (r.quality == QUALITY.purple) {
+			index = 2;
 		}
-		if(r.quality==QUALITY.orange){
-			index=3;
+		if (r.quality == QUALITY.orange) {
+			index = 3;
 		}
-	
+
 		return index;
 	}
 }

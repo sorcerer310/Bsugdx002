@@ -34,7 +34,7 @@ public class GameScreenConfigure {
 
 	public void makeGameScreen2(GameScreen gs) {
 		Array<Role> rols = new Array<Role>();
-		for(Role h:Player.getInstance().getPlayerFightRole()){
+		for(Role h:Player.getInstance().playerFightRole){
 			rols.add(h);
 		}
 		rols.add(new Role(new Card(SUBTYPE.enemy, QUALITY.green)

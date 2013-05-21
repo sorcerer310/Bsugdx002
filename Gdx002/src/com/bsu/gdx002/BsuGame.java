@@ -5,18 +5,21 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Rectangle;
 import com.bsu.head.HeadScreen;
 import com.bsu.make.GameScreenConfigure;
+import com.bsu.obj.Player;
 import com.bsu.screen.CPanelMainScreen;
 import com.bsu.screen.EquipScreen;
 import com.bsu.screen.FightScreen;
 import com.bsu.screen.GameScreen;
 import com.bsu.screen.MenuScreen;
 import com.bsu.screen.RoleScreen;
+import com.bsu.screen.SelectRoleScreen;
 import com.bsu.screen.SettingScreen;
 import com.bsu.screen.ShopScreen;
 import com.bsu.screen.SkillScreen;
 import com.bsu.screen.UpdateScreen;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.MessageObject;
 
 public class BsuGame extends Game {
 	@Override
@@ -52,6 +55,7 @@ public class BsuGame extends Game {
 			public void update(Observable o, Object arg) {
 				if (arg.toString().equals(Configure.screen_game)) {
 					BsuGame.this.setScreen(this);
+					this.game_init(0, Player.getInstance().playerFightRole);
 				}
 			}
 		};
@@ -61,8 +65,6 @@ public class BsuGame extends Game {
 		MenuScreen ms = new MenuScreen(this) {
 			@Override
 			public void update(Observable o, Object arg) {
-				System.out.println(arg.toString());
-				//				if(arg.toString().equals(Configure.screen_menu))
 					BsuGame.this.setScreen(this);
 			}
 		};
@@ -75,19 +77,12 @@ public class BsuGame extends Game {
 					BsuGame.this.setScreen(this);
 			}
 		};
-		//装备界面
-		EquipScreen es = new EquipScreen(this){
-			@Override
-			public void update(Observable o,Object arg){
-				if(arg.toString().equals(Configure.screen_equip))
-					BsuGame.this.setScreen(this);
-			}
-		};
 		//升级界面
 		UpdateScreen us = new UpdateScreen(this){
 			@Override
 			public void update(Observable o,Object arg){
-				if(arg.toString().equals(Configure.screen_update))
+				MessageObject mo=(MessageObject)arg;
+				if(mo.message.equals(Configure.screen_update))
 					BsuGame.this.setScreen(this);
 			}
 		};
@@ -95,15 +90,8 @@ public class BsuGame extends Game {
 		FightScreen fs = new FightScreen(this){
 			@Override
 			public void update(Observable o,Object arg){
-				if(arg.toString().equals(Configure.screen_fight))
-					BsuGame.this.setScreen(this);
-			}
-		};
-		//技能界面
-		SkillScreen skls = new SkillScreen(this){
-			@Override
-			public void update(Observable o ,Object arg){
-				if(arg.toString().equals(Configure.screen_skill))
+				MessageObject mo=(MessageObject)arg;
+				if(mo.message.equals(Configure.screen_fight))
 					BsuGame.this.setScreen(this);
 			}
 		};
@@ -111,7 +99,8 @@ public class BsuGame extends Game {
 		RoleScreen rs = new RoleScreen(this){
 			@Override
 			public void update(Observable o,Object arg){
-				if(arg.toString().equals(Configure.screen_role))
+				MessageObject mo=(MessageObject)arg;
+				if(mo.message.equals(Configure.screen_role))
 					BsuGame.this.setScreen(this);
 			}
 		};
@@ -119,31 +108,38 @@ public class BsuGame extends Game {
 		ShopScreen shops = new ShopScreen(this){
 			@Override
 			public void update(Observable o,Object arg){
-				if(arg.toString().equals(Configure.screen_shop))
+				MessageObject mo=(MessageObject)arg;
+				if(mo.message.equals(Configure.screen_shop))
 					BsuGame.this.setScreen(this);
 			}
 		};
-		
+		//队伍更换界面
+		SelectRoleScreen srs=new SelectRoleScreen(this){
+			@Override
+			public void update(Observable o,Object arg){
+				MessageObject mo=(MessageObject)arg;
+				if(mo.message.equals(Configure.screen_selectRole))
+					BsuGame.this.setScreen(this);
+					this.setChangeRole(mo.o);
+			}
+		};
 		setScreen(hs_logo1);
 		hs_logo1.addObserver(hs_logo2);
 		hs_logo2.addObserver(ms);
 		ms.addObserver(gs);
 		ms.addObserver(ss);
 		ms.addObserver(cpms);
-//		ss.addObserver(ms);
-		//gs.addObserver(ms);
-		
-		cpms.addObserver(es);		//es观察cpms，如果cpms有Configure.screen_equip消息传过来则切换到es界面
-		es.addObserver(cpms);		//cpms观察es，如果es有有Configure.bt_back消息传过来则返回到cpms界面
 		cpms.addObserver(fs);
+		fs.addObserver(gs);
 		fs.addObserver(cpms);
-		cpms.addObserver(skls);
-		skls.addObserver(cpms);
 		cpms.addObserver(rs);
 		rs.addObserver(cpms);
 		cpms.addObserver(us);
 		us.addObserver(cpms);
 		cpms.addObserver(shops);
 		shops.addObserver(cpms);
+		cpms.addObserver(srs);
+		srs.addObserver(cpms);
+		gs.addObserver(cpms);
 	}
 }

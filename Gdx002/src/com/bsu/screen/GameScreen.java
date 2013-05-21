@@ -39,6 +39,7 @@ public class GameScreen extends CubocScreen implements Observer,GestureListener 
 	private boolean controlled;
 	private int clingX,clingY;// 地图移动位移
 
+
 	public GameScreen(Game mxg) {
 		super(mxg);
 		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
@@ -51,6 +52,7 @@ public class GameScreen extends CubocScreen implements Observer,GestureListener 
 	 * @param rols		关卡初始化英雄与敌人的数组，出生地点在地图中已经设置好
 	 */
 	public void game_init(int mindex,Array<Role> rols) {
+		stage.clear();
 		GameMap.make_map(mindex);
 		setAction_start(true);
 		setControlled(true);
@@ -120,7 +122,7 @@ public class GameScreen extends CubocScreen implements Observer,GestureListener 
 		UIStage.draw();
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			setChanged();
-			notifyObservers(this);
+			notifyObservers(Configure.screen_mpanel);
 		}
 	}
 

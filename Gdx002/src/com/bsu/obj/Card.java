@@ -24,5 +24,4 @@ public class Card {
 	public RoleValue getRoleValue() {
 		return roleValue;
 	}
-
 }

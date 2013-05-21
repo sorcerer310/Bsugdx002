@@ -25,7 +25,6 @@ public class Configure {
 	public static String screen_setting = "setting"; // 设置String
 	public static String screen_menu = "menu";
 	public static String screen_game = "game";
-	
 	public static String screen_mpanel = "mpanel";
 	public static String screen_equip = "mequip";
 	public static String screen_fight = "mfight";
@@ -33,6 +32,7 @@ public class Configure {
 	public static String screen_update = "msupdate";
 	public static String screen_skill = "mskill";
 	public static String screen_shop = "mshop";
+	public static String screen_selectRole="mselect";
 	public static String button_back = "btback";
 	public static String Img_head_back="headback";
 	public static String Img_skill_back="skillback";
@@ -67,6 +67,9 @@ public class Configure {
 	public static enum QUALITY{
 		green,blue,purple,orange
 	}//品质数据
+	public enum QualityS {
+		gselect, bselect, pselect, oselect,allselect
+	}
 	public static enum FACE {
 		left, right
 	}; // 人物朝向
