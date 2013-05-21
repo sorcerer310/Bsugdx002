@@ -28,7 +28,8 @@ import com.bsu.obj.Role.Type;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameMap;
 
-public class GameScreen extends CubocScreen implements Observer,GestureListener {
+public class GameScreen extends CubocScreen implements Observer,
+		GestureListener {
 	private Stage stage; // 场景对象
 	private Stage UIStage; // UI场景对象
 	private Commander commander; // 指挥官对象，指挥所有对象交互
@@ -37,8 +38,7 @@ public class GameScreen extends CubocScreen implements Observer,GestureListener 
 	private OrthographicCamera c;
 	private boolean action_start; // 是否回合开始
 	private boolean controlled;
-	private int clingX,clingY;// 地图移动位移
-
+	private int clingX, clingY;// 地图移动位移
 
 	public GameScreen(Game mxg) {
 		super(mxg);
@@ -48,24 +48,37 @@ public class GameScreen extends CubocScreen implements Observer,GestureListener 
 
 	/**
 	 * 游戏关卡初始化
-	 * @param mindex	关卡索引数，系统会根据这个参数判断载入哪个地图
-	 * @param rols		关卡初始化英雄与敌人的数组，出生地点在地图中已经设置好
+	 * 
+	 * @param mindex
+	 *            关卡索引数，系统会根据这个参数判断载入哪个地图
+	 * @param rols
+	 *            关卡初始化英雄与敌人的数组，出生地点在地图中已经设置好
 	 */
-	public void game_init(int mindex,Array<Role> rols) {
+	public void game_init(int mindex, Array<Role> rols) {
 		stage.clear();
 		GameMap.make_map(mindex);
 		setAction_start(true);
 		setControlled(true);
-		mb = new MapBox();
+		if (mb == null) {
+			mb = new MapBox();
+		}
 		stage.addActor(mb); // 增加地图方格显示
-		for(int i=0;i<rols.size;i++){
+		for (int i = 0; i < rols.size; i++) {
 			stage.addActor(rols.get(i));
 		}
-		commander = Commander.getInstance(stage,this);
+		if (commander == null) {
+			commander = Commander.getInstance(stage,this);
+		}else{
+			commander.commanderStart();
+		}
 		this.addActorListener();
 		setBornPosition(GameMap.map, Type.HERO, Configure.object_layer_hero);
 		setBornPosition(GameMap.map, Type.ENEMY, Configure.object_layer_enemy);
-		fightUI = new GameFightUI(UIStage);
+		if (fightUI == null) {
+			fightUI = new GameFightUI(UIStage);
+		}else{
+			fightUI.show_hero_state();
+		}
 		c = (OrthographicCamera) stage.getCamera();
 	}
 
@@ -107,12 +120,13 @@ public class GameScreen extends CubocScreen implements Observer,GestureListener 
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		if(clingX!=0){
-			int mx=clingX>0?-1:1;
-			int maxW=GameMap.map_render.getMapWidthUnits()-Configure.rect_width;
-			int w=Configure.rect_width/2;
-			if(c.position.x+mx>=w&&c.position.x+mx<=maxW+w){
-				c.position.x+=mx;
+		if (clingX != 0) {
+			int mx = clingX > 0 ? -1 : 1;
+			int maxW = GameMap.map_render.getMapWidthUnits()
+					- Configure.rect_width;
+			int w = Configure.rect_width / 2;
+			if (c.position.x + mx >= w && c.position.x + mx <= maxW + w) {
+				c.position.x += mx;
 			}
 		}
 		GameMap.map_render.render(c);
@@ -235,7 +249,7 @@ public class GameScreen extends CubocScreen implements Observer,GestureListener 
 			MapBox.pass_array.add(tempV);
 		}
 	}
-	
+
 	public boolean isControlled() {
 		return controlled;
 	}
@@ -273,7 +287,8 @@ public class GameScreen extends CubocScreen implements Observer,GestureListener 
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
 		// TODO Auto-generated method stub
-		clingX=velocityX>0?Configure.rect_width/2:-Configure.rect_width/2;
+		clingX = velocityX > 0 ? Configure.rect_width / 2
+				: -Configure.rect_width / 2;
 		return false;
 	}
 
@@ -298,5 +313,9 @@ public class GameScreen extends CubocScreen implements Observer,GestureListener 
 
 	public GameFightUI getFightUI() {
 		return fightUI;
+	}
+
+	public Stage getStage() {
+		return stage;
 	}
 }

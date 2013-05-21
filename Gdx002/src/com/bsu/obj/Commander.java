@@ -23,25 +23,27 @@ import com.bsu.tools.Configure.STATE;
 public class Commander {
 	private static Commander instance = null;
 
-	public static Commander getInstance(Stage s, GameScreen gs) {
+	public static Commander getInstance(Stage s,GameScreen gs) {
 		if (instance == null)
-			instance = new Commander(s, gs);
+			instance = new Commander(s,gs);
 		return instance;
 	}
 
 	public static Commander getInstance() {
 		return instance;
 	}
-
+	private Stage stage;
 	private GameScreen gamescreen = null;
-	private Stage stage = null;
 	private Array<Actor> lactor = null;
 	private Array<Role> heros = new Array<Role>();
 	private Array<Role> npcs = new Array<Role>();
 
-	private Commander(Stage s, GameScreen gs) {
+	private Commander(Stage s,GameScreen gs) {
 		gamescreen = gs;
-		stage = s;
+		stage=s;
+		commanderStart();
+	}
+	public void commanderStart(){
 		lactor = stage.getActors();
 		heros.clear();
 		npcs.clear();
@@ -74,7 +76,6 @@ public class Commander {
 			}
 		}.start();
 	}
-
 	/**
 	 * 回合结束，命令所有的角色行动
 	 */
@@ -164,7 +165,7 @@ public class Commander {
 	 */
 	private void mapEvent(BsuEvent be) {
 		// 从stage中获得mb
-		Array<Actor> acts = stage.getActors();
+		Array<Actor> acts = lactor;
 		MapBox mb = null;
 		for (Actor act : acts) {
 			if (act instanceof MapBox) {

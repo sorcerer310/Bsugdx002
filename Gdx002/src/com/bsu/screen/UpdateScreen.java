@@ -5,11 +5,14 @@ import java.util.Observer;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -28,7 +31,8 @@ import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.Configure.QualityS;
 import com.bsu.tools.GameTextureClass;
 
-public class UpdateScreen extends CubocScreen implements Observer {
+public class UpdateScreen extends CubocScreen implements Observer,
+		GestureListener {
 	private Texture timg;
 	private Image background;
 	private Stage stage;
@@ -37,8 +41,15 @@ public class UpdateScreen extends CubocScreen implements Observer {
 	private Array<Image> RoleSelectImg = new Array<Image>();// 用来升级的卡片
 
 	private Role selectUpdateRole;
+	private Image roleImg;
 	private Array<Role> eatRoles = new Array<Role>();
 	private QualityS quality;// 当前选择显示的品质
+	private TextButton allButton;
+	private TextButton greenButton;
+	private TextButton blueButton;
+	private TextButton purpleButton;
+	private TextButton orangeButton;
+	private TextButton eatButton;
 
 	public UpdateScreen(Game game) {
 		super(game);
@@ -53,22 +64,36 @@ public class UpdateScreen extends CubocScreen implements Observer {
 		ib_back.setPosition(360, 40);
 		stage.addActor(background);
 		stage.addActor(ib_back);
-
 		Label updateLabel = new Label("Role1", Configure.get_sytle());
-		Label reduceLabel = new Label("Role2", Configure.get_sytle());
 		Label expLabel = new Label("addExp", Configure.get_sytle());
 		Label upLabel = new Label("up", Configure.get_sytle());
 		updateLabel.setPosition(140, 240);
-		reduceLabel.setPosition(200, 240);
 		expLabel.setPosition(260, 240);
 		upLabel.setPosition(320, 260);
 		stage.addActor(updateLabel);
-		stage.addActor(reduceLabel);
 		stage.addActor(expLabel);
 		stage.addActor(upLabel);
+		allButton = ButtonFactory.getInstance().makeOneTextButton("all", 140,
+				30);
+		greenButton = ButtonFactory.getInstance().makeOneTextButton("green",
+				180, 30);
+		blueButton = ButtonFactory.getInstance().makeOneTextButton("blue", 220,
+				30);
+		purpleButton = ButtonFactory.getInstance().makeOneTextButton("purple",
+				260, 30);
+		orangeButton = ButtonFactory.getInstance().makeOneTextButton("orange",
+				300, 30);
+		eatButton = ButtonFactory.getInstance().makeOneTextButton("eat",
+				360, 30);
+		stage.addActor(allButton);
+		stage.addActor(greenButton);
+		stage.addActor(blueButton);
+		stage.addActor(purpleButton);
+		stage.addActor(orangeButton);
+		stage.addActor(eatButton);
 		getRoles();
 		setListener();
-		// showRoleInfo();
+		addRoleToStage(QualityS.allselect);
 	}
 
 	private void getRoles() {
@@ -89,6 +114,7 @@ public class UpdateScreen extends CubocScreen implements Observer {
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 					selectUpdateRole = r;
+					showSelectImg();
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
@@ -119,6 +145,12 @@ public class UpdateScreen extends CubocScreen implements Observer {
 		defendValueLabel.setPosition(250, 220);
 	}
 
+	/**
+	 * 取得品质对应文字
+	 * 
+	 * @param q
+	 * @return
+	 */
 	private String getQualityName(QUALITY q) {
 		String s = null;
 		if (q == QUALITY.green) {
@@ -139,7 +171,11 @@ public class UpdateScreen extends CubocScreen implements Observer {
 	/**
 	 * 当点击卡片按钮时添加背包中卡片到舞台，并根据当前所选类型显示
 	 */
-	private void addRoleToStage() {
+	private void addRoleToStage(QualityS q) {
+		quality = q;
+		if (quality == QualityS.allselect) {
+			showQualityRole(Player.getInstance().playerIdelRole);
+		}
 		if (quality == QualityS.gselect) {
 			showQualityRole(Player.getInstance().playerGreenRole);
 		}
@@ -164,18 +200,71 @@ public class UpdateScreen extends CubocScreen implements Observer {
 		sRoleStage.clear();
 		for (int i = 0; i < roleArray.size; i++) {
 			Image roleImg = new Image(roleArray.get(i).roleTexture);
+			final Role r=roleArray.get(i);
 			roleImg.setScale(0.5f);
 			sRoleStage.addActor(roleImg);
 			roleImg.setPosition(140 + i % 5 * 70, 200 - i / 5 * 70);
+			roleImg.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y,
+						int pointer, int button) {
+					return true;
+				}
+
+				@Override
+				public void touchUp(InputEvent event, float x, float y,
+						int pointer, int button) {
+					System.out.println("up");
+					setEatRoles(r);
+					super.touchUp(event, x, y, pointer, button);
+				}
+			});
 		}
+		selectUpdateRole = Player.getInstance().playerFightRole.get(0);
+	}
+	/**
+	 * 添加或者删除role 到被吞噬数组
+	 * @param r
+	 */
+	private void setEatRoles(Role r){
+		boolean hasFlag=false;
+		for(Role e:eatRoles){
+			if(e.equals(r)){
+				hasFlag=true;
+			}
+		}
+		if(hasFlag){
+			eatRoles.removeValue(r, false);
+		}else{
+			eatRoles.add(r);
+			System.out.println(eatRoles.size);
+		}
+	}
+	/**
+	 * 显示想要升级的role头像
+	 */
+	private void showSelectImg() {
+		if (roleImg != null) {
+			roleImg.getParent().removeActor(roleImg);
+		}
+		roleImg = new Image(selectUpdateRole.roleTexture);
+		roleImg.setPosition(150, 250);
+		roleImg.setScale(0.5f);
+		stage.addActor(roleImg);
 	}
 
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(null);
-		Gdx.input.setInputProcessor(stage);
+		InputMultiplexer inputMultiplexer = new InputMultiplexer();
+		inputMultiplexer.addProcessor(sRoleStage);// 必须先加这个。。。。
+		inputMultiplexer.addProcessor(stage);
+		inputMultiplexer.addProcessor(new GestureDetector(this));
+		Gdx.input.setInputProcessor(inputMultiplexer);
 		getRoles();
 		selectUpdateRole = Player.getInstance().playerFightRole.get(0);
+		showSelectImg();
+		addRoleToStage(QualityS.allselect);
 	}
 
 	@Override
@@ -214,5 +303,151 @@ public class UpdateScreen extends CubocScreen implements Observer {
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
+		purpleButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				ib_back.setScale(0.95f);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				addRoleToStage(QualityS.pselect);
+				ib_back.setScale(1f);
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+		orangeButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				ib_back.setScale(0.95f);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				addRoleToStage(QualityS.oselect);
+				ib_back.setScale(1f);
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+		blueButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				ib_back.setScale(0.95f);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				addRoleToStage(QualityS.bselect);
+				ib_back.setScale(1f);
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+		greenButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				ib_back.setScale(0.95f);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				addRoleToStage(QualityS.gselect);
+				ib_back.setScale(1f);
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+		allButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				ib_back.setScale(0.95f);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				addRoleToStage(QualityS.allselect);
+				ib_back.setScale(1f);
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+		eatButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				for(Role r:Player.getInstance().playerIdelRole){
+					for(Role e:eatRoles){
+						if(e.equals(r)){
+							Player.getInstance().playerRole.removeValue(r, false);
+						}
+					}
+				}
+				eatRoles.clear();
+				Player.getInstance().getPlayerPackageRole();
+				addRoleToStage(quality);
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+	}
+
+	@Override
+	public boolean touchDown(float x, float y, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean tap(float x, float y, int count, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean longPress(float x, float y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean fling(float velocityX, float velocityY, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean pan(float x, float y, float deltaX, float deltaY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean zoom(float initialDistance, float distance) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2,
+			Vector2 pointer1, Vector2 pointer2) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

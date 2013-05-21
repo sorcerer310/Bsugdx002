@@ -103,7 +103,12 @@ public class Player {
 	 * 
 	 * @return
 	 */
-	private Array<Role> getPlayerPackageRole() {
+	public Array<Role> getPlayerPackageRole() {
+		playerIdelRole.clear();
+		playerGreenRole.clear();
+		playerBlueRole.clear();
+		playerPurpleRole.clear();
+		playerOrangeRole.clear();
 		for (Role r : playerRole) {
 			boolean flag = false;
 			for (Role e : playerFightRole) {
@@ -134,7 +139,7 @@ public class Player {
 	/**
 	 * 根据等级的优先顺序排列 参数为同品质的数组
 	 */
-	private void resetRoleArray(Array<Role> roles) {
+	public void resetRoleArray(Array<Role> roles) {
 		int i, j;
 		// n个元素的数组进行n-1轮排序
 		for (i = 0; i < roles.size - 1; i++) {

@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.ButtonFactory;
+import com.bsu.make.GameScreenConfigure;
 import com.bsu.make.RoleFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
@@ -67,7 +68,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer, GestureLi
 		stage.addActor(purpleButton);
 		stage.addActor(orangeButton);
 		quality=QualityS.allselect;
-		addRoleToStage(QualityS.gselect);
+		addRoleToStage(QualityS.allselect);
 		setListener();
 	}
 	public void setChangeRole(Role r){
@@ -121,7 +122,8 @@ public class SelectRoleScreen extends CubocScreen implements Observer, GestureLi
 						int pointer, int button) {
 					Player.getInstance().playerFightRole.removeValue(changeRole,false);
 					Player.getInstance().playerFightRole.add(r);
-					System.out.println(Player.getInstance().playerFightRole.size);
+					Player.getInstance().getPlayerPackageRole();
+					GameScreenConfigure.getInstance().setHeroRoles(Player.getInstance().playerFightRole);
 					setChanged();
 					notifyObservers(Configure.button_back);
 					ib_back.setScale(1f);
@@ -138,6 +140,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer, GestureLi
 		inputMultiplexer.addProcessor(stage);
 		inputMultiplexer.addProcessor(new GestureDetector(this));
 		Gdx.input.setInputProcessor(inputMultiplexer);
+		addRoleToStage(QualityS.allselect);
 	}
 	
 	@Override

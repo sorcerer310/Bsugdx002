@@ -58,7 +58,7 @@ public class GameFightUI {
 	 * 
 	 * @param roleIndex
 	 */
-	private void show_hero_state() {
+	public void show_hero_state() {
 		int roleIndex = 0;
 		for (Role e : c.getHeros()) {
 			role_state_array.add(new FightRoleUI(stage, e, roleIndex));
