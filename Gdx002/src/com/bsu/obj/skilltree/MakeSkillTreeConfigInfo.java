@@ -60,7 +60,7 @@ public class MakeSkillTreeConfigInfo {
 	}
 	
 	public void makeSkillTree(Configure.QUALITY hqual){
-		int greencount,bluecount,purplecount,orangecount,currcount=0;
+		int greencount,bluecount,purplecount,orangecount;
 		int useprice_green = 8,useprice_blue = 15,useprice_purple = 23,useprice_orange = 30;
 		Array<SimpleSkill> useSkills = new Array<SimpleSkill>();
 		Random rnd = new Random();
@@ -138,7 +138,8 @@ public class MakeSkillTreeConfigInfo {
 			sbs.append(s.getId()).append(",");
 		}
 		System.out.print(sb.toString());
-		System.out.println("Array skltree1 = new Array<Integer>(){"+sbs.substring(0, sbs.length()-1)+"};\n");
+//		System.out.println("Array skltree1 = new Array<Integer>(){"+sbs.substring(0, sbs.length()-1)+"};\n");
+		System.out.println("new Array<Integer>(new Integer[]{"+sbs.substring(0,sbs.length()-1)+"})");
 	}
 	
 	public static void main(String[] args){
