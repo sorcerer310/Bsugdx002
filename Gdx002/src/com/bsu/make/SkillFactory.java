@@ -62,9 +62,6 @@ public class SkillFactory {
 		Skill skl = null;
 		switch(i){
 		case 1:
-//			store.put("atk3", new Skill(999,"攻击", QUALITY.green,Skill.Type.f_damage, 10,1, new CLASSES[]{CLASSES.fighter},1,"普通攻击，没什么稀奇的。",
-//									GameAnimationClass.getInstance().getEffect0(), GameAnimationClass.getInstance().getEffect1(), 
-//									new Vector2[] {new Vector2(1, 0), new Vector2(2, 0) }));
 			skl = new Skill(i,"重击",QUALITY.green,Type.prob_dizzy,0.2f,0.03f,new CLASSES[]{CLASSES.fighter},8,"重击对手，令对手有一定机率眩晕",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0)});
