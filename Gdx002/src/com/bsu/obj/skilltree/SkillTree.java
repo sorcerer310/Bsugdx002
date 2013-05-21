@@ -1,9 +1,15 @@
 package com.bsu.obj.skilltree;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.utils.Array;
-
+import com.bsu.make.SkillFactory;
+import com.bsu.tools.Configure;
+import com.bsu.tools.Configure.QUALITY;
+/**
+ * 保存技能树的基本信息。st_forGreenHero中Array<Integer>保存的是改数所有技能的索引。
+ * 其他配置数据同上
+ * @author fengchong
+ *
+ */
 public class SkillTree {
 	private Array<Array<Integer>> st_forGreenHero = new Array<Array<Integer>>();		//绿色英雄技能树配置
 	private Array<Array<Integer>> st_forBlueHero = new Array<Array<Integer>>();			//蓝色英雄技能树配置
@@ -55,5 +61,32 @@ public class SkillTree {
 		st_forOrangeHero.add(new Array<Integer>(new Integer[]{7,19,17,15,14,20,31,25,29,26,22,40,41,36}));
 		st_forOrangeHero.add(new Array<Integer>(new Integer[]{6,17,16,12,10,13,21,33,32,24,28,38,37,36}));
 	}
-
+	/**
+	 * 通过英雄品质和配置的索引获得一颗技能树配置
+	 * @param h_quality	指定英雄品质参数
+	 * @param cfgidx	配置索引
+	 * @return
+	 */
+	public Array<Skill> getSkillTree(Configure.QUALITY h_quality,int cfgidx){
+		Array<Integer> st = null;
+		if(h_quality==QUALITY.green){
+			st = st_forGreenHero.get(cfgidx);
+		}else if(h_quality==QUALITY.blue){
+			st = st_forBlueHero.get(cfgidx);
+		}else if(h_quality==QUALITY.purple){
+			st = st_forPurpleHero.get(cfgidx);
+		}else if(h_quality==QUALITY.orange){
+			st = st_forOrangeHero.get(cfgidx);
+		}
+		
+		if(st==null)
+			return null;
+		
+		Array<Skill> skills = new Array<Skill>();
+		SkillFactory sf = SkillFactory.getInstance();
+		for(int i=0;i<st.size;i++)
+			skills.add(sf.getSkillByIdx(st.get(i)));
+		return skills;
+	}
+	
 }
