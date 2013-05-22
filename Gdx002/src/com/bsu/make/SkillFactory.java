@@ -62,17 +62,17 @@ public class SkillFactory {
 		Skill skl = null;
 		switch(i){
 		case 1:
-			skl = new Skill(i,"重击",QUALITY.green,Type.prob_dizzy,0.2f,0.03f,new CLASSES[]{CLASSES.fighter},"重击对手，令对手有一定机率眩晕",
+			skl = new Skill(i,"重击",QUALITY.green,Type.prob_dizzy,0.2f,0.03f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"重击对手，令对手有一定机率眩晕",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0)});
 			break;
 		case 2:
-			skl = new Skill(i,"直拳",QUALITY.green,Type.mul_damage,1.5f,0.3f,new CLASSES[]{CLASSES.fighter},"风驰电掣的直拳，令敌人猝防不及",
+			skl = new Skill(i,"直拳",QUALITY.green,Type.mul_damage,1.5f,0.3f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"风驰电掣的直拳，令敌人猝防不及",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0)});
 			break;
 		case 3:
-			skl = new Skill(i,"勾拳",QUALITY.green,Type.mul_damage,1.2f,0.4f,new CLASSES[]{CLASSES.fighter},"目标为下巴的勾拳，攻击力成长要比直拳好",
+			skl = new Skill(i,"勾拳",QUALITY.green,Type.mul_damage,1.2f,0.4f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"目标为下巴的勾拳，攻击力成长要比直拳好",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0)});
 			break;

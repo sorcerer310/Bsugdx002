@@ -2,7 +2,9 @@ package com.bsu.obj.skilltree;
 
 import java.util.Random;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.obj.Role;
 import com.bsu.tools.Configure;
+import com.bsu.tools.Configure.CLASSES;
 import com.bsu.tools.Configure.QUALITY;
 
 /**
@@ -16,75 +18,75 @@ public class MakeSkillTreeConfigInfo {
 	private Array<SimpleSkill> purpleskill = new Array<SimpleSkill>();
 	private Array<SimpleSkill> orangeskill = new Array<SimpleSkill>();
 	public MakeSkillTreeConfigInfo(){
-		greenskill.add(new SimpleSkill(1,QUALITY.green,8));
-		greenskill.add(new SimpleSkill(2,QUALITY.green,1));
-		greenskill.add(new SimpleSkill(3,QUALITY.green,4));
-		greenskill.add(new SimpleSkill(4,QUALITY.green,9));
-		greenskill.add(new SimpleSkill(5,QUALITY.green,6));
-		greenskill.add(new SimpleSkill(6,QUALITY.green,4));
-		greenskill.add(new SimpleSkill(7,QUALITY.green,4));
-		greenskill.add(new SimpleSkill(8,QUALITY.green,7));
-		greenskill.add(new SimpleSkill(9,QUALITY.green,4));
-		blueskill.add(new SimpleSkill(10,QUALITY.blue,7));
-		blueskill.add(new SimpleSkill(11,QUALITY.blue,16));
-		blueskill.add(new SimpleSkill(12,QUALITY.blue,16));
-		blueskill.add(new SimpleSkill(13,QUALITY.blue,7));
-		blueskill.add(new SimpleSkill(14,QUALITY.blue,10));
-		blueskill.add(new SimpleSkill(15,QUALITY.blue,9));
-		blueskill.add(new SimpleSkill(16,QUALITY.blue,7));
-		blueskill.add(new SimpleSkill(17,QUALITY.blue,8));
-		blueskill.add(new SimpleSkill(18,QUALITY.blue,12));
-		blueskill.add(new SimpleSkill(19,QUALITY.blue,10));
-		blueskill.add(new SimpleSkill(20,QUALITY.blue,13));
-		purpleskill.add(new SimpleSkill(21,QUALITY.purple,25));
-		purpleskill.add(new SimpleSkill(22,QUALITY.purple,16));
-		purpleskill.add(new SimpleSkill(23,QUALITY.purple,17));
-		purpleskill.add(new SimpleSkill(24,QUALITY.purple,15));
-		purpleskill.add(new SimpleSkill(25,QUALITY.purple,22));
-		purpleskill.add(new SimpleSkill(26,QUALITY.purple,15));
-		purpleskill.add(new SimpleSkill(27,QUALITY.purple,19));
-		purpleskill.add(new SimpleSkill(28,QUALITY.purple,21));
-		purpleskill.add(new SimpleSkill(29,QUALITY.purple,25));
-		purpleskill.add(new SimpleSkill(30,QUALITY.purple,18));
-		purpleskill.add(new SimpleSkill(31,QUALITY.purple,22));
-		purpleskill.add(new SimpleSkill(32,QUALITY.purple,22));
-		purpleskill.add(new SimpleSkill(33,QUALITY.purple,23));
-		purpleskill.add(new SimpleSkill(34,QUALITY.purple,24));
-		orangeskill.add(new SimpleSkill(35,QUALITY.orange,32));
-		orangeskill.add(new SimpleSkill(36,QUALITY.orange,26));
-		orangeskill.add(new SimpleSkill(37,QUALITY.orange,25));
-		orangeskill.add(new SimpleSkill(38,QUALITY.orange,25));
-		orangeskill.add(new SimpleSkill(39,QUALITY.orange,24));
-		orangeskill.add(new SimpleSkill(40,QUALITY.orange,28));
-		orangeskill.add(new SimpleSkill(41,QUALITY.orange,31));
+		greenskill.add(new SimpleSkill(1,QUALITY.green,new CLASSES[]{CLASSES.fighter,CLASSES.archer},8));
+		greenskill.add(new SimpleSkill(2,QUALITY.green,new CLASSES[]{CLASSES.fighter,CLASSES.archer},1));
+		greenskill.add(new SimpleSkill(3,QUALITY.green,new CLASSES[]{CLASSES.fighter,CLASSES.archer},4));
+		greenskill.add(new SimpleSkill(4,QUALITY.green,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},9));
+		greenskill.add(new SimpleSkill(5,QUALITY.green,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},6));
+		greenskill.add(new SimpleSkill(6,QUALITY.green,new CLASSES[]{CLASSES.all},4));
+		greenskill.add(new SimpleSkill(7,QUALITY.green,new CLASSES[]{CLASSES.all},4));
+		greenskill.add(new SimpleSkill(8,QUALITY.green,new CLASSES[]{CLASSES.all},7));
+		greenskill.add(new SimpleSkill(9,QUALITY.green,new CLASSES[]{CLASSES.archer,CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},4));
+		blueskill.add(new SimpleSkill(10,QUALITY.blue,new CLASSES[]{CLASSES.archer,CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},7));
+		blueskill.add(new SimpleSkill(11,QUALITY.blue,new CLASSES[]{CLASSES.fighter,CLASSES.archer},16));
+		blueskill.add(new SimpleSkill(12,QUALITY.blue,new CLASSES[]{CLASSES.fighter,CLASSES.archer},16));
+		blueskill.add(new SimpleSkill(13,QUALITY.blue,new CLASSES[]{CLASSES.wizard},7));
+		blueskill.add(new SimpleSkill(14,QUALITY.blue,new CLASSES[]{CLASSES.cleric},10));
+		blueskill.add(new SimpleSkill(15,QUALITY.blue,new CLASSES[]{CLASSES.all},9));
+		blueskill.add(new SimpleSkill(16,QUALITY.blue,new CLASSES[]{CLASSES.sorcerer},7));
+		blueskill.add(new SimpleSkill(17,QUALITY.blue,new CLASSES[]{CLASSES.archer,CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},8));
+		blueskill.add(new SimpleSkill(18,QUALITY.blue,new CLASSES[]{CLASSES.archer,CLASSES.wizard},12));
+		blueskill.add(new SimpleSkill(19,QUALITY.blue,new CLASSES[]{CLASSES.sorcerer},10));
+		blueskill.add(new SimpleSkill(20,QUALITY.blue,new CLASSES[]{CLASSES.all},13));
+		purpleskill.add(new SimpleSkill(21,QUALITY.purple,new CLASSES[]{CLASSES.fighter,CLASSES.archer},25));
+		purpleskill.add(new SimpleSkill(22,QUALITY.purple,new CLASSES[]{CLASSES.fighter},16));
+		purpleskill.add(new SimpleSkill(23,QUALITY.purple,new CLASSES[]{CLASSES.fighter,CLASSES.wizard,CLASSES.sorcerer},17));
+		purpleskill.add(new SimpleSkill(24,QUALITY.purple,new CLASSES[]{CLASSES.fighter,CLASSES.archer},15));
+		purpleskill.add(new SimpleSkill(25,QUALITY.purple,new CLASSES[]{CLASSES.wizard},22));
+		purpleskill.add(new SimpleSkill(26,QUALITY.purple,new CLASSES[]{CLASSES.wizard},15));
+		purpleskill.add(new SimpleSkill(27,QUALITY.purple,new CLASSES[]{CLASSES.cleric,CLASSES.sorcerer},19));
+		purpleskill.add(new SimpleSkill(28,QUALITY.purple,new CLASSES[]{CLASSES.cleric},21));
+		purpleskill.add(new SimpleSkill(29,QUALITY.purple,new CLASSES[]{CLASSES.all},25));
+		purpleskill.add(new SimpleSkill(30,QUALITY.purple,new CLASSES[]{CLASSES.sorcerer},18));
+		purpleskill.add(new SimpleSkill(31,QUALITY.purple,new CLASSES[]{CLASSES.archer},22));
+		purpleskill.add(new SimpleSkill(32,QUALITY.purple,new CLASSES[]{CLASSES.all},22));
+		purpleskill.add(new SimpleSkill(33,QUALITY.purple,new CLASSES[]{CLASSES.fighter,CLASSES.archer},23));
+		purpleskill.add(new SimpleSkill(34,QUALITY.purple,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},24));
+		orangeskill.add(new SimpleSkill(35,QUALITY.orange,new CLASSES[]{CLASSES.fighter,CLASSES.archer},32));
+		orangeskill.add(new SimpleSkill(36,QUALITY.orange,new CLASSES[]{CLASSES.wizard},26));
+		orangeskill.add(new SimpleSkill(37,QUALITY.orange,new CLASSES[]{CLASSES.cleric},25));
+		orangeskill.add(new SimpleSkill(38,QUALITY.orange,new CLASSES[]{CLASSES.all},25));
+		orangeskill.add(new SimpleSkill(39,QUALITY.orange,new CLASSES[]{CLASSES.sorcerer},24));
+		orangeskill.add(new SimpleSkill(40,QUALITY.orange,new CLASSES[]{CLASSES.all},28));
+		orangeskill.add(new SimpleSkill(41,QUALITY.orange,new CLASSES[]{CLASSES.archer},31));
 	}
 	
-	public void makeSkillTree(Configure.QUALITY hqual){
+	public void makeSkillTree(QUALITY hqual,CLASSES c){
 		int greencount,bluecount,purplecount,orangecount;
 		int useprice_green = 8,useprice_blue = 15,useprice_purple = 23,useprice_orange = 30;
 		Array<SimpleSkill> useSkills = new Array<SimpleSkill>();
 		Random rnd = new Random();
 		if(hqual == QUALITY.green){
 			greencount = 3;bluecount = 3;purplecount = 0;orangecount = 0;
-			useSkills.addAll(getSameQualitySkill(rnd,greenskill,greencount,useprice_green));
-			useSkills.addAll(getSameQualitySkill(rnd,blueskill,bluecount,useprice_blue));
+			useSkills.addAll(getSameQualitySkill(rnd,greenskill,greencount,useprice_green,c));
+			useSkills.addAll(getSameQualitySkill(rnd,blueskill,bluecount,useprice_blue,c));
 		}else if(hqual == QUALITY.blue){
-			greencount = 3;bluecount = 5;purplecount = 1;orangecount = 0;
-			useSkills.addAll(getSameQualitySkill(rnd,greenskill,greencount,useprice_green));
-			useSkills.addAll(getSameQualitySkill(rnd,blueskill,bluecount,useprice_blue));
-			useSkills.addAll(getSameQualitySkill(rnd,purpleskill,purplecount,useprice_purple));
+			greencount = 3;bluecount = 4;purplecount = 1;orangecount = 0;
+			useSkills.addAll(getSameQualitySkill(rnd,greenskill,greencount,useprice_green,c));
+			useSkills.addAll(getSameQualitySkill(rnd,blueskill,bluecount,useprice_blue,c));
+			useSkills.addAll(getSameQualitySkill(rnd,purpleskill,purplecount,useprice_purple,c));
 		}else if(hqual == QUALITY.purple){
-			greencount = 3;bluecount = 5;purplecount = 3;orangecount = 1;
-			useSkills.addAll(getSameQualitySkill(rnd,greenskill,greencount,useprice_green));
-			useSkills.addAll(getSameQualitySkill(rnd,blueskill,bluecount,useprice_blue));
-			useSkills.addAll(getSameQualitySkill(rnd,purpleskill,purplecount,useprice_purple));
-			useSkills.addAll(getSameQualitySkill(rnd,orangeskill,orangecount,useprice_orange));
+			greencount = 3;bluecount = 4;purplecount = 3;orangecount = 1;
+			useSkills.addAll(getSameQualitySkill(rnd,greenskill,greencount,useprice_green,c));
+			useSkills.addAll(getSameQualitySkill(rnd,blueskill,bluecount,useprice_blue,c));
+			useSkills.addAll(getSameQualitySkill(rnd,purpleskill,purplecount,useprice_purple,c));
+			useSkills.addAll(getSameQualitySkill(rnd,orangeskill,orangecount,useprice_orange,c));
 		}else if(hqual == QUALITY.orange){
-			greencount = 1;bluecount = 5;purplecount = 5;orangecount = 3;
-			useSkills.addAll(getSameQualitySkill(rnd,greenskill,greencount,useprice_green));
-			useSkills.addAll(getSameQualitySkill(rnd,blueskill,bluecount,useprice_blue));
-			useSkills.addAll(getSameQualitySkill(rnd,purpleskill,purplecount,useprice_purple));
-			useSkills.addAll(getSameQualitySkill(rnd,orangeskill,orangecount,useprice_orange));
+			greencount = 1;bluecount = 4;purplecount = 4;orangecount = 3;
+			useSkills.addAll(getSameQualitySkill(rnd,greenskill,greencount,useprice_green,c));
+			useSkills.addAll(getSameQualitySkill(rnd,blueskill,bluecount,useprice_blue,c));
+			useSkills.addAll(getSameQualitySkill(rnd,purpleskill,purplecount,useprice_purple,c));
+			useSkills.addAll(getSameQualitySkill(rnd,orangeskill,orangecount,useprice_orange,c));
 		}
 		printSameQualitySkillInfo(useSkills);
 	}
@@ -94,18 +96,23 @@ public class MakeSkillTreeConfigInfo {
 	 * @param ss		//相同品质技能队列
 	 * @param sklcount	//取得技能的数量
 	 * @param userprice	//所有技能不能超过的价值总和
+	 * @param c			//限定的职业
 	 * @return			//返回相同品质技能的数组
 	 */
-	private Array<SimpleSkill> getSameQualitySkill(Random rnd,Array<SimpleSkill> ss,int sklcount,int userprice){
+	private Array<SimpleSkill> getSameQualitySkill(Random rnd,Array<SimpleSkill> ss,int sklcount,int userprice,CLASSES c){
 		Array<SimpleSkill> retss = new Array<SimpleSkill>();
 		Array<Integer> saveindex = new Array<Integer>();
 		int cc = 0;
 		while(true){
+			//如果总数超过技能数量直接 推处
 			if(cc>=sklcount)
 				break;
+			//获得任意一个技能序号
 			int i=rnd.nextInt(ss.size);
-			if(!saveindex.contains(i, true)
-					&& (ss.get(i).getPrice()+sumArrayInteger(saveindex)<userprice*sklcount)){
+			if(!saveindex.contains(i, true)														//如果该序号使用过直接退出	
+					&& (ss.get(i).getPrice()+sumArrayInteger(saveindex)<userprice*sklcount)		//如果总价值超过限制价值退出
+					&& includeClasses(c,ss.get(i).getClasses())									//如果要指定的职业不包含在技能职业中退出
+					){
 					retss.add(ss.get(i));
 					saveindex.add(i);
 					cc++;
@@ -113,6 +120,19 @@ public class MakeSkillTreeConfigInfo {
 		}
 		return retss;
 	}
+	/**
+	 * 判断pc是否包含在pca数组中，如果包含则返回true，否则返回false
+	 * @param pc	要判断的职业
+	 * @param pca	限定职业范围
+	 * @return
+	 */
+	private boolean includeClasses(CLASSES pc,CLASSES[] pca){
+		for(CLASSES c:pca)
+			if(c==pc || c==CLASSES.all)
+				return true;
+		return false;
+	}
+	
 	/**
 	 * 计算整形数组中所有数字的和
 	 * @param a	带入的整形数组
@@ -134,27 +154,32 @@ public class MakeSkillTreeConfigInfo {
 		for(SimpleSkill s:ss){
 			sb.append("id:").append(s.getId())
 				.append("\tprice:").append(s.getPrice()).append(" ")
-				.append("\tquality:").append(s.getQuality()).append("\n");
+				.append("\tquality:").append(s.getQuality()).append(" ")
+				.append("\tclasses:");
+			for(CLASSES c:s.getClasses())
+				sb.append(c).append(" ");	
+			sb.append("\n");
+			
+			
 			sbs.append(s.getId()).append(",");
 		}
 		System.out.print(sb.toString());
-//		System.out.println("Array skltree1 = new Array<Integer>(){"+sbs.substring(0, sbs.length()-1)+"};\n");
 		System.out.println("new Array<Integer>(new Integer[]{"+sbs.substring(0,sbs.length()-1)+"})");
 	}
 	
 	public static void main(String[] args){
 		MakeSkillTreeConfigInfo stci = new MakeSkillTreeConfigInfo();
 		System.out.println("green hero skill tree:");
-		stci.makeSkillTree(QUALITY.green);
+		stci.makeSkillTree(QUALITY.green,CLASSES.fighter);
 		
 		System.out.println("blue hero skill tree:");
-		stci.makeSkillTree(QUALITY.blue);
+		stci.makeSkillTree(QUALITY.blue,CLASSES.fighter);
 		
 		System.out.println("purple hero skill tree:");
-		stci.makeSkillTree(QUALITY.purple);
+		stci.makeSkillTree(QUALITY.purple,CLASSES.fighter);
 		
 		System.out.println("orange hero skill tree:");
-		stci.makeSkillTree(QUALITY.orange);
+		stci.makeSkillTree(QUALITY.orange,CLASSES.fighter);
 	}
 }
 /**
@@ -164,11 +189,13 @@ public class MakeSkillTreeConfigInfo {
  */
 class SimpleSkill{
 	private int id = 0;
-	private Configure.QUALITY quality = QUALITY.green;
+	private QUALITY quality = QUALITY.green;
+	private CLASSES[] classes = null; 
 	private int price = 0;
-	public SimpleSkill(int pid,QUALITY q,int p){
+	public SimpleSkill(int pid,QUALITY q,CLASSES[] c,int p){
 		id = pid;
 		quality = q;
+		classes = c;
 		price = p;
 	}
 	public int getPrice() {
@@ -177,7 +204,10 @@ class SimpleSkill{
 	public int getId() {
 		return id;
 	}
-	public Configure.QUALITY getQuality() {
+	public QUALITY getQuality() {
 		return quality;
+	}
+	public CLASSES[] getClasses() {
+		return classes;
 	}
 }
