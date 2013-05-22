@@ -38,7 +38,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	private OrthographicCamera c;
 	private boolean action_start; // 是否回合开始
 	private boolean controlled;
-	private int clingX, clingY;// 地图移动位移
+	private int clingX;// 地图移动位移
 
 	public GameScreen(Game mxg) {
 		super(mxg);

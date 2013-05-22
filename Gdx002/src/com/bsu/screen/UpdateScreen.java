@@ -14,6 +14,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -49,6 +50,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	private TextButton purpleButton;
 	private TextButton orangeButton;
 	private TextButton eatButton;
+	private TextButton eatAllButton;// 一键吞噬所有某种品质
 
 	public UpdateScreen(Game game) {
 		super(game);
@@ -84,12 +86,15 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				300, 30);
 		eatButton = ButtonFactory.getInstance().makeOneTextButton("eat", 360,
 				30);
+		eatAllButton = ButtonFactory.getInstance().makeOneTextButton("eatall",
+				390, 30);
 		stage.addActor(allButton);
 		stage.addActor(greenButton);
 		stage.addActor(blueButton);
 		stage.addActor(purpleButton);
 		stage.addActor(orangeButton);
 		stage.addActor(eatButton);
+		stage.addActor(eatAllButton);
 		getRoles();
 		setListener();
 		addRoleToStage(QualityS.allselect);
@@ -103,7 +108,11 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			final Image roleImg = new Image(playerRols.get(i).roleTexture);
 			Image backImg = ButtonFactory.getInstance().makeImageButton(
 					Configure.Img_head_back);
-			roleImg.setScale(0.5f);
+			if (i == 0) {
+				roleImg.setScale(0.4f);
+			} else {
+				roleImg.setScale(0.5f);
+			}
 			stage.addActor(backImg);
 			stage.addActor(roleImg);
 			roleImg.setPosition(48, 236 - 55 * i);
@@ -113,9 +122,8 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
-					selectUpdateRole = r;
 					resetAllSelectImg(roleImg);
-					// showSelectImg();
+					showSelectImg(r);
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
@@ -193,19 +201,19 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		}
 		if (quality == QualityS.gselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerRole, QUALITY.green));
+					Player.getInstance().playerIdelRole, QUALITY.green));
 		}
 		if (quality == QualityS.bselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerRole, QUALITY.blue));
+					Player.getInstance().playerIdelRole, QUALITY.blue));
 		}
 		if (quality == QualityS.pselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerRole, QUALITY.purple));
+					Player.getInstance().playerIdelRole, QUALITY.purple));
 		}
 		if (quality == QualityS.oselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerRole, QUALITY.orange));
+					Player.getInstance().playerIdelRole, QUALITY.orange));
 		}
 	}
 
@@ -233,7 +241,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
-					roleImg.setScale(0.4f);
+					resetEatRole(r, roleImg);
 					super.touchUp(event, x, y, pointer, button);
 				}
 			});
@@ -241,13 +249,80 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	}
 
 	/**
+	 * 吞噬卡片升级
+	 * 
+	 * @param flag
+	 *            是否一键吞噬
+	 */
+	private void eatRolesUpdate(boolean flag) {
+		if (flag) {
+			if (quality == QualityS.allselect) {
+				eatRoles = Player.getInstance().playerIdelRole;
+			}
+			if (quality == QualityS.gselect) {
+				eatRoles = Player.getInstance().getQualityRole(
+						Player.getInstance().playerIdelRole, QUALITY.green);
+			}
+			if (quality == QualityS.bselect) {
+				eatRoles = Player.getInstance().getQualityRole(
+						Player.getInstance().playerIdelRole, QUALITY.blue);
+			}
+			if (quality == QualityS.pselect) {
+				eatRoles = Player.getInstance().getQualityRole(
+						Player.getInstance().playerIdelRole, QUALITY.purple);
+			}
+			if (quality == QualityS.oselect) {
+				eatRoles = Player.getInstance().getQualityRole(
+						Player.getInstance().playerIdelRole, QUALITY.orange);
+			}
+			for(Role e:eatRoles){
+				Player.getInstance().playerRole.removeValue(e, false);
+			}
+		} else {
+			for (Role r : Player.getInstance().playerIdelRole) {
+				for (Role e : eatRoles) {
+					if (e.equals(r)) {
+						Player.getInstance().playerRole.removeValue(r, false);
+					}
+				}
+			}
+		}
+		eatRoles.clear();
+		Player.getInstance().getPlayerPackageRole();
+		addRoleToStage(quality);
+	}
+
+	/**
+	 * 设置被吞噬或者取消吞噬
+	 * 
+	 * @param r
+	 * @param img
+	 */
+	private void resetEatRole(Role r, Image img) {
+		boolean flag = false;
+		for (Role e : eatRoles) {
+			if (e.equals(r)) {
+				flag = true;
+			}
+		}
+		if (flag) {
+			eatRoles.removeValue(r, false);
+			img.setScale(0.5f);
+		} else {
+			eatRoles.add(r);
+			img.setScale(0.4f);
+		}
+	}
+
+	/**
 	 * 显示想要升级的role头像
 	 */
-	private void showSelectImg() {
+	private void showSelectImg(Role r) {
+		selectUpdateRole = r;
 		if (roleImg != null) {
 			roleImg.getParent().removeActor(roleImg);
 		}
-		roleImg = new Image(selectUpdateRole.roleTexture);
+		roleImg = new Image(r.roleTexture);
 		roleImg.setPosition(150, 250);
 		roleImg.setScale(0.5f);
 		stage.addActor(roleImg);
@@ -262,8 +337,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		inputMultiplexer.addProcessor(new GestureDetector(this));
 		Gdx.input.setInputProcessor(inputMultiplexer);
 		getRoles();
-		selectUpdateRole = Player.getInstance().playerFightRole.get(0);
-		showSelectImg();
+		showSelectImg(Player.getInstance().playerFightRole.get(0));
 		addRoleToStage(QualityS.allselect);
 	}
 
@@ -393,17 +467,21 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				for (Role r : Player.getInstance().playerIdelRole) {
-					for (Role e : eatRoles) {
-						if (e.equals(r)) {
-							Player.getInstance().playerRole.removeValue(r,
-									false);
-						}
-					}
-				}
-				eatRoles.clear();
-				Player.getInstance().getPlayerPackageRole();
-				addRoleToStage(quality);
+				eatRolesUpdate(false);
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+		eatAllButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				eatRolesUpdate(true);
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});

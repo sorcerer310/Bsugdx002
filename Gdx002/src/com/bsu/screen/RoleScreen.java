@@ -7,6 +7,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -26,6 +27,7 @@ import com.bsu.make.ButtonFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.tools.Configure;
+import com.bsu.tools.GameMap;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.GameTextureClass;
 import com.bsu.tools.Configure.QualityS;
@@ -43,13 +45,17 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private TextButton blueButton;
 	private TextButton purpleButton;
 	private TextButton orangeButton;
-	private Array<Image> imgArray=new Array<Image>();
+	private Array<Image> imgArray = new Array<Image>();
+	private int clingX;// 地图移动位移
+	private OrthographicCamera c;
+	private int cameraWidth;// 显示人物时的界面宽度
 
 	public RoleScreen(Game game) {
 		super(game);
 		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
 		sRoleStage = new Stage(Configure.rect_width, Configure.rect_height,
 				false);
+		c = (OrthographicCamera) sRoleStage.getCamera();
 		background = new Image(GameTextureClass.getInstance().rolePanel);
 
 		ib_back = ButtonFactory.getInstance().makeImageButton(
@@ -111,14 +117,16 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private void showQualityRole(Array<Role> roleArray) {
 		sRoleStage.clear();
 		imgArray.clear();
+		clingX=0;
+		c.position.x=Configure.rect_width/2;
 		for (int i = 0; i < roleArray.size; i++) {
 			final Image roleImg = new Image(roleArray.get(i).roleTexture);
 			final Role r = roleArray.get(i);
-			
+			cameraWidth = (i + 1) * 70+10;
 			roleImg.setScale(0.5f);
 			sRoleStage.addActor(roleImg);
 			imgArray.add(roleImg);
-			roleImg.setPosition(20 + i % 5 * 70, 200 - i / 5 * 70);
+			roleImg.setPosition(20 + i * 70, 50);
 			roleImg.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
@@ -142,6 +150,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param img
 	 */
 	private void resetAllSelectImg(Image img) {
+		clingX=0;
 		for (int i = 0; i < imgArray.size; i++) {
 			imgArray.get(i).setScale(0.5f);
 			if (imgArray.get(i).equals(img)) {
@@ -149,6 +158,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			}
 		}
 	}
+
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(null);
@@ -163,6 +173,15 @@ public class RoleScreen extends CubocScreen implements Observer,
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		if (clingX != 0) {
+			int mx = clingX > 0 ? -1 : 1;
+			int maxW = cameraWidth - Configure.rect_width < 0 ? 0 : cameraWidth
+					- Configure.rect_width;
+			int w = Configure.rect_width / 2;
+			if (c.position.x + mx >= w && c.position.x + mx <= maxW + w) {
+				c.position.x += mx;
+			}
+		}
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		sRoleStage.act(Gdx.graphics.getDeltaTime());
@@ -299,6 +318,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
 		// TODO Auto-generated method stub
+		clingX = velocityX > 0 ? Configure.rect_width / 2
+				: -Configure.rect_width / 2;
 		return false;
 	}
 
