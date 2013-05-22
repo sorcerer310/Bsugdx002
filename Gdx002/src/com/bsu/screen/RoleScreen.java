@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
@@ -40,6 +41,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private Stage sRoleStage;
 	private Image ib_back;
 	private QualityS quality;// 当前选择显示的品质
+	private Role selectRole;
 	private TextButton allButton;
 	private TextButton greenButton;
 	private TextButton blueButton;
@@ -49,6 +51,10 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private int clingX;// 地图移动位移
 	private OrthographicCamera c;
 	private int cameraWidth;// 显示人物时的界面宽度
+	Label nameLabel;
+	Label qualityLabel;
+	Label attackValueLabel;
+	Label defendValueLabel;
 
 	public RoleScreen(Game game) {
 		super(game);
@@ -79,6 +85,18 @@ public class RoleScreen extends CubocScreen implements Observer,
 		stage.addActor(blueButton);
 		stage.addActor(purpleButton);
 		stage.addActor(orangeButton);
+		nameLabel = new Label("name:", Configure.get_sytle());
+		qualityLabel = new Label("quality:", Configure.get_sytle());
+		attackValueLabel = new Label("attack:", Configure.get_sytle());
+		defendValueLabel = new Label("defend:" + "", Configure.get_sytle());
+		stage.addActor(nameLabel);
+		stage.addActor(qualityLabel);
+		stage.addActor(attackValueLabel);
+		stage.addActor(defendValueLabel);
+		nameLabel.setPosition(60, 240);
+		qualityLabel.setPosition(160, 240);
+		attackValueLabel.setPosition(60, 220);
+		defendValueLabel.setPosition(160, 220);
 		setListener();
 	}
 
@@ -117,12 +135,12 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private void showQualityRole(Array<Role> roleArray) {
 		sRoleStage.clear();
 		imgArray.clear();
-		clingX=0;
-		c.position.x=Configure.rect_width/2;
+		clingX = 0;
+		c.position.x = Configure.rect_width / 2;
 		for (int i = 0; i < roleArray.size; i++) {
 			final Image roleImg = new Image(roleArray.get(i).roleTexture);
 			final Role r = roleArray.get(i);
-			cameraWidth = (i + 1) * 70+10;
+			cameraWidth = (i + 1) * 70 + 10;
 			roleImg.setScale(0.5f);
 			sRoleStage.addActor(roleImg);
 			imgArray.add(roleImg);
@@ -138,10 +156,45 @@ public class RoleScreen extends CubocScreen implements Observer,
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
 					resetAllSelectImg(roleImg);
+					showRoleInfo(r);
 					super.touchUp(event, x, y, pointer, button);
 				}
 			});
 		}
+	}
+
+	/**
+	 * 显示人物信息
+	 */
+	private void showRoleInfo(Role r) {
+		selectRole = r;
+		nameLabel.setText("name::"+r.name);
+		qualityLabel.setText("quality::"+getQualityName(r.quality));
+		attackValueLabel.setText("attack::"+""+r.attack_value);
+		defendValueLabel.setText("defend::"+""+r.defend_value);
+	}
+
+	/**
+	 * 取得品质对应文字
+	 * 
+	 * @param q
+	 * @return
+	 */
+	private String getQualityName(QUALITY q) {
+		String s = null;
+		if (q == QUALITY.green) {
+			s = "green";
+		}
+		if (q == QUALITY.blue) {
+			s = "blue";
+		}
+		if (q == QUALITY.purple) {
+			s = "pruple";
+		}
+		if (q == QUALITY.orange) {
+			s = "orange";
+		}
+		return s;
 	}
 
 	/**
@@ -150,7 +203,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param img
 	 */
 	private void resetAllSelectImg(Image img) {
-		clingX=0;
+		clingX = 0;
 		for (int i = 0; i < imgArray.size; i++) {
 			imgArray.get(i).setScale(0.5f);
 			if (imgArray.get(i).equals(img)) {

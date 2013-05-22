@@ -145,53 +145,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	}
 
 	/**
-	 * 显示人物信息
-	 */
-	private void showRoleInfo() {
-		sRoleStage.clear();
-		Label nameLabel = new Label("name:" + selectUpdateRole.name,
-				Configure.get_sytle());
-		Label qualityLabel = new Label("quality:"
-				+ getQualityName(selectUpdateRole.quality),
-				Configure.get_sytle());
-		Label attackValueLabel = new Label("attack:"
-				+ selectUpdateRole.attack_value + "", Configure.get_sytle());
-		Label defendValueLabel = new Label("defend:"
-				+ selectUpdateRole.defend_value + "", Configure.get_sytle());
-		sRoleStage.addActor(nameLabel);
-		sRoleStage.addActor(qualityLabel);
-		sRoleStage.addActor(attackValueLabel);
-		sRoleStage.addActor(defendValueLabel);
-		nameLabel.setPosition(140, 240);
-		qualityLabel.setPosition(250, 240);
-		attackValueLabel.setPosition(140, 220);
-		defendValueLabel.setPosition(250, 220);
-	}
-
-	/**
-	 * 取得品质对应文字
-	 * 
-	 * @param q
-	 * @return
-	 */
-	private String getQualityName(QUALITY q) {
-		String s = null;
-		if (q == QUALITY.green) {
-			s = "green";
-		}
-		if (q == QUALITY.blue) {
-			s = "blue";
-		}
-		if (q == QUALITY.purple) {
-			s = "pruple";
-		}
-		if (q == QUALITY.orange) {
-			s = "orange";
-		}
-		return s;
-	}
-
-	/**
 	 * 当点击卡片按钮时添加背包中卡片到舞台，并根据当前所选类型显示
 	 */
 	private void addRoleToStage(QualityS q) {

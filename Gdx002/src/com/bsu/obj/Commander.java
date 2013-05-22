@@ -331,7 +331,7 @@ public class Commander {
 	 */
 	public void moveAction(final Role r, final int mx, final int my) {
 		// GameScreen.setControlled(false);
-		gamescreen.setControlled(false);
+		gamescreen.setControlled(false); 
 		waitRoleFlag = true;
 		boolean disapperFlag = true;// 默认闪现出现到指定位置
 		DIRECTION d = null;
