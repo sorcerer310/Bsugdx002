@@ -162,7 +162,7 @@ public class Role extends Actor {
 	 * @param enemy
 	 *            攻击动作的角色
 	 */
-	public void hero_attack(Role enemy, Skill skl, BsuEvent be) {
+	public void ani_hero_attack(Role enemy, Skill skl, BsuEvent be) {
 		if (enemy == null)
 			return;
 		bevent = be;

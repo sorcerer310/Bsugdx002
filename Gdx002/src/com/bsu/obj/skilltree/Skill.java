@@ -3,6 +3,7 @@ package com.bsu.obj.skilltree;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.obj.Role;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.CLASSES;
 import com.bsu.tools.Configure.QUALITY;
@@ -74,4 +75,35 @@ public class Skill {
 			retv.add(new Vector2(-v.x,v.y));
 		return retv;
 	}
+	/**
+	 * 技能对目标的逻辑处理
+	 * @param owen		技能释放者
+	 * @param object	技能目标
+	 * @return			返回一个布尔值，表示owner是否还继续向前移动
+	 */
+	public boolean skillLogic(Role owner,Role object){
+		if(this.type==Skill.Type.f_damage ||this.type==Skill.Type.f_shifhp ||this.type==Skill.Type.p_atkbeat ||
+				this.type==Skill.Type.p_damage ||this.type==Skill.Type.pdot_damage ||this.type==Skill.Type.prob_blind ||
+				this.type==Skill.Type.prob_dizzy ||this.type==Skill.Type.prob_nude){
+			object.currentHp = (int) (object.currentHp - this.val >= 0 ? object.currentHp
+				- this.val
+				: 0);
+			return false;
+		}
+		else if(this.type==Skill.Type.f_healing  ||this.type==Skill.Type.pbuff_atk ||
+				this.type==Skill.Type.pbuff_def ||this.type==Skill.Type.pbuff_healing ||this.type==Skill.Type.pbuff_hp){
+			object.currentHp = (int)(object.currentHp + this.val >= object.maxHp ? object.currentHp
+					:object.currentHp+this.val);
+			if(owner== object)
+				return true;
+			else
+				return false;
+		}
+		else return false;
+//		if (object.currentHp == 0) {
+//			npcthis.removeValue(object, true); // 从Commander逻辑计算队列中移除
+//			object.getParent().removeActor(object); // 从父Actor中移除该Actor节点
+//		}
+	}
+	
 }

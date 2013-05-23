@@ -63,17 +63,17 @@ public class SkillFactory {
 		case 1:
 			skl = new Skill(i,"重击",QUALITY.green,Type.prob_dizzy,0.2f,0.03f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"重击对手，令对手有一定机率眩晕",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
-					new Vector2[] {new Vector2(1,0)});
+					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
 			break;
 		case 2:
 			skl = new Skill(i,"直拳",QUALITY.green,Type.p_damage,1.5f,0.3f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"风驰电掣的直拳，令敌人猝防不及",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
-					new Vector2[] {new Vector2(1,0)});
+					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
 			break;
 		case 3:
 			skl = new Skill(i,"勾拳",QUALITY.green,Type.p_damage,1.2f,0.4f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"目标为下巴的勾拳，攻击力成长要比直拳好",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
-					new Vector2[] {new Vector2(1,0)});
+					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
 			break;
 		case 4:
 			skl = new Skill(i,"突刺",QUALITY.green,Type.f_box,2.0f,0.5f,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"攻击前方多个格子的敌人，对每个敌人都造成一定伤害",
