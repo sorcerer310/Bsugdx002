@@ -3,7 +3,6 @@ package com.bsu.make;
 import java.util.HashMap;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.obj.skilltree.Skill.Type;
 import com.bsu.tools.Configure.CLASSES;
@@ -67,22 +66,22 @@ public class SkillFactory {
 					new Vector2[] {new Vector2(1,0)});
 			break;
 		case 2:
-			skl = new Skill(i,"直拳",QUALITY.green,Type.mul_damage,1.5f,0.3f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"风驰电掣的直拳，令敌人猝防不及",
+			skl = new Skill(i,"直拳",QUALITY.green,Type.p_damage,1.5f,0.3f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"风驰电掣的直拳，令敌人猝防不及",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0)});
 			break;
 		case 3:
-			skl = new Skill(i,"勾拳",QUALITY.green,Type.mul_damage,1.2f,0.4f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"目标为下巴的勾拳，攻击力成长要比直拳好",
+			skl = new Skill(i,"勾拳",QUALITY.green,Type.p_damage,1.2f,0.4f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"目标为下巴的勾拳，攻击力成长要比直拳好",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0)});
 			break;
 		case 4:
-			skl = new Skill(i,"突刺",QUALITY.green,Type.box_count,2.0f,0.5f,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"攻击前方多个格子的敌人，对每个敌人都造成一定伤害",
+			skl = new Skill(i,"突刺",QUALITY.green,Type.f_box,2.0f,0.5f,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"攻击前方多个格子的敌人，对每个敌人都造成一定伤害",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
 			break;
 		case 5:
-			skl = new Skill(i,"横扫",QUALITY.green,Type.box_count,2.0f,0.5f,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"横扫面前竖排敌人",
+			skl = new Skill(i,"横扫",QUALITY.green,Type.f_box,2.0f,0.5f,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"横扫面前竖排敌人",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0),new Vector2(1,1)});
 			break;
@@ -117,7 +116,7 @@ public class SkillFactory {
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
 			break;
 		case 32:
-			skl = new Skill(i,"蓄力一击",QUALITY.blue,Type.mul_damage,1.5f,0.5f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"积攒了一定力量，奋力一击，对敌人造成较大伤害",
+			skl = new Skill(i,"蓄力一击",QUALITY.blue,Type.p_damage,1.5f,0.5f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"积攒了一定力量，奋力一击，对敌人造成较大伤害",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
 			break;
@@ -149,24 +148,24 @@ public class SkillFactory {
 										new Vector2(3,0),new Vector2(3,1),new Vector2(3,-1)});
 			break;
 		case 38:
-			skl = new Skill(i,"爆头",QUALITY.blue,Type.mul_damage,1.8f,0.5f,new CLASSES[]{CLASSES.archer,CLASSES.wizard},"正中敌人头部，造成较大伤害",
+			skl = new Skill(i,"爆头",QUALITY.blue,Type.p_damage,1.8f,0.5f,new CLASSES[]{CLASSES.archer,CLASSES.wizard},"正中敌人头部，造成较大伤害",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
 			break;
 		case 39:
-			skl = new Skill(i,"血池",QUALITY.blue,Type.p_atk,5f,2f,new CLASSES[]{CLASSES.sorcerer},"在前方3*3格子敌人脚下召唤出血池，对他们造成持续伤害",
+			skl = new Skill(i,"血池",QUALITY.blue,Type.pdot_damage,5f,2f,new CLASSES[]{CLASSES.sorcerer},"在前方3*3格子敌人脚下召唤出血池，对他们造成持续伤害",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0),new Vector2(1,1),new Vector2(1,-1),
 						new Vector2(2,0),new Vector2(2,1),new Vector2(2,-1),
 						new Vector2(3,0),new Vector2(3,1),new Vector2(3,-1)});
 			break;
 		case 40:
-			skl = new Skill(i,"蛮力",QUALITY.blue,Type.p_atk,0.03f,0.02f,new CLASSES[]{CLASSES.all},"提升自己的攻击力",
+			skl = new Skill(i,"蛮力",QUALITY.blue,Type.pbuff_atk,0.03f,0.02f,new CLASSES[]{CLASSES.all},"提升自己的攻击力",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(0,0)});
 			break;
 		case 41:
-			skl = new Skill(i,"生命天赋",QUALITY.blue,Type.p_hp,0.05f,0.02f,new CLASSES[]{CLASSES.fighter,CLASSES.cleric},"只有战士与牧师对生命的意义理解到了一定高度，可额外提高自己的生命上限",
+			skl = new Skill(i,"生命天赋",QUALITY.blue,Type.pbuff_hp,0.05f,0.02f,new CLASSES[]{CLASSES.fighter,CLASSES.cleric},"只有战士与牧师对生命的意义理解到了一定高度，可额外提高自己的生命上限",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(0,0)});
 			break;
@@ -194,12 +193,12 @@ public class SkillFactory {
 					new Vector2[] {new Vector2(1,0)});
 			break;
 		case 65:
-			skl = new Skill(i,"火球三连",QUALITY.purple,Type.p_atk,2f,0.3f,new CLASSES[]{CLASSES.wizard},"单体攻击3连发火球，威力较大",
+			skl = new Skill(i,"火球三连",QUALITY.purple,Type.p_damage,2f,0.3f,new CLASSES[]{CLASSES.wizard},"单体攻击3连发火球，威力较大",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
 			break;
 		case 66:
-			skl = new Skill(i,"冰锥推进",QUALITY.purple,Type.p_atk,1.5f,0.3f,new CLASSES[]{CLASSES.wizard},"对前方横向3个格子所有敌人进行冰锥攻击",
+			skl = new Skill(i,"冰锥推进",QUALITY.purple,Type.p_damage,1.5f,0.3f,new CLASSES[]{CLASSES.wizard},"对前方横向3个格子所有敌人进行冰锥攻击",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
 			break;
@@ -235,22 +234,22 @@ public class SkillFactory {
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
 			break;
 		case 72:
-			skl = new Skill(i,"好运降临",QUALITY.purple,Type.mul_reward,0.03f,0.02f,new CLASSES[]{CLASSES.all},"通关后增加一定的奖励",
+			skl = new Skill(i,"好运降临",QUALITY.purple,Type.p_reward,0.03f,0.02f,new CLASSES[]{CLASSES.all},"通关后增加一定的奖励",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(0,0)});
 			break;
 		case 73:
-			skl = new Skill(i,"斜刺",QUALITY.purple,Type.p_atk,50f,30f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"对斜下方所有格子敌人进行攻击",
+			skl = new Skill(i,"斜刺",QUALITY.purple,Type.f_damage,50f,30f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"对斜下方所有格子敌人进行攻击",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0),new Vector2(2,1),new Vector2(3,2),new Vector2(4,3),new Vector2(5,4),new Vector2(6,5)});
 			break;
 		case 74:
-			skl = new Skill(i,"魔法震退",QUALITY.purple,Type.p_atk,1.3f,0.4f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"对前方3个格子的敌人进行震退攻击",
+			skl = new Skill(i,"魔法震退",QUALITY.purple,Type.p_atkbeat,1.3f,0.4f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"对前方3个格子的敌人进行震退攻击",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
 			break;
 		case 95:
-			skl = new Skill(i,"空中打击",QUALITY.orange,Type.p_atk,2f,0.5f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"对4*4格子敌人进行空中打击",
+			skl = new Skill(i,"空中打击",QUALITY.orange,Type.p_damage,2f,0.5f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"对4*4格子敌人进行空中打击",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),
 									new Vector2(1,2),new Vector2(2,2),new Vector2(3,2),new Vector2(4,2),
@@ -259,7 +258,7 @@ public class SkillFactory {
 									});
 			break;
 		case 96:
-			skl = new Skill(i,"群星陨落",QUALITY.orange,Type.p_atk,1.8f,0.4f,new CLASSES[]{CLASSES.wizard},"对全体敌人进行陨石攻击",
+			skl = new Skill(i,"群星陨落",QUALITY.orange,Type.p_damage,1.8f,0.4f,new CLASSES[]{CLASSES.wizard},"对全体敌人进行陨石攻击",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {});
 			break;
@@ -279,12 +278,12 @@ public class SkillFactory {
 					new Vector2[] {});
 			break;
 		case 100:
-			skl = new Skill(i,"游戏加速",QUALITY.orange,Type.mul_speed,2f,0.15f,new CLASSES[]{CLASSES.all},"提高游戏速度",
+			skl = new Skill(i,"游戏加速",QUALITY.orange,Type.p_speed,2f,0.15f,new CLASSES[]{CLASSES.all},"提高游戏速度",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {});
 			break;
 		case 101:
-			skl = new Skill(i,"贯穿",QUALITY.orange,Type.p_atk,2f,0.05f,new CLASSES[]{CLASSES.archer},"攻击前面所有敌人，贯穿很长一段距离",
+			skl = new Skill(i,"贯穿",QUALITY.orange,Type.p_damage,2f,0.05f,new CLASSES[]{CLASSES.archer},"攻击前面所有敌人，贯穿很长一段距离",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),new Vector2(5,0),new Vector2(6,0),new Vector2(7,0),new Vector2(8,0)});
 			break;
@@ -294,7 +293,7 @@ public class SkillFactory {
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
 			break;
 		case 103:
-			skl = new Skill(i,"冲锋",QUALITY.orange,Type.mul_damage,2.5f,0.8f,new CLASSES[]{CLASSES.fighter},"向前冲刺，直至撞到敌人或地图边缘，撞到敌人后对敌人造成大量伤害",
+			skl = new Skill(i,"冲锋",QUALITY.orange,Type.p_damage,2.5f,0.8f,new CLASSES[]{CLASSES.fighter},"向前冲刺，直至撞到敌人或地图边缘，撞到敌人后对敌人造成大量伤害",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),new Vector2(5,0),new Vector2(6,0),new Vector2(7,0),new Vector2(8,0)});
 			break;

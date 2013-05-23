@@ -169,7 +169,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 */
 	private void showRoleInfo(Role r) {
 		selectRole = r;
-//<<<<<<< HEAD
 		nameLabel.setText("name::"+r.name);
 		qualityLabel.setText("quality::"+getQualityName(r.quality));
 		attackValueLabel.setText("attack::"+""+r.value_attack);
@@ -197,14 +196,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			s = "orange";
 		}
 		return s;
-//=======
-//		nameLabel.setText(r.name);
-//		qualityLabel.setText(Configure.getQualityName(r.quality));
-//		attackValueLabel.setText("" + r.attack_value);
-//		defendValueLabel.setText("" + r.defend_value);
-//		levelLabel.setText("" + r.level);
-//		professionLabel.setText("zhanshi");
-//>>>>>>> 3c7e59eb8fe188d0f27490b2110fc878cb40d67f
 	}
 
 	/**
