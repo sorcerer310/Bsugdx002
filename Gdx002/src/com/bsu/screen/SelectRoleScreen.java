@@ -46,6 +46,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	private TextButton purpleButton;
 	private TextButton orangeButton;
 	private Role changeRole;
+	private Role selectRole;
 
 	public SelectRoleScreen(Game game) {
 		super(game);
@@ -55,17 +56,17 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		background = new Image(GameTextureClass.getInstance().selectRolePanel);
 		stage.addActor(background);
 		ib_back = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_back,stage,380,280);
-		allButton = WidgetFactory.getInstance().makeOneTextButton("all",stage, 140,
-				30);
-		greenButton = WidgetFactory.getInstance().makeOneTextButton("green",stage,
-				180, 30);
-		blueButton = WidgetFactory.getInstance().makeOneTextButton("blue",stage, 220,
-				30);
-		purpleButton = WidgetFactory.getInstance().makeOneTextButton("purple",stage,
-				260, 30);
-		orangeButton = WidgetFactory.getInstance().makeOneTextButton("orange",stage,
-				300, 30);
+				Configure.button_back, stage, 380, 280);
+		allButton = WidgetFactory.getInstance().makeOneTextButton("all", stage,
+				140, 30);
+		greenButton = WidgetFactory.getInstance().makeOneTextButton("green",
+				stage, 180, 30);
+		blueButton = WidgetFactory.getInstance().makeOneTextButton("blue",
+				stage, 220, 30);
+		purpleButton = WidgetFactory.getInstance().makeOneTextButton("purple",
+				stage, 260, 30);
+		orangeButton = WidgetFactory.getInstance().makeOneTextButton("orange",
+				stage, 300, 30);
 		quality = QualityS.allselect;
 		addRoleToStage(QualityS.allselect);
 		setListener();
@@ -111,7 +112,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		sRoleStage.clear();
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			Image roleImg = new Image(r.roleTexture);
+			final Image roleImg = new Image(r.roleTexture);
 			roleImg.setScale(0.5f);
 			sRoleStage.addActor(roleImg);
 			roleImg.setPosition(140 + i % 5 * 70, 200 - i / 5 * 70);
@@ -126,18 +127,30 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
-					int index=0;
-					for(int i=0;i<Player.getInstance().playerFightRole.size;i++){
-						if(Player.getInstance().playerFightRole.get(i)==changeRole){
-							index=i;
-						}
+					if(selectRole!=r){
+						selectRole=r;//选定人物。。
+						roleImg.setScale(0.4f);
+						return ;
 					}
-					Player.getInstance().playerFightRole.removeValue(
-							changeRole, false);
-					Player.getInstance().playerFightRole.insert(index, r);
-					Player.getInstance().getPlayerPackageRole();
-					GameScreenConfigure.getInstance().setHeroRoles(
-							Player.getInstance().playerFightRole);
+					if (changeRole != null) {
+						int index = 0;
+						for (int i = 0; i < Player.getInstance().playerFightRole.size; i++) {
+							if (Player.getInstance().playerFightRole.get(i) == changeRole) {
+								index = i;
+							}
+						}
+						Player.getInstance().playerFightRole.removeValue(
+								changeRole, false);
+						Player.getInstance().playerFightRole.insert(index, r);
+						Player.getInstance().getPlayerPackageRole();
+						GameScreenConfigure.getInstance().setHeroRoles(
+								Player.getInstance().playerFightRole);
+					} else {
+						Player.getInstance().playerFightRole.add(r);
+						Player.getInstance().getPlayerPackageRole();
+						GameScreenConfigure.getInstance().setHeroRoles(
+								Player.getInstance().playerFightRole);
+					}
 					setChanged();
 					notifyObservers(Configure.button_back);
 					ib_back.setScale(1f);
@@ -146,6 +159,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 			});
 		}
 	}
+	
 
 	@Override
 	public void show() {

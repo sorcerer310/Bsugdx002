@@ -44,16 +44,16 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		background = new Image(timg);
 		stage.addActor(background);
 		ib_mb_update = WidgetFactory.getInstance().makeImageButton(
-				Configure.screen_update,stage,135,225);
+				Configure.screen_update, stage, 135, 225);
 		ib_mb_update.setPosition(135, 225);
 		ib_mb_role = WidgetFactory.getInstance().makeImageButton(
-				Configure.screen_role,stage,300,135);
+				Configure.screen_role, stage, 300, 135);
 		ib_mb_role.setPosition(300, 135);
 		ib_mb_fight = WidgetFactory.getInstance().makeImageButton(
-				Configure.screen_fight,stage,135,50);
+				Configure.screen_fight, stage, 135, 50);
 		ib_mb_fight.setPosition(135, 50);
 		ib_mb_shop = WidgetFactory.getInstance().makeImageButton(
-				Configure.screen_shop,stage,300,50);
+				Configure.screen_shop, stage, 300, 50);
 		ib_mb_shop.setPosition(300, 50);
 		// 增加上阵英雄头像
 		setFightRoles();
@@ -62,12 +62,14 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 
 	private void setFightRoles() {
 		roleStage.clear();
+		int frlength = 0;
 		Array<Role> playerRols = Player.getInstance().playerFightRole;
 		for (int i = 0; i < playerRols.size; i++) {
+			frlength++;
 			final Role r = playerRols.get(i);
 			Image roleImg = new Image(playerRols.get(i).roleTexture);
 			Image backImg = WidgetFactory.getInstance().makeImageButton(
-					Configure.Img_head_back,roleStage,40,240-55*i);
+					Configure.Img_head_back, roleStage, 40, 240 - 55 * i);
 			roleImg.setScale(0.5f);
 			roleStage.addActor(roleImg);
 			roleImg.setPosition(48, 246 - 55 * i);
@@ -81,6 +83,22 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
+		}
+		if (frlength < 5) {
+			for (int i = frlength; i < 5; i++) {
+				Image backImg = WidgetFactory.getInstance().makeImageButton(
+						Configure.Img_head_back, roleStage, 40, 240 - 55 * i);
+				backImg.addListener(new InputListener() {
+					@Override
+					public boolean touchDown(InputEvent event, float x,
+							float y, int pointer, int button) {
+						setChanged();
+						notifyObservers(new MessageObject(null,
+								Configure.screen_selectRole));
+						return super.touchDown(event, x, y, pointer, button);
+					}
+				});
+			}
 		}
 	}
 
@@ -143,8 +161,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(new MessageObject(null,
-						Configure.screen_fight));
+				notifyObservers(new MessageObject(null, Configure.screen_fight));
 				ib_mb_fight.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
@@ -178,8 +195,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(new MessageObject(null,
-						Configure.screen_update));
+				notifyObservers(new MessageObject(null, Configure.screen_update));
 				ib_mb_update.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}

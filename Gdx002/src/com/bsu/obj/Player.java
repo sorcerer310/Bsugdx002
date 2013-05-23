@@ -74,10 +74,6 @@ public class Player {
 	private Array<Role> getPlayerFightRole() {
 		if (playerFightRole.size == 0) {
 			playerFightRole.add(playerRole.get(0));
-			playerFightRole.add(playerRole.get(1));
-			playerFightRole.add(playerRole.get(2));
-			playerFightRole.add(playerRole.get(3));
-			playerFightRole.add(playerRole.get(4));
 		}
 		return playerFightRole;
 	}

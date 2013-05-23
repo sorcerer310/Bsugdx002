@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
@@ -155,16 +156,32 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * 显示人物信息
 	 */
 	private void showRoleInfo(Role r) {
+		if (r == null) {
+			nameLabel.setText("");
+			qualityLabel.setText("");
+			attackValueLabel.setText("");
+			defendValueLabel.setText("");
+			roleImg = resetImg(roleImg, false, stage, null, 0.2f, 100, 140);
+			skillImg = resetImg(skillImg, false, stage, null, 0.2f, 100, 140);
+			skill1Img = resetImg(skill1Img, false, stage, null, 0.2f, 100, 140);
+			attackImg = resetImg(attackImg, false, stage, null, 0.2f, 100, 140);
+			defendImg = resetImg(defendImg, false, stage, null, 0.2f, 100, 140);
+			selectRole = null;
+			return;
+		}
 		selectRole = r;
 		nameLabel.setText("" + r.name);
 		qualityLabel.setText("" + getQualityName(r.quality));
 		attackValueLabel.setText("" + "" + r.value_attack);
 		defendValueLabel.setText("" + "" + r.value_defend);
-		roleImg = resetImg(roleImg, stage, r.roleTexture, 0.5f, 40, 280);
-		skillImg = resetImg(skillImg, stage, r.roleTexture, 0.2f, 40, 180);
-		skill1Img = resetImg(skill1Img, stage, r.roleTexture, 0.2f, 100, 180);
-		attackImg = resetImg(attackImg, stage, r.roleTexture, 0.2f, 40, 140);
-		defendImg = resetImg(defendImg, stage, r.roleTexture, 0.2f, 100, 140);
+		roleImg = resetImg(roleImg, true, stage, r.roleTexture, 0.5f, 40, 260);
+		skillImg = resetImg(skillImg, true, stage, r.roleTexture, 0.2f, 40, 180);
+		skill1Img = resetImg(skill1Img, true, stage, r.roleTexture, 0.2f, 100,
+				180);
+		attackImg = resetImg(attackImg, true, stage, r.roleTexture, 0.2f, 40,
+				140);
+		defendImg = resetImg(defendImg, true, stage, r.roleTexture, 0.2f, 100,
+				140);
 	}
 
 	/**
@@ -181,13 +198,25 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param x
 	 * @param y
 	 */
-	private Image resetImg(Image img, Stage s, TextureRegion tr, float scv,
-			int x, int y) {
-		if (img != null) {
-			img.getParent().removeActor(img);
-			img = null;
+	private Image resetImg(Image img, boolean flag, Stage s, TextureRegion tr,
+			float scv, int x, int y) {
+		if (!flag) {
+			if (img != null) {
+				img.getParent().removeActor(img);
+				img = null;
+			}
+		} else {
+			Skin skin = new Skin();
+			skin.add("hi", tr);
+			if (img == null) {
+				img = WidgetFactory.getInstance().makeImg(tr, s, scv, x, y);
+			} else {
+				img.setDrawable(skin.getDrawable("hi"));
+			}
+			skin.dispose();
+			skin=null;
 		}
-		return img = WidgetFactory.getInstance().makeImg(tr, s, scv, x, y);
+		return img;
 	}
 
 	/**
@@ -296,6 +325,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QualityS.pselect);
+				showRoleInfo(null);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
@@ -312,6 +342,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QualityS.oselect);
+				showRoleInfo(null);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
@@ -328,6 +359,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QualityS.bselect);
+				showRoleInfo(null);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
@@ -344,6 +376,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QualityS.gselect);
+				showRoleInfo(null);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
@@ -360,6 +393,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QualityS.allselect);
+				showRoleInfo(null);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
