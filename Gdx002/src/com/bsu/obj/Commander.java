@@ -25,27 +25,29 @@ import com.bsu.tools.Configure.STATE;
 public class Commander {
 	private static Commander instance = null;
 
-	public static Commander getInstance(Stage s,GameScreen gs) {
+	public static Commander getInstance(Stage s, GameScreen gs) {
 		if (instance == null)
-			instance = new Commander(s,gs);
+			instance = new Commander(s, gs);
 		return instance;
 	}
 
 	public static Commander getInstance() {
 		return instance;
 	}
+
 	private Stage stage;
 	private GameScreen gamescreen = null;
 	private Array<Actor> lactor = null;
 	private Array<Role> heros = new Array<Role>();
 	private Array<Role> npcs = new Array<Role>();
 
-	private Commander(Stage s,GameScreen gs) {
+	private Commander(Stage s, GameScreen gs) {
 		gamescreen = gs;
-		stage=s;
+		stage = s;
 		commanderStart();
 	}
-	private void commanderStart(){
+
+	private void resetRoles() {
 		lactor = stage.getActors();
 		heros.clear();
 		npcs.clear();
@@ -58,7 +60,10 @@ public class Commander {
 					npcs.add((Role) act);
 			}
 		}
+	}
 
+	private void commanderStart() {
+		resetRoles();
 		/**
 		 * 单独启动个线程，监视任务队列执行任务
 		 */
@@ -78,6 +83,7 @@ public class Commander {
 			}
 		}.start();
 	}
+
 	/**
 	 * 回合结束，命令所有的角色行动
 	 */
@@ -88,6 +94,7 @@ public class Commander {
 		if (!roundEndCompleted)
 			return;
 		roundEndCompleted = false; // 回合操作开始设置完成标示为false
+		resetRoles();
 		resetHeroValue();
 
 		CommandQueue.getInstance().put(new CommandTask() {
@@ -352,7 +359,7 @@ public class Commander {
 	 */
 	public void moveAction(final Role r, final int mx, final int my) {
 		// GameScreen.setControlled(false);
-		gamescreen.setControlled(false); 
+		gamescreen.setControlled(false);
 		waitRoleFlag = true;
 		boolean disapperFlag = true;// 默认闪现出现到指定位置
 		DIRECTION d = null;
@@ -457,17 +464,14 @@ public class Commander {
 	 * 每轮操作结束后，清空角色方可移动数组
 	 */
 	private void resetHeroValue() {
-		for (Actor act : lactor) {
-			if (act instanceof Role) {
-				final Role r = (Role) act;
-				if (r.getType() == Type.HERO) {
-					r.setSelected(false);
-					r.setControlled(false);
-					r.getPass_array().clear();
-					r.getAttack_array().clear();
-					MapBox.pass_array.clear();
-					MapBox.attack_array.clear();
-				}
+		for (Role r : heros) {
+			if (r.getType() == Type.HERO) {
+				r.setSelected(false);
+				r.setControlled(false);
+				r.getPass_array().clear();
+				r.getAttack_array().clear();
+				MapBox.pass_array.clear();
+				MapBox.attack_array.clear();
 			}
 		}
 	}

@@ -36,6 +36,7 @@ public class GameFightUI {
 	public GameFightUI(Stage s) {
 		// TODO Auto-generated constructor stub
 		stage = s;
+		stage.clear();
 		c = Commander.getInstance();
 		gameUI();
 		show_hero_state();
@@ -59,7 +60,7 @@ public class GameFightUI {
 	 */
 	public void show_hero_state() {
 		int roleIndex = 0;
-		for (Role e : c.getHeros()) {
+		for (Role e : Player.getInstance().playerFightRole) {
 			role_state_array.add(new FightRoleUI(stage, e, roleIndex));
 			roleIndex++;
 		}
