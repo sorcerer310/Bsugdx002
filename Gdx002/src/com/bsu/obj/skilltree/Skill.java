@@ -3,8 +3,9 @@ package com.bsu.obj.skilltree;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.obj.Commander;
 import com.bsu.obj.Role;
-import com.bsu.tools.Configure;
+import com.bsu.tools.U;
 import com.bsu.tools.Configure.CLASSES;
 import com.bsu.tools.Configure.QUALITY;
 /**
@@ -82,9 +83,32 @@ public class Skill {
 	 * @return			返回一个布尔值，表示owner是否还继续向前移动
 	 */
 	public boolean skillLogic(Role owner,Role object){
-		if(this.type==Skill.Type.f_damage ||this.type==Skill.Type.f_shifhp ||this.type==Skill.Type.p_atkbeat ||
-				this.type==Skill.Type.p_damage ||this.type==Skill.Type.pdot_damage ||this.type==Skill.Type.prob_blind ||
-				this.type==Skill.Type.prob_dizzy ||this.type==Skill.Type.prob_nude){
+		if(type==Skill.Type.f_damage ||type==Skill.Type.f_shifhp ||type==Skill.Type.p_atkbeat ||
+				type==Skill.Type.p_damage ||type==Skill.Type.pdot_damage ||type==Skill.Type.prob_blind ||
+				type==Skill.Type.prob_dizzy ||type==Skill.Type.prob_nude){
+			//固定伤害处理
+			if(type==Skill.Type.f_damage){
+				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.value_attack+val), object.value_defend) >= 0 
+						? object.currentHp - U.realDamage((int)(owner.value_attack+val), object.value_defend): 0);
+			//转移伤害至生命	
+			}else if(type==Skill.Type.f_shifhp){
+				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.value_attack+val), object.value_defend) >= 0 
+						? object.currentHp - U.realDamage((int)(owner.value_attack+val), object.value_defend): 0);	//伤害敌人
+				owner.currentHp = (int)(owner.currentHp + U.realDamage((int)(owner.value_attack+val), object.value_defend)/2) >= owner.maxHp //转移生命至自己
+						? owner.maxHp : (int)(owner.currentHp + U.realDamage((int)(owner.value_attack+val), object.value_defend)/2);
+			//击退伤害
+			}else if(type==Skill.Type.p_atkbeat){
+				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.value_attack*val), object.value_defend) >= 0 
+						? object.currentHp - U.realDamage((int)(owner.value_attack*val), object.value_defend): 0);	//伤害敌人
+				Commander.getInstance().heatAction(object);	//击退
+			//百分比伤害
+			}else if(type==Skill.Type.p_damage){
+				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.value_attack*val), object.value_defend) >= 0 
+					? object.currentHp - U.realDamage((int)(owner.value_attack*val), object.value_defend): 0);	//伤害敌人
+			//持续伤害，默认为3回合
+			}else if(type==Skill.Type.pdot_damage){
+				
+			}
 			object.currentHp = (int) (object.currentHp - this.val >= 0 ? object.currentHp
 				- this.val
 				: 0);

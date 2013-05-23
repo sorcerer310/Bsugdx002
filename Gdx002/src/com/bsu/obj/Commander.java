@@ -12,6 +12,8 @@ import com.bsu.screen.GameScreen;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.CommandQueue;
 import com.bsu.tools.Configure;
+import com.bsu.tools.U;
+import com.bsu.tools.Configure.FACE;
 import com.bsu.tools.FightRoleUI;
 import com.bsu.tools.Configure.DIRECTION;
 import com.bsu.tools.Configure.STATE;
@@ -40,6 +42,7 @@ public class Commander {
 	private Array<Actor> lactor = null;
 	private Array<Role> heros = new Array<Role>();
 	private Array<Role> npcs = new Array<Role>();
+	private Array<Role> allRoles = new Array<Role>();
 
 	private Commander(Stage s, GameScreen gs) {
 		gamescreen = gs;
@@ -60,6 +63,8 @@ public class Commander {
 					npcs.add((Role) act);
 			}
 		}
+		allRoles.addAll(heros);
+		allRoles.addAll(npcs);
 	}
 
 	private void commanderStart() {
@@ -132,13 +137,9 @@ public class Commander {
 
 	/**
 	 * 移动动作
-	 * 
-	 * @param r
-	 *            要移动的Role
-	 * @param d
-	 *            移动方向
-	 * @param be
-	 *            移动动作结束后从这里获得结束的消息
+	 * @param r	要移动的Role
+	 * @param d	移动方向
+	 * @param be	移动动作结束后从这里获得结束的消息
 	 */
 	public void directAction(final Role r, DIRECTION d, final BsuEvent be) {
 		if (r.get_ani_from_state() != STATE.idle)
@@ -165,7 +166,17 @@ public class Commander {
 					}
 				})));
 	}
-
+	/**
+	 * 击退移动
+	 * @param r	被击退的Role
+	 */
+	public void heatAction(Role r){
+		if(r.face==FACE.left && !U.hasRoleInPos(allRoles, new Vector2(r.getBoxX()+1,r.getBoxY())))
+			r.addAction(moveBy(r.getX()+Configure.map_box_value,r.getY(),0.01f));
+		else if(r.face == FACE.right && !U.hasRoleInPos(allRoles, new Vector2(r.getBoxX()-1,r.getBoxY())))
+			r.addAction(moveBy(r.getX()-Configure.map_box_value,r.getY(),0.01f));
+	}
+	
 	/**
 	 * 处理地图块事件，检查地图上特殊属性的块是否有Role在 有则对Role对象进行处理
 	 * 
@@ -352,7 +363,6 @@ public class Commander {
 
 	/**
 	 * 向role下命令，命令其如何移动,只针对hero方
-	 * 
 	 * @param mx
 	 * @param my
 	 */
