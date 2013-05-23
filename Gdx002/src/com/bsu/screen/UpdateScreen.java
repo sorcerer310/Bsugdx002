@@ -23,7 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
-import com.bsu.make.ButtonFactory;
+import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.tools.Configure;
@@ -51,50 +51,42 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	private TextButton orangeButton;
 	private TextButton eatButton;
 	private TextButton eatAllButton;// 一键吞噬所有某种品质
-
+	private Label updateLabel;
+	private Label expLabel;
+	private Label upLabel;
 	public UpdateScreen(Game game) {
 		super(game);
 		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
 		sRoleStage = new Stage(Configure.rect_width, Configure.rect_height,
 				false);
 		background = new Image(GameTextureClass.getInstance().updatePanel);
+		stage.addActor(background);
 		quality = QualityS.gselect;
 		selectUpdateRole = Player.getInstance().playerFightRole.get(0);
-		ib_back = ButtonFactory.getInstance().makeImageButton(
-				Configure.button_back);
+		ib_back = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_back,stage,360,40);
 		ib_back.setPosition(360, 40);
-		stage.addActor(background);
-		stage.addActor(ib_back);
-		Label updateLabel = new Label("Role1", Configure.get_sytle());
-		Label expLabel = new Label("addExp", Configure.get_sytle());
-		Label upLabel = new Label("up", Configure.get_sytle());
-		updateLabel.setPosition(140, 240);
-		expLabel.setPosition(260, 240);
-		upLabel.setPosition(320, 260);
-		stage.addActor(updateLabel);
-		stage.addActor(expLabel);
-		stage.addActor(upLabel);
-		allButton = ButtonFactory.getInstance().makeOneTextButton("all", 140,
-				30);
-		greenButton = ButtonFactory.getInstance().makeOneTextButton("green",
-				180, 30);
-		blueButton = ButtonFactory.getInstance().makeOneTextButton("blue", 220,
-				30);
-		purpleButton = ButtonFactory.getInstance().makeOneTextButton("purple",
-				260, 30);
-		orangeButton = ButtonFactory.getInstance().makeOneTextButton("orange",
-				300, 30);
-		eatButton = ButtonFactory.getInstance().makeOneTextButton("eat", 360,
-				30);
-		eatAllButton = ButtonFactory.getInstance().makeOneTextButton("eatall",
-				390, 30);
-		stage.addActor(allButton);
-		stage.addActor(greenButton);
-		stage.addActor(blueButton);
-		stage.addActor(purpleButton);
-		stage.addActor(orangeButton);
-		stage.addActor(eatButton);
-		stage.addActor(eatAllButton);
+		
+		updateLabel = WidgetFactory.getInstance().makeLabel("role",
+				stage, 140, 240);
+		expLabel = WidgetFactory.getInstance().makeLabel("exp", stage,
+				140, 240);
+		upLabel = WidgetFactory.getInstance().makeLabel("up", stage, 140,
+				240);
+		allButton = WidgetFactory.getInstance().makeOneTextButton("all", stage,
+				140, 30);
+		greenButton = WidgetFactory.getInstance().makeOneTextButton("green",
+				stage, 180, 30);
+		blueButton = WidgetFactory.getInstance().makeOneTextButton("blue",
+				stage, 220, 30);
+		purpleButton = WidgetFactory.getInstance().makeOneTextButton("purple",
+				stage, 260, 30);
+		orangeButton = WidgetFactory.getInstance().makeOneTextButton("orange",
+				stage, 300, 30);
+		eatButton = WidgetFactory.getInstance().makeOneTextButton("eat", stage,
+				360, 30);
+		eatAllButton = WidgetFactory.getInstance().makeOneTextButton("eatall",
+				stage, 390, 30);
 		getRoles();
 		setListener();
 		addRoleToStage(QualityS.allselect);
@@ -106,17 +98,15 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < playerRols.size; i++) {
 			final Role r = playerRols.get(i);
 			final Image roleImg = new Image(playerRols.get(i).roleTexture);
-			Image backImg = ButtonFactory.getInstance().makeImageButton(
-					Configure.Img_head_back);
+			Image backImg = WidgetFactory.getInstance().makeImageButton(
+					Configure.Img_head_back,stage,40,230-55*i);
 			if (i == 0) {
 				roleImg.setScale(0.4f);
 			} else {
 				roleImg.setScale(0.5f);
 			}
-			stage.addActor(backImg);
 			stage.addActor(roleImg);
 			roleImg.setPosition(48, 236 - 55 * i);
-			backImg.setPosition(40, 230 - 55 * i);
 			RoleSelectImg.add(roleImg);
 			roleImg.addListener(new InputListener() {
 				@Override
@@ -228,7 +218,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				eatRoles = Player.getInstance().getQualityRole(
 						Player.getInstance().playerIdelRole, QUALITY.orange);
 			}
-			for(Role e:eatRoles){
+			for (Role e : eatRoles) {
 				Player.getInstance().playerRole.removeValue(e, false);
 			}
 		} else {

@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
-import com.bsu.make.ButtonFactory;
+import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.tools.Configure;
@@ -42,24 +42,19 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 				false);
 		timg = GameTextureClass.getInstance().mPanel;
 		background = new Image(timg);
-		ib_mb_update = ButtonFactory.getInstance().makeImageButton(
-				Configure.screen_update);
-		ib_mb_update.setPosition(135, 225);
-		ib_mb_role = ButtonFactory.getInstance().makeImageButton(
-				Configure.screen_role);
-		ib_mb_role.setPosition(300, 135);
-		ib_mb_fight = ButtonFactory.getInstance().makeImageButton(
-				Configure.screen_fight);
-		ib_mb_fight.setPosition(135, 50);
-		ib_mb_shop = ButtonFactory.getInstance().makeImageButton(
-				Configure.screen_shop);
-		ib_mb_shop.setPosition(300, 50);
 		stage.addActor(background);
-		stage.addActor(ib_mb_update);
-
-		stage.addActor(ib_mb_role);
-		stage.addActor(ib_mb_fight);
-		stage.addActor(ib_mb_shop);
+		ib_mb_update = WidgetFactory.getInstance().makeImageButton(
+				Configure.screen_update,stage,135,225);
+		ib_mb_update.setPosition(135, 225);
+		ib_mb_role = WidgetFactory.getInstance().makeImageButton(
+				Configure.screen_role,stage,300,135);
+		ib_mb_role.setPosition(300, 135);
+		ib_mb_fight = WidgetFactory.getInstance().makeImageButton(
+				Configure.screen_fight,stage,135,50);
+		ib_mb_fight.setPosition(135, 50);
+		ib_mb_shop = WidgetFactory.getInstance().makeImageButton(
+				Configure.screen_shop,stage,300,50);
+		ib_mb_shop.setPosition(300, 50);
 		// 增加上阵英雄头像
 		setFightRoles();
 		setListener();
@@ -71,13 +66,11 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < playerRols.size; i++) {
 			final Role r = playerRols.get(i);
 			Image roleImg = new Image(playerRols.get(i).roleTexture);
-			Image backImg = ButtonFactory.getInstance().makeImageButton(
-					Configure.Img_head_back);
+			Image backImg = WidgetFactory.getInstance().makeImageButton(
+					Configure.Img_head_back,roleStage,40,240-55*i);
 			roleImg.setScale(0.5f);
-			roleStage.addActor(backImg);
 			roleStage.addActor(roleImg);
 			roleImg.setPosition(48, 246 - 55 * i);
-			backImg.setPosition(40, 240 - 55 * i);
 			roleImg.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,

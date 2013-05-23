@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.bsu.head.CubocScreen;
-import com.bsu.make.ButtonFactory;
+import com.bsu.make.WidgetFactory;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameTextureClass;
 
@@ -31,12 +31,9 @@ public class FightScreen extends CubocScreen implements Observer {
 		super(game);
 		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
 		background = new Image(GameTextureClass.getInstance().fightPanel);
-		ib_back = ButtonFactory.getInstance().makeImageButton(Configure.button_back);
-		ib_back.setPosition(360,262);
-		level1=ButtonFactory.getInstance().makeOneTextButton("level1", 100, 260);
 		stage.addActor(background);
-		stage.addActor(ib_back);
-		stage.addActor(level1);
+		ib_back = WidgetFactory.getInstance().makeImageButton(Configure.button_back,stage,360,262);
+		level1=WidgetFactory.getInstance().makeOneTextButton("level1",stage, 80, 260);
 		setListener();
 	}
 
