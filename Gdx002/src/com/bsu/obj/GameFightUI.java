@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.bsu.make.ButtonFactory;
+import com.bsu.make.WidgetFactory;
 import com.bsu.tools.Configure;
 import com.bsu.tools.FightRoleUI;
 import com.bsu.tools.RoleHP;
@@ -42,15 +42,14 @@ public class GameFightUI {
 	}
 
 	private void gameUI() {
-		bt_endround = ButtonFactory.getInstance().makeOneTextButton("end", 200,
-				60);
+		bt_endround = WidgetFactory.getInstance().makeOneTextButton("end",stage, 200,
+				80);
 		bt_endround.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				c.roundEnd();
 			}
 		});
-		stage.addActor(bt_endround);
 	}
 
 	/**

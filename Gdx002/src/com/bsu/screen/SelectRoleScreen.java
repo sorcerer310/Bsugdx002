@@ -22,7 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
-import com.bsu.make.ButtonFactory;
+import com.bsu.make.WidgetFactory;
 import com.bsu.make.GameScreenConfigure;
 import com.bsu.make.RoleFactory;
 import com.bsu.obj.Player;
@@ -53,27 +53,19 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		sRoleStage = new Stage(Configure.rect_width, Configure.rect_height,
 				false);
 		background = new Image(GameTextureClass.getInstance().selectRolePanel);
-
-		ib_back = ButtonFactory.getInstance().makeImageButton(
-				Configure.button_back);
-		ib_back.setPosition(380, 280);
-		allButton = ButtonFactory.getInstance().makeOneTextButton("all", 140,
-				30);
-		greenButton = ButtonFactory.getInstance().makeOneTextButton("green",
-				180, 30);
-		blueButton = ButtonFactory.getInstance().makeOneTextButton("blue", 220,
-				30);
-		purpleButton = ButtonFactory.getInstance().makeOneTextButton("purple",
-				260, 30);
-		orangeButton = ButtonFactory.getInstance().makeOneTextButton("orange",
-				300, 30);
 		stage.addActor(background);
-		stage.addActor(ib_back);
-		stage.addActor(allButton);
-		stage.addActor(greenButton);
-		stage.addActor(blueButton);
-		stage.addActor(purpleButton);
-		stage.addActor(orangeButton);
+		ib_back = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_back,stage,380,280);
+		allButton = WidgetFactory.getInstance().makeOneTextButton("all",stage, 140,
+				30);
+		greenButton = WidgetFactory.getInstance().makeOneTextButton("green",stage,
+				180, 30);
+		blueButton = WidgetFactory.getInstance().makeOneTextButton("blue",stage, 220,
+				30);
+		purpleButton = WidgetFactory.getInstance().makeOneTextButton("purple",stage,
+				260, 30);
+		orangeButton = WidgetFactory.getInstance().makeOneTextButton("orange",stage,
+				300, 30);
 		quality = QualityS.allselect;
 		addRoleToStage(QualityS.allselect);
 		setListener();
@@ -134,9 +126,15 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
+					int index=0;
+					for(int i=0;i<Player.getInstance().playerFightRole.size;i++){
+						if(Player.getInstance().playerFightRole.get(i)==changeRole){
+							index=i;
+						}
+					}
 					Player.getInstance().playerFightRole.removeValue(
 							changeRole, false);
-					Player.getInstance().playerFightRole.add(r);
+					Player.getInstance().playerFightRole.insert(index, r);
 					Player.getInstance().getPlayerPackageRole();
 					GameScreenConfigure.getInstance().setHeroRoles(
 							Player.getInstance().playerFightRole);

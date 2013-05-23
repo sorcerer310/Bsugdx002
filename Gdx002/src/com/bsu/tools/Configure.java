@@ -132,4 +132,26 @@ public class Configure {
 		}
 		return isAttackedImgGroup;
 	}
+	/**
+	 * 取得品质对应文字
+	 * 
+	 * @param q
+	 * @return 返回的字符串
+	 */
+	public static String getQualityName(QUALITY q) {
+		String s = null;
+		if (q == QUALITY.green) {
+			s = "green";
+		}
+		if (q == QUALITY.blue) {
+			s = "blue";
+		}
+		if (q == QUALITY.purple) {
+			s = "pruple";
+		}
+		if (q == QUALITY.orange) {
+			s = "orange";
+		}
+		return s;
+	}
 }

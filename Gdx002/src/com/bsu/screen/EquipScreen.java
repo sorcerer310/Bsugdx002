@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.head.CubocScreen;
-import com.bsu.make.ButtonFactory;
+import com.bsu.make.WidgetFactory;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameTextureClass;
 
@@ -24,9 +24,8 @@ public class EquipScreen extends CubocScreen implements Observer {
 		super(game);
 		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
 		background = new Image(GameTextureClass.getInstance().equipPanel);
-		
-		ib_back = ButtonFactory.getInstance().makeImageButton(Configure.button_back);
-		ib_back.setPosition(360,262);
+		stage.addActor(background);
+		ib_back = WidgetFactory.getInstance().makeImageButton(Configure.button_back,stage,360,262);
 		ib_back.addListener(new InputListener(){
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -43,9 +42,6 @@ public class EquipScreen extends CubocScreen implements Observer {
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		
-		stage.addActor(background);
-		stage.addActor(ib_back);
 	}
 
 	@Override
