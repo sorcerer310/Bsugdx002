@@ -24,7 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
-import com.bsu.make.ButtonFactory;
+import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.tools.Configure;
@@ -51,10 +51,14 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private int clingX;// 地图移动位移
 	private OrthographicCamera c;
 	private int cameraWidth;// 显示人物时的界面宽度
-	Label nameLabel;
-	Label qualityLabel;
-	Label attackValueLabel;
-	Label defendValueLabel;
+	private Label nameLabel;
+	private Label qualityLabel;
+	private Label attackValueLabel;
+	private Label defendValueLabel;
+	private Label levelLabel;
+	private Label professionLabel;// 职业
+	private Image roleImg;
+	private Image skillImg, skill1Img, attackImg, defendImg;// 技能，武器，防具
 
 	public RoleScreen(Game game) {
 		super(game);
@@ -63,40 +67,37 @@ public class RoleScreen extends CubocScreen implements Observer,
 				false);
 		c = (OrthographicCamera) sRoleStage.getCamera();
 		background = new Image(GameTextureClass.getInstance().rolePanel);
-
-		ib_back = ButtonFactory.getInstance().makeImageButton(
-				Configure.button_back);
-		ib_back.setPosition(375, 272);
-
 		stage.addActor(background);
-		stage.addActor(ib_back);
-		allButton = ButtonFactory.getInstance()
-				.makeOneTextButton("all", 20, 30);
-		greenButton = ButtonFactory.getInstance().makeOneTextButton("green",
-				50, 30);
-		blueButton = ButtonFactory.getInstance().makeOneTextButton("blue", 90,
-				30);
-		purpleButton = ButtonFactory.getInstance().makeOneTextButton("purple",
-				130, 30);
-		orangeButton = ButtonFactory.getInstance().makeOneTextButton("orange",
-				170, 30);
-		stage.addActor(allButton);
-		stage.addActor(greenButton);
-		stage.addActor(blueButton);
-		stage.addActor(purpleButton);
-		stage.addActor(orangeButton);
-		nameLabel = new Label("name:", Configure.get_sytle());
-		qualityLabel = new Label("quality:", Configure.get_sytle());
-		attackValueLabel = new Label("attack:", Configure.get_sytle());
-		defendValueLabel = new Label("defend:" + "", Configure.get_sytle());
-		stage.addActor(nameLabel);
-		stage.addActor(qualityLabel);
-		stage.addActor(attackValueLabel);
-		stage.addActor(defendValueLabel);
-		nameLabel.setPosition(60, 240);
-		qualityLabel.setPosition(160, 240);
-		attackValueLabel.setPosition(60, 220);
-		defendValueLabel.setPosition(160, 220);
+		ib_back = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_back, stage, 375, 272);
+		allButton = WidgetFactory.getInstance().makeOneTextButton("all", stage,
+				20, 30);
+		greenButton = WidgetFactory.getInstance().makeOneTextButton("green",
+				stage, 50, 30);
+		blueButton = WidgetFactory.getInstance().makeOneTextButton("blue",
+				stage, 90, 30);
+		purpleButton = WidgetFactory.getInstance().makeOneTextButton("purple",
+				stage, 130, 30);
+		orangeButton = WidgetFactory.getInstance().makeOneTextButton("orange",
+				stage, 170, 30);
+		nameLabel = WidgetFactory.getInstance().makeLabel("", stage, 40, 240);
+		qualityLabel = WidgetFactory.getInstance().makeLabel("", stage, 100,
+				240);
+		attackValueLabel = WidgetFactory.getInstance().makeLabel("", stage, 40,
+				220);
+		defendValueLabel = WidgetFactory.getInstance().makeLabel("", stage,
+				100, 220);
+		levelLabel = WidgetFactory.getInstance().makeLabel("", stage, 40, 200);
+		professionLabel = WidgetFactory.getInstance().makeLabel("", stage, 100,
+				200);
+		skillImg = WidgetFactory.getInstance().makeImg(null, stage, 0.2f, 40,
+				120);
+		skill1Img = WidgetFactory.getInstance().makeImg(null, stage, 0.2f, 100,
+				120);
+		attackImg = WidgetFactory.getInstance().makeImg(null, stage, 0.2f, 40,
+				80);
+		defendImg = WidgetFactory.getInstance().makeImg(null, stage, 0.2f, 100,
+				80);
 		setListener();
 	}
 
@@ -168,6 +169,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 */
 	private void showRoleInfo(Role r) {
 		selectRole = r;
+//<<<<<<< HEAD
 		nameLabel.setText("name::"+r.name);
 		qualityLabel.setText("quality::"+getQualityName(r.quality));
 		attackValueLabel.setText("attack::"+""+r.value_attack);
@@ -195,6 +197,14 @@ public class RoleScreen extends CubocScreen implements Observer,
 			s = "orange";
 		}
 		return s;
+//=======
+//		nameLabel.setText(r.name);
+//		qualityLabel.setText(Configure.getQualityName(r.quality));
+//		attackValueLabel.setText("" + r.attack_value);
+//		defendValueLabel.setText("" + r.defend_value);
+//		levelLabel.setText("" + r.level);
+//		professionLabel.setText("zhanshi");
+//>>>>>>> 3c7e59eb8fe188d0f27490b2110fc878cb40d67f
 	}
 
 	/**
