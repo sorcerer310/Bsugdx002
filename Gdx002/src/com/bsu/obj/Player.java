@@ -51,45 +51,15 @@ public class Player {
 		if (playerRole.size == 0) {
 			RoleFactory rf = RoleFactory.getInstance();
 			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
-			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().zyc_photo));
+			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.blue,GameTextureClass.getInstance().zyc_photo));
+			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
+			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.purple,GameTextureClass.getInstance().zyc_photo));
+			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
+			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().zyc_photo));
-			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
-			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
-			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().zyc_photo));
-			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().zyc_photo));
-			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().zyc_photo));
-//			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.green)
-//					.getRoleValue()));
-//			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.green)
-//					.getRoleValue()));
-//			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.green)
-//					.getRoleValue()));
-//			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.orange)
-//					.getRoleValue()));
-//			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.green)
-//					.getRoleValue()));
-//			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.green)
-//					.getRoleValue()));
-//			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.green)
-//					.getRoleValue()));
-//			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.green)
-//					.getRoleValue()));
-//			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.green)
-//					.getRoleValue()));
-//			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.orange)
-//					.getRoleValue()));
-//			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.blue)
-//					.getRoleValue()));
-//			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.blue)
-//					.getRoleValue()));
-//			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.blue)
-//					.getRoleValue()));
-//			playerRole.add(new Role(new Card(SUBTYPE.zyc, QUALITY.green)
-//					.getRoleValue()));
-//			playerRole.add(new Role(new Card(SUBTYPE.fc, QUALITY.purple)
-//					.getRoleValue()));
+			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.orange,GameTextureClass.getInstance().zyc_photo));
 		}
 		resetRoleArray(playerRole);
 		return playerRole;

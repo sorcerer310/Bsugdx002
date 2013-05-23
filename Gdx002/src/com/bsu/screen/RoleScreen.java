@@ -2,15 +2,12 @@ package com.bsu.screen;
 
 import java.util.Observable;
 import java.util.Observer;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
@@ -19,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
@@ -28,7 +24,6 @@ import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.tools.Configure;
-import com.bsu.tools.GameMap;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.GameTextureClass;
 import com.bsu.tools.Configure.QualityS;
@@ -90,14 +85,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 		levelLabel = WidgetFactory.getInstance().makeLabel("", stage, 40, 200);
 		professionLabel = WidgetFactory.getInstance().makeLabel("", stage, 100,
 				200);
-		skillImg = WidgetFactory.getInstance().makeImg(null, stage, 0.2f, 40,
-				120);
-		skill1Img = WidgetFactory.getInstance().makeImg(null, stage, 0.2f, 100,
-				120);
-		attackImg = WidgetFactory.getInstance().makeImg(null, stage, 0.2f, 40,
-				80);
-		defendImg = WidgetFactory.getInstance().makeImg(null, stage, 0.2f, 100,
-				80);
 		setListener();
 	}
 
@@ -169,11 +156,38 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 */
 	private void showRoleInfo(Role r) {
 		selectRole = r;
-//<<<<<<< HEAD
-		nameLabel.setText("name::"+r.name);
-		qualityLabel.setText("quality::"+getQualityName(r.quality));
-		attackValueLabel.setText("attack::"+""+r.value_attack);
-		defendValueLabel.setText("defend::"+""+r.value_defend);
+		nameLabel.setText("" + r.name);
+		qualityLabel.setText("" + getQualityName(r.quality));
+		attackValueLabel.setText("" + "" + r.value_attack);
+		defendValueLabel.setText("" + "" + r.value_defend);
+		roleImg = resetImg(roleImg, stage, r.roleTexture, 0.5f, 40, 280);
+		skillImg = resetImg(skillImg, stage, r.roleTexture, 0.2f, 40, 180);
+		skill1Img = resetImg(skill1Img, stage, r.roleTexture, 0.2f, 100, 180);
+		attackImg = resetImg(attackImg, stage, r.roleTexture, 0.2f, 40, 140);
+		defendImg = resetImg(defendImg, stage, r.roleTexture, 0.2f, 100, 140);
+	}
+
+	/**
+	 * 重新设置Role技能，装备的图像，
+	 * 
+	 * @param img
+	 *            目标图像
+	 * @param s
+	 *            舞台
+	 * @param tr
+	 *            图片源
+	 * @param scv
+	 *            缩放值
+	 * @param x
+	 * @param y
+	 */
+	private Image resetImg(Image img, Stage s, TextureRegion tr, float scv,
+			int x, int y) {
+		if (img != null) {
+			img.getParent().removeActor(img);
+			img = null;
+		}
+		return img = WidgetFactory.getInstance().makeImg(tr, s, scv, x, y);
 	}
 
 	/**
@@ -197,14 +211,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			s = "orange";
 		}
 		return s;
-//=======
-//		nameLabel.setText(r.name);
-//		qualityLabel.setText(Configure.getQualityName(r.quality));
-//		attackValueLabel.setText("" + r.attack_value);
-//		defendValueLabel.setText("" + r.defend_value);
-//		levelLabel.setText("" + r.level);
-//		professionLabel.setText("zhanshi");
-//>>>>>>> 3c7e59eb8fe188d0f27490b2110fc878cb40d67f
 	}
 
 	/**

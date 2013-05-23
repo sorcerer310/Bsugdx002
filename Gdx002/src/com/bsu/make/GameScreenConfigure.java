@@ -25,12 +25,6 @@ public class GameScreenConfigure {
 	public void makeGameScreen1(GameScreen gs) {
 
 		Array<Role> rols = new Array<Role>();
-//		rols.add(RoleFactory.getInstance().getHeroRole("hero1"));
-//		rols.add(RoleFactory.getInstance().getHeroRole2("hero2"));
-//		rols.add(RoleFactory.getInstance().getHeroRole2("hero3"));
-//		rols.add(RoleFactory.getInstance().getEnemyRole("enemy1"));
-//		rols.add(RoleFactory.getInstance().getEnemyRole("enemy2"));
-//		rols.add(RoleFactory.getInstance().getEnemyRole("enemy3"));
 		rols.add(RoleFactory.getInstance().getFighter("hero1", Type.HERO, QUALITY.green,GameTextureClass.getInstance().h0_photo));
 		rols.add(RoleFactory.getInstance().getFighter("hero2", Type.HERO, QUALITY.green,GameTextureClass.getInstance().h1_photo));
 		rols.add(RoleFactory.getInstance().getFighter("hero3", Type.HERO, QUALITY.green,GameTextureClass.getInstance().h2_photo));
@@ -48,8 +42,6 @@ public class GameScreenConfigure {
 		for(Role h:Player.getInstance().playerFightRole){
 			heroRoles.add(h);
 		}
-//		npcRoles.add(new Role(new Card(SUBTYPE.enemy, QUALITY.green)
-//				.getRoleValue()));
 		npcRoles.add(RoleFactory.getInstance().getFighter("enemy1", Type.ENEMY, QUALITY.green,GameTextureClass.getInstance().h5_photo));
 		rols.addAll(heroRoles);
 		rols.addAll(npcRoles);
