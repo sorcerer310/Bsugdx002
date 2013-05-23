@@ -3,6 +3,7 @@ package com.bsu.obj.skilltree;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillFactory;
 import com.bsu.tools.Configure;
+import com.bsu.tools.Configure.CLASSES;
 import com.bsu.tools.Configure.QUALITY;
 /**
  * 保存技能树的基本信息。st_forGreenHero中Array<Integer>保存的是改数所有技能的索引。
@@ -61,6 +62,27 @@ public class SkillTree {
 		st_forOrangeHero.add(new Array<Integer>(new Integer[]{7,19,17,15,14,20,31,25,29,26,22,40,41,36}));
 		st_forOrangeHero.add(new Array<Integer>(new Integer[]{6,17,16,12,10,13,21,33,32,24,28,38,37,36}));
 	}
+	
+	private MakeSkillTreeConfigInfo stmaker = new MakeSkillTreeConfigInfo();
+	/**
+	 * 通过英雄的品质与职业生成一棵随机的技能树
+	 * @param h_quality	英雄品质
+	 * @param h_classes	英雄职业
+	 * @return
+	 */
+	public Array<Skill> getRandomSkillTree(QUALITY h_quality,CLASSES h_classes){
+		Array<SimpleSkill> st = null;
+		st = stmaker.makeSkillTree(h_quality, h_classes);
+		if(st==null)
+			return null;
+		
+		Array<Skill> skills = new Array<Skill>();
+		SkillFactory sf = SkillFactory.getInstance();
+		for(int i=0;i<st.size;i++)
+			skills.add(sf.getSkillByIdx(st.get(i).getId()));
+		return skills;
+	}
+	
 	/**
 	 * 通过英雄品质和配置的索引获得一颗技能树配置
 	 * @param h_quality	指定英雄品质参数

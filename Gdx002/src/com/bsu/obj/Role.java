@@ -10,23 +10,20 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillFactory;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.obj.skilltree.SkillTree;
-import com.bsu.tools.AttackWeaponBase;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.CLASSES;
 import com.bsu.tools.Configure.QUALITY;
-import com.bsu.tools.DefendWeaponBase;
 import com.bsu.tools.GameAnimationClass;
 import com.bsu.tools.Configure.FACE;
 import com.bsu.tools.Configure.STATE;
-import com.bsu.tools.RoleValue;
 
 public class Role extends Actor {
 	public static enum Type {
 		HERO, ENEMY
 	}; // 英雄还是NPC
-	private AttackWeaponBase attack_weapon;//人物武器
-	private DefendWeaponBase defend_weapon;//人物护甲
+	private Equip weapon;//人物武器
+	private Equip armor;//人物护甲
 	private Array<Skill> skillList;//人物技能树
 	private SkillTree skltree;//人物技能树对象
 	
@@ -39,8 +36,8 @@ public class Role extends Actor {
 	public TextureRegion roleTexture;
 	public int maxHp = 100; // 总血量
 	public int currentHp = 30; // 当前血量
-	public int attack_value; // 自身攻击力
-	public int defend_value;//自身防御力
+	public int value_attack; // 自身攻击力
+	public int value_defend;//自身防御力
 	
 	private float time_state; // 行动状态时间
 	public float time_effect; // 技能特效时间
@@ -71,42 +68,48 @@ public class Role extends Actor {
 	 * @param n
 	 *            该角色的名字
 	 */
-	public Role(Type t, String n) {
+	public Role(Type t, String n,int mhp,int av,int dv,Equip w,Equip a,Array<Skill> as,TextureRegion tr) {
 		// TODO Auto-generated constructor stub
-		name = n;
-		type = t;
-		time_state = 0;
-		currentHp = 100;
-		maxHp = 100;
-		attack_value = 5;
+		name = n;																		//名称
+		type = t;																		//类型，英雄还是敌人
+		time_state = 0;																	//time_state初始化为0
+		maxHp = mhp;
+		currentHp = mhp;
+		value_attack = av;
+		value_defend = dv;
+		weapon = w;
+		armor = a;
+		array_skill = as;
+		roleTexture = tr;
+		cskill = array_skill.get(0);
 		set_actor_base(type);
-		array_skill.add(SkillFactory.getInstance().getSkillByName("atk"));
-		cskill=SkillFactory.getInstance().getSkillByName("atk");
+//		array_skill.add(SkillFactory.getInstance().getSkillByName("atk"));
+//		cskill=SkillFactory.getInstance().getSkillByName("atk");
 	}
 
-	public Role(RoleValue rv) {
-		// TODO Auto-generated constructor stub
-		time_state = 0;
-		name = rv.name;
-		roleTexture=rv.roleTexture;
-		quality=rv.quality;
-		maxHp=rv.roleHp;
-		currentHp=maxHp;
-		attack_value=rv.attackValue;
-		defend_value=rv.defendValue;
-		attack_weapon=rv.attackWeapon;
-		defend_weapon=rv.defendWeapon;
-		this.skillList=rv.skillList;
-		cskill=skillList.get(0);
-		this.type=rv.type;
-		if(type==Type.HERO){
-			face=FACE.right;
-		}else{
-			face=FACE.left;
-			roleTexture.flip(true, false);
-		}
-		set_actor_base(type);
-	}
+//	public Role(RoleValue rv) {
+//		// TODO Auto-generated constructor stub
+//		time_state = 0;
+//		name = rv.name;
+//		roleTexture=rv.roleTexture;
+//		quality=rv.quality;
+//		maxHp=rv.roleHp;
+//		currentHp=maxHp;
+//		attack_value=rv.attackValue;
+//		defend_value=rv.defendValue;
+//		weapon=rv.attackWeapon;
+//		armor=rv.defendWeapon;
+//		this.skillList=rv.skillList;
+//		cskill=skillList.get(0);
+//		this.type=rv.type;
+//		if(type==Type.HERO){
+//			face=FACE.right;
+//		}else{
+//			face=FACE.left;
+//			roleTexture.flip(true, false);
+//		}
+//		set_actor_base(type);
+//	}
 
 	/**
 	 * 根据类型获得资源
@@ -115,6 +118,12 @@ public class Role extends Actor {
 	 */
 	private void set_actor_base(Type type) {
 		this.type = type;
+		if(type==Type.HERO)
+			face = FACE.right;
+		else{
+			face=FACE.left;
+			roleTexture.flip(true, false);
+		}
 		ani_idle = GameAnimationClass.getInstance().getRoleAnimation(roleTexture);
 		ani_move = GameAnimationClass.getInstance().getRoleAnimation(roleTexture);
 		ani_disapper = GameAnimationClass.getInstance().getEffectDisapper();

@@ -1,12 +1,12 @@
 package com.bsu.make;
 
 import com.badlogic.gdx.utils.Array;
-import com.bsu.make.CardFactory.SUBTYPE;
-import com.bsu.obj.Card;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
+import com.bsu.obj.Role.Type;
 import com.bsu.screen.GameScreen;
 import com.bsu.tools.Configure.QUALITY;
+import com.bsu.tools.GameTextureClass;
 
 public class GameScreenConfigure {
 	private static GameScreenConfigure instance = null;
@@ -25,12 +25,19 @@ public class GameScreenConfigure {
 	public void makeGameScreen1(GameScreen gs) {
 
 		Array<Role> rols = new Array<Role>();
-		rols.add(RoleFactory.getInstance().getHeroRole("hero1"));
-		rols.add(RoleFactory.getInstance().getHeroRole2("hero2"));
-		rols.add(RoleFactory.getInstance().getHeroRole2("hero3"));
-		rols.add(RoleFactory.getInstance().getEnemyRole("enemy1"));
-		rols.add(RoleFactory.getInstance().getEnemyRole("enemy2"));
-		rols.add(RoleFactory.getInstance().getEnemyRole("enemy3"));
+//		rols.add(RoleFactory.getInstance().getHeroRole("hero1"));
+//		rols.add(RoleFactory.getInstance().getHeroRole2("hero2"));
+//		rols.add(RoleFactory.getInstance().getHeroRole2("hero3"));
+//		rols.add(RoleFactory.getInstance().getEnemyRole("enemy1"));
+//		rols.add(RoleFactory.getInstance().getEnemyRole("enemy2"));
+//		rols.add(RoleFactory.getInstance().getEnemyRole("enemy3"));
+		rols.add(RoleFactory.getInstance().getFighter("hero1", Type.HERO, QUALITY.green,GameTextureClass.getInstance().h0_photo));
+		rols.add(RoleFactory.getInstance().getFighter("hero2", Type.HERO, QUALITY.green,GameTextureClass.getInstance().h1_photo));
+		rols.add(RoleFactory.getInstance().getFighter("hero3", Type.HERO, QUALITY.green,GameTextureClass.getInstance().h2_photo));
+		rols.add(RoleFactory.getInstance().getFighter("enemy1", Type.ENEMY, QUALITY.green,GameTextureClass.getInstance().h3_photo));
+		rols.add(RoleFactory.getInstance().getFighter("enemy2", Type.ENEMY, QUALITY.green,GameTextureClass.getInstance().h4_photo));
+		rols.add(RoleFactory.getInstance().getFighter("enemy3", Type.ENEMY, QUALITY.green,GameTextureClass.getInstance().h5_photo));
+
 		gs.game_init(0, rols);
 	}
 
@@ -41,8 +48,9 @@ public class GameScreenConfigure {
 		for(Role h:Player.getInstance().playerFightRole){
 			heroRoles.add(h);
 		}
-		npcRoles.add(new Role(new Card(SUBTYPE.enemy, QUALITY.green)
-				.getRoleValue()));
+//		npcRoles.add(new Role(new Card(SUBTYPE.enemy, QUALITY.green)
+//				.getRoleValue()));
+		npcRoles.add(RoleFactory.getInstance().getFighter("enemy1", Type.ENEMY, QUALITY.green,GameTextureClass.getInstance().h5_photo));
 		rols.addAll(heroRoles);
 		rols.addAll(npcRoles);
 		gs.game_init(0, rols);
