@@ -24,9 +24,7 @@ public class Role extends Actor {
 	}; // 英雄还是NPC
 	private Equip weapon;//人物武器
 	private Equip armor;//人物护甲
-	private Array<Skill> skillList;//人物技能树
-	private SkillTree skltree;//人物技能树对象
-	
+
 	private BsuEvent bevent = null; // 用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
 	public QUALITY quality;//品质
@@ -42,8 +40,9 @@ public class Role extends Actor {
 	private float time_state; // 行动状态时间
 	public float time_effect; // 技能特效时间
 	public STATE state; // 英雄的当前状态
-	private Skill cskill; // 英雄当前的攻击技能
-	public Array<Skill> array_skill = new Array<Skill>(); // 英雄此关卡携带的技能
+	public Skill cskill; // 英雄当前的攻击技能
+	public Array<Skill> skill_tree = new Array<Skill>();	//英雄的技能树
+	public Array<Skill> skill_array = new Array<Skill>(); // 英雄此关卡携带的技能
 
 	private Animation ani_idle; // 站立动画
 	private Animation ani_move; // 移动动画
@@ -68,10 +67,11 @@ public class Role extends Actor {
 	 * @param n
 	 *            该角色的名字
 	 */
-	public Role(Type t, String n,int mhp,int av,int dv,Equip w,Equip a,Array<Skill> as,TextureRegion tr) {
+	public Role(Type t,QUALITY q, String n,int mhp,int av,int dv,Equip w,Equip a,Array<Skill> as,TextureRegion tr) {
 		// TODO Auto-generated constructor stub
 		name = n;																		//名称
 		type = t;																		//类型，英雄还是敌人
+		quality = q;
 		time_state = 0;																	//time_state初始化为0
 		maxHp = mhp;
 		currentHp = mhp;
@@ -79,9 +79,9 @@ public class Role extends Actor {
 		value_defend = dv;
 		weapon = w;
 		armor = a;
-		array_skill = as;
+		skill_tree = as;
 		roleTexture = tr;
-		cskill = array_skill.get(0);
+		cskill = skill_tree.get(0);
 		set_actor_base(type);
 //		array_skill.add(SkillFactory.getInstance().getSkillByName("atk"));
 //		cskill=SkillFactory.getInstance().getSkillByName("atk");

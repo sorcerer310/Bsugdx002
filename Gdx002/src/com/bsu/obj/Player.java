@@ -60,6 +60,7 @@ public class Player {
 			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().zyc_photo));
 			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().zyc_photo));
 			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.orange,GameTextureClass.getInstance().zyc_photo));
+			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().zyc_photo));
 		}
 		resetRoleArray(playerRole);
 		return playerRole;

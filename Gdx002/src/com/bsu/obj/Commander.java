@@ -43,7 +43,7 @@ public class Commander {
 		stage=s;
 		commanderStart();
 	}
-	public void commanderStart(){
+	private void commanderStart(){
 		lactor = stage.getActors();
 		heros.clear();
 		npcs.clear();
