@@ -8,7 +8,6 @@ import com.bsu.obj.Role.Type;
 import com.bsu.obj.skilltree.SkillTree;
 import com.bsu.tools.Configure.CLASSES;
 import com.bsu.tools.U;
-import com.bsu.tools.Configure.FACE;
 import com.bsu.tools.Configure.QUALITY;
 
 /**

@@ -86,7 +86,7 @@ public class SkillFactory {
 					new Vector2[] {new Vector2(1,0),new Vector2(1,1)});
 			break;
 		case 6:
-			skl = new Skill(i,"马步",QUALITY.green,Type.pbuff_healing,0.05f,0.01f,new CLASSES[]{CLASSES.all},"一回合内恢复自身少量生命",
+			skl = new Skill(i,"马步",QUALITY.green,Type.p_healing,0.05f,0.01f,new CLASSES[]{CLASSES.all},"一回合内恢复自身少量生命",
 					GameAnimationClass.getInstance().getEffect2(),GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(0,0)});
 			break;

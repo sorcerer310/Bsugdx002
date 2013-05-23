@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role.Type;
+import com.bsu.obj.skilltree.Skill;
+import com.bsu.obj.skilltree.Skill.ObjectType;
 import com.bsu.screen.GameScreen;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.CommandQueue;
@@ -190,8 +192,9 @@ public class Commander {
 		for (int i = 0; i < heros.size; i++) {
 			Role h = heros.get(i);
 			waitRoleFlag = true; // 初始化等待循环flag为true
-			Array<Vector2> vs = h.getCurrSkillRange(); // 获得当前技能的攻击范围
-			Array<Role> atkrs = getRolsInSkillRange(vs, npcs); // 获得攻击范围内的作用目标
+//			Array<Vector2> vs = h.getCurrSkillRange(); // 获得当前技能的攻击范围
+//			Array<Role> atkrs = getRolsInSkillRange(vs, npcs); // 获得攻击范围内的作用目标
+			Array<Role> atkrs = getRolesInSkillRange(h.cskill);
 			// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
 			if (atkrs.size == 0) {
 				if (!h.hasAnatherRole(heros)) {
@@ -247,8 +250,9 @@ public class Commander {
 		for (int i = 0; i < npcs.size; i++) {
 			Role e = npcs.get(i);
 			waitRoleFlag = true; // 初始化等待循环flag为false
-			Array<Vector2> vs = e.getCurrSkillRange(); // 获得当前技能的攻击范围
-			Array<Role> atkrs = getRolsInSkillRange(vs, heros); // 获得攻击范围内的作用目标
+//			Array<Vector2> vs = e.getCurrSkillRange(); // 获得当前技能的攻击范围
+//			Array<Role> atkrs = getRolsInSkillRange(vs, heros); // 获得攻击范围内的作用目标
+			Array<Role> atkrs = getRolesInSkillRange(e.cskill);
 			// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
 			if (atkrs.size == 0) {
 				if (!e.hasAnatherRole(npcs)) {
@@ -312,12 +316,29 @@ public class Commander {
 	 *            技能范围
 	 * @return 返回符合类型的所有Role
 	 */
-	private Array<Role> getRolsInSkillRange(Array<Vector2> vs, Array<Role> rs) {
-		Array<Role> retrs = new Array<Role>();
+	private Array<Role> getRolesInSkillRange(Skill s) {
+		Array<Vector2> vs = s.getRange();					//技能作用范围
+		Array<Role> retrs = new Array<Role>();				//返回符合类型的英雄
+		Array<Role> checkrs = null;
+		if(s.type==Skill.Type.f_damage ||s.type==Skill.Type.f_shifhp ||s.type==Skill.Type.p_atkbeat ||
+				s.type==Skill.Type.p_damage ||s.type==Skill.Type.pdot_damage ||s.type==Skill.Type.prob_blind ||
+				s.type==Skill.Type.prob_dizzy ||s.type==Skill.Type.prob_nude )
+			checkrs = npcs;
+		else if(s.type==Skill.Type.f_healing ||s.type==Skill.Type.p_healing ||s.type==Skill.Type.pbuff_atk ||
+				s.type==Skill.Type.pbuff_def ||s.type==Skill.Type.pbuff_healing ||s.type==Skill.Type.pbuff_hp )
+			checkrs = heros;
+		//如果没有指定检查Role直接返回retrs
+		if(checkrs == null)
+			return retrs;
+		
 		for (Vector2 v : vs) {
-			for (Role r : rs) {
-				if (v.x == r.getBoxX() && v.y == r.getBoxY())
+			for (Role r : checkrs) {
+				if (v.x == r.getBoxX() && v.y == r.getBoxY()){
 					retrs.add(r);
+					//如果技能为单体技能，直接返回结果数组
+					if(s.otype==ObjectType.single)
+						return retrs;
+				}
 			}
 		}
 		return retrs;

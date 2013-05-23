@@ -44,7 +44,6 @@ public class GameScreen extends CubocScreen implements Observer,
 		super(mxg);
 		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
 		UIStage = new Stage(Configure.rect_width, Configure.rect_height, false);
-		commander = Commander.getInstance(stage,this);
 	}
 
 	/**
@@ -67,7 +66,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < rols.size; i++) {
 			stage.addActor(rols.get(i));
 		}
-		//commander.commanderStart();
+		commander = Commander.getInstance(stage,this);
 		this.addActorListener();
 		setBornPosition(GameMap.map, Type.HERO, Configure.object_layer_hero);
 		setBornPosition(GameMap.map, Type.ENEMY, Configure.object_layer_enemy);
