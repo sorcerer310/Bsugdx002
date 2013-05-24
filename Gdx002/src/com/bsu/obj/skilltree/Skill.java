@@ -113,10 +113,19 @@ public class Skill {
 			//持续伤害，默认为3回合
 			}else if(type==Skill.Type.pdot_damage){
 				object.csstate.add(new ContinuedSkillState(3,owner.getAttack()*val,CSType.dot,ani_continue));
+			//一定机率致盲
+			}else if(type==Skill.Type.prob_blind){
+				//此处增加机率代码
+				object.csstate.add(new ContinuedSkillState(1,0,CSType.blind,ani_continue));
+			//一定机率眩晕
+			}else if(type==Skill.Type.prob_dizzy){
+				//此处增加机率代码
+				object.csstate.add(new ContinuedSkillState(1,0,CSType.dizzy,ani_continue));
+			//破甲效果
+			}else if(type==Skill.Type.prob_nude){
+				object.csstate.add(new ContinuedSkillState(3,val,CSType.debuff_def,ani_continue));
 			}
-			object.currentHp = (int) (object.currentHp - this.val >= 0 ? object.currentHp
-				- this.val
-				: 0);
+			
 			return false;
 		}
 		else if(this.type==Skill.Type.f_healing  ||this.type==Skill.Type.pbuff_atk ||

@@ -38,7 +38,8 @@ public class Role extends Actor {
 	public int extAttack = 0;	//额外的攻击力		
 	private int defend;//自身防御力
 	public int extDefend = 0;	//额外的防御力
-	public Array<ContinuedSkillState> csstate;	//当前在人物身上的各种持续效果 
+	public Array<ContinuedSkillState> csstate;	//当前在人物身上的各种持续效果
+	public boolean isRoundMove = true;	//本回合是否移动
 	
 	private float time_state; // 行动状态时间
 	public float time_effect; // 技能特效时间
@@ -376,6 +377,8 @@ public class Role extends Actor {
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
+
+	
 	/**
 	 * 返回英雄的职业数据
 	 * @return
@@ -411,6 +414,7 @@ public class Role extends Actor {
 		extMaxHp = 0;
 		extAttack = 0;
 		extDefend = 0;
+		isRoundMove = true;
 	}
 	/**
 	 * 获得人物总hp上限

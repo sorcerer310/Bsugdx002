@@ -10,8 +10,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 public class ContinuedSkillState {
 	public int remainRound	 = 0;		//残留回合数
 	public float val = 0;				//每回合的作用值
-	//增益攻击，增益防御，增益HP上限，减益攻击，减益防御，减益HP，持续伤害，持续治疗
-	public enum CSType {none,buff_atk,buff_def,buff_hp,debuff_atk,debuff_def,debuff_hp,dot,hot};
+	//增益攻击，增益防御，增益HP上限，减益攻击，减益防御，减益HP，持续伤害，持续治疗,致盲,眩晕
+	public enum CSType {none,buff_atk,buff_def,buff_hp,debuff_atk,debuff_def,debuff_hp,dot,hot,blind,dizzy};
 	public CSType cstype = CSType.none;
 	public Animation ani = null;		//持续效果每回合的动画
 	

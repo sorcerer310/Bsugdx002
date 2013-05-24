@@ -220,7 +220,19 @@ public class Commander {
 						commandRoleDead(r);
 				}else if(css.cstype==CSType.hot){
 					r.currentHp = (int)(r.currentHp + css.val<(r.getMaxHp())?r.currentHp+css.val:r.getMaxHp());
+				}else if(css.cstype==CSType.blind){
+					r.isRoundMove = false;
+				}else if(css.cstype==CSType.dizzy){
+					r.isRoundMove = false;
 				}
+				//如果持续效果动画不为空，播放动画
+				if(css.ani!=null)
+					r.ani_role_isAttacked(css.ani);
+				//持续回合数减1
+				css.remainRound -=1;
+				//如果持续效果剩余回合数为0，从人物的持续效果队列中移除该持续效果
+				if(css.remainRound<=0)
+					r.csstate.removeValue(css, true);
 			}
 		}
 		be.notify(this, "continue_state_completed");
@@ -258,6 +270,7 @@ public class Commander {
 	private void commandHeros(BsuEvent be) throws InterruptedException {
 		for (int i = 0; i < heros.size; i++) {
 			final Role h = heros.get(i);
+			if(!h.isRoundMove) continue;	//如果本回合该英雄不行动则跳过该英雄
 			waitRoleFlag = true; 			// 初始化等待循环flag为true
 			currTaskComFlag = false;		//只是当前处理技能任务是否完成
 //			moveAfterSkillFlag = false;		//指示释放技能后是否继续移动
