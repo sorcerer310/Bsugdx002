@@ -16,37 +16,40 @@ import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.GameAnimationClass;
 import com.bsu.tools.Configure.FACE;
 import com.bsu.tools.Configure.STATE;
+import com.bsu.tools.U;
 
 public class Role extends Actor {
 	public static enum Type {
 		HERO, ENEMY
 	}; // 英雄还是NPC
-	private Equip weapon;//人物武器
-	private Equip armor;//人物护甲
+
+	private Equip weapon;// 人物武器
+	private Equip armor;// 人物护甲
 
 	private BsuEvent bevent = null; // 用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
-	public QUALITY quality;//品质
+	public QUALITY quality;// 品质
 	public Type type = null; // ָ指定当前角色是英雄还是 NPC
-	public CLASSES classes = null;//指定当前人物的职业
-	public int level;//等级
+	public CLASSES classes = null;// 指定当前人物的职业
+	public int level;// 等级
 	public TextureRegion roleTexture;
-	private int maxHp = 100; // 总血量
-	public int extMaxHp = 0;	//额外的血量上限
+	public int maxHp = 100; // 总血量
+	public int extMaxHp = 0; // 额外的血量上限
 	public int currentHp = 30; // 当前血量
 	private int attack; // 自身攻击力
-	public int extAttack = 0;	//额外的攻击力		
-	private int defend;//自身防御力
-	public int extDefend = 0;	//额外的防御力
-	public int exp = 0;			//经验值
-	public Array<ContinuedSkillState> csstate = new Array<ContinuedSkillState>();	//当前在人物身上的各种持续效果
-	public boolean isRoundMove = true;	//本回合是否移动
-	
+	public int extAttack = 0; // 额外的攻击力
+	private int defend;// 自身防御力
+	public int extDefend = 0; // 额外的防御力
+	public int exp = 0; // 经验值
+	public int expUp = 0;
+	public Array<ContinuedSkillState> csstate = new Array<ContinuedSkillState>(); // 当前在人物身上的各种持续效果
+	public boolean isRoundMove = true; // 本回合是否移动
+
 	private float time_state; // 行动状态时间
 	public float time_effect; // 技能特效时间
 	public STATE state; // 英雄的当前状态
 	public Skill cskill; // 英雄当前的攻击技能
-	public Array<Skill> skill_tree = new Array<Skill>();	//英雄的技能树
+	public Array<Skill> skill_tree = new Array<Skill>(); // 英雄的技能树
 	public Array<Skill> skill_array = new Array<Skill>(); // 英雄此关卡携带的技能
 
 	private Animation ani_idle; // 站立动画
@@ -62,7 +65,7 @@ public class Role extends Actor {
 	private boolean selected; // 被选中等待操作？
 	private boolean controlled;// 此轮是否被操作过
 	private Array<Vector2> pass_array = new Array<Vector2>(); // 人物可以移动的格子数组
-	private Array<Vector2> attack_array = new Array<Vector2>();//人物可以攻击的格子
+	private Array<Vector2> attack_array = new Array<Vector2>();// 人物可以攻击的格子
 
 	/**
 	 * 角色初始化
@@ -72,13 +75,22 @@ public class Role extends Actor {
 	 * @param n
 	 *            该角色的名字
 	 */
+//<<<<<<< HEAD
 	public Role(Type t,QUALITY q, CLASSES c,String n,int mhp,int av,int dv,Equip w,Equip a,Array<Skill> as,TextureRegion tr) {
+//=======
+//	public Role(Type t, QUALITY q, String n, int mhp, int av, int dv, Equip w,
+//			Equip a, Array<Skill> as, TextureRegion tr) {
+//>>>>>>> f53bf844694bc899075bcb82dcf031040cb27e91
 		// TODO Auto-generated constructor stub
-		name = n;																		//名称
-		type = t;																		//类型，英雄还是敌人
+		name = n; // 名称
+		type = t; // 类型，英雄还是敌人
 		quality = q;
+//<<<<<<< HEAD
 		classes = c;
 		time_state = 0;																	//time_state初始化为0
+//=======
+//		time_state = 0; // time_state初始化为0
+//>>>>>>> f53bf844694bc899075bcb82dcf031040cb27e91
 		maxHp = mhp;
 		currentHp = mhp;
 		attack = av;
@@ -88,10 +100,11 @@ public class Role extends Actor {
 		skill_tree = as;
 		roleTexture = tr;
 		cskill = skill_tree.get(0);
+		exp=baseExp();
 		set_actor_base(type);
-//		array_skill.add(SkillFactory.getInstance().getSkillByName("atk"));
-//		cskill=SkillFactory.getInstance().getSkillByName("atk");
+		levelUp();
 	}
+
 	/**
 	 * 根据类型获得资源
 	 * 
@@ -99,16 +112,18 @@ public class Role extends Actor {
 	 */
 	private void set_actor_base(Type type) {
 		this.type = type;
-		if(type==Type.HERO)
+		if (type == Type.HERO)
 			face = FACE.right;
-		else{
-			face=FACE.left;
+		else {
+			face = FACE.left;
 			roleTexture.flip(true, false);
 		}
-		ani_idle = GameAnimationClass.getInstance().getRoleAnimation(roleTexture);
-		ani_move = GameAnimationClass.getInstance().getRoleAnimation(roleTexture);
+		ani_idle = GameAnimationClass.getInstance().getRoleAnimation(
+				roleTexture);
+		ani_move = GameAnimationClass.getInstance().getRoleAnimation(
+				roleTexture);
 		ani_disapper = GameAnimationClass.getInstance().getEffectDisapper();
-		ani_apper =  GameAnimationClass.getInstance().getEffectApper();
+		ani_apper = GameAnimationClass.getInstance().getEffectApper();
 		set_ani_from_state(STATE.idle);
 	}
 
@@ -154,7 +169,9 @@ public class Role extends Actor {
 
 	/**
 	 * 英雄被攻击播放动画
-	 * @param ani	要播放的动画
+	 * 
+	 * @param ani
+	 *            要播放的动画
 	 */
 	public void ani_role_isAttacked(Animation ani) {
 		time_effect = 0;
@@ -208,7 +225,7 @@ public class Role extends Actor {
 				set_ani_from_state(STATE.idle);
 			}
 			if (bevent != null) {
-				if(ani_current==ani_apper){
+				if (ani_current == ani_apper) {
 					set_ani_from_state(STATE.idle);
 				}
 				bevent.notify(this, this.name);
@@ -280,9 +297,9 @@ public class Role extends Actor {
 	public Array<Vector2> getCurrSkillRange() {
 		realrange.clear();
 		Array<Vector2> rs = null;
-		if(this.face==Configure.FACE.right)
+		if (this.face == Configure.FACE.right)
 			rs = cskill.getRange();
-		else if(this.face==Configure.FACE.left)
+		else if (this.face == Configure.FACE.left)
 			rs = cskill.flipRange();
 		for (Vector2 v : rs) {
 			realrange.add(new Vector2(this.getBoxX() + v.x, v.y
@@ -354,51 +371,86 @@ public class Role extends Actor {
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
-
-	
 	/**
-	 * 返回英雄的职业数据
+	 * 返回角色基本exp
 	 * @return
 	 */
+	public int baseExp(){
+		int exp=0;
+		if(quality==QUALITY.green)
+			exp=Configure.baseExpGreen;
+		if(quality==QUALITY.blue)
+			exp=Configure.baseExpBlue;
+		if(quality==QUALITY.purple)
+			exp=Configure.baseExpPurple;
+		if(quality==QUALITY.orange)
+			exp=Configure.baseExpOrange;
+		return exp;
+	}
+	/**
+	 * 返回英雄升级后数据
+	 */
+	public void levelUp(){
+		level++;
+		maxHp=U.hpLevel(this);
+		attack=U.attackLevel(this);
+		defend=U.defendLevel(this);
+		expUp=U.expLevel(this);
+	}
+	/**
+	 * 返回英雄的职业数据
+	 * 
+	 * @return
+	 */
+	
 	public CLASSES getClasses() {
 		return classes;
 	}
+
 	/**
-	 * 返回英雄的品质 
+	 * 返回英雄的品质
+	 * 
 	 * @return
 	 */
 	public QUALITY getQuality() {
 		return quality;
 	}
+
 	/**
 	 * 返回人物总攻击力
+	 * 
 	 * @return
 	 */
 	public int getAttack() {
-		return attack+extAttack;
+		return attack + extAttack;
 	}
+
 	/**
 	 * 返回人物总防御力
+	 * 
 	 * @return
 	 */
 	public int getDefend() {
-		return defend+extDefend;
+		return defend + extDefend;
 	}
+
 	/**
 	 * 清除所有额外值
 	 */
-	public void clearExtValue(){
+	public void clearExtValue() {
 		extMaxHp = 0;
 		extAttack = 0;
 		extDefend = 0;
 		isRoundMove = true;
 	}
+
 	/**
 	 * 获得人物总hp上限
+	 * 
 	 * @return
 	 */
 	public int getMaxHp() {
-		return maxHp+extMaxHp;
+		return maxHp + extMaxHp;
 	}
 
 }

@@ -29,6 +29,7 @@ import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.GameTextureClass;
 import com.bsu.tools.Configure.QualityS;
+import com.bsu.tools.U;
 
 public class RoleScreen extends CubocScreen implements Observer,
 		GestureListener {
@@ -49,14 +50,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private int clingX;// 地图移动位移
 	private OrthographicCamera c;
 	private int cameraWidth;// 显示人物时的界面宽度
-	private Label nameLabel;
-	private Label qualityLabel;
-	private Label attackValueLabel;
-	private Label defendValueLabel;
-	private Label levelLabel;
-	private Label professionLabel;// 职业
-	private Image roleImg;
-	private Image skillImg, skill1Img, attackImg, defendImg;// 技能，武器，防具
+	private WidgetFactory wfy;// 界面工厂类
 
 	public RoleScreen(Game game) {
 		super(game);
@@ -65,21 +59,16 @@ public class RoleScreen extends CubocScreen implements Observer,
 				false);
 		RoleInfoStage = new Stage(Configure.rect_width, Configure.rect_height,
 				false);
+		wfy = WidgetFactory.getInstance();
 		c = (OrthographicCamera) sRoleStage.getCamera();
 		background = new Image(GameTextureClass.getInstance().rolePanel);
 		stage.addActor(background);
-		ib_back = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_back, stage, 375, 272);
-		allButton = WidgetFactory.getInstance().makeOneTextButton("all", stage,
-				20, 30);
-		greenButton = WidgetFactory.getInstance().makeOneTextButton("green",
-				stage, 50, 30);
-		blueButton = WidgetFactory.getInstance().makeOneTextButton("blue",
-				stage, 90, 30);
-		purpleButton = WidgetFactory.getInstance().makeOneTextButton("purple",
-				stage, 130, 30);
-		orangeButton = WidgetFactory.getInstance().makeOneTextButton("orange",
-				stage, 170, 30);
+		ib_back = wfy.makeImageButton(Configure.button_back, stage, 375, 272);
+		allButton = wfy.makeOneTextButton("all", stage, 20, 30);
+		greenButton = wfy.makeOneTextButton("green", stage, 50, 30);
+		blueButton = wfy.makeOneTextButton("blue", stage, 90, 30);
+		purpleButton = wfy.makeOneTextButton("purple", stage, 130, 30);
+		orangeButton = wfy.makeOneTextButton("orange", stage, 170, 30);
 		setListener();
 	}
 
@@ -117,6 +106,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 */
 	private void showQualityRole(Array<Role> roleArray) {
 		sRoleStage.clear();
+		RoleInfoStage.clear();
 		imgArray.clear();
 		clingX = 0;
 		c.position.x = Configure.rect_width / 2;
@@ -151,91 +141,57 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 */
 	private void showRoleInfo(Role r) {
 		RoleInfoStage.clear();
-		if (r == null) {
-			selectRole = r;
+		selectRole = r;
+		if (selectRole == null) {
 			return;
 		}
-		nameLabel = WidgetFactory.getInstance().makeLabel(r.name, RoleInfoStage, 40,
-				240);
-		qualityLabel = WidgetFactory.getInstance().makeLabel(
-				getQualityName(r.quality), RoleInfoStage, 100, 240);
-		attackValueLabel = WidgetFactory.getInstance().makeLabel(
-				"" + r.getAttack(), RoleInfoStage, 40, 220);
-		defendValueLabel = WidgetFactory.getInstance().makeLabel(
-				"" + r.getDefend(), RoleInfoStage, 100, 220);
-		levelLabel = WidgetFactory.getInstance().makeLabel("" + r.level, RoleInfoStage,
-				40, 200);
-		professionLabel = WidgetFactory.getInstance().makeLabel("" + r.classes,
+		Label nameLabel = wfy.makeLabel(r.name, RoleInfoStage, 40, 240);
+		Label qualityLabel = wfy.makeLabel(getQualityName(r.quality),
+				RoleInfoStage, 100, 240);
+		Label lifeLabel = wfy.makeLabel(r.maxHp + "", RoleInfoStage, 40, 220);
+		Label expLabel = wfy.makeLabel(r.exp + "/" + r.expUp, RoleInfoStage,
+				100, 220);
+		Label attackValueLabel = wfy.makeLabel("" + r.getAttack(),
+				RoleInfoStage, 40, 180);
+		Label defendValueLabel = wfy.makeLabel("" + r.getDefend(),
+				RoleInfoStage, 100, 180);
+		Label levelLabel = wfy.makeLabel("" + r.level, RoleInfoStage, 40, 200);
+		Label professionLabel = wfy.makeLabel("" + U.getClasses(r),
 				RoleInfoStage, 100, 200);
-		roleImg = resetImg(roleImg, true, RoleInfoStage, r.roleTexture, 0.5f,
-				40, 260);
-		skillImg = resetImg(skillImg, true, RoleInfoStage, r.roleTexture, 0.2f,
-				40, 180);
-		skill1Img = resetImg(skill1Img, true, RoleInfoStage, r.roleTexture,
-				0.2f, 100, 180);
-		attackImg = resetImg(attackImg, true, RoleInfoStage, r.roleTexture,
-				0.2f, 40, 140);
-		defendImg = resetImg(defendImg, true, RoleInfoStage, r.roleTexture,
-				0.2f, 100, 140);
-		int numsGreen=0;
-		int numsBlue=0;
-		int numsPur=0;
-		int numsOra=0;
-		int ix=180,iy=110;
+		Image roleImg = wfy
+				.makeImg(r.roleTexture, RoleInfoStage, 0.5f, 40, 260);
+		Image skillImg = wfy.makeImg(r.cskill.icon, RoleInfoStage, 1f, 40, 140);
+		Image skill1Img = wfy.makeImg(null, RoleInfoStage, 0.2f, 100, 140);
+		Image attackImg = wfy.makeImg(null, RoleInfoStage, 0.2f, 40, 100);
+		Image defendImg = wfy.makeImg(null, RoleInfoStage, 0.2f, 100, 100);
+		int numsGreen = 0;
+		int numsBlue = 0;
+		int numsPur = 0;
+		int numsOra = 0;
+		int ix = 180, iy = 110;
 		for (Skill s : r.skill_tree) {
 			if (s.quality == QUALITY.green) {
-				Image img=WidgetFactory.getInstance().makeImg(s.icon, RoleInfoStage, 1, ix+numsGreen*40, iy);
+				Image img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix
+						+ numsGreen * 40, iy);
 				numsGreen++;
 			}
 			if (s.quality == QUALITY.blue) {
-				Image img=WidgetFactory.getInstance().makeImg(s.icon, RoleInfoStage, 1, ix+numsBlue*40, iy+40);
+				Image img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsBlue
+						* 40, iy + 40);
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
-				Image img=WidgetFactory.getInstance().makeImg(s.icon, RoleInfoStage, 1, ix+numsPur*40, iy+80);
+				Image img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsPur
+						* 40, iy + 80);
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
-				Image img=WidgetFactory.getInstance().makeImg(s.icon, RoleInfoStage, 1, ix+numsOra*40, iy+120);
+				Image img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsOra
+						* 40, iy + 120);
 				numsOra++;
 			}
 
 		}
-	}
-
-	/**
-	 * 重新设置Role技能，装备的图像，
-	 * 
-	 * @param img
-	 *            目标图像
-	 * @param s
-	 *            舞台
-	 * @param tr
-	 *            图片源
-	 * @param scv
-	 *            缩放值
-	 * @param x
-	 * @param y
-	 */
-	private Image resetImg(Image img, boolean flag, Stage s, TextureRegion tr,
-			float scv, int x, int y) {
-		if (!flag) {
-			if (img != null) {
-				img.getParent().removeActor(img);
-				img = null;
-			}
-		} else {
-			Skin skin = new Skin();
-			skin.add("hi", tr);
-			if (img == null) {
-				img = WidgetFactory.getInstance().makeImg(tr, s, scv, x, y);
-			} else {
-				img.setDrawable(skin.getDrawable("hi"));
-			}
-			skin.dispose();
-			skin = null;
-		}
-		return img;
 	}
 
 	/**
@@ -311,6 +267,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
+		selectRole = null;
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public class Configure {
 
 	public static int map_box_value = 32;
 	public static float duration = 0.5f; // 移动一格需要的时间
-	public static float duration_skill_effect = 0.08f;	//技能效果释放时间
+	public static float duration_skill_effect = 0.08f; // 技能效果释放时间
 	public static int extra_value = 10; // 根据坐标判断人物所在格子的额外数值，以免出现格子错误，因为太接近了。
 
 	public static String logo_0_texture_string = "data/logo/BsuLogo.png";
@@ -33,17 +33,17 @@ public class Configure {
 	public static String screen_update = "msupdate";
 	public static String screen_skill = "mskill";
 	public static String screen_shop = "mshop";
-	public static String screen_selectRole="mselect";
+	public static String screen_selectRole = "mselect";
 	public static String button_back = "btback";
-	public static String Img_head_back="headback";
-	public static String Img_skill_back="skillback";
+	public static String Img_head_back = "headback";
+	public static String Img_skill_back = "skillback";
 
 	public static String[] game_map_path_string = { "map1", "map2" };// 地图关卡名称（路径）
 
-	public static String map_raw_min_key="raw_min";//记录地图长宽数据key
-	public static String map_raw_max_key="raw_max";
-	public static String map_coll_min_key="coll_min";
-	public static String map_coll_max_key="coll_max";
+	public static String map_raw_min_key = "raw_min";// 记录地图长宽数据key
+	public static String map_raw_max_key = "raw_max";
+	public static String map_coll_min_key = "coll_min";
+	public static String map_coll_max_key = "coll_max";
 	public static String object_layer_hero = "hero"; // 地图元素中对象层角色方名称
 	public static String object_layer_enemy = "enemy";
 
@@ -62,24 +62,55 @@ public class Configure {
 	public static String map_type_hero_home = "hero_home"; // 地图对象层类型-->角色基地
 	public static String map_type_enemy_home = "enemy_home"; // 地图对象层类型-->NPC基地
 
+	public static int baseHpGreen = 100;// 绿色品质卡片初始基本生命
+	public static int baseHpBlue = 200;// 蓝色品质卡片初始生命
+	public static int baseHpPurple = 300;
+	public static int baseHpOrange = 400;
+
+	public static int baseAttackGreen = 10;// 绿色卡片初始基本攻击力
+	public static int baseAttackBlue = 20;
+	public static int baseAttackPurple = 30;
+	public static int baseAttackOrange = 40;
+
+	public static int baseDefendGreen = 5;// 绿色卡片初始基本防御力
+	public static int baseDefendBlue = 10;
+	public static int baseDefendPurple = 15;
+	public static int baseDefendOrange = 20;
+
+	public static int baseExpGreen = 10;// 绿色卡片初始经验
+	public static int baseExpBlue = 50;
+	public static int baseExpPurple = 200;
+	public static int baseExpOrange = 500;
+	
+	public static int baseExpUpGreen = 50;// 绿色卡片升级所需基本经验
+	public static int baseExpUpBlue = 200;
+	public static int baseExpUpPurple = 500;
+	public static int baseExpUpOrange = 1000;
+
 	public static enum STATE { // 人物状态
-		idle, attack_normal, move, attack_v, attack_h,disapper,apper
+		idle, attack_normal, move, attack_v, attack_h, disapper, apper
 	};
-	public static enum QUALITY{
-		green,blue,purple,orange
-	}//品质数据
+
+	public static enum QUALITY {
+		green, blue, purple, orange
+	}// 品质数据
+
 	public enum QualityS {
-		gselect, bselect, pselect, oselect,allselect
+		gselect, bselect, pselect, oselect, allselect
 	}
+
 	public static enum FACE {
 		left, right
 	}; // 人物朝向
+
 	public static enum DIRECTION {
 		left, right, up, down
 	};// 4方向
-	public static enum CLASSES{
-		fighter,cleric,wizard,sorcerer,archer,all
-	};//人物职业，战士，牧师，元素法师，黑暗法师，射手
+
+	public static enum CLASSES {
+		fighter, cleric, wizard, sorcerer, archer, all
+	};// 人物职业，战士，牧师，元素法师，黑暗法师，射手
+
 	/**
 	 * 取得FONT
 	 * 
@@ -133,6 +164,7 @@ public class Configure {
 		}
 		return isAttackedImgGroup;
 	}
+
 	/**
 	 * 取得品质对应文字
 	 * 
