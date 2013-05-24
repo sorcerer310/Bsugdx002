@@ -91,6 +91,8 @@ public class Role extends Actor {
 		skill_tree = as;
 		roleTexture = tr;
 		cskill = skill_tree.get(0);
+		skill_array.add(skill_tree.get(0));
+		skill_array.add(skill_tree.get(1));
 		exp=baseExp();
 		set_actor_base(type);
 		levelUp();

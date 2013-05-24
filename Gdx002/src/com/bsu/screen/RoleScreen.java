@@ -160,8 +160,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 				RoleInfoStage, 100, 200);
 		Image roleImg = wfy
 				.makeImg(r.roleTexture, RoleInfoStage, 0.5f, 40, 260);
-		Image skillImg = wfy.makeImg(r.cskill.icon, RoleInfoStage, 1f, 40, 140);
-		Image skill1Img = wfy.makeImg(null, RoleInfoStage, 0.2f, 100, 140);
+		Image skillImg = wfy.makeImg(r.skill_array.get(0).icon, RoleInfoStage, 1f, 40, 140);
+		Image skill1Img = wfy.makeImg(r.skill_array.get(1).icon, RoleInfoStage, 1f, 100, 140);
 		Image attackImg = wfy.makeImg(null, RoleInfoStage, 0.2f, 40, 100);
 		Image defendImg = wfy.makeImg(null, RoleInfoStage, 0.2f, 100, 100);
 		int numsGreen = 0;
