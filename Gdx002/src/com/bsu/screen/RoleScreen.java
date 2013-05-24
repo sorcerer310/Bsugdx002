@@ -29,6 +29,7 @@ import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.GameTextureClass;
 import com.bsu.tools.Configure.QualityS;
+import com.bsu.tools.U;
 
 public class RoleScreen extends CubocScreen implements Observer,
 		GestureListener {
@@ -50,9 +51,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private OrthographicCamera c;
 	private int cameraWidth;// 显示人物时的界面宽度
 	private WidgetFactory wfy;// 界面工厂类
-
-	// private Image roleImg;
-	// private Image skillImg, skill1Img, attackImg, defendImg;// 技能，武器，防具
 
 	public RoleScreen(Game game) {
 		super(game);
@@ -150,22 +148,22 @@ public class RoleScreen extends CubocScreen implements Observer,
 		Label nameLabel = wfy.makeLabel(r.name, RoleInfoStage, 40, 240);
 		Label qualityLabel = wfy.makeLabel(getQualityName(r.quality),
 				RoleInfoStage, 100, 240);
+		Label lifeLabel = wfy.makeLabel(r.maxHp + "", RoleInfoStage, 40, 220);
+		Label expLabel = wfy.makeLabel(r.exp + "/" + r.expUp, RoleInfoStage,
+				100, 220);
 		Label attackValueLabel = wfy.makeLabel("" + r.getAttack(),
-				RoleInfoStage, 40, 220);
+				RoleInfoStage, 40, 180);
 		Label defendValueLabel = wfy.makeLabel("" + r.getDefend(),
-				RoleInfoStage, 100, 220);
+				RoleInfoStage, 100, 180);
 		Label levelLabel = wfy.makeLabel("" + r.level, RoleInfoStage, 40, 200);
-		Label professionLabel = wfy.makeLabel("" + r.classes, RoleInfoStage,
-				100, 200);
+		Label professionLabel = wfy.makeLabel("" + U.getClasses(r),
+				RoleInfoStage, 100, 200);
 		Image roleImg = wfy
 				.makeImg(r.roleTexture, RoleInfoStage, 0.5f, 40, 260);
-		Image skillImg = wfy.makeImg(r.cskill.icon, RoleInfoStage, 1f, 40, 160);
-		Image skill1Img = wfy.makeImg(r.roleTexture, RoleInfoStage, 0.2f, 100,
-				180);
-		Image attackImg = wfy.makeImg(r.roleTexture, RoleInfoStage, 0.2f, 40,
-				140);
-		Image defendImg = wfy.makeImg(r.roleTexture, RoleInfoStage, 0.2f, 100,
-				140);
+		Image skillImg = wfy.makeImg(r.cskill.icon, RoleInfoStage, 1f, 40, 140);
+		Image skill1Img = wfy.makeImg(null, RoleInfoStage, 0.2f, 100, 140);
+		Image attackImg = wfy.makeImg(null, RoleInfoStage, 0.2f, 40, 100);
+		Image defendImg = wfy.makeImg(null, RoleInfoStage, 0.2f, 100, 100);
 		int numsGreen = 0;
 		int numsBlue = 0;
 		int numsPur = 0;
