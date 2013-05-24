@@ -68,7 +68,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 			frlength++;
 			final Role r = playerRols.get(i);
 			Image roleImg = new Image(playerRols.get(i).roleTexture);
-			Image backImg = WidgetFactory.getInstance().makeImageButton(
+			WidgetFactory.getInstance().makeImageButton(
 					Configure.Img_head_back, roleStage, 40, 240 - 55 * i);
 			roleImg.setScale(0.5f);
 			roleStage.addActor(roleImg);

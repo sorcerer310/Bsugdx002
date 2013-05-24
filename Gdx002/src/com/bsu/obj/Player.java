@@ -56,9 +56,9 @@ public class Player {
 			RoleFactory rf = RoleFactory.getInstance();
 			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.blue,GameTextureClass.getInstance().zyc_photo));
-//			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
-//			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.purple,GameTextureClass.getInstance().zyc_photo));
-//			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
+			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
+			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.purple,GameTextureClass.getInstance().zyc_photo));
+			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 //			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 //			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 //			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().zyc_photo));

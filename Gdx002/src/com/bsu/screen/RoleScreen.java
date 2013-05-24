@@ -145,25 +145,21 @@ public class RoleScreen extends CubocScreen implements Observer,
 		if (selectRole == null) {
 			return;
 		}
-		Label nameLabel = wfy.makeLabel(r.name, RoleInfoStage, 40, 240);
-		Label qualityLabel = wfy.makeLabel(getQualityName(r.quality),
-				RoleInfoStage, 100, 240);
-		Label lifeLabel = wfy.makeLabel(r.maxHp + "", RoleInfoStage, 40, 220);
-		Label expLabel = wfy.makeLabel(r.exp + "/" + r.expUp, RoleInfoStage,
-				100, 220);
-		Label attackValueLabel = wfy.makeLabel("" + r.getAttack(),
-				RoleInfoStage, 40, 180);
-		Label defendValueLabel = wfy.makeLabel("" + r.getDefend(),
-				RoleInfoStage, 100, 180);
-		Label levelLabel = wfy.makeLabel("" + r.level, RoleInfoStage, 40, 200);
-		Label professionLabel = wfy.makeLabel("" + U.getClasses(r),
-				RoleInfoStage, 100, 200);
-		Image roleImg = wfy
-				.makeImg(r.roleTexture, RoleInfoStage, 0.5f, 40, 260);
-		Image skillImg = wfy.makeImg(r.skill_array.get(0).icon, RoleInfoStage, 1f, 40, 140);
-		Image skill1Img = wfy.makeImg(r.skill_array.get(1).icon, RoleInfoStage, 1f, 100, 140);
-		Image attackImg = wfy.makeImg(null, RoleInfoStage, 0.2f, 40, 100);
-		Image defendImg = wfy.makeImg(null, RoleInfoStage, 0.2f, 100, 100);
+		wfy.makeLabel(r.name, RoleInfoStage, 40, 240);
+		wfy.makeLabel(getQualityName(r.quality), RoleInfoStage, 100, 240);
+		wfy.makeLabel(r.maxHp + "", RoleInfoStage, 40, 220);
+		wfy.makeLabel(r.exp + "/" + r.expUp, RoleInfoStage, 100, 220);
+		wfy.makeLabel("" + r.getAttack(), RoleInfoStage, 40, 180);
+		wfy.makeLabel("" + r.getDefend(), RoleInfoStage, 100, 180);
+		wfy.makeLabel("" + r.level, RoleInfoStage, 40, 200);
+		wfy.makeLabel("" + U.getClasses(r), RoleInfoStage, 100, 200);
+		wfy.makeImg(r.roleTexture, RoleInfoStage, 0.5f, 40, 260);
+		Image skillImg = wfy.makeImg(r.skill_array.get(0).icon, RoleInfoStage,
+				1f, 40, 140);
+		Image skill1Img = wfy.makeImg(r.skill_array.get(1).icon, RoleInfoStage,
+				1f, 100, 140);
+		// wfy.makeImg(r.weapon.texture, RoleInfoStage, 1f, 40, 100);
+		// wfy.makeImg(r.armor.texture, RoleInfoStage, 1f, 100, 100);
 		int numsGreen = 0;
 		int numsBlue = 0;
 		int numsPur = 0;
@@ -171,26 +167,24 @@ public class RoleScreen extends CubocScreen implements Observer,
 		int ix = 180, iy = 110;
 		for (Skill s : r.skill_tree) {
 			if (s.quality == QUALITY.green) {
-				Image img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix
-						+ numsGreen * 40, iy);
+				wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsGreen * 40, iy);
 				numsGreen++;
 			}
 			if (s.quality == QUALITY.blue) {
-				Image img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsBlue
-						* 40, iy + 40);
+				wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsBlue * 40,
+						iy + 40);
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
-				Image img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsPur
-						* 40, iy + 80);
+				wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsPur * 40,
+						iy + 80);
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
-				Image img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsOra
-						* 40, iy + 120);
+				wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsOra * 40,
+						iy + 120);
 				numsOra++;
 			}
-
 		}
 	}
 

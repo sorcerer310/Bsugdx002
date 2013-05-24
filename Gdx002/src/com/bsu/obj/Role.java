@@ -23,8 +23,8 @@ public class Role extends Actor {
 		HERO, ENEMY
 	}; // 英雄还是NPC
 
-	private Equip weapon;// 人物武器
-	private Equip armor;// 人物护甲
+	public Equip weapon;// 人物武器
+	public Equip armor;// 人物护甲
 
 	private BsuEvent bevent = null; // 用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
@@ -75,22 +75,12 @@ public class Role extends Actor {
 	 * @param n
 	 *            该角色的名字
 	 */
-//<<<<<<< HEAD
 	public Role(Type t,QUALITY q, CLASSES c,String n,int mhp,int av,int dv,Equip w,Equip a,Array<Skill> as,TextureRegion tr) {
-//=======
-//	public Role(Type t, QUALITY q, String n, int mhp, int av, int dv, Equip w,
-//			Equip a, Array<Skill> as, TextureRegion tr) {
-//>>>>>>> f53bf844694bc899075bcb82dcf031040cb27e91
-		// TODO Auto-generated constructor stub
 		name = n; // 名称
 		type = t; // 类型，英雄还是敌人
 		quality = q;
-//<<<<<<< HEAD
 		classes = c;
-		time_state = 0;																	//time_state初始化为0
-//=======
-//		time_state = 0; // time_state初始化为0
-//>>>>>>> f53bf844694bc899075bcb82dcf031040cb27e91
+		time_state = 0;					
 		maxHp = mhp;
 		currentHp = mhp;
 		attack = av;
@@ -394,6 +384,7 @@ public class Role extends Actor {
 	 */
 	public void levelUp(){
 		level++;
+		exp-=expUp;
 		maxHp=U.hpLevel(this);
 		attack=U.attackLevel(this);
 		defend=U.defendLevel(this);

@@ -51,9 +51,8 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	private TextButton orangeButton;
 	private TextButton eatButton;
 	private TextButton eatAllButton;// 一键吞噬所有某种品质
-	private Label updateLabel;
-	private Label expLabel;
-	private Label upLabel;
+	private Label name,exp,up;
+
 	public UpdateScreen(Game game) {
 		super(game);
 		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
@@ -64,15 +63,12 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		quality = QualityS.gselect;
 		selectUpdateRole = Player.getInstance().playerFightRole.get(0);
 		ib_back = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_back,stage,360,40);
+				Configure.button_back, stage, 360, 40);
 		ib_back.setPosition(360, 40);
-		
-		updateLabel = WidgetFactory.getInstance().makeLabel("role",
-				stage, 140, 240);
-		expLabel = WidgetFactory.getInstance().makeLabel("exp", stage,
-				140, 240);
-		upLabel = WidgetFactory.getInstance().makeLabel("up", stage, 140,
-				240);
+
+		name=WidgetFactory.getInstance().makeLabel("", stage, 200, 260);
+		exp=WidgetFactory.getInstance().makeLabel("", stage, 260, 260);
+		up=WidgetFactory.getInstance().makeLabel("up", stage, 340, 260);
 		allButton = WidgetFactory.getInstance().makeOneTextButton("all", stage,
 				140, 30);
 		greenButton = WidgetFactory.getInstance().makeOneTextButton("green",
@@ -98,8 +94,8 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < playerRols.size; i++) {
 			final Role r = playerRols.get(i);
 			final Image roleImg = new Image(playerRols.get(i).roleTexture);
-			Image backImg = WidgetFactory.getInstance().makeImageButton(
-					Configure.Img_head_back,stage,40,230-55*i);
+			WidgetFactory.getInstance().makeImageButton(
+					Configure.Img_head_back, stage, 40, 230 - 55 * i);
 			if (i == 0) {
 				roleImg.setScale(0.4f);
 			} else {
@@ -218,17 +214,10 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				eatRoles = Player.getInstance().getQualityRole(
 						Player.getInstance().playerIdelRole, QUALITY.orange);
 			}
-			for (Role e : eatRoles) {
-				Player.getInstance().playerRole.removeValue(e, false);
-			}
-		} else {
-			for (Role r : Player.getInstance().playerIdelRole) {
-				for (Role e : eatRoles) {
-					if (e.equals(r)) {
-						Player.getInstance().playerRole.removeValue(r, false);
-					}
-				}
-			}
+		}
+		for (Role e : eatRoles) {
+			selectUpdateRole.exp += e.exp;
+			Player.getInstance().playerRole.removeValue(e, false);
 		}
 		eatRoles.clear();
 		Player.getInstance().getPlayerPackageRole();
@@ -291,6 +280,9 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		stage.draw();
 		sRoleStage.act(Gdx.graphics.getDeltaTime());
 		sRoleStage.draw();
+		name.setText(selectUpdateRole.name);
+		exp.setText(selectUpdateRole.exp+"/"+selectUpdateRole.expUp);
+		up.setVisible(selectUpdateRole.exp>selectUpdateRole.expUp?true:false);
 	}
 
 	@Override
@@ -425,6 +417,20 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				eatRolesUpdate(true);
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+		up.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				selectUpdateRole.levelUp();
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});

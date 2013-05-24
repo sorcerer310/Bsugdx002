@@ -34,7 +34,6 @@ import com.bsu.tools.GameTextureClass;
 
 public class SelectRoleScreen extends CubocScreen implements Observer,
 		GestureListener {
-	private Texture timg;
 	private Image background;
 	private Stage stage;
 	private Stage sRoleStage;
@@ -47,6 +46,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	private TextButton orangeButton;
 	private Role changeRole;
 	private Role selectRole;
+	private Array<Image> RoleSelectImg = new Array<Image>();// 用来更换的卡片图像
 
 	public SelectRoleScreen(Game game) {
 		super(game);
@@ -71,11 +71,24 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		addRoleToStage(QualityS.allselect);
 		setListener();
 	}
-
+	/**
+	 * 设置要更改队伍的角色
+	 * @param r
+	 */
 	public void setChangeRole(Role r) {
 		changeRole = r;
 	}
-
+	/**
+	 * 重新设置所有role的图像，以便正确显示目前要更换的人物
+	 */
+	private void resetImg(Image image){
+		for(Image img:RoleSelectImg){
+			img.setScale(0.5f);
+			if(img.equals(image)){
+				img.setScale(0.4f);
+			}
+		}
+	}
 	/**
 	 * 当点击卡片按钮时添加背包中卡片到舞台，并根据当前所选类型显示
 	 */
@@ -110,11 +123,13 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	 */
 	private void showQualityRole(final Array<Role> roleArray) {
 		sRoleStage.clear();
+		RoleSelectImg.clear();
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
 			final Image roleImg = new Image(r.roleTexture);
 			roleImg.setScale(0.5f);
 			sRoleStage.addActor(roleImg);
+			RoleSelectImg.add(roleImg);
 			roleImg.setPosition(140 + i % 5 * 70, 200 - i / 5 * 70);
 			roleImg.addListener(new InputListener() {
 				@Override
@@ -127,10 +142,10 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
-					if(selectRole!=r){
-						selectRole=r;//选定人物。。
-						roleImg.setScale(0.4f);
-						return ;
+					if (selectRole != r) {
+						selectRole = r;// 选定人物。。
+						resetImg(roleImg);
+						return;
 					}
 					if (changeRole != null) {
 						int index = 0;
@@ -159,7 +174,6 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 			});
 		}
 	}
-	
 
 	@Override
 	public void show() {

@@ -145,7 +145,7 @@ public class WidgetFactory {
 			int y) {
 		Image img;
 		if (tr == null) {
-			img = new Image();
+			return null;
 		} else {
 			img = new Image(tr);
 		}
