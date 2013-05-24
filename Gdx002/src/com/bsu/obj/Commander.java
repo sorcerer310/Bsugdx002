@@ -274,19 +274,20 @@ public class Commander {
 			waitRoleFlag = true; 			// 初始化等待循环flag为true
 			currTaskComFlag = false;		//只是当前处理技能任务是否完成
 //			moveAfterSkillFlag = false;		//指示释放技能后是否继续移动
-			Array<Role> atkrs = getRolesInSkillRange(h);
+			final Array<Role> atkrs = getRolesInSkillRange(h);
 			//1:执行技能命令
 			if(atkrs.size!=0){
 				// 命令当前英雄进攻所有范围内的敌人
-				for (Role e : atkrs) {
+				for (final Role e : atkrs) {
 					h.ani_role_attack(e, h.getCskill(), new BsuEvent() {
 						@Override
 						public void notify(Object obj, String msg) {
+							//如果技能逻辑函数返回true,清空技能目标队列继续移动该单位
+							if(h.cskill.skillLogic(h, e))
+								atkrs.clear();
 							currTaskComFlag = true;
 						}
 					});
-					h.cskill.skillLogic(h, e);
-//					moveAfterSkillFlag = h.cskill.skillLogic(h,e);
 				}
 			}else{currTaskComFlag = true;}
 			

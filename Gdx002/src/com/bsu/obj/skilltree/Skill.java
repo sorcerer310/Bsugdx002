@@ -128,20 +128,30 @@ public class Skill {
 			
 			return false;
 		}
-		else if(this.type==Skill.Type.f_healing  ||this.type==Skill.Type.pbuff_atk ||
-				this.type==Skill.Type.pbuff_def ||this.type==Skill.Type.pbuff_healing ||this.type==Skill.Type.pbuff_hp){
-			object.currentHp = (int)(object.currentHp + this.val >= object.getMaxHp() ? object.currentHp
-					:object.currentHp+this.val);
+		else if(type==Skill.Type.f_healing  ||type==Skill.Type.pbuff_atk ||
+				type==Skill.Type.pbuff_def ||type==Skill.Type.pbuff_healing ||type==Skill.Type.pbuff_hp){
+			//固定治疗
+			if(type==Skill.Type.f_healing){
+				object.currentHp = (int)(object.currentHp+this.val>=object.getMaxHp()?object.currentHp:object.currentHp+val);
+			//百分比攻击力buff
+			}else if(type==Skill.Type.pbuff_atk){
+				object.csstate.add(new ContinuedSkillState(2,object.getAttack()*val,CSType.buff_atk,ani_continue));
+			//百分比防御力buff
+			}else if(type==Skill.Type.pbuff_def){
+				object.csstate.add(new ContinuedSkillState(2,object.getDefend()*val,CSType.buff_def,ani_continue));
+			//百分比持续性治疗
+			}else if(type==Skill.Type.pbuff_healing){
+				object.currentHp = (int)(object.currentHp+object.currentHp*val>=object.getMaxHp()?object.currentHp:object.currentHp+object.currentHp*val);
+			//百分比生命最大值
+			}else if(type==Skill.Type.pbuff_hp){
+				object.csstate.add(new ContinuedSkillState(2,object.getMaxHp()*val,CSType.buff_hp,ani_continue));
+			}
 			if(owner== object)
 				return true;
 			else
 				return false;
 		}
 		else return false;
-//		if (object.currentHp == 0) {
-//			npcthis.removeValue(object, true); // 从Commander逻辑计算队列中移除
-//			object.getParent().removeActor(object); // 从父Actor中移除该Actor节点
-//		}
 	}
 	
 }

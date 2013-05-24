@@ -38,7 +38,7 @@ public class Role extends Actor {
 	public int extAttack = 0;	//额外的攻击力		
 	private int defend;//自身防御力
 	public int extDefend = 0;	//额外的防御力
-	public Array<ContinuedSkillState> csstate;	//当前在人物身上的各种持续效果
+	public Array<ContinuedSkillState> csstate = new Array<ContinuedSkillState>();	//当前在人物身上的各种持续效果
 	public boolean isRoundMove = true;	//本回合是否移动
 	
 	private float time_state; // 行动状态时间
@@ -90,31 +90,6 @@ public class Role extends Actor {
 //		array_skill.add(SkillFactory.getInstance().getSkillByName("atk"));
 //		cskill=SkillFactory.getInstance().getSkillByName("atk");
 	}
-
-//	public Role(RoleValue rv) {
-//		// TODO Auto-generated constructor stub
-//		time_state = 0;
-//		name = rv.name;
-//		roleTexture=rv.roleTexture;
-//		quality=rv.quality;
-//		maxHp=rv.roleHp;
-//		currentHp=maxHp;
-//		attack_value=rv.attackValue;
-//		defend_value=rv.defendValue;
-//		weapon=rv.attackWeapon;
-//		armor=rv.defendWeapon;
-//		this.skillList=rv.skillList;
-//		cskill=skillList.get(0);
-//		this.type=rv.type;
-//		if(type==Type.HERO){
-//			face=FACE.right;
-//		}else{
-//			face=FACE.left;
-//			roleTexture.flip(true, false);
-//		}
-//		set_actor_base(type);
-//	}
-
 	/**
 	 * 根据类型获得资源
 	 * 
