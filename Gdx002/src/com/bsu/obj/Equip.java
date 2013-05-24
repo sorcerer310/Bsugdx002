@@ -20,7 +20,7 @@ public class Equip {
 	public int val;// 提供的值，武器代表攻击力，防具代表防御值
 	public TextureRegion texture;// 图标
 	public String info;// 描述信息
-	public int level;// 等级
+	public int level;// 等级 
 
 	public Equip(String s, Type t,QUALITY q,TextureRegion tr, int l, int av, String info) {
 		// TODO Auto-generated constructor stub
