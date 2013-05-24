@@ -20,7 +20,7 @@ public class Skill {
 	//后缀解释 damage:伤害，healing:治疗,hp:血上限，def:防御上限，atk：攻击上限，nude:碎甲，dizzy：眩晕，blind:致盲，atkbeat:造成伤害并击退，shifhp:转移生命,speed:游戏速度,reward:奖励,box:格子
 	public static enum Type {f_damage,f_healing,f_shifhp,f_box,p_damage,p_healing,p_lucky,p_atkbeat,p_reward,p_speed,pbuff_hp,pbuff_healing,pbuff_atk,pbuff_def,pdot_damage,prob_dizzy,prob_nude,prob_blind};
 	public static enum ObjectType{single,multi};			
-	private int id = 0;										//技能索引
+	public int id = 0;										//技能索引
 	public String name = "";								//技能名称唯一索引
 	public QUALITY quality = QUALITY.green;					//技能品质，默认为绿色
 	public Type type = Type.f_damage;						//设置默认类型为攻击类型

@@ -24,6 +24,7 @@ import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
+import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.GameTextureClass;
@@ -182,6 +183,21 @@ public class RoleScreen extends CubocScreen implements Observer,
 				140);
 		defendImg = resetImg(defendImg, true, stage, r.roleTexture, 0.2f, 100,
 				140);
+		for (Skill s : r.skill_tree) {
+			if (s.quality == QUALITY.green) {
+				
+			}
+			if (s.quality == QUALITY.green) {
+
+			}
+			if (s.quality == QUALITY.green) {
+
+			}
+			if (s.quality == QUALITY.green) {
+
+			}
+
+		}
 	}
 
 	/**
@@ -214,7 +230,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 				img.setDrawable(skin.getDrawable("hi"));
 			}
 			skin.dispose();
-			skin=null;
+			skin = null;
 		}
 		return img;
 	}
