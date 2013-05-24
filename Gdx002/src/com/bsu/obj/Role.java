@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.obj.skilltree.ContinuedSkillState;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.Configure;
@@ -30,10 +31,14 @@ public class Role extends Actor {
 	public CLASSES classes = null;//指定当前人物的职业
 	public int level;//等级
 	public TextureRegion roleTexture;
-	public int maxHp = 100; // 总血量
+	private int maxHp = 100; // 总血量
+	public int extMaxHp = 0;	//额外的血量上限
 	public int currentHp = 30; // 当前血量
-	public int value_attack; // 自身攻击力
-	public int value_defend;//自身防御力
+	private int attack; // 自身攻击力
+	public int extAttack = 0;	//额外的攻击力		
+	private int defend;//自身防御力
+	public int extDefend = 0;	//额外的防御力
+	public Array<ContinuedSkillState> csstate;	//当前在人物身上的各种持续效果 
 	
 	private float time_state; // 行动状态时间
 	public float time_effect; // 技能特效时间
@@ -73,8 +78,8 @@ public class Role extends Actor {
 		time_state = 0;																	//time_state初始化为0
 		maxHp = mhp;
 		currentHp = mhp;
-		value_attack = av;
-		value_defend = dv;
+		attack = av;
+		defend = dv;
 		weapon = w;
 		armor = a;
 		skill_tree = as;
@@ -160,19 +165,20 @@ public class Role extends Actor {
 	 * @param enemy
 	 *            攻击动作的角色
 	 */
-	public void ani_hero_attack(Role enemy, Skill skl, BsuEvent be) {
+	public void ani_role_attack(Role enemy, Skill skl, BsuEvent be) {
 		if (enemy == null)
 			return;
 		bevent = be;
 		time_effect = 0; // 此处一定要设置time_effect为0，否则动画不会重新开始
 		ani_effect = skl.ani_self;
-		enemy.hero_isAttacked(skl.ani_object, skl.val);
+		enemy.ani_role_isAttacked(skl.ani_object);
 	}
 
 	/**
-	 * @param damage_value
+	 * 英雄被攻击播放动画
+	 * @param ani	要播放的动画
 	 */
-	public void hero_isAttacked(Animation ani, float damage_value) {
+	public void ani_role_isAttacked(Animation ani) {
 		time_effect = 0;
 		ani_effect = ani;
 	}
@@ -384,4 +390,34 @@ public class Role extends Actor {
 	public QUALITY getQuality() {
 		return quality;
 	}
+	/**
+	 * 返回人物总攻击力
+	 * @return
+	 */
+	public int getAttack() {
+		return attack+extAttack;
+	}
+	/**
+	 * 返回人物总防御力
+	 * @return
+	 */
+	public int getDefend() {
+		return defend+extDefend;
+	}
+	/**
+	 * 清除所有额外值
+	 */
+	public void clearExtValue(){
+		extMaxHp = 0;
+		extAttack = 0;
+		extDefend = 0;
+	}
+	/**
+	 * 获得人物总hp上限
+	 * @return
+	 */
+	public int getMaxHp() {
+		return maxHp+extMaxHp;
+	}
+
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Commander;
 import com.bsu.obj.Role;
+import com.bsu.obj.skilltree.ContinuedSkillState.CSType;
 import com.bsu.tools.U;
 import com.bsu.tools.Configure.CLASSES;
 import com.bsu.tools.Configure.QUALITY;
@@ -14,9 +15,9 @@ import com.bsu.tools.Configure.QUALITY;
  *
  */
 public class Skill {
-  	//前缀解释 f:fixed固定的，fdot:固定持续伤害，p:percent百分比,pbuff:百分比buff,prob:机率
+  	//前缀解释 f:fixed固定的，fdot:固定持续伤害，pdot百分比持续伤害，p:percent百分比,pbuff:百分比buff,prob:机率
 	//后缀解释 damage:伤害，healing:治疗,hp:血上限，def:防御上限，atk：攻击上限，nude:碎甲，dizzy：眩晕，blind:致盲，atkbeat:造成伤害并击退，shifhp:转移生命,speed:游戏速度,reward:奖励,box:格子
-	public static enum Type {f_damage,f_healing,f_shifhp,f_box,p_healing,p_damage,p_lucky,p_atkbeat,p_reward,p_speed,pbuff_hp,pbuff_healing,pbuff_atk,pbuff_def,pdot_damage,prob_dizzy,prob_nude,prob_blind};
+	public static enum Type {f_damage,f_healing,f_shifhp,f_box,p_damage,p_healing,p_lucky,p_atkbeat,p_reward,p_speed,pbuff_hp,pbuff_healing,pbuff_atk,pbuff_def,pdot_damage,prob_dizzy,prob_nude,prob_blind};
 	public static enum ObjectType{single,multi};			
 	private int id = 0;										//技能索引
 	public String name = "";								//技能名称唯一索引
@@ -30,8 +31,12 @@ public class Skill {
 	private String info = "";								//技能描述
 	private Array<Vector2> range = new Array<Vector2>();	//技能释放范围
 	
-	public Animation ani_self = null;						//技能自身动画效果
-	public Animation ani_object = null;						//技能目标动画效果
+	public Animation ani_self = null;						//技能释放者动画效果
+	public Animation ani_object = null;						//技能承受者动画效果
+//	public Animation ani_conself = null;					//持续技能释放者动画效果
+//	public Animation ani_conobject = null;					//持续技能承受者动画效果
+	public Animation ani_continue = null;					//持续技能承受者动画效果，暂时只有承受者有动画效果。
+	
 
 
 	
@@ -88,26 +93,26 @@ public class Skill {
 				type==Skill.Type.prob_dizzy ||type==Skill.Type.prob_nude){
 			//固定伤害处理
 			if(type==Skill.Type.f_damage){
-				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.value_attack+val), object.value_defend) >= 0 
-						? object.currentHp - U.realDamage((int)(owner.value_attack+val), object.value_defend): 0);
+				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.getAttack()+val), object.getDefend()) >= 0 
+						? object.currentHp - U.realDamage((int)(owner.getAttack()+val), object.getDefend()): 0);
 			//转移伤害至生命	
 			}else if(type==Skill.Type.f_shifhp){
-				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.value_attack+val), object.value_defend) >= 0 
-						? object.currentHp - U.realDamage((int)(owner.value_attack+val), object.value_defend): 0);	//伤害敌人
-				owner.currentHp = (int)(owner.currentHp + U.realDamage((int)(owner.value_attack+val), object.value_defend)/2) >= owner.maxHp //转移生命至自己
-						? owner.maxHp : (int)(owner.currentHp + U.realDamage((int)(owner.value_attack+val), object.value_defend)/2);
+				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.getAttack()+val), object.getDefend()) >= 0 
+						? object.currentHp - U.realDamage((int)(owner.getAttack()+val), object.getDefend()): 0);	//伤害敌人
+				owner.currentHp = (int)(owner.currentHp + U.realDamage((int)(owner.getAttack()+val), object.getDefend())/2) >= owner.getMaxHp() //转移生命至自己
+						? owner.getMaxHp() : (int)(owner.currentHp + U.realDamage((int)(owner.getAttack()+val), object.getDefend())/2);
 			//击退伤害
 			}else if(type==Skill.Type.p_atkbeat){
-				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.value_attack*val), object.value_defend) >= 0 
-						? object.currentHp - U.realDamage((int)(owner.value_attack*val), object.value_defend): 0);	//伤害敌人
+				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.getAttack()*val), object.getDefend()) >= 0 
+						? object.currentHp - U.realDamage((int)(owner.getAttack()*val), object.getDefend()): 0);	//伤害敌人
 				Commander.getInstance().heatAction(object);	//击退
 			//百分比伤害
 			}else if(type==Skill.Type.p_damage){
-				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.value_attack*val), object.value_defend) >= 0 
-					? object.currentHp - U.realDamage((int)(owner.value_attack*val), object.value_defend): 0);	//伤害敌人
+				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.getAttack()*val), object.getDefend()) >= 0 
+					? object.currentHp - U.realDamage((int)(owner.getAttack()*val), object.getDefend()): 0);	//伤害敌人
 			//持续伤害，默认为3回合
 			}else if(type==Skill.Type.pdot_damage){
-				
+				object.csstate.add(new ContinuedSkillState(3,owner.getAttack()*val,CSType.dot,ani_continue));
 			}
 			object.currentHp = (int) (object.currentHp - this.val >= 0 ? object.currentHp
 				- this.val
@@ -116,7 +121,7 @@ public class Skill {
 		}
 		else if(this.type==Skill.Type.f_healing  ||this.type==Skill.Type.pbuff_atk ||
 				this.type==Skill.Type.pbuff_def ||this.type==Skill.Type.pbuff_healing ||this.type==Skill.Type.pbuff_hp){
-			object.currentHp = (int)(object.currentHp + this.val >= object.maxHp ? object.currentHp
+			object.currentHp = (int)(object.currentHp + this.val >= object.getMaxHp() ? object.currentHp
 					:object.currentHp+this.val);
 			if(owner== object)
 				return true;

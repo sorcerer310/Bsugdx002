@@ -172,8 +172,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 		selectRole = r;
 		nameLabel.setText("" + r.name);
 		qualityLabel.setText("" + getQualityName(r.quality));
-		attackValueLabel.setText("" + "" + r.value_attack);
-		defendValueLabel.setText("" + "" + r.value_defend);
+		attackValueLabel.setText("" + "" + r.getAttack());
+		defendValueLabel.setText("" + "" + r.getDefend());
 		roleImg = resetImg(roleImg, true, stage, r.roleTexture, 0.5f, 40, 260);
 		skillImg = resetImg(skillImg, true, stage, r.roleTexture, 0.2f, 40, 180);
 		skill1Img = resetImg(skill1Img, true, stage, r.roleTexture, 0.2f, 100,

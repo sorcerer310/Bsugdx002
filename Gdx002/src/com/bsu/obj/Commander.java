@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role.Type;
+import com.bsu.obj.skilltree.ContinuedSkillState;
+import com.bsu.obj.skilltree.ContinuedSkillState.CSType;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.obj.skilltree.Skill.ObjectType;
 import com.bsu.screen.GameScreen;
@@ -66,7 +68,9 @@ public class Commander {
 		allRoles.addAll(heros);
 		allRoles.addAll(npcs);
 	}
-
+	/**
+	 * commander对象开始线程，进行监视
+	 */
 	private void commanderStart() {
 		resetRoles();
 		/**
@@ -101,7 +105,16 @@ public class Commander {
 		roundEndCompleted = false; // 回合操作开始设置完成标示为false
 		resetRoles();
 		resetHeroValue();
-
+		
+		CommandQueue.getInstance().put(new CommandTask(){
+			@Override
+			public void opTask(BsuEvent be){
+				System.out.println("role continued skill state");
+				roleContinuedSkillState(be);
+			}
+		});
+		
+		//增加对站在特殊地图块上的英雄进行处理的任务
 		CommandQueue.getInstance().put(new CommandTask() {
 			@Override
 			public void opTask(BsuEvent be) {
@@ -109,7 +122,7 @@ public class Commander {
 				mapEvent(be);
 			}
 		});
-
+		//增加命令英雄任务
 		CommandQueue.getInstance().put(new CommandTask() {
 			@Override
 			public void opTask(BsuEvent be) {
@@ -121,7 +134,7 @@ public class Commander {
 				}
 			}
 		});
-
+		//增加命令敌人任务
 		CommandQueue.getInstance().put(new CommandTask() {
 			@Override
 			public void opTask(BsuEvent be) {
@@ -176,6 +189,42 @@ public class Commander {
 		else if(r.face == FACE.right && !U.hasRoleInPos(allRoles, new Vector2(r.getBoxX()-1,r.getBoxY())))
 			r.addAction(moveBy(r.getX()-Configure.map_box_value,r.getY(),0.01f));
 	}
+	/**
+	 * 对所有的Role进行持续技能状态处理
+	 * @param be	持续技能操作完成事件
+	 */
+	private void roleContinuedSkillState(BsuEvent be){
+		for(Role r:allRoles){
+			if(r.csstate.size==0)
+				continue;
+			r.clearExtValue();
+			for(ContinuedSkillState css:r.csstate){
+				r.ani_role_isAttacked(css.ani);			//播放持续技能效果动画
+				if(css.cstype==CSType.buff_atk){
+					r.extAttack += (int) css.val; 
+				}else if(css.cstype==CSType.buff_def){
+					r.extDefend += (int) css.val;
+				}else if(css.cstype==CSType.buff_hp){
+					r.extMaxHp += (int)css.val;
+					r.currentHp += (int)css.val;
+				}else if(css.cstype==CSType.debuff_atk){
+					r.extAttack += (int) -css.val;
+				}else if(css.cstype==CSType.debuff_def){
+					r.extDefend += (int) -css.val;
+				}else if(css.cstype==CSType.debuff_hp){
+					r.extMaxHp += (int)-css.val;
+					r.currentHp += (int)-css.val;
+				}else if(css.cstype==CSType.dot){
+					r.currentHp = (int) (r.currentHp-css.val >0 ?r.currentHp-css.val:0);
+					if(r.currentHp==0)
+						commandRoleDead(r);
+				}else if(css.cstype==CSType.hot){
+					r.currentHp = (int)(r.currentHp + css.val<(r.getMaxHp())?r.currentHp+css.val:r.getMaxHp());
+				}
+			}
+		}
+		be.notify(this, "continue_state_completed");
+	}
 	
 	/**
 	 * 处理地图块事件，检查地图上特殊属性的块是否有Role在 有则对Role对象进行处理
@@ -217,7 +266,7 @@ public class Commander {
 			if(atkrs.size!=0){
 				// 命令当前英雄进攻所有范围内的敌人
 				for (Role e : atkrs) {
-					h.ani_hero_attack(e, h.getCskill(), new BsuEvent() {
+					h.ani_role_attack(e, h.getCskill(), new BsuEvent() {
 						@Override
 						public void notify(Object obj, String msg) {
 							currTaskComFlag = true;
@@ -286,7 +335,7 @@ public class Commander {
 			} else {
 				// 命令当前英雄进攻所有范围内的敌人
 				for (Role h : atkrs) {
-					e.ani_hero_attack(h, e.getCskill(), new BsuEvent() {
+					e.ani_role_attack(h, e.getCskill(), new BsuEvent() {
 						@Override
 						public void notify(Object obj, String msg) {
 							if (((Role) obj).name.equals(msg))
@@ -302,7 +351,7 @@ public class Commander {
 							.getRole_state_array()) {// 设置相应血条高度
 						if (fru.role == h) {
 							fru.role_hp.setScaleY((float) h.currentHp
-									/ (float) h.maxHp);
+									/ (float) h.getMaxHp());
 							if (h.currentHp == 0) {
 								fru.role_photo.setColor(
 										fru.role_photo.getColor().r,
@@ -484,7 +533,15 @@ public class Commander {
 			}
 		}
 	}
-
+	/**
+	 * 命令一个Role死亡
+	 * @param r	要致死的Role
+	 */
+	public void commandRoleDead(Role r){
+		//后续处理
+		System.out.println("啊啊啊啊啊，我死了！！！");
+	}
+	
 	public Array<Role> getHeros() {
 		return heros;
 	}
