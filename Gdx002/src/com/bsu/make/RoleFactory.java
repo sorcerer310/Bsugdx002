@@ -31,7 +31,7 @@ public class RoleFactory {
 	 * @return
 	 */
 	public Role getFighter(String n,Type t,QUALITY q,TextureRegion tr){
-		return new Role(t,q,n,U.getRandom(100, -6, 6),8,10
+		return new Role(t,q,CLASSES.fighter,n,U.getRandom(100, -6, 6),8,10
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.fighter),tr);
 	}
@@ -43,7 +43,7 @@ public class RoleFactory {
 	 * @return
 	 */
 	public Role getWizard(String n,Type t,QUALITY q,TextureRegion tr){
-		return new Role(t,q,n,U.getRandom(50, -3, 6),10,3
+		return new Role(t,q,CLASSES.wizard,n,U.getRandom(50, -3, 6),10,3
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.wizard),tr);
 	}
@@ -55,7 +55,7 @@ public class RoleFactory {
 	 * @return
 	 */
 	public Role getCleric(String n,Type t,QUALITY q,TextureRegion tr){
-		return new Role(t,q,n,U.getRandom(70, -4, 4),3,5
+		return new Role(t,q,CLASSES.cleric,n,U.getRandom(70, -4, 4),3,5
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.cleric),tr);
 	}
@@ -67,7 +67,7 @@ public class RoleFactory {
 	 * @return
 	 */
 	public Role getSorcerer(String n,Type t,QUALITY q,TextureRegion tr){
-		return new Role(t,q,n,U.getRandom(70, -6, 3),5,5
+		return new Role(t,q,CLASSES.sorcerer,n,U.getRandom(70, -6, 3),5,5
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.sorcerer),tr);
 	}
@@ -79,7 +79,7 @@ public class RoleFactory {
 	 * @return
 	 */
 	public Role getArcher(String n,Type t,QUALITY q,TextureRegion tr){
-		return new Role(t,q,n,U.getRandom(80, -2, 2),10,16
+		return new Role(t,q,CLASSES.archer,n,U.getRandom(80, -2, 2),10,16
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.archer),tr);
 	}

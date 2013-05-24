@@ -75,13 +75,22 @@ public class Role extends Actor {
 	 * @param n
 	 *            该角色的名字
 	 */
-	public Role(Type t, QUALITY q, String n, int mhp, int av, int dv, Equip w,
-			Equip a, Array<Skill> as, TextureRegion tr) {
+//<<<<<<< HEAD
+	public Role(Type t,QUALITY q, CLASSES c,String n,int mhp,int av,int dv,Equip w,Equip a,Array<Skill> as,TextureRegion tr) {
+//=======
+//	public Role(Type t, QUALITY q, String n, int mhp, int av, int dv, Equip w,
+//			Equip a, Array<Skill> as, TextureRegion tr) {
+//>>>>>>> f53bf844694bc899075bcb82dcf031040cb27e91
 		// TODO Auto-generated constructor stub
 		name = n; // 名称
 		type = t; // 类型，英雄还是敌人
 		quality = q;
-		time_state = 0; // time_state初始化为0
+//<<<<<<< HEAD
+		classes = c;
+		time_state = 0;																	//time_state初始化为0
+//=======
+//		time_state = 0; // time_state初始化为0
+//>>>>>>> f53bf844694bc899075bcb82dcf031040cb27e91
 		maxHp = mhp;
 		currentHp = mhp;
 		attack = av;
@@ -152,7 +161,7 @@ public class Role extends Actor {
 	 *            攻击动作的角色
 	 */
 	public void ani_role_attack(Role enemy, Skill skl, BsuEvent be) {
-		if (enemy == null)
+		if (enemy == null )
 			return;
 		bevent = be;
 		time_effect = 0; // 此处一定要设置time_effect为0，否则动画不会重新开始
@@ -230,11 +239,11 @@ public class Role extends Actor {
 			if (ani_effect.isAnimationFinished(time_effect)) {
 				current_effect_frame = null;
 				ani_effect = null;
-				// 如果event对象不为空，执行函数通知完成
-				if (bevent != null) {
-					System.out.println(this.name + "skill_effect_completed");
-					bevent.notify(this, this.name);
-				}
+			}
+			// 如果event对象不为空，执行函数通知完成
+			if (bevent != null) {
+				System.out.println(this.name + "skill_effect_completed");
+				bevent.notify(this, this.name);
 			}
 		}
 		if (isSelected()) {
