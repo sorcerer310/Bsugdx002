@@ -38,6 +38,7 @@ public class Role extends Actor {
 	public int extAttack = 0;	//额外的攻击力		
 	private int defend;//自身防御力
 	public int extDefend = 0;	//额外的防御力
+	public int exp = 0;			//经验值
 	public Array<ContinuedSkillState> csstate = new Array<ContinuedSkillState>();	//当前在人物身上的各种持续效果
 	public boolean isRoundMove = true;	//本回合是否移动
 	
