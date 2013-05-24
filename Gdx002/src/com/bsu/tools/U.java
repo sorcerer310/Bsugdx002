@@ -58,7 +58,7 @@ public class U {
 		if(r.quality==QUALITY.green)
 			basehp=Configure.baseHpGreen;
 		if(r.quality==QUALITY.blue)
-			basehp=Configure.baseAttackBlue;
+			basehp=Configure.baseHpBlue;
 		if(r.quality==QUALITY.purple)
 			basehp=Configure.baseHpPurple;
 		if(r.quality==QUALITY.orange)
