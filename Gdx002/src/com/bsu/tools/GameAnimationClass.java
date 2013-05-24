@@ -3,6 +3,7 @@ package com.bsu.tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
@@ -29,12 +30,15 @@ public class GameAnimationClass {
 	private Texture card_texture;
 	private TextureRegion[][] effect_spilt;
 	private TextureRegion[][] role_spilt;
+	
+	private TextureAtlas texture_effect_skills;
 
 	private void gameAnimations() {
 		effect_texture = GameTextureClass.getInstance().effect_texture;
 		effect_spilt = TextureRegion.split(effect_texture, 32, 32);
 		card_texture = GameTextureClass.getInstance().role_texture;
 		role_spilt = TextureRegion.split(card_texture, 96, 96);
+		texture_effect_skills = GameTextureClass.getInstance().texture_effect_skills;
 	}
 	public Animation getRoleAnimation(TextureRegion tr){
 		TextureRegion[] region_idle = new TextureRegion[1];
@@ -91,5 +95,61 @@ public class GameAnimationClass {
 		region_effect[2] = effect_spilt[4][5];
 		Animation ani_effect = new Animation(0.4f, region_effect);
 		return ani_effect;
+	}
+	
+	/**
+	 * 获得技能拥有者效果
+	 * @param idx	技能id
+	 * @return
+	 */
+	public Animation getSkillOwnerEffect(int idx){
+		Animation retani = null;
+		switch(idx){
+		case 1:
+			TextureRegion[] tr = new TextureRegion[3];
+			tr[0] = texture_effect_skills.findRegion("heavyBeet",1);
+			tr[1] = texture_effect_skills.findRegion("heavyBeet",2);
+			tr[2] = texture_effect_skills.findRegion("heavyBeet",3);
+			retani = new Animation(Configure.duration_skill_effect,tr);			
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		default:
+			break;
+		}
+		
+		return retani;
+	}
+	/**
+	 * 获得技能承受者效果
+	 * @param idx	技能id
+	 * @return
+	 */
+	public Animation getSkillObjectEffect(int idx){
+		Animation retani = null;
+		switch(idx){
+		case 1:
+			TextureRegion[] tr = new TextureRegion[3];
+			tr[0] = texture_effect_skills.findRegion("isAttacked",1);
+			tr[1] = texture_effect_skills.findRegion("isAttacked",2);
+			tr[2] = texture_effect_skills.findRegion("isAttacked",3);
+
+			retani = new Animation(Configure.duration_skill_effect,tr);			
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		default:
+			break;
+		}
+		
+		return retani;
 	}
 }

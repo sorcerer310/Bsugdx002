@@ -72,39 +72,39 @@ public class WidgetFactory {
 
 		if (bname.equals(Configure.screen_equip))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().textureatlas_mbutton
+					GameTextureClass.getInstance().texture_atlas_mbutton
 							.findRegion("mb_equip"));
 		else if (bname.equals(Configure.screen_fight))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().textureatlas_mbutton
+					GameTextureClass.getInstance().texture_atlas_mbutton
 							.findRegion("mb_fight"));
 		else if (bname.equals(Configure.screen_role))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().textureatlas_mbutton
+					GameTextureClass.getInstance().texture_atlas_mbutton
 							.findRegion("mb_role"));
 		else if (bname.equals(Configure.screen_update))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().textureatlas_mbutton
+					GameTextureClass.getInstance().texture_atlas_mbutton
 							.findRegion("mb_update"));
 		else if (bname.equals(Configure.screen_skill))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().textureatlas_mbutton
+					GameTextureClass.getInstance().texture_atlas_mbutton
 							.findRegion("mb_skill"));
 		else if (bname.equals(Configure.screen_shop))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().textureatlas_mbutton
+					GameTextureClass.getInstance().texture_atlas_mbutton
 							.findRegion("mb_shop"));
 		else if (bname.equals(Configure.button_back))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().textureatlas_mbutton
+					GameTextureClass.getInstance().texture_atlas_mbutton
 							.findRegion("back"));
 		else if (bname.equals(Configure.Img_head_back))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().textureatlas_mbutton
+					GameTextureClass.getInstance().texture_atlas_mbutton
 							.findRegion("frame_head"));
 		else if (bname.equals(Configure.Img_skill_back))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().textureatlas_mbutton
+					GameTextureClass.getInstance().texture_atlas_mbutton
 							.findRegion("frame_skill"));
 
 		img_nomal

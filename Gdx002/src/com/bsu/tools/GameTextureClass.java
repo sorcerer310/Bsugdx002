@@ -30,11 +30,13 @@ public class GameTextureClass {
 	public Texture equipPanel;
 	public Texture fightPanel, rolePanel, selectRolePanel, shopPanel,
 			skillPanel, updatePanel;
-	public TextureAtlas textureatlas_mbutton;
+	public TextureAtlas texture_atlas_mbutton;
+	public TextureAtlas texture_effect_skills;
 	
 	public TextureRegion fc_photo, zyc_photo, h0_photo, h1_photo, h2_photo,
 			h3_photo, h4_photo, h5_photo;
 	public TextureRegion tmpskillicon;
+	
 
 	private GameTextureClass() {
 		// TODO Auto-generated constructor stub
@@ -51,7 +53,7 @@ public class GameTextureClass {
 		updatePanel = new Texture(
 				Gdx.files.internal("data/menu/updatepanel.png"));
 		
-		textureatlas_mbutton = new TextureAtlas(Gdx.files.internal("data/menu/mbutton.txt"));
+		texture_atlas_mbutton = new TextureAtlas(Gdx.files.internal("data/menu/mbutton.txt"));
 
 		role_texture = new Texture(
 				Gdx.files.internal("data/game/hero/Actor1.png"));
@@ -66,6 +68,7 @@ public class GameTextureClass {
 
 		Texture tmpicon = new Texture(Gdx.files.internal("data/icon/11.png"));
 		tmpskillicon = new TextureRegion(tmpicon,0,0,32,32);
+		texture_effect_skills = new TextureAtlas(Gdx.files.internal("data/game/effect/skilleffect.txt"));
 	}
 
 }
