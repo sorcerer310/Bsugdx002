@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * 加载游戏中所有动画，在贴图加载之后
@@ -96,7 +97,7 @@ public class GameAnimationClass {
 		Animation ani_effect = new Animation(0.4f, region_effect);
 		return ani_effect;
 	}
-	
+	Array<TextureRegion> tr = new Array<TextureRegion>();
 	/**
 	 * 获得技能拥有者效果
 	 * @param idx	技能id
@@ -106,22 +107,25 @@ public class GameAnimationClass {
 		Animation retani = null;
 		switch(idx){
 		case 1:
-			TextureRegion[] tr = new TextureRegion[3];
-			tr[0] = texture_effect_skills.findRegion("heavyBeet",1);
-			tr[1] = texture_effect_skills.findRegion("heavyBeet",2);
-			tr[2] = texture_effect_skills.findRegion("heavyBeet",3);
-			retani = new Animation(Configure.duration_skill_effect,tr);			
+			tr.clear();
+			tr.add(texture_effect_skills.findRegion("heavyBeet",1));
+			tr.add(texture_effect_skills.findRegion("heavyBeet",2));
+			tr.add(texture_effect_skills.findRegion("heavyBeet",3));			
 			break;
 		case 2:
 			break;
 		case 3:
 			break;
 		case 4:
+			tr.clear();
+			tr.add(texture_effect_skills.findRegion("stab",1));
+			tr.add(texture_effect_skills.findRegion("stab",2));
+			tr.add(texture_effect_skills.findRegion("stab",3));
 			break;
 		default:
 			break;
 		}
-		
+		retani = new Animation(Configure.duration_skill_effect,tr);
 		return retani;
 	}
 	/**
@@ -131,25 +135,28 @@ public class GameAnimationClass {
 	 */
 	public Animation getSkillObjectEffect(int idx){
 		Animation retani = null;
+//		Array<TextureRegion> tr = new Array<TextureRegion>();
 		switch(idx){
 		case 1:
-			TextureRegion[] tr = new TextureRegion[3];
-			tr[0] = texture_effect_skills.findRegion("isAttacked",1);
-			tr[1] = texture_effect_skills.findRegion("isAttacked",2);
-			tr[2] = texture_effect_skills.findRegion("isAttacked",3);
-
-			retani = new Animation(Configure.duration_skill_effect,tr);			
+			tr.clear();
+			tr.add(texture_effect_skills.findRegion("isAttacked",1));
+			tr.add(texture_effect_skills.findRegion("isAttacked",2));
+			tr.add(texture_effect_skills.findRegion("isAttacked",3));	
 			break;
 		case 2:
 			break;
 		case 3:
 			break;
 		case 4:
+			tr.clear();
+			tr.add(texture_effect_skills.findRegion("isAttacked",1));
+			tr.add(texture_effect_skills.findRegion("isAttacked",2));
+			tr.add(texture_effect_skills.findRegion("isAttacked",3));	
 			break;
 		default:
 			break;
 		}
-		
+		retani = new Animation(Configure.duration_skill_effect,tr);
 		return retani;
 	}
 }

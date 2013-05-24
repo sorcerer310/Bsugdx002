@@ -106,20 +106,19 @@ public class Commander {
 		resetRoles();
 		resetHeroValue();
 		
-		CommandQueue.getInstance().put(new CommandTask(){
-			@Override
-			public void opTask(BsuEvent be){
-				System.out.println("role continued skill state");
-				roleContinuedSkillState(be);
-			}
-		});
-		
 		//增加对站在特殊地图块上的英雄进行处理的任务
 		CommandQueue.getInstance().put(new CommandTask() {
 			@Override
 			public void opTask(BsuEvent be) {
 				System.out.println("map event optask");
 				mapEvent(be);
+			}
+		});
+		//检测Role是否有持续状态
+		CommandQueue.getInstance().put(new CommandTask(){
+			@Override
+			public void opTask(BsuEvent be){
+				roleContinuedSkillState(be);
 			}
 		});
 		//增加命令英雄任务
@@ -134,12 +133,21 @@ public class Commander {
 				}
 			}
 		});
+		
+		//检测Role是否有持续状态
+		CommandQueue.getInstance().put(new CommandTask(){
+			@Override
+			public void opTask(BsuEvent be){
+				roleContinuedSkillState(be);
+			}
+		});
 		//增加命令敌人任务
 		CommandQueue.getInstance().put(new CommandTask() {
 			@Override
 			public void opTask(BsuEvent be) {
 				try {
 					commandNpcs(be);
+					roundEndCompleted = true;
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -220,8 +228,10 @@ public class Commander {
 						commandRoleDead(r);
 				}else if(css.cstype==CSType.hot){
 					r.currentHp = (int)(r.currentHp + css.val<(r.getMaxHp())?r.currentHp+css.val:r.getMaxHp());
+				//致盲
 				}else if(css.cstype==CSType.blind){
 					r.isRoundMove = false;
+				//眩晕
 				}else if(css.cstype==CSType.dizzy){
 					r.isRoundMove = false;
 				}
@@ -270,10 +280,9 @@ public class Commander {
 	private void commandHeros(BsuEvent be) throws InterruptedException {
 		for (int i = 0; i < heros.size; i++) {
 			final Role h = heros.get(i);
-			if(!h.isRoundMove) continue;	//如果本回合该英雄不行动则跳过该英雄
+			if(!h.isRoundMove) {h.isRoundMove=true;continue;}	//如果本回合该英雄不行动则跳过该英雄
 			waitRoleFlag = true; 			// 初始化等待循环flag为true
 			currTaskComFlag = false;		//只是当前处理技能任务是否完成
-//			moveAfterSkillFlag = false;		//指示释放技能后是否继续移动
 			final Array<Role> atkrs = getRolesInSkillRange(h);
 			//1:执行技能命令
 			if(atkrs.size!=0){
@@ -297,7 +306,6 @@ public class Commander {
 			}
 			
 			//2:执行移动命令
-//			if(atkrs.size == 0 || moveAfterSkillFlag){
 			if(atkrs.size == 0){
 				if(!h.hasAnatherRole(heros)){
 					Commander.this.directAction(h, DIRECTION.right, new BsuEvent(){
@@ -323,68 +331,51 @@ public class Commander {
 	 * @throws InterruptedException
 	 */
 	private void commandNpcs(BsuEvent be) throws InterruptedException {
-		// 第一步所有敌人都进攻
-		// for (Role e : npcs) {
 		for (int i = 0; i < npcs.size; i++) {
-			Role e = npcs.get(i);
-			waitRoleFlag = true; // 初始化等待循环flag为false
-//			Array<Vector2> vs = e.getCurrSkillRange(); // 获得当前技能的攻击范围
-//			Array<Role> atkrs = getRolsInSkillRange(vs, heros); // 获得攻击范围内的作用目标
-			Array<Role> atkrs = getRolesInSkillRange(e);
-			// 如果坐标目标数量为0，进行下一循环，对下一英雄进行判断，当前英雄加入移动队列
-			if (atkrs.size == 0) {
-				if (!e.hasAnatherRole(npcs)) {
-					Commander.this.directAction(e, DIRECTION.left,
-							new BsuEvent() {
-								@Override
-								public void notify(Object obj, String msg) {
-									// 收到消息设置等待标示为false
-									waitRoleFlag = false;
-								}
-							});
-
-				} else {
-					waitRoleFlag = false;
-				}
-			} else {
-				// 命令当前英雄进攻所有范围内的敌人
-				for (Role h : atkrs) {
-					e.ani_role_attack(h, e.getCskill(), new BsuEvent() {
+			final Role n = npcs.get(i);
+			if(!n.isRoundMove) {n.isRoundMove=true;continue;}	//如果本回合该npc不行动则跳过该npc
+			waitRoleFlag = true; 			// 初始化等待循环flag为true
+			currTaskComFlag = false;		//只是当前处理技能任务是否完成
+			final Array<Role> atkrs = getRolesInSkillRange(n);
+			//1:执行技能命令
+			if(atkrs.size!=0){
+				// 命令当前npc进攻所有范围内的英雄
+				for (final Role h : atkrs) {
+					n.ani_role_attack(h, n.getCskill(), new BsuEvent() {
 						@Override
 						public void notify(Object obj, String msg) {
-							if (((Role) obj).name.equals(msg))
-								waitRoleFlag = false;
+							//如果技能逻辑函数返回true,清空技能目标队列继续移动该单位
+							if(n.cskill.skillLogic(n, h))
+								atkrs.clear();
+							currTaskComFlag = true;
 						}
 					});
-
-					// 如果英雄血量为0，从heros数组中移除该敌人
-					h.currentHp = (int) (h.currentHp - e.getCskill().val >= 0 ? h.currentHp
-							- e.getCskill().val
-							: 0);
-					for (FightRoleUI fru : gamescreen.getFightUI()
-							.getRole_state_array()) {// 设置相应血条高度
-						if (fru.role == h) {
-							fru.role_hp.setScaleY((float) h.currentHp
-									/ (float) h.getMaxHp());
-							if (h.currentHp == 0) {
-								fru.role_photo.setColor(
-										fru.role_photo.getColor().r,
-										fru.role_photo.getColor().g,
-										fru.role_photo.getColor().b, 0.4f);
-								heros.removeValue(h, true); // 从Commander逻辑计算队列中移除
-								h.getParent().removeActor(h); // 从父Actor中移除该Actor节点
-							}
-						}
-					}
 				}
+			}else{currTaskComFlag = true;}
+			
+			while (!currTaskComFlag) {
+				System.out.println(currTaskComFlag);
+				Thread.sleep(500);
 			}
-			// 循环中等待
+			
+			//2:执行移动命令
+			if(atkrs.size == 0){
+				if(!n.hasAnatherRole(npcs)){
+					Commander.this.directAction(n, DIRECTION.left, new BsuEvent(){
+						@Override
+						public void notify(Object obj, String msg) {
+							waitRoleFlag = false;
+						}
+					});
+				}else{waitRoleFlag = false;}
+			}else{waitRoleFlag = false;}
+
+			// 等待动作完成
 			while (waitRoleFlag) {
 				Thread.sleep(200);
 			}
 		}
 		be.notify(this, "command_npcs_completed");
-		roundEndCompleted = true;
 	}
 
 	/**
@@ -397,9 +388,16 @@ public class Commander {
 	private Array<Role> getRolesInSkillRange(Role h) {
 		Skill s = h.cskill;
 		Array<Vector2> vs = s.getRange();					//技能作用范围
+		//如果技能为f_box类型，重新计算技能攻击范围
+		if(s.type==Skill.Type.f_box){
+			vs.clear();
+			for(int i=0;i<s.val;i++)
+				vs.add(new Vector2(i+1,0));
+		}
+		
 		Array<Role> retrs = new Array<Role>();				//返回符合类型的英雄
 		Array<Role> checkrs = null;
-		if(s.type==Skill.Type.f_damage ||s.type==Skill.Type.f_shifhp ||s.type==Skill.Type.p_atkbeat ||
+		if(s.type==Skill.Type.f_damage ||s.type==Skill.Type.f_shifhp ||s.type==Skill.Type.f_box ||s.type==Skill.Type.p_atkbeat ||
 				s.type==Skill.Type.p_damage ||s.type==Skill.Type.pdot_damage ||s.type==Skill.Type.prob_blind ||
 				s.type==Skill.Type.prob_dizzy ||s.type==Skill.Type.prob_nude )
 			checkrs = npcs;

@@ -75,8 +75,8 @@ public class SkillFactory {
 			break;
 		case 4:
 			skl = new Skill(i,"突刺",QUALITY.green,Type.f_box,2.0f,0.5f,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"攻击前方多个格子的敌人，对每个敌人都造成一定伤害",
-					GameTextureClass.getInstance().tmpskillicon,GameAnimationClass.getInstance().getEffect0(), GameAnimationClass.getInstance().getEffect1(),GameAnimationClass.getInstance().getEffect3(),
-					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
+					GameTextureClass.getInstance().tmpskillicon,GameAnimationClass.getInstance().getSkillOwnerEffect(i), GameAnimationClass.getInstance().getSkillObjectEffect(i),GameAnimationClass.getInstance().getEffect3(),
+					new Vector2[] {new Vector2(0,0)});
 			break;
 		case 5:
 			skl = new Skill(i,"横扫",QUALITY.green,Type.f_box,2.0f,0.5f,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"横扫面前竖排敌人",

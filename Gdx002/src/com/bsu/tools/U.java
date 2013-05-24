@@ -45,4 +45,23 @@ public class U {
 				return true;
 		return false;
 	}
+	/**
+	 * 给定一个机率参数，返回是否在机率之内
+	 * @param p	机率参数	
+	 * @return	返回机率为true或false
+	 */
+	public static boolean probability(float p){
+		if(p<=.0f)
+			return false;
+		if(p>=1.0f)
+			return true;
+		int rval = rnd.nextInt(100);
+		int pval = (int) (p*100);
+		System.out.println("rval:"+rval+" pval:"+pval);
+		if(rval<=pval)
+//		if(rnd.nextInt(100)<=(int)(p*100))
+			return true;
+		else
+			return false;
+	}
 } 

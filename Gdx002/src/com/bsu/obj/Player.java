@@ -54,12 +54,12 @@ public class Player {
 	private Array<Role> getPlayerRole() {
 		if (playerRole.size == 0) {
 			RoleFactory rf = RoleFactory.getInstance();
-			playerRole.add(new Role(Role.Type.HERO,QUALITY.green,"测试人物",U.getRandom(100, -6, 6),8,10
+			playerRole.add(new Role(Role.Type.HERO,QUALITY.green,CLASSES.fighter,"测试人物",U.getRandom(100, -6, 6),8,10
 								,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
-								new SkillTree().getSkillTreeFixedSkill(1)
+								new SkillTree().getSkillTreeFixedSkill(4)
 								,GameTextureClass.getInstance().fc_photo));				//测试技能用
 			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
-			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.blue,GameTextureClass.getInstance().zyc_photo));
+//			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.blue,GameTextureClass.getInstance().zyc_photo));
 //			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 //			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.purple,GameTextureClass.getInstance().zyc_photo));
 //			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));

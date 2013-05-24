@@ -94,13 +94,17 @@ public class Skill {
 	 * @return			返回一个布尔值，表示owner是否还继续向前移动
 	 */
 	public boolean skillLogic(Role owner,Role object){
-		if(type==Skill.Type.f_damage ||type==Skill.Type.f_shifhp ||type==Skill.Type.p_atkbeat ||
+		if(type==Skill.Type.f_damage ||type==Skill.Type.f_shifhp ||type==Skill.Type.f_box||type==Skill.Type.p_atkbeat ||
 				type==Skill.Type.p_damage ||type==Skill.Type.pdot_damage ||type==Skill.Type.prob_blind ||
 				type==Skill.Type.prob_dizzy ||type==Skill.Type.prob_nude){
 			//固定伤害处理
 			if(type==Skill.Type.f_damage){
 				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.getAttack()+val), object.getDefend()) >= 0 
 						? object.currentHp - U.realDamage((int)(owner.getAttack()+val), object.getDefend()): 0);
+			//扩展格子伤害
+			}else if(type==Skill.Type.f_box){
+				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.getAttack()), object.getDefend()) >= 0 
+						? object.currentHp - U.realDamage((int)(owner.getAttack()), object.getDefend()): 0);
 			//转移伤害至生命	
 			}else if(type==Skill.Type.f_shifhp){
 				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.getAttack()+val), object.getDefend()) >= 0 
@@ -122,11 +126,13 @@ public class Skill {
 			//一定机率致盲
 			}else if(type==Skill.Type.prob_blind){
 				//此处增加机率代码
-				object.csstate.add(new ContinuedSkillState(1,0,CSType.blind,ani_continue));
+				if(U.probability(val))
+					object.csstate.add(new ContinuedSkillState(1,0,CSType.blind,ani_continue));
 			//一定机率眩晕
 			}else if(type==Skill.Type.prob_dizzy){
 				//此处增加机率代码
-				object.csstate.add(new ContinuedSkillState(1,0,CSType.dizzy,ani_continue));
+				if(U.probability(val))
+					object.csstate.add(new ContinuedSkillState(1,0,CSType.dizzy,ani_continue));
 			//破甲效果
 			}else if(type==Skill.Type.prob_nude){
 				object.csstate.add(new ContinuedSkillState(3,val,CSType.debuff_def,ani_continue));
