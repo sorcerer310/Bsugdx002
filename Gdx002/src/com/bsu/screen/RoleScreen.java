@@ -34,8 +34,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 		GestureListener {
 	private Texture timg;
 	private Image background;
-	private Stage stage;
-	private Stage sRoleStage;
+	private Stage stage;// 基本舞台
+	private Stage sRoleStage;// Role舞台
+	private Stage RoleInfoStage;// Role信息舞台
 	private Image ib_back;
 	private QualityS quality;// 当前选择显示的品质
 	private Role selectRole;
@@ -62,6 +63,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
 		sRoleStage = new Stage(Configure.rect_width, Configure.rect_height,
 				false);
+		RoleInfoStage = new Stage(Configure.rect_width, Configure.rect_height,
+				false);
 		c = (OrthographicCamera) sRoleStage.getCamera();
 		background = new Image(GameTextureClass.getInstance().rolePanel);
 		stage.addActor(background);
@@ -77,16 +80,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 				stage, 130, 30);
 		orangeButton = WidgetFactory.getInstance().makeOneTextButton("orange",
 				stage, 170, 30);
-		nameLabel = WidgetFactory.getInstance().makeLabel("", stage, 40, 240);
-		qualityLabel = WidgetFactory.getInstance().makeLabel("", stage, 100,
-				240);
-		attackValueLabel = WidgetFactory.getInstance().makeLabel("", stage, 40,
-				220);
-		defendValueLabel = WidgetFactory.getInstance().makeLabel("", stage,
-				100, 220);
-		levelLabel = WidgetFactory.getInstance().makeLabel("", stage, 40, 200);
-		professionLabel = WidgetFactory.getInstance().makeLabel("", stage, 100,
-				200);
 		setListener();
 	}
 
@@ -157,44 +150,54 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * 显示人物信息
 	 */
 	private void showRoleInfo(Role r) {
+		RoleInfoStage.clear();
 		if (r == null) {
-			nameLabel.setText("");
-			qualityLabel.setText("");
-			attackValueLabel.setText("");
-			defendValueLabel.setText("");
-			roleImg = resetImg(roleImg, false, stage, null, 0.2f, 100, 140);
-			skillImg = resetImg(skillImg, false, stage, null, 0.2f, 100, 140);
-			skill1Img = resetImg(skill1Img, false, stage, null, 0.2f, 100, 140);
-			attackImg = resetImg(attackImg, false, stage, null, 0.2f, 100, 140);
-			defendImg = resetImg(defendImg, false, stage, null, 0.2f, 100, 140);
-			selectRole = null;
+			selectRole = r;
 			return;
 		}
-		selectRole = r;
-		nameLabel.setText("" + r.name);
-		qualityLabel.setText("" + getQualityName(r.quality));
-		attackValueLabel.setText("" + "" + r.getAttack());
-		defendValueLabel.setText("" + "" + r.getDefend());
-		roleImg = resetImg(roleImg, true, stage, r.roleTexture, 0.5f, 40, 260);
-		skillImg = resetImg(skillImg, true, stage, r.roleTexture, 0.2f, 40, 180);
-		skill1Img = resetImg(skill1Img, true, stage, r.roleTexture, 0.2f, 100,
-				180);
-		attackImg = resetImg(attackImg, true, stage, r.roleTexture, 0.2f, 40,
-				140);
-		defendImg = resetImg(defendImg, true, stage, r.roleTexture, 0.2f, 100,
-				140);
+		nameLabel = WidgetFactory.getInstance().makeLabel(r.name, RoleInfoStage, 40,
+				240);
+		qualityLabel = WidgetFactory.getInstance().makeLabel(
+				getQualityName(r.quality), RoleInfoStage, 100, 240);
+		attackValueLabel = WidgetFactory.getInstance().makeLabel(
+				"" + r.getAttack(), RoleInfoStage, 40, 220);
+		defendValueLabel = WidgetFactory.getInstance().makeLabel(
+				"" + r.getDefend(), RoleInfoStage, 100, 220);
+		levelLabel = WidgetFactory.getInstance().makeLabel("" + r.level, RoleInfoStage,
+				40, 200);
+		professionLabel = WidgetFactory.getInstance().makeLabel("" + r.classes,
+				RoleInfoStage, 100, 200);
+		roleImg = resetImg(roleImg, true, RoleInfoStage, r.roleTexture, 0.5f,
+				40, 260);
+		skillImg = resetImg(skillImg, true, RoleInfoStage, r.roleTexture, 0.2f,
+				40, 180);
+		skill1Img = resetImg(skill1Img, true, RoleInfoStage, r.roleTexture,
+				0.2f, 100, 180);
+		attackImg = resetImg(attackImg, true, RoleInfoStage, r.roleTexture,
+				0.2f, 40, 140);
+		defendImg = resetImg(defendImg, true, RoleInfoStage, r.roleTexture,
+				0.2f, 100, 140);
+		int numsGreen=0;
+		int numsBlue=0;
+		int numsPur=0;
+		int numsOra=0;
+		int ix=180,iy=110;
 		for (Skill s : r.skill_tree) {
 			if (s.quality == QUALITY.green) {
-				
+				Image img=WidgetFactory.getInstance().makeImg(s.icon, RoleInfoStage, 1, ix+numsGreen*40, iy);
+				numsGreen++;
 			}
-			if (s.quality == QUALITY.green) {
-
+			if (s.quality == QUALITY.blue) {
+				Image img=WidgetFactory.getInstance().makeImg(s.icon, RoleInfoStage, 1, ix+numsBlue*40, iy+40);
+				numsBlue++;
 			}
-			if (s.quality == QUALITY.green) {
-
+			if (s.quality == QUALITY.purple) {
+				Image img=WidgetFactory.getInstance().makeImg(s.icon, RoleInfoStage, 1, ix+numsPur*40, iy+80);
+				numsPur++;
 			}
-			if (s.quality == QUALITY.green) {
-
+			if (s.quality == QUALITY.orange) {
+				Image img=WidgetFactory.getInstance().makeImg(s.icon, RoleInfoStage, 1, ix+numsOra*40, iy+120);
+				numsOra++;
 			}
 
 		}
@@ -277,6 +280,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	public void show() {
 		Gdx.input.setInputProcessor(null);
 		InputMultiplexer inputMultiplexer = new InputMultiplexer();
+		inputMultiplexer.addProcessor(RoleInfoStage);
 		inputMultiplexer.addProcessor(sRoleStage);// 必须先加这个。。。。
 		inputMultiplexer.addProcessor(stage);
 		inputMultiplexer.addProcessor(new GestureDetector(this));
@@ -300,6 +304,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 		stage.draw();
 		sRoleStage.act(Gdx.graphics.getDeltaTime());
 		sRoleStage.draw();
+		RoleInfoStage.act(Gdx.graphics.getDeltaTime());
+		RoleInfoStage.draw();
 	}
 
 	@Override
