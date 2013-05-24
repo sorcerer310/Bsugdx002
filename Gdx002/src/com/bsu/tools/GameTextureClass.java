@@ -34,6 +34,7 @@ public class GameTextureClass {
 	
 	public TextureRegion fc_photo, zyc_photo, h0_photo, h1_photo, h2_photo,
 			h3_photo, h4_photo, h5_photo;
+	public TextureRegion tmpskillicon;
 
 	private GameTextureClass() {
 		// TODO Auto-generated constructor stub
@@ -63,6 +64,8 @@ public class GameTextureClass {
 		h4_photo=new TextureRegion(role_texture,192,96,96,96);
 		h5_photo=new TextureRegion(role_texture,288,96,96,96);
 
+		Texture tmpicon = new Texture(Gdx.files.internal("data/icon/11.png"));
+		tmpskillicon = new TextureRegion(tmpicon,0,0,32,32);
 	}
 
 }

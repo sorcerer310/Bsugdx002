@@ -1,6 +1,7 @@
 package com.bsu.obj.skilltree;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Commander;
@@ -30,6 +31,7 @@ public class Skill {
 	private CLASSES[] classes = null;						//技能适用的职业范围 
 	private String info = "";								//技能描述
 	private Array<Vector2> range = new Array<Vector2>();	//技能释放范围
+	public TextureRegion icon = null;						//技能图标
 	
 	public Animation ani_self = null;						//技能释放者动画效果
 	public Animation ani_object = null;						//技能承受者动画效果
@@ -50,11 +52,13 @@ public class Skill {
 	 * @param uv	技能值下级升级递增值
 	 * @param ac 	技能适用职业
 	 * @param i		技能描述信息
+	 * @param tr	技能图标
 	 * @param as	技能自身动画
 	 * @param ao	技能目标动画
+	 * @param anic	技能持续效果动画
 	 * @param r		技能攻击范围
 	 */
-	public Skill(int pi,String n,QUALITY q,Type t,float v,float uv,CLASSES[] ac,String i,Animation as,Animation ao,Vector2[] r){
+	public Skill(int pi,String n,QUALITY q,Type t,float v,float uv,CLASSES[] ac,String i,TextureRegion tr,Animation as,Animation ao,Animation anic,Vector2[] r){
 		id = pi;
 		name = n;
 		quality = q;
@@ -63,8 +67,10 @@ public class Skill {
 		uval = uv;
 		classes = ac;
 		info = i;
+		icon = tr;
 		ani_self = as;
 		ani_object = ao;
+		ani_continue = anic;
 		range.addAll(r);
 	}
 

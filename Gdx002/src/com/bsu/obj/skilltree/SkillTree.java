@@ -110,5 +110,14 @@ public class SkillTree {
 			skills.add(sf.getSkillByIdx(st.get(i)));
 		return skills;
 	}
-	
+	/**
+	 * 获得一棵只有一个技能的技能树，用于生成指定技能的英雄测试用
+	 * @param idx 	指定技能的id
+	 * @return		返回指定技能的技能树
+	 */
+	public Array<Skill> getSkillTreeFixedSkill(int idx){
+		Array<Skill> skills = new Array<Skill>();
+		skills.add(SkillFactory.getInstance().getSkillByIdx(idx));
+		return skills;
+	}
 }
