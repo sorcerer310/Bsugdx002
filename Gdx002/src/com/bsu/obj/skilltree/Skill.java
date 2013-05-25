@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Commander;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.ContinuedSkillState.CSType;
+import com.bsu.tools.GameAnimationClass;
+import com.bsu.tools.GameTextureClass;
 import com.bsu.tools.U;
 import com.bsu.tools.Configure.CLASSES;
 import com.bsu.tools.Configure.QUALITY;
@@ -45,7 +47,7 @@ public class Skill {
 	
 
 	/**
-	 * 技能初始化构造函数
+	 * 技能初始化构造函数，
 	 * @param n		技能名字
 	 * @param q		技能品质
 	 * @param t		技能类型
@@ -74,7 +76,34 @@ public class Skill {
 		ani_continue = anic;
 		range.addAll(r);
 	}
-
+	/**
+	 * 简化后的构造函数，内部根据技能索引自动带入动画图标等资源
+	 * @param pi	技能id
+	 * @param n		技能名称
+	 * @param q		技能品质 
+	 * @param t		技能类型
+	 * @param v		技能值
+	 * @param uv	技能升级值
+	 * @param ac	技能所属职业
+	 * @param i		技能信息
+	 * @param r		技能作用范围
+	 */
+	public Skill(int pi,String n,QUALITY q,Type t,float v,float uv,CLASSES[] ac,String i,Vector2[] r){
+		id = pi;
+		name = n;
+		quality = q;
+		type = t;
+		val = v;
+		uval = uv;
+		classes = ac;
+		info = i;
+		icon = GameTextureClass.getInstance().getSkillIcon(pi);
+		ani_self = GameAnimationClass.getInstance().getSkillOwnerEffect(pi);
+		ani_object = GameAnimationClass.getInstance().getSkillObjectEffect(pi);
+		ani_continue = GameAnimationClass.getInstance().getContinuedEffect(pi);
+		range.addAll(r);
+	}
+	
 	public Array<Vector2> getRange() {
 		return range;
 	}

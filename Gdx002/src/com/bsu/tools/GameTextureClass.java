@@ -31,11 +31,12 @@ public class GameTextureClass {
 	public Texture fightPanel, rolePanel, selectRolePanel, shopPanel,
 			skillPanel, updatePanel;
 	public TextureAtlas texture_atlas_mbutton;
-	public TextureAtlas texture_effect_skills;
+	public TextureAtlas texture_skills_effect;				//技能效果纹理
+	public TextureAtlas texture_skills_icon;				//技能图标纹理
 	
 	public TextureRegion fc_photo, zyc_photo, h0_photo, h1_photo, h2_photo,
 			h3_photo, h4_photo, h5_photo;
-	public TextureRegion tmpskillicon;
+	public TextureRegion tmpskillicon;				//临时用图标
 	
 
 	private GameTextureClass() {
@@ -66,9 +67,35 @@ public class GameTextureClass {
 		h4_photo=new TextureRegion(role_texture,192,96,96,96);
 		h5_photo=new TextureRegion(role_texture,288,96,96,96);
 
-		Texture tmpicon = new Texture(Gdx.files.internal("data/icon/11.png"));
+		Texture tmpicon = new Texture(Gdx.files.internal("data/game/icon/11.png"));
 		tmpskillicon = new TextureRegion(tmpicon,0,0,32,32);
-		texture_effect_skills = new TextureAtlas(Gdx.files.internal("data/game/effect/skilleffect.txt"));
+		
+		texture_skills_effect = new TextureAtlas(Gdx.files.internal("data/game/effect/skilleffect.txt"));
+		texture_skills_icon = new TextureAtlas(Gdx.files.internal("data/game/icon/skillicon.txt"));
 	}
-
+	/**
+	 * 根据技能索引返回技能的纹理
+	 * @param idx	技能索引
+	 * @return
+	 */
+	public TextureRegion getSkillIcon(int idx){
+		TextureRegion tr = null;
+		switch(idx){
+		case 1:
+			tr = texture_skills_icon.findRegion("11");
+			break;
+		case 2:
+			tr = texture_skills_icon.findRegion("11");
+			break;
+		case 3:
+			tr = texture_skills_icon.findRegion("11");
+			break;
+		case 4:
+			tr = texture_skills_icon.findRegion("11");
+			break;
+		default:
+			break;
+		}
+		return tr;
+	}
 }

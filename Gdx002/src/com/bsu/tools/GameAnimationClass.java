@@ -39,7 +39,7 @@ public class GameAnimationClass {
 		effect_spilt = TextureRegion.split(effect_texture, 32, 32);
 		card_texture = GameTextureClass.getInstance().role_texture;
 		role_spilt = TextureRegion.split(card_texture, 96, 96);
-		texture_effect_skills = GameTextureClass.getInstance().texture_effect_skills;
+		texture_effect_skills = GameTextureClass.getInstance().texture_skills_effect;
 	}
 	public Animation getRoleAnimation(TextureRegion tr){
 		TextureRegion[] region_idle = new TextureRegion[1];
