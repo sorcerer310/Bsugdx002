@@ -75,12 +75,13 @@ public class Role extends Actor {
 	 * @param n
 	 *            该角色的名字
 	 */
-	public Role(Type t,QUALITY q, CLASSES c,String n,int mhp,int av,int dv,Equip w,Equip a,Array<Skill> as,TextureRegion tr) {
+	public Role(Type t, QUALITY q, CLASSES c, String n, int mhp, int av,
+			int dv, Equip w, Equip a, Array<Skill> as, TextureRegion tr) {
 		name = n; // 名称
 		type = t; // 类型，英雄还是敌人
 		quality = q;
 		classes = c;
-		time_state = 0;					
+		time_state = 0;
 		maxHp = mhp;
 		currentHp = mhp;
 		attack = av;
@@ -92,7 +93,7 @@ public class Role extends Actor {
 		cskill = skill_tree.get(0);
 		skill_array.add(skill_tree.get(0));
 		skill_array.add(skill_tree.get(1));
-		exp=baseExp();
+		exp = baseExp();
 		set_actor_base(type);
 		levelUp();
 	}
@@ -122,14 +123,11 @@ public class Role extends Actor {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
-		
+
 		if (current_action_frame != null) {
 			batch.draw(current_action_frame, getX(), getY(), getOriginX(),
 					getOriginY(), 32, 32, getScaleX(), getScaleY(),
 					getRotation());
-		}
-		if (current_effect_frame != null) {
-			batch.draw(current_effect_frame, getX(), getY());
 		}
 		Role_logic();
 	}
@@ -152,16 +150,19 @@ public class Role extends Actor {
 	 *            攻击动作的角色
 	 */
 	public void ani_role_attack(Role enemy, Skill skl, BsuEvent be) {
-		if (enemy == null )
+		if (enemy == null)
 			return;
 		bevent = be;
 		time_effect = 0; // 此处一定要设置time_effect为0，否则动画不会重新开始
-		//如果动画为空直接通知动画播放结束事件
-		if(skl.ani_self==null){
-			if (bevent != null) 
+		// 如果动画为空直接通知动画播放结束事件
+		if (skl.ani_self == null) {
+			if (bevent != null)
 				bevent.notify(this, this.name);
 		}
 		ani_effect = skl.ani_self;
+
+		current_effect_frame = ani_effect.getKeyFrame(time_effect, false);
+		AttackEffect.getInstance().startEffect(current_effect_frame, this);
 		enemy.ani_role_isAttacked(skl.ani_object);
 	}
 
@@ -173,7 +174,7 @@ public class Role extends Actor {
 	 */
 	public void ani_role_isAttacked(Animation ani) {
 		time_effect = 0;
-		if(ani!=null)
+		if (ani != null)
 			ani_effect = ani;
 	}
 
@@ -233,9 +234,11 @@ public class Role extends Actor {
 
 		if (ani_effect != null) {
 			current_effect_frame = ani_effect.getKeyFrame(time_effect, false);
+			AttackEffect.getInstance().setFrame(current_effect_frame);
 			if (ani_effect.isAnimationFinished(time_effect)) {
 				current_effect_frame = null;
 				ani_effect = null;
+				AttackEffect.getInstance().endEffect();
 				// 如果event对象不为空，执行函数通知完成
 				if (bevent != null) {
 					System.out.println(this.name + "skill_effect_completed");
@@ -371,39 +374,43 @@ public class Role extends Actor {
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
+
 	/**
 	 * 返回角色基本exp
+	 * 
 	 * @return
 	 */
-	public int baseExp(){
-		int exp=0;
-		if(quality==QUALITY.green)
-			exp=Configure.baseExpGreen;
-		if(quality==QUALITY.blue)
-			exp=Configure.baseExpBlue;
-		if(quality==QUALITY.purple)
-			exp=Configure.baseExpPurple;
-		if(quality==QUALITY.orange)
-			exp=Configure.baseExpOrange;
+	public int baseExp() {
+		int exp = 0;
+		if (quality == QUALITY.green)
+			exp = Configure.baseExpGreen;
+		if (quality == QUALITY.blue)
+			exp = Configure.baseExpBlue;
+		if (quality == QUALITY.purple)
+			exp = Configure.baseExpPurple;
+		if (quality == QUALITY.orange)
+			exp = Configure.baseExpOrange;
 		return exp;
 	}
+
 	/**
 	 * 返回英雄升级后数据
 	 */
-	public void levelUp(){
+	public void levelUp() {
 		level++;
-		exp-=expUp;
-		maxHp=U.hpLevel(this);
-		attack=U.attackLevel(this);
-		defend=U.defendLevel(this);
-		expUp=U.expLevel(this);
+		exp -= expUp;
+		maxHp = U.hpLevel(this);
+		attack = U.attackLevel(this);
+		defend = U.defendLevel(this);
+		expUp = U.expLevel(this);
 	}
+
 	/**
 	 * 返回英雄的职业数据
 	 * 
 	 * @return
 	 */
-	
+
 	public CLASSES getClasses() {
 		return classes;
 	}

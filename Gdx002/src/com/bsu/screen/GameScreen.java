@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
+import com.bsu.obj.AttackEffect;
 import com.bsu.obj.Commander;
 import com.bsu.obj.GameFightUI;
 import com.bsu.obj.MapBox;
@@ -39,6 +40,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	private boolean action_start; // 是否回合开始
 	private boolean controlled;
 	private int clingX;// 地图移动位移
+	private AttackEffect attack_effect;
 
 	public GameScreen(Game mxg) {
 		super(mxg);
@@ -76,6 +78,10 @@ public class GameScreen extends CubocScreen implements Observer,
 			fightUI.show_hero_state();
 		}
 		c = (OrthographicCamera) stage.getCamera();
+		if(attack_effect==null){
+			attack_effect=AttackEffect.getInstance();
+		}
+		stage.addActor(attack_effect);
 	}
 
 	/**
