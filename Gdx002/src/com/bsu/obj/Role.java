@@ -122,7 +122,7 @@ public class Role extends Actor {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
-		Role_logic();
+		
 		if (current_action_frame != null) {
 			batch.draw(current_action_frame, getX(), getY(), getOriginX(),
 					getOriginY(), 32, 32, getScaleX(), getScaleY(),
@@ -131,6 +131,7 @@ public class Role extends Actor {
 		if (current_effect_frame != null) {
 			batch.draw(current_effect_frame, getX(), getY());
 		}
+		Role_logic();
 	}
 
 	public void hero_disapper(BsuEvent be) {

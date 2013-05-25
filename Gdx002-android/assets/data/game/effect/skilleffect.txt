@@ -4,183 +4,239 @@ filter: Linear,Linear
 repeat: none
 dizzy
   rotate: false
-  xy: 588, 0
+  xy: 74, 132
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 s-2-
   rotate: false
-  xy: 382, 0
+  xy: 0, 132
   size: 40, 32
   orig: 40, 32
   offset: 0, 0
   index: 1
 s-3-
   rotate: false
-  xy: 845, 0
+  xy: 132, 198
   size: 25, 32
   orig: 25, 32
   offset: 0, 0
   index: 4
 isAttacked
   rotate: false
-  xy: 621, 0
+  xy: 99, 165
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 heavyBeet
   rotate: false
-  xy: 786, 0
+  xy: 132, 165
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 s-5-
   rotate: false
-  xy: 218, 0
+  xy: 159, 33
   size: 40, 32
   orig: 40, 32
   offset: 0, 0
   index: 2
 s-6-
   rotate: false
-  xy: 489, 0
+  xy: 66, 198
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
+s-8-
+  rotate: false
+  xy: 0, 165
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+s-9-
+  rotate: false
+  xy: 0, 0
+  size: 82, 32
+  orig: 82, 32
+  offset: 0, 0
+  index: 2
 s-3-
   rotate: false
-  xy: 819, 0
+  xy: 225, 0
   size: 25, 32
   orig: 25, 32
   offset: 0, 0
   index: 5
 s-2-
   rotate: false
-  xy: 341, 0
+  xy: 0, 99
   size: 40, 32
   orig: 40, 32
   offset: 0, 0
   index: 2
 s-3-
   rotate: false
-  xy: 937, 0
+  xy: 224, 66
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
   index: 1
 s-5-
   rotate: false
-  xy: 177, 0
+  xy: 118, 33
   size: 40, 32
   orig: 40, 32
   offset: 0, 0
   index: 3
 stab
   rotate: false
-  xy: 118, 0
+  xy: 59, 33
   size: 58, 32
   orig: 58, 32
   offset: 0, 0
   index: 1
 isAttacked
   rotate: false
-  xy: 654, 0
+  xy: 99, 198
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 s-6-
   rotate: false
-  xy: 456, 0
+  xy: 66, 165
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
+s-7-
+  rotate: false
+  xy: 41, 99
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
 dizzy
   rotate: false
-  xy: 522, 0
+  xy: 74, 66
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 s-2-
   rotate: false
-  xy: 300, 0
+  xy: 0, 66
   size: 40, 32
   orig: 40, 32
   offset: 0, 0
   index: 3
 heavyBeet
   rotate: false
-  xy: 720, 0
+  xy: 107, 99
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 isAttacked
   rotate: false
-  xy: 687, 0
+  xy: 107, 66
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 s-3-
   rotate: false
-  xy: 904, 0
+  xy: 191, 66
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
   index: 2
 stab
   rotate: false
-  xy: 59, 0
+  xy: 0, 33
   size: 58, 32
   orig: 58, 32
   offset: 0, 0
   index: 2
 s-6-
   rotate: false
-  xy: 423, 0
+  xy: 41, 132
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
+s-7-
+  rotate: false
+  xy: 41, 66
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+s-8-
+  rotate: false
+  xy: 33, 165
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
 dizzy
   rotate: false
-  xy: 555, 0
+  xy: 74, 99
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 s-3-
   rotate: false
-  xy: 871, 0
+  xy: 158, 198
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
   index: 3
 heavyBeet
   rotate: false
-  xy: 753, 0
+  xy: 107, 132
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 stab
   rotate: false
-  xy: 0, 0
+  xy: 166, 0
   size: 58, 32
   orig: 58, 32
   offset: 0, 0
   index: 3
 s-5-
   rotate: false
-  xy: 259, 0
+  xy: 200, 33
   size: 40, 32
   orig: 40, 32
+  offset: 0, 0
+  index: 1
+s-7-
+  rotate: false
+  xy: 33, 198
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+s-8-
+  rotate: false
+  xy: 0, 198
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+s-9-
+  rotate: false
+  xy: 83, 0
+  size: 82, 32
+  orig: 82, 32
   offset: 0, 0
   index: 1

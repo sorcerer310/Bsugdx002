@@ -91,12 +91,12 @@ public class SkillFactory {
 					new Vector2[] {new Vector2(0,0)});
 			break;
 		case 9:
-			skl = new Skill(i,"速射",QUALITY.green,Type.pbuff_atk,1.2f,0.4f,new CLASSES[]{CLASSES.archer,CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"增加远程职业的攻击力",
-					new Vector2[] {new Vector2(0,0)});
+			skl = new Skill(i,"速射",QUALITY.green,Type.p_damage,1.2f,0.4f,new CLASSES[]{CLASSES.archer,CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"增加远程职业的攻击力",
+					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
 			break;
 		case 10:
-			skl = new Skill(i,"连射",QUALITY.green,Type.pbuff_atk,1.5f,0.3f,new CLASSES[]{CLASSES.archer,CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"远程职业连续射击2次，但第二发威力较弱",
-					new Vector2[] {new Vector2(0,0)});
+			skl = new Skill(i,"连射",QUALITY.green,Type.p_damage,1.5f,0.3f,new CLASSES[]{CLASSES.archer,CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"远程职业连续射击2次，但第二发威力较弱",
+					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
 			break;
 		case 31:
 			skl = new Skill(i,"破甲",QUALITY.blue,Type.prob_nude,5f,2f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"以较强的攻击力击破敌人护甲",
