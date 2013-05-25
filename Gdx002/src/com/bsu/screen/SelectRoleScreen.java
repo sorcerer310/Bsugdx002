@@ -71,24 +71,28 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		addRoleToStage(QualityS.allselect);
 		setListener();
 	}
+
 	/**
 	 * 设置要更改队伍的角色
+	 * 
 	 * @param r
 	 */
 	public void setChangeRole(Role r) {
 		changeRole = r;
 	}
+
 	/**
 	 * 重新设置所有role的图像，以便正确显示目前要更换的人物
 	 */
-	private void resetImg(Image image){
-		for(Image img:RoleSelectImg){
+	private void resetImg(Image image) {
+		for (Image img : RoleSelectImg) {
 			img.setScale(0.5f);
-			if(img.equals(image)){
+			if (img.equals(image)) {
 				img.setScale(0.4f);
 			}
 		}
 	}
+
 	/**
 	 * 当点击卡片按钮时添加背包中卡片到舞台，并根据当前所选类型显示
 	 */
@@ -96,19 +100,19 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		quality = qs;
 		if (quality == QualityS.gselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerRole, QUALITY.green));
+					Player.getInstance().playerIdelRole, QUALITY.green));
 		}
 		if (quality == QualityS.bselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerRole, QUALITY.blue));
+					Player.getInstance().playerIdelRole, QUALITY.blue));
 		}
 		if (quality == QualityS.pselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerRole, QUALITY.purple));
+					Player.getInstance().playerIdelRole, QUALITY.purple));
 		}
 		if (quality == QualityS.oselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerRole, QUALITY.orange));
+					Player.getInstance().playerIdelRole, QUALITY.orange));
 		}
 		if (quality == QualityS.allselect) {
 			showQualityRole(Player.getInstance().playerIdelRole);
@@ -152,20 +156,18 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 						for (int i = 0; i < Player.getInstance().playerFightRole.size; i++) {
 							if (Player.getInstance().playerFightRole.get(i) == changeRole) {
 								index = i;
+								break;
 							}
 						}
 						Player.getInstance().playerFightRole.removeValue(
 								changeRole, false);
 						Player.getInstance().playerFightRole.insert(index, r);
-						Player.getInstance().getPlayerPackageRole();
-						GameScreenConfigure.getInstance().setHeroRoles(
-								Player.getInstance().playerFightRole);
 					} else {
 						Player.getInstance().playerFightRole.add(r);
-						Player.getInstance().getPlayerPackageRole();
-						GameScreenConfigure.getInstance().setHeroRoles(
-								Player.getInstance().playerFightRole);
 					}
+					Player.getInstance().getPlayerPackageRole();
+					GameScreenConfigure.getInstance().setHeroRoles(
+							Player.getInstance().playerFightRole);
 					setChanged();
 					notifyObservers(Configure.button_back);
 					ib_back.setScale(1f);

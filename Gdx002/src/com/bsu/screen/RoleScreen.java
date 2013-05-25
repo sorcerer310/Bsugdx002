@@ -51,7 +51,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private OrthographicCamera c;
 	private int cameraWidth;// 显示人物时的界面宽度
 	private WidgetFactory wfy;// 界面工厂类
-
+	private int skillIndex;//希望改变的技能
 	public RoleScreen(Game game) {
 		super(game);
 		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
@@ -139,12 +139,13 @@ public class RoleScreen extends CubocScreen implements Observer,
 	/**
 	 * 显示人物信息
 	 */
-	private void showRoleInfo(Role r) {
+	private void showRoleInfo(final Role r) {
 		RoleInfoStage.clear();
 		selectRole = r;
 		if (selectRole == null) {
 			return;
 		}
+		skillIndex=0;
 		wfy.makeLabel(r.name, RoleInfoStage, 40, 240);
 		wfy.makeLabel(getQualityName(r.quality), RoleInfoStage, 100, 240);
 		wfy.makeLabel(r.maxHp + "", RoleInfoStage, 40, 220);
@@ -154,10 +155,38 @@ public class RoleScreen extends CubocScreen implements Observer,
 		wfy.makeLabel("" + r.level, RoleInfoStage, 40, 200);
 		wfy.makeLabel("" + U.getClasses(r), RoleInfoStage, 100, 200);
 		wfy.makeImg(r.roleTexture, RoleInfoStage, 0.5f, 40, 260);
-		Image skillImg = wfy.makeImg(r.skill_array.get(0).icon, RoleInfoStage,
+		final Image skillImg = wfy.makeImg(r.skill_array.get(0).icon, RoleInfoStage,
 				1f, 40, 140);
+		skillImg.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				skillIndex=0;
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
 		Image skill1Img = wfy.makeImg(r.skill_array.get(1).icon, RoleInfoStage,
 				1f, 100, 140);
+		skill1Img.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				skillIndex=1;
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
 		// wfy.makeImg(r.weapon.texture, RoleInfoStage, 1f, 40, 100);
 		// wfy.makeImg(r.armor.texture, RoleInfoStage, 1f, 100, 100);
 		int numsGreen = 0;
@@ -165,29 +194,59 @@ public class RoleScreen extends CubocScreen implements Observer,
 		int numsPur = 0;
 		int numsOra = 0;
 		int ix = 180, iy = 110;
-		for (Skill s : r.skill_tree) {
+		for (final Skill s : r.skill_tree) {
+			Image skill_img=null;
 			if (s.quality == QUALITY.green) {
-				wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsGreen * 40, iy);
+				skill_img=wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsGreen * 40, iy);
 				numsGreen++;
 			}
 			if (s.quality == QUALITY.blue) {
-				wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsBlue * 40,
+				skill_img=wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsBlue * 40,
 						iy + 40);
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
-				wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsPur * 40,
+				skill_img=wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsPur * 40,
 						iy + 80);
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
-				wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsOra * 40,
+				skill_img=wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsOra * 40,
 						iy + 120);
 				numsOra++;
+			}
+			if(!s.enable){
+				skill_img.addListener(new InputListener() {
+					@Override
+					public boolean touchDown(InputEvent event, float x, float y,
+							int pointer, int button) {
+						return true;
+					}
+
+					@Override
+					public void touchUp(InputEvent event, float x, float y,
+							int pointer, int button) {
+						setAnotherSkill(r,skillIndex,s,skillImg);
+						super.touchUp(event, x, y, pointer, button);
+					}
+				});
 			}
 		}
 	}
 
+	/**
+	 * 重新给指定技能更换新技能
+	 * @param s
+	 * @param img
+	 */
+	private void setAnotherSkill(Role r,int index,Skill s,Image img){
+		r.skill_array.set(index, s);
+		Skin skin=new Skin();
+		skin.add("skillImg", s.icon);
+		img.setDrawable(skin.getDrawable("skillImg"));
+		skin.dispose();
+		skin=null;
+	}
 	/**
 	 * 取得品质对应文字
 	 * 

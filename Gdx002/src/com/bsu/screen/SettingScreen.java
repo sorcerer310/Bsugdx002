@@ -32,7 +32,6 @@ public class SettingScreen extends CubocScreen implements Observer {
 		actor_init();
 		stage.addActor(backgroundImage);
 		stage.addActor(back_image);
-		stage.addActor(label1);
 
 		back_image.addListener(new InputListener() {
 			@Override
@@ -56,15 +55,10 @@ public class SettingScreen extends CubocScreen implements Observer {
 	}
 
 	private void actor_init() {
-		atlas = new TextureAtlas(Gdx.files.internal("data/menu/pack")); // ¸ù¾ÝpackÎÄ¼þ»ñÈ¡ËùÓÐÍ¼Æ¬
+		atlas = new TextureAtlas(Gdx.files.internal("data/menu/pack")); // ï¿½ï¿½ï¿½packï¿½Ä¼ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 		backgroundImage = new Image(atlas.findRegion("bground2"));
 		back_image = new Image(atlas.findRegion("backarrow"));
 		back_image.setPosition(100, 100);
-		label1 = new Label("Hello everyone\n I am nunuge \n  Potato", Configure.get_sytle());
-		label1.setAlignment(1);
-		label1.setPosition(50, 150);
-		label1.setFontScale(1);
-		label1.setColor(Color.GREEN);
 	}
 
 	@Override
