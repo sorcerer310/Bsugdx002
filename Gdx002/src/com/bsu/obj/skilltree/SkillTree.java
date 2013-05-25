@@ -118,6 +118,7 @@ public class SkillTree {
 	public Array<Skill> getSkillTreeFixedSkill(int idx){
 		Array<Skill> skills = new Array<Skill>();
 		skills.add(SkillFactory.getInstance().getSkillByIdx(idx));
+		skills.add(SkillFactory.getInstance().getSkillByIdx(idx));
 		return skills;
 	}
 }

@@ -135,7 +135,6 @@ public class GameAnimationClass {
 	 */
 	public Animation getSkillObjectEffect(int idx){
 		Animation retani = null;
-//		Array<TextureRegion> tr = new Array<TextureRegion>();
 		switch(idx){
 		case 1:
 			tr.clear();
@@ -152,6 +151,36 @@ public class GameAnimationClass {
 			tr.add(texture_effect_skills.findRegion("isAttacked",1));
 			tr.add(texture_effect_skills.findRegion("isAttacked",2));
 			tr.add(texture_effect_skills.findRegion("isAttacked",3));	
+			break;
+		default:
+			break;
+		}
+		retani = new Animation(Configure.duration_skill_effect,tr);
+		return retani;
+	}
+	/**
+	 * 返回持续性状态动画
+	 * @param idx	对应的技能ID
+	 * @return
+	 */
+	public Animation getContinuedEffect(int idx){
+		Animation retani = null;
+		switch(idx){
+		case 1:
+			tr.clear();
+			tr.add(texture_effect_skills.findRegion("dizzy",1));
+			tr.add(texture_effect_skills.findRegion("dizzy",2));
+			tr.add(texture_effect_skills.findRegion("dizzy",3));
+			tr.add(texture_effect_skills.findRegion("dizzy",1));
+			tr.add(texture_effect_skills.findRegion("dizzy",2));
+			tr.add(texture_effect_skills.findRegion("dizzy",3));
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+
 			break;
 		default:
 			break;

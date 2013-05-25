@@ -4,28 +4,35 @@ filter: Linear,Linear
 repeat: none
 heavyBeet
   rotate: false
-  xy: 92, 0
+  xy: 375, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 isAttacked
   rotate: false
-  xy: 59, 33
+  xy: 309, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 stab
   rotate: false
-  xy: 0, 66
+  xy: 118, 0
   size: 58, 32
   orig: 58, 32
   offset: 0, 0
   index: 1
+dizzy
+  rotate: false
+  xy: 210, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
 stab
   rotate: false
-  xy: 0, 33
+  xy: 59, 0
   size: 58, 32
   orig: 58, 32
   offset: 0, 0
@@ -39,28 +46,42 @@ stab
   index: 3
 isAttacked
   rotate: false
-  xy: 59, 0
+  xy: 276, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+dizzy
+  rotate: false
+  xy: 177, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 heavyBeet
   rotate: false
-  xy: 92, 66
+  xy: 441, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 isAttacked
   rotate: false
-  xy: 59, 66
+  xy: 342, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+dizzy
+  rotate: false
+  xy: 243, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 heavyBeet
   rotate: false
-  xy: 92, 33
+  xy: 408, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

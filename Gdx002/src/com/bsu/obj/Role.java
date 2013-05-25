@@ -229,13 +229,14 @@ public class Role extends Actor {
 			if (ani_effect.isAnimationFinished(time_effect)) {
 				current_effect_frame = null;
 				ani_effect = null;
-			}
-			// 如果event对象不为空，执行函数通知完成
-			if (bevent != null) {
-				System.out.println(this.name + "skill_effect_completed");
-				bevent.notify(this, this.name);
+				// 如果event对象不为空，执行函数通知完成
+				if (bevent != null) {
+					System.out.println(this.name + "skill_effect_completed");
+					bevent.notify(this, this.name);
+				}
 			}
 		}
+
 		if (isSelected()) {
 			if (state == STATE.idle) {
 				MapBox.attack_array.clear();

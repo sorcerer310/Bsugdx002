@@ -60,7 +60,9 @@ public class SkillFactory {
 		switch(i){
 		case 1:
 			skl = new Skill(i,"重击",QUALITY.green,Type.prob_dizzy,0.2f,0.03f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"重击对手，令对手有一定机率眩晕",
-					GameTextureClass.getInstance().tmpskillicon,GameAnimationClass.getInstance().getSkillOwnerEffect(i), GameAnimationClass.getInstance().getSkillObjectEffect(i),GameAnimationClass.getInstance().getEffect3(),
+					GameTextureClass.getInstance().tmpskillicon,GameAnimationClass.getInstance().getSkillOwnerEffect(i), GameAnimationClass.getInstance().getSkillObjectEffect(i),
+					GameAnimationClass.getInstance().getContinuedEffect(i),
+//					GameAnimationClass.getInstance().getEffect3(),
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
 			break;
 		case 2:
