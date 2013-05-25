@@ -240,10 +240,11 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param img
 	 */
 	private void setAnotherSkill(Role r,int index,Skill s,Image img){
+		System.out.println(r.skill_array.get(index).name+"change to"+s.name);
 		r.skill_array.set(index, s);
 		Skin skin=new Skin();
-		skin.add("skillImg", s.icon);
-		img.setDrawable(skin.getDrawable("skillImg"));
+		skin.add("Img",new TextureRegion(s.icon));
+		img.setDrawable(skin.getDrawable("Img"));
 		skin.dispose();
 		skin=null;
 	}
