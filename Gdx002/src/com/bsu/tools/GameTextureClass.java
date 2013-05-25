@@ -94,8 +94,11 @@ public class GameTextureClass {
 			tr = texture_skills_icon.findRegion("11");
 			break;
 		default:
+			tr = texture_skills_icon.findRegion("q");
 			break;
 		}
+		if(tr==null)
+			tr = texture_skills_icon.findRegion("q");
 		return tr;
 	}
 }

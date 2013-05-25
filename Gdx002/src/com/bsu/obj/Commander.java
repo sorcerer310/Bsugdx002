@@ -401,7 +401,7 @@ public class Commander {
 				s.type==Skill.Type.p_damage ||s.type==Skill.Type.pdot_damage ||s.type==Skill.Type.prob_blind ||
 				s.type==Skill.Type.prob_dizzy ||s.type==Skill.Type.prob_nude )
 			checkrs = npcs;
-		else if(s.type==Skill.Type.f_healing  ||s.type==Skill.Type.pbuff_atk ||
+		else if(s.type==Skill.Type.f_healing ||s.type==Skill.Type.p_healing  ||s.type==Skill.Type.pbuff_atk ||
 				s.type==Skill.Type.pbuff_def ||s.type==Skill.Type.pbuff_healing ||s.type==Skill.Type.pbuff_hp )
 			checkrs = heros;
 			

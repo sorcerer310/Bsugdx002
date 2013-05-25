@@ -155,6 +155,11 @@ public class Role extends Actor {
 			return;
 		bevent = be;
 		time_effect = 0; // 此处一定要设置time_effect为0，否则动画不会重新开始
+		//如果动画为空直接通知动画播放结束事件
+		if(skl.ani_self==null){
+			if (bevent != null) 
+				bevent.notify(this, this.name);
+		}
 		ani_effect = skl.ani_self;
 		enemy.ani_role_isAttacked(skl.ani_object);
 	}
@@ -167,7 +172,8 @@ public class Role extends Actor {
 	 */
 	public void ani_role_isAttacked(Animation ani) {
 		time_effect = 0;
-		ani_effect = ani;
+		if(ani!=null)
+			ani_effect = ani;
 	}
 
 	/**

@@ -170,11 +170,14 @@ public class Skill {
 			
 			return false;
 		}
-		else if(type==Skill.Type.f_healing  ||type==Skill.Type.pbuff_atk ||
+		else if(type==Skill.Type.f_healing ||type==Skill.Type.p_healing ||type==Skill.Type.pbuff_atk ||
 				type==Skill.Type.pbuff_def ||type==Skill.Type.pbuff_healing ||type==Skill.Type.pbuff_hp){
 			//固定治疗
 			if(type==Skill.Type.f_healing){
-				object.currentHp = (int)(object.currentHp+this.val>=object.getMaxHp()?object.currentHp:object.currentHp+val);
+				object.currentHp = (int)(object.currentHp+this.val>=object.getMaxHp()?object.getMaxHp():object.currentHp+val);
+			//百分比治疗
+			}else if(type==Skill.Type.p_healing){
+				object.currentHp = (int)(object.currentHp+object.getMaxHp()*val>=object.getMaxHp()?object.getMaxHp():object.currentHp+object.getMaxHp()*val);
 			//百分比攻击力buff
 			}else if(type==Skill.Type.pbuff_atk){
 				object.csstate.add(new ContinuedSkillState(2,object.getAttack()*val,CSType.buff_atk,ani_continue));

@@ -105,27 +105,43 @@ public class GameAnimationClass {
 	 */
 	public Animation getSkillOwnerEffect(int idx){
 		Animation retani = null;
+		tr.clear();
 		switch(idx){
 		case 1:
-			tr.clear();
 			tr.add(texture_effect_skills.findRegion("heavyBeet",1));
 			tr.add(texture_effect_skills.findRegion("heavyBeet",2));
 			tr.add(texture_effect_skills.findRegion("heavyBeet",3));			
 			break;
 		case 2:
+			tr.add(texture_effect_skills.findRegion("s-2-",1));
+			tr.add(texture_effect_skills.findRegion("s-2-",2));
+			tr.add(texture_effect_skills.findRegion("s-2-",3));
 			break;
 		case 3:
+			tr.add(texture_effect_skills.findRegion("s-3-",1));
+			tr.add(texture_effect_skills.findRegion("s-3-",2));
+			tr.add(texture_effect_skills.findRegion("s-3-",3));
 			break;
 		case 4:
-			tr.clear();
 			tr.add(texture_effect_skills.findRegion("stab",1));
 			tr.add(texture_effect_skills.findRegion("stab",2));
 			tr.add(texture_effect_skills.findRegion("stab",3));
 			break;
+		case 5:
+			tr.add(texture_effect_skills.findRegion("s-5-",1));
+			tr.add(texture_effect_skills.findRegion("s-5-",2));
+			tr.add(texture_effect_skills.findRegion("s-5-",3));
+			break;
+		case 6:
+			tr.add(texture_effect_skills.findRegion("s-6-",1));
+			tr.add(texture_effect_skills.findRegion("s-6-",2));
+			tr.add(texture_effect_skills.findRegion("s-6-",3));
+			break;
 		default:
 			break;
 		}
-		retani = new Animation(Configure.duration_skill_effect,tr);
+		if(tr.size>0)
+			retani = new Animation(Configure.duration_skill_effect,tr);
 		return retani;
 	}
 	/**
@@ -135,27 +151,43 @@ public class GameAnimationClass {
 	 */
 	public Animation getSkillObjectEffect(int idx){
 		Animation retani = null;
+		tr.clear();
 		switch(idx){
 		case 1:
-			tr.clear();
 			tr.add(texture_effect_skills.findRegion("isAttacked",1));
 			tr.add(texture_effect_skills.findRegion("isAttacked",2));
 			tr.add(texture_effect_skills.findRegion("isAttacked",3));	
 			break;
 		case 2:
+			tr.add(texture_effect_skills.findRegion("s-3-",4));
+			tr.add(texture_effect_skills.findRegion("s-3-",4));
+			tr.add(texture_effect_skills.findRegion("s-3-",5));
+			tr.add(texture_effect_skills.findRegion("s-3-",5));
 			break;
 		case 3:
+			tr.add(texture_effect_skills.findRegion("s-3-",4));
+			tr.add(texture_effect_skills.findRegion("s-3-",4));
+			tr.add(texture_effect_skills.findRegion("s-3-",5));
+			tr.add(texture_effect_skills.findRegion("s-3-",5));
 			break;
 		case 4:
-			tr.clear();
 			tr.add(texture_effect_skills.findRegion("isAttacked",1));
 			tr.add(texture_effect_skills.findRegion("isAttacked",2));
 			tr.add(texture_effect_skills.findRegion("isAttacked",3));	
 			break;
+		case 5:
+			tr.add(texture_effect_skills.findRegion("s-3-",4));
+			tr.add(texture_effect_skills.findRegion("s-3-",4));
+			tr.add(texture_effect_skills.findRegion("s-3-",5));
+			tr.add(texture_effect_skills.findRegion("s-3-",5));
+			break;
+		case 6:
+			break;
 		default:
 			break;
 		}
-		retani = new Animation(Configure.duration_skill_effect,tr);
+		if(tr.size>0)
+			retani = new Animation(Configure.duration_skill_effect,tr);
 		return retani;
 	}
 	/**
@@ -185,7 +217,8 @@ public class GameAnimationClass {
 		default:
 			break;
 		}
-		retani = new Animation(Configure.duration_skill_effect,tr);
+		if(tr.size>0)
+			retani = new Animation(Configure.duration_skill_effect,tr);
 		return retani;
 	}
 }

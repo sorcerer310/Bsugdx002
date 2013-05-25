@@ -75,8 +75,8 @@ public class SkillFactory {
 					new Vector2[] {new Vector2(0,0)});
 			break;
 		case 5:
-			skl = new Skill(i,"横扫",QUALITY.green,Type.f_box,2.0f,0.5f,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"横扫面前竖排敌人",
-					new Vector2[] {new Vector2(1,0),new Vector2(1,1)});
+			skl = new Skill(i,"横扫",QUALITY.green,Type.p_damage,0.8f,0.2f,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"横扫面前竖排敌人",
+					new Vector2[] {new Vector2(1,0),new Vector2(1,1),new Vector2(1,-1)});
 			break;
 		case 6:
 			skl = new Skill(i,"马步",QUALITY.green,Type.p_healing,0.05f,0.01f,new CLASSES[]{CLASSES.all},"一回合内恢复自身少量生命",
