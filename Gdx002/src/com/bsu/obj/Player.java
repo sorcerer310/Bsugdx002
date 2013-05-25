@@ -54,11 +54,11 @@ public class Player {
 	private Array<Role> getPlayerRole() {
 		if (playerRole.size == 0) {
 			RoleFactory rf = RoleFactory.getInstance();
-			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
-			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.blue,GameTextureClass.getInstance().zyc_photo));
-			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
-			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.purple,GameTextureClass.getInstance().zyc_photo));
-			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
+			playerRole.add(rf.getFighter("哎呀", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
+			playerRole.add(rf.getFighter("ss哈哈", Type.HERO, QUALITY.blue,GameTextureClass.getInstance().zyc_photo));
+			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
+			playerRole.add(rf.getFighter("张永臣", Type.HERO, QUALITY.purple,GameTextureClass.getInstance().zyc_photo));
+			playerRole.add(rf.getFighter("努努", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 //			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 //			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 //			playerRole.add(rf.getFighter("zyc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().zyc_photo));

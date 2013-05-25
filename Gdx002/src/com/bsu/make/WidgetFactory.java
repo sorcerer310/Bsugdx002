@@ -49,7 +49,6 @@ public class WidgetFactory {
 		TextButtonStyle tbs = new TextButtonStyle();
 		tbs.up = skin.newDrawable("white", Color.DARK_GRAY);
 		tbs.down = skin.newDrawable("white", Color.DARK_GRAY);
-		// tbs.checked = skin.newDrawable("white",Color.BLUE);
 		tbs.over = skin.newDrawable("white", Color.LIGHT_GRAY);
 		tbs.font = skin.getFont("default");
 		skin.add("default", tbs);
