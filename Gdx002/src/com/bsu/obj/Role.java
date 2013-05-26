@@ -161,18 +161,12 @@ public class Role extends Actor {
 		if (skl.ani_self == null) {
 			if (bevent != null)
 				bevent.notify(this, this.name);
-		}
-//<<<<<<< HEAD
-//		ani_effect = skl.ani_self;
-//		
-//		current_effect_frame = ani_effect.getKeyFrame(time_effect, false);
-//		AttackEffect.getInstance().startEffect(current_effect_frame, this);
-//=======
-		attack_effect = skl.ani_self;
+		}else{
+			attack_effect = skl.ani_self;
+			current_attack_frame = attack_effect.getKeyFrame(time_effect, false);
+			AttackEffect.getInstance().startEffect(current_attack_frame, this);
 
-		current_attack_frame = attack_effect.getKeyFrame(time_effect, false);
-		AttackEffect.getInstance().startEffect(current_attack_frame, this);
-//>>>>>>> a3380f8b964f49fd7055cc88e1351eff00ff2fa1
+		}
 		enemy.ani_role_isAttacked(skl.ani_object);
 	}
 
