@@ -2,233 +2,247 @@ skilleffect.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-dizzy
-  rotate: false
-  xy: 74, 132
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-s-2-
-  rotate: false
-  xy: 0, 132
-  size: 40, 32
-  orig: 40, 32
-  offset: 0, 0
-  index: 1
-s-3-
-  rotate: false
-  xy: 132, 198
-  size: 25, 32
-  orig: 25, 32
-  offset: 0, 0
-  index: 4
 isAttacked
   rotate: false
-  xy: 99, 165
+  xy: 66, 387
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
-heavyBeet
+dizzy
   rotate: false
-  xy: 132, 165
+  xy: 0, 408
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
-s-5-
-  rotate: false
-  xy: 159, 33
-  size: 40, 32
-  orig: 40, 32
-  offset: 0, 0
-  index: 2
-s-6-
-  rotate: false
-  xy: 66, 198
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-s-8-
-  rotate: false
-  xy: 0, 165
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 3
-s-9-
-  rotate: false
-  xy: 0, 0
-  size: 82, 32
-  orig: 82, 32
-  offset: 0, 0
-  index: 2
 s-3-
   rotate: false
-  xy: 225, 0
+  xy: 107, 321
   size: 25, 32
   orig: 25, 32
   offset: 0, 0
   index: 5
-s-2-
+s-33-
   rotate: false
-  xy: 0, 99
-  size: 40, 32
-  orig: 40, 32
-  offset: 0, 0
-  index: 2
-s-3-
-  rotate: false
-  xy: 224, 66
-  size: 32, 30
-  orig: 32, 30
-  offset: 0, 0
-  index: 1
-s-5-
-  rotate: false
-  xy: 118, 33
-  size: 40, 32
-  orig: 40, 32
+  xy: 81, 114
+  size: 80, 80
+  orig: 80, 80
   offset: 0, 0
   index: 3
+s-6-
+  rotate: false
+  xy: 165, 375
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
 stab
   rotate: false
-  xy: 59, 33
+  xy: 0, 276
   size: 58, 32
   orig: 58, 32
   offset: 0, 0
   index: 1
-isAttacked
+s-32-
   rotate: false
-  xy: 99, 198
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
-s-6-
-  rotate: false
-  xy: 66, 165
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
-s-7-
-  rotate: false
-  xy: 41, 99
+  xy: 100, 288
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 dizzy
   rotate: false
-  xy: 74, 66
+  xy: 198, 375
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+s-5-
+  rotate: false
+  xy: 199, 276
+  size: 40, 32
+  orig: 40, 32
+  offset: 0, 0
+  index: 3
+s-6-
+  rotate: false
+  xy: 132, 372
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+s-2-
+  rotate: false
+  xy: 215, 309
+  size: 40, 32
+  orig: 40, 32
+  offset: 0, 0
+  index: 1
+stab
+  rotate: false
+  xy: 140, 273
+  size: 58, 32
+  orig: 58, 32
+  offset: 0, 0
+  index: 2
+s-7-
+  rotate: false
+  xy: 66, 354
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+s-33-
+  rotate: false
+  xy: 81, 33
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 6
+s-33-
+  rotate: false
+  xy: 0, 195
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 1
+s-6-
+  rotate: false
+  xy: 99, 354
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 s-2-
   rotate: false
-  xy: 0, 66
+  xy: 174, 309
   size: 40, 32
   orig: 40, 32
   offset: 0, 0
-  index: 3
-heavyBeet
+  index: 2
+s-32-
   rotate: false
-  xy: 107, 99
+  xy: 81, 225
+  size: 68, 29
+  orig: 68, 29
+  offset: 0, 0
+  index: 4
+stab
+  rotate: false
+  xy: 81, 255
+  size: 58, 32
+  orig: 58, 32
+  offset: 0, 0
+  index: 3
+s-7-
+  rotate: false
+  xy: 0, 375
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 3
-isAttacked
-  rotate: false
-  xy: 107, 66
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
+  index: 2
 s-3-
   rotate: false
-  xy: 191, 66
+  xy: 99, 420
   size: 32, 30
   orig: 32, 30
   offset: 0, 0
+  index: 1
+heavyBeet
+  rotate: false
+  xy: 0, 474
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
   index: 2
-stab
+s-33-
   rotate: false
   xy: 0, 33
-  size: 58, 32
-  orig: 58, 32
+  size: 80, 80
+  orig: 80, 80
   offset: 0, 0
-  index: 2
-s-6-
+  index: 7
+s-31-
   rotate: false
-  xy: 41, 132
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 3
-s-7-
-  rotate: false
-  xy: 41, 66
+  xy: 0, 342
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 s-8-
   rotate: false
-  xy: 33, 165
+  xy: 199, 342
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
-dizzy
+s-32-
   rotate: false
-  xy: 74, 99
-  size: 32, 32
-  orig: 32, 32
+  xy: 81, 195
+  size: 68, 29
+  orig: 68, 29
   offset: 0, 0
-  index: 2
-s-3-
+  index: 5
+s-2-
   rotate: false
-  xy: 158, 198
-  size: 32, 30
-  orig: 32, 30
-  offset: 0, 0
-  index: 3
-heavyBeet
-  rotate: false
-  xy: 107, 132
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
-stab
-  rotate: false
-  xy: 166, 0
-  size: 58, 32
-  orig: 58, 32
-  offset: 0, 0
-  index: 3
-s-5-
-  rotate: false
-  xy: 200, 33
+  xy: 133, 306
   size: 40, 32
   orig: 40, 32
   offset: 0, 0
-  index: 1
+  index: 3
+isAttacked
+  rotate: false
+  xy: 99, 387
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
 s-7-
   rotate: false
-  xy: 33, 198
+  xy: 33, 354
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+s-33-
+  rotate: false
+  xy: 0, 114
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 4
+s-3-
+  rotate: false
+  xy: 66, 420
+  size: 32, 30
+  orig: 32, 30
+  offset: 0, 0
+  index: 2
+s-31-
+  rotate: false
+  xy: 41, 321
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 s-8-
   rotate: false
-  xy: 0, 198
+  xy: 166, 342
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+s-32-
+  rotate: false
+  xy: 219, 243
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+dizzy
+  rotate: false
+  xy: 33, 387
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -240,3 +254,101 @@ s-9-
   orig: 82, 32
   offset: 0, 0
   index: 1
+s-33-
+  rotate: false
+  xy: 162, 81
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 5
+s-3-
+  rotate: false
+  xy: 33, 471
+  size: 32, 30
+  orig: 32, 30
+  offset: 0, 0
+  index: 3
+s-8-
+  rotate: false
+  xy: 133, 339
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+s-32-
+  rotate: false
+  xy: 150, 243
+  size: 68, 29
+  orig: 68, 29
+  offset: 0, 0
+  index: 3
+s-9-
+  rotate: false
+  xy: 0, 0
+  size: 82, 32
+  orig: 82, 32
+  offset: 0, 0
+  index: 2
+s-5-
+  rotate: false
+  xy: 0, 309
+  size: 40, 32
+  orig: 40, 32
+  offset: 0, 0
+  index: 1
+s-3-
+  rotate: false
+  xy: 231, 375
+  size: 25, 32
+  orig: 25, 32
+  offset: 0, 0
+  index: 4
+heavyBeet
+  rotate: false
+  xy: 0, 441
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+s-33-
+  rotate: false
+  xy: 162, 162
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 2
+isAttacked
+  rotate: false
+  xy: 132, 405
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+s-31-
+  rotate: false
+  xy: 74, 321
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+heavyBeet
+  rotate: false
+  xy: 33, 438
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+s-33-
+  rotate: false
+  xy: 166, 0
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 8
+s-5-
+  rotate: false
+  xy: 59, 288
+  size: 40, 32
+  orig: 40, 32
+  offset: 0, 0
+  index: 2

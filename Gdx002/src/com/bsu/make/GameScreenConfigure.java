@@ -4,9 +4,12 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
+import com.bsu.obj.skilltree.SkillTree;
 import com.bsu.screen.GameScreen;
+import com.bsu.tools.Configure.CLASSES;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.U;
 
 public class GameScreenConfigure {
 	private static GameScreenConfigure instance = null;
@@ -42,7 +45,11 @@ public class GameScreenConfigure {
 		for(Role h:Player.getInstance().playerFightRole){
 			heroRoles.add(h);
 		}
-		npcRoles.add(RoleFactory.getInstance().getFighter("enemy1", Type.ENEMY, QUALITY.green,GameTextureClass.getInstance().h5_photo));
+//		npcRoles.add(RoleFactory.getInstance().getFighter("enemy1", Type.ENEMY, QUALITY.green,GameTextureClass.getInstance().h5_photo));
+		npcRoles.add(new Role(Role.Type.ENEMY,QUALITY.green,CLASSES.fighter,"测试敌人",U.getRandom(100, -6, 6),8,10
+				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
+				new SkillTree().getSkillTreeFixedSkill(10)
+				,GameTextureClass.getInstance().h3_photo));				//测试技能用
 		rols.addAll(heroRoles);
 		rols.addAll(npcRoles);
 		gs.game_init(0, rols);

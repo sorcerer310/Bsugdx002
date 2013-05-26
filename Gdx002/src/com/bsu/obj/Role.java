@@ -160,7 +160,7 @@ public class Role extends Actor {
 				bevent.notify(this, this.name);
 		}
 		ani_effect = skl.ani_self;
-
+		
 		current_effect_frame = ani_effect.getKeyFrame(time_effect, false);
 		AttackEffect.getInstance().startEffect(current_effect_frame, this);
 		enemy.ani_role_isAttacked(skl.ani_object);

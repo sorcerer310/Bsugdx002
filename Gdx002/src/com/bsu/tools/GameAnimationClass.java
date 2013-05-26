@@ -157,6 +157,22 @@ public class GameAnimationClass {
 			tr.add(texture_effect_skills.findRegion("s-9-",1));
 			tr.add(texture_effect_skills.findRegion("s-9-",2));
 			break;			
+		case 31:
+			tr.add(texture_effect_skills.findRegion("s-2-",1));
+			tr.add(texture_effect_skills.findRegion("s-2-",2));
+			tr.add(texture_effect_skills.findRegion("s-2-",3));
+			break;
+		case 32:
+			tr.add(texture_effect_skills.findRegion("s-32-",1));
+			tr.add(texture_effect_skills.findRegion("s-32-",2));
+			tr.add(texture_effect_skills.findRegion("s-32-",1));
+			tr.add(texture_effect_skills.findRegion("s-32-",2));
+			tr.add(texture_effect_skills.findRegion("s-32-",1));
+			tr.add(texture_effect_skills.findRegion("s-32-",2));
+			tr.add(texture_effect_skills.findRegion("s-32-",3));
+			tr.add(texture_effect_skills.findRegion("s-32-",4));
+			tr.add(texture_effect_skills.findRegion("s-32-",5));
+			break;
 		default:
 			break;
 		}
@@ -203,6 +219,22 @@ public class GameAnimationClass {
 			break;
 		case 6:
 			break;
+		case 31:
+			tr.add(texture_effect_skills.findRegion("s-31-",1));
+			tr.add(texture_effect_skills.findRegion("s-31-",2));
+			tr.add(texture_effect_skills.findRegion("s-31-",3));
+			break;
+		case 33:
+			tr.add(texture_effect_skills.findRegion("s-33-",1));
+			tr.add(texture_effect_skills.findRegion("s-33-",2));
+			tr.add(texture_effect_skills.findRegion("s-33-",3));
+			tr.add(texture_effect_skills.findRegion("s-33-",4));
+			tr.add(texture_effect_skills.findRegion("s-33-",5));
+			tr.add(texture_effect_skills.findRegion("s-33-",6));
+			tr.add(texture_effect_skills.findRegion("s-33-",7));
+			tr.add(texture_effect_skills.findRegion("s-33-",8));
+			tr.add(texture_effect_skills.findRegion("s-33-",7));
+			tr.add(texture_effect_skills.findRegion("s-33-",8));
 		default:
 			break;
 		}
