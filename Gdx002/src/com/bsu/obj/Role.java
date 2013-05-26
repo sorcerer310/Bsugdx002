@@ -46,7 +46,8 @@ public class Role extends Actor {
 	public boolean isRoundMove = true; // 本回合是否移动
 
 	private float time_state; // 行动状态时间
-	public float time_effect; // 技能特效时间
+	private float time_effect; // 技能特效时间
+	private float px, py;// 动画偏移量
 	public STATE state; // 英雄的当前状态
 	public Skill cskill; // 英雄当前的攻击技能
 	public Array<Skill> skill_tree = new Array<Skill>(); // 英雄的技能树
@@ -132,7 +133,7 @@ public class Role extends Actor {
 					getRotation());
 		}
 		if (current_beattack_frame != null) {
-			batch.draw(current_beattack_frame, getX(), getY());
+			batch.draw(current_beattack_frame, getX() + px, getY() + py);
 		}
 		Role_logic();
 	}
@@ -161,13 +162,15 @@ public class Role extends Actor {
 		if (skl.ani_self == null) {
 			if (bevent != null)
 				bevent.notify(this, this.name);
-		}else{
+		} else {
 			attack_effect = skl.ani_self;
-			current_attack_frame = attack_effect.getKeyFrame(time_effect, false);
-			AttackEffect.getInstance().startEffect(current_attack_frame, this);
+			current_attack_frame = attack_effect
+					.getKeyFrame(time_effect, false);
+			AttackEffect.getInstance().startEffect(current_attack_frame, this,
+					skl.offset_ani_self);
 
 		}
-		enemy.ani_role_isAttacked(skl.ani_object);
+		enemy.ani_role_isAttacked(skl.ani_object, skl.offset_ani_object);
 	}
 
 	/**
@@ -176,21 +179,38 @@ public class Role extends Actor {
 	 * @param ani
 	 *            要播放的动画
 	 */
-	private void ani_role_isAttacked(Animation ani) {
+	private void ani_role_isAttacked(Animation ani, Vector2 v) {
 		time_effect = 0;
-		if (ani != null)
+		if (ani != null) {
 			beAttack_effect = ani;
+			if (v != null) {
+				px = v.x;
+				py = v.y;
+				System.out.println(px+"@@"+py);
+			}
+		}
 	}
+
 	/**
 	 * 播放人物持续动画
-	 * @param ani	要播放的动画参数
+	 * 
+	 * @param ani
+	 *            要播放的动画参数
 	 */
-	public void ani_role_continue(ContinuedSkillState css){
+	public void ani_role_continue(ContinuedSkillState css) {
 		/**
 		 * 从css中取持续效果动画偏移量
 		 */
+		time_effect = 0;
+		if (css.ani != null) {
+			beAttack_effect = css.ani;
+			if (css.offset != null) {
+				px = css.offset.x;
+				py = css.offset.y;
+			}
+		}
 	}
-	
+
 	/**
 	 * 根据角色状态取得角色动画
 	 * 
@@ -245,19 +265,24 @@ public class Role extends Actor {
 			}
 		}
 		if (beAttack_effect != null) {
-			current_beattack_frame = beAttack_effect.getKeyFrame(time_effect, false);
+			current_beattack_frame = beAttack_effect.getKeyFrame(time_effect,
+					false);
 			if (beAttack_effect.isAnimationFinished(time_effect)) {
 				current_beattack_frame = null;
 				beAttack_effect = null;
+				px = 0;
+				py = 0;
 				// 如果event对象不为空，执行函数通知完成
 				if (bevent != null) {
-					System.out.println(this.name + "beattacked_effect_completed");
+					System.out.println(this.name
+							+ "beattacked_effect_completed");
 					bevent.notify(this, this.name);
 				}
 			}
 		}
 		if (attack_effect != null) {
-			current_attack_frame = attack_effect.getKeyFrame(time_effect, false);
+			current_attack_frame = attack_effect
+					.getKeyFrame(time_effect, false);
 			AttackEffect.getInstance().setFrame(current_attack_frame);
 			if (attack_effect.isAnimationFinished(time_effect)) {
 				current_attack_frame = null;
@@ -265,7 +290,8 @@ public class Role extends Actor {
 				AttackEffect.getInstance().endEffect();
 				// 如果event对象不为空，执行函数通知完成
 				if (bevent != null) {
-					System.out.println(this.name + "attact_skill_effect_completed");
+					System.out.println(this.name
+							+ "attact_skill_effect_completed");
 					bevent.notify(this, this.name);
 				}
 			}
