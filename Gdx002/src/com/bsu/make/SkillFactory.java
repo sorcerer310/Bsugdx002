@@ -109,6 +109,7 @@ public class SkillFactory {
 		case 33:
 			skl = new Skill(i,"火球术",QUALITY.blue,Type.f_damage,50f,25f,new CLASSES[]{CLASSES.wizard},"法师的基本法术，差不多所有元素法师第一课都要学习此技能",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0)});
+			skl.offset_ani_object = new Vector2(-64,0);
 			break;
 		case 34:
 			skl = new Skill(i,"疗伤",QUALITY.blue,Type.f_healing,50f,25f,new CLASSES[]{CLASSES.cleric},"牧师最基本的治疗术，可以为其他人恢复HP",
