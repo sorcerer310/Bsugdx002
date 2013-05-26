@@ -147,7 +147,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		}
 		skillIndex=0;
 		wfy.makeLabel(r.name, RoleInfoStage, 40, 240);
-		wfy.makeLabel(getQualityName(r.quality), RoleInfoStage, 100, 240);
+		wfy.makeLabel(Configure.getQualityName(r.quality), RoleInfoStage, 100, 240);
 		wfy.makeLabel(r.maxHp + "", RoleInfoStage, 40, 220);
 		wfy.makeLabel(r.exp + "/" + r.expUp, RoleInfoStage, 100, 220);
 		wfy.makeLabel("" + r.getAttack(), RoleInfoStage, 40, 180);
@@ -247,28 +247,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 		img.setDrawable(skin.getDrawable("Img"));
 		skin.dispose();
 		skin=null;
-	}
-	/**
-	 * 取得品质对应文字
-	 * 
-	 * @param q
-	 * @return
-	 */
-	private String getQualityName(QUALITY q) {
-		String s = null;
-		if (q == QUALITY.green) {
-			s = "green";
-		}
-		if (q == QUALITY.blue) {
-			s = "blue";
-		}
-		if (q == QUALITY.purple) {
-			s = "pruple";
-		}
-		if (q == QUALITY.orange) {
-			s = "orange";
-		}
-		return s;
 	}
 
 	/**
