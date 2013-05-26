@@ -59,7 +59,7 @@ public class SkillFactory {
 		Skill skl = null;
 		switch(i){
 		case 1:
-			skl = new Skill(i,"重击",QUALITY.green,Type.prob_dizzy,0.2f,0.03f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"重击对手，令对手有一定机率眩晕",
+			skl = new Skill(i,"重击",QUALITY.green,Type.prob_dizzy,1f,0.03f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"重击对手，令对手有一定机率眩晕",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
 			break;
 		case 2:
