@@ -38,11 +38,18 @@ public class GameFightUI {
 		stage = s;
 		stage.clear();
 		c = Commander.getInstance();
-		gameUI();
 		show_hero_state();
 	}
 
-	private void gameUI() {
+	
+
+	/**
+	 * 绘画每个角色状态
+	 * 
+	 * @param roleIndex
+	 */
+	public void show_hero_state() {
+		stage.clear();
 		bt_endround = WidgetFactory.getInstance().makeOneTextButton("end",stage, 200,
 				80);
 		bt_endround.addListener(new ClickListener() {
@@ -51,14 +58,6 @@ public class GameFightUI {
 				c.roundEnd();
 			}
 		});
-	}
-
-	/**
-	 * 绘画每个角色状态
-	 * 
-	 * @param roleIndex
-	 */
-	public void show_hero_state() {
 		int roleIndex = 0;
 		for (Role e : Player.getInstance().playerFightRole) {
 			role_state_array.add(new FightRoleUI(stage, e, roleIndex));

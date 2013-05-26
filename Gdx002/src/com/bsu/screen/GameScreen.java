@@ -160,6 +160,8 @@ public class GameScreen extends CubocScreen implements Observer,
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
+		UIStage.clear();
+		stage.clear();
 	}
 
 	@Override

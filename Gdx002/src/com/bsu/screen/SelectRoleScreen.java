@@ -28,6 +28,7 @@ import com.bsu.make.RoleFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.tools.Configure;
+import com.bsu.tools.TipsWindows;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.Configure.QualityS;
 import com.bsu.tools.GameTextureClass;
@@ -148,6 +149,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 						int pointer, int button) {
 					if (selectRole != r) {
 						selectRole = r;// 选定人物。。
+						TipsWindows.getInstance().showRoleInfo(r,sRoleStage);
 						resetImg(roleImg);
 						return;
 					}
@@ -195,6 +197,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		stage.draw();
 		sRoleStage.act(Gdx.graphics.getDeltaTime());
 		sRoleStage.draw();
+
 	}
 
 	@Override
