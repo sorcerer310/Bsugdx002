@@ -42,7 +42,6 @@ public class Skill {
 //	public Animation ani_conself = null;					//持续技能释放者动画效果
 //	public Animation ani_conobject = null;					//持续技能承受者动画效果
 	public Animation ani_continue = null;					//持续技能承受者动画效果，暂时只有承受者有动画效果。
-	public Vector2 offset_ani_coninue = null;				//持续技能承受者动画偏移量
 	
 	public boolean enable = false;							//该技能是否开启使用
 

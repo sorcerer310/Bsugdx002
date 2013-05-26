@@ -207,7 +207,7 @@ public class Commander {
 				continue;
 			r.clearExtValue();
 			for(ContinuedSkillState css:r.csstate){
-				r.ani_role_isAttacked(css.ani);			//播放持续技能效果动画
+				r.ani_role_continue(css);				//播放持续技能效果动画
 				if(css.cstype==CSType.buff_atk){
 					r.extAttack += (int) css.val; 
 				}else if(css.cstype==CSType.buff_def){
@@ -237,7 +237,8 @@ public class Commander {
 				}
 				//如果持续效果动画不为空，播放动画
 				if(css.ani!=null)
-					r.ani_role_isAttacked(css.ani);
+					r.ani_role_continue(css);
+//					r.ani_role_isAttacked(css.ani);
 				//持续回合数减1
 				css.remainRound -=1;
 				//如果持续效果剩余回合数为0，从人物的持续效果队列中移除该持续效果

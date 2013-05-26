@@ -176,12 +176,21 @@ public class Role extends Actor {
 	 * @param ani
 	 *            要播放的动画
 	 */
-	public void ani_role_isAttacked(Animation ani) {
+	private void ani_role_isAttacked(Animation ani) {
 		time_effect = 0;
 		if (ani != null)
 			beAttack_effect = ani;
 	}
-
+	/**
+	 * 播放人物持续动画
+	 * @param ani	要播放的动画参数
+	 */
+	public void ani_role_continue(ContinuedSkillState css){
+		/**
+		 * 从css中取持续效果动画偏移量
+		 */
+	}
+	
 	/**
 	 * 根据角色状态取得角色动画
 	 * 
