@@ -60,8 +60,10 @@ public class Role extends Actor {
 
 	private Animation ani_current; // 当前人物动画
 	private TextureRegion current_action_frame;// 当前人物动画所对应的TextureRegion
-	private Animation ani_effect; // 效果动画
-	private TextureRegion current_effect_frame; // 当前效果动画对应的某一帧
+	private Animation attack_effect; // 攻击效果动画
+	private TextureRegion current_attack_frame; // 当前攻击效果动画对应的某一帧
+	private Animation beAttack_effect; // 被攻击效果动画
+	private TextureRegion current_beattack_frame; // 当前被攻击效果动画对应的某一帧
 	private boolean selected; // 被选中等待操作？
 	private boolean controlled;// 此轮是否被操作过
 	private Array<Vector2> pass_array = new Array<Vector2>(); // 人物可以移动的格子数组
@@ -129,6 +131,9 @@ public class Role extends Actor {
 					getOriginY(), 32, 32, getScaleX(), getScaleY(),
 					getRotation());
 		}
+		if (current_beattack_frame != null) {
+			batch.draw(current_beattack_frame, getX(), getY());
+		}
 		Role_logic();
 	}
 
@@ -144,8 +149,6 @@ public class Role extends Actor {
 	}
 
 	/**
-	 * 角色攻击，目前npc只有普通攻击
-	 * 
 	 * @param enemy
 	 *            攻击动作的角色
 	 */
@@ -159,10 +162,17 @@ public class Role extends Actor {
 			if (bevent != null)
 				bevent.notify(this, this.name);
 		}
-		ani_effect = skl.ani_self;
-		
-		current_effect_frame = ani_effect.getKeyFrame(time_effect, false);
-		AttackEffect.getInstance().startEffect(current_effect_frame, this);
+//<<<<<<< HEAD
+//		ani_effect = skl.ani_self;
+//		
+//		current_effect_frame = ani_effect.getKeyFrame(time_effect, false);
+//		AttackEffect.getInstance().startEffect(current_effect_frame, this);
+//=======
+		attack_effect = skl.ani_self;
+
+		current_attack_frame = attack_effect.getKeyFrame(time_effect, false);
+		AttackEffect.getInstance().startEffect(current_attack_frame, this);
+//>>>>>>> a3380f8b964f49fd7055cc88e1351eff00ff2fa1
 		enemy.ani_role_isAttacked(skl.ani_object);
 	}
 
@@ -175,7 +185,7 @@ public class Role extends Actor {
 	public void ani_role_isAttacked(Animation ani) {
 		time_effect = 0;
 		if (ani != null)
-			ani_effect = ani;
+			beAttack_effect = ani;
 	}
 
 	/**
@@ -231,17 +241,28 @@ public class Role extends Actor {
 				bevent.notify(this, this.name);
 			}
 		}
-
-		if (ani_effect != null) {
-			current_effect_frame = ani_effect.getKeyFrame(time_effect, false);
-			AttackEffect.getInstance().setFrame(current_effect_frame);
-			if (ani_effect.isAnimationFinished(time_effect)) {
-				current_effect_frame = null;
-				ani_effect = null;
+		if (beAttack_effect != null) {
+			current_beattack_frame = beAttack_effect.getKeyFrame(time_effect, false);
+			if (beAttack_effect.isAnimationFinished(time_effect)) {
+				current_beattack_frame = null;
+				beAttack_effect = null;
+				// 如果event对象不为空，执行函数通知完成
+				if (bevent != null) {
+					System.out.println(this.name + "beattacked_effect_completed");
+					bevent.notify(this, this.name);
+				}
+			}
+		}
+		if (attack_effect != null) {
+			current_attack_frame = attack_effect.getKeyFrame(time_effect, false);
+			AttackEffect.getInstance().setFrame(current_attack_frame);
+			if (attack_effect.isAnimationFinished(time_effect)) {
+				current_attack_frame = null;
+				attack_effect = null;
 				AttackEffect.getInstance().endEffect();
 				// 如果event对象不为空，执行函数通知完成
 				if (bevent != null) {
-					System.out.println(this.name + "skill_effect_completed");
+					System.out.println(this.name + "attact_skill_effect_completed");
 					bevent.notify(this, this.name);
 				}
 			}
