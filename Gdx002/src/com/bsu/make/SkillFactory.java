@@ -181,6 +181,7 @@ public class SkillFactory {
 		case 66:
 			skl = new Skill(i,"冰锥推进",QUALITY.purple,Type.p_damage,1.5f,0.3f,new CLASSES[]{CLASSES.wizard},"对前方横向3个格子所有敌人进行冰锥攻击",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
+			skl.offset_ani_self = new Vector2(35,0);
 			break;
 		case 67:
 			skl = new Skill(i,"生命转移",QUALITY.purple,Type.f_shifhp,50f,30f,new CLASSES[]{CLASSES.cleric,CLASSES.sorcerer},"将前方3*3范围内的敌人的生命转移到己方",

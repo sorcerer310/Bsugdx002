@@ -236,6 +236,14 @@ public class GameAnimationClass {
 			tr.add(texture_effect_skills.findRegion("stab",2));
 			tr.add(texture_effect_skills.findRegion("stab",3));
 			break;
+		case 66:
+			tr.add(texture_effect_skills.findRegion("s-66-",1));
+			tr.add(texture_effect_skills.findRegion("s-66-",2));
+			tr.add(texture_effect_skills.findRegion("s-66-",3));
+			tr.add(texture_effect_skills.findRegion("s-66-",4));
+			tr.add(texture_effect_skills.findRegion("s-66-",5));
+			tr.add(texture_effect_skills.findRegion("s-66-",6));
+			break;
 		default:
 			break;
 		}
