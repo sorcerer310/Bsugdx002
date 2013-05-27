@@ -122,12 +122,14 @@ public class SkillFactory {
 		case 36:
 			skl = new Skill(i,"吸星",QUALITY.blue,Type.f_shifhp,5f,2f,new CLASSES[]{CLASSES.sorcerer},"伤害敌人，并回复伤害一半的HP为自己",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),new Vector2(4,1),new Vector2(4,-1)});
+			skl.offset_ani_object = new Vector2(-32,0);
 			break;
 		case 37:
 			skl = new Skill(i,"乱射",QUALITY.blue,Type.f_damage,5f,2f,new CLASSES[]{CLASSES.archer,CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"对前方3*3格子的敌人进行乱射攻击",
 					new Vector2[] {new Vector2(1,0),new Vector2(1,1),new Vector2(1,-1),
 										new Vector2(2,0),new Vector2(2,1),new Vector2(2,-1),
 										new Vector2(3,0),new Vector2(3,1),new Vector2(3,-1)});
+			skl.offset_ani_self = new Vector2(22,10);
 			break;
 		case 38:
 			skl = new Skill(i,"爆头",QUALITY.blue,Type.p_damage,1.8f,0.5f,new CLASSES[]{CLASSES.archer,CLASSES.wizard},"正中敌人头部，造成较大伤害",
