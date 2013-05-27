@@ -134,12 +134,15 @@ public class SkillFactory {
 		case 38:
 			skl = new Skill(i,"爆头",QUALITY.blue,Type.p_damage,1.8f,0.5f,new CLASSES[]{CLASSES.archer,CLASSES.wizard},"正中敌人头部，造成较大伤害",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
+			skl.offset_ani_self = new Vector2(22,10);
+			skl.offset_ani_object = new Vector2(0,10);
 			break;
 		case 39:
-			skl = new Skill(i,"血池",QUALITY.blue,Type.pdot_damage,5f,2f,new CLASSES[]{CLASSES.sorcerer},"在前方3*3格子敌人脚下召唤出血池，对他们造成持续伤害",
+			skl = new Skill(i,"血池",QUALITY.blue,Type.pdot_damage,1.5f,0.3f,new CLASSES[]{CLASSES.sorcerer},"在前方3*3格子敌人脚下召唤出血池，对他们造成持续伤害",
 					new Vector2[] {new Vector2(1,0),new Vector2(1,1),new Vector2(1,-1),
 						new Vector2(2,0),new Vector2(2,1),new Vector2(2,-1),
 						new Vector2(3,0),new Vector2(3,1),new Vector2(3,-1)});
+			skl.offset_ani_object = new Vector2(10,0);
 			break;
 		case 40:
 			skl = new Skill(i,"蛮力",QUALITY.blue,Type.pbuff_atk,0.03f,0.02f,new CLASSES[]{CLASSES.all},"提升自己的攻击力",

@@ -203,11 +203,13 @@ public class Commander {
 	 */
 	private void roleContinuedSkillState(BsuEvent be){
 		for(Role r:allRoles){
+//		for(int i=0;i<allRoles.size)
 			if(r.csstate.size==0)
 				continue;
 			r.clearExtValue();
 			for(ContinuedSkillState css:r.csstate){
-				r.ani_role_continue(css);				//播放持续技能效果动画
+				if(css.ani!=null)
+					r.ani_role_continue(css);				//播放持续技能效果动画
 				if(css.cstype==CSType.buff_atk){
 					r.extAttack += (int) css.val; 
 				}else if(css.cstype==CSType.buff_def){
@@ -236,8 +238,8 @@ public class Commander {
 					r.isRoundMove = false;
 				}
 				//如果持续效果动画不为空，播放动画
-				if(css.ani!=null)
-					r.ani_role_continue(css);
+//				if(css.ani!=null)
+//					r.ani_role_continue(css);
 //					r.ani_role_isAttacked(css.ani);
 				//持续回合数减1
 				css.remainRound -=1;
