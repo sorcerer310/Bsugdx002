@@ -97,7 +97,7 @@ public class GameAnimationClass {
 		Animation ani_effect = new Animation(0.4f, region_effect);
 		return ani_effect;
 	}
-	Array<TextureRegion> tr = new Array<TextureRegion>();
+	
 	/**
 	 * 获得技能拥有者效果
 	 * @param idx	技能id
@@ -105,7 +105,7 @@ public class GameAnimationClass {
 	 */
 	public Animation getSkillOwnerEffect(int idx){
 		Animation retani = null;
-		tr.clear();
+		Array<TextureRegion> tr = new Array<TextureRegion>();
 		switch(idx){
 		case 1:
 			tr.add(texture_effect_skills.findRegion("heavyBeet",1));
@@ -173,6 +173,45 @@ public class GameAnimationClass {
 			tr.add(texture_effect_skills.findRegion("s-32-",4));
 			tr.add(texture_effect_skills.findRegion("s-32-",5));
 			break;
+		case 33:
+			break;
+		case 34:
+			tr.add(texture_effect_skills.findRegion("s-34-",1));
+			tr.add(texture_effect_skills.findRegion("s-34-",2));
+			break;
+		case 35:
+			tr.add(texture_effect_skills.findRegion("s-6-",1));
+			tr.add(texture_effect_skills.findRegion("s-6-",2));
+			tr.add(texture_effect_skills.findRegion("s-6-",3));
+			tr.add(texture_effect_skills.findRegion("s-6-",1));
+			tr.add(texture_effect_skills.findRegion("s-6-",2));
+			tr.add(texture_effect_skills.findRegion("s-6-",3));
+			break;
+		case 36:
+			tr.add(texture_effect_skills.findRegion("s-34-",1));
+			tr.add(texture_effect_skills.findRegion("s-34-",2));
+			tr.add(texture_effect_skills.findRegion("s-34-",3));
+			tr.add(texture_effect_skills.findRegion("s-34-",4));
+			break;
+		case 37:
+			tr.add(texture_effect_skills.findRegion("s-37-",1));
+			tr.add(texture_effect_skills.findRegion("s-37-",2));
+			tr.add(texture_effect_skills.findRegion("s-37-",3));
+			tr.add(texture_effect_skills.findRegion("s-37-",4));
+			tr.add(texture_effect_skills.findRegion("s-37-",5));
+			tr.add(texture_effect_skills.findRegion("s-37-",6));
+			tr.add(texture_effect_skills.findRegion("s-37-",7));
+			tr.add(texture_effect_skills.findRegion("s-37-",8));
+			tr.add(texture_effect_skills.findRegion("s-37-",9));
+			tr.add(texture_effect_skills.findRegion("s-37-",4));
+			tr.add(texture_effect_skills.findRegion("s-37-",5));
+			tr.add(texture_effect_skills.findRegion("s-37-",6));
+			break;
+		case 38:
+			tr.add(texture_effect_skills.findRegion("s-37-",4));
+			tr.add(texture_effect_skills.findRegion("s-37-",5));
+			tr.add(texture_effect_skills.findRegion("s-37-",6));
+			break;
 		default:
 			break;
 		}
@@ -187,7 +226,7 @@ public class GameAnimationClass {
 	 */
 	public Animation getSkillObjectEffect(int idx){
 		Animation retani = null;
-		tr.clear();
+		Array<TextureRegion> tr = new Array<TextureRegion>();
 		switch(idx){
 		case 1:
 			tr.add(texture_effect_skills.findRegion("isAttacked",1));
@@ -228,6 +267,39 @@ public class GameAnimationClass {
 			tr.add(texture_effect_skills.findRegion("s-33-",8));
 			tr.add(texture_effect_skills.findRegion("s-33-",7));
 			tr.add(texture_effect_skills.findRegion("s-33-",8));
+			tr.add(texture_effect_skills.findRegion("s-33-",7));
+			tr.add(texture_effect_skills.findRegion("s-33-",8));
+			break;
+		case 34:
+			tr.add(texture_effect_skills.findRegion("s-34-",1));
+			tr.add(texture_effect_skills.findRegion("s-34-",2));
+			tr.add(texture_effect_skills.findRegion("s-34-",3));
+			tr.add(texture_effect_skills.findRegion("s-34-",4));
+			break;
+		case 36:
+			tr.add(texture_effect_skills.findRegion("s-36-",1));
+			tr.add(texture_effect_skills.findRegion("s-36-",2));
+			tr.add(texture_effect_skills.findRegion("s-36-",3));
+			tr.add(texture_effect_skills.findRegion("s-36-",4));
+			tr.add(texture_effect_skills.findRegion("s-36-",5));
+			tr.add(texture_effect_skills.findRegion("s-36-",6));
+			break;
+		case 38:
+			tr.add(texture_effect_skills.findRegion("s-38-",1));
+			tr.add(texture_effect_skills.findRegion("s-38-",2));
+			tr.add(texture_effect_skills.findRegion("s-38-",3));
+			tr.add(texture_effect_skills.findRegion("s-38-",4));
+			tr.add(texture_effect_skills.findRegion("s-38-",2));
+			tr.add(texture_effect_skills.findRegion("s-38-",1));
+			break;
+		case 39:
+			tr.add(texture_effect_skills.findRegion("s-39-",1));
+			tr.add(texture_effect_skills.findRegion("s-39-",2));
+			tr.add(texture_effect_skills.findRegion("s-39-",3));
+			tr.add(texture_effect_skills.findRegion("s-39-",4));
+			tr.add(texture_effect_skills.findRegion("s-39-",5));
+			tr.add(texture_effect_skills.findRegion("s-39-",6));
+			break;
 		default:
 			break;
 		}
@@ -242,6 +314,7 @@ public class GameAnimationClass {
 	 */
 	public Animation getContinuedEffect(int idx){
 		Animation retani = null;
+		Array<TextureRegion> tr = new Array<TextureRegion>();
 		switch(idx){
 		case 1:
 			tr.clear();
@@ -263,6 +336,14 @@ public class GameAnimationClass {
 			tr.add(texture_effect_skills.findRegion("s-31-",2));
 			tr.add(texture_effect_skills.findRegion("s-31-",3));
 			break;
+		case 39:
+			tr.add(texture_effect_skills.findRegion("s-39-",1));
+			tr.add(texture_effect_skills.findRegion("s-39-",2));
+			tr.add(texture_effect_skills.findRegion("s-39-",3));
+			tr.add(texture_effect_skills.findRegion("s-39-",4));
+			tr.add(texture_effect_skills.findRegion("s-39-",5));
+			tr.add(texture_effect_skills.findRegion("s-39-",6));
+		break;
 		default:
 			break;
 		}

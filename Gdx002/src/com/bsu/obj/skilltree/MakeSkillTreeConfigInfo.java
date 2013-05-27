@@ -187,6 +187,14 @@ public class MakeSkillTreeConfigInfo {
 		
 		System.out.println("orange hero skill tree:");
 		stci.makeSkillTree(QUALITY.orange,CLASSES.fighter);
+//		Array<Integer> arr = new Array<Integer>();
+//		arr.add(1);arr.add(2);arr.add(3);
+//		for(int j=0;j<5;j++){
+//			for(Integer i:arr)
+//				System.out.println(i);
+//			System.out.println("-------------");
+//		}
+		
 	}
 }
 /**

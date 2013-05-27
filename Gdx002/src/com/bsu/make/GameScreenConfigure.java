@@ -42,9 +42,12 @@ public class GameScreenConfigure {
 		rols.clear();
 		heroRoles.clear();
 		npcRoles.clear();
-		for(Role h:Player.getInstance().playerFightRole){
-			heroRoles.add(h);
+		
+		Array<Role> pfr =  Player.getInstance().playerFightRole;
+		for(int i=0;i<pfr.size;i++){
+			heroRoles.add(pfr.get(i));
 		}
+//		heroRoles.add(Player.getInstance().playerFightRole.get(1));
 //		npcRoles.add(RoleFactory.getInstance().getFighter("enemy1", Type.ENEMY, QUALITY.green,GameTextureClass.getInstance().h5_photo));
 		npcRoles.add(new Role(Role.Type.ENEMY,QUALITY.green,CLASSES.fighter,"测试敌人",U.getRandom(100, -6, 6),8,10
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),

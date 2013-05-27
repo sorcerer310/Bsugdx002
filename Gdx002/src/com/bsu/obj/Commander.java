@@ -56,6 +56,7 @@ public class Commander {
 		lactor = stage.getActors();
 		heros.clear();
 		npcs.clear();
+		allRoles.clear();
 		// 此处区分处英雄与敌人npc
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
@@ -135,12 +136,12 @@ public class Commander {
 		});
 		
 		//检测Role是否有持续状态
-		CommandQueue.getInstance().put(new CommandTask(){
-			@Override
-			public void opTask(BsuEvent be){
-				roleContinuedSkillState(be);
-			}
-		});
+//		CommandQueue.getInstance().put(new CommandTask(){
+//			@Override
+//			public void opTask(BsuEvent be){
+//				roleContinuedSkillState(be);
+//			}
+//		});
 		//增加命令敌人任务
 		CommandQueue.getInstance().put(new CommandTask() {
 			@Override
@@ -203,11 +204,13 @@ public class Commander {
 	 */
 	private void roleContinuedSkillState(BsuEvent be){
 		for(Role r:allRoles){
+//		for(int i=0;i<allRoles.size)
 			if(r.csstate.size==0)
 				continue;
 			r.clearExtValue();
 			for(ContinuedSkillState css:r.csstate){
-				r.ani_role_continue(css);				//播放持续技能效果动画
+				if(css.ani!=null)
+					r.ani_role_continue(css);				//播放持续技能效果动画
 				if(css.cstype==CSType.buff_atk){
 					r.extAttack += (int) css.val; 
 				}else if(css.cstype==CSType.buff_def){
@@ -236,8 +239,8 @@ public class Commander {
 					r.isRoundMove = false;
 				}
 				//如果持续效果动画不为空，播放动画
-				if(css.ani!=null)
-					r.ani_role_continue(css);
+//				if(css.ani!=null)
+//					r.ani_role_continue(css);
 //					r.ani_role_isAttacked(css.ani);
 				//持续回合数减1
 				css.remainRound -=1;
@@ -290,12 +293,26 @@ public class Commander {
 				// 命令当前英雄进攻所有范围内的敌人
 				for (final Role e : atkrs) {
 					h.ani_role_attack(e, h.getCskill(), new BsuEvent() {
+						//因为攻击动画与被攻击动画有不同步完成的时候，所以要两个动画都完成后才进行下步任务
+						boolean ani_attack_finished = false;			//判断攻击动画是否完成
+						boolean ani_beattacked_finished = false;		//判断被攻击动画是否完成
+						boolean skill_logic_finished = false;			//判断技能逻辑函数是否完成
 						@Override
 						public void notify(Object obj, String msg) {
-							//如果技能逻辑函数返回true,清空技能目标队列继续移动该单位
-							if(h.cskill.skillLogic(h, e))
+							//如果技能逻辑函数返回true,当英雄释放自身的某些技能时，释放后仍然会移动。清空技能目标队列继续移动该单位
+							if( !skill_logic_finished && h.cskill.skillLogic(h, e))
 								atkrs.clear();
-							currTaskComFlag = true;
+							skill_logic_finished = true;
+							
+							//判断攻击动画是否完成
+							if(msg.equals("ani_attack_finished"))
+								ani_attack_finished = true;
+							//判断被攻击动画是否完成
+							if(msg.equals("ani_beattacked_finished"))
+								ani_beattacked_finished = true;
+							//两部动画都完成后再进行下步任务
+							if(ani_attack_finished && ani_beattacked_finished)
+								currTaskComFlag = true;
 						}
 					});
 				}
@@ -343,12 +360,25 @@ public class Commander {
 				// 命令当前npc进攻所有范围内的英雄
 				for (final Role h : atkrs) {
 					n.ani_role_attack(h, n.getCskill(), new BsuEvent() {
+						//因为攻击动画与被攻击动画有不同步完成的时候，所以要两个动画都完成后才进行下步任务
+						boolean ani_attack_finished = false;			//判断攻击动画是否完成
+						boolean ani_beattacked_finished = false;		//判断被攻击动画是否完成
+						boolean skill_logic_finished = false;			//判断技能逻辑函数是否完成
 						@Override
 						public void notify(Object obj, String msg) {
 							//如果技能逻辑函数返回true,清空技能目标队列继续移动该单位
-							if(n.cskill.skillLogic(n, h))
+							if( !skill_logic_finished && n.cskill.skillLogic(n, h))
 								atkrs.clear();
-							currTaskComFlag = true;
+							skill_logic_finished = true;
+							//判断攻击动画是否完成
+							if(msg.equals("ani_attack_finished"))
+								ani_attack_finished = true;
+							//判断被攻击动画是否完成
+							if(msg.equals("ani_beattacked_finished"))
+								ani_beattacked_finished = true;
+							//两部动画都完成后再进行下步任务
+							if(ani_attack_finished && ani_beattacked_finished)
+								currTaskComFlag = true;
 						}
 					});
 				}

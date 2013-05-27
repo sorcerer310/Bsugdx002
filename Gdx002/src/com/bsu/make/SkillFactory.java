@@ -59,7 +59,7 @@ public class SkillFactory {
 		Skill skl = null;
 		switch(i){
 		case 1:
-			skl = new Skill(i,"重击",QUALITY.green,Type.prob_dizzy,1f,0.03f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"重击对手，令对手有一定机率眩晕",
+			skl = new Skill(i,"重击",QUALITY.green,Type.prob_dizzy,0.2f,0.03f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"重击对手，令对手有一定机率眩晕",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
 			break;
 		case 2:
@@ -109,11 +109,11 @@ public class SkillFactory {
 		case 33:
 			skl = new Skill(i,"火球术",QUALITY.blue,Type.f_damage,50f,25f,new CLASSES[]{CLASSES.wizard},"法师的基本法术，差不多所有元素法师第一课都要学习此技能",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0)});
-			skl.offset_ani_object = new Vector2(-64,0);
+			skl.offset_ani_object = new Vector2(-48,0);
 			break;
 		case 34:
 			skl = new Skill(i,"疗伤",QUALITY.blue,Type.f_healing,50f,25f,new CLASSES[]{CLASSES.cleric},"牧师最基本的治疗术，可以为其他人恢复HP",
-					new Vector2[] {new Vector2(0,0),new Vector2(0,1),new Vector2(0,-1)});
+					new Vector2[] {new Vector2(1,0),new Vector2(1,1),new Vector2(1,-1)});
 			break;
 		case 35:
 			skl = new Skill(i,"包扎",QUALITY.blue,Type.f_healing,5f,2f,new CLASSES[]{CLASSES.all},"使用绷带包扎自己，回复少量生命",
@@ -122,22 +122,27 @@ public class SkillFactory {
 		case 36:
 			skl = new Skill(i,"吸星",QUALITY.blue,Type.f_shifhp,5f,2f,new CLASSES[]{CLASSES.sorcerer},"伤害敌人，并回复伤害一半的HP为自己",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),new Vector2(4,1),new Vector2(4,-1)});
+			skl.offset_ani_object = new Vector2(-32,0);
 			break;
 		case 37:
 			skl = new Skill(i,"乱射",QUALITY.blue,Type.f_damage,5f,2f,new CLASSES[]{CLASSES.archer,CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"对前方3*3格子的敌人进行乱射攻击",
 					new Vector2[] {new Vector2(1,0),new Vector2(1,1),new Vector2(1,-1),
 										new Vector2(2,0),new Vector2(2,1),new Vector2(2,-1),
 										new Vector2(3,0),new Vector2(3,1),new Vector2(3,-1)});
+			skl.offset_ani_self = new Vector2(22,10);
 			break;
 		case 38:
 			skl = new Skill(i,"爆头",QUALITY.blue,Type.p_damage,1.8f,0.5f,new CLASSES[]{CLASSES.archer,CLASSES.wizard},"正中敌人头部，造成较大伤害",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
+			skl.offset_ani_self = new Vector2(22,10);
+			skl.offset_ani_object = new Vector2(0,10);
 			break;
 		case 39:
-			skl = new Skill(i,"血池",QUALITY.blue,Type.pdot_damage,5f,2f,new CLASSES[]{CLASSES.sorcerer},"在前方3*3格子敌人脚下召唤出血池，对他们造成持续伤害",
+			skl = new Skill(i,"血池",QUALITY.blue,Type.pdot_damage,1.5f,0.3f,new CLASSES[]{CLASSES.sorcerer},"在前方3*3格子敌人脚下召唤出血池，对他们造成持续伤害",
 					new Vector2[] {new Vector2(1,0),new Vector2(1,1),new Vector2(1,-1),
 						new Vector2(2,0),new Vector2(2,1),new Vector2(2,-1),
 						new Vector2(3,0),new Vector2(3,1),new Vector2(3,-1)});
+			skl.offset_ani_object = new Vector2(10,0);
 			break;
 		case 40:
 			skl = new Skill(i,"蛮力",QUALITY.blue,Type.pbuff_atk,0.03f,0.02f,new CLASSES[]{CLASSES.all},"提升自己的攻击力",
