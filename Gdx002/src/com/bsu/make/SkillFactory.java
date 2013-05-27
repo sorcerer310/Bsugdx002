@@ -166,18 +166,22 @@ public class SkillFactory {
 			skl = new Skill(i,"爆震",QUALITY.purple,Type.f_damage,50f,30f,new CLASSES[]{CLASSES.fighter},"对自己周围一圈的敌人造成伤害,冲到敌阵中央很好用",
 					new Vector2[] {new Vector2(1,0),new Vector2(1,1),new Vector2(1,-1),new Vector2(0,1),new Vector2(0,-1)
 									,new Vector2(-1,1),new Vector2(-1,0),new Vector2(-1,-1)});
+			skl.offset_ani_self = new Vector2(-32,-32);
 			break;
 		case 64:
 			skl = new Skill(i,"击退",QUALITY.purple,Type.p_atkbeat,1.2f,0.5f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"对敌人造成一定伤害，并击退敌人一格",
-					new Vector2[] {new Vector2(1,0)});
+					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
+			skl.offset_ani_self = new Vector2(32,0);
 			break;
 		case 65:
 			skl = new Skill(i,"火球三连",QUALITY.purple,Type.p_damage,2f,0.3f,new CLASSES[]{CLASSES.wizard},"单体攻击3连发火球，威力较大",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
+			skl.offset_ani_object = new Vector2(-48,0);
 			break;
 		case 66:
 			skl = new Skill(i,"冰锥推进",QUALITY.purple,Type.p_damage,1.5f,0.3f,new CLASSES[]{CLASSES.wizard},"对前方横向3个格子所有敌人进行冰锥攻击",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
+			skl.offset_ani_self = new Vector2(35,0);
 			break;
 		case 67:
 			skl = new Skill(i,"生命转移",QUALITY.purple,Type.f_shifhp,50f,30f,new CLASSES[]{CLASSES.cleric,CLASSES.sorcerer},"将前方3*3范围内的敌人的生命转移到己方",

@@ -194,9 +194,9 @@ public class Commander {
 	 */
 	public void heatAction(Role r){
 		if(r.face==FACE.left && !U.hasRoleInPos(allRoles, new Vector2(r.getBoxX()+1,r.getBoxY())))
-			r.addAction(moveBy(r.getX()+Configure.map_box_value,r.getY(),0.01f));
+			r.addAction(moveBy(Configure.map_box_value,0,0.01f));
 		else if(r.face == FACE.right && !U.hasRoleInPos(allRoles, new Vector2(r.getBoxX()-1,r.getBoxY())))
-			r.addAction(moveBy(r.getX()-Configure.map_box_value,r.getY(),0.01f));
+			r.addAction(moveBy(-Configure.map_box_value,0,0.01f));
 	}
 	/**
 	 * 对所有的Role进行持续技能状态处理
