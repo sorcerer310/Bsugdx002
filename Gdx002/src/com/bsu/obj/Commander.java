@@ -293,11 +293,14 @@ public class Commander {
 						//因为攻击动画与被攻击动画有不同步完成的时候，所以要两个动画都完成后才进行下步任务
 						boolean ani_attack_finished = false;			//判断攻击动画是否完成
 						boolean ani_beattacked_finished = false;		//判断被攻击动画是否完成
+						boolean skill_logic_finished = false;			//判断技能逻辑函数是否完成
 						@Override
 						public void notify(Object obj, String msg) {
 							//如果技能逻辑函数返回true,当英雄释放自身的某些技能时，释放后仍然会移动。清空技能目标队列继续移动该单位
-							if(h.cskill.skillLogic(h, e))
+							if( !skill_logic_finished && h.cskill.skillLogic(h, e))
 								atkrs.clear();
+							skill_logic_finished = true;
+							
 							//判断攻击动画是否完成
 							if(msg.equals("ani_attack_finished"))
 								ani_attack_finished = true;
@@ -357,11 +360,13 @@ public class Commander {
 						//因为攻击动画与被攻击动画有不同步完成的时候，所以要两个动画都完成后才进行下步任务
 						boolean ani_attack_finished = false;			//判断攻击动画是否完成
 						boolean ani_beattacked_finished = false;		//判断被攻击动画是否完成
+						boolean skill_logic_finished = false;			//判断技能逻辑函数是否完成
 						@Override
 						public void notify(Object obj, String msg) {
 							//如果技能逻辑函数返回true,清空技能目标队列继续移动该单位
-							if(n.cskill.skillLogic(n, h))
+							if( !skill_logic_finished && n.cskill.skillLogic(n, h))
 								atkrs.clear();
+							skill_logic_finished = true;
 							//判断攻击动画是否完成
 							if(msg.equals("ani_attack_finished"))
 								ani_attack_finished = true;

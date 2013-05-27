@@ -113,7 +113,7 @@ public class SkillFactory {
 			break;
 		case 34:
 			skl = new Skill(i,"疗伤",QUALITY.blue,Type.f_healing,50f,25f,new CLASSES[]{CLASSES.cleric},"牧师最基本的治疗术，可以为其他人恢复HP",
-					new Vector2[] {new Vector2(0,0),new Vector2(0,1),new Vector2(0,-1)});
+					new Vector2[] {new Vector2(1,0),new Vector2(1,1),new Vector2(1,-1)});
 			break;
 		case 35:
 			skl = new Skill(i,"包扎",QUALITY.blue,Type.f_healing,5f,2f,new CLASSES[]{CLASSES.all},"使用绷带包扎自己，回复少量生命",

@@ -54,12 +54,12 @@ public class Player {
 		if (playerRole.size == 0) {
 			RoleFactory rf = RoleFactory.getInstance();
 			playerRole.add(new Role(Role.Type.HERO,QUALITY.green,CLASSES.fighter,"测试人物",U.getRandom(100, -6, 6),8,10
-								,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
-								new SkillTree().getSkillTreeFixedSkill(33)
-								,GameTextureClass.getInstance().fc_photo));				//测试技能用
+					,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
+					new SkillTree().getSkillTreeFixedSkill(35)
+					,GameTextureClass.getInstance().fc_photo));				//测试技能用
+			playerRole.add(rf.getFighter("fc", Role.Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
+//			playerRole.add(rf.getFighter("ss哈哈", Role.Type.HERO, QUALITY.blue,GameTextureClass.getInstance().zyc_photo));
 
-//			playerRole.add(rf.getFighter("fc", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
-//			playerRole.add(rf.getFighter("ss哈哈", Type.HERO, QUALITY.blue,GameTextureClass.getInstance().zyc_photo));
 //			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 //			playerRole.add(rf.getFighter("张永臣", Type.HERO, QUALITY.purple,GameTextureClass.getInstance().zyc_photo));
 //			playerRole.add(rf.getFighter("努努", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
@@ -77,6 +77,7 @@ public class Player {
 	private Array<Role> getPlayerFightRole() {
 		if (playerFightRole.size == 0) {
 			playerFightRole.add(playerRole.get(0));
+			playerFightRole.add(playerRole.get(1));
 		}
 		return playerFightRole;
 	}
