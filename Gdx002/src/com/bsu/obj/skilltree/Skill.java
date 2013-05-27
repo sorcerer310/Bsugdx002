@@ -31,7 +31,7 @@ public class Skill {
 	public float uval = 0;									//下级升级递增值 
 	public int lev = 1;										//技能级别，默认为1级，满级6级
 	private CLASSES[] classes = null;						//技能适用的职业范围 
-	private String info = "";								//技能描述
+	public String info = "";								//技能描述
 	private Array<Vector2> range = new Array<Vector2>();	//技能释放范围
 	public TextureRegion icon = null;						//技能图标
 	

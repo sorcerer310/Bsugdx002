@@ -103,7 +103,7 @@ public class SkillFactory {
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
 			break;
 		case 32:
-			skl = new Skill(i,"蓄力一击",QUALITY.blue,Type.p_damage,1.5f,0.5f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"积攒了一定力量，奋力一击，对敌人造成较大伤害",
+			skl = new Skill(i,"蓄力一击",QUALITY.blue,Type.p_damage,1.5f,0.5f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"积累了一定力量，奋力一击，对敌人造成较大伤害",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
 			break;
 		case 33:

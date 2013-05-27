@@ -99,6 +99,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	 */
 	private void addRoleToStage(QualityS qs) {
 		quality = qs;
+		selectRole=null;
 		if (quality == QualityS.gselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
 					Player.getInstance().playerIdelRole, QUALITY.green));
@@ -136,6 +137,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 			sRoleStage.addActor(roleImg);
 			RoleSelectImg.add(roleImg);
 			roleImg.setPosition(140 + i % 5 * 70, 200 - i / 5 * 70);
+			final Vector2 vs=new Vector2(roleImg.getX(),roleImg.getY());
 			roleImg.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
@@ -149,7 +151,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 						int pointer, int button) {
 					if (selectRole != r) {
 						selectRole = r;// 选定人物。。
-						TipsWindows.getInstance().showRoleInfo(r,sRoleStage);
+						TipsWindows.getInstance().showRoleInfo(r,vs,sRoleStage);
 						resetImg(roleImg);
 						return;
 					}

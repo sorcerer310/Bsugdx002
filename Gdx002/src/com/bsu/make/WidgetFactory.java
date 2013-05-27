@@ -124,7 +124,7 @@ public class WidgetFactory {
 	 *            position
 	 */
 	public Label makeLabel(String ls, Stage s, int x, int y) {
-		Label l = new Label(ls, Configure.get_sytle());
+		Label l = new Label(ls, Configure.get_sytle(Color.GREEN));
 		l.setPosition(x, y);
 		s.addActor(l);
 		return l;

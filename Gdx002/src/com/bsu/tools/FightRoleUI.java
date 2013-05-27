@@ -1,6 +1,7 @@
 package com.bsu.tools;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -48,8 +49,7 @@ public class FightRoleUI {
 		roleBack=WidgetFactory.getInstance().makeImageButton(Configure.Img_head_back,stage,role_index*96,0);
 		rhp = new RoleHP();
 		role_hp = rhp.get_hp_image();
-		label_name = new Label(role.name, Configure.get_sytle());
-		Configure.get_sytle().font.setScale(0.5f);
+		label_name = new Label(role.name, Configure.get_sytle(Color.GREEN));
 		role_photo.setScale(0.5f);
 		show_role_state();
 	}
