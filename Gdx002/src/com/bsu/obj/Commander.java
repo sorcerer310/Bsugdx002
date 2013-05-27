@@ -56,6 +56,7 @@ public class Commander {
 		lactor = stage.getActors();
 		heros.clear();
 		npcs.clear();
+		allRoles.clear();
 		// 此处区分处英雄与敌人npc
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
@@ -135,12 +136,12 @@ public class Commander {
 		});
 		
 		//检测Role是否有持续状态
-		CommandQueue.getInstance().put(new CommandTask(){
-			@Override
-			public void opTask(BsuEvent be){
-				roleContinuedSkillState(be);
-			}
-		});
+//		CommandQueue.getInstance().put(new CommandTask(){
+//			@Override
+//			public void opTask(BsuEvent be){
+//				roleContinuedSkillState(be);
+//			}
+//		});
 		//增加命令敌人任务
 		CommandQueue.getInstance().put(new CommandTask() {
 			@Override
