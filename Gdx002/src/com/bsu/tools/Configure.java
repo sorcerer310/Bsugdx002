@@ -114,7 +114,7 @@ public class Configure {
 	private static FreeTypeFontGenerator Generator;
 	private static FreeTypeBitmapFontData fontData;
 	private static BitmapFont font;
-	public static int fontSize=16;
+	public static int fontSize=20;
 
 	/**
 	 * 取得FONT
@@ -139,10 +139,10 @@ public class Configure {
 	 * 
 	 * @return
 	 */
-	public static LabelStyle get_sytle(Color c) {
+	public static LabelStyle get_sytle() {
 		LabelStyle style;
 		BitmapFont f = get_font();
-		style = new LabelStyle(f, c);
+		style = new LabelStyle(f, f.getColor());
 		return style;
 	}
 
@@ -177,24 +177,44 @@ public class Configure {
 
 	/**
 	 * 取得品质对应文字
-	 * 
 	 * @param q
 	 * @return 返回的字符串
 	 */
 	public static String getQualityName(QUALITY q) {
 		String s = null;
 		if (q == QUALITY.green) {
-			s = "green";
+			s = "绿色";
 		}
 		if (q == QUALITY.blue) {
-			s = "blue";
+			s = "蓝色";
 		}
 		if (q == QUALITY.purple) {
-			s = "pruple";
+			s = "紫色";
 		}
 		if (q == QUALITY.orange) {
-			s = "orange";
+			s = "橙色";
 		}
 		return s;
+	}
+	/**
+	 * 取得品质对应文字颜色
+	 * @param q
+	 * @return
+	 */
+	public static Color getQualityColor(QUALITY q) {
+		Color c = Color.WHITE;
+		if (q == QUALITY.green) {
+			c=Color.GREEN;
+		}
+		if (q == QUALITY.blue) {
+			c=Color.BLUE;
+		}
+		if (q == QUALITY.purple) {
+			c=new Color(255,0,255,1);
+		}
+		if (q == QUALITY.orange) {
+			c=Color.ORANGE;
+		}
+		return c;
 	}
 }

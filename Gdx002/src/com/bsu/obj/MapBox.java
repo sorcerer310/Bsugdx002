@@ -175,7 +175,6 @@ public class MapBox extends Actor {
 			temp_c = Color.BLUE;
 			temp_c.a = 0.4f;
 		}
-
 		Pixmap pixmap;
 		pixmap = new Pixmap(Configure.map_box_value, Configure.map_box_value,
 				Format.RGBA8888);

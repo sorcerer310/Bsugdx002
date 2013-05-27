@@ -49,7 +49,7 @@ public class FightRoleUI {
 		roleBack=WidgetFactory.getInstance().makeImageButton(Configure.Img_head_back,stage,role_index*96,0);
 		rhp = new RoleHP();
 		role_hp = rhp.get_hp_image();
-		label_name = new Label(role.name, Configure.get_sytle(Color.GREEN));
+		label_name = new Label(role.name, Configure.get_sytle());
 		role_photo.setScale(0.5f);
 		show_role_state();
 	}

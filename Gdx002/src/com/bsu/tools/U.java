@@ -150,15 +150,15 @@ public class U {
 	public static String getClasses(Role r){
 		String n=null;
 		if(r.classes==CLASSES.fighter)
-			n="zs";//战士
+			n="战士";//战士
 		if(r.classes==CLASSES.cleric)
-			n="ms";//牧师
+			n="牧师";//牧师
 		if(r.classes==CLASSES.wizard)
-			n="ys";//元素
+			n="元素";//元素
 		if(r.classes==CLASSES.sorcerer)
-			n="ha";//黑暗
+			n="黑暗";//黑暗
 		if(r.classes==CLASSES.archer)
-			n="ss";//弓手
+			n="弓手";//弓手
 		return n;
 	}
 } 

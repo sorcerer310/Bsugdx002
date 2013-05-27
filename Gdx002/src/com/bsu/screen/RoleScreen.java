@@ -148,7 +148,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			return;
 		}
 		skillIndex = 0;
-		wfy.makeLabel(r.name, RoleInfoStage, 40, 240);
+		wfy.makeLabel(r.name, RoleInfoStage, 40, 240,Configure.getQualityColor(r.quality));
 		wfy.makeLabel(Configure.getQualityName(r.quality), RoleInfoStage, 100,
 				240);
 		wfy.makeLabel(r.maxHp + "", RoleInfoStage, 40, 220);

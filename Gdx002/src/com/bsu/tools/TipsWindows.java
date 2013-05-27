@@ -3,12 +3,16 @@ package com.bsu.tools;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Equip;
 import com.bsu.obj.Role;
@@ -31,10 +35,11 @@ public class TipsWindows {
 	private TipsWindows() {
 		skin = new Skin();
 		skin.add("draw", new TextureRegion(
-				GameTextureClass.getInstance().rolePanel, 200, 20));
+				GameTextureClass.getInstance().tipsPanel ,120, 60));
 		Window.WindowStyle ws = new WindowStyle(Configure.get_font(),
 				Color.BLACK, skin.getDrawable("draw"));
-		tipsWindows = new Window("INOF", ws);
+		tipsWindows = new Window("", ws);
+		tipsWindows.align(Align.left);
 		tipsWindows.setWidth(200);
 	}
 
@@ -49,25 +54,24 @@ public class TipsWindows {
 			tipsWindows.getParent().removeActor(tipsWindows);
 		}
 		tipsWindows.clear();
-		tipsWindows.defaults().spaceBottom(10);
-		tipsWindows.defaults().spaceRight(20);
-		tipsWindows.add(new Label(r.name, Configure.get_sytle(Color.ORANGE)));
-		tipsWindows.add(new Label(U.getClasses(r), Configure.get_sytle(Color.ORANGE)));
-		tipsWindows.add(new Label(r.level + "", Configure.get_sytle(Color.ORANGE)));
+		tipsWindows.defaults().space(0);
+		tipsWindows.defaults().align(Align.left);
+		tipsWindows.add(new Label("姓名:"+r.name, Configure.get_sytle()));
+		tipsWindows.add(new Label("职业:"+U.getClasses(r), Configure.get_sytle()));
 		tipsWindows.row();
-		tipsWindows.add(new Label(r.name, Configure.get_sytle(Color.ORANGE)));
-		tipsWindows.add(new Label(U.getClasses(r), Configure.get_sytle(Color.ORANGE)));
-		tipsWindows.add(new Label(r.level + "", Configure.get_sytle(Color.ORANGE)));
+		tipsWindows.add(new Label("等级:"+r.level, Configure.get_sytle()));
+		tipsWindows.add(new Label("经验:"+r.exp+"/"+r.expUp, Configure.get_sytle()));
 		tipsWindows.row();
-		tipsWindows.add(new Label(r.name, Configure.get_sytle(Color.ORANGE)));
-		tipsWindows.add(new Label(U.getClasses(r), Configure.get_sytle(Color.ORANGE)));
-		tipsWindows.add(new Label(r.level + "", Configure.get_sytle(Color.ORANGE)));
-		tipsWindows.row();
-		tipsWindows.add(new Label(r.name, Configure.get_sytle(Color.ORANGE)));
-		tipsWindows.add(new Label(U.getClasses(r), Configure.get_sytle(Color.ORANGE)));
-		tipsWindows.add(new Label(r.level + "", Configure.get_sytle(Color.ORANGE)));
+		tipsWindows.add(new Image(r.skill_array.get(0).icon));
+		tipsWindows.add(new Image(r.skill_array.get(1).icon));
 		tipsWindows.pack();
 		tipsWindows.setPosition(getPosition(v).x, getPosition(v).y);
+		tipsWindows.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				tipsWindows.getParent().removeActor(tipsWindows);
+			}
+		});
 		s.addActor(tipsWindows);
 	}
 
@@ -81,19 +85,30 @@ public class TipsWindows {
 			tipsWindows.getParent().removeActor(tipsWindows);
 		}
 		tipsWindows.clear();
-		tipsWindows.defaults().spaceBottom(10);
-		tipsWindows.row();
-		tipsWindows.add(new Label(s.name, Configure.get_sytle(Color.ORANGE)));
+		tipsWindows.defaults().align(Align.center);
+		tipsWindows.defaults().space(0);
+		Label nameLabel = new Label(s.name, Configure.get_sytle());
+		nameLabel.setColor(Configure.getQualityColor(s.quality));
+		tipsWindows.add(nameLabel);
+		tipsWindows.defaults().align(Align.left);
 		Array<String> infoArray = new Array<String>();
-		getMuLabel(infoArray, s.info);
-
-		for (String as : infoArray) {
+		float scaleValue = 0.7f;
+		getMuLabel(infoArray, s.info, scaleValue);
+		for (int i = 0; i < infoArray.size; i++) {
 			tipsWindows.row();
-			Label label=new Label(as, Configure.get_sytle(Color.ORANGE));
+			Label label = new Label(infoArray.get(i), Configure.get_sytle());
+			label.setFontScale(scaleValue);
 			tipsWindows.add(label);
+
 		}
 		tipsWindows.pack();
 		tipsWindows.setPosition(getPosition(v).x, getPosition(v).y);
+		tipsWindows.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				tipsWindows.getParent().removeActor(tipsWindows);
+			}
+		});
 		stage.addActor(tipsWindows);
 	}
 
@@ -118,10 +133,11 @@ public class TipsWindows {
 		tipsWindows.defaults().spaceBottom(10);
 		tipsWindows.defaults().spaceRight(20);
 		Array<String> tipsArray = new Array<String>();
-		getMuLabel(tipsArray, s);
+		float scaleValue = 0.7f;
+		getMuLabel(tipsArray, s,scaleValue);
 		for (String as : tipsArray) {
 			tipsWindows.row();
-			tipsWindows.add(new Label(as, Configure.get_sytle(Color.GREEN)));
+			tipsWindows.add(new Label(as, Configure.get_sytle()));
 		}
 		tipsWindows.pack();
 		stage.addActor(tipsWindows);
@@ -151,14 +167,14 @@ public class TipsWindows {
 
 	/**
 	 * 将一个字符串分成几行
-	 * 
+	 * @param sv 缩放比
 	 * @param s
 	 * @return 字符串数组
 	 */
-	private void getMuLabel(Array<String> labelArray, String s) {
-		int nums = (int) (s.length() * Configure.fontSize / tipsWindows
+	private void getMuLabel(Array<String> labelArray, String s, float sv) {
+		int nums = (int) (s.length() * sv * Configure.fontSize / tipsWindows
 				.getWidth());
-		if (s.length() * Configure.fontSize % tipsWindows.getWidth() == 0) {
+		if (s.length() * sv * Configure.fontSize % tipsWindows.getWidth() == 0) {
 			nums--;
 		}
 		int index = 0;
@@ -166,7 +182,7 @@ public class TipsWindows {
 			int startIndex = 0;
 			while (index <= nums) {
 				for (int i = startIndex; i <= s.length(); i++) {
-					if (s.substring(startIndex, i).length()
+					if (s.substring(startIndex, i).length() * sv
 							* Configure.fontSize > tipsWindows.getWidth()) {
 						labelArray.add(s.substring(startIndex, i));
 						index++;

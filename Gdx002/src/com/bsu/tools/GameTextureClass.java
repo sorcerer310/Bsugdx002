@@ -37,7 +37,7 @@ public class GameTextureClass {
 	public TextureRegion fc_photo, zyc_photo, h0_photo, h1_photo, h2_photo,
 			h3_photo, h4_photo, h5_photo;
 	public TextureRegion tmpskillicon;				//临时用图标
-	
+	public Texture tipsPanel;
 
 	private GameTextureClass() {
 		// TODO Auto-generated constructor stub
@@ -47,6 +47,7 @@ public class GameTextureClass {
 		equipPanel = new Texture(Gdx.files.internal("data/menu/equippanel.png"));
 		fightPanel = new Texture(Gdx.files.internal("data/menu/fightpanel.png"));
 		rolePanel = new Texture(Gdx.files.internal("data/menu/rolespanel.png"));
+		tipsPanel=new Texture(Gdx.files.internal("data/menu/wback.png"));
 		selectRolePanel = new Texture(
 				Gdx.files.internal("data/menu/selectrolepanel.png"));
 		shopPanel = new Texture(Gdx.files.internal("data/menu/shoppanel.png"));

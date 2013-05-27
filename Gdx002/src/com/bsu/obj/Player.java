@@ -29,7 +29,7 @@ public class Player {
 	private int money;// 玩家金钱
 	public Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
 	public Array<Role> playerFightRole = new Array<Role>();// 玩家拥有的出战卡片
-	public Array<Role> playerIdelRole = new Array<Role>();// 玩家背�
+	public Array<Role> playerIdelRole = new Array<Role>();// 玩家背�
 
 	public Player() {
 		// TODO Auto-generated constructor stub
@@ -61,7 +61,7 @@ public class Player {
 			playerRole.add(rf.getFighter("fc", Role.Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 //			playerRole.add(rf.getFighter("ss哈哈", Role.Type.HERO, QUALITY.blue,GameTextureClass.getInstance().zyc_photo));
 //			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
-//			playerRole.add(rf.getFighter("张永臣", Type.HERO, QUALITY.purple,GameTextureClass.getInstance().zyc_photo));
+			playerRole.add(rf.getFighter("张永臣", Type.HERO, QUALITY.purple,GameTextureClass.getInstance().zyc_photo));
 //			playerRole.add(rf.getFighter("努努", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 
 		}
@@ -77,7 +77,7 @@ public class Player {
 	private Array<Role> getPlayerFightRole() {
 		if (playerFightRole.size == 0) {
 			playerFightRole.add(playerRole.get(0));
-			playerFightRole.add(playerRole.get(1));
+			//playerFightRole.add(playerRole.get(1));
 		}
 		return playerFightRole;
 	}

@@ -112,7 +112,6 @@ public class WidgetFactory {
 		s.addActor(img_nomal);
 		return img_nomal;
 	}
-
 	/**
 	 * 将一个label 初始化并做好设置，加入指定stage
 	 * 
@@ -124,8 +123,18 @@ public class WidgetFactory {
 	 *            position
 	 */
 	public Label makeLabel(String ls, Stage s, int x, int y) {
-		Label l = new Label(ls, Configure.get_sytle(Color.GREEN));
+		Label l = new Label(ls, Configure.get_sytle());
 		l.setPosition(x, y);
+		s.addActor(l);
+		return l;
+	}
+	
+	public Label makeLabel(String ls, Stage s, int x, int y,Color c) {
+		Label l = new Label(ls, Configure.get_sytle());
+		l.setPosition(x, y);
+		if(c!=null){
+			l.setColor(c);
+		}
 		s.addActor(l);
 		return l;
 	}
