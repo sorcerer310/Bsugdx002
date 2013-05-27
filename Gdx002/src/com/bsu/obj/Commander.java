@@ -290,12 +290,23 @@ public class Commander {
 				// 命令当前英雄进攻所有范围内的敌人
 				for (final Role e : atkrs) {
 					h.ani_role_attack(e, h.getCskill(), new BsuEvent() {
+						//因为攻击动画与被攻击动画有不同步完成的时候，所以要两个动画都完成后才进行下步任务
+						boolean ani_attack_finished = false;			//判断攻击动画是否完成
+						boolean ani_beattacked_finished = false;		//判断被攻击动画是否完成
 						@Override
 						public void notify(Object obj, String msg) {
-							//如果技能逻辑函数返回true,清空技能目标队列继续移动该单位
+							//如果技能逻辑函数返回true,当英雄释放自身的某些技能时，释放后仍然会移动。清空技能目标队列继续移动该单位
 							if(h.cskill.skillLogic(h, e))
 								atkrs.clear();
-							currTaskComFlag = true;
+							//判断攻击动画是否完成
+							if(msg.equals("ani_attack_finished"))
+								ani_attack_finished = true;
+							//判断被攻击动画是否完成
+							if(msg.equals("ani_beattacked_finished"))
+								ani_beattacked_finished = true;
+							//两部动画都完成后再进行下步任务
+							if(ani_attack_finished && ani_beattacked_finished)
+								currTaskComFlag = true;
 						}
 					});
 				}
@@ -343,12 +354,23 @@ public class Commander {
 				// 命令当前npc进攻所有范围内的英雄
 				for (final Role h : atkrs) {
 					n.ani_role_attack(h, n.getCskill(), new BsuEvent() {
+						//因为攻击动画与被攻击动画有不同步完成的时候，所以要两个动画都完成后才进行下步任务
+						boolean ani_attack_finished = false;			//判断攻击动画是否完成
+						boolean ani_beattacked_finished = false;		//判断被攻击动画是否完成
 						@Override
 						public void notify(Object obj, String msg) {
 							//如果技能逻辑函数返回true,清空技能目标队列继续移动该单位
 							if(n.cskill.skillLogic(n, h))
 								atkrs.clear();
-							currTaskComFlag = true;
+							//判断攻击动画是否完成
+							if(msg.equals("ani_attack_finished"))
+								ani_attack_finished = true;
+							//判断被攻击动画是否完成
+							if(msg.equals("ani_beattacked_finished"))
+								ani_beattacked_finished = true;
+							//两部动画都完成后再进行下步任务
+							if(ani_attack_finished && ani_beattacked_finished)
+								currTaskComFlag = true;
 						}
 					});
 				}

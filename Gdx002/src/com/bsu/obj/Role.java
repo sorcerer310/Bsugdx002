@@ -164,13 +164,10 @@ public class Role extends Actor {
 				bevent.notify(this, this.name);
 		} else {
 			attack_effect = skl.ani_self;
-			current_attack_frame = attack_effect
-					.getKeyFrame(time_effect, false);
-			AttackEffect.getInstance().startEffect(current_attack_frame, this,
-					skl.offset_ani_self);
-
+			current_attack_frame = attack_effect.getKeyFrame(time_effect, false);
+			AttackEffect.getInstance().startEffect(current_attack_frame, this,skl.offset_ani_self);
 		}
-		enemy.ani_role_isAttacked(skl.ani_object, skl.offset_ani_object);
+		enemy.ani_role_isAttacked(skl.ani_object, skl.offset_ani_object,be);
 	}
 
 	/**
@@ -179,9 +176,10 @@ public class Role extends Actor {
 	 * @param ani
 	 *            要播放的动画
 	 */
-	private void ani_role_isAttacked(Animation ani, Vector2 v) {
+	private void ani_role_isAttacked(Animation ani, Vector2 v,BsuEvent be) {
 		time_effect = 0;
 		if (ani != null) {
+			bevent = be;
 			beAttack_effect = ani;
 			if (v != null) {
 				px = v.x;
@@ -264,25 +262,8 @@ public class Role extends Actor {
 				bevent.notify(this, this.name);
 			}
 		}
-		if (beAttack_effect != null) {
-			current_beattack_frame = beAttack_effect.getKeyFrame(time_effect,
-					false);
-			if (beAttack_effect.isAnimationFinished(time_effect)) {
-				current_beattack_frame = null;
-				beAttack_effect = null;
-				px = 0;
-				py = 0;
-				// 如果event对象不为空，执行函数通知完成
-				if (bevent != null) {
-					System.out.println(this.name
-							+ "beattacked_effect_completed");
-					bevent.notify(this, this.name);
-				}
-			}
-		}
 		if (attack_effect != null) {
-			current_attack_frame = attack_effect
-					.getKeyFrame(time_effect, false);
+			current_attack_frame = attack_effect.getKeyFrame(time_effect, false);
 			AttackEffect.getInstance().setFrame(current_attack_frame);
 			if (attack_effect.isAnimationFinished(time_effect)) {
 				current_attack_frame = null;
@@ -292,10 +273,29 @@ public class Role extends Actor {
 				if (bevent != null) {
 					System.out.println(this.name
 							+ "attact_skill_effect_completed");
-					bevent.notify(this, this.name);
+					//bevent.notify(this, this.name);
+					bevent.notify(this,"ani_attack_finished");
 				}
 			}
-		}
+		}else{if(bevent!=null)bevent.notify(this,"ani_attack_finished");}
+		
+		if (beAttack_effect != null) {
+			current_beattack_frame = beAttack_effect.getKeyFrame(time_effect,false);
+			if (beAttack_effect.isAnimationFinished(time_effect)) {
+				current_beattack_frame = null;
+				beAttack_effect = null;
+				px = 0;
+				py = 0;
+				// 如果event对象不为空，执行函数通知完成
+				if (bevent != null) {
+					System.out.println(this.name
+							+ "beattacked_effect_completed");
+//					bevent.notify(this, this.name);
+					bevent.notify(this,"ani_beattacked_finished");
+				}
+			}
+		}else{if(bevent!=null)bevent.notify(this,"ani_beattacked_finished");}
+
 
 		if (isSelected()) {
 			if (state == STATE.idle) {
