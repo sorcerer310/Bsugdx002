@@ -304,7 +304,9 @@ public class SkillFactory {
 			break;
 		case 102:
 			skl = new Skill(i,"法术折磨",QUALITY.orange,Type.prob_blind,0.2f,0.1f,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"用法术折磨敌人，使其防御大幅度降低",
-					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
+					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),new Vector2(5,0)});
+			skl.offset_ani_object = new Vector2(-20,-16);
+			skl.offset_ani_continue = new Vector2(-20,-16);
 			break;
 		case 103:
 			skl = new Skill(i,"冲锋",QUALITY.orange,Type.p_damage,2.5f,0.8f,new CLASSES[]{CLASSES.fighter},"向前冲刺，直至撞到敌人或地图边缘，撞到敌人后对敌人造成大量伤害",

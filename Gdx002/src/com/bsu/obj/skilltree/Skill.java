@@ -160,12 +160,12 @@ public class Skill {
 			}else if(type==Skill.Type.prob_blind){
 				//此处增加机率代码
 				if(U.probability(val))
-					object.csstate.add(new ContinuedSkillState(1,0,CSType.blind,ani_continue,offset_ani_continue));
+					object.csstate.add(new ContinuedSkillState(2,0,CSType.blind,ani_continue,offset_ani_continue));
 			//一定机率眩晕
 			}else if(type==Skill.Type.prob_dizzy){
 				//此处增加机率代码
 				if(U.probability(val))
-					object.csstate.add(new ContinuedSkillState(1,0,CSType.dizzy,ani_continue,offset_ani_continue));
+					object.csstate.add(new ContinuedSkillState(2,0,CSType.dizzy,ani_continue,offset_ani_continue));
 			//破甲效果
 			}else if(type==Skill.Type.prob_nude){
 				object.csstate.add(new ContinuedSkillState(3,val,CSType.debuff_def,ani_continue,offset_ani_continue));
