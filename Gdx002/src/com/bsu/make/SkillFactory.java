@@ -238,6 +238,8 @@ public class SkillFactory {
 									new Vector2(1,1),new Vector2(2,1),new Vector2(3,1),new Vector2(4,1),
 									new Vector2(1,-1),new Vector2(2,-1),new Vector2(3,-1),new Vector2(4,-1)
 									});
+			skl.offset_ani_self = new Vector2(0,-32);
+			skl.offset_ani_object = new Vector2(-48,0);
 			break;
 		case 96:
 			skl = new Skill(i,"群星陨落",QUALITY.orange,Type.p_damage,1.8f,0.4f,new CLASSES[]{CLASSES.wizard},"对全体敌人进行陨石攻击",

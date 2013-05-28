@@ -305,10 +305,11 @@ public class Commander {
 							skill_logic_finished = true;
 							
 							//判断攻击动画是否完成
-							if(msg.equals("ani_attack_finished"))
+							if(msg.equals("ani_attack_finished") || h.getCskill().ani_self==null)
 								ani_attack_finished = true;
+
 							//判断被攻击动画是否完成
-							if(msg.equals("ani_beattacked_finished"))
+							if(msg.equals("ani_beattacked_finished") || h.getCskill().ani_object==null)
 								ani_beattacked_finished = true;
 							//两部动画都完成后再进行下步任务
 							if(ani_attack_finished && ani_beattacked_finished)
@@ -320,7 +321,7 @@ public class Commander {
 			
 			while (!currTaskComFlag) {
 				System.out.println(currTaskComFlag);
-				Thread.sleep(500);
+				Thread.sleep(100);
 			}
 			
 			//2:执行移动命令
@@ -337,7 +338,7 @@ public class Commander {
 
 			// 等待动作完成
 			while (waitRoleFlag) {
-				Thread.sleep(200);
+				Thread.sleep(1000);
 			}
 		}
 		be.notify(this, "command_heros_completed");

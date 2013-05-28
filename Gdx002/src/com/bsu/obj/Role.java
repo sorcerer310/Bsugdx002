@@ -277,7 +277,7 @@ public class Role extends Actor {
 					bevent.notify(this,"ani_attack_finished");
 				}
 			}
-		}else{if(bevent!=null)bevent.notify(this,"ani_attack_finished");}
+		}//else{if(bevent!=null)bevent.notify(this,"ani_attack_finished");}
 		
 		if (beAttack_effect != null) {
 			current_beattack_frame = beAttack_effect.getKeyFrame(time_effect,false);
@@ -294,7 +294,7 @@ public class Role extends Actor {
 					bevent.notify(this,"ani_beattacked_finished");
 				}
 			}
-		}else{if(bevent!=null)bevent.notify(this,"ani_beattacked_finished");}
+		}//else{if(bevent!=null)bevent.notify(this,"ani_beattacked_finished");}
 
 
 		if (isSelected()) {
