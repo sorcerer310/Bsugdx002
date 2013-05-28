@@ -428,7 +428,7 @@ public class Commander {
 		}
 		
 		Array<Role> retrs = new Array<Role>();				//返回符合类型的英雄
-		Array<Role> checkrs = null;
+		Array<Role> checkrs = null;							//要检查的单位群体类型，伤害类技能检查敌人，回血buff类检查hero
 		if(s.type==Skill.Type.f_damage ||s.type==Skill.Type.f_shifhp ||s.type==Skill.Type.f_box ||s.type==Skill.Type.p_atkbeat ||
 				s.type==Skill.Type.p_damage ||s.type==Skill.Type.pdot_damage ||s.type==Skill.Type.prob_blind ||
 				s.type==Skill.Type.prob_dizzy ||s.type==Skill.Type.prob_nude )
@@ -443,6 +443,12 @@ public class Commander {
 		
 		for (Vector2 v : vs) {
 			for (Role r : checkrs) {
+				//如果技能为全图技能，加入作用单位继续循环
+				if(s.otype==ObjectType.all){
+					retrs.add(r);
+					continue;
+				}
+				
 				if ((v.x+h.getBoxX()) == r.getBoxX() && (v.y+h.getBoxY()) == r.getBoxY()){
 					retrs.add(r);
 					//如果技能为单体技能，直接返回结果数组
