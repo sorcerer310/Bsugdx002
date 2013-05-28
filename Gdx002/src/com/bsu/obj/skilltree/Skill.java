@@ -42,6 +42,7 @@ public class Skill {
 //	public Animation ani_conself = null;					//持续技能释放者动画效果
 //	public Animation ani_conobject = null;					//持续技能承受者动画效果
 	public Animation ani_continue = null;					//持续技能承受者动画效果，暂时只有承受者有动画效果。
+	public Vector2 offset_ani_continue = null;				//持续技能承受者动画偏移量
 	
 	public boolean enable = false;							//该技能是否开启使用
 
@@ -154,20 +155,20 @@ public class Skill {
 					? object.currentHp - U.realDamage((int)(owner.getAttack()*val), object.getDefend()): 0);	//伤害敌人
 			//持续伤害，默认为3回合
 			}else if(type==Skill.Type.pdot_damage){
-				object.csstate.add(new ContinuedSkillState(3,owner.getAttack()*val,CSType.dot,ani_continue));
+				object.csstate.add(new ContinuedSkillState(3,owner.getAttack()*val,CSType.dot,ani_continue,offset_ani_continue));
 			//一定机率致盲
 			}else if(type==Skill.Type.prob_blind){
 				//此处增加机率代码
 				if(U.probability(val))
-					object.csstate.add(new ContinuedSkillState(1,0,CSType.blind,ani_continue));
+					object.csstate.add(new ContinuedSkillState(1,0,CSType.blind,ani_continue,offset_ani_continue));
 			//一定机率眩晕
 			}else if(type==Skill.Type.prob_dizzy){
 				//此处增加机率代码
 				if(U.probability(val))
-					object.csstate.add(new ContinuedSkillState(1,0,CSType.dizzy,ani_continue));
+					object.csstate.add(new ContinuedSkillState(1,0,CSType.dizzy,ani_continue,offset_ani_continue));
 			//破甲效果
 			}else if(type==Skill.Type.prob_nude){
-				object.csstate.add(new ContinuedSkillState(3,val,CSType.debuff_def,ani_continue));
+				object.csstate.add(new ContinuedSkillState(3,val,CSType.debuff_def,ani_continue,offset_ani_continue));
 			}
 			
 			return false;
@@ -182,16 +183,16 @@ public class Skill {
 				object.currentHp = (int)(object.currentHp+object.getMaxHp()*val>=object.getMaxHp()?object.getMaxHp():object.currentHp+object.getMaxHp()*val);
 			//百分比攻击力buff
 			}else if(type==Skill.Type.pbuff_atk){
-				object.csstate.add(new ContinuedSkillState(2,object.getAttack()*val,CSType.buff_atk,ani_continue));
+				object.csstate.add(new ContinuedSkillState(2,object.getAttack()*val,CSType.buff_atk,ani_continue,offset_ani_continue));
 			//百分比防御力buff
 			}else if(type==Skill.Type.pbuff_def){
-				object.csstate.add(new ContinuedSkillState(2,object.getDefend()*val,CSType.buff_def,ani_continue));
+				object.csstate.add(new ContinuedSkillState(2,object.getDefend()*val,CSType.buff_def,ani_continue,offset_ani_continue));
 			//百分比持续性治疗
 			}else if(type==Skill.Type.pbuff_healing){
 				object.currentHp = (int)(object.currentHp+object.currentHp*val>=object.getMaxHp()?object.currentHp:object.currentHp+object.currentHp*val);
 			//百分比生命最大值
 			}else if(type==Skill.Type.pbuff_hp){
-				object.csstate.add(new ContinuedSkillState(2,object.getMaxHp()*val,CSType.buff_hp,ani_continue));
+				object.csstate.add(new ContinuedSkillState(2,object.getMaxHp()*val,CSType.buff_hp,ani_continue,offset_ani_continue));
 			}
 			if(owner== object)
 				return true;

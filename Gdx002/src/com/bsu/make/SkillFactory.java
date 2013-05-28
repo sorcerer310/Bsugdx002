@@ -152,6 +152,11 @@ public class SkillFactory {
 			skl = new Skill(i,"生命天赋",QUALITY.blue,Type.pbuff_hp,0.05f,0.02f,new CLASSES[]{CLASSES.fighter,CLASSES.cleric},"只有战士与牧师对生命的意义理解到了一定高度，可额外提高自己的生命上限",
 					new Vector2[] {new Vector2(0,0)});
 			break;
+		case 42:
+			skl = new Skill(i,"致盲",QUALITY.blue,Type.prob_blind,0.2f,0.05f,new CLASSES[]{CLASSES.sorcerer,CLASSES.cleric},"对敌人产生致盲效果，导致敌人下回合不能攻击",
+					new Vector2[]{new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
+			skl.offset_ani_self = new Vector2(16,5);
+			break;
 		case 61:
 			skl = new Skill(i,"碎甲",QUALITY.purple,Type.prob_nude,10f,5f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"对敌人的盔甲造成毁灭性打击，大幅降低敌人的防御力",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0)});
@@ -200,10 +205,13 @@ public class SkillFactory {
 					new Vector2[] {new Vector2(0,0)});
 			break;
 		case 70:
-			skl = new Skill(i,"黑暗降临",QUALITY.purple,Type.prob_blind,0.2f,0.05f,new CLASSES[]{CLASSES.sorcerer},"对3*3格子的敌人一定几率致盲，导致下回合不能攻击",
+			skl = new Skill(i,"黑暗降临",QUALITY.purple,Type.prob_blind,1f,0.05f,new CLASSES[]{CLASSES.sorcerer},"对3*3格子的敌人一定几率致盲，导致下回合不能攻击",
 					new Vector2[] {new Vector2(1,0),new Vector2(1,1),new Vector2(1,-1),
 						new Vector2(2,0),new Vector2(2,1),new Vector2(2,-1),
 						new Vector2(3,0),new Vector2(3,1),new Vector2(3,-1)});
+			skl.offset_ani_object = new Vector2(5,10);
+			skl.offset_ani_self = new Vector2(16,5);
+			skl.offset_ani_continue = new Vector2(5,10);
 			break;
 		case 71:
 			skl = new Skill(i,"穿透",QUALITY.purple,Type.f_damage,60f,20f,new CLASSES[]{CLASSES.archer},"对前方3个格子的敌人进行穿透攻击",
@@ -215,11 +223,13 @@ public class SkillFactory {
 			break;
 		case 73:
 			skl = new Skill(i,"斜刺",QUALITY.purple,Type.f_damage,50f,30f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"对斜下方所有格子敌人进行攻击",
-					new Vector2[] {new Vector2(1,0),new Vector2(2,1),new Vector2(3,2),new Vector2(4,3),new Vector2(5,4),new Vector2(6,5)});
+					new Vector2[] {new Vector2(1,-1),new Vector2(2,-2),new Vector2(3,-3),new Vector2(4,-4),new Vector2(5,-5)});
+			skl.offset_ani_self = new Vector2(32,-96);
 			break;
 		case 74:
 			skl = new Skill(i,"魔法震退",QUALITY.purple,Type.p_atkbeat,1.3f,0.4f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"对前方3个格子的敌人进行震退攻击",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
+			skl.offset_ani_object = new Vector2(-16,0);
 			break;
 		case 95:
 			skl = new Skill(i,"空中打击",QUALITY.orange,Type.p_damage,2f,0.5f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"对4*4格子敌人进行空中打击",
