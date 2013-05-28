@@ -59,7 +59,7 @@ public class Player {
 					new SkillTree().getSkillTreeFixedSkill(96)
 					,GameTextureClass.getInstance().fc_photo));				//测试技能用
 			playerRole.add(rf.getFighter("fc", Role.Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
-//			playerRole.add(rf.getFighter("ss哈哈", Role.Type.HERO, QUALITY.blue,GameTextureClass.getInstance().zyc_photo));
+			playerRole.add(rf.getFighter("ss哈哈", Role.Type.HERO, QUALITY.blue,GameTextureClass.getInstance().zyc_photo));
 //			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 			playerRole.add(rf.getFighter("张永臣", Type.HERO, QUALITY.purple,GameTextureClass.getInstance().zyc_photo));
 //			playerRole.add(rf.getFighter("努努", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
@@ -77,8 +77,8 @@ public class Player {
 	private Array<Role> getPlayerFightRole() {
 		if (playerFightRole.size == 0) {
 			playerFightRole.add(playerRole.get(0));
-			playerFightRole.add(playerRole.get(1));
-			playerFightRole.add(playerRole.get(2));
+			//playerFightRole.add(playerRole.get(1));
+			//playerFightRole.add(playerRole.get(2));
 		}
 		return playerFightRole;
 	}

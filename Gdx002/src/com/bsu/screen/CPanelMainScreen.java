@@ -6,6 +6,7 @@ import java.util.Observer;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.input.GestureDetector;
@@ -20,7 +21,9 @@ import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
+import com.bsu.obj.RolePhoto;
 import com.bsu.tools.Configure;
+import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.GameTextureClass;
 import com.bsu.tools.MessageObject;
 
@@ -67,13 +70,10 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < playerRols.size; i++) {
 			frlength++;
 			final Role r = playerRols.get(i);
-			Image roleImg = new Image(playerRols.get(i).roleTexture);
-			WidgetFactory.getInstance().makeImageButton(
-					Configure.Img_head_back, roleStage, 40, 240 - 55 * i);
-			roleImg.setScale(0.5f);
-			roleStage.addActor(roleImg);
-			roleImg.setPosition(48, 246 - 55 * i);
-			roleImg.addListener(new InputListener() {
+			Vector2 v = new Vector2(48, 246 - 55 * i);
+			RolePhoto photo = new RolePhoto(r.roleTexture, roleStage,
+					r.quality, v, true);
+			photo.role.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
@@ -86,9 +86,9 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		}
 		if (frlength < 5) {
 			for (int i = frlength; i < 5; i++) {
-				Image backImg = WidgetFactory.getInstance().makeImageButton(
-						Configure.Img_head_back, roleStage, 40, 240 - 55 * i);
-				backImg.addListener(new InputListener() {
+				Vector2 v = new Vector2(46, 244 - 55 * i);
+				RolePhoto photo = new RolePhoto(roleStage, QUALITY.orange, v);
+				photo.role_k.addListener(new InputListener() {
 					@Override
 					public boolean touchDown(InputEvent event, float x,
 							float y, int pointer, int button) {
@@ -101,7 +101,6 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 			}
 		}
 	}
-
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);

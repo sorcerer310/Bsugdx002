@@ -1,10 +1,14 @@
 package com.bsu.screen;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
 import java.util.Observable;
 import java.util.Observer;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,9 +16,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -24,6 +30,7 @@ import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
+import com.bsu.obj.RolePhoto;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.Configure;
 import com.bsu.tools.TipsWindows;
@@ -47,7 +54,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private TextButton blueButton;
 	private TextButton purpleButton;
 	private TextButton orangeButton;
-	private Array<Image> imgArray = new Array<Image>();
 	private int clingX;// 地图移动位移
 	private OrthographicCamera c;
 	private int cameraWidth;// 显示人物时的界面宽度
@@ -109,18 +115,15 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private void showQualityRole(Array<Role> roleArray) {
 		sRoleStage.clear();
 		RoleInfoStage.clear();
-		imgArray.clear();
 		clingX = 0;
 		c.position.x = Configure.rect_width / 2;
 		for (int i = 0; i < roleArray.size; i++) {
-			final Image roleImg = new Image(roleArray.get(i).roleTexture);
 			final Role r = roleArray.get(i);
-			cameraWidth = (i + 1) * 70 + 10;
-			roleImg.setScale(0.5f);
-			sRoleStage.addActor(roleImg);
-			imgArray.add(roleImg);
-			roleImg.setPosition(20 + i * 70, 50);
-			roleImg.addListener(new InputListener() {
+			Vector2 v = new Vector2(20 + 70 * i, 50);
+			final RolePhoto photo = new RolePhoto(r.roleTexture, sRoleStage,
+					r.quality, v, false);
+			r.photo=photo;
+			photo.role.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
@@ -130,25 +133,41 @@ public class RoleScreen extends CubocScreen implements Observer,
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
-					resetAllSelectImg(roleImg);
 					showRoleInfo(r);
 					super.touchUp(event, x, y, pointer, button);
 				}
 			});
 		}
 	}
-
+	/**
+	 * 设置被选中的角色
+	 * @param r
+	 */
+	private void resetRole(Role r){
+		for(Role e:Player.getInstance().playerRole){
+			e.photo.showEffect(false);
+		}
+		for(Actor act:sRoleStage.getActors()){
+			if(act instanceof Image){
+				if(act.equals(r.photo.role)){
+					r.photo.showEffect(true);
+				}
+			}
+		}
+	}
 	/**
 	 * 显示人物信息
 	 */
 	private void showRoleInfo(final Role r) {
+		resetRole(r);
 		RoleInfoStage.clear();
 		selectRole = r;
 		if (selectRole == null) {
 			return;
 		}
 		skillIndex = 0;
-		wfy.makeLabel(r.name, RoleInfoStage, 40, 240,Configure.getQualityColor(r.quality));
+		wfy.makeLabel(r.name, RoleInfoStage, 40, 240,
+				Configure.getQualityColor(r.quality));
 		wfy.makeLabel(Configure.getQualityName(r.quality), RoleInfoStage, 100,
 				240);
 		wfy.makeLabel(r.maxHp + "", RoleInfoStage, 40, 220);
@@ -267,21 +286,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 		}
 		skin.dispose();
 		skin = null;
-	}
-
-	/**
-	 * 重设所有图片效果，以便正确显示被选中对象
-	 * 
-	 * @param img
-	 */
-	private void resetAllSelectImg(Image img) {
-		clingX = 0;
-		for (int i = 0; i < imgArray.size; i++) {
-			imgArray.get(i).setScale(0.5f);
-			if (imgArray.get(i).equals(img)) {
-				img.setScale(0.4f);
-			}
-		}
 	}
 
 	@Override
@@ -434,6 +438,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) {
 		// TODO Auto-generated method stub
+		clingX = 0;
 		return false;
 	}
 

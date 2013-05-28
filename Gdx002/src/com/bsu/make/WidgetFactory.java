@@ -1,5 +1,8 @@
 package com.bsu.make;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -24,8 +28,9 @@ import com.bsu.tools.GameTextureClass;
 
 public class WidgetFactory {
 	private static WidgetFactory instance = null;
-
+	private Image role_photo;// 选中角色后的特效图片
 	private WidgetFactory() {
+		role_photo = new Image(GameTextureClass.getInstance().role_photo);
 	}
 
 	public static WidgetFactory getInstance() {
@@ -67,7 +72,7 @@ public class WidgetFactory {
 	 */
 	Image img_nomal = null;
 
-	public Image makeImageButton(String bname,Stage s,int x,int y) {
+	public Image makeImageButton(String bname, Stage s, int x, int y) {
 
 		if (bname.equals(Configure.screen_equip))
 			img_nomal = new Image(
@@ -112,6 +117,7 @@ public class WidgetFactory {
 		s.addActor(img_nomal);
 		return img_nomal;
 	}
+
 	/**
 	 * 将一个label 初始化并做好设置，加入指定stage
 	 * 
@@ -128,11 +134,11 @@ public class WidgetFactory {
 		s.addActor(l);
 		return l;
 	}
-	
-	public Label makeLabel(String ls, Stage s, int x, int y,Color c) {
+
+	public Label makeLabel(String ls, Stage s, int x, int y, Color c) {
 		Label l = new Label(ls, Configure.get_sytle());
 		l.setPosition(x, y);
-		if(c!=null){
+		if (c != null) {
 			l.setColor(c);
 		}
 		s.addActor(l);
@@ -161,5 +167,65 @@ public class WidgetFactory {
 		img.setPosition(x, y);
 		s.addActor(img);
 		return img;
+	}
+
+	/**
+	 * 返回一个pixMap绘制的图像
+	 * 
+	 * @param maxValue
+	 *            宽高
+	 * @param c
+	 *            颜色
+	 * @param a
+	 *            透明度
+	 * @return
+	 */
+	public TextureRegion getTExtureRegionFromPixmap(int maxValue, Color dc,
+			Color c, float a) {
+		c.a = a;
+		TextureRegion temp_box = null;
+		Pixmap pixmap;
+		pixmap = new Pixmap(maxValue, maxValue, Format.RGBA8888);
+		pixmap.setColor(dc);
+		pixmap.drawRectangle(0, 0, maxValue, maxValue);
+		pixmap.setColor(c);
+		pixmap.fillRectangle(1, 1, maxValue - 2, maxValue - 2);
+		Texture pixmaptex = new Texture(pixmap);
+		temp_box = new TextureRegion(pixmaptex, maxValue, maxValue);
+		pixmap.dispose();
+		return temp_box;
+	}
+	/**
+	 * 设置人物选中后的效果
+	 * @param role_photo
+	 * @param s
+	 * @param vs
+	 */
+	public void showRoleEffect(Stage s, Vector2 vs) {
+		if (role_photo.getStage() != null) {
+			role_photo.getParent().removeActor(role_photo);
+		}
+		role_photo.getActions().clear();
+		s.addActor(role_photo);
+		role_photo.setPosition(vs.x - 17, vs.y - 17);
+		RepeatAction ra = new RepeatAction();
+		ra.setAction(sequence(moveBy(0, 50, 1f), moveBy(50, 0, 1f),
+				moveBy(0, -50, 1f), moveBy(-50, 0, 1f)));
+		ra.setCount(RepeatAction.FOREVER);
+		role_photo.addAction(ra);
+	}
+	
+	public void showRoleEffect(Image role_photo,Stage s, Vector2 vs) {
+		if (role_photo.getStage() != null) {
+			role_photo.getParent().removeActor(role_photo);
+		}
+		role_photo.getActions().clear();
+		s.addActor(role_photo);
+		role_photo.setPosition(vs.x - 17, vs.y - 17);
+		RepeatAction ra = new RepeatAction();
+		ra.setAction(sequence(moveBy(0, 50, 1f), moveBy(50, 0, 1f),
+				moveBy(0, -50, 1f), moveBy(-50, 0, 1f)));
+		ra.setCount(RepeatAction.FOREVER);
+		role_photo.addAction(ra);
 	}
 }

@@ -204,10 +204,10 @@ public class Configure {
 	public static Color getQualityColor(QUALITY q) {
 		Color c = Color.WHITE;
 		if (q == QUALITY.green) {
-			c=Color.GREEN;
+			c=new Color(0,255,0,1);
 		}
 		if (q == QUALITY.blue) {
-			c=Color.BLUE;
+			c=new Color(0,0,255,1);
 		}
 		if (q == QUALITY.purple) {
 			c=new Color(255,0,255,1);

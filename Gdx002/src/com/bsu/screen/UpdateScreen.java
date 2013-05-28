@@ -26,6 +26,7 @@ import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
+import com.bsu.obj.RolePhoto;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.Configure.QualityS;
@@ -38,10 +39,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	private Stage stage;
 	private Stage sRoleStage;
 	private Image ib_back;
-	private Array<Image> RoleSelectImg = new Array<Image>();// 用来升级的卡片
-
 	private Role selectUpdateRole;
-	private Image roleImg;
 	private Array<Role> eatRoles = new Array<Role>();
 	private QualityS quality;// 当前选择显示的品质
 	private TextButton allButton;
@@ -51,7 +49,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	private TextButton orangeButton;
 	private TextButton eatButton;
 	private TextButton eatAllButton;// 一键吞噬所有某种品质
-	private Label name,exp,up;
+	private Label name, exp, up;
 
 	public UpdateScreen(Game game) {
 		super(game);
@@ -66,9 +64,9 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				Configure.button_back, stage, 360, 40);
 		ib_back.setPosition(360, 40);
 
-		name=WidgetFactory.getInstance().makeLabel("", stage, 200, 260);
-		exp=WidgetFactory.getInstance().makeLabel("", stage, 260, 260);
-		up=WidgetFactory.getInstance().makeLabel("up", stage, 340, 260);
+		name = WidgetFactory.getInstance().makeLabel("", stage, 200, 260);
+		exp = WidgetFactory.getInstance().makeLabel("", stage, 260, 260);
+		up = WidgetFactory.getInstance().makeLabel("up", stage, 340, 260);
 		allButton = WidgetFactory.getInstance().makeOneTextButton("all", stage,
 				140, 30);
 		greenButton = WidgetFactory.getInstance().makeOneTextButton("green",
@@ -89,27 +87,23 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	}
 
 	private void getRoles() {
-		RoleSelectImg.clear();
 		Array<Role> playerRols = Player.getInstance().playerFightRole;
 		for (int i = 0; i < playerRols.size; i++) {
 			final Role r = playerRols.get(i);
-			final Image roleImg = new Image(playerRols.get(i).roleTexture);
-			WidgetFactory.getInstance().makeImageButton(
-					Configure.Img_head_back, stage, 40, 230 - 55 * i);
+			Vector2 v = new Vector2(48, 246 - 55 * i);
+			RolePhoto photo = new RolePhoto(r.roleTexture, stage, r.quality, v,
+					false);
 			if (i == 0) {
-				roleImg.setScale(0.4f);
+				r.photo.showEffect(true);
 			} else {
-				roleImg.setScale(0.5f);
+				r.photo.showEffect(false);
 			}
-			stage.addActor(roleImg);
-			roleImg.setPosition(48, 236 - 55 * i);
-			RoleSelectImg.add(roleImg);
-			roleImg.addListener(new InputListener() {
+			r.photo = photo;
+			photo.role.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
-					resetAllSelectImg(roleImg);
-					showSelectImg(r);
+					resetUpRole(r);
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
@@ -117,17 +111,15 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	}
 
 	/**
-	 * 重设所有图片效果，以便正确显示被选中对象
+	 * 重设需要强化的角色效果
 	 * 
-	 * @param img
+	 * @param r
 	 */
-	private void resetAllSelectImg(Image img) {
-		for (int i = 0; i < RoleSelectImg.size; i++) {
-			RoleSelectImg.get(i).setScale(0.5f);
-			if (RoleSelectImg.get(i).equals(img)) {
-				img.setScale(0.4f);
-			}
+	private void resetUpRole(Role r) {
+		for (Role e : Player.getInstance().playerFightRole) {
+			e.photo.showEffect(false);
 		}
+		r.photo.showEffect(true);
 	}
 
 	/**
@@ -165,12 +157,12 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	private void showQualityRole(Array<Role> roleArray) {
 		sRoleStage.clear();
 		for (int i = 0; i < roleArray.size; i++) {
-			final Image roleImg = new Image(roleArray.get(i).roleTexture);
 			final Role r = roleArray.get(i);
-			roleImg.setScale(0.5f);
-			sRoleStage.addActor(roleImg);
-			roleImg.setPosition(140 + i % 5 * 70, 200 - i / 5 * 70);
-			roleImg.addListener(new InputListener() {
+			Vector2 v = new Vector2(140 + i % 5 * 70, 200 - i / 5 * 70);
+			RolePhoto photo = new RolePhoto(r.roleTexture, sRoleStage,
+					r.quality, v, false);
+			r.photo = photo;
+			photo.role.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
@@ -180,7 +172,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
-					resetEatRole(r, roleImg);
+					resetEatRole(r);
 					super.touchUp(event, x, y, pointer, button);
 				}
 			});
@@ -225,12 +217,25 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	}
 
 	/**
+	 * 设置被选中准备吞噬的角色
+	 * 
+	 * @param r
+	 */
+	private void resetRole() {
+		for (Role e : Player.getInstance().playerIdelRole) {
+			e.photo.showEffect(false);
+		}
+		for (Role r : eatRoles) {
+			r.photo.showEffect(true);
+		}
+	}
+
+	/**
 	 * 设置被吞噬或者取消吞噬
 	 * 
 	 * @param r
-	 * @param img
 	 */
-	private void resetEatRole(Role r, Image img) {
+	private void resetEatRole(Role r) {
 		boolean flag = false;
 		for (Role e : eatRoles) {
 			if (e.equals(r)) {
@@ -239,25 +244,11 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		}
 		if (flag) {
 			eatRoles.removeValue(r, false);
-			img.setScale(0.5f);
+
 		} else {
 			eatRoles.add(r);
-			img.setScale(0.4f);
 		}
-	}
-
-	/**
-	 * 显示想要升级的role头像
-	 */
-	private void showSelectImg(Role r) {
-		selectUpdateRole = r;
-		if (roleImg != null) {
-			roleImg.getParent().removeActor(roleImg);
-		}
-		roleImg = new Image(r.roleTexture);
-		roleImg.setPosition(150, 250);
-		roleImg.setScale(0.5f);
-		stage.addActor(roleImg);
+		resetRole();
 	}
 
 	@Override
@@ -269,7 +260,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		inputMultiplexer.addProcessor(new GestureDetector(this));
 		Gdx.input.setInputProcessor(inputMultiplexer);
 		getRoles();
-		showSelectImg(Player.getInstance().playerFightRole.get(0));
 		addRoleToStage(QualityS.allselect);
 	}
 
@@ -281,8 +271,9 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		sRoleStage.act(Gdx.graphics.getDeltaTime());
 		sRoleStage.draw();
 		name.setText(selectUpdateRole.name);
-		exp.setText(selectUpdateRole.exp+"/"+selectUpdateRole.expUp);
-		up.setVisible(selectUpdateRole.exp>selectUpdateRole.expUp?true:false);
+		exp.setText(selectUpdateRole.exp + "/" + selectUpdateRole.expUp);
+		up.setVisible(selectUpdateRole.exp > selectUpdateRole.expUp ? true
+				: false);
 	}
 
 	@Override
