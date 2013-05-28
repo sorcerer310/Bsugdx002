@@ -321,7 +321,7 @@ public class Commander {
 			
 			while (!currTaskComFlag) {
 				System.out.println(currTaskComFlag);
-				Thread.sleep(100);
+				Thread.sleep(500);
 			}
 			
 			//2:执行移动命令
@@ -338,7 +338,7 @@ public class Commander {
 
 			// 等待动作完成
 			while (waitRoleFlag) {
-				Thread.sleep(1000);
+				Thread.sleep(500);
 			}
 		}
 		be.notify(this, "command_heros_completed");

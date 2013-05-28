@@ -49,10 +49,18 @@ public class GameScreenConfigure {
 		}
 //		heroRoles.add(Player.getInstance().playerFightRole.get(1));
 //		npcRoles.add(RoleFactory.getInstance().getFighter("enemy1", Type.ENEMY, QUALITY.green,GameTextureClass.getInstance().h5_photo));
-		npcRoles.add(new Role(Role.Type.ENEMY,QUALITY.green,CLASSES.fighter,"测试敌人",U.getRandom(100, -6, 6),8,10
+		npcRoles.add(new Role(Role.Type.ENEMY,QUALITY.green,CLASSES.fighter,"测试敌人1",U.getRandom(100, -6, 6),8,10
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getSkillTreeFixedSkill(10)
 				,GameTextureClass.getInstance().h3_photo));				//测试技能用
+//		npcRoles.add(new Role(Role.Type.ENEMY,QUALITY.green,CLASSES.fighter,"测试敌人2",U.getRandom(100, -6, 6),8,10
+//				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
+//				new SkillTree().getSkillTreeFixedSkill(10)
+//				,GameTextureClass.getInstance().h3_photo));				//测试技能用
+//		npcRoles.add(new Role(Role.Type.ENEMY,QUALITY.green,CLASSES.fighter,"测试敌人3",U.getRandom(100, -6, 6),8,10
+//				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
+//				new SkillTree().getSkillTreeFixedSkill(10)
+//				,GameTextureClass.getInstance().h3_photo));				//测试技能用
 		rols.addAll(heroRoles);
 		rols.addAll(npcRoles);
 		gs.game_init(0, rols);
