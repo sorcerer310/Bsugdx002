@@ -271,17 +271,18 @@ public class SkillFactory {
 			break;
 		case 97:
 			skl = new Skill(i,"圣光术",QUALITY.orange,Type.p_healing,0.15f,0.04f,new CLASSES[]{CLASSES.cleric},"对己方全体进行大量回血",
-					new Vector2[] {new Vector2(-1,0),new Vector2(-2,0),new Vector2(-3,0),new Vector2(-4,0),new Vector2(-5,0),new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),new Vector2(5,0),
-					new Vector2(-1,-1),new Vector2(-2,-1),new Vector2(-3,-1),new Vector2(-4,-1),new Vector2(-5,-1),new Vector2(0,-1),new Vector2(1,-1),new Vector2(2,-1),new Vector2(3,-1),new Vector2(4,-1),new Vector2(5,-1),
-					new Vector2(-1,1),new Vector2(-2,1),new Vector2(-3,1),new Vector2(-4,1),new Vector2(-5,1),new Vector2(0,1),new Vector2(1,1),new Vector2(2,1),new Vector2(3,1),new Vector2(4,1),new Vector2(5,1),
-					new Vector2(-1,-2),new Vector2(-2,-2),new Vector2(-3,-2),new Vector2(-4,-2),new Vector2(-5,-2),new Vector2(0,-2),new Vector2(1,-2),new Vector2(2,-2),new Vector2(3,-2),new Vector2(4,-2),new Vector2(5,-2),
-					new Vector2(-1,2),new Vector2(-2,2),new Vector2(-3,2),new Vector2(-4,2),new Vector2(-5,2),new Vector2(0,2),new Vector2(1,2),new Vector2(2,2),new Vector2(3,2),new Vector2(4,2),new Vector2(5,2),
-					new Vector2(-1,-3),new Vector2(-2,-3),new Vector2(-3,-3),new Vector2(-4,-3),new Vector2(-5,-3),new Vector2(0,-3),new Vector2(1,-3),new Vector2(2,-3),new Vector2(3,-3),new Vector2(4,-3),new Vector2(5,-3),
-					new Vector2(-1,3),new Vector2(-2,3),new Vector2(-3,3),new Vector2(-4,3),new Vector2(-5,3),new Vector2(0,3),new Vector2(1,3),new Vector2(2,3),new Vector2(3,3),new Vector2(4,3),new Vector2(5,3),
-					new Vector2(-1,-4),new Vector2(-2,-4),new Vector2(-3,-4),new Vector2(-4,-4),new Vector2(-5,-4),new Vector2(0,-4),new Vector2(1,-4),new Vector2(2,-4),new Vector2(3,-4),new Vector2(4,-4),new Vector2(5,-4),
-					new Vector2(-1,4),new Vector2(-2,4),new Vector2(-3,4),new Vector2(-4,4),new Vector2(-5,4),new Vector2(0,4),new Vector2(1,4),new Vector2(2,4),new Vector2(3,4),new Vector2(4,4),new Vector2(5,4),
-									});
-			skl.otype = ObjectType.multi;
+//					new Vector2[] {new Vector2(-1,0),new Vector2(-2,0),new Vector2(-3,0),new Vector2(-4,0),new Vector2(-5,0),new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),new Vector2(5,0),
+//					new Vector2(-1,-1),new Vector2(-2,-1),new Vector2(-3,-1),new Vector2(-4,-1),new Vector2(-5,-1),new Vector2(0,-1),new Vector2(1,-1),new Vector2(2,-1),new Vector2(3,-1),new Vector2(4,-1),new Vector2(5,-1),
+//					new Vector2(-1,1),new Vector2(-2,1),new Vector2(-3,1),new Vector2(-4,1),new Vector2(-5,1),new Vector2(0,1),new Vector2(1,1),new Vector2(2,1),new Vector2(3,1),new Vector2(4,1),new Vector2(5,1),
+//					new Vector2(-1,-2),new Vector2(-2,-2),new Vector2(-3,-2),new Vector2(-4,-2),new Vector2(-5,-2),new Vector2(0,-2),new Vector2(1,-2),new Vector2(2,-2),new Vector2(3,-2),new Vector2(4,-2),new Vector2(5,-2),
+//					new Vector2(-1,2),new Vector2(-2,2),new Vector2(-3,2),new Vector2(-4,2),new Vector2(-5,2),new Vector2(0,2),new Vector2(1,2),new Vector2(2,2),new Vector2(3,2),new Vector2(4,2),new Vector2(5,2),
+//					new Vector2(-1,-3),new Vector2(-2,-3),new Vector2(-3,-3),new Vector2(-4,-3),new Vector2(-5,-3),new Vector2(0,-3),new Vector2(1,-3),new Vector2(2,-3),new Vector2(3,-3),new Vector2(4,-3),new Vector2(5,-3),
+//					new Vector2(-1,3),new Vector2(-2,3),new Vector2(-3,3),new Vector2(-4,3),new Vector2(-5,3),new Vector2(0,3),new Vector2(1,3),new Vector2(2,3),new Vector2(3,3),new Vector2(4,3),new Vector2(5,3),
+//					new Vector2(-1,-4),new Vector2(-2,-4),new Vector2(-3,-4),new Vector2(-4,-4),new Vector2(-5,-4),new Vector2(0,-4),new Vector2(1,-4),new Vector2(2,-4),new Vector2(3,-4),new Vector2(4,-4),new Vector2(5,-4),
+//					new Vector2(-1,4),new Vector2(-2,4),new Vector2(-3,4),new Vector2(-4,4),new Vector2(-5,4),new Vector2(0,4),new Vector2(1,4),new Vector2(2,4),new Vector2(3,4),new Vector2(4,4),new Vector2(5,4),
+//									});
+					new Vector2[]{new Vector2(0,0)});
+			skl.otype = ObjectType.all;
 			break;
 		case 98:
 			skl = new Skill(i,"高级强身术",QUALITY.orange,Type.pbuff_hp,0.15f,0.04f,new CLASSES[]{CLASSES.all},"超大幅度提高自身的HP上限",
