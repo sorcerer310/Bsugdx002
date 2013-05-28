@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.math.Vector2;
 import com.bsu.obj.skilltree.Skill;
+import com.bsu.obj.skilltree.Skill.ObjectType;
 import com.bsu.obj.skilltree.Skill.Type;
 import com.bsu.tools.Configure.CLASSES;
 import com.bsu.tools.Configure.QUALITY;
@@ -73,10 +74,12 @@ public class SkillFactory {
 		case 4:
 			skl = new Skill(i,"突刺",QUALITY.green,Type.f_box,2.0f,0.5f,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"攻击前方多个格子的敌人，对每个敌人都造成一定伤害",
 					new Vector2[] {new Vector2(0,0)});
+			skl.otype = ObjectType.multi;
 			break;
 		case 5:
 			skl = new Skill(i,"横扫",QUALITY.green,Type.p_damage,0.8f,0.2f,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"横扫面前竖排敌人",
 					new Vector2[] {new Vector2(1,0),new Vector2(1,1),new Vector2(1,-1)});
+			skl.otype = ObjectType.multi;
 			break;
 		case 6:
 			skl = new Skill(i,"马步",QUALITY.green,Type.p_healing,0.05f,0.01f,new CLASSES[]{CLASSES.all},"一回合内恢复自身少量生命",
@@ -130,6 +133,7 @@ public class SkillFactory {
 										new Vector2(2,0),new Vector2(2,1),new Vector2(2,-1),
 										new Vector2(3,0),new Vector2(3,1),new Vector2(3,-1)});
 			skl.offset_ani_self = new Vector2(22,10);
+			skl.otype = ObjectType.multi;
 			break;
 		case 38:
 			skl = new Skill(i,"爆头",QUALITY.blue,Type.p_damage,1.8f,0.5f,new CLASSES[]{CLASSES.archer,CLASSES.wizard},"正中敌人头部，造成较大伤害",
@@ -166,12 +170,14 @@ public class SkillFactory {
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),
 									new Vector2(1,1),new Vector2(2,1),
 									new Vector2(1,-1),new Vector2(2,-1)});
+			skl.otype = ObjectType.multi;
 			break;
 		case 63:
 			skl = new Skill(i,"爆震",QUALITY.purple,Type.f_damage,50f,30f,new CLASSES[]{CLASSES.fighter},"对自己周围一圈的敌人造成伤害,冲到敌阵中央很好用",
 					new Vector2[] {new Vector2(1,0),new Vector2(1,1),new Vector2(1,-1),new Vector2(0,1),new Vector2(0,-1)
 									,new Vector2(-1,1),new Vector2(-1,0),new Vector2(-1,-1)});
 			skl.offset_ani_self = new Vector2(-32,-32);
+			skl.otype = ObjectType.multi;
 			break;
 		case 64:
 			skl = new Skill(i,"击退",QUALITY.purple,Type.p_atkbeat,1.2f,0.5f,new CLASSES[]{CLASSES.fighter,CLASSES.archer},"对敌人造成一定伤害，并击退敌人一格",
@@ -187,6 +193,7 @@ public class SkillFactory {
 			skl = new Skill(i,"冰锥推进",QUALITY.purple,Type.p_damage,1.5f,0.3f,new CLASSES[]{CLASSES.wizard},"对前方横向3个格子所有敌人进行冰锥攻击",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
 			skl.offset_ani_self = new Vector2(35,0);
+			skl.otype = ObjectType.multi;
 			break;
 		case 67:
 			skl = new Skill(i,"生命转移",QUALITY.purple,Type.f_shifhp,50f,30f,new CLASSES[]{CLASSES.cleric,CLASSES.sorcerer},"将前方3*3范围内的敌人的生命转移到己方",
@@ -199,6 +206,7 @@ public class SkillFactory {
 					new Vector2[] {new Vector2(1,0),new Vector2(1,1),new Vector2(1,-1),
 						new Vector2(2,0),new Vector2(2,1),new Vector2(2,-1)
 						});
+			skl.otype = ObjectType.multi;
 			break;
 		case 69:
 			skl = new Skill(i,"强健身躯",QUALITY.purple,Type.pbuff_hp,0.1f,0.03f,new CLASSES[]{CLASSES.all},"强效的增加生命上限技能",
@@ -257,7 +265,16 @@ public class SkillFactory {
 			break;
 		case 97:
 			skl = new Skill(i,"圣光术",QUALITY.orange,Type.p_healing,0.15f,0.04f,new CLASSES[]{CLASSES.cleric},"对己方全体进行大量回血",
-					new Vector2[] {});
+					new Vector2[] {new Vector2(-1,0),new Vector2(-2,0),new Vector2(-3,0),new Vector2(-4,0),new Vector2(-5,0),new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),new Vector2(5,0),
+					new Vector2(-1,-1),new Vector2(-2,-1),new Vector2(-3,-1),new Vector2(-4,-1),new Vector2(-5,-1),new Vector2(0,-1),new Vector2(1,-1),new Vector2(2,-1),new Vector2(3,-1),new Vector2(4,-1),new Vector2(5,-1),
+					new Vector2(-1,1),new Vector2(-2,1),new Vector2(-3,1),new Vector2(-4,1),new Vector2(-5,1),new Vector2(0,1),new Vector2(1,1),new Vector2(2,1),new Vector2(3,1),new Vector2(4,1),new Vector2(5,1),
+					new Vector2(-1,-2),new Vector2(-2,-2),new Vector2(-3,-2),new Vector2(-4,-2),new Vector2(-5,-2),new Vector2(0,-2),new Vector2(1,-2),new Vector2(2,-2),new Vector2(3,-2),new Vector2(4,-2),new Vector2(5,-2),
+					new Vector2(-1,2),new Vector2(-2,2),new Vector2(-3,2),new Vector2(-4,2),new Vector2(-5,2),new Vector2(0,2),new Vector2(1,2),new Vector2(2,2),new Vector2(3,2),new Vector2(4,2),new Vector2(5,2),
+					new Vector2(-1,-3),new Vector2(-2,-3),new Vector2(-3,-3),new Vector2(-4,-3),new Vector2(-5,-3),new Vector2(0,-3),new Vector2(1,-3),new Vector2(2,-3),new Vector2(3,-3),new Vector2(4,-3),new Vector2(5,-3),
+					new Vector2(-1,3),new Vector2(-2,3),new Vector2(-3,3),new Vector2(-4,3),new Vector2(-5,3),new Vector2(0,3),new Vector2(1,3),new Vector2(2,3),new Vector2(3,3),new Vector2(4,3),new Vector2(5,3),
+					new Vector2(-1,-4),new Vector2(-2,-4),new Vector2(-3,-4),new Vector2(-4,-4),new Vector2(-5,-4),new Vector2(0,-4),new Vector2(1,-4),new Vector2(2,-4),new Vector2(3,-4),new Vector2(4,-4),new Vector2(5,-4),
+					new Vector2(-1,4),new Vector2(-2,4),new Vector2(-3,4),new Vector2(-4,4),new Vector2(-5,4),new Vector2(0,4),new Vector2(1,4),new Vector2(2,4),new Vector2(3,4),new Vector2(4,4),new Vector2(5,4),
+									});
 			break;
 		case 98:
 			skl = new Skill(i,"高级强身术",QUALITY.orange,Type.pbuff_hp,0.15f,0.04f,new CLASSES[]{CLASSES.all},"超大幅度提高自身的HP上限",
