@@ -90,7 +90,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	}
 
 	private void getRoles() {
-		Array<Role> playerRoles = Player.getInstance().playerFightRole;
+		final Array<Role> playerRoles = Player.getInstance().playerFightRole;
 		for (int i = 0; i < playerRoles.size; i++) {
 			final Role r = playerRoles.get(i);
 			Vector2 v = new Vector2(48, 246 - 55 * i);
@@ -101,14 +101,14 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
-					U.showRoleSelect(playerRols,r);
+					U.showRoleSelect(playerRoles,r);
 					selectUpdateRole=r;
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
 		}
-		U.showRoleSelect(playerRols,playerRols.get(0));
-		selectUpdateRole=playerRols.get(0);
+		U.showRoleSelect(playerRoles,playerRoles.get(0));
+		selectUpdateRole=playerRoles.get(0);
 	}
 	/**
 	 * 显示要强化角色信息
