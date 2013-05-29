@@ -254,33 +254,13 @@ public class SkillFactory {
 			skl.otype = ObjectType.multi;
 			break;
 		case 96:
-			skl = new Skill(i,"群星陨落",QUALITY.orange,Type.p_damage,1.8f,0.4f,new CLASSES[]{CLASSES.wizard},"对全体敌人进行陨石攻击",
-//					new Vector2[] {new Vector2(-1,0),new Vector2(-2,0),new Vector2(-3,0),new Vector2(-4,0),new Vector2(-5,0),new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),new Vector2(5,0),
-//					new Vector2(-1,-1),new Vector2(-2,-1),new Vector2(-3,-1),new Vector2(-4,-1),new Vector2(-5,-1),new Vector2(0,-1),new Vector2(1,-1),new Vector2(2,-1),new Vector2(3,-1),new Vector2(4,-1),new Vector2(5,-1),
-//					new Vector2(-1,1),new Vector2(-2,1),new Vector2(-3,1),new Vector2(-4,1),new Vector2(-5,1),new Vector2(0,1),new Vector2(1,1),new Vector2(2,1),new Vector2(3,1),new Vector2(4,1),new Vector2(5,1),
-//					new Vector2(-1,-2),new Vector2(-2,-2),new Vector2(-3,-2),new Vector2(-4,-2),new Vector2(-5,-2),new Vector2(0,-2),new Vector2(1,-2),new Vector2(2,-2),new Vector2(3,-2),new Vector2(4,-2),new Vector2(5,-2),
-//					new Vector2(-1,2),new Vector2(-2,2),new Vector2(-3,2),new Vector2(-4,2),new Vector2(-5,2),new Vector2(0,2),new Vector2(1,2),new Vector2(2,2),new Vector2(3,2),new Vector2(4,2),new Vector2(5,2),
-//					new Vector2(-1,-3),new Vector2(-2,-3),new Vector2(-3,-3),new Vector2(-4,-3),new Vector2(-5,-3),new Vector2(0,-3),new Vector2(1,-3),new Vector2(2,-3),new Vector2(3,-3),new Vector2(4,-3),new Vector2(5,-3),
-//					new Vector2(-1,3),new Vector2(-2,3),new Vector2(-3,3),new Vector2(-4,3),new Vector2(-5,3),new Vector2(0,3),new Vector2(1,3),new Vector2(2,3),new Vector2(3,3),new Vector2(4,3),new Vector2(5,3),
-//					new Vector2(-1,-4),new Vector2(-2,-4),new Vector2(-3,-4),new Vector2(-4,-4),new Vector2(-5,-4),new Vector2(0,-4),new Vector2(1,-4),new Vector2(2,-4),new Vector2(3,-4),new Vector2(4,-4),new Vector2(5,-4),
-//					new Vector2(-1,4),new Vector2(-2,4),new Vector2(-3,4),new Vector2(-4,4),new Vector2(-5,4),new Vector2(0,4),new Vector2(1,4),new Vector2(2,4),new Vector2(3,4),new Vector2(4,4),new Vector2(5,4),
-//									});
+			skl = new Skill(i,"群星陨落",QUALITY.orange,Type.p_damage,1.8f,0.4f,new CLASSES[]{CLASSES.wizard},"对全体敌人进行落星攻击",
 					new Vector2[]{new Vector2(0,0)});
 			skl.offset_ani_object  = new Vector2(-42,-16);
 			skl.otype = ObjectType.all;
 			break;
 		case 97:
-			skl = new Skill(i,"圣光术",QUALITY.orange,Type.p_healing,0.15f,0.04f,new CLASSES[]{CLASSES.cleric},"对己方全体进行大量回血",
-//					new Vector2[] {new Vector2(-1,0),new Vector2(-2,0),new Vector2(-3,0),new Vector2(-4,0),new Vector2(-5,0),new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),new Vector2(5,0),
-//					new Vector2(-1,-1),new Vector2(-2,-1),new Vector2(-3,-1),new Vector2(-4,-1),new Vector2(-5,-1),new Vector2(0,-1),new Vector2(1,-1),new Vector2(2,-1),new Vector2(3,-1),new Vector2(4,-1),new Vector2(5,-1),
-//					new Vector2(-1,1),new Vector2(-2,1),new Vector2(-3,1),new Vector2(-4,1),new Vector2(-5,1),new Vector2(0,1),new Vector2(1,1),new Vector2(2,1),new Vector2(3,1),new Vector2(4,1),new Vector2(5,1),
-//					new Vector2(-1,-2),new Vector2(-2,-2),new Vector2(-3,-2),new Vector2(-4,-2),new Vector2(-5,-2),new Vector2(0,-2),new Vector2(1,-2),new Vector2(2,-2),new Vector2(3,-2),new Vector2(4,-2),new Vector2(5,-2),
-//					new Vector2(-1,2),new Vector2(-2,2),new Vector2(-3,2),new Vector2(-4,2),new Vector2(-5,2),new Vector2(0,2),new Vector2(1,2),new Vector2(2,2),new Vector2(3,2),new Vector2(4,2),new Vector2(5,2),
-//					new Vector2(-1,-3),new Vector2(-2,-3),new Vector2(-3,-3),new Vector2(-4,-3),new Vector2(-5,-3),new Vector2(0,-3),new Vector2(1,-3),new Vector2(2,-3),new Vector2(3,-3),new Vector2(4,-3),new Vector2(5,-3),
-//					new Vector2(-1,3),new Vector2(-2,3),new Vector2(-3,3),new Vector2(-4,3),new Vector2(-5,3),new Vector2(0,3),new Vector2(1,3),new Vector2(2,3),new Vector2(3,3),new Vector2(4,3),new Vector2(5,3),
-//					new Vector2(-1,-4),new Vector2(-2,-4),new Vector2(-3,-4),new Vector2(-4,-4),new Vector2(-5,-4),new Vector2(0,-4),new Vector2(1,-4),new Vector2(2,-4),new Vector2(3,-4),new Vector2(4,-4),new Vector2(5,-4),
-//					new Vector2(-1,4),new Vector2(-2,4),new Vector2(-3,4),new Vector2(-4,4),new Vector2(-5,4),new Vector2(0,4),new Vector2(1,4),new Vector2(2,4),new Vector2(3,4),new Vector2(4,4),new Vector2(5,4),
-//									});
+			skl = new Skill(i,"圣光术",QUALITY.orange,Type.p_healing,0.15f,0.04f,new CLASSES[]{CLASSES.cleric},"可以对己方全体队友大量回血",
 					new Vector2[]{new Vector2(0,0)});
 			skl.otype = ObjectType.all;
 			break;
@@ -289,7 +269,7 @@ public class SkillFactory {
 					new Vector2[] {new Vector2(0,0)});
 			break;
 		case 99:
-			skl = new Skill(i,"日蚀",QUALITY.orange,Type.prob_blind,0.25f,0.03f,new CLASSES[]{CLASSES.sorcerer},"对所有敌人造成致盲，导致下回合不能攻击",
+			skl = new Skill(i,"日蚀",QUALITY.orange,Type.prob_blind,0.25f,0.03f,new CLASSES[]{CLASSES.sorcerer},"较高机率对所有敌人造成致盲，导致下回合不能攻击",
 					new Vector2[] {});
 			skl.otype = ObjectType.multi;
 			break;
@@ -309,7 +289,7 @@ public class SkillFactory {
 			skl.offset_ani_continue = new Vector2(-20,-16);
 			break;
 		case 103:
-			skl = new Skill(i,"冲锋",QUALITY.orange,Type.p_damage,2.5f,0.8f,new CLASSES[]{CLASSES.fighter},"向前冲刺，直至撞到敌人或地图边缘，撞到敌人后对敌人造成大量伤害",
+			skl = new Skill(i,"冲锋",QUALITY.orange,Type.p_damage,2.5f,0.8f,new CLASSES[]{CLASSES.fighter},"向前冲刺很长一段距离，直至撞到敌人或地图边缘，撞到敌人后对敌人造成大量伤害",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),new Vector2(5,0),new Vector2(6,0),new Vector2(7,0),new Vector2(8,0)});
 			break;
 		default:
