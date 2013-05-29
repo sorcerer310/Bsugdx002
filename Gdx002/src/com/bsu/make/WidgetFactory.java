@@ -30,7 +30,7 @@ public class WidgetFactory {
 	private static WidgetFactory instance = null;
 	private Image role_photo;// 选中角色后的特效图片
 	private WidgetFactory() {
-		role_photo = new Image(GameTextureClass.getInstance().role_photo);
+		role_photo = new Image(GameTextureClass.getInstance().role_effect);
 	}
 
 	public static WidgetFactory getInstance() {
@@ -180,7 +180,7 @@ public class WidgetFactory {
 	 *            透明度
 	 * @return
 	 */
-	public TextureRegion getTExtureRegionFromPixmap(int maxValue, Color dc,
+	public TextureRegion getTexture(int maxValue, Color dc,
 			Color c, float a) {
 		c.a = a;
 		TextureRegion temp_box = null;
@@ -197,7 +197,7 @@ public class WidgetFactory {
 	}
 	/**
 	 * 设置人物选中后的效果
-	 * @param role_photo
+	 * @param role_effect
 	 * @param s
 	 * @param vs
 	 */

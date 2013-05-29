@@ -161,4 +161,23 @@ public class U {
 			n="弓手";//弓手
 		return n;
 	}
+	/**
+	 * 设置显示头像
+	 * @param roleArray 将要取消显示的数组
+	 * @param r 显示的目标role
+	 */
+	public static void showRoleSelect(Array<Role> roleArray,Role r){
+		for(Role e:roleArray){
+			e.photo.showEffect(false);
+		}
+		r.photo.showEffect(true);
+	}
+	public static void showRolesSelect(Array<Role> roleArray,Array<Role> r){
+		for(Role e:roleArray){
+			e.photo.showEffect(false);
+		}
+		for(Role e:r){
+			e.photo.showEffect(true);
+		}
+	}
 } 

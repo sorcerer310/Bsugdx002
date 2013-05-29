@@ -27,10 +27,10 @@ public class RolePhoto {
 
 	public RolePhoto(TextureRegion tr,Stage s, QUALITY q,Vector2 v,boolean b) {
 		role = new Image(tr);
-		role_effect = new Image(GameTextureClass.getInstance().role_photo);
-		role_effect_another = new Image(GameTextureClass.getInstance().role_photo);
+		role_effect = new Image(GameTextureClass.getInstance().role_effect);
+		role_effect_another = new Image(GameTextureClass.getInstance().role_effect);
 		role_k = new Image(WidgetFactory.getInstance()
-				.getTExtureRegionFromPixmap(50, Configure.getQualityColor(q),
+				.getTexture(50, Configure.getQualityColor(q),
 						Color.BLACK, 0.2f));
 		role.setScale(0.5f);
 		s.addActor(role_k);
@@ -50,7 +50,7 @@ public class RolePhoto {
 	 */
 	public RolePhoto(Stage s, QUALITY q,Vector2 v) {
 		role_k = new Image(WidgetFactory.getInstance()
-				.getTExtureRegionFromPixmap(50, Configure.getQualityColor(q),
+				.getTexture(50, Configure.getQualityColor(q),
 						Color.BLACK, 0.2f));
 		s.addActor(role_k);
 		role_k.setPosition(v.x-1, v.y-1);

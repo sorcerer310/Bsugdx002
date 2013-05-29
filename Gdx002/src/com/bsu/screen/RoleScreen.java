@@ -48,7 +48,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private Stage RoleInfoStage;// Role信息舞台
 	private Image ib_back;
 	private QualityS quality;// 当前选择显示的品质
-	private Role selectRole;
+	private Role selectRole;// 选择显示的Role
+	private Skill selectSkill;// 选择要更换的skill
 	private TextButton allButton;
 	private TextButton greenButton;
 	private TextButton blueButton;
@@ -122,7 +123,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			Vector2 v = new Vector2(20 + 70 * i, 50);
 			final RolePhoto photo = new RolePhoto(r.roleTexture, sRoleStage,
 					r.quality, v, false);
-			r.photo=photo;
+			r.photo = photo;
 			photo.role.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
@@ -139,33 +140,62 @@ public class RoleScreen extends CubocScreen implements Observer,
 			});
 		}
 	}
-	/**
-	 * 设置被选中的角色
-	 * @param r
-	 */
-	private void resetRole(Role r){
-		for(Role e:Player.getInstance().playerRole){
-			e.photo.showEffect(false);
-		}
-		for(Actor act:sRoleStage.getActors()){
-			if(act instanceof Image){
-				if(act.equals(r.photo.role)){
-					r.photo.showEffect(true);
-				}
-			}
-		}
-	}
+
 	/**
 	 * 显示人物信息
 	 */
 	private void showRoleInfo(final Role r) {
-		resetRole(r);
+
 		RoleInfoStage.clear();
 		selectRole = r;
 		if (selectRole == null) {
 			return;
 		}
+		U.showRoleSelect(Player.getInstance().playerRole, r);
 		skillIndex = 0;
+		showRoleBaseInfo(r);
+		Image[] skillImg = new Image[2];
+		final Image skillImgEffect = new Image(
+				WidgetFactory
+						.getInstance()
+						.getTexture(
+								36,
+								Color.BLACK,
+								Configure.getQualityColor(r.skill_array.get(0).quality),
+								1));
+		RoleInfoStage.addActor(skillImgEffect);
+		for (int i = 0; i < 2; i++) {
+			final int index = i;
+			final Image img = wfy.makeImg(r.skill_array.get(0).icon,
+					RoleInfoStage, 1f, 40 + i * 60, 140);
+			final Vector2 v = new Vector2(img.getX(), img.getY());
+			skillImg[i] = img;
+			img.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y,
+						int pointer, int button) {
+					TipsWindows.getInstance().showSkillInfo(
+							r.skill_array.get(index), v, RoleInfoStage);
+					return true;
+				}
+
+				@Override
+				public void touchUp(InputEvent event, float x, float y,
+						int pointer, int button) {
+					skillIndex = index;
+					skillImgEffect.setPosition(img.getX()-2, img.getY()-2);
+					super.touchUp(event, x, y, pointer, button);
+				}
+			});
+		}
+		// wfy.makeImg(r.weapon.texture, RoleInfoStage, 1f, 40, 100);
+		// wfy.makeImg(r.armor.texture, RoleInfoStage, 1f, 100, 100);
+		showSkillTree(r, skillImg[0], skillImg[1]);
+		skillImgEffect.setPosition(skillImg[0].getX() - 2,
+				skillImg[0].getY() - 2);
+	}
+
+	private void showRoleBaseInfo(Role r) {
 		wfy.makeLabel(r.name, RoleInfoStage, 40, 240,
 				Configure.getQualityColor(r.quality));
 		wfy.makeLabel(Configure.getQualityName(r.quality), RoleInfoStage, 100,
@@ -177,46 +207,19 @@ public class RoleScreen extends CubocScreen implements Observer,
 		wfy.makeLabel("" + r.level, RoleInfoStage, 40, 200);
 		wfy.makeLabel("" + U.getClasses(r), RoleInfoStage, 100, 200);
 		wfy.makeImg(r.roleTexture, RoleInfoStage, 0.5f, 40, 260);
-		final Image skill0Img = wfy.makeImg(r.skill_array.get(0).icon,
-				RoleInfoStage, 1f, 40, 140);
-		final Vector2 v = new Vector2(skill0Img.getX(), skill0Img.getY());
-		skill0Img.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				TipsWindows.getInstance().showSkillInfo(r.skill_array.get(0),
-						v, RoleInfoStage);
-				return true;
-			}
+	}
 
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				skillIndex = 0;
-				super.touchUp(event, x, y, pointer, button);
-			}
-		});
-		final Image skill1Img = wfy.makeImg(r.skill_array.get(1).icon,
-				RoleInfoStage, 1f, 100, 140);
-		final Vector2 v1 = new Vector2(skill1Img.getX(), skill1Img.getY());
-		skill1Img.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				TipsWindows.getInstance().showSkillInfo(r.skill_array.get(1),
-						v1, RoleInfoStage);
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				skillIndex = 1;
-				super.touchUp(event, x, y, pointer, button);
-			}
-		});
-		// wfy.makeImg(r.weapon.texture, RoleInfoStage, 1f, 40, 100);
-		// wfy.makeImg(r.armor.texture, RoleInfoStage, 1f, 100, 100);
+	/**
+	 * 设置显示技能树
+	 * 
+	 * @param r
+	 *            角色
+	 * @param img0
+	 *            第一个携带技能图标
+	 * @param img1
+	 *            第二个携带技能图标
+	 */
+	public void showSkillTree(final Role r, final Image img0, final Image img1) {
 		int numsGreen = 0;
 		int numsBlue = 0;
 		int numsPur = 0;
@@ -258,7 +261,11 @@ public class RoleScreen extends CubocScreen implements Observer,
 					@Override
 					public void touchUp(InputEvent event, float x, float y,
 							int pointer, int button) {
-						setAnotherSkill(r, skillIndex, s, skill0Img, skill1Img);
+						if ((selectSkill == null) || selectSkill != s) {
+							selectSkill = s;
+						} else {
+							setAnotherSkill(r, skillIndex, s, img0, img1);
+						}
 						super.touchUp(event, x, y, pointer, button);
 					}
 				});

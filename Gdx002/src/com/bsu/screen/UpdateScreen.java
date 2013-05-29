@@ -31,6 +31,7 @@ import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.Configure.QualityS;
 import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.U;
 
 public class UpdateScreen extends CubocScreen implements Observer,
 		GestureListener {
@@ -38,6 +39,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	private Image background;
 	private Stage stage;
 	private Stage sRoleStage;
+	private Stage upRoleStage;
 	private Image ib_back;
 	private Role selectUpdateRole;
 	private Array<Role> eatRoles = new Array<Role>();
@@ -56,17 +58,18 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
 		sRoleStage = new Stage(Configure.rect_width, Configure.rect_height,
 				false);
+		upRoleStage = new Stage(Configure.rect_width, Configure.rect_height,
+				false);
 		background = new Image(GameTextureClass.getInstance().updatePanel);
 		stage.addActor(background);
 		quality = QualityS.gselect;
-		selectUpdateRole = Player.getInstance().playerFightRole.get(0);
 		ib_back = WidgetFactory.getInstance().makeImageButton(
 				Configure.button_back, stage, 360, 40);
 		ib_back.setPosition(360, 40);
 
 		name = WidgetFactory.getInstance().makeLabel("", stage, 200, 260);
-		exp = WidgetFactory.getInstance().makeLabel("", stage, 260, 260);
-		up = WidgetFactory.getInstance().makeLabel("up", stage, 340, 260);
+		exp = WidgetFactory.getInstance().makeLabel("", stage, 320, 260);
+		up = WidgetFactory.getInstance().makeLabel("up", stage, 380, 260);
 		allButton = WidgetFactory.getInstance().makeOneTextButton("all", stage,
 				140, 30);
 		greenButton = WidgetFactory.getInstance().makeOneTextButton("green",
@@ -87,41 +90,35 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	}
 
 	private void getRoles() {
-		Array<Role> playerRols = Player.getInstance().playerFightRole;
+		upRoleStage.clear();
+		final Array<Role> playerRols = Player.getInstance().playerFightRole;
 		for (int i = 0; i < playerRols.size; i++) {
 			final Role r = playerRols.get(i);
 			Vector2 v = new Vector2(48, 246 - 55 * i);
-			RolePhoto photo = new RolePhoto(r.roleTexture, stage, r.quality, v,
-					false);
+			RolePhoto photo = new RolePhoto(r.roleTexture, upRoleStage,
+					r.quality, v, false);
 			r.photo = photo;
-			if (i == 0) {
-				r.photo.showEffect(true);
-			} else {
-				r.photo.showEffect(false);
-			}
 			photo.role.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
-					resetUpRole(r);
+					U.showRoleSelect(playerRols,r);
+					selectUpdateRole=r;
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
 		}
+		U.showRoleSelect(playerRols,playerRols.get(0));
+		selectUpdateRole=playerRols.get(0);
 	}
-
 	/**
-	 * 重设需要强化的角色效果
-	 * 
-	 * @param r
+	 * 显示要强化角色信息
 	 */
-	private void resetUpRole(Role r) {
-		for (Role e : Player.getInstance().playerFightRole) {
-			e.photo.showEffect(false);
-		}
-		r.photo.showEffect(true);
+	private void showUpRoleInfo(){
+		name.setText(selectUpdateRole.name);
+		exp.setText(selectUpdateRole.exp + "/" + selectUpdateRole.expUp);
+		up.setVisible(selectUpdateRole.exp > selectUpdateRole.expUp ? true : false);
 	}
-
 	/**
 	 * 当点击卡片按钮时添加背包中卡片到舞台，并根据当前所选类型显示
 	 */
@@ -212,22 +209,9 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			Player.getInstance().playerRole.removeValue(e, false);
 		}
 		eatRoles.clear();
+		showUpRoleInfo();
 		Player.getInstance().getPlayerPackageRole();
 		addRoleToStage(quality);
-	}
-
-	/**
-	 * 设置被选中准备吞噬的角色
-	 * 
-	 * @param r
-	 */
-	private void resetRole() {
-		for (Role e : Player.getInstance().playerIdelRole) {
-			e.photo.showEffect(false);
-		}
-		for (Role r : eatRoles) {
-			r.photo.showEffect(true);
-		}
 	}
 
 	/**
@@ -248,13 +232,14 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		} else {
 			eatRoles.add(r);
 		}
-		resetRole();
+		U.showRolesSelect(Player.getInstance().playerIdelRole, eatRoles);
 	}
 
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(null);
 		InputMultiplexer inputMultiplexer = new InputMultiplexer();
+		inputMultiplexer.addProcessor(upRoleStage);// 必须先加这个。。。。
 		inputMultiplexer.addProcessor(sRoleStage);// 必须先加这个。。。。
 		inputMultiplexer.addProcessor(stage);
 		inputMultiplexer.addProcessor(new GestureDetector(this));
@@ -270,10 +255,8 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		stage.draw();
 		sRoleStage.act(Gdx.graphics.getDeltaTime());
 		sRoleStage.draw();
-		name.setText(selectUpdateRole.name);
-		exp.setText(selectUpdateRole.exp + "/" + selectUpdateRole.expUp);
-		up.setVisible(selectUpdateRole.exp > selectUpdateRole.expUp ? true
-				: false);
+		upRoleStage.act(Gdx.graphics.getDeltaTime());
+		upRoleStage.draw();
 	}
 
 	@Override
@@ -422,6 +405,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				selectUpdateRole.levelUp();
+				showUpRoleInfo();
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});

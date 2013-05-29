@@ -38,7 +38,7 @@ public class GameTextureClass {
 			h3_photo, h4_photo, h5_photo;
 	public TextureRegion tmpskillicon;				//临时用图标
 	public Texture tipsPanel;
-	public TextureRegion role_photo;//人物头像效果
+	public TextureRegion role_effect;//人物头像效果
 
 	private GameTextureClass() {
 		// TODO Auto-generated constructor stub
@@ -68,7 +68,7 @@ public class GameTextureClass {
 		h3_photo=new TextureRegion(role_texture,96,96,96,96);
 		h4_photo=new TextureRegion(role_texture,192,96,96,96);
 		h5_photo=new TextureRegion(role_texture,288,96,96,96);
-		role_photo=new TextureRegion(effect_texture, 224, 160,32,32);
+		role_effect=new TextureRegion(effect_texture, 224, 160,32,32);
 		Texture tmpicon = new Texture(Gdx.files.internal("data/game/icon/11.png"));
 		tmpskillicon = new TextureRegion(tmpicon,0,0,32,32);
 		
