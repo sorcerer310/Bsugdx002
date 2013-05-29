@@ -86,11 +86,11 @@ public class SkillFactory {
 					new Vector2[] {new Vector2(0,0)});
 			break;
 		case 7:
-			skl = new Skill(i,"弓步",QUALITY.green,Type.pbuff_def,0.07f,0.03f,new CLASSES[]{CLASSES.all},"一回合内增加一定防御力",
+			skl = new Skill(i,"防御姿态",QUALITY.green,Type.pbuff_def,0.07f,0.03f,new CLASSES[]{CLASSES.all},"一回合内增加一定防御力",
 					new Vector2[] {new Vector2(0,0)});
 			break;
 		case 8:
-			skl = new Skill(i,"蓄力",QUALITY.green,Type.pbuff_atk,0.05f,0.02f,new CLASSES[]{CLASSES.all},"一回合内增加一定攻击力",
+			skl = new Skill(i,"蓄力",QUALITY.green,Type.pbuff_atk,0.03f,0.02f,new CLASSES[]{CLASSES.all},"一回合内增加一定攻击力",
 					new Vector2[] {new Vector2(0,0)});
 			break;
 		case 9:
@@ -149,7 +149,7 @@ public class SkillFactory {
 			skl.offset_ani_object = new Vector2(10,0);
 			break;
 		case 40:
-			skl = new Skill(i,"蛮力",QUALITY.blue,Type.pbuff_atk,0.03f,0.02f,new CLASSES[]{CLASSES.all},"提升自己的攻击力",
+			skl = new Skill(i,"蛮力",QUALITY.blue,Type.pbuff_atk,0.05f,0.02f,new CLASSES[]{CLASSES.all},"提升自己的攻击力",
 					new Vector2[] {new Vector2(0,0)});
 			break;
 		case 41:
