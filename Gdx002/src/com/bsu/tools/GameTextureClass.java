@@ -33,6 +33,7 @@ public class GameTextureClass {
 	public TextureAtlas texture_atlas_mbutton;
 	public TextureAtlas texture_skills_effect;				//技能效果纹理
 	public TextureAtlas texture_skills_icon;				//技能图标纹理
+	public TextureAtlas texture_atlas_button;
 	
 	public TextureRegion fc_photo, zyc_photo, h0_photo, h1_photo, h2_photo,
 			h3_photo, h4_photo, h5_photo;
@@ -57,7 +58,7 @@ public class GameTextureClass {
 				Gdx.files.internal("data/menu/updatepanel.png"));
 		
 		texture_atlas_mbutton = new TextureAtlas(Gdx.files.internal("data/menu/mbutton.txt"));
-
+		texture_atlas_button = new TextureAtlas(Gdx.files.internal("data/button/pack"));
 		role_texture = new Texture(
 				Gdx.files.internal("data/game/hero/Actor1.png"));
 		fc_photo=new TextureRegion(role_texture,0,0,96,96);

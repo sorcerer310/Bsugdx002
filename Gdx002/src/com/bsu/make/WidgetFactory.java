@@ -74,11 +74,8 @@ public class WidgetFactory {
 
 	public Image makeImageButton(String bname, Stage s, int x, int y) {
 
-		if (bname.equals(Configure.screen_equip))
-			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_mbutton
-							.findRegion("mb_equip"));
-		else if (bname.equals(Configure.screen_fight))
+	
+		if (bname.equals(Configure.screen_fight))
 			img_nomal = new Image(
 					GameTextureClass.getInstance().texture_atlas_mbutton
 							.findRegion("mb_fight"));
@@ -90,27 +87,50 @@ public class WidgetFactory {
 			img_nomal = new Image(
 					GameTextureClass.getInstance().texture_atlas_mbutton
 							.findRegion("mb_update"));
-		else if (bname.equals(Configure.screen_skill))
-			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_mbutton
-							.findRegion("mb_skill"));
 		else if (bname.equals(Configure.screen_shop))
 			img_nomal = new Image(
 					GameTextureClass.getInstance().texture_atlas_mbutton
 							.findRegion("mb_shop"));
 		else if (bname.equals(Configure.button_back))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_mbutton
+					GameTextureClass.getInstance().texture_atlas_button
 							.findRegion("back"));
-		else if (bname.equals(Configure.Img_head_back))
+		else if (bname.equals(Configure.button_green))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_mbutton
-							.findRegion("frame_head"));
-		else if (bname.equals(Configure.Img_skill_back))
+					GameTextureClass.getInstance().texture_atlas_button
+							.findRegion("green"));
+		else if (bname.equals(Configure.button_blue))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_mbutton
-							.findRegion("frame_skill"));
-
+					GameTextureClass.getInstance().texture_atlas_button
+							.findRegion("blue"));
+		else if (bname.equals(Configure.button_purple))
+			img_nomal = new Image(
+					GameTextureClass.getInstance().texture_atlas_button
+							.findRegion("purple"));
+		else if (bname.equals(Configure.button_orange))
+			img_nomal = new Image(
+					GameTextureClass.getInstance().texture_atlas_button
+							.findRegion("orange"));
+		else if (bname.equals(Configure.button_eat))
+			img_nomal = new Image(
+					GameTextureClass.getInstance().texture_atlas_button
+							.findRegion("eat"));
+		else if (bname.equals(Configure.button_eatall))
+			img_nomal = new Image(
+					GameTextureClass.getInstance().texture_atlas_button
+							.findRegion("eatall"));
+		else if (bname.equals(Configure.button_level))
+			img_nomal = new Image(
+					GameTextureClass.getInstance().texture_atlas_button
+							.findRegion("level"));
+		else if (bname.equals(Configure.button_up))
+			img_nomal = new Image(
+					GameTextureClass.getInstance().texture_atlas_button
+							.findRegion("up"));
+		else if (bname.equals(Configure.button_all))
+			img_nomal = new Image(
+					GameTextureClass.getInstance().texture_atlas_button
+							.findRegion("all"));
 		img_nomal
 				.setOrigin(img_nomal.getWidth() / 2, img_nomal.getHeight() / 2);
 		img_nomal.setPosition(x, y);

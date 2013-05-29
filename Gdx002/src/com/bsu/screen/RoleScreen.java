@@ -42,19 +42,20 @@ import com.bsu.tools.U;
 public class RoleScreen extends CubocScreen implements Observer,
 		GestureListener {
 	private Texture timg;
-	private Image background;
+
 	private Stage stage;// 基本舞台
 	private Stage sRoleStage;// Role舞台
 	private Stage RoleInfoStage;// Role信息舞台
+	private Image background;
 	private Image ib_back;
+	private Image allButton;
+	private Image greenButton;
+	private Image blueButton;
+	private Image purpleButton;
+	private Image orangeButton;
 	private QualityS quality;// 当前选择显示的品质
 	private Role selectRole;// 选择显示的Role
 	private Skill selectSkill;// 选择要更换的skill
-	private TextButton allButton;
-	private TextButton greenButton;
-	private TextButton blueButton;
-	private TextButton purpleButton;
-	private TextButton orangeButton;
 	private int clingX;// 地图移动位移
 	private OrthographicCamera c;
 	private int cameraWidth;// 显示人物时的界面宽度
@@ -73,11 +74,16 @@ public class RoleScreen extends CubocScreen implements Observer,
 		background = new Image(GameTextureClass.getInstance().rolePanel);
 		stage.addActor(background);
 		ib_back = wfy.makeImageButton(Configure.button_back, stage, 375, 272);
-		allButton = wfy.makeOneTextButton("all", stage, 20, 30);
-		greenButton = wfy.makeOneTextButton("green", stage, 50, 30);
-		blueButton = wfy.makeOneTextButton("blue", stage, 90, 30);
-		purpleButton = wfy.makeOneTextButton("purple", stage, 130, 30);
-		orangeButton = wfy.makeOneTextButton("orange", stage, 170, 30);
+		allButton = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_all, stage, 20, 20);
+		greenButton = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_green, stage, 83, 20);
+		blueButton = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_blue, stage, 146, 20);
+		purpleButton = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_purple, stage, 209, 20);
+		orangeButton = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_orange, stage, 272, 20);
 		setListener();
 	}
 
@@ -145,7 +151,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * 显示人物信息
 	 */
 	private void showRoleInfo(final Role r) {
-
 		RoleInfoStage.clear();
 		selectRole = r;
 		if (selectRole == null) {
@@ -183,7 +188,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
 					skillIndex = index;
-					skillImgEffect.setPosition(img.getX()-2, img.getY()-2);
+					skillImgEffect.setPosition(img.getX() - 2, img.getY() - 2);
 					super.touchUp(event, x, y, pointer, button);
 				}
 			});

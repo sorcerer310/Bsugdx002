@@ -1,0 +1,75 @@
+
+menuButton.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+eatall
+  rotate: false
+  xy: 2, 2
+  size: 93, 30
+  orig: 93, 30
+  offset: 0, 0
+  index: -1
+up
+  rotate: false
+  xy: 2, 34
+  size: 62, 20
+  orig: 62, 20
+  offset: 0, 0
+  index: -1
+purple
+  rotate: false
+  xy: 2, 56
+  size: 62, 20
+  orig: 62, 20
+  offset: 0, 0
+  index: -1
+orange
+  rotate: false
+  xy: 2, 78
+  size: 62, 20
+  orig: 62, 20
+  offset: 0, 0
+  index: -1
+level
+  rotate: false
+  xy: 2, 100
+  size: 62, 20
+  orig: 62, 20
+  offset: 0, 0
+  index: -1
+green
+  rotate: false
+  xy: 97, 2
+  size: 62, 20
+  orig: 62, 20
+  offset: 0, 0
+  index: -1
+eat
+  rotate: false
+  xy: 161, 2
+  size: 62, 20
+  orig: 62, 20
+  offset: 0, 0
+  index: -1
+blue
+  rotate: false
+  xy: 97, 24
+  size: 62, 20
+  orig: 62, 20
+  offset: 0, 0
+  index: -1
+back
+  rotate: false
+  xy: 97, 46
+  size: 62, 20
+  orig: 62, 20
+  offset: 0, 0
+  index: -1
+all
+  rotate: false
+  xy: 97, 68
+  size: 62, 20
+  orig: 62, 20
+  offset: 0, 0
+  index: -1

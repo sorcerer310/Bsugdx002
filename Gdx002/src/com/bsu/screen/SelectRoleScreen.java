@@ -50,16 +50,17 @@ import com.bsu.tools.GameTextureClass;
 
 public class SelectRoleScreen extends CubocScreen implements Observer,
 		GestureListener {
-	private Image background;
+
 	private Stage stage;
 	private Stage sRoleStage;
 	private QualityS quality;
+	private Image background;
 	private Image ib_back;
-	private TextButton allButton;
-	private TextButton greenButton;
-	private TextButton blueButton;
-	private TextButton purpleButton;
-	private TextButton orangeButton;
+	private Image allButton;
+	private Image greenButton;
+	private Image blueButton;
+	private Image purpleButton;
+	private Image orangeButton;
 	private Role changeRole;
 	private Role selectRole;
 
@@ -71,17 +72,17 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		background = new Image(GameTextureClass.getInstance().selectRolePanel);
 		stage.addActor(background);
 		ib_back = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_back, stage, 380, 280);
-		allButton = WidgetFactory.getInstance().makeOneTextButton("all", stage,
-				140, 30);
-		greenButton = WidgetFactory.getInstance().makeOneTextButton("green",
-				stage, 180, 30);
-		blueButton = WidgetFactory.getInstance().makeOneTextButton("blue",
-				stage, 220, 30);
-		purpleButton = WidgetFactory.getInstance().makeOneTextButton("purple",
-				stage, 260, 30);
-		orangeButton = WidgetFactory.getInstance().makeOneTextButton("orange",
-				stage, 300, 30);
+				Configure.button_back, stage, 380, 272);
+		allButton = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_all, stage, 100, 20);
+		greenButton = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_green, stage, 163, 20);
+		blueButton = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_blue, stage, 226, 20);
+		purpleButton = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_purple, stage, 289, 20);
+		orangeButton = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_orange, stage, 352, 20);
 		quality = QualityS.allselect;
 		addRoleToStage(QualityS.allselect);
 		setListener();

@@ -25,7 +25,6 @@ public class FightRoleUI {
 	int role_index;// role 所在数组索引
 	Texture photo_texture;
 	
-	Image roleBack;
 	public Image role_photo;// role的头像
 	Label label_name;
 	Image skillImg0;
@@ -46,7 +45,6 @@ public class FightRoleUI {
 				Gdx.files.internal("data/game/ui/jewel_dea.png")));
 		skillImg1 = new Image(new Texture(
 				Gdx.files.internal("data/game/ui/jewel_dead2.png")));
-		roleBack=WidgetFactory.getInstance().makeImageButton(Configure.Img_head_back,stage,role_index*96,0);
 		rhp = new RoleHP();
 		role_hp = rhp.get_hp_image();
 		label_name = new Label(role.name, Configure.get_sytle());

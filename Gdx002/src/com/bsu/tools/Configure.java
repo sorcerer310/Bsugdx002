@@ -30,16 +30,21 @@ public class Configure {
 	public static String screen_menu = "menu";
 	public static String screen_game = "game";
 	public static String screen_mpanel = "mpanel";
-	public static String screen_equip = "mequip";
 	public static String screen_fight = "mfight";
 	public static String screen_role = "mrole";
 	public static String screen_update = "msupdate";
-	public static String screen_skill = "mskill";
 	public static String screen_shop = "mshop";
 	public static String screen_selectRole = "mselect";
+	public static String button_all = "btall";
 	public static String button_back = "btback";
-	public static String Img_head_back = "headback";
-	public static String Img_skill_back = "skillback";
+	public static String button_green="btgreen";
+	public static String button_blue="btblue";
+	public static String button_purple="btpurple";
+	public static String button_orange="btorange";
+	public static String button_up="btup";
+	public static String button_eat="bteat";
+	public static String button_eatall="bteatall";
+	public static String button_level="btlevel";
 
 	public static String[] game_map_path_string = { "map1", "map2" };// 地图关卡名称（路径）
 
