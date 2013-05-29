@@ -90,10 +90,9 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	}
 
 	private void getRoles() {
-		upRoleStage.clear();
-		final Array<Role> playerRols = Player.getInstance().playerFightRole;
-		for (int i = 0; i < playerRols.size; i++) {
-			final Role r = playerRols.get(i);
+		Array<Role> playerRoles = Player.getInstance().playerFightRole;
+		for (int i = 0; i < playerRoles.size; i++) {
+			final Role r = playerRoles.get(i);
 			Vector2 v = new Vector2(48, 246 - 55 * i);
 			RolePhoto photo = new RolePhoto(r.roleTexture, upRoleStage,
 					r.quality, v, false);
