@@ -503,7 +503,23 @@ public class Role extends Actor {
 	}
 
 	public void stopedAction(){
-		
+		if(face==FACE.right){
+			addAction(sequence(moveBy(16,0,0.06f),moveBy(-16,0,0.06f),
+					moveBy(14,0,0.06f),moveBy(-14,0,0.06f),
+					moveBy(10,0,0.06f),moveBy(-10,0,0.06f),
+					moveBy(6,0,0.06f),moveBy(-6,0,0.06f),
+					moveBy(2,0,0.06f),moveBy(-2,0,0.06f)
+					));
+		}
+		else if(face==FACE.left){
+			addAction(sequence(moveBy(-16,0,0.06f),moveBy(16,0,0.06f),
+					moveBy(-14,0,0.06f),moveBy(14,0,0.06f),
+					moveBy(-10,0,0.06f),moveBy(10,0,0.06f),
+					moveBy(-6,0,0.06f),moveBy(6,0,0.06f),
+					moveBy(-2,0,0.06f),moveBy(2,0,0.06f)
+					));
+		}
+				
 	}
 	
 	public void hitedAction(){

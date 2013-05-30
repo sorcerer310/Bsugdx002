@@ -185,6 +185,10 @@ public class Commander {
 		else if(r.face == FACE.right && !U.hasRoleInPos(allRoles, new Vector2(r.getBoxX()-1,r.getBoxY())))
 			r.heatAction(-Configure.map_box_value, 0);
 	}
+	public void stopedCommand(Role r){
+		r.stopedAction();
+	}
+	
 	/**
 	 * 对所有的Role进行持续技能状态处理
 	 * @param be	持续技能操作完成事件
@@ -313,14 +317,14 @@ public class Commander {
 			
 			//2:执行移动命令
 			if(atkrs.size == 0){
-				if(!h.hasAnatherRole(heros)){
+				if(!h.hasAnatherRole(allRoles)){
 					Commander.this.moveDirectCommand(h, DIRECTION.right, new BsuEvent(){
 						@Override
 						public void notify(Object obj, String msg) {
 							waitRoleFlag = false;
 						}
 					});
-				}else{waitRoleFlag = false;}
+				}else{stopedCommand(h);waitRoleFlag = false;}
 			}else{waitRoleFlag = false;}
 
 			// 等待动作完成
@@ -386,7 +390,7 @@ public class Commander {
 							waitRoleFlag = false;
 						}
 					});
-				}else{waitRoleFlag = false;}
+				}else{stopedCommand(n);waitRoleFlag = false;}
 			}else{waitRoleFlag = false;}
 
 			// 等待动作完成
