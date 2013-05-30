@@ -148,7 +148,7 @@ public class Skill {
 			}else if(type==Skill.Type.p_atkbeat){
 				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.getAttack()*val), object.getDefend()) >= 0 
 						? object.currentHp - U.realDamage((int)(owner.getAttack()*val), object.getDefend()): 0);	//伤害敌人
-				Commander.getInstance().heatAction(object);	//击退
+				Commander.getInstance().heatCommand(object);	//击退
 			//百分比伤害
 			}else if(type==Skill.Type.p_damage){
 				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.getAttack()*val), object.getDefend()) >= 0 

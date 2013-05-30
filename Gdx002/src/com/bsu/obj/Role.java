@@ -1,5 +1,11 @@
 package com.bsu.obj;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.rotateBy;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -321,7 +327,6 @@ public class Role extends Actor {
 
 	/**
 	 * 获得以32*32方格为单位的x坐标
-	 * 
 	 * @return
 	 */
 	public int getBoxX() {
@@ -330,7 +335,6 @@ public class Role extends Actor {
 
 	/**
 	 * 获得以32*32方格为单位的y坐标
-	 * 
 	 * @return
 	 */
 	public int getBoxY() {
@@ -457,7 +461,62 @@ public class Role extends Actor {
 		defend = U.defendLevel(this);
 		expUp = U.expLevel(this);
 	}
+	
+	/**
+	 * 移动函数，指定当前的role移动到x y 位置，移动完成后通过BsuEvent通知调用者
+	 * @param x	要移动位置的x坐标
+	 * @param y	要移动位置的y坐标
+	 * @param be	事件对象
+	 */
+	public void moveAction(int x,int y,final BsuEvent be){
+		if (get_ani_from_state() != STATE.idle)
+			return;
+		set_ani_from_state(STATE.move);
+		if(face==FACE.right){
+			this.setOrigin(0, 0);
+			addAction(parallel(
+				sequence(rotateBy(30, 0.1f), rotateBy(-30, 0.1f),
+						rotateBy(-10, 0.1f), rotateBy(10, 0.1f)),
+				moveBy(x, y, Configure.duration), run(new Runnable() {
+					@Override
+					public void run() {
+						set_ani_from_state(STATE.idle);
+						if (be != null)
+							be.notify(this, name);
+					}
+				})));
+		}
+		else if(face==FACE.left){
+			this.setOrigin(32, 0);
+			addAction(parallel(
+					sequence(rotateBy(-30, 0.1f), rotateBy(30, 0.1f),
+							rotateBy(10, 0.1f), rotateBy(-10, 0.1f)),
+					moveBy(x, y, Configure.duration), run(new Runnable() {
+						@Override
+						public void run() {
+							set_ani_from_state(STATE.idle);
+							if (be != null)
+								be.notify(this, name);
+						}
+					})));
+		}
+	}
 
+	public void stopedAction(){
+		
+	}
+	
+	public void hitedAction(){
+		
+	}
+	/**
+	 * 击退效果
+	 * @param x 击退到的位置x坐标
+	 * @param y	击退到的位置y坐标
+	 */
+	public void heatAction(int x,int y){
+		addAction(moveBy(x,y,0.01f));
+	}
 	/**
 	 * 返回英雄的职业数据
 	 * 

@@ -163,10 +163,7 @@ public class Commander {
 	 * @param d	移动方向
 	 * @param be	移动动作结束后从这里获得结束的消息
 	 */
-	public void directAction(final Role r, DIRECTION d, final BsuEvent be) {
-		if (r.get_ani_from_state() != STATE.idle)
-			return;
-		r.set_ani_from_state(STATE.move);
+	public void moveDirectCommand(Role r, DIRECTION d, BsuEvent be) {
 		int x = 0, y = 0;
 		if (d == DIRECTION.left)
 			x = -Configure.map_box_value;
@@ -176,27 +173,17 @@ public class Commander {
 			y = Configure.map_box_value;
 		else if (d == DIRECTION.down)
 			y = -Configure.map_box_value;
-		r.addAction(parallel(
-				sequence(rotateBy(30, 0.1f), rotateBy(-30, 0.1f),
-						rotateBy(-10, 0.1f), rotateBy(10, 0.1f)),
-				moveBy(x, y, Configure.duration), run(new Runnable() {
-					@Override
-					public void run() {
-						r.set_ani_from_state(STATE.idle);
-						if (be != null)
-							be.notify(r, r.name);
-					}
-				})));
+		r.moveAction(x, y, be);
 	}
 	/**
 	 * 击退移动
 	 * @param r	被击退的Role
 	 */
-	public void heatAction(Role r){
+	public void heatCommand(Role r){
 		if(r.face==FACE.left && !U.hasRoleInPos(allRoles, new Vector2(r.getBoxX()+1,r.getBoxY())))
-			r.addAction(moveBy(Configure.map_box_value,0,0.01f));
+			r.heatAction(Configure.map_box_value, 0);
 		else if(r.face == FACE.right && !U.hasRoleInPos(allRoles, new Vector2(r.getBoxX()-1,r.getBoxY())))
-			r.addAction(moveBy(-Configure.map_box_value,0,0.01f));
+			r.heatAction(-Configure.map_box_value, 0);
 	}
 	/**
 	 * 对所有的Role进行持续技能状态处理
@@ -327,7 +314,7 @@ public class Commander {
 			//2:执行移动命令
 			if(atkrs.size == 0){
 				if(!h.hasAnatherRole(heros)){
-					Commander.this.directAction(h, DIRECTION.right, new BsuEvent(){
+					Commander.this.moveDirectCommand(h, DIRECTION.right, new BsuEvent(){
 						@Override
 						public void notify(Object obj, String msg) {
 							waitRoleFlag = false;
@@ -393,7 +380,7 @@ public class Commander {
 			//2:执行移动命令
 			if(atkrs.size == 0){
 				if(!n.hasAnatherRole(allRoles)){
-					Commander.this.directAction(n, DIRECTION.left, new BsuEvent(){
+					Commander.this.moveDirectCommand(n, DIRECTION.left, new BsuEvent(){
 						@Override
 						public void notify(Object obj, String msg) {
 							waitRoleFlag = false;
@@ -492,7 +479,7 @@ public class Commander {
 			}
 		}
 		if (!disapperFlag) {
-			this.directAction(r, d, new BsuEvent() {
+			this.moveDirectCommand(r, d, new BsuEvent() {
 				@Override
 				public void notify(Object obj, String msg) {
 					// 收到消息设置等待标示为false

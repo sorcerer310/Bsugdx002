@@ -65,14 +65,6 @@ public class GameAnimationClass {
 		Animation ani_effect_disapper = new Animation(0.1f, region_effect_disapper);
 		return ani_effect_disapper;
 	}
-	public Animation getEffect0(){
-		TextureRegion[] region_effect = new TextureRegion[3];
-		region_effect[0] = effect_spilt[0][0];
-		region_effect[1] = effect_spilt[0][1];
-		region_effect[2] = effect_spilt[0][2];
-		Animation ani_effect = new Animation(0.4f, region_effect);
-		return ani_effect;
-	}
 	
 	/**
 	 * 获得技能拥有者效果

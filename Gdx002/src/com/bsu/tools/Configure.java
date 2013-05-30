@@ -93,7 +93,7 @@ public class Configure {
 	public static int baseExpUpOrange = 1000;
 
 	public static enum STATE { // 人物状态
-		idle, attack_normal, move, attack_v, attack_h, disapper, apper
+		idle, attack_normal, move, attack_v, attack_h, disapper, apper,hited,stoped
 	};
 
 	public static enum QUALITY {
