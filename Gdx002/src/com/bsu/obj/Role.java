@@ -376,7 +376,7 @@ public class Role extends Actor {
 		int num = 0;
 		for (Role r : rs) {
 			if (this != r) {
-				num = r.getType() == Type.HERO ? 1 : -1;
+				num = face == FACE.right ? 1 : -1;
 				if ((r.getBoxY() == this.getBoxY())
 						&& (r.getBoxX() == this.getBoxX() + num)) {
 					return true;

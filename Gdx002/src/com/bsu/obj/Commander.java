@@ -392,7 +392,7 @@ public class Commander {
 			
 			//2:执行移动命令
 			if(atkrs.size == 0){
-				if(!n.hasAnatherRole(npcs)){
+				if(!n.hasAnatherRole(allRoles)){
 					Commander.this.directAction(n, DIRECTION.left, new BsuEvent(){
 						@Override
 						public void notify(Object obj, String msg) {
