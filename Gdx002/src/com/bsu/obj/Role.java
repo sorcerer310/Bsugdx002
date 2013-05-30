@@ -55,6 +55,8 @@ public class Role extends Actor {
 
 	private Animation ani_idle; // 站立动画
 	private Animation ani_move; // 移动动画
+	private Animation ani_hited;//挨打动画
+	private Animation ani_stoped;//被阻挡动画
 	private Animation ani_disapper;// 角色消失
 	private Animation ani_apper;// 角色出现
 	private boolean loop_flag;
@@ -118,6 +120,7 @@ public class Role extends Actor {
 				roleTexture);
 		ani_move = GameAnimationClass.getInstance().getRoleAnimation(
 				roleTexture);
+		
 		ani_disapper = GameAnimationClass.getInstance().getEffectDisapper();
 		ani_apper = GameAnimationClass.getInstance().getEffectApper();
 		set_ani_from_state(STATE.idle);

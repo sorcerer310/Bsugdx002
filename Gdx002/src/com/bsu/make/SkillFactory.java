@@ -31,22 +31,7 @@ public class SkillFactory {
 	/**
 	 * 初始化所有技能，并保存到hashmap中，此处数据全部为配置数据，不能再改变
 	 */
-	private SkillFactory() {
-		// 普通攻击1,测试用
-		store.put("atk", new Skill(999,"攻击", QUALITY.green,Skill.Type.f_damage, 10,1, new CLASSES[]{CLASSES.fighter},"普通攻击，没什么稀奇的。",
-				GameTextureClass.getInstance().tmpskillicon,GameAnimationClass.getInstance().getEffect0(), GameAnimationClass.getInstance().getEffect1(),GameAnimationClass.getInstance().getEffect3(),  
-				new Vector2[] {new Vector2(1, 0), new Vector2(2, 0) }));
-		// 普通攻击2,测试用
-		store.put("atk2", new Skill(998,"攻击", QUALITY.green,Skill.Type.f_damage, 20,1,new CLASSES[]{CLASSES.fighter},"普通攻击，没什么稀奇的。",
-				GameTextureClass.getInstance().tmpskillicon,GameAnimationClass.getInstance().getEffect0(), GameAnimationClass.getInstance().getEffect1(),GameAnimationClass.getInstance().getEffect3(), 
-				new Vector2[] { new Vector2(1, 0), new Vector2(2, 0) }));
-		// 普通攻击3,测试用
-		store.put("atk3", new Skill(997,"攻击", QUALITY.green,Skill.Type.f_damage, 30,1,new CLASSES[]{CLASSES.fighter},"普通攻击，没什么稀奇的。",
-				GameTextureClass.getInstance().tmpskillicon,GameAnimationClass.getInstance().getEffect0(), GameAnimationClass.getInstance().getEffect1(),GameAnimationClass.getInstance().getEffect3(), 
-				new Vector2[] { new Vector2(1, 0), new Vector2(2, 0) }));
-		//增加所有技能对象为空，在取该技能时再建立对应的技能对象
-		//store.put("", value)
-	}
+	private SkillFactory() {}
 
 	public Skill getSkillByName(String k){
 		return store.get(k);
