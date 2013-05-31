@@ -17,18 +17,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.U;
 
 public class FightScreen extends CubocScreen implements Observer {
-	private Texture timg;
 	private Image background;
 	private Stage stage;
 	private Image ib_back;
 	private Image level1;
-	private Label levelLabel;
 	public FightScreen(Game game) {
 		super(game);
 		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
@@ -36,11 +36,8 @@ public class FightScreen extends CubocScreen implements Observer {
 		stage.addActor(background);
 		ib_back = WidgetFactory.getInstance().makeImageButton(Configure.button_back,stage,360,262);
 		level1=WidgetFactory.getInstance().makeImageButton(Configure.button_level,stage, 140, 230);
-		levelLabel=WidgetFactory.getInstance().makeLabel("第一关，很简单，熟悉操作，了解技能", stage, 10, 260);
-		levelLabel.setFontScale(0.5f);
 		setListener();
 	}
-
 	@Override
 	public void show(){
 		Gdx.input.setInputProcessor(null);

@@ -16,7 +16,6 @@ import com.bsu.tools.CommandQueue;
 import com.bsu.tools.Configure;
 import com.bsu.tools.U;
 import com.bsu.tools.Configure.FACE;
-import com.bsu.tools.FightRoleUI;
 import com.bsu.tools.Configure.DIRECTION;
 import com.bsu.tools.Configure.STATE;
 

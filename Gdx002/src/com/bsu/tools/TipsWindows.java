@@ -93,13 +93,12 @@ public class TipsWindows {
 		tipsWindows.defaults().align(Align.left);
 		Array<String> infoArray = new Array<String>();
 		float scaleValue = 0.7f;
-		getMuLabel(infoArray, s.info, scaleValue);
+		infoArray=U.getMuLabel(s.info, scaleValue,tipsWindows.getWidth());
 		for (int i = 0; i < infoArray.size; i++) {
 			tipsWindows.row();
 			Label label = new Label(infoArray.get(i), Configure.get_sytle());
 			label.setFontScale(scaleValue);
 			tipsWindows.add(label);
-
 		}
 		tipsWindows.pack();
 		tipsWindows.setPosition(getPosition(v).x, getPosition(v).y);
@@ -134,7 +133,7 @@ public class TipsWindows {
 		tipsWindows.defaults().spaceRight(20);
 		Array<String> tipsArray = new Array<String>();
 		float scaleValue = 0.7f;
-		getMuLabel(tipsArray, s,scaleValue);
+		tipsArray=U.getMuLabel(s,scaleValue,tipsWindows.getWidth());
 		for (String as : tipsArray) {
 			tipsWindows.row();
 			tipsWindows.add(new Label(as, Configure.get_sytle()));
@@ -163,42 +162,5 @@ public class TipsWindows {
 		v.y = ay < 0 ? tv.y + Configure.map_box_value : tv.y
 				- tipsWindows.getHeight();
 		return v;
-	}
-
-	/**
-	 * 将一个字符串分成几行
-	 * @param sv 缩放比
-	 * @param s
-	 * @return 字符串数组
-	 */
-	private void getMuLabel(Array<String> labelArray, String s, float sv) {
-		int nums = (int) (s.length() * sv * Configure.fontSize / tipsWindows
-				.getWidth());
-		if (s.length() * sv * Configure.fontSize % tipsWindows.getWidth() == 0) {
-			nums--;
-		}
-		int index = 0;
-		if (nums > 0) {
-			int startIndex = 0;
-			while (index <= nums) {
-				for (int i = startIndex; i <= s.length(); i++) {
-					if (s.substring(startIndex, i).length() * sv
-							* Configure.fontSize > tipsWindows.getWidth()) {
-						labelArray.add(s.substring(startIndex, i));
-						index++;
-						startIndex = i;
-						break;
-					} else {
-						if (i == s.length()) {
-							labelArray.add(s.substring(startIndex, i));
-							index++;
-							break;
-						}
-					}
-				}
-			}
-		} else {
-			labelArray.add(s);
-		}
 	}
 }

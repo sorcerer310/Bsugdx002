@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.WidgetFactory;
 import com.bsu.tools.Configure;
-import com.bsu.tools.FightRoleUI;
 import com.bsu.tools.RoleHP;
 
 /**
@@ -31,7 +31,6 @@ public class GameFightUI {
 	Texture photo_texture;
 	TextButton bt_endround;
 	Commander c;
-	Array<FightRoleUI> role_state_array = new Array<FightRoleUI>();
 
 	public GameFightUI(Stage s) {
 		// TODO Auto-generated constructor stub
@@ -41,8 +40,6 @@ public class GameFightUI {
 		show_hero_state();
 	}
 
-	
-
 	/**
 	 * 绘画每个角色状态
 	 * 
@@ -50,22 +47,20 @@ public class GameFightUI {
 	 */
 	public void show_hero_state() {
 		stage.clear();
-		bt_endround = WidgetFactory.getInstance().makeOneTextButton("end",stage, 200,
-				80);
+		bt_endround = WidgetFactory.getInstance().makeOneTextButton("end",
+				stage, 200, 80);
 		bt_endround.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				c.roundEnd();
 			}
 		});
-		int roleIndex = 0;
-		for (Role e : Player.getInstance().playerFightRole) {
-			role_state_array.add(new FightRoleUI(stage, e, roleIndex));
-			roleIndex++;
+		for (int i = 0; i < Player.getInstance().playerFightRole.size; i++) {
+			final Role r = Player.getInstance().playerFightRole.get(i);
+			Vector2 v = new Vector2(20 + 70 * i, 20);
+			final RolePhoto photo = new RolePhoto(r.roleTexture, stage,
+					r.quality, v, false);
+			r.photo=photo;
 		}
-	}
-
-	public Array<FightRoleUI> getRole_state_array() {
-		return role_state_array;
 	}
 }

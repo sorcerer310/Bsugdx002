@@ -180,4 +180,43 @@ public class U {
 			e.photo.showEffect(true);
 		}
 	}
+	/**
+	 * 将一个字符串分成几行
+	 * @param sv 缩放比
+	 * @param s
+	 * @return 字符串数组
+	 */
+	public static Array<String> getMuLabel(String s, float sv,float w) {
+		Array<String> labelArray=new Array<String>();
+		int nums = (int) (s.length() * sv * Configure.fontSize / 
+				w);
+		if (s.length() * sv * Configure.fontSize % w == 0) {
+			nums--;
+		}
+		int index = 0;
+		if (nums > 0) {
+			int startIndex = 0;
+			while (index <= nums) {
+				for (int i = startIndex; i <= s.length(); i++) {
+					if (s.substring(startIndex, i).length() * sv
+							* Configure.fontSize > w) {
+						labelArray.add(s.substring(startIndex, i));
+						index++;
+						startIndex = i;
+						break;
+					} else {
+						if (i == s.length()) {
+							labelArray.add(s.substring(startIndex, i));
+							index++;
+							break;
+						}
+					}
+				}
+			}
+		} else {
+			labelArray.add(s);
+		}
+		return labelArray;
+	}
+
 } 
