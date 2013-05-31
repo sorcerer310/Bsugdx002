@@ -164,14 +164,14 @@ public class RoleScreen extends CubocScreen implements Observer,
 				WidgetFactory
 						.getInstance()
 						.getTexture(
-								36,
+								30,
 								Color.BLACK,
 								Configure.getQualityColor(r.skill_array.get(0).quality),
 								1));
 		RoleInfoStage.addActor(skillImgEffect);
 		for (int i = 0; i < 2; i++) {
 			final int index = i;
-			final Image img = wfy.makeImg(r.skill_array.get(0).icon,
+			final Image img = wfy.makeImg(r.skill_array.get(index).icon,
 					RoleInfoStage, 1f, 40 + i * 60, 140);
 			final Vector2 v = new Vector2(img.getX(), img.getY());
 			skillImg[i] = img;
@@ -200,6 +200,10 @@ public class RoleScreen extends CubocScreen implements Observer,
 				skillImg[0].getY() - 2);
 	}
 
+	/**
+	 * 基本信息
+	 * @param r
+	 */
 	private void showRoleBaseInfo(Role r) {
 		wfy.makeLabel(r.name, RoleInfoStage, 40, 240,
 				Configure.getQualityColor(r.quality));
