@@ -469,7 +469,7 @@ public class Role extends Actor {
 	 * @param be	事件对象
 	 */
 	public void moveAction(int x,int y,final BsuEvent be){
-		float dur = Configure.duration_ani/3;
+		float dur = Configure.duration_ani/2;
 		if (get_ani_from_state() != STATE.idle)
 			return;
 		set_ani_from_state(STATE.move);
@@ -477,8 +477,8 @@ public class Role extends Actor {
 			this.setOrigin(0, 0);
 			addAction(parallel(
 				sequence(rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur), rotateBy(10, dur),
-						rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur), rotateBy(10, dur),
 						rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur), rotateBy(10, dur)
+//						rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur), rotateBy(10, dur)
 						),
 				moveBy(x, y, Configure.duration_move_box), run(new Runnable() {
 					@Override
@@ -493,8 +493,8 @@ public class Role extends Actor {
 			this.setOrigin(32, 0);
 			addAction(parallel(
 					sequence(rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur), rotateBy(-10, dur),
-							rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur), rotateBy(-10, dur),
 							rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur), rotateBy(-10, dur)
+//							rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur), rotateBy(-10, dur)
 							),
 					moveBy(x, y, Configure.duration_move_box), run(new Runnable() {
 						@Override
