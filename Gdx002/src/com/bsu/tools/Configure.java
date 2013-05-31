@@ -16,7 +16,8 @@ public class Configure {
 	public static int rect_height = 320; // 屏幕高
 
 	public static int map_box_value = 32;
-	public static float duration = 0.5f; // 移动一格需要的时间
+	public static float duration_move_box = 0.5f; // 移动一格需要的时间
+	public static float duration_ani = 0.1f;		//标准动画时间
 	public static float duration_skill_effect = 0.08f; // 技能效果释放时间
 	public static int extra_value = 10; // 根据坐标判断人物所在格子的额外数值，以免出现格子错误，因为太接近了。
 
