@@ -185,6 +185,17 @@ public class Commander {
 		else if(r.face == FACE.right && !U.hasRoleInPos(allRoles, new Vector2(r.getBoxX()-1,r.getBoxY())))
 			r.heatAction(-Configure.map_box_value, 0);
 	}
+	/**
+	 * 被攻击命令，命令一个单位被攻击
+	 * @param r
+	 */
+	public void hitedCommand(Role r){
+		r.hitedAction();
+	}
+	/**
+	 * 被阻挡命令
+	 * @param r	受到阻挡的人
+	 */
 	public void stopedCommand(Role r){
 		r.stopedAction();
 	}
@@ -531,9 +542,7 @@ public class Commander {
 
 	/**
 	 * 判断此可移动方块是否有人存在
-	 * 
-	 * @param r
-	 *            被选要移动的人
+	 * @param r 被选要移动的人
 	 * @return
 	 */
 	public boolean isOtherHero(int inputX, int inputY) {

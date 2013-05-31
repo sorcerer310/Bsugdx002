@@ -524,24 +524,17 @@ public class Role extends Actor {
 				
 	}
 	/**
-	 * 收到攻击动画
+	 * 受到攻击动画
 	 */
 	public void hitedAction(){
+		
 		if(face==FACE.right){
-			addAction(sequence(moveBy(-16,0,0.06f),moveBy(16,0,0.06f),
-					moveBy(-14,0,0.06f),moveBy(14,0,0.06f),
-					moveBy(-10,0,0.06f),moveBy(10,0,0.06f),
-					moveBy(-6,0,0.06f),moveBy(6,0,0.06f),
-					moveBy(-2,0,0.06f),moveBy(2,0,0.06f)
-					));
+			this.setOrigin(0, 0);
+			addAction(sequence(parallel(sequence(rotateBy(15.0f,0.05f),moveBy(-10.0f,.0f,0.05f))),parallel(sequence(rotateBy(-15.0f,0.05f),moveBy(10.0f,.0f,0.05f)))));
 		}
 		else if(face==FACE.left){
-			addAction(sequence(moveBy(16,0,0.06f),moveBy(-16,0,0.06f),
-					moveBy(14,0,0.06f),moveBy(-14,0,0.06f),
-					moveBy(10,0,0.06f),moveBy(-10,0,0.06f),
-					moveBy(6,0,0.06f),moveBy(-6,0,0.06f),
-					moveBy(2,0,0.06f),moveBy(-2,0,0.06f)
-					));
+			this.setOrigin(32, 0);
+			addAction(sequence(parallel(sequence(rotateBy(-15.0f,0.05f),moveBy(10.0f,.0f,0.05f))),parallel(sequence(rotateBy(15.0f,0.05f),moveBy(-10.0f,.0f,0.05f)))));
 		}
 	}
 	/**
