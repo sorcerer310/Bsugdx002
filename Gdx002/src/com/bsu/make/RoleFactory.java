@@ -35,6 +35,13 @@ public class RoleFactory {
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.fighter),tr);
 	}
+	
+	public Role getFighter(String n,Type t,QUALITY q,TextureRegion tr,int sklidx){
+		return new Role(t,q,CLASSES.fighter,n,U.getRandom(100, -6, 6),8,10
+				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
+				new SkillTree().getSkillTreeFixedSkill(sklidx),tr);
+	}
+	
 	/**
 	 * 获得一个元素法师
 	 * @param n	
@@ -83,35 +90,4 @@ public class RoleFactory {
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.archer),tr);
 	}
-	
-	
-//	/**
-//	 * 获得一个英雄类型的角色
-//	 * @param n	改英雄的名字
-//	 * @return	返回英雄类型的角色对象
-//	 */
-//	public Role getHeroRole(String n){
-//		Role r = new Role(Role.Type.HERO,n);
-//		r.face=FACE.right;
-//		//初始化英雄类型角色要做的事写在这里。
-//		return r;
-//	}
-//	
-//	public Role getHeroRole2(String n){
-//		Role r = new Role(Role.Type.HERO,n);
-//		r.face=FACE.right;
-//		return r;
-//	}
-//	
-//	public Role getEnemyRole(String n){
-//		Role r = new Role(Role.Type.ENEMY,n);
-//		r.face=FACE.left;
-//		//初始化敌人类型角色要做的事写在这里
-//		return r;
-//	} 
-	
-//	public Role getRole(SUBTYPE st,QUALITY q){
-//		Role r=new Role(new Card(st,q).getRoleValue());
-//		return r;
-//	}
 }
