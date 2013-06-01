@@ -200,18 +200,18 @@ public class WidgetFactory {
 	 *            透明度
 	 * @return
 	 */
-	public TextureRegion getTexture(int maxValue, Color dc,
+	public TextureRegion getTexture(int w,int h, Color dc,
 			Color c, float a) {
 		c.a = a;
 		TextureRegion temp_box = null;
 		Pixmap pixmap;
-		pixmap = new Pixmap(maxValue, maxValue, Format.RGBA8888);
+		pixmap = new Pixmap(w, h, Format.RGBA8888);
 		pixmap.setColor(dc);
-		pixmap.drawRectangle(0, 0, maxValue, maxValue);
+		pixmap.drawRectangle(0, 0, w, h);
 		pixmap.setColor(c);
-		pixmap.fillRectangle(1, 1, maxValue - 2, maxValue - 2);
+		pixmap.fillRectangle(1, 1, w - 2, h - 2);
 		Texture pixmaptex = new Texture(pixmap);
-		temp_box = new TextureRegion(pixmaptex, maxValue, maxValue);
+		temp_box = new TextureRegion(pixmaptex, w, h);
 		pixmap.dispose();
 		return temp_box;
 	}

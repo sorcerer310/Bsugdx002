@@ -3,6 +3,7 @@ package com.bsu.obj;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -48,7 +49,7 @@ public class GameFightUI {
 	public void show_hero_state() {
 		stage.clear();
 		bt_endround = WidgetFactory.getInstance().makeOneTextButton("end",
-				stage, 200, 80);
+				stage, 200, 70);
 		bt_endround.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -56,11 +57,18 @@ public class GameFightUI {
 			}
 		});
 		for (int i = 0; i < Player.getInstance().playerFightRole.size; i++) {
+			int x=20+i*80;
+			int y=10;
 			final Role r = Player.getInstance().playerFightRole.get(i);
-			Vector2 v = new Vector2(20 + 70 * i, 20);
+			Vector2 v = new Vector2(x,y);
 			final RolePhoto photo = new RolePhoto(r.roleTexture, stage,
 					r.quality, v, false);
 			r.photo=photo;
+			TextureRegion hp=WidgetFactory.getInstance().getTexture(4,48, Color.BLACK, Color.RED, 1);
+			WidgetFactory.getInstance().makeImg(hp, stage, 1, x-10, y);
+			WidgetFactory.getInstance().makeLabel(r.name, stage, x, y+50);
+			WidgetFactory.getInstance().makeImg(r.skill_array.get(0).icon, stage, 1, x+50, y+26);
+			WidgetFactory.getInstance().makeImg(r.skill_array.get(1).icon, stage, 1, x+50, y);
 		}
 	}
 }

@@ -164,11 +164,14 @@ public class MapBox extends Actor {
 	 */
 	private void init_box_value() {
 		map_pass = WidgetFactory.getInstance().getTexture(
-				Configure.map_box_value, Color.BLACK, Color.GREEN, 0.5f);
+				Configure.map_box_value, Configure.map_box_value, Color.BLACK,
+				Color.GREEN, 0.5f);
 		map_block = WidgetFactory.getInstance().getTexture(
-				Configure.map_box_value, Color.BLACK, Color.RED, 0.5f);
+				Configure.map_box_value, Configure.map_box_value, Color.BLACK,
+				Color.RED, 0.5f);
 		map_attack = WidgetFactory.getInstance().getTexture(
-				Configure.map_box_value, Color.BLACK, Color.BLUE, 0.5f);
+				Configure.map_box_value, Configure.map_box_value, Color.BLACK,
+				Color.BLUE, 0.5f);
 		ani_enemy_home = GameAnimationClass.getInstance().getEffectApper();
 		ani_hero_home = GameAnimationClass.getInstance().getEffectDisapper();
 		hero_home_time = 0;

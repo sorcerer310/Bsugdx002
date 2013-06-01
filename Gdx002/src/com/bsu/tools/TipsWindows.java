@@ -86,7 +86,9 @@ public class TipsWindows {
 		}
 		tipsWindows.clear();
 		tipsWindows.defaults().align(Align.center);
-		tipsWindows.defaults().space(0);
+		tipsWindows.defaults().padLeft(10);
+		tipsWindows.defaults().padRight(10);
+		//tipsWindows.defaults().padBottom(5);
 		Label nameLabel = new Label(s.name, Configure.get_sytle());
 		nameLabel.setColor(Configure.getQualityColor(s.quality));
 		tipsWindows.add(nameLabel);

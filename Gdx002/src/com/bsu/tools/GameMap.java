@@ -25,7 +25,7 @@ public class GameMap {
 	 * @param level 关卡索引，此方法不使用packfield
 	 */
 	public static void make_map(int level){
-		FileHandle mapHandle = Gdx.files.internal("data/map/"+Configure.game_map_path_string[level]+".tmx");
+		FileHandle mapHandle = Gdx.files.internal("data/map/output/"+Configure.game_map_path_string[level]+".tmx");
 		map = TiledLoader.createMap(mapHandle);
 		FileHandle packages=Gdx.files.internal("data/map");   
         atlas = new CustomerTiledAlisa(map, packages); 

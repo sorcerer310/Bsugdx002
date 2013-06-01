@@ -1,18 +1,30 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><map height="8" orientation="orthogonal" tileheight="32" tilewidth="32" version="1.0" width="15"><properties><property name="blended tiles" value="2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,116,117,118,119,120,121,125,126,127,128,129,131,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,155,156,157,158,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208"/></properties>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><map height="10" orientation="orthogonal" tileheight="32" tilewidth="32" version="1.0" width="15"><properties><property name="blended tiles" value="2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,116,117,118,119,120,121,125,126,127,128,129,131,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,155,156,157,158,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208"/></properties>
  <tileset firstgid="1" name="deck001" tileheight="32" tilewidth="32">
   <image height="832" source="imgs/deck001.png" width="256"/>
  </tileset>
  <tileset firstgid="209" name="ter017" tileheight="32" tilewidth="32">
   <image height="128" source="imgs/ter017.png" width="96"/>
  </tileset>
- <layer height="8" name="ter" width="15">
+ <layer height="10" name="ter" width="15">
   <data compression="zlib" encoding="base64">
-   eJxjZGBgYBzFwxYDAHNQAHk=
+   eJxjZGBgYBzFwxYPFAAArAgAeQ==
   </data>
  </layer>
- <layer height="8" name="deck" width="15">
+ <layer height="10" name="deck" width="15">
   <data compression="zlib" encoding="base64">
-   eJy7wsDAcJUMfA2IrzNAgAgDJkjDIgYDN5H0IgMePHq5Ceglx14eNHmYXm4GTECqvRJY9CbjwKlQjCyWAhUD6b0FxLfJwHeAGACEryrX
+   eJy7wsDAcJUMfA2IrzNAgAgDJkjDIgYDN5H0IgMePHq5Ceglx14eNHmYXm4GTECqvRJY9CbjwKlQjCyWAhUD6b0FxLfJwHfwuJfWAACaoyrX
   </data>
  </layer>
+ <objectgroup height="10" name="birthday" width="15">
+  <object gid="9" name="n1" type="enemy" x="416" y="64"/>
+  <object gid="9" name="n2" type="enemy" x="416" y="96"/>
+  <object gid="9" name="n3" type="enemy" x="416" y="128"/>
+  <object gid="9" name="n4" type="enemy" x="416" y="160"/>
+  <object gid="9" name="n5" type="enemy" x="416" y="192"/>
+  <object gid="9" name="h1" type="hero" x="32" y="64"/>
+  <object gid="9" name="h2" type="hero" x="32" y="96"/>
+  <object gid="9" name="h3" type="hero" x="32" y="128"/>
+  <object gid="9" name="h4" type="hero" x="32" y="160"/>
+  <object gid="9" name="h5" type="hero" x="32" y="192"/>
+ </objectgroup>
 </map>

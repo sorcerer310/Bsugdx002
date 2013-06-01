@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="15" height="8" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="15" height="10" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="deck001" tilewidth="32" tileheight="32">
   <image source="imgs/deck001.png" width="256" height="832"/>
  </tileset>
  <tileset firstgid="209" name="ter017" tilewidth="32" tileheight="32">
   <image source="imgs/ter017.png" width="96" height="128"/>
  </tileset>
- <layer name="ter" width="15" height="8">
+ <layer name="ter" width="15" height="10">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYBzFwxYDAHNQAHk=
+   eJxjZGBgYBzFwxYPFAAArAgAeQ==
   </data>
  </layer>
- <layer name="deck" width="15" height="8">
+ <layer name="deck" width="15" height="10">
   <data encoding="base64" compression="zlib">
-   eJy7wsDAcJUMfA2IrzNAgAgDJkjDIgYDN5H0IgMePHq5Ceglx14eNHmYXm4GTECqvRJY9CbjwKlQjCyWAhUD6b0FxLfJwHeAGACEryrX
+<<<<<<< HEAD
+   eJy7wsDAcJUMfA2IrzNAgAgDJkjDIgYDN5H0IgMePHq5Ceglx14eNHmYXm4GTECqvRJY9KaQgUF6bwHxbTLwHSAGAIcjKt0=
+=======
+   eJy7wsDAcJUMfA2IrzNAgAgDJkjDIgYDN5H0IgMePHq5Ceglx14eNHmYXm4GTECqvRJY9CbjwKlQjCyWAhUD6b0FxLfJwHfwuJfWAACaoyrX
+>>>>>>> 08ff61a279e14f85d36296f7b86ffdd902b3367f
   </data>
  </layer>
+ <objectgroup name="birthday" width="15" height="10">
+  <object name="n1" type="enemy" gid="9" x="416" y="64"/>
+  <object name="n2" type="enemy" gid="9" x="416" y="96"/>
+  <object name="n3" type="enemy" gid="9" x="416" y="128"/>
+  <object name="n4" type="enemy" gid="9" x="416" y="160"/>
+  <object name="n5" type="enemy" gid="9" x="416" y="192"/>
+  <object name="h1" type="hero" gid="9" x="32" y="64"/>
+  <object name="h2" type="hero" gid="9" x="32" y="96"/>
+  <object name="h3" type="hero" gid="9" x="32" y="128"/>
+  <object name="h4" type="hero" gid="9" x="32" y="160"/>
+  <object name="h5" type="hero" gid="9" x="32" y="192"/>
+ </objectgroup>
 </map>

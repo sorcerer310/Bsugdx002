@@ -160,14 +160,11 @@ public class RoleScreen extends CubocScreen implements Observer,
 		skillIndex = 0;
 		showRoleBaseInfo(r);
 		Image[] skillImg = new Image[2];
-		final Image skillImgEffect = new Image(
-				WidgetFactory
-						.getInstance()
-						.getTexture(
-								30,
-								Color.BLACK,
-								Configure.getQualityColor(r.skill_array.get(0).quality),
-								1));
+		TextureRegion tr = WidgetFactory.getInstance().getTexture(30, 30,
+				Color.BLACK,
+				Configure.getQualityColor(r.skill_array.get(0).quality), 1);
+		final Image skillImgEffect = new Image(tr);
+
 		RoleInfoStage.addActor(skillImgEffect);
 		for (int i = 0; i < 2; i++) {
 			final int index = i;
@@ -202,6 +199,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 
 	/**
 	 * 基本信息
+	 * 
 	 * @param r
 	 */
 	private void showRoleBaseInfo(Role r) {
