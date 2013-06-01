@@ -32,6 +32,7 @@ import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.Configure.QualityS;
 import com.bsu.tools.GameTextureClass;
 import com.bsu.tools.MessageObject;
+import com.bsu.tools.TipsWindows;
 import com.bsu.tools.U;
 
 public class UpdateScreen extends CubocScreen implements Observer,
@@ -167,7 +168,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		int w = 60;
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			Vector2 v = new Vector2(x + i % 5 * w, y - i / 5 * w);
+			final Vector2 v = new Vector2(x + i % 5 * w, y - i / 5 * w);
 			RolePhoto photo = new RolePhoto(r.roleTexture, sRoleStage,
 					r.quality, v, false);
 			r.photo = photo;
@@ -182,6 +183,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
 					resetEatRole(r);
+					TipsWindows.getInstance().showEatInfo(r, v, sRoleStage);
 					super.touchUp(event, x, y, pointer, button);
 				}
 			});

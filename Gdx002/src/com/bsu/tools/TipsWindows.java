@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Equip;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.Skill;
@@ -68,7 +69,7 @@ public class TipsWindows {
 		tipsWindows.add(new Label("" + r.exp + "/" + r.expUp, Configure
 				.get_sytle()));
 		tipsWindows.row();
-		Table t=new Table();
+		Table t = new Table();
 		t.defaults().padLeft(10);
 		t.add(new Image(r.skill_array.get(0).icon));
 		t.defaults().padRight(10);
@@ -153,6 +154,87 @@ public class TipsWindows {
 		}
 		tipsWindows.pack();
 		stage.addActor(tipsWindows);
+	}
+
+	/**
+	 * 设置吞噬界面，被选择吞噬的role信息
+	 * 
+	 * @param r
+	 * @param stage
+	 */
+	public void showEatInfo(Role r, Vector2 v, Stage stage) {
+
+		if (tipsWindows.getStage() != null) {
+			tipsWindows.getParent().removeActor(tipsWindows);
+		}
+		tipsWindows.clear();
+		tipsWindows.setHeight(10);
+		tipsWindows.align(Align.center);
+		tipsWindows.defaults().spaceBottom(5);
+		tipsWindows.defaults().spaceTop(5);
+		tipsWindows.padBottom(10);
+		Table to = new Table();
+		to.align(Align.center);
+		Table tp = new Table();
+		tp.align(Align.center);
+		Table tb = new Table();
+		tb.align(Align.center);
+		Table tg = new Table();
+		tg.align(Align.center);
+
+		for (final Skill s : r.skill_tree) {
+			Image skill_img = null;
+			if (s.quality == QUALITY.green) {
+				skill_img = new Image(s.icon);
+				tg.add(skill_img);
+				Label l=new Label(""+s.lev,Configure.get_sytle());
+				l.setFontScale(0.5f);
+				tg.defaults().align(Align.bottom);
+				tg.add(l);
+			}
+			if (s.quality == QUALITY.blue) {
+				skill_img = new Image(s.icon);
+				tb.add(skill_img);
+				Label l=new Label(""+s.lev,Configure.get_sytle());
+				l.setFontScale(0.5f);
+				tb.defaults().align(Align.bottom);
+				tb.add(l);
+			}
+			if (s.quality == QUALITY.purple) {
+				skill_img = new Image(s.icon);
+				tp.add(skill_img);
+				Label l=new Label(""+s.lev,Configure.get_sytle());
+				l.setFontScale(0.5f);
+				tp.defaults().align(Align.bottom);
+				tp.add(l);
+			}
+			if (s.quality == QUALITY.orange) {
+				skill_img = new Image(s.icon);
+				to.add(skill_img);
+				Label l=new Label(""+s.lev,Configure.get_sytle());
+				l.setFontScale(0.5f);
+				to.defaults().align(Align.bottom);
+				to.add(l);
+			}
+		}
+		tipsWindows.add(new Label("lv:" + r.level, Configure.get_sytle()));
+		tipsWindows.row();
+		tipsWindows.add(to);
+		tipsWindows.row();
+		tipsWindows.add(tp);
+		tipsWindows.row();
+		tipsWindows.add(tb);
+		tipsWindows.row();
+		tipsWindows.add(tg);
+		tipsWindows.pack();
+		tipsWindows.setPosition(getPosition(v).x, getPosition(v).y);
+		stage.addActor(tipsWindows);
+		tipsWindows.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				tipsWindows.getParent().removeActor(tipsWindows);
+			}
+		});
 	}
 
 	/**

@@ -168,7 +168,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 			final Image skillImgEffect = new Image(tr);
 			RoleInfoStage.addActor(skillImgEffect);
 			final Image img = wfy.makeImg(r.skill_array.get(index).icon,
-					RoleInfoStage, 1f, 40 + i * 60, 155);
+					RoleInfoStage, 1f, 40 + i * 60, 170);
+			wfy.makeLabel(""+r.skill_array.get(i).lev, RoleInfoStage, 0.5f, 40+i*60+28, 163);
 			final Vector2 v = new Vector2(img.getX(), img.getY());
 			skillImgEffect.setPosition(v.x - 1, v.y - 1);
 			skillImg[i] = img;
@@ -200,15 +201,15 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param r
 	 */
 	private void showRoleBaseInfo(Role r) {
-		wfy.makeLabel("姓名:" + r.name, RoleInfoStage, 0.6f, 40, 240,
+		wfy.makeLabel(r.name, RoleInfoStage, 0.6f, 40, 240,
 				Configure.getQualityColor(r.quality));
-		wfy.makeLabel("职业:" + U.getClasses(r), RoleInfoStage, 0.6f, 100, 240);
+		wfy.makeLabel("等级:" + r.level, RoleInfoStage, 0.6f, 100, 240);
 		wfy.makeLabel("生命:" + r.maxHp, RoleInfoStage, 0.6f, 40, 220);
 		wfy.makeLabel("经验:" + r.exp + "/" + r.expUp, RoleInfoStage, 0.6f, 100,
 				220);
-		wfy.makeLabel("攻击:" + r.getAttack(), RoleInfoStage, 0.6f, 40, 180);
-		wfy.makeLabel("防御:" + r.getDefend(), RoleInfoStage, 0.6f, 100, 180);
-		wfy.makeLabel("等级:" + r.level, RoleInfoStage, 0.6f, 40, 200);
+		wfy.makeLabel("攻击:" + r.getAttack(), RoleInfoStage, 0.6f, 40, 200);
+		wfy.makeLabel("防御:" + r.getDefend(), RoleInfoStage, 0.6f, 100, 200);
+		
 	}
 
 	/**
@@ -226,7 +227,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		int numsBlue = 0;
 		int numsPur = 0;
 		int numsOra = 0;
-		int ix = 190, iy = 125;
+		int ix = 200, iy = 125;
 		for (final Skill s : r.skill_tree) {
 			TextureRegion tr = WidgetFactory.getInstance().getTexture(26, 26,
 					Configure.getQualityColor(s.quality), Color.BLACK, 1);
@@ -237,21 +238,25 @@ public class RoleScreen extends CubocScreen implements Observer,
 			if (s.quality == QUALITY.green) {
 				skill_img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix
 						+ numsGreen * 40, iy);
+				wfy.makeLabel(""+s.lev, RoleInfoStage, 0.5f, ix+numsBlue*40+28, iy-7);
 				numsGreen++;
 			}
 			if (s.quality == QUALITY.blue) {
 				skill_img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsBlue
 						* 40, iy + 35);
+				wfy.makeLabel(""+s.lev, RoleInfoStage, 0.5f, ix+numsBlue*40+28, iy+28);
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
 				skill_img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsPur
 						* 40, iy + 70);
+				wfy.makeLabel(""+s.lev, RoleInfoStage, 0.5f, ix+numsPur*40+28, iy+63);
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
 				skill_img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsOra
 						* 40, iy + 105);
+				wfy.makeLabel(""+s.lev, RoleInfoStage, 0.5f, ix+numsOra*40+28, iy+98);
 				numsOra++;
 			}
 			final Vector2 vs = new Vector2(skill_img.getX(), skill_img.getY());
