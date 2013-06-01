@@ -65,7 +65,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		background = new Image(GameTextureClass.getInstance().updatePanel);
 		stage.addActor(background);
 		quality = QualityS.gselect;
-		infos = WidgetFactory.getInstance().makeLabel("", stage, 135, 280);
+		infos = WidgetFactory.getInstance().makeLabel("", stage,1, 135, 280);
 		upButton = WidgetFactory.getInstance().makeImageButton(
 				Configure.button_up, stage, 320, 270);
 		ib_back = WidgetFactory.getInstance().makeImageButton(

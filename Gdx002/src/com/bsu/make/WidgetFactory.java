@@ -23,12 +23,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
+import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameTextureClass;
 
 public class WidgetFactory {
 	private static WidgetFactory instance = null;
 	private Image role_photo;// 选中角色后的特效图片
+
 	private WidgetFactory() {
 		role_photo = new Image(GameTextureClass.getInstance().role_effect);
 	}
@@ -74,7 +76,6 @@ public class WidgetFactory {
 
 	public Image makeImageButton(String bname, Stage s, int x, int y) {
 
-	
 		if (bname.equals(Configure.screen_fight))
 			img_nomal = new Image(
 					GameTextureClass.getInstance().texture_atlas_mbutton
@@ -148,16 +149,19 @@ public class WidgetFactory {
 	 * @param v
 	 *            position
 	 */
-	public Label makeLabel(String ls, Stage s, int x, int y) {
+	public Label makeLabel(String ls, Stage s, float scaleValue, int x, int y) {
 		Label l = new Label(ls, Configure.get_sytle());
 		l.setPosition(x, y);
+		l.setFontScale(scaleValue);
 		s.addActor(l);
 		return l;
 	}
 
-	public Label makeLabel(String ls, Stage s, int x, int y, Color c) {
+	public Label makeLabel(String ls, Stage s, float scaleValue, int x, int y,
+			Color c) {
 		Label l = new Label(ls, Configure.get_sytle());
 		l.setPosition(x, y);
+		l.setFontScale(scaleValue);
 		if (c != null) {
 			l.setColor(c);
 		}
@@ -200,28 +204,30 @@ public class WidgetFactory {
 	 *            透明度
 	 * @return
 	 */
-	public TextureRegion getTexture(int w,int h, Color dc,
-			Color c, float a) {
+	public TextureRegion getTexture(int w, int h, Color dc, Color c, float a) {
 		c.a = a;
 		TextureRegion temp_box = null;
 		Pixmap pixmap;
-		pixmap = new Pixmap(w, h, Format.RGBA8888);
+		pixmap = new Pixmap(w + 2, h + 2, Format.RGBA8888);
 		pixmap.setColor(dc);
-		pixmap.drawRectangle(0, 0, w, h);
+		pixmap.drawRectangle(0, 0, w + 2, h + 2);
 		pixmap.setColor(c);
-		pixmap.fillRectangle(1, 1, w - 2, h - 2);
+		pixmap.fillRectangle(1, 1, w, h);
 		Texture pixmaptex = new Texture(pixmap);
-		temp_box = new TextureRegion(pixmaptex, w, h);
+		temp_box = new TextureRegion(pixmaptex, w + 2, h + 2);
 		pixmap.dispose();
 		return temp_box;
 	}
+
 	/**
 	 * 设置人物选中后的效果
+	 * 
 	 * @param role_effect
 	 * @param s
 	 * @param vs
 	 */
-	public void showRoleEffect(Stage s, Vector2 vs) {
+
+	public void showRoleEffect(Image role_photo, Stage s, Vector2 vs) {
 		if (role_photo.getStage() != null) {
 			role_photo.getParent().removeActor(role_photo);
 		}
@@ -234,18 +240,25 @@ public class WidgetFactory {
 		ra.setCount(RepeatAction.FOREVER);
 		role_photo.addAction(ra);
 	}
-	
-	public void showRoleEffect(Image role_photo,Stage s, Vector2 vs) {
-		if (role_photo.getStage() != null) {
-			role_photo.getParent().removeActor(role_photo);
-		}
-		role_photo.getActions().clear();
-		s.addActor(role_photo);
-		role_photo.setPosition(vs.x - 17, vs.y - 17);
-		RepeatAction ra = new RepeatAction();
-		ra.setAction(sequence(moveBy(0, 50, 1f), moveBy(50, 0, 1f),
-				moveBy(0, -50, 1f), moveBy(-50, 0, 1f)));
-		ra.setCount(RepeatAction.FOREVER);
-		role_photo.addAction(ra);
+
+	/**
+	 * 讲一个技能图标添加到某一个舞台
+	 * 
+	 * @param skill
+	 *            技能
+	 * @param s
+	 *            舞台
+	 * @param v
+	 *            坐标
+	 */
+	public void showSkillImg(Skill skill, Stage s, Vector2 v) {
+		Image img = new Image(skill.icon);
+		TextureRegion tr = getTexture(26, 26,
+				Configure.getQualityColor(skill.quality), Color.BLACK, 1);
+		Image skillImgEffect = new Image(tr);
+		s.addActor(skillImgEffect);
+		s.addActor(img);
+		img.setPosition(v.x, v.y);
+		skillImgEffect.setPosition(v.x-1, v.y-1);
 	}
 }

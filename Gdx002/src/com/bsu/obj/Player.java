@@ -64,9 +64,9 @@ public class Player {
 			playerRole.add(rf.getFighter("努努", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 			playerRole.add(rf.getFighter("努努", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
 			playerRole.add(rf.getFighter("努努", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
-//			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
-//			playerRole.add(rf.getFighter("张永臣", Type.HERO, QUALITY.purple,GameTextureClass.getInstance().zyc_photo));
-//			playerRole.add(rf.getFighter("努努", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
+			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));
+			playerRole.add(rf.getFighter("张永臣", Type.HERO, QUALITY.purple,GameTextureClass.getInstance().zyc_photo));
+			playerRole.add(rf.getFighter("努努", Type.HERO, QUALITY.orange,GameTextureClass.getInstance().fc_photo));
 
 		}
 		resetRoleArray(playerRole);

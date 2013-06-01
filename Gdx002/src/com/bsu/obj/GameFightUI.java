@@ -66,7 +66,7 @@ public class GameFightUI {
 			r.photo=photo;
 			TextureRegion hp=WidgetFactory.getInstance().getTexture(4,48, Color.BLACK, Color.RED, 1);
 			WidgetFactory.getInstance().makeImg(hp, stage, 1, x-10, y);
-			WidgetFactory.getInstance().makeLabel(r.name, stage, x, y+50);
+			WidgetFactory.getInstance().makeLabel(r.name, stage,0.8f, x, y+50);
 			WidgetFactory.getInstance().makeImg(r.skill_array.get(0).icon, stage, 1, x+50, y+26);
 			WidgetFactory.getInstance().makeImg(r.skill_array.get(1).icon, stage, 1, x+50, y);
 		}

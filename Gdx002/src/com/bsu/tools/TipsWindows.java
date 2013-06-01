@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -23,6 +24,7 @@ public class TipsWindows {
 
 	private static TipsWindows instance = null;
 	private Skin skin;
+	private int windowWidth = 120;
 	public Window tipsWindows;
 
 	public static TipsWindows getInstance() {
@@ -35,7 +37,7 @@ public class TipsWindows {
 	private TipsWindows() {
 		skin = new Skin();
 		skin.add("draw", new TextureRegion(
-				GameTextureClass.getInstance().tipsPanel ,120, 60));
+				GameTextureClass.getInstance().tipsPanel, windowWidth, 60));
 		Window.WindowStyle ws = new WindowStyle(Configure.get_font(),
 				Color.BLACK, skin.getDrawable("draw"));
 		tipsWindows = new Window("", ws);
@@ -54,16 +56,24 @@ public class TipsWindows {
 			tipsWindows.getParent().removeActor(tipsWindows);
 		}
 		tipsWindows.clear();
-		tipsWindows.defaults().space(0);
-		tipsWindows.defaults().align(Align.left);
-		tipsWindows.add(new Label("姓名:"+r.name, Configure.get_sytle()));
-		tipsWindows.add(new Label("职业:"+U.getClasses(r), Configure.get_sytle()));
+		tipsWindows.align(Align.center);
+		tipsWindows.padTop(10);
+		tipsWindows.padBottom(10);
+		tipsWindows.add(new Label("" + r.name, Configure.get_sytle()));
 		tipsWindows.row();
-		tipsWindows.add(new Label("等级:"+r.level, Configure.get_sytle()));
-		tipsWindows.add(new Label("经验:"+r.exp+"/"+r.expUp, Configure.get_sytle()));
+		tipsWindows.add(new Label("" + U.getClasses(r), Configure.get_sytle()));
 		tipsWindows.row();
-		tipsWindows.add(new Image(r.skill_array.get(0).icon));
-		tipsWindows.add(new Image(r.skill_array.get(1).icon));
+		tipsWindows.add(new Label("lv:" + r.level, Configure.get_sytle()));
+		tipsWindows.row();
+		tipsWindows.add(new Label("" + r.exp + "/" + r.expUp, Configure
+				.get_sytle()));
+		tipsWindows.row();
+		Table t=new Table();
+		t.defaults().padLeft(10);
+		t.add(new Image(r.skill_array.get(0).icon));
+		t.defaults().padRight(10);
+		t.add(new Image(r.skill_array.get(1).icon));
+		tipsWindows.add(t);
 		tipsWindows.pack();
 		tipsWindows.setPosition(getPosition(v).x, getPosition(v).y);
 		tipsWindows.addListener(new ClickListener() {
@@ -86,16 +96,17 @@ public class TipsWindows {
 		}
 		tipsWindows.clear();
 		tipsWindows.defaults().align(Align.center);
+		tipsWindows.padTop(10);
+		tipsWindows.padBottom(10);
 		tipsWindows.defaults().padLeft(10);
 		tipsWindows.defaults().padRight(10);
-		//tipsWindows.defaults().padBottom(5);
 		Label nameLabel = new Label(s.name, Configure.get_sytle());
 		nameLabel.setColor(Configure.getQualityColor(s.quality));
 		tipsWindows.add(nameLabel);
 		tipsWindows.defaults().align(Align.left);
 		Array<String> infoArray = new Array<String>();
 		float scaleValue = 0.7f;
-		infoArray=U.getMuLabel(s.info, scaleValue,tipsWindows.getWidth());
+		infoArray = U.getMuLabel(s.info, scaleValue, windowWidth);
 		for (int i = 0; i < infoArray.size; i++) {
 			tipsWindows.row();
 			Label label = new Label(infoArray.get(i), Configure.get_sytle());
@@ -135,7 +146,7 @@ public class TipsWindows {
 		tipsWindows.defaults().spaceRight(20);
 		Array<String> tipsArray = new Array<String>();
 		float scaleValue = 0.7f;
-		tipsArray=U.getMuLabel(s,scaleValue,tipsWindows.getWidth());
+		tipsArray = U.getMuLabel(s, scaleValue, tipsWindows.getWidth());
 		for (String as : tipsArray) {
 			tipsWindows.row();
 			tipsWindows.add(new Label(as, Configure.get_sytle()));

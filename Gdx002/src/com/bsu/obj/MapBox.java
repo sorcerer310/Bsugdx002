@@ -48,8 +48,8 @@ public class MapBox extends Actor {
 
 	private static int raw_max = 8; // 可以移动的最高格子数，应该定义在MAP TXM文件里，以下同
 	private static int raw_min = 4; // 可以移动的最低格子数，靠近屏幕下方
-	private static int coll_max = 14; // 可以移动的最远格子数，屏幕右侧
-	private static int coll_min = 0; // 可以移动的最左格子数
+	private static int coll_max = 13; // 可以移动的最远格子数，屏幕右侧
+	private static int coll_min = 1; // 可以移动的最左格子数
 
 	private float hero_home_time; // 角色基地动画时间
 	private float enemy_home_time; // 角色基地动画时间
