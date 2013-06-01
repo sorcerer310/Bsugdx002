@@ -469,15 +469,18 @@ public class Role extends Actor {
 	 * @param be	事件对象
 	 */
 	public void moveAction(int x,int y,final BsuEvent be){
+		float dur = Configure.duration_ani/2;
 		if (get_ani_from_state() != STATE.idle)
 			return;
 		set_ani_from_state(STATE.move);
 		if(face==FACE.right){
 			this.setOrigin(0, 0);
 			addAction(parallel(
-				sequence(rotateBy(30, 0.1f), rotateBy(-30, 0.1f),
-						rotateBy(-10, 0.1f), rotateBy(10, 0.1f)),
-				moveBy(x, y, Configure.duration), run(new Runnable() {
+				sequence(rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur), rotateBy(10, dur),
+						rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur), rotateBy(10, dur)
+//						rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur), rotateBy(10, dur)
+						),
+				moveBy(x, y, Configure.duration_move_box), run(new Runnable() {
 					@Override
 					public void run() {
 						set_ani_from_state(STATE.idle);
@@ -489,9 +492,11 @@ public class Role extends Actor {
 		else if(face==FACE.left){
 			this.setOrigin(32, 0);
 			addAction(parallel(
-					sequence(rotateBy(-30, 0.1f), rotateBy(30, 0.1f),
-							rotateBy(10, 0.1f), rotateBy(-10, 0.1f)),
-					moveBy(x, y, Configure.duration), run(new Runnable() {
+					sequence(rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur), rotateBy(-10, dur),
+							rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur), rotateBy(-10, dur)
+//							rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur), rotateBy(-10, dur)
+							),
+					moveBy(x, y, Configure.duration_move_box), run(new Runnable() {
 						@Override
 						public void run() {
 							set_ani_from_state(STATE.idle);
@@ -505,43 +510,35 @@ public class Role extends Actor {
 	 * 移动过程中被阻挡执行此动作
 	 */
 	public void stopedAction(){
+		float dur = Configure.duration_ani/1.6f;
 		if(face==FACE.right){
-			addAction(sequence(moveBy(16,0,0.06f),moveBy(-16,0,0.06f),
-					moveBy(14,0,0.06f),moveBy(-14,0,0.06f),
-					moveBy(10,0,0.06f),moveBy(-10,0,0.06f),
-					moveBy(6,0,0.06f),moveBy(-6,0,0.06f),
-					moveBy(2,0,0.06f),moveBy(-2,0,0.06f)
+			addAction(sequence(moveBy(16,0,dur),moveBy(-16,0,dur),
+					moveBy(12,0,dur),moveBy(-12,0,dur),
+					moveBy(8,0,dur),moveBy(-8,0,dur),
+					moveBy(4,0,dur),moveBy(-4,0,dur)
 					));
 		}
 		else if(face==FACE.left){
-			addAction(sequence(moveBy(-16,0,0.06f),moveBy(16,0,0.06f),
-					moveBy(-14,0,0.06f),moveBy(14,0,0.06f),
-					moveBy(-10,0,0.06f),moveBy(10,0,0.06f),
-					moveBy(-6,0,0.06f),moveBy(6,0,0.06f),
-					moveBy(-2,0,0.06f),moveBy(2,0,0.06f)
+			addAction(sequence(moveBy(-16,0,dur),moveBy(16,0,dur),
+					moveBy(-12,0,dur),moveBy(12,0,dur),
+					moveBy(-8,0,dur),moveBy(8,0,dur),
+					moveBy(-4,0,dur),moveBy(4,0,dur)
 					));
 		}
 				
 	}
 	/**
-	 * 收到攻击动画
+	 * 受到攻击动画
 	 */
 	public void hitedAction(){
+		float dur = Configure.duration_ani/2;
 		if(face==FACE.right){
-			addAction(sequence(moveBy(-16,0,0.06f),moveBy(16,0,0.06f),
-					moveBy(-14,0,0.06f),moveBy(14,0,0.06f),
-					moveBy(-10,0,0.06f),moveBy(10,0,0.06f),
-					moveBy(-6,0,0.06f),moveBy(6,0,0.06f),
-					moveBy(-2,0,0.06f),moveBy(2,0,0.06f)
-					));
+			this.setOrigin(0, 0);
+			addAction(sequence(parallel(sequence(rotateBy(15.0f,dur),moveBy(-10.0f,.0f,dur))),parallel(sequence(rotateBy(-15.0f,dur),moveBy(10.0f,.0f,dur)))));
 		}
 		else if(face==FACE.left){
-			addAction(sequence(moveBy(16,0,0.06f),moveBy(-16,0,0.06f),
-					moveBy(14,0,0.06f),moveBy(-14,0,0.06f),
-					moveBy(10,0,0.06f),moveBy(-10,0,0.06f),
-					moveBy(6,0,0.06f),moveBy(-6,0,0.06f),
-					moveBy(2,0,0.06f),moveBy(-2,0,0.06f)
-					));
+			this.setOrigin(32, 0);
+			addAction(sequence(parallel(sequence(rotateBy(-15.0f,dur),moveBy(10.0f,.0f,dur))),parallel(sequence(rotateBy(15.0f,dur),moveBy(-10.0f,.0f,dur)))));
 		}
 	}
 	/**
@@ -550,7 +547,7 @@ public class Role extends Actor {
 	 * @param y	击退到的位置y坐标
 	 */
 	public void heatAction(int x,int y){
-		addAction(moveBy(x,y,0.01f));
+		addAction(moveBy(x,y,Configure.duration_ani/10));
 	}
 	/**
 	 * 返回英雄的职业数据

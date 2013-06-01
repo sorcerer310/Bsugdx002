@@ -134,16 +134,19 @@ public class Skill {
 			if(type==Skill.Type.f_damage){
 				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.getAttack()+val), object.getDefend()) >= 0 
 						? object.currentHp - U.realDamage((int)(owner.getAttack()+val), object.getDefend()): 0);
+				Commander.getInstance().hitedCommand(object);
 			//扩展格子伤害
 			}else if(type==Skill.Type.f_box){
 				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.getAttack()), object.getDefend()) >= 0 
 						? object.currentHp - U.realDamage((int)(owner.getAttack()), object.getDefend()): 0);
+				Commander.getInstance().hitedCommand(object);
 			//转移伤害至生命	
 			}else if(type==Skill.Type.f_shifhp){
 				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.getAttack()+val), object.getDefend()) >= 0 
 						? object.currentHp - U.realDamage((int)(owner.getAttack()+val), object.getDefend()): 0);	//伤害敌人
 				owner.currentHp = (int)(owner.currentHp + U.realDamage((int)(owner.getAttack()+val), object.getDefend())/2) >= owner.getMaxHp() //转移生命至自己
 						? owner.getMaxHp() : (int)(owner.currentHp + U.realDamage((int)(owner.getAttack()+val), object.getDefend())/2);
+				Commander.getInstance().hitedCommand(object);
 			//击退伤害
 			}else if(type==Skill.Type.p_atkbeat){
 				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.getAttack()*val), object.getDefend()) >= 0 
@@ -153,9 +156,11 @@ public class Skill {
 			}else if(type==Skill.Type.p_damage){
 				object.currentHp = (int) (object.currentHp - U.realDamage((int)(owner.getAttack()*val), object.getDefend()) >= 0 
 					? object.currentHp - U.realDamage((int)(owner.getAttack()*val), object.getDefend()): 0);	//伤害敌人
+				Commander.getInstance().hitedCommand(object);
 			//持续伤害，默认为3回合
 			}else if(type==Skill.Type.pdot_damage){
 				object.csstate.add(new ContinuedSkillState(3,owner.getAttack()*val,CSType.dot,ani_continue,offset_ani_continue));
+
 			//一定机率致盲
 			}else if(type==Skill.Type.prob_blind){
 				//此处增加机率代码
@@ -166,9 +171,11 @@ public class Skill {
 				//此处增加机率代码
 				if(U.probability(val))
 					object.csstate.add(new ContinuedSkillState(2,0,CSType.dizzy,ani_continue,offset_ani_continue));
+				Commander.getInstance().hitedCommand(object);
 			//破甲效果
 			}else if(type==Skill.Type.prob_nude){
 				object.csstate.add(new ContinuedSkillState(3,val,CSType.debuff_def,ani_continue,offset_ani_continue));
+				Commander.getInstance().hitedCommand(object);
 			}
 			
 			return false;

@@ -50,8 +50,10 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 				Configure.screen_update, stage, 135, 225);
 		ib_mb_update.setPosition(135, 225);
 		ib_mb_role = WidgetFactory.getInstance().makeImageButton(
-				Configure.screen_role, stage, 300, 135);
-		ib_mb_role.setPosition(300, 135);
+				Configure.screen_role, stage, 300, 225);
+//		ib_mb_role = WidgetFactory.getInstance().makeImageButton(
+//				Configure.screen_role, stage, 300, 135);
+//		ib_mb_role.setPosition(300, 135);
 		ib_mb_fight = WidgetFactory.getInstance().makeImageButton(
 				Configure.screen_fight, stage, 135, 50);
 		ib_mb_fight.setPosition(135, 50);
