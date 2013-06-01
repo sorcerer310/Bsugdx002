@@ -33,17 +33,10 @@ public class GameScreenConfigure {
 		roles.clear();
 		heroRoles.clear();
 		npcRoles.clear();
-		//加入3个英雄
-		heroRoles.add(new Role(Role.Type.HERO,QUALITY.green,CLASSES.fighter,"粘思",U.getRandom(100, -6, 6),8,10
-				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
-				new SkillTree().getSkillTreeFixedSkill(1)
-				,GameTextureClass.getInstance().fc_photo));
-		heroRoles.add(new Role(Role.Type.HERO,QUALITY.green,CLASSES.wizard,"呜思",U.getRandom(50, -3, 6),10,3
-				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
-				new SkillTree().getSkillTreeFixedSkill(10),GameTextureClass.getInstance().h5_photo));
-		heroRoles.add(new Role(Role.Type.HERO,QUALITY.green,CLASSES.archer,"色首",U.getRandom(80, -2, 2),10,16
-				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
-				new SkillTree().getSkillTreeFixedSkill(38),GameTextureClass.getInstance().h3_photo));
+		
+		Array<Role> froles = Player.getInstance().playerFightRole;
+		for(Role r:froles)
+			heroRoles.add(r);
 		
 		//加入3个敌人
 		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GameTextureClass.getInstance().h1_photo,1));

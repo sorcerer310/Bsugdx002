@@ -28,10 +28,10 @@ public class Player {
 
 	private int money;// 玩家金钱
 	public Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
-	public Array<Role> playerFightRole = new Array<Role>();// 玩家拥有的出战卡片
+	public Array<Role> playerFightRole = new Array<Role>();// 玩家拥有的出战英雄
 	public Array<Role> playerIdelRole = new Array<Role>();// 玩家背�
 
-	public Player() {
+	private Player() {
 		// TODO Auto-generated constructor stub
 		getPlayerRole();
 		getPlayerFightRole();
@@ -79,11 +79,8 @@ public class Player {
 	 * @return
 	 */
 	private Array<Role> getPlayerFightRole() {
-		if (playerFightRole.size == 0) {
+		if (playerFightRole.size == 0) 
 			playerFightRole.add(playerRole.get(0));
-			//playerFightRole.add(playerRole.get(1));
-			//playerFightRole.add(playerRole.get(2));
-		}
 		return playerFightRole;
 	}
 
@@ -126,8 +123,9 @@ public class Player {
 		return qa;
 	}
 
-	/**
+	/** 
 	 * 根据等级的优先顺序排列 参数为同品质的数组
+	 * @param roles	带入的角色数组
 	 */
 	public void resetRoleArray(Array<Role> roles) {
 		int i, j;
