@@ -47,7 +47,7 @@ public class Configure {
 	public static String button_eatall="bteatall";
 	public static String button_level="btlevel";
 
-	public static String[] game_map_path_string = { "map1", "map2" };// 地图关卡名称（路径）
+	public static String[] game_map_path_string = { "teaching","map1", "map2" };// 地图关卡名称（路径）
 
 	public static String map_raw_min_key = "raw_min";// 记录地图长宽数据key
 	public static String map_raw_max_key = "raw_max";
