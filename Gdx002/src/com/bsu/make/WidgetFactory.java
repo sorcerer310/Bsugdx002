@@ -29,10 +29,8 @@ import com.bsu.tools.GameTextureClass;
 
 public class WidgetFactory {
 	private static WidgetFactory instance = null;
-	private Image role_photo;// 选中角色后的特效图片
-
 	private WidgetFactory() {
-		role_photo = new Image(GameTextureClass.getInstance().role_effect);
+		
 	}
 
 	public static WidgetFactory getInstance() {
