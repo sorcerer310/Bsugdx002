@@ -7,12 +7,12 @@
  </tileset>
  <layer height="10" name="ter" width="15">
   <data compression="zlib" encoding="base64">
-   eJxjZGBgYBzFwxYPFAAArAgAeQ==
+   eJxjZGBgYBzFgxoPRQAAoyAAag==
   </data>
  </layer>
  <layer height="10" name="deck" width="15">
   <data compression="zlib" encoding="base64">
-   eJy7wsDAcJUMfA2IrzNAgAgDJkjDIgYDN5H0IgMePHq5Ceglx14eNHmYXm4GTECqvRJY9CbjwKlQjCyWAhUD6b0FxLfJwHfwuJfWAACaoyrX
+   eJy7wsDAcJUMfA2IrzNAgAgDJkjDIgYDN5H0IgMePHq5Ceglx14eNHmYXm4GTECqvRJoem8B8W0y8B08dg5mAAAHnSQZ
   </data>
  </layer>
  <objectgroup height="10" name="birthday" width="15">

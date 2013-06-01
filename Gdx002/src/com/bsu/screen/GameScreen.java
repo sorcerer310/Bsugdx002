@@ -116,7 +116,7 @@ public class GameScreen extends CubocScreen implements Observer,
 				}
 			}
 		}
-	}
+	} 
 
 	@Override
 	public void render(float delta) {

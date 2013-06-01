@@ -8,12 +8,12 @@
  </tileset>
  <layer name="ter" width="15" height="10">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYBzFwxYPFAAArAgAeQ==
+   eJxjZGBgYBzFgxoPRQAAoyAAag==
   </data>
  </layer>
  <layer name="deck" width="15" height="10">
   <data encoding="base64" compression="zlib">
-   eJy7wsDAcJUMfA2IrzNAgAgDJkjDIgYDN5H0IgMePHq5Ceglx14eNHmYXm4GTECqvRJY9CbjwKlQjCyWAhUD6b0FxLfJwHfwuJfWAACaoyrX
+   eJy7wsDAcJUMfA2IrzNAgAgDJkjDIgYDN5H0IgMePHq5Ceglx14eNHmYXm4GTECqvRJoem8B8W0y8B08dg5mAAAHnSQZ
   </data>
  </layer>
  <objectgroup name="birthday" width="15" height="10">
