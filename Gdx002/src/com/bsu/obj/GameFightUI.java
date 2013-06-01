@@ -57,18 +57,21 @@ public class GameFightUI {
 			}
 		});
 		for (int i = 0; i < Player.getInstance().playerFightRole.size; i++) {
-			int x=20+i*80;
-			int y=10;
+			int x = 20 + i * 80;
+			int y = 10;
 			final Role r = Player.getInstance().playerFightRole.get(i);
-			Vector2 v = new Vector2(x,y);
-			final RolePhoto photo = new RolePhoto(r.roleTexture, stage,
-					r.quality, v, false);
-			r.photo=photo;
-			TextureRegion hp=WidgetFactory.getInstance().getTexture(4,48, Color.BLACK, Color.RED, 1);
-			WidgetFactory.getInstance().makeImg(hp, stage, 1, x-10, y);
-			WidgetFactory.getInstance().makeLabel(r.name, stage,0.8f, x, y+50);
-			WidgetFactory.getInstance().makeImg(r.skill_array.get(0).icon, stage, 1, x+50, y+26);
-			WidgetFactory.getInstance().makeImg(r.skill_array.get(1).icon, stage, 1, x+50, y);
+			Vector2 v = new Vector2(x, y);
+			final RolePhoto photo = new RolePhoto(r, stage, v, false);
+			r.photo = photo;
+			TextureRegion hp = WidgetFactory.getInstance().getTexture(4, 48,
+					Color.BLACK, Color.RED, 1);
+			WidgetFactory.getInstance().makeImg(hp, stage, 1, x - 10, y);
+			WidgetFactory.getInstance().makeLabel(r.name, stage, 0.8f, x,
+					y + 50);
+			WidgetFactory.getInstance().makeImg(r.skill_array.get(0).icon,
+					stage, 1, x + 50, y + 26);
+			WidgetFactory.getInstance().makeImg(r.skill_array.get(1).icon,
+					stage, 1, x + 50, y);
 		}
 	}
 }

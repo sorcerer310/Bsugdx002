@@ -66,7 +66,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		background = new Image(GameTextureClass.getInstance().updatePanel);
 		stage.addActor(background);
 		quality = QualityS.gselect;
-		infos = WidgetFactory.getInstance().makeLabel("", stage,1, 135, 280);
+		infos = WidgetFactory.getInstance().makeLabel("", stage, 1, 135, 280);
 		upButton = WidgetFactory.getInstance().makeImageButton(
 				Configure.button_up, stage, 320, 270);
 		ib_back = WidgetFactory.getInstance().makeImageButton(
@@ -97,8 +97,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < playerRoles.size; i++) {
 			final Role r = playerRoles.get(i);
 			Vector2 v = new Vector2(48, 246 - 55 * i);
-			RolePhoto photo = new RolePhoto(r.roleTexture, upRoleStage,
-					r.quality, v, false);
+			RolePhoto photo = new RolePhoto(r, upRoleStage, v, false);
 			r.photo = photo;
 			photo.role.addListener(new InputListener() {
 				@Override
@@ -169,8 +168,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
 			final Vector2 v = new Vector2(x + i % 5 * w, y - i / 5 * w);
-			RolePhoto photo = new RolePhoto(r.roleTexture, sRoleStage,
-					r.quality, v, false);
+			RolePhoto photo = new RolePhoto(r, sRoleStage, v, false);
 			r.photo = photo;
 			photo.role.addListener(new InputListener() {
 				@Override

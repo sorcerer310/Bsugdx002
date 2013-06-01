@@ -127,8 +127,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
 			Vector2 v = new Vector2(20 + 60 * i, 50);
-			final RolePhoto photo = new RolePhoto(r.roleTexture, sRoleStage,
-					r.quality, v, false);
+			final RolePhoto photo = new RolePhoto(r, sRoleStage, v,
+					false);
 			r.photo = photo;
 			photo.role.addListener(new InputListener() {
 				@Override
@@ -169,7 +169,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 			RoleInfoStage.addActor(skillImgEffect);
 			final Image img = wfy.makeImg(r.skill_array.get(index).icon,
 					RoleInfoStage, 1f, 40 + i * 60, 170);
-			wfy.makeLabel(""+r.skill_array.get(i).lev, RoleInfoStage, 0.5f, 40+i*60+28, 163);
+			wfy.makeLabel("" + r.skill_array.get(i).lev, RoleInfoStage, 0.5f,
+					40 + i * 60 + 28, 163);
 			final Vector2 v = new Vector2(img.getX(), img.getY());
 			skillImgEffect.setPosition(v.x - 1, v.y - 1);
 			skillImg[i] = img;
@@ -209,7 +210,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 				220);
 		wfy.makeLabel("攻击:" + r.getAttack(), RoleInfoStage, 0.6f, 40, 200);
 		wfy.makeLabel("防御:" + r.getDefend(), RoleInfoStage, 0.6f, 100, 200);
-		
+
 	}
 
 	/**
@@ -238,25 +239,29 @@ public class RoleScreen extends CubocScreen implements Observer,
 			if (s.quality == QUALITY.green) {
 				skill_img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix
 						+ numsGreen * 40, iy);
-				wfy.makeLabel(""+s.lev, RoleInfoStage, 0.5f, ix+numsBlue*40+28, iy-7);
+				wfy.makeLabel("" + s.lev, RoleInfoStage, 0.5f, ix + numsBlue
+						* 40 + 28, iy - 7);
 				numsGreen++;
 			}
 			if (s.quality == QUALITY.blue) {
 				skill_img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsBlue
 						* 40, iy + 35);
-				wfy.makeLabel(""+s.lev, RoleInfoStage, 0.5f, ix+numsBlue*40+28, iy+28);
+				wfy.makeLabel("" + s.lev, RoleInfoStage, 0.5f, ix + numsBlue
+						* 40 + 28, iy + 28);
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
 				skill_img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsPur
 						* 40, iy + 70);
-				wfy.makeLabel(""+s.lev, RoleInfoStage, 0.5f, ix+numsPur*40+28, iy+63);
+				wfy.makeLabel("" + s.lev, RoleInfoStage, 0.5f, ix + numsPur
+						* 40 + 28, iy + 63);
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
 				skill_img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsOra
 						* 40, iy + 105);
-				wfy.makeLabel(""+s.lev, RoleInfoStage, 0.5f, ix+numsOra*40+28, iy+98);
+				wfy.makeLabel("" + s.lev, RoleInfoStage, 0.5f, ix + numsOra
+						* 40 + 28, iy + 98);
 				numsOra++;
 			}
 			final Vector2 vs = new Vector2(skill_img.getX(), skill_img.getY());
@@ -297,7 +302,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		System.out.println(r.skill_array.get(index).name + "change to" + s.name
 				+ "inf" + s.info);
 		r.skill_array.set(index, s);
-		r.cskill=r.skill_array.get(0);
+		r.cskill = r.skill_array.get(0);
 		Skin skin = new Skin();
 		skin.add("Img", new TextureRegion(s.icon));
 		if (index == 0) {

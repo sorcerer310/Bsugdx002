@@ -51,9 +51,9 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		ib_mb_update.setPosition(135, 225);
 		ib_mb_role = WidgetFactory.getInstance().makeImageButton(
 				Configure.screen_role, stage, 300, 225);
-//		ib_mb_role = WidgetFactory.getInstance().makeImageButton(
-//				Configure.screen_role, stage, 300, 135);
-//		ib_mb_role.setPosition(300, 135);
+		// ib_mb_role = WidgetFactory.getInstance().makeImageButton(
+		// Configure.screen_role, stage, 300, 135);
+		// ib_mb_role.setPosition(300, 135);
 		ib_mb_fight = WidgetFactory.getInstance().makeImageButton(
 				Configure.screen_fight, stage, 135, 50);
 		ib_mb_fight.setPosition(135, 50);
@@ -69,12 +69,11 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		roleStage.clear();
 		int frlength = 0;
 		Array<Role> playerRols = Player.getInstance().playerFightRole;
-			frlength=playerRols.size;
+		frlength = playerRols.size;
 		for (int i = 0; i < playerRols.size; i++) {
 			final Role r = playerRols.get(i);
 			Vector2 v = new Vector2(48, 246 - 55 * i);
-			RolePhoto photo = new RolePhoto(r.roleTexture, roleStage,
-					r.quality, v, true);
+			RolePhoto photo = new RolePhoto(r, roleStage, v, true);
 			photo.role.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
@@ -103,6 +102,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 			}
 		}
 	}
+
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);

@@ -140,8 +140,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
 			Vector2 v = new Vector2(x + i % 7 * w, y - i / 7 * w);
-			final RolePhoto photo = new RolePhoto(r.roleTexture, sRoleStage,
-					r.quality, v, false);
+			final RolePhoto photo = new RolePhoto(r, sRoleStage, v, false);
 			r.photo = photo;
 			photo.role.addListener(new InputListener() {
 				@Override

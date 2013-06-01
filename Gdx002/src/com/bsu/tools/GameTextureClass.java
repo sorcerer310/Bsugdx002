@@ -35,16 +35,22 @@ public class GameTextureClass {
 	public TextureAtlas texture_skills_icon;				//技能图标纹理
 	public TextureAtlas texture_atlas_button;
 	
-	public TextureRegion fc_photo, zyc_photo, h0_photo, h1_photo, h2_photo,
-			h3_photo, h4_photo, h5_photo;
-	public TextureRegion tmpskillicon;				//临时用图标
+	public TextureRegion fc_photo, zyc_photo;
 	public Texture tipsPanel;
 	public TextureRegion role_effect;//人物头像效果
+	private TextureAtlas role_classes;//人物职业图像
+	public TextureRegion fight_texture,cleric_texture,wizard_texture,sorcerer_texture,archer_texture;
 
 	private GameTextureClass() {
 		// TODO Auto-generated constructor stub
 		effect_texture = new Texture(
 				Gdx.files.internal("data/game/hero/effect.png"));
+		role_classes=new TextureAtlas(Gdx.files.internal("data/game/icon/classes.txt"));
+		fight_texture=role_classes.findRegion("fighter");
+		cleric_texture=role_classes.findRegion("cleric");
+		wizard_texture=role_classes.findRegion("wizard");
+		sorcerer_texture=role_classes.findRegion("sorcerer");
+		archer_texture=role_classes.findRegion("archer");
 		mPanel = new Texture(Gdx.files.internal("data/menu/mpanel.png"));
 		equipPanel = new Texture(Gdx.files.internal("data/menu/equippanel.png"));
 		fightPanel = new Texture(Gdx.files.internal("data/menu/fightpanel.png"));
@@ -63,15 +69,8 @@ public class GameTextureClass {
 				Gdx.files.internal("data/game/hero/Actor1.png"));
 		fc_photo=new TextureRegion(role_texture,0,0,96,96);
 		zyc_photo=new TextureRegion(role_texture,96,0,96,96);
-		h0_photo=new TextureRegion(role_texture,192,0,96,96);
-		h1_photo=new TextureRegion(role_texture,288,0,96,96);
-		h2_photo=new TextureRegion(role_texture,0,96,96,96);
-		h3_photo=new TextureRegion(role_texture,96,96,96,96);
-		h4_photo=new TextureRegion(role_texture,192,96,96,96);
-		h5_photo=new TextureRegion(role_texture,288,96,96,96);
 		role_effect=new TextureRegion(effect_texture, 224, 160,32,32);
-//		Texture tmpicon = new Texture(Gdx.files.internal("data/game/icon/11.png"));
-//		tmpskillicon = new TextureRegion(tmpicon,0,0,32,32);
+
 		
 		texture_skills_effect = new TextureAtlas(Gdx.files.internal("data/game/effect/skilleffect.txt"));
 		texture_skills_icon = new TextureAtlas(Gdx.files.internal("data/game/icon/skillicon.txt"));
