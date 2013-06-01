@@ -16,4 +16,16 @@
    eJy7wsDAcJUMfA2IrzNAgAgDJkjDIgYDN5H0IgMePHq5Ceglx14eNHmYXm4GTECqvRJY9CbjwKlQjCyWAhUD6b0FxLfJwHeAGACEryrX
   </data>
  </layer>
+ <objectgroup name="birthday" width="15" height="8">
+  <object name="n1" type="enemy" gid="9" x="416" y="64"/>
+  <object name="n2" type="enemy" gid="9" x="416" y="96"/>
+  <object name="n3" type="enemy" gid="9" x="416" y="128"/>
+  <object name="n4" type="enemy" gid="9" x="416" y="160"/>
+  <object name="n5" type="enemy" gid="9" x="416" y="192"/>
+  <object name="h1" type="hero" gid="9" x="32" y="64"/>
+  <object name="h2" type="hero" gid="9" x="32" y="96"/>
+  <object name="h3" type="hero" gid="9" x="32" y="128"/>
+  <object name="h4" type="hero" gid="9" x="32" y="160"/>
+  <object name="h5" type="hero" gid="9" x="32" y="192"/>
+ </objectgroup>
 </map>
