@@ -367,6 +367,7 @@ public class Role extends Actor {
 	}
 
 	public Skill getCskill() {
+		cskill=skill_array.get(0);
 		return cskill;
 	}
 

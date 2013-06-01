@@ -134,12 +134,15 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	private void showQualityRole(final Array<Role> roleArray) {
 		sRoleStage.clear();
 		int frlength = roleArray.size;
+		int x = 35;
+		int y = 200;
+		int w = 60;
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			Vector2 v = new Vector2(20 + i % 7 * 60, 200 - i / 7 * 60);
+			Vector2 v = new Vector2(x + i % 7 * w, y - i / 7 * w);
 			final RolePhoto photo = new RolePhoto(r.roleTexture, sRoleStage,
 					r.quality, v, false);
-			r.photo=photo;
+			r.photo = photo;
 			photo.role.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
@@ -181,37 +184,40 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 				}
 			});
 		}
-			for (int i = frlength; i < 21; i++) {
-				Vector2 v = new Vector2(20+i%7*60, 200 - i/7*60);
-				RolePhoto photo = new RolePhoto(sRoleStage, QUALITY.orange, v);
-				photo.role_k.addListener(new InputListener() {
-					@Override
-					public boolean touchDown(InputEvent event, float x,
-							float y, int pointer, int button) {
-						setChanged();
-						notifyObservers(new MessageObject(null,
-								Configure.screen_selectRole));
-						return super.touchDown(event, x, y, pointer, button);
-					}
-				});
-			}
+		for (int i = frlength; i < 21; i++) {
+			Vector2 v = new Vector2(x + i % 7 * w, y - i / 7 * w);
+			RolePhoto photo = new RolePhoto(sRoleStage, QUALITY.orange, v);
+			photo.role_k.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y,
+						int pointer, int button) {
+					setChanged();
+					notifyObservers(new MessageObject(null,
+							Configure.screen_selectRole));
+					return super.touchDown(event, x, y, pointer, button);
+				}
+			});
+		}
 	}
+
 	/**
 	 * 设置被选中的角色
+	 * 
 	 * @param r
 	 */
-	private void resetRole(Role r){
-		for(Role e:Player.getInstance().playerIdelRole){
+	private void resetRole(Role r) {
+		for (Role e : Player.getInstance().playerIdelRole) {
 			e.photo.showEffect(false);
 		}
-		for(Actor act:sRoleStage.getActors()){
-			if(act instanceof Image){
-				if(act.equals(r.photo.role)){
+		for (Actor act : sRoleStage.getActors()) {
+			if (act instanceof Image) {
+				if (act.equals(r.photo.role)) {
 					r.photo.showEffect(true);
 				}
 			}
 		}
 	}
+
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(null);

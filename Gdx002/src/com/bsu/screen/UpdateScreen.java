@@ -31,6 +31,7 @@ import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.Configure.QualityS;
 import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.MessageObject;
 import com.bsu.tools.U;
 
 public class UpdateScreen extends CubocScreen implements Observer,
@@ -118,7 +119,9 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	 */
 	private void showUpRoleInfo() {
 		infos.setFontScale(0.7f);
-		infos.setText(selectUpdateRole.name+"  lv:"+selectUpdateRole.level+"  exp:"+selectUpdateRole.exp + "/" + selectUpdateRole.expUp);
+		infos.setText(selectUpdateRole.name + "  lv:" + selectUpdateRole.level
+				+ "  exp:" + selectUpdateRole.exp + "/"
+				+ selectUpdateRole.expUp);
 		upButton.setColor(upButton.getColor().r, upButton.getColor().g,
 				upButton.getColor().b,
 				(selectUpdateRole.exp > selectUpdateRole.expUp ? 1 : 0f));
@@ -158,9 +161,13 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	 */
 	private void showQualityRole(Array<Role> roleArray) {
 		sRoleStage.clear();
+		int frlength = roleArray.size;
+		int x = 150;
+		int y = 210;
+		int w = 60;
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			Vector2 v = new Vector2(140 + i % 5 * 70, 200 - i / 5 * 70);
+			Vector2 v = new Vector2(x + i % 5 * w, y - i / 5 * w);
 			RolePhoto photo = new RolePhoto(r.roleTexture, sRoleStage,
 					r.quality, v, false);
 			r.photo = photo;
@@ -176,6 +183,20 @@ public class UpdateScreen extends CubocScreen implements Observer,
 						int pointer, int button) {
 					resetEatRole(r);
 					super.touchUp(event, x, y, pointer, button);
+				}
+			});
+		}
+		for (int i = frlength; i < 15; i++) {
+			Vector2 v = new Vector2(x + i % 5 * w, y - i / 5 * w);
+			RolePhoto photo = new RolePhoto(sRoleStage, QUALITY.orange, v);
+			photo.role_k.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y,
+						int pointer, int button) {
+					setChanged();
+					notifyObservers(new MessageObject(null,
+							Configure.screen_selectRole));
+					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
 		}
