@@ -42,6 +42,10 @@ public class GameScreenConfigure {
 		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GameTextureClass.getInstance().h1_photo,1));
 		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GameTextureClass.getInstance().h1_photo,1));
 		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GameTextureClass.getInstance().h1_photo,1));
+//		npcRoles.add(new Role(Role.Type.ENEMY,QUALITY.green,CLASSES.fighter,"测试人物",U.getRandom(100, -6, 6),8,10
+//					,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
+//					new SkillTree().getSkillTreeFixedSkill(1)
+//					,GameTextureClass.getInstance().fc_photo));
 		
 		roles.addAll(heroRoles);
 		roles.addAll(npcRoles);
