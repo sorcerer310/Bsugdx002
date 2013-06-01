@@ -66,7 +66,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		quality = QualityS.gselect;
 		infos = WidgetFactory.getInstance().makeLabel("", stage, 135, 280);
 		upButton = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_up, stage, 300, 270);
+				Configure.button_up, stage, 320, 270);
 		ib_back = WidgetFactory.getInstance().makeImageButton(
 				Configure.button_back, stage, 380, 270);
 		allButton = WidgetFactory.getInstance().makeImageButton(
@@ -121,7 +121,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		infos.setText(selectUpdateRole.name+"  lv:"+selectUpdateRole.level+"  exp:"+selectUpdateRole.exp + "/" + selectUpdateRole.expUp);
 		upButton.setColor(upButton.getColor().r, upButton.getColor().g,
 				upButton.getColor().b,
-				(selectUpdateRole.exp > selectUpdateRole.expUp ? 1 : 0.5f));
+				(selectUpdateRole.exp > selectUpdateRole.expUp ? 1 : 0f));
 	}
 
 	/**
