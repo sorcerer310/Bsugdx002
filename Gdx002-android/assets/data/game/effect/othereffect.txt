@@ -1,0 +1,39 @@
+othereffect.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+star
+  rotate: false
+  xy: 0, 0
+  size: 29, 27
+  orig: 33, 33
+  offset: 2, 2
+  index: 1
+star
+  rotate: false
+  xy: 0, 28
+  size: 29, 27
+  orig: 33, 33
+  offset: 2, 2
+  index: 2
+star
+  rotate: false
+  xy: 30, 0
+  size: 29, 27
+  orig: 33, 33
+  offset: 2, 2
+  index: 3
+star
+  rotate: false
+  xy: 30, 28
+  size: 27, 25
+  orig: 33, 33
+  offset: 3, 3
+  index: 4
+star
+  rotate: false
+  xy: 30, 54
+  size: 25, 25
+  orig: 33, 33
+  offset: 5, 3
+  index: 5
