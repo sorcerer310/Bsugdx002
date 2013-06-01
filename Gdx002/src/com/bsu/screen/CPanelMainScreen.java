@@ -69,8 +69,8 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		roleStage.clear();
 		int frlength = 0;
 		Array<Role> playerRols = Player.getInstance().playerFightRole;
+			frlength=playerRols.size;
 		for (int i = 0; i < playerRols.size; i++) {
-			frlength++;
 			final Role r = playerRols.get(i);
 			Vector2 v = new Vector2(48, 246 - 55 * i);
 			RolePhoto photo = new RolePhoto(r.roleTexture, roleStage,

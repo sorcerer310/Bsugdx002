@@ -42,6 +42,7 @@ import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.obj.RolePhoto;
 import com.bsu.tools.Configure;
+import com.bsu.tools.MessageObject;
 import com.bsu.tools.TipsWindows;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.Configure.QualityS;
@@ -132,9 +133,10 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	 */
 	private void showQualityRole(final Array<Role> roleArray) {
 		sRoleStage.clear();
+		int frlength = roleArray.size;
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			Vector2 v = new Vector2(140 + i % 5 * 70, 200 - i / 5 * 70);
+			Vector2 v = new Vector2(20 + i % 7 * 60, 200 - i / 7 * 60);
 			final RolePhoto photo = new RolePhoto(r.roleTexture, sRoleStage,
 					r.quality, v, false);
 			r.photo=photo;
@@ -179,6 +181,20 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 				}
 			});
 		}
+			for (int i = frlength; i < 21; i++) {
+				Vector2 v = new Vector2(20+i%7*60, 200 - i/7*60);
+				RolePhoto photo = new RolePhoto(sRoleStage, QUALITY.orange, v);
+				photo.role_k.addListener(new InputListener() {
+					@Override
+					public boolean touchDown(InputEvent event, float x,
+							float y, int pointer, int button) {
+						setChanged();
+						notifyObservers(new MessageObject(null,
+								Configure.screen_selectRole));
+						return super.touchDown(event, x, y, pointer, button);
+					}
+				});
+			}
 	}
 	/**
 	 * 设置被选中的角色
