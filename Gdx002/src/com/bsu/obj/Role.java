@@ -28,6 +28,7 @@ public class Role extends Actor {
 	public static enum Type {
 		HERO, ENEMY
 	}; // 英雄还是NPC
+
 	public RolePhoto photo;
 	public Equip weapon;// 人物武器
 	public Equip armor;// 人物护甲
@@ -50,7 +51,7 @@ public class Role extends Actor {
 	public int expUp = 0;
 	public Array<ContinuedSkillState> csstate = new Array<ContinuedSkillState>(); // 当前在人物身上的各种持续效果
 	public boolean isRoundMove = true; // 本回合是否移动
-	public boolean locked;//是否被锁住
+	public boolean locked;// 是否被锁住
 	private float time_state; // 行动状态时间
 	private float time_effect; // 技能特效时间
 	private float px, py;// 动画偏移量
@@ -98,7 +99,7 @@ public class Role extends Actor {
 		weapon = w;
 		armor = a;
 		skill_tree = as;
-		roleTexture = tr;
+		roleTexture = new TextureRegion(tr);
 		cskill = skill_tree.get(0);
 		skill_array.add(skill_tree.get(0));
 		skill_array.add(skill_tree.get(1));
@@ -114,9 +115,9 @@ public class Role extends Actor {
 	 */
 	private void set_actor_base(Type type) {
 		this.type = type;
-		if (type == Type.HERO)
+		if (type == Type.HERO) {
 			face = FACE.right;
-		else {
+		} else {
 			face = FACE.left;
 			roleTexture.flip(true, false);
 		}
@@ -124,7 +125,7 @@ public class Role extends Actor {
 				roleTexture);
 		ani_move = GameAnimationClass.getInstance().getRoleAnimation(
 				roleTexture);
-		
+
 		ani_disapper = GameAnimationClass.getInstance().getEffectDisapper();
 		ani_apper = GameAnimationClass.getInstance().getEffectApper();
 		set_ani_from_state(STATE.idle);
@@ -171,10 +172,12 @@ public class Role extends Actor {
 				bevent.notify(this, this.name);
 		} else {
 			attack_effect = skl.ani_self;
-			current_attack_frame = attack_effect.getKeyFrame(time_effect, false);
-			AttackEffect.getInstance().startEffect(current_attack_frame, this,skl.offset_ani_self);
+			current_attack_frame = attack_effect
+					.getKeyFrame(time_effect, false);
+			AttackEffect.getInstance().startEffect(current_attack_frame, this,
+					skl.offset_ani_self);
 		}
-		enemy.ani_role_isAttacked(skl.ani_object, skl.offset_ani_object,be);
+		enemy.ani_role_isAttacked(skl.ani_object, skl.offset_ani_object, be);
 	}
 
 	/**
@@ -183,7 +186,7 @@ public class Role extends Actor {
 	 * @param ani
 	 *            要播放的动画
 	 */
-	private void ani_role_isAttacked(Animation ani, Vector2 v,BsuEvent be) {
+	private void ani_role_isAttacked(Animation ani, Vector2 v, BsuEvent be) {
 		time_effect = 0;
 		if (ani != null) {
 			bevent = be;
@@ -191,7 +194,6 @@ public class Role extends Actor {
 			if (v != null) {
 				px = v.x;
 				py = v.y;
-				System.out.println(px+"@@"+py);
 			}
 		}
 	}
@@ -270,7 +272,8 @@ public class Role extends Actor {
 			}
 		}
 		if (attack_effect != null) {
-			current_attack_frame = attack_effect.getKeyFrame(time_effect, false);
+			current_attack_frame = attack_effect
+					.getKeyFrame(time_effect, false);
 			AttackEffect.getInstance().setFrame(current_attack_frame);
 			if (attack_effect.isAnimationFinished(time_effect)) {
 				current_attack_frame = null;
@@ -280,14 +283,15 @@ public class Role extends Actor {
 				if (bevent != null) {
 					System.out.println(this.name
 							+ "attact_skill_effect_completed");
-					//bevent.notify(this, this.name);
-					bevent.notify(this,"ani_attack_finished");
+					// bevent.notify(this, this.name);
+					bevent.notify(this, "ani_attack_finished");
 				}
 			}
-		}//else{if(bevent!=null)bevent.notify(this,"ani_attack_finished");}
-		
+		}// else{if(bevent!=null)bevent.notify(this,"ani_attack_finished");}
+
 		if (beAttack_effect != null) {
-			current_beattack_frame = beAttack_effect.getKeyFrame(time_effect,false);
+			current_beattack_frame = beAttack_effect.getKeyFrame(time_effect,
+					false);
 			if (beAttack_effect.isAnimationFinished(time_effect)) {
 				current_beattack_frame = null;
 				beAttack_effect = null;
@@ -297,12 +301,11 @@ public class Role extends Actor {
 				if (bevent != null) {
 					System.out.println(this.name
 							+ "beattacked_effect_completed");
-//					bevent.notify(this, this.name);
-					bevent.notify(this,"ani_beattacked_finished");
+					// bevent.notify(this, this.name);
+					bevent.notify(this, "ani_beattacked_finished");
 				}
 			}
-		}//else{if(bevent!=null)bevent.notify(this,"ani_beattacked_finished");}
-
+		}// else{if(bevent!=null)bevent.notify(this,"ani_beattacked_finished");}
 
 		if (isSelected()) {
 			if (state == STATE.idle) {
@@ -325,6 +328,7 @@ public class Role extends Actor {
 
 	/**
 	 * 获得以32*32方格为单位的x坐标
+	 * 
 	 * @return
 	 */
 	public int getBoxX() {
@@ -333,6 +337,7 @@ public class Role extends Actor {
 
 	/**
 	 * 获得以32*32方格为单位的y坐标
+	 * 
 	 * @return
 	 */
 	public int getBoxY() {
@@ -459,42 +464,51 @@ public class Role extends Actor {
 		defend = U.defendLevel(this);
 		expUp = U.expLevel(this);
 	}
-	
+
 	/**
 	 * 移动函数，指定当前的role移动到x y 位置，移动完成后通过BsuEvent通知调用者
-	 * @param x	要移动位置的x坐标
-	 * @param y	要移动位置的y坐标
-	 * @param be	事件对象
+	 * 
+	 * @param x
+	 *            要移动位置的x坐标
+	 * @param y
+	 *            要移动位置的y坐标
+	 * @param be
+	 *            事件对象
 	 */
-	public void moveAction(int x,int y,final BsuEvent be){
-		float dur = Configure.duration_ani/2;
+	public void moveAction(int x, int y, final BsuEvent be) {
+		float dur = Configure.duration_ani / 2;
 		if (get_ani_from_state() != STATE.idle)
 			return;
 		set_ani_from_state(STATE.move);
-		if(face==FACE.right){
+		if (face == FACE.right) {
 			this.setOrigin(0, 0);
 			addAction(parallel(
-				sequence(rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur), rotateBy(10, dur),
-						rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur), rotateBy(10, dur)
-//						rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur), rotateBy(10, dur)
-						),
-				moveBy(x, y, Configure.duration_move_box), run(new Runnable() {
-					@Override
-					public void run() {
-						set_ani_from_state(STATE.idle);
-						if (be != null)
-							be.notify(this, name);
-					}
-				})));
-		}
-		else if(face==FACE.left){
+					sequence(rotateBy(15, dur), rotateBy(-15, dur),
+							rotateBy(-10, dur), rotateBy(10, dur),
+							rotateBy(15, dur), rotateBy(-15, dur),
+							rotateBy(-10, dur), rotateBy(10, dur)
+					// rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur),
+					// rotateBy(10, dur)
+					), moveBy(x, y, Configure.duration_move_box),
+					run(new Runnable() {
+						@Override
+						public void run() {
+							set_ani_from_state(STATE.idle);
+							if (be != null)
+								be.notify(this, name);
+						}
+					})));
+		} else if (face == FACE.left) {
 			this.setOrigin(32, 0);
 			addAction(parallel(
-					sequence(rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur), rotateBy(-10, dur),
-							rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur), rotateBy(-10, dur)
-//							rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur), rotateBy(-10, dur)
-							),
-					moveBy(x, y, Configure.duration_move_box), run(new Runnable() {
+					sequence(rotateBy(-15, dur), rotateBy(15, dur),
+							rotateBy(10, dur), rotateBy(-10, dur),
+							rotateBy(-15, dur), rotateBy(15, dur),
+							rotateBy(10, dur), rotateBy(-10, dur)
+					// rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur),
+					// rotateBy(-10, dur)
+					), moveBy(x, y, Configure.duration_move_box),
+					run(new Runnable() {
 						@Override
 						public void run() {
 							set_ani_from_state(STATE.idle);
@@ -504,49 +518,59 @@ public class Role extends Actor {
 					})));
 		}
 	}
+
 	/**
 	 * 移动过程中被阻挡执行此动作
 	 */
-	public void stopedAction(){
-		float dur = Configure.duration_ani/1.6f;
-		if(face==FACE.right){
-			addAction(sequence(moveBy(16,0,dur),moveBy(-16,0,dur),
-					moveBy(12,0,dur),moveBy(-12,0,dur),
-					moveBy(8,0,dur),moveBy(-8,0,dur),
-					moveBy(4,0,dur),moveBy(-4,0,dur)
-					));
+	public void stopedAction() {
+		float dur = Configure.duration_ani / 1.6f;
+		if (face == FACE.right) {
+			addAction(sequence(moveBy(16, 0, dur), moveBy(-16, 0, dur),
+					moveBy(12, 0, dur), moveBy(-12, 0, dur), moveBy(8, 0, dur),
+					moveBy(-8, 0, dur), moveBy(4, 0, dur), moveBy(-4, 0, dur)));
+		} else if (face == FACE.left) {
+			addAction(sequence(moveBy(-16, 0, dur), moveBy(16, 0, dur),
+					moveBy(-12, 0, dur), moveBy(12, 0, dur),
+					moveBy(-8, 0, dur), moveBy(8, 0, dur), moveBy(-4, 0, dur),
+					moveBy(4, 0, dur)));
 		}
-		else if(face==FACE.left){
-			addAction(sequence(moveBy(-16,0,dur),moveBy(16,0,dur),
-					moveBy(-12,0,dur),moveBy(12,0,dur),
-					moveBy(-8,0,dur),moveBy(8,0,dur),
-					moveBy(-4,0,dur),moveBy(4,0,dur)
-					));
-		}
-				
+
 	}
+
 	/**
 	 * 受到攻击动画
 	 */
-	public void hitedAction(){
-		float dur = Configure.duration_ani/2;
-		if(face==FACE.right){
+	public void hitedAction() {
+		float dur = Configure.duration_ani / 2;
+		if (face == FACE.right) {
 			this.setOrigin(0, 0);
-			addAction(sequence(parallel(sequence(rotateBy(15.0f,dur),moveBy(-10.0f,.0f,dur))),parallel(sequence(rotateBy(-15.0f,dur),moveBy(10.0f,.0f,dur)))));
-		}
-		else if(face==FACE.left){
+			addAction(sequence(
+					parallel(sequence(rotateBy(15.0f, dur),
+							moveBy(-10.0f, .0f, dur))),
+					parallel(sequence(rotateBy(-15.0f, dur),
+							moveBy(10.0f, .0f, dur)))));
+		} else if (face == FACE.left) {
 			this.setOrigin(32, 0);
-			addAction(sequence(parallel(sequence(rotateBy(-15.0f,dur),moveBy(10.0f,.0f,dur))),parallel(sequence(rotateBy(15.0f,dur),moveBy(-10.0f,.0f,dur)))));
+			addAction(sequence(
+					parallel(sequence(rotateBy(-15.0f, dur),
+							moveBy(10.0f, .0f, dur))),
+					parallel(sequence(rotateBy(15.0f, dur),
+							moveBy(-10.0f, .0f, dur)))));
 		}
 	}
+
 	/**
 	 * 击退效果
-	 * @param x 击退到的位置x坐标
-	 * @param y	击退到的位置y坐标
+	 * 
+	 * @param x
+	 *            击退到的位置x坐标
+	 * @param y
+	 *            击退到的位置y坐标
 	 */
-	public void heatAction(int x,int y){
-		addAction(moveBy(x,y,Configure.duration_ani/10));
+	public void heatAction(int x, int y) {
+		addAction(moveBy(x, y, Configure.duration_ani / 10));
 	}
+
 	/**
 	 * 返回英雄的职业数据
 	 * 

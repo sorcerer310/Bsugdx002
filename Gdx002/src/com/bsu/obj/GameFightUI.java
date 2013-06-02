@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.WidgetFactory;
 import com.bsu.tools.Configure;
-import com.bsu.tools.RoleHP;
+
 
 /**
  * GAME游戏战斗场景UI
