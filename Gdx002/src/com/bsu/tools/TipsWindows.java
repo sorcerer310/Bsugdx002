@@ -70,13 +70,17 @@ public class TipsWindows {
 				.get_sytle()));
 		tipsWindows.row();
 		Table t = new Table();
-		for(Skill skill:r.skill_array){
+		for (Skill skill : r.skill_array) {
 			t.defaults().align(Align.center);
-			t.add(new Image(skill.icon));
-			Label l=new Label(""+skill.lev,Configure.get_sytle());
-			l.setFontScale(0.5f);
-			t.defaults().align(Align.bottom);
-			t.add(l);
+			if (skill.enable) {
+				t.add(new Image(skill.icon));
+				Label l = new Label("" + skill.lev, Configure.get_sytle());
+				l.setFontScale(0.5f);
+				t.defaults().align(Align.bottom);
+				t.add(l);
+			} else {
+				t.add(new Image(GameTextureClass.getInstance().getSkillIcon(0)));
+			}
 		}
 		tipsWindows.add(t);
 		tipsWindows.pack();
@@ -191,7 +195,7 @@ public class TipsWindows {
 			if (s.quality == QUALITY.green) {
 				skill_img = new Image(s.icon);
 				tg.add(skill_img);
-				Label l=new Label(""+s.lev,Configure.get_sytle());
+				Label l = new Label("" + s.lev, Configure.get_sytle());
 				l.setFontScale(0.5f);
 				tg.defaults().align(Align.bottom);
 				tg.add(l);
@@ -199,7 +203,7 @@ public class TipsWindows {
 			if (s.quality == QUALITY.blue) {
 				skill_img = new Image(s.icon);
 				tb.add(skill_img);
-				Label l=new Label(""+s.lev,Configure.get_sytle());
+				Label l = new Label("" + s.lev, Configure.get_sytle());
 				l.setFontScale(0.5f);
 				tb.defaults().align(Align.bottom);
 				tb.add(l);
@@ -207,7 +211,7 @@ public class TipsWindows {
 			if (s.quality == QUALITY.purple) {
 				skill_img = new Image(s.icon);
 				tp.add(skill_img);
-				Label l=new Label(""+s.lev,Configure.get_sytle());
+				Label l = new Label("" + s.lev, Configure.get_sytle());
 				l.setFontScale(0.5f);
 				tp.defaults().align(Align.bottom);
 				tp.add(l);
@@ -215,7 +219,7 @@ public class TipsWindows {
 			if (s.quality == QUALITY.orange) {
 				skill_img = new Image(s.icon);
 				to.add(skill_img);
-				Label l=new Label(""+s.lev,Configure.get_sytle());
+				Label l = new Label("" + s.lev, Configure.get_sytle());
 				l.setFontScale(0.5f);
 				to.defaults().align(Align.bottom);
 				to.add(l);

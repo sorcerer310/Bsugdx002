@@ -281,15 +281,14 @@ public class RoleScreen extends CubocScreen implements Observer,
 			Image img1) {
 		r.skill_array.set(index, s);
 		r.cskill = r.skill_array.get(0);
-		Skin skin = new Skin();
-		skin.add("Img", new TextureRegion(s.icon));
 		if (index == 0) {
-			img.setDrawable(skin.getDrawable("Img"));
+			img = wfy.showSkillImg(r.skill_array.get(index),
+					RoleInfoStage, new Vector2(img.getX(),img.getY()));
 		} else {
-			img1.setDrawable(skin.getDrawable("Img"));
+			img1 = wfy.showSkillImg(r.skill_array.get(index),
+					RoleInfoStage, new Vector2(img1.getX(),img1.getY()));
 		}
-		skin.dispose();
-		skin = null;
+		
 	}
 
 	@Override
