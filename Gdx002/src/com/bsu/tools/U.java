@@ -3,6 +3,8 @@ package com.bsu.tools;
 import java.util.Random;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role;
 import com.bsu.tools.Configure.CLASSES;
@@ -218,5 +220,12 @@ public class U {
 		}
 		return labelArray;
 	}
-
+	/**
+	 * 设置一个widget透明度，目前只有image
+	 * @param img
+	 * @param a
+	 */
+	public static void setApha(Widget img,float a){
+		img.setColor(img.getColor().r, img.getColor().g, img.getColor().b, a);
+	}
 } 

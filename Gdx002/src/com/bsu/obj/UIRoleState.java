@@ -8,11 +8,13 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.WidgetFactory;
 import com.bsu.screen.GameScreen;
+import com.bsu.tools.U;
 
 /**
  * GAME游戏战斗场景UI
@@ -25,7 +27,7 @@ public class UIRoleState {
 	Stage stage;
 	TextButton bt_endround;
 	Commander c;
-	Array<Image> hpArray = new Array<Image>();
+	Array<roleUIInfo> hpArray = new Array<roleUIInfo>();
 
 	public UIRoleState(Stage s) {
 		// TODO Auto-generated constructor stub
@@ -52,22 +54,15 @@ public class UIRoleState {
 			}
 		});
 		for (int i = 0; i < Player.getInstance().playerFightRole.size; i++) {
-			int x = 20 + i * 80;
+			int x = 20 + i * 90;
 			int y = 10;
 			final Role r = Player.getInstance().playerFightRole.get(i);
 			Vector2 v = new Vector2(x, y);
 			RolePhoto photo = new RolePhoto(r, stage, v, false);
-			r.photo = photo;
-			TextureRegion hpBack = WidgetFactory.getInstance().getTextureFill(
-					4, 48, Color.BLACK);
-			TextureRegion hp = WidgetFactory.getInstance().getTextureFill(4,
-					48, new Color(255,0,0,1));
-			WidgetFactory.getInstance().makeImg(hpBack, stage, 1, x - 10, y);
-			Image hpImg = WidgetFactory.getInstance().makeImg(hp, stage, 1,
-					x - 10, y);
-			WidgetFactory.getInstance().makeLabel(r.name, stage, 0.8f, x,
-					y + 50);
-			hpArray.add(hpImg);
+			roleUIInfo rui = new roleUIInfo(r, stage, x, y);
+			rui.photoImg = photo.role;
+			rui.role_classes=photo.role_classes;
+			hpArray.add(rui);
 			for (int j = 0; j < r.skill_array.size; j++) {
 				final int tempIndex = j;
 				Image skillImg = WidgetFactory.getInstance().showSkillImg(
@@ -78,7 +73,6 @@ public class UIRoleState {
 						@Override
 						public boolean touchDown(InputEvent event, float x,
 								float y, int pointer, int button) {
-
 							return true;
 						}
 
@@ -102,9 +96,35 @@ public class UIRoleState {
 	public void changeRoleHp(Role r) {
 		for (int i = 0; i < Player.getInstance().playerFightRole.size; i++) {
 			if (Player.getInstance().playerFightRole.get(i).equals(r)) {
-				hpArray.get(i).setScaleY(
-						(float) (r.currentHp) / (float) (r.maxHp));
+				roleUIInfo rui = hpArray.get(i);
+				if (r.currentHp > 0) {
+					rui.hpImg.setScaleY((float) (r.currentHp)
+							/ (float) (r.maxHp));
+				} else {
+					rui.hpImg.setScaleY(0);
+					U.setApha(rui.photoImg, 0.2f);
+					U.setApha(rui.role_classes, 0.2f);
+					U.setApha(rui.nameLabel, 0.2f);
+				}
 			}
 		}
+	}
+}
+
+class roleUIInfo {
+	Image hpImg;
+	Image photoImg,role_classes;
+	Label nameLabel;
+	
+
+	public roleUIInfo(Role r, Stage stage, int x, int y) {
+		TextureRegion hpBack = WidgetFactory.getInstance().getTextureFill(4,
+				48, Color.BLACK);
+		TextureRegion hp = WidgetFactory.getInstance().getTextureFill(4, 48,
+				new Color(255, 0, 0, 1));
+		WidgetFactory.getInstance().makeImg(hpBack, stage, 1, x - 10, y);
+		hpImg = WidgetFactory.getInstance().makeImg(hp, stage, 1, x - 10, y);
+		nameLabel = WidgetFactory.getInstance().makeLabel(r.name, stage, 0.8f,
+				x, y + 50);
 	}
 }
