@@ -288,17 +288,17 @@ public class Commander {
 //	boolean moveAfterSkillFlag = false;	//指示释放技能后人物是否继续移动
 	private void commandRoles(BsuEvent be,Role.Type rt) throws InterruptedException {
 		Array<Role> attackRoles = null;
-		Array<Role> beAttackedRoles = null;
+//		Array<Role> beAttackedRoles = null;
 		DIRECTION direct = DIRECTION.right;
 		//判断进攻方为英雄还是npc
 		if(rt==Type.HERO){
 			attackRoles = heros;
-			beAttackedRoles = npcs;
+//			beAttackedRoles = npcs;
 			direct = DIRECTION.right;
 		}
 		else if(rt==Type.ENEMY){
 			attackRoles = npcs;
-			beAttackedRoles = heros;
+//			beAttackedRoles = heros;
 			direct = DIRECTION.left;
 		} 
 			
