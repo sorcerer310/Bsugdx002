@@ -29,8 +29,9 @@ import com.bsu.tools.GameTextureClass;
 
 public class WidgetFactory {
 	private static WidgetFactory instance = null;
+
 	private WidgetFactory() {
-		
+
 	}
 
 	public static WidgetFactory getInstance() {
@@ -249,7 +250,7 @@ public class WidgetFactory {
 	 * @param v
 	 *            坐标
 	 */
-	public void showSkillImg(Skill skill, Stage s, Vector2 v) {
+	public Image showSkillImg(Skill skill, Stage s, Vector2 v) {
 		Image img = new Image(skill.icon);
 		TextureRegion tr = getTexture(26, 26,
 				Configure.getQualityColor(skill.quality), Color.BLACK, 1);
@@ -257,6 +258,8 @@ public class WidgetFactory {
 		s.addActor(skillImgEffect);
 		s.addActor(img);
 		img.setPosition(v.x, v.y);
-		skillImgEffect.setPosition(v.x-1, v.y-1);
+		skillImgEffect.setPosition(v.x - 1, v.y - 1);
+		makeLabel("" + skill.lev, s, 0.5f, (int)(v.x) + 28, (int)(v.y) - 7);
+		return img;
 	}
 }

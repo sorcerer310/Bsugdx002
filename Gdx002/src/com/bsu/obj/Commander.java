@@ -41,9 +41,9 @@ public class Commander {
 	private Stage stage;
 	private GameScreen gamescreen = null;
 	private Array<Actor> lactor = null;
-	private Array<Role> heros = new Array<Role>();
-	private Array<Role> npcs = new Array<Role>();
-	private Array<Role> allRoles = new Array<Role>();
+	public Array<Role> heros = new Array<Role>();
+	public Array<Role> npcs = new Array<Role>();
+	public Array<Role> allRoles = new Array<Role>();
 
 	private Commander(Stage s, GameScreen gs) {
 		gamescreen = gs;
@@ -51,7 +51,7 @@ public class Commander {
 		commanderStart();
 	}
 
-	private void resetRoles() {
+	public void resetRoles() {
 		lactor = stage.getActors();
 		heros.clear();
 		npcs.clear();
@@ -368,7 +368,7 @@ public class Commander {
 	 */
 	private Array<Role> getRolesInSkillRange(Role h) {
 		Skill s = h.cskill;
-		Array<Vector2> vs = s.getRange();					//技能作用范围
+		Array<Vector2> vs = h.type==Type.HERO?s.getRange():s.flipRange();					//技能作用范围
 		//如果技能为f_box类型，重新计算技能攻击范围
 		if(s.type==Skill.Type.f_box){
 			vs.clear();
@@ -465,53 +465,6 @@ public class Commander {
 					}
 				}
 			});
-		}
-	}
-
-	/**
-	 * 用来检查角色是否被本轮选择，若被选择，则其他不被选择，
-	 * 
-	 * @author 张永臣
-	 */
-	public void heroSelected(Role hero) {
-		for (Actor act : lactor) {
-			if (act instanceof Role) {
-				final Role r = (Role) act;
-				if (r.getType() == Type.HERO) {
-					r.setSelected(false);
-					if (hero == r) {
-						hero.setSelected(true);
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * 判断此可移动方块是否有人存在
-	 * @param r 被选要移动的人
-	 * @return
-	 */
-	public boolean isOtherHero(int inputX, int inputY) {
-
-		for (Role hr : heros) {
-			Vector2 hv = new Vector2(hr.getBoxX(), hr.getBoxY());
-			if ((inputX == hv.x) && (inputY == hv.y)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * 用来检查角色是否被本轮选择操作，如果第一次选择，则计算可移动范围
-	 * 
-	 * @author 张永臣
-	 */
-	public void heroControllor(Role r) {
-		r.setControlled(true);
-		if (r.getType() == Type.HERO) {
-			r.setPass_array(MapBox.set_hero_pass_box(r, npcs));
 		}
 	}
 

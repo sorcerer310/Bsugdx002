@@ -68,19 +68,21 @@ public class GameScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < rols.size; i++) {
 			stage.addActor(rols.get(i));
 		}
-		commander = Commander.getInstance(stage,this);
+		commander = Commander.getInstance(stage, this);
+		commander.resetRoles();
 		this.addActorListener();
 		setBornPosition(GameMap.map, Type.HERO, Configure.object_layer_hero);
 		setBornPosition(GameMap.map, Type.ENEMY, Configure.object_layer_enemy);
 		if (fightUI == null) {
 			fightUI = new GameFightUI(UIStage);
-		}else{
+		} else {
 			fightUI.show_hero_state();
 		}
 		c = (OrthographicCamera) stage.getCamera();
-		if(attack_effect==null){
-			attack_effect=AttackEffect.getInstance();
+		if (attack_effect == null) {
+			attack_effect = AttackEffect.getInstance();
 		}
+		initRoles();
 		stage.addActor(attack_effect);
 	}
 
@@ -110,13 +112,13 @@ public class GameScreen extends CubocScreen implements Observer,
 		for (Actor act : stage.getActors()) {
 			if (act instanceof Role) {
 				Role r = (Role) act;
-				if (r.getType().equals(p) && v.size>0) {
+				if (r.getType().equals(p) && v.size > 0) {
 					r.setPosition(v.get(index).x, v.get(index).y);
 					index++;
 				}
 			}
 		}
-	} 
+	}
 
 	@Override
 	public void render(float delta) {
@@ -216,9 +218,9 @@ public class GameScreen extends CubocScreen implements Observer,
 		if (mx == hero_x) {
 			if (my == hero_y) {
 				if (!r.isSelected()) {
-					commander.heroSelected(r);
+					heroSelected(r);
 					if (!r.isControlled()) {
-						commander.heroControllor(r);
+						heroControllor(r);
 					}
 				}
 				set_map_value(r);
@@ -226,7 +228,7 @@ public class GameScreen extends CubocScreen implements Observer,
 			}
 		}
 		if (r.isSelected()) {
-			if (commander.isOtherHero(mx, my)) {
+			if (isOtherHero(mx, my)) {
 				return;
 			}
 			for (int i = 0; i < r.getPass_array().size; i++) {
@@ -237,6 +239,68 @@ public class GameScreen extends CubocScreen implements Observer,
 					break;
 				}
 			}
+		}
+	}
+	/**
+	 * 初始化role
+	 */
+	private void initRoles(){
+		for(Role r:commander.allRoles){
+			r.setSelected(false);
+			r.setControlled(false);
+			r.currentHp=r.maxHp;
+			r.clearExtValue();
+			r.getPass_array().clear();
+			r.getAttack_array().clear();
+			r.cskill=r.skill_array.get(0);
+			MapBox.attack_array.clear();
+			MapBox.pass_array.clear();
+			mb.block_array.clear();
+		}
+	}
+
+	/**
+	 * 用来检查角色是否被本轮选择，若被选择，则其他不被选择，
+	 * 
+	 * @author 张永臣
+	 */
+	public void heroSelected(Role hero) {
+		for (Role r : commander.heros) {
+			if (r.getType() == Type.HERO) {
+				r.setSelected(false);
+				if (hero == r) {
+					hero.setSelected(true);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 判断此可移动方块是否有人存在
+	 * 
+	 * @param r
+	 *            被选要移动的人
+	 * @return
+	 */
+	public boolean isOtherHero(int inputX, int inputY) {
+		for (Role r : commander.allRoles) {
+			Vector2 hv = new Vector2(r.getBoxX(), r.getBoxY());
+			if ((inputX == hv.x) && (inputY == hv.y)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 用来检查角色是否被本轮选择操作，如果第一次选择，则计算可移动范围
+	 * 
+	 * @author 张永臣
+	 */
+	public void heroControllor(Role r) {
+		r.setControlled(true);
+		if (r.getType() == Type.HERO) {
+			r.setPass_array(mb.set_hero_pass_box(r, commander.npcs));
 		}
 	}
 

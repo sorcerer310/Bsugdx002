@@ -38,13 +38,13 @@ public class MapBox extends Actor {
 
 	public static Array<Vector2> pass_array = new Array<Vector2>();// 选择人物后，显示地图上可移动范围
 	public static Array<Vector2> attack_array = new Array<Vector2>();// 选择人物后，显示人物可攻击范围
-	public static Array<Vector2> block_array = new Array<Vector2>(); // 地图上障碍格子数组
-	public static Array<Vector2> box_array = new Array<Vector2>(); // 宝箱格子
-	public static Array<Vector2> hpRaise_array = new Array<Vector2>(); // 加血格子
-	public static Array<Vector2> enemy_array = new Array<Vector2>(); // 地图上所有NPC所在位置的格子数组
-	public static Array<Vector2> hero_array = new Array<Vector2>(); // 角色人物所在格子数组
-	public static Array<Vector2> hero_home_array = new Array<Vector2>(); // 角色基地所在格子数组
-	public static Array<Vector2> enemy_home_array = new Array<Vector2>(); // NPC基地所在格子数组
+	public  Array<Vector2> block_array = new Array<Vector2>(); // 地图上障碍格子数组
+	public  Array<Vector2> box_array = new Array<Vector2>(); // 宝箱格子
+	public  Array<Vector2> hpRaise_array = new Array<Vector2>(); // 加血格子
+	public  Array<Vector2> enemy_array = new Array<Vector2>(); // 地图上所有NPC所在位置的格子数组
+	public  Array<Vector2> hero_array = new Array<Vector2>(); // 角色人物所在格子数组
+	public  Array<Vector2> hero_home_array = new Array<Vector2>(); // 角色基地所在格子数组
+	public  Array<Vector2> enemy_home_array = new Array<Vector2>(); // NPC基地所在格子数组
 
 	private static int raw_max = 8; // 可以移动的最高格子数，应该定义在MAP TXM文件里，以下同
 	private static int raw_min = 4; // 可以移动的最低格子数，靠近屏幕下方
@@ -74,7 +74,7 @@ public class MapBox extends Actor {
 	 * @param enemy
 	 *            NPC角色，理论应该为NPC数组集合，目前为单体。
 	 */
-	public static Array<Vector2> set_hero_pass_box(Role hero,
+	public  Array<Vector2> set_hero_pass_box(Role hero,
 			Array<Role> enemyArray) {
 		pass_array.clear();
 		enemy_array = get_role_block(enemyArray, enemy_array);
@@ -101,7 +101,7 @@ public class MapBox extends Actor {
 	 * @param coll
 	 *            格子列数
 	 */
-	private static void set_h(int index, int coll, Array<Vector2> array) {
+	private void set_h(int index, int coll, Array<Vector2> array) {
 
 		for (int i = 0; i < 5; i++) {
 			if (i + coll - 2 >= coll_min) {
@@ -245,7 +245,7 @@ public class MapBox extends Actor {
 	 * @param coll
 	 * @return
 	 */
-	private static boolean blocked(int raw, int coll) {
+	private  boolean blocked(int raw, int coll) {
 		/*
 		 * for (int i = 0; i < block_array.size; i++) { if (raw ==
 		 * block_array.get(i).y) { if (coll >= block_array.get(i).x) { return

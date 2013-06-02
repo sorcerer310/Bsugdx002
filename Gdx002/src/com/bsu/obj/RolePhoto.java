@@ -35,7 +35,7 @@ public class RolePhoto {
 
 	public RolePhoto(Role r, Stage s, Vector2 v, boolean b) {
 		role = new Image(r.roleTexture);
-		role_k = new Image(WidgetFactory.getInstance().getTexture(50, 50,
+		role_k = new Image(WidgetFactory.getInstance().getTexture(48, 48,
 				Configure.getQualityColor(r.quality), Color.BLACK, 0.2f));
 		role_classes = getClassesImg(r);
 		role.setScale(0.5f);
@@ -64,7 +64,7 @@ public class RolePhoto {
 		role_k.setPosition(v.x - 1, v.y - 1);
 		role.setPosition(v.x, v.y);
 		role_v = v;
-		role_classes.setPosition(v.x + 34, v.y);
+		role_classes.setPosition(v.x + 32, v.y);
 		showEffect(b);
 	}
 

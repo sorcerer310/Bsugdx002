@@ -47,7 +47,7 @@ public class TipsWindows {
 	}
 
 	/**
-	 * 显示人物信息，位置动态
+	 * 显示更换的人物信息，位置动态
 	 * 
 	 * @param r
 	 * @param s
@@ -70,10 +70,14 @@ public class TipsWindows {
 				.get_sytle()));
 		tipsWindows.row();
 		Table t = new Table();
-		t.defaults().padLeft(10);
-		t.add(new Image(r.skill_array.get(0).icon));
-		t.defaults().padRight(10);
-		t.add(new Image(r.skill_array.get(1).icon));
+		for(Skill skill:r.skill_array){
+			t.defaults().align(Align.center);
+			t.add(new Image(skill.icon));
+			Label l=new Label(""+skill.lev,Configure.get_sytle());
+			l.setFontScale(0.5f);
+			t.defaults().align(Align.bottom);
+			t.add(l);
+		}
 		tipsWindows.add(t);
 		tipsWindows.pack();
 		tipsWindows.setPosition(getPosition(v).x, getPosition(v).y);
@@ -87,7 +91,7 @@ public class TipsWindows {
 	}
 
 	/**
-	 * 显示技能信息 位置动态
+	 * 显示技能描述信息 位置动态
 	 * 
 	 * @param s
 	 */

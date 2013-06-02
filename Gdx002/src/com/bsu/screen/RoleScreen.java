@@ -127,8 +127,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
 			Vector2 v = new Vector2(20 + 60 * i, 50);
-			final RolePhoto photo = new RolePhoto(r, sRoleStage, v,
-					false);
+			final RolePhoto photo = new RolePhoto(r, sRoleStage, v, false);
 			r.photo = photo;
 			photo.role.addListener(new InputListener() {
 				@Override
@@ -162,17 +161,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 		Image[] skillImg = new Image[2];
 		for (int i = 0; i < 2; i++) {
 			final int index = i;
-			TextureRegion tr = WidgetFactory.getInstance().getTexture(26, 26,
-					Configure.getQualityColor(r.skill_array.get(i).quality),
-					Color.BLACK, 1);
-			final Image skillImgEffect = new Image(tr);
-			RoleInfoStage.addActor(skillImgEffect);
-			final Image img = wfy.makeImg(r.skill_array.get(index).icon,
-					RoleInfoStage, 1f, 40 + i * 60, 170);
-			wfy.makeLabel("" + r.skill_array.get(i).lev, RoleInfoStage, 0.5f,
-					40 + i * 60 + 28, 163);
+			final Image img = wfy.showSkillImg(r.skill_array.get(index),
+					RoleInfoStage, new Vector2(40 + i * 60, 170));
 			final Vector2 v = new Vector2(img.getX(), img.getY());
-			skillImgEffect.setPosition(v.x - 1, v.y - 1);
 			skillImg[i] = img;
 			img.addListener(new InputListener() {
 				@Override
@@ -230,42 +221,28 @@ public class RoleScreen extends CubocScreen implements Observer,
 		int numsOra = 0;
 		int ix = 200, iy = 125;
 		for (final Skill s : r.skill_tree) {
-			TextureRegion tr = WidgetFactory.getInstance().getTexture(26, 26,
-					Configure.getQualityColor(s.quality), Color.BLACK, 1);
-
-			final Image skillImgEffect = new Image(tr);
-			RoleInfoStage.addActor(skillImgEffect);
 			Image skill_img = null;
 			if (s.quality == QUALITY.green) {
-				skill_img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix
-						+ numsGreen * 40, iy);
-				wfy.makeLabel("" + s.lev, RoleInfoStage, 0.5f, ix + numsBlue
-						* 40 + 28, iy - 7);
+				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
+						+ numsGreen * 40, iy));
 				numsGreen++;
 			}
 			if (s.quality == QUALITY.blue) {
-				skill_img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsBlue
-						* 40, iy + 35);
-				wfy.makeLabel("" + s.lev, RoleInfoStage, 0.5f, ix + numsBlue
-						* 40 + 28, iy + 28);
+				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
+						+ numsBlue * 40, iy + 35));
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
-				skill_img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsPur
-						* 40, iy + 70);
-				wfy.makeLabel("" + s.lev, RoleInfoStage, 0.5f, ix + numsPur
-						* 40 + 28, iy + 63);
+				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix + numsPur
+						* 40, iy + 70));
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
-				skill_img = wfy.makeImg(s.icon, RoleInfoStage, 1, ix + numsOra
-						* 40, iy + 105);
-				wfy.makeLabel("" + s.lev, RoleInfoStage, 0.5f, ix + numsOra
-						* 40 + 28, iy + 98);
+				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix + numsOra
+						* 40, iy + 105));
 				numsOra++;
 			}
 			final Vector2 vs = new Vector2(skill_img.getX(), skill_img.getY());
-			skillImgEffect.setPosition(vs.x - 1, vs.y - 1);
 			if (!s.enable) {
 				skill_img.addListener(new InputListener() {
 					@Override
@@ -299,8 +276,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 */
 	private void setAnotherSkill(Role r, int index, Skill s, Image img,
 			Image img1) {
-		System.out.println(r.skill_array.get(index).name + "change to" + s.name
-				+ "inf" + s.info);
 		r.skill_array.set(index, s);
 		r.cskill = r.skill_array.get(0);
 		Skin skin = new Skin();

@@ -10,14 +10,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.WidgetFactory;
+import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.Configure;
-
+import com.bsu.tools.TipsWindows;
 
 /**
  * GAME游戏战斗场景UI
@@ -68,10 +70,26 @@ public class GameFightUI {
 			WidgetFactory.getInstance().makeImg(hp, stage, 1, x - 10, y);
 			WidgetFactory.getInstance().makeLabel(r.name, stage, 0.8f, x,
 					y + 50);
-			WidgetFactory.getInstance().makeImg(r.skill_array.get(0).icon,
-					stage, 1, x + 50, y + 26);
-			WidgetFactory.getInstance().makeImg(r.skill_array.get(1).icon,
-					stage, 1, x + 50, y);
+			for (int j = 0; j < r.skill_array.size; j++) {
+				final int tempIndex=j;
+				Image skillImg = WidgetFactory.getInstance().showSkillImg(
+						r.skill_array.get(j), stage,
+						new Vector2(x + 50, y + 24-j*26));
+				skillImg.addListener(new InputListener() {
+					@Override
+					public boolean touchDown(InputEvent event, float x, float y,
+							int pointer, int button) {
+						
+						return true;
+					}
+					@Override
+					public void touchUp(InputEvent event, float x, float y,
+							int pointer, int button) {
+						r.cskill=r.skill_array.get(tempIndex);
+						super.touchUp(event, x, y, pointer, button);
+					}
+				});
+			}
 		}
 	}
 }
