@@ -393,11 +393,17 @@ public class Role extends Actor {
 		}
 		return realrange;
 	}
-
+	/**
+	 * 获得当前技能
+	 * @return
+	 */
 	public Skill getCskill() {
+		
 		return cskill;
 	}
-
+	
+	
+	
 	/**
 	 * 判断移动路径上是否有自己人阻挡
 	 * 

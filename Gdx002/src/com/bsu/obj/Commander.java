@@ -370,8 +370,9 @@ public class Commander {
 		//如果技能为f_box类型，重新计算技能攻击范围
 		if(s.type==Skill.Type.f_box){
 			vs.clear();
+			int offset = h.type==Type.HERO?1:-1;
 			for(int i=0;i<s.val;i++)
-				vs.add(new Vector2(i+1,0));
+				vs.add(new Vector2(i+offset,0));
 		}
 		
 		Array<Role> retrs = new Array<Role>();				//返回符合类型的英雄
@@ -379,10 +380,11 @@ public class Commander {
 		if(s.type==Skill.Type.f_damage ||s.type==Skill.Type.f_shifhp ||s.type==Skill.Type.f_box ||s.type==Skill.Type.p_atkbeat ||
 				s.type==Skill.Type.p_damage ||s.type==Skill.Type.pdot_damage ||s.type==Skill.Type.prob_blind ||
 				s.type==Skill.Type.prob_dizzy ||s.type==Skill.Type.prob_nude )
-			checkrs = npcs;
+			checkrs = h.type==Type.HERO?npcs:heros;
 		else if(s.type==Skill.Type.f_healing ||s.type==Skill.Type.p_healing  ||s.type==Skill.Type.pbuff_atk ||
 				s.type==Skill.Type.pbuff_def ||s.type==Skill.Type.pbuff_healing ||s.type==Skill.Type.pbuff_hp )
-			checkrs = heros;
+			checkrs = h.type==Type.HERO?heros:npcs;
+
 			
 		//如果没有指定检查Role直接返回retrs
 		if(checkrs == null)
