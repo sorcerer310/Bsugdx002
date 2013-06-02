@@ -126,7 +126,8 @@ public class Commander {
 			@Override
 			public void opTask(BsuEvent be) {
 				try {
-					commandHeros(be);
+//					commandHeros(be);
+					commandRoles(be,Role.Type.HERO);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -146,7 +147,8 @@ public class Commander {
 			@Override
 			public void opTask(BsuEvent be) {
 				try {
-					commandNpcs(be);
+//					commandNpcs(be);
+					commandRoles(be,Role.Type.ENEMY);
 					roundEndCompleted = true;
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -284,30 +286,45 @@ public class Commander {
 	boolean loopCompleted = false;
 	int skillAniCompletedCount = 0;		//技能动画完成数量		
 //	boolean moveAfterSkillFlag = false;	//指示释放技能后人物是否继续移动
-	private void commandHeros(BsuEvent be) throws InterruptedException {
-		for (int i = 0; i < heros.size; i++) {
-			final Role h = heros.get(i);
-			if(!h.isRoundMove) {h.isRoundMove=true;continue;}	//如果本回合该英雄不行动则跳过该英雄
+	private void commandRoles(BsuEvent be,Role.Type rt) throws InterruptedException {
+		Array<Role> attackRoles = null;
+		Array<Role> beAttackedRoles = null;
+		DIRECTION direct = DIRECTION.right;
+		//判断进攻方为英雄还是npc
+		if(rt==Type.HERO){
+			attackRoles = heros;
+			beAttackedRoles = npcs;
+			direct = DIRECTION.right;
+		}
+		else if(rt==Type.ENEMY){
+			attackRoles = npcs;
+			beAttackedRoles = heros;
+			direct = DIRECTION.left;
+		}
+			
+		for (int i = 0; i < attackRoles.size; i++) {
+			final Role r = attackRoles.get(i);
+			if(!r.isRoundMove) {r.isRoundMove=true;continue;}	//如果本回合该英雄不行动则跳过该英雄
 			waitRoleFlag = true; 			// 初始化等待循环flag为true
 			currTaskComFlag = false;		//只是当前处理技能任务是否完成
-			final Array<Role> atkrs = getRolesInSkillRange(h);
+			final Array<Role> atkrs = getRolesInSkillRange(r);
 			//1:执行技能命令
 			if(atkrs.size!=0){
-				h.ani_role_attack(atkrs,h.getCskill(),new BsuEvent(){
+				r.ani_role_attack(atkrs,r.getCskill(),new BsuEvent(){
 					boolean ani_attack_finished = false;			//判断攻击动画是否完成
 					boolean ani_beattacked_finished = false;		//判断被攻击动画是否完成
 					boolean skill_logic = false;					//判断技能逻辑函数返回值，返回true为自身释放技能，返回false为对其他单位释放技能
 					@Override
 					public void notify(Object obj,String msg){
-						if(!skill_logic && h.cskill.skillLogic(h, atkrs))
+						if(!skill_logic && r.cskill.skillLogic(r, atkrs))
 							atkrs.clear();
 						skill_logic = true;
 						//判断攻击动画是否完成
-						if(msg.equals("ani_attack_finished") || h.getCskill().ani_self==null)
+						if(msg.equals("ani_attack_finished") || r.getCskill().ani_self==null)
 							ani_attack_finished = true;
 
 						//判断被攻击动画是否完成
-						if(msg.equals("ani_beattacked_finished") || h.getCskill().ani_object==null)
+						if(msg.equals("ani_beattacked_finished") || r.getCskill().ani_object==null)
 							ani_beattacked_finished = true;
 						//技能两处动画都完成进行下步任务
 						if(ani_attack_finished && ani_beattacked_finished){
@@ -324,14 +341,14 @@ public class Commander {
 			
 			//2:执行移动命令
 			if(atkrs.size == 0){
-				if(!h.hasAnatherRole(allRoles)){
-					Commander.this.moveDirectCommand(h, DIRECTION.right, new BsuEvent(){
+				if(!r.hasAnatherRole(allRoles)){
+					Commander.this.moveDirectCommand(r, direct, new BsuEvent(){
 						@Override
 						public void notify(Object obj, String msg) {
 							waitRoleFlag = false;
 						}
 					});
-				}else{stopedCommand(h);waitRoleFlag = false;}
+				}else{stopedCommand(r);waitRoleFlag = false;}
 			}else{waitRoleFlag = false;}
 
 			// 等待动作完成
@@ -340,72 +357,6 @@ public class Commander {
 			}
 		}
 		be.notify(this, "command_heros_completed");
-	}
-
-	/**
-	 * 指挥敌人们进行行动
-	 * 
-	 * @throws InterruptedException
-	 */
-	private void commandNpcs(BsuEvent be) throws InterruptedException {
-		for (int i = 0; i < npcs.size; i++) {
-			final Role n = npcs.get(i);
-			if(!n.isRoundMove) {n.isRoundMove=true;continue;}	//如果本回合该npc不行动则跳过该npc
-			waitRoleFlag = true; 			// 初始化等待循环flag为true
-			currTaskComFlag = false;		//只是当前处理技能任务是否完成
-			final Array<Role> atkrs = getRolesInSkillRange(n);
-			//1:执行技能命令
-			if(atkrs.size!=0){
-				// 命令当前npc进攻所有范围内的英雄
-				for (final Role h : atkrs) {
-					n.ani_role_attack(h, n.getCskill(), new BsuEvent() {
-						//因为攻击动画与被攻击动画有不同步完成的时候，所以要两个动画都完成后才进行下步任务
-						boolean ani_attack_finished = false;			//判断攻击动画是否完成
-						boolean ani_beattacked_finished = false;		//判断被攻击动画是否完成
-						boolean skill_logic_finished = false;			//判断技能逻辑函数是否完成
-						@Override
-						public void notify(Object obj, String msg) {
-							//如果技能逻辑函数返回true,清空技能目标队列继续移动该单位
-							if( !skill_logic_finished && n.cskill.skillLogic(n, atkrs))
-								atkrs.clear();
-							skill_logic_finished = true;
-							//判断攻击动画是否完成
-							if(msg.equals("ani_attack_finished"))
-								ani_attack_finished = true;
-							//判断被攻击动画是否完成
-							if(msg.equals("ani_beattacked_finished"))
-								ani_beattacked_finished = true;
-							//两部动画都完成后再进行下步任务
-							if(ani_attack_finished && ani_beattacked_finished)
-								currTaskComFlag = true;
-						}
-					});
-				}
-			}else{currTaskComFlag = true;}
-			
-			while (!currTaskComFlag) {
-				System.out.println(currTaskComFlag);
-				Thread.sleep(500);
-			}
-			
-			//2:执行移动命令
-			if(atkrs.size == 0){
-				if(!n.hasAnatherRole(allRoles)){
-					Commander.this.moveDirectCommand(n, DIRECTION.left, new BsuEvent(){
-						@Override
-						public void notify(Object obj, String msg) {
-							waitRoleFlag = false;
-						}
-					});
-				}else{stopedCommand(n);waitRoleFlag = false;}
-			}else{waitRoleFlag = false;}
-
-			// 等待动作完成
-			while (waitRoleFlag) {
-				Thread.sleep(200);
-			}
-		}
-		be.notify(this, "command_npcs_completed");
 	}
 
 	/**
