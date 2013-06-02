@@ -1,17 +1,12 @@
 package com.bsu.obj;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.rotateBy;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.skilltree.ContinuedSkillState;
 import com.bsu.obj.skilltree.Skill;
@@ -195,6 +190,7 @@ public class Role extends Actor {
 			return;
 		bevent = be;
 		time_effect = 0;
+		//自身技能效果
 		if (skl.ani_self == null) {
 			if (bevent != null)
 				bevent.notify(this, this.name);
@@ -205,9 +201,13 @@ public class Role extends Actor {
 			AttackEffect.getInstance().startEffect(current_attack_frame, this,
 					skl.offset_ani_self);
 		}
+		//目标动画效果
 		for (Role e : enemys)
 			e.ani_role_isAttacked(skl.ani_object, skl.offset_ani_object, be);
-
+		//位移效果
+		if(skl.type==Skill.Type.p_assault){
+			Commander.getInstance().assaultCommand(this, be);
+		}else{if(be!=null)be.notify(this,"assaultAcion_finished");}
 	}
 
 	/**
@@ -610,6 +610,36 @@ public class Role extends Actor {
 		addAction(moveBy(x, y, Configure.duration_ani / 10));
 	}
 
+	/**
+	 * 冲锋效果
+	 * @param x	冲锋到的位置x坐标
+	 * @param y	冲锋到的位置y坐标
+	 */
+	public void assaultAction(float x,float y,final Role obj,final BsuEvent be){
+		if(face==FACE.left){
+//		r.addAction(sequence(rotateBy(15.0f,1f),moveBy(-15.0f,0.0f,1f))moveTo(x,r.getY(),0.1f));
+		}
+		else if(face==FACE.right){
+			addAction(sequence(
+					//后仰
+					parallel(rotateBy(15.0f,0.3f),moveBy(-10.0f,0.0f,0.3f)),
+					//冲锋
+					parallel(rotateBy(-15.0f,0.2f),moveTo(x,y,0.3f)),
+					//处理冲锋结束后的动作
+					run(new Runnable(){
+						@Override
+						public void run() {
+							Commander.getInstance().stopedCommand(obj);
+//							set_ani_from_state(STATE.idle);
+							if (be != null)
+								be.notify(this, "assaultAcion_finished");
+							
+						}
+					})
+					));
+		}
+	}
+	
 	/**
 	 * 返回英雄的职业数据
 	 * 

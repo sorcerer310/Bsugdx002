@@ -275,7 +275,7 @@ public class SkillFactory {
 			break;
 		case 103:
 			skl = new Skill(i,"冲锋",QUALITY.orange,Type.p_assault,2.5f,0.8f,new CLASSES[]{CLASSES.fighter},"向前冲刺很长一段距离，直至撞到敌人或地图边缘，撞到敌人后对敌人造成大量伤害",
-					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),new Vector2(5,0),new Vector2(6,0),new Vector2(7,0),new Vector2(8,0)});
+					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),new Vector2(5,0),new Vector2(6,0)});
 			break;
 		default:
 			break;

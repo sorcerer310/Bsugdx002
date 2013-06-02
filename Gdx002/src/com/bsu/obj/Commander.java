@@ -182,19 +182,19 @@ public class Commander {
 	/**
 	 * 冲锋动作
 	 * @param r		要冲锋的Role
-	 * @param path	冲锋的路径，由若干个点组成
 	 */
-	public void assaultCommand(Role r,Array<Vector2> path){
+	public void assaultCommand(Role r,BsuEvent be){
+			Array<Vector2> path = r.cskill.getRange();
 			Array<Role> obj = getRolesInSkillRange(r);
 			int x = ((int) (r.type==Type.HERO ? (
-					(int)(r.getBoxX()+r.cskill.getRange().get(r.cskill.getRange().size-1).x)>15?15:(r.getBoxX()+r.cskill.getRange().get(r.cskill.getRange().size-1).x)
-					):(int)(r.getBoxX()-r.cskill.getRange().get(r.cskill.getRange().size-1).x)<0?0:(r.getBoxX()-r.cskill.getRange().get(r.cskill.getRange().size-1).x)
+					(int)(r.getBoxX()+path.get(path.size-1).x)>15?15:(r.getBoxX()+path.get(path.size-1).x)
+					):(int)(r.getBoxX()-path.get(path.size-1).x)<0?0:(r.getBoxX()-path.get(path.size-1).x)
 							))*Configure.map_box_value; 
-			if(obj.size>0)
+			if(obj.size>0){
 				x = (int) (r.type==Type.HERO ?obj.get(0).getX()-Configure.map_box_value:obj.get(0).getX()+Configure.map_box_value);
-			r.addAction(moveBy(x,r.getY()));
-//			r.moveAction(x, (int) r.getY(), null);
-//		r.heatAction(r.face==FACE.left, 0);
+				r.assaultAction((float)x,r.getY(),obj.get(0),be);
+			}
+			
 	}
 	
 	/**
@@ -211,6 +211,7 @@ public class Commander {
 	public void stopedCommand(Role r){
 		r.stopedAction();
 	}
+	
 	
 	/**
 	 * 对所有的Role进行持续技能状态处理
@@ -316,12 +317,14 @@ public class Commander {
 			if(!r.isRoundMove) {r.isRoundMove=true;continue;}	//如果本回合该英雄不行动则跳过该英雄
 			waitRoleFlag = true; 			// 初始化等待循环flag为true
 			currTaskComFlag = false;		//只是当前处理技能任务是否完成
+			
 			final Array<Role> atkrs = getRolesInSkillRange(r);
 			//1:执行技能命令
 			if(atkrs.size!=0){
 				r.ani_role_attack(atkrs,r.getCskill(),new BsuEvent(){
 					boolean ani_attack_finished = false;			//判断攻击动画是否完成
 					boolean ani_beattacked_finished = false;		//判断被攻击动画是否完成
+					boolean ani_assault_finished = false;			//判断位移动画是否完成
 					boolean skill_logic = false;					//判断技能逻辑函数返回值，返回true为自身释放技能，返回false为对其他单位释放技能
 					@Override
 					public void notify(Object obj,String msg){
@@ -335,8 +338,13 @@ public class Commander {
 						//判断被攻击动画是否完成
 						if(msg.equals("ani_beattacked_finished") || r.getCskill().ani_object==null)
 							ani_beattacked_finished = true;
+						
+						//判断位移动画是否完成
+						if(msg.equals("assaultAcion_finished"))
+							ani_assault_finished = true;
+						
 						//技能两处动画都完成进行下步任务
-						if(ani_attack_finished && ani_beattacked_finished){
+						if(ani_attack_finished && ani_beattacked_finished && ani_assault_finished){
 							currTaskComFlag = true;
 						}
 					}
@@ -350,14 +358,25 @@ public class Commander {
 			
 			//2:执行移动命令
 			if(atkrs.size == 0){
-				if(!r.hasAnatherRole(allRoles)){
-					Commander.this.moveDirectCommand(r, direct, new BsuEvent(){
-						@Override
-						public void notify(Object obj, String msg) {
-							waitRoleFlag = false;
-						}
-					});
-				}else{stopedCommand(r);waitRoleFlag = false;}
+				//如果为冲锋技能，不执行下面的普通位移
+//				if(r.cskill.type==Skill.Type.p_assault){
+//					assaultCommand(r,new BsuEvent(){
+//						@Override
+//						public void notify(Object obj,String msg){
+//							waitRoleFlag = false;
+//						}
+//					});
+//				//普通行走指令
+//				}else{
+					if(!r.hasAnatherRole(allRoles)){
+						Commander.this.moveDirectCommand(r, direct, new BsuEvent(){
+							@Override
+							public void notify(Object obj, String msg) {
+								waitRoleFlag = false;
+							}
+						});
+					}else{stopedCommand(r);waitRoleFlag = false;}
+//				}
 			}else{waitRoleFlag = false;}
 
 			// 等待动作完成

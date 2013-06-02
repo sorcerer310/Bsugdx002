@@ -229,7 +229,7 @@ public class Skill {
 					- U.realDamage((int) (owner.getAttack() * val),
 							object.getDefend()) : 0); // 伤害敌人
 					//进行冲锋动作
-					Commander.getInstance().assaultCommand(owner, owner.cskill.getRange());
+//					Commander.getInstance().assaultCommand(owner, owner.cskill.getRange());
 				}
 				// 百分比伤害
 			} else if (type == Skill.Type.p_damage) {
