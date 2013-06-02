@@ -251,15 +251,21 @@ public class WidgetFactory {
 	 *            坐标
 	 */
 	public Image showSkillImg(Skill skill, Stage s, Vector2 v) {
-		Image img = new Image(skill.icon);
-		TextureRegion tr = getTexture(26, 26,
-				Configure.getQualityColor(skill.quality), Color.BLACK, 1);
-		Image skillImgEffect = new Image(tr);
-		s.addActor(skillImgEffect);
+		Image img = null;
+		if (skill.enable) {
+			img = new Image(skill.icon);
+			TextureRegion tr = getTexture(26, 26,
+					Configure.getQualityColor(skill.quality), Color.BLACK, 1);
+			Image skillImgEffect = new Image(tr);
+			s.addActor(skillImgEffect);
+			skillImgEffect.setPosition(v.x - 1, v.y - 1);
+			makeLabel("" + skill.lev, s, 0.5f, (int) (v.x) + 28,
+					(int) (v.y) - 7);
+		}else{
+			img=new Image(GameTextureClass.getInstance().getSkillIcon(0));
+		}
 		s.addActor(img);
 		img.setPosition(v.x, v.y);
-		skillImgEffect.setPosition(v.x - 1, v.y - 1);
-		makeLabel("" + skill.lev, s, 0.5f, (int)(v.x) + 28, (int)(v.y) - 7);
 		return img;
 	}
 }
