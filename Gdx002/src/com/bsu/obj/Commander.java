@@ -293,12 +293,10 @@ public class Commander {
 		//判断进攻方为英雄还是npc
 		if(rt==Type.HERO){
 			attackRoles = heros;
-//			beAttackedRoles = npcs;
 			direct = DIRECTION.right;
 		}
 		else if(rt==Type.ENEMY){
 			attackRoles = npcs;
-//			beAttackedRoles = heros;
 			direct = DIRECTION.left;
 		} 
 			
