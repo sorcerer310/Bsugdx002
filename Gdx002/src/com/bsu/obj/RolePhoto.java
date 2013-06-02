@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.make.WidgetFactory;
 import com.bsu.tools.Configure.CLASSES;
@@ -24,8 +25,10 @@ import com.bsu.tools.GameTextureClass;
 public class RolePhoto {
 
 	public Image role;// 角色图像
-	private Image[] role_effect = new Image[3];// 选中角色后的特效图片
-	private Image[] role_effect_another = new Image[3];// 选中角色后的特效图片
+	private Image[] role_effect1 = new Image[1];// 选中角色后的特效图片
+	private Image[] role_effect2 = new Image[1];// 选中角色后的特效图片
+	private Image[] role_effect3 = new Image[1];
+	private Image[] role_effect4 = new Image[1];
 	public Image role_k;// 边框
 	public Vector2 role_v;// 坐标
 	public Image role_classes;// 角色职业图标
@@ -36,22 +39,26 @@ public class RolePhoto {
 				Configure.getQualityColor(r.quality), Color.BLACK, 0.2f));
 		role_classes = getClassesImg(r);
 		role.setScale(0.5f);
-		role_effect[0] = new Image(GameTextureClass.getInstance().start_zero);
-		role_effect[1] = new Image(GameTextureClass.getInstance().start_one);
-		role_effect[2] = new Image(GameTextureClass.getInstance().start_two);
-		role_effect_another[0] = new Image(
+		role_effect1[0] = new Image(GameTextureClass.getInstance().start_zero);
+		role_effect2[0] = new Image(
 				GameTextureClass.getInstance().start_zero);
-		role_effect_another[1] = new Image(
-				GameTextureClass.getInstance().start_one);
-		role_effect_another[2] = new Image(
-				GameTextureClass.getInstance().start_two);
+		
+		role_effect3[0] = new Image(GameTextureClass.getInstance().start_zero);
+		role_effect4[0] = new Image(GameTextureClass.getInstance().start_zero);
+		
 		s.addActor(role_k);
 		s.addActor(role);
 		s.addActor(role_classes);
-		for (Image img : role_effect) {
+		for (Image img : role_effect1) {
 			s.addActor(img);
 		}
-		for (Image img : role_effect_another) {
+		for (Image img : role_effect2) {
+			s.addActor(img);
+		}
+		for (Image img : role_effect3) {
+			s.addActor(img);
+		}
+		for (Image img : role_effect4) {
 			s.addActor(img);
 		}
 		role_k.setPosition(v.x - 1, v.y - 1);
@@ -82,39 +89,52 @@ public class RolePhoto {
 	 */
 	public void showEffect(boolean b) {
 		if (b) {
-			for (int i=0;i<role_effect.length;i++) {
-				role_effect[i].setVisible(b);
-				role_effect[i].getActions().clear();
-				role_effect[i].setPosition(role_v.x - 16, role_v.y - 14);
-				MoveByAction mba=moveBy(0,0,0.5f*i);
-				RepeatAction ra = new RepeatAction();
-				ra.setAction(sequence(moveBy(0, 50, 2f), moveBy(50, 0, 2f),
-						moveBy(0, -50, 2f), moveBy(-50, 0, 2f)));
-				ra.setCount(RepeatAction.FOREVER);
-				role_effect[i].addAction(sequence(mba,ra));
-			}
-			for (int i=0;i< role_effect_another.length;i++) {
-				role_effect_another[i].setVisible(b);
-				role_effect_another[i].getActions().clear();
-				role_effect_another[i].setPosition(role_v.x + 34, role_v.y + 36);
-				MoveByAction mba=moveBy(0,0,0.5f*i);
-				RepeatAction ra_other = new RepeatAction();
-				ra_other.setAction(sequence(moveBy(0, -50, 2f),
-						moveBy(-50, 0, 2f), moveBy(0, 50, 2f),
-						moveBy(50, 0, 2f)));
-				ra_other.setCount(RepeatAction.FOREVER);
-				role_effect_another[i].addAction(sequence(mba,ra_other));
-			}
+			float moveDura = 0.35f;
+			SequenceAction seq1 = sequence(moveBy(0, 50, moveDura), moveBy(50, 0, moveDura),
+					moveBy(0, -50, moveDura), moveBy(-50, 0, moveDura));
+			setEffectAction(role_effect1,b,moveDura,-16,-14,seq1);
+			
+			SequenceAction seq2 = sequence(moveBy(50, 0, moveDura), moveBy(0, -50, moveDura),
+					moveBy(-50, 0, moveDura), moveBy(0, 50, moveDura));
+			setEffectAction(role_effect2,b,moveDura,-16,36,seq2);
+			
+			SequenceAction seq3 = sequence(moveBy(0, -50, moveDura),moveBy(-50, 0, moveDura), 
+					moveBy(0, 50, moveDura),moveBy(50, 0, moveDura));
+			setEffectAction(role_effect3,b,moveDura,34,36,seq3);
+
+			SequenceAction seq4 = sequence(moveBy(-50, 0, moveDura),moveBy(0, 50, moveDura), 
+					moveBy(50, 0, moveDura),moveBy(0, -50, moveDura));
+			setEffectAction(role_effect4,b,moveDura,34,-14,seq4);
 		} else {
-			for (Image img : role_effect) {
+			for (Image img : role_effect1) 
 				img.setVisible(b);
-			}
-			for (Image img : role_effect_another) {
+			for (Image img : role_effect2) 
 				img.setVisible(b);
-			}
+			for (Image img : role_effect3) 
+				img.setVisible(b);
+			for (Image img : role_effect4) 
+				img.setVisible(b);
+			
 		}
 	}
-
+	/**
+	 * 设置效果的动作
+	 * @param reffect	效果图片
+	 * @param b			是否显示
+	 * @param moveDura	移动一个边所花费的时间
+	 */
+	private void setEffectAction(Image[] reffect,boolean b,float moveDura,int offsetX,int offsetY,SequenceAction seq){
+		for (int i=0;i<reffect.length;i++) {
+			reffect[i].setVisible(b);
+			reffect[i].getActions().clear();
+			reffect[i].setPosition(role_v.x +offsetX, role_v.y +offsetY);
+			MoveByAction mba=moveBy(0,0,moveDura/5*i);
+			RepeatAction ra = new RepeatAction();
+			ra.setAction(seq);
+			ra.setCount(RepeatAction.FOREVER);
+			reffect[i].addAction(sequence(mba,ra));
+		}
+	}
 	/**
 	 * 根据role 返回角色职业图标
 	 * 
