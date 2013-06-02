@@ -179,30 +179,37 @@ public class Role extends Actor {
 		}
 		enemy.ani_role_isAttacked(skl.ani_object, skl.offset_ani_object, be);
 	}
+
 	/**
 	 * 技能攻击群体敌人。用来处理群体技能。
-	 * @param enemys	攻击范围内的所有敌人
-	 * @param skl		释放的技能
-	 * @param be		事件对象
+	 * 
+	 * @param enemys
+	 *            攻击范围内的所有敌人
+	 * @param skl
+	 *            释放的技能
+	 * @param be
+	 *            事件对象
 	 */
-	public void ani_role_attack(Array<Role> enemys,Skill skl,BsuEvent be){
-		if(enemys.size<=0)
+	public void ani_role_attack(Array<Role> enemys, Skill skl, BsuEvent be) {
+		if (enemys.size <= 0)
 			return;
 		bevent = be;
-		time_effect=0;		
-		if(skl.ani_self == null){
-			if(bevent != null)
-				bevent.notify(this,this.name);
-		}else{
+		time_effect = 0;
+		if (skl.ani_self == null) {
+			if (bevent != null)
+				bevent.notify(this, this.name);
+		} else {
 			attack_effect = skl.ani_self;
-			current_attack_frame = attack_effect.getKeyFrame(time_effect,false);
-			AttackEffect.getInstance().startEffect(current_attack_frame, this, skl.offset_ani_self);
+			current_attack_frame = attack_effect
+					.getKeyFrame(time_effect, false);
+			AttackEffect.getInstance().startEffect(current_attack_frame, this,
+					skl.offset_ani_self);
 		}
-		for(Role e:enemys)
+		for (Role e : enemys)
 			e.ani_role_isAttacked(skl.ani_object, skl.offset_ani_object, be);
-		
+
 	}
-	
+
 	/**
 	 * 英雄被攻击播放动画
 	 * 
@@ -315,6 +322,9 @@ public class Role extends Actor {
 		if (beAttack_effect != null) {
 			current_beattack_frame = beAttack_effect.getKeyFrame(time_effect,
 					false);
+			if (type == Type.HERO) {
+				current_beattack_frame.flip(true, false);
+			}
 			if (beAttack_effect.isAnimationFinished(time_effect)) {
 				current_beattack_frame = null;
 				beAttack_effect = null;

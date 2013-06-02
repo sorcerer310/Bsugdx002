@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.bsu.obj.Role.Type;
 import com.bsu.screen.GameScreen;
 import com.bsu.tools.GameTextureClass;
 
@@ -13,6 +14,7 @@ public class AttackEffect extends Actor {
 	private TextureRegion currentFrame;
 	private float cx;
 	private float cy;
+	private boolean flip_flag;
 
 	private static AttackEffect instance = null;
 
@@ -37,15 +39,23 @@ public class AttackEffect extends Actor {
 		if (v != null) {
 			cx = r.getX() + v.x;
 			cy = r.getY() + v.y;
-			System.out.println(v.x+"！！！！！！！！！"+v.y);
 		}else{
 			cx = r.getX() ;
 			cy = r.getY() ;
+		}
+		if(r.type==Type.HERO){
+			flip_flag=false;
+		}else{
+			flip_flag=true;
+			currentFrame.flip(true, false);
 		}
 	}
 
 	public void setFrame(TextureRegion tr) {
 		currentFrame = new TextureRegion(tr);
+		if(flip_flag){
+			currentFrame.flip(true, false);
+		}
 	}
 
 	/**
