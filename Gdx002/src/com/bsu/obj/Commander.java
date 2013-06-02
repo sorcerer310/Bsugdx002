@@ -300,7 +300,7 @@ public class Commander {
 			attackRoles = npcs;
 			beAttackedRoles = heros;
 			direct = DIRECTION.left;
-		}
+		} 
 			
 		for (int i = 0; i < attackRoles.size; i++) {
 			final Role r = attackRoles.get(i);
