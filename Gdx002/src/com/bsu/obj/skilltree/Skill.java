@@ -23,9 +23,9 @@ public class Skill {
 	// 前缀解释
 	// f:fixed固定的，fdot:固定持续伤害，pdot百分比持续伤害，p:percent百分比,pbuff:百分比buff,prob:机率
 	// 后缀解释
-	// damage:伤害，healing:治疗,hp:血上限，def:防御上限，atk：攻击上限，nude:碎甲，dizzy：眩晕，blind:致盲，atkbeat:造成伤害并击退，shifhp:转移生命,speed:游戏速度,reward:奖励,box:格子
+	// damage:伤害，healing:治疗,hp:血上限，def:防御上限，atk：攻击上限，nude:碎甲，dizzy：眩晕，blind:致盲，atkbeat:造成伤害并击退，assault:冲锋攻击，shifhp:转移生命,speed:游戏速度,reward:奖励,box:格子
 	public static enum Type {
-		f_damage, f_healing, f_shifhp, f_box, p_damage, p_healing, p_lucky, p_atkbeat, p_reward, p_speed, pbuff_hp, pbuff_healing, pbuff_atk, pbuff_def, pdot_damage, prob_dizzy, prob_nude, prob_blind
+		f_damage, f_healing, f_shifhp, f_box, p_damage, p_healing, p_lucky, p_atkbeat, p_assault,p_reward, p_speed, pbuff_hp, pbuff_healing, pbuff_atk, pbuff_def, pdot_damage, prob_dizzy, prob_nude, prob_blind
 	};
 
 	public static enum ObjectType {
@@ -166,7 +166,9 @@ public class Skill {
 	 */
 	public boolean skillLogic(Role owner, Array<Role> objects) {
 		if (type == Skill.Type.f_damage || type == Skill.Type.f_shifhp
-				|| type == Skill.Type.f_box || type == Skill.Type.p_atkbeat
+				|| type == Skill.Type.f_box 
+				|| type == Skill.Type.p_atkbeat
+				|| type == Skill.Type.p_assault
 				|| type == Skill.Type.p_damage
 				|| type == Skill.Type.pdot_damage
 				|| type == Skill.Type.prob_blind
@@ -219,6 +221,15 @@ public class Skill {
 							- U.realDamage((int) (owner.getAttack() * val),
 									object.getDefend()) : 0); // 伤害敌人
 					Commander.getInstance().heatCommand(object); // 击退
+				}
+				//冲锋伤害,单体伤害
+			}else if(type==Skill.Type.p_assault){
+				for(Role object:objects){
+					object.currentHp = (int)(object.currentHp-U.realDamage((int)(owner.getAttack()*val), object.getDefend()) >= 0 ? object.currentHp
+					- U.realDamage((int) (owner.getAttack() * val),
+							object.getDefend()) : 0); // 伤害敌人
+					//进行冲锋动作
+					Commander.getInstance().assaultCommand(owner, owner.cskill.getRange());
 				}
 				// 百分比伤害
 			} else if (type == Skill.Type.p_damage) {

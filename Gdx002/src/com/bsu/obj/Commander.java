@@ -135,13 +135,6 @@ public class Commander {
 			}
 		});
 		
-		//检测Role是否有持续状态
-//		CommandQueue.getInstance().put(new CommandTask(){
-//			@Override
-//			public void opTask(BsuEvent be){
-//				roleContinuedSkillState(be);
-//			}
-//		});
 		//增加命令敌人任务
 		CommandQueue.getInstance().put(new CommandTask() {
 			@Override
@@ -186,6 +179,24 @@ public class Commander {
 		else if(r.face == FACE.right && !U.hasRoleInPos(allRoles, new Vector2(r.getBoxX()-1,r.getBoxY())))
 			r.heatAction(-Configure.map_box_value, 0);
 	}
+	/**
+	 * 冲锋动作
+	 * @param r		要冲锋的Role
+	 * @param path	冲锋的路径，由若干个点组成
+	 */
+	public void assaultCommand(Role r,Array<Vector2> path){
+			Array<Role> obj = getRolesInSkillRange(r);
+			int x = ((int) (r.type==Type.HERO ? (
+					(int)(r.getBoxX()+r.cskill.getRange().get(r.cskill.getRange().size-1).x)>15?15:(r.getBoxX()+r.cskill.getRange().get(r.cskill.getRange().size-1).x)
+					):(int)(r.getBoxX()-r.cskill.getRange().get(r.cskill.getRange().size-1).x)<0?0:(r.getBoxX()-r.cskill.getRange().get(r.cskill.getRange().size-1).x)
+							))*Configure.map_box_value; 
+			if(obj.size>0)
+				x = (int) (r.type==Type.HERO ?obj.get(0).getX()-Configure.map_box_value:obj.get(0).getX()+Configure.map_box_value);
+			r.addAction(moveBy(x,r.getY()));
+//			r.moveAction(x, (int) r.getY(), null);
+//		r.heatAction(r.face==FACE.left, 0);
+	}
+	
 	/**
 	 * 被攻击命令，命令一个单位被攻击
 	 * @param r
@@ -378,7 +389,7 @@ public class Commander {
 		Array<Role> retrs = new Array<Role>();				//返回符合类型的英雄
 		Array<Role> checkrs = null;							//要检查的单位群体类型，伤害类技能检查敌人，回血buff类检查hero
 		if(s.type==Skill.Type.f_damage ||s.type==Skill.Type.f_shifhp ||s.type==Skill.Type.f_box ||s.type==Skill.Type.p_atkbeat ||
-				s.type==Skill.Type.p_damage ||s.type==Skill.Type.pdot_damage ||s.type==Skill.Type.prob_blind ||
+				s.type==Skill.Type.p_assault||s.type==Skill.Type.p_damage ||s.type==Skill.Type.pdot_damage ||s.type==Skill.Type.prob_blind ||
 				s.type==Skill.Type.prob_dizzy ||s.type==Skill.Type.prob_nude )
 			checkrs = h.type==Type.HERO?npcs:heros;
 		else if(s.type==Skill.Type.f_healing ||s.type==Skill.Type.p_healing  ||s.type==Skill.Type.pbuff_atk ||

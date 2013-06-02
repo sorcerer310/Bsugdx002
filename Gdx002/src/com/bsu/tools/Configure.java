@@ -14,7 +14,9 @@ public class Configure {
 
 	public static int rect_width = 480; // 屏幕宽
 	public static int rect_height = 320; // 屏幕高
-
+	public static int rect_box_width = 15;//屏幕宽格子数
+	public static int rect_box_height = 7;//屏幕高格子数
+	
 	public static int map_box_value = 32;
 	public static float duration_move_box = 0.5f; // 移动一格需要的时间
 	public static float duration_ani = 0.1f;		//标准动画时间
