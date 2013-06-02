@@ -56,7 +56,7 @@ public class Player {
 			RoleFactory rf = RoleFactory.getInstance();
 			playerRole.add(new Role(Role.Type.HERO,QUALITY.green,CLASSES.fighter,"测试人物",U.getRandom(100, -6, 6),8,10
 					,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
-					new SkillTree().getSkillTreeFixedSkill(1)
+					new SkillTree().getSkillTreeFixedSkill(37)
 					,GameTextureClass.getInstance().fc_photo));				//测试技能用
 
 			playerRole.add(rf.getFighter("fc", Role.Type.HERO, QUALITY.green,GameTextureClass.getInstance().fc_photo));

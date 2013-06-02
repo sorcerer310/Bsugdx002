@@ -282,6 +282,7 @@ public class Commander {
 	boolean waitRoleFlag = false; // 等待标示，用来标记是否继续循环对下一英雄进行操作
 	boolean currTaskComFlag = false;	//当前任务是否完成标示
 	boolean loopCompleted = false;
+	int skillAniCompletedCount = 0;		//技能动画完成数量		
 //	boolean moveAfterSkillFlag = false;	//指示释放技能后人物是否继续移动
 	private void commandHeros(BsuEvent be) throws InterruptedException {
 		for (int i = 0; i < heros.size; i++) {
@@ -292,45 +293,32 @@ public class Commander {
 			final Array<Role> atkrs = getRolesInSkillRange(h);
 			//1:执行技能命令
 			if(atkrs.size!=0){
-				// 命令当前英雄进攻所有范围内的敌人
-//				for (final Role e : atkrs) {
-				for(int j=0;j<atkrs.size;i++){
-					final Role e = atkrs.get(j);
-					loopCompleted = false;			//当前循环是否完成
-					h.ani_role_attack(e, h.getCskill(), new BsuEvent() {
-						//因为攻击动画与被攻击动画有不同步完成的时候，所以要两个动画都完成后才进行下步任务
-						boolean ani_attack_finished = false;			//判断攻击动画是否完成
-						boolean ani_beattacked_finished = false;		//判断被攻击动画是否完成
-						boolean skill_logic_finished = false;			//判断技能逻辑函数是否完成
-						@Override
-						public void notify(Object obj, String msg) {
-							//如果技能逻辑函数返回true,当英雄释放自身的某些技能时，释放后仍然会移动。清空技能目标队列继续移动该单位
-							if( !skill_logic_finished && h.cskill.skillLogic(h, e))
-								atkrs.clear();
-							skill_logic_finished = true;
-							
-							//判断攻击动画是否完成
-							if(msg.equals("ani_attack_finished") || h.getCskill().ani_self==null)
-								ani_attack_finished = true;
+				h.ani_role_attack(atkrs,h.getCskill(),new BsuEvent(){
+					boolean ani_attack_finished = false;			//判断攻击动画是否完成
+					boolean ani_beattacked_finished = false;		//判断被攻击动画是否完成
+					boolean skill_logic = false;					//判断技能逻辑函数返回值，返回true为自身释放技能，返回false为对其他单位释放技能
+					@Override
+					public void notify(Object obj,String msg){
+						if(!skill_logic && h.cskill.skillLogic(h, atkrs))
+							atkrs.clear();
+						skill_logic = true;
+						//判断攻击动画是否完成
+						if(msg.equals("ani_attack_finished") || h.getCskill().ani_self==null)
+							ani_attack_finished = true;
 
-							//判断被攻击动画是否完成
-							if(msg.equals("ani_beattacked_finished") || h.getCskill().ani_object==null)
-								ani_beattacked_finished = true;
-							//两部动画都完成后再进行下步循环任务
-							if(ani_attack_finished && ani_beattacked_finished)
-								loopCompleted = true;
+						//判断被攻击动画是否完成
+						if(msg.equals("ani_beattacked_finished") || h.getCskill().ani_object==null)
+							ani_beattacked_finished = true;
+						//技能两处动画都完成进行下步任务
+						if(ani_attack_finished && ani_beattacked_finished){
+							currTaskComFlag = true;
 						}
-					});
-					while(!loopCompleted){
-						System.out.println("loopCompleted");
-						Thread.sleep(200);
 					}
-				}
-				currTaskComFlag = true;
+				});
 			}else{currTaskComFlag = true;}
 			
 			while (!currTaskComFlag) {
-				System.out.println(currTaskComFlag);
+				System.out.println("currTaskComFlag");
 				Thread.sleep(500);
 			}
 			
@@ -378,7 +366,7 @@ public class Commander {
 						@Override
 						public void notify(Object obj, String msg) {
 							//如果技能逻辑函数返回true,清空技能目标队列继续移动该单位
-							if( !skill_logic_finished && n.cskill.skillLogic(n, h))
+							if( !skill_logic_finished && n.cskill.skillLogic(n, atkrs))
 								atkrs.clear();
 							skill_logic_finished = true;
 							//判断攻击动画是否完成
