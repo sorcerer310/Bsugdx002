@@ -23,6 +23,7 @@ import com.bsu.tools.U;
 
 public class Role extends Actor {
 	private RoleObservable ro = new RoleObservable();
+
 	public static enum Type {
 		HERO, ENEMY
 	}; // 英雄还是NPC
@@ -193,7 +194,7 @@ public class Role extends Actor {
 			return;
 		bevent = be;
 		time_effect = 0;
-		//自身技能效果
+		// 自身技能效果
 		if (skl.ani_self == null) {
 			if (bevent != null)
 				bevent.notify(this, this.name);
@@ -204,13 +205,16 @@ public class Role extends Actor {
 			AttackEffect.getInstance().startEffect(current_attack_frame, this,
 					skl.offset_ani_self);
 		}
-		//目标动画效果
+		// 目标动画效果
 		for (Role e : enemys)
 			e.ani_role_isAttacked(skl.ani_object, skl.offset_ani_object, be);
-		//位移效果
-		if(skl.type==Skill.Type.p_assault){
+		// 位移效果
+		if (skl.type == Skill.Type.p_assault) {
 			Commander.getInstance().assaultCommand(this, be);
-		}else{if(be!=null)be.notify(this,"assaultAcion_finished");}
+		} else {
+			if (be != null)
+				be.notify(this, "assaultAcion_finished");
+		}
 	}
 
 	/**
@@ -225,7 +229,11 @@ public class Role extends Actor {
 			bevent = be;
 			beAttack_effect = ani;
 			if (v != null) {
-				px = v.x;
+				if (type == Type.HERO) {
+					//px = 32-v.x;
+				} else {
+					px = v.x;	
+				}
 				py = v.y;
 			}
 		}
@@ -406,17 +414,17 @@ public class Role extends Actor {
 		}
 		return realrange;
 	}
+
 	/**
 	 * 获得当前技能
+	 * 
 	 * @return
 	 */
 	public Skill getCskill() {
-		
+
 		return cskill;
 	}
-	
-	
-	
+
 	/**
 	 * 判断移动路径上是否有自己人阻挡
 	 * 
@@ -615,78 +623,84 @@ public class Role extends Actor {
 
 	/**
 	 * 冲锋效果
-	 * @param x	冲锋到的位置x坐标
-	 * @param y	冲锋到的位置y坐标
+	 * 
+	 * @param x
+	 *            冲锋到的位置x坐标
+	 * @param y
+	 *            冲锋到的位置y坐标
 	 */
-	public void assaultAction(float x,float y,final Role obj,final BsuEvent be){
-		if(face==FACE.left){
+	public void assaultAction(float x, float y, final Role obj,
+			final BsuEvent be) {
+		if (face == FACE.left) {
 			this.setOrigin(32, 0);
 			addAction(sequence(
-					//后仰
-					parallel(rotateBy(-15.0f,0.3f),moveBy(10.0f,0.0f,0.3f)),
-					//冲锋
-					parallel(rotateBy(15.0f,0.2f),moveTo(x,y,0.3f)),
-					//处理冲锋结束后的动作
-					run(new Runnable(){
+			// 后仰
+					parallel(rotateBy(-15.0f, 0.3f), moveBy(10.0f, 0.0f, 0.3f)),
+					// 冲锋
+					parallel(rotateBy(15.0f, 0.2f), moveTo(x, y, 0.3f)),
+					// 处理冲锋结束后的动作
+					run(new Runnable() {
 						@Override
 						public void run() {
 							Commander.getInstance().stopedCommand(obj);
 							if (be != null)
 								be.notify(this, "assaultAcion_finished");
-							
+
 						}
-					})
-					));
-		}
-		else if(face==FACE.right){
+					})));
+		} else if (face == FACE.right) {
 			this.setOrigin(0, 0);
 			addAction(sequence(
-					//后仰
-					parallel(rotateBy(15.0f,0.3f),moveBy(-10.0f,0.0f,0.3f)),
-					//冲锋
-					parallel(rotateBy(-15.0f,0.2f),moveTo(x,y,0.3f)),
-					//处理冲锋结束后的动作
-					run(new Runnable(){
+			// 后仰
+					parallel(rotateBy(15.0f, 0.3f), moveBy(-10.0f, 0.0f, 0.3f)),
+					// 冲锋
+					parallel(rotateBy(-15.0f, 0.2f), moveTo(x, y, 0.3f)),
+					// 处理冲锋结束后的动作
+					run(new Runnable() {
 						@Override
 						public void run() {
 							Commander.getInstance().stopedCommand(obj);
 							if (be != null)
 								be.notify(this, "assaultAcion_finished");
-							
+
 						}
-					})
-					));
+					})));
 		}
 	}
+
 	/**
 	 * 死亡动作
 	 */
-	public void deadAction(final BsuEvent be){
-		if(face==FACE.right){
+	public void deadAction(final BsuEvent be) {
+		if (face == FACE.right) {
 			this.setOrigin(0, 0);
-			addAction(sequence(parallel(rotateBy(45f,0.3f),moveBy(-5f,0f,0.3f),moveBy(0f,10f,0.3f)),
-								parallel(rotateBy(45f,0.3f),moveBy(-5f,0f,0.3f),moveBy(0f,-10f,0.3f)),
-								alpha(0.0f,0.5f),run(new Runnable(){
-									@Override
-									public void run(){
-										be.notify(this, "dead");
-									}
-								})
-					));
-		}else if(face==FACE.left){
-			this.setOrigin(32,0);
-			addAction(sequence(parallel(rotateBy(-45f,0.3f),moveBy(5f,0f,0.3f),moveBy(0f,-10f,0.3f)),
-					parallel(rotateBy(-45f,0.3f),moveBy(5f,0f,0.3f),moveBy(0f,10f,0.3f)),
-					alpha(0.0f,0.5f),run(new Runnable(){
+			addAction(sequence(
+					parallel(rotateBy(45f, 0.3f), moveBy(-5f, 0f, 0.3f),
+							moveBy(0f, 10f, 0.3f)),
+					parallel(rotateBy(45f, 0.3f), moveBy(-5f, 0f, 0.3f),
+							moveBy(0f, -10f, 0.3f)), alpha(0.0f, 0.5f),
+					run(new Runnable() {
 						@Override
-						public void run(){
+						public void run() {
 							be.notify(this, "dead");
 						}
-					})
-		));
+					})));
+		} else if (face == FACE.left) {
+			this.setOrigin(32, 0);
+			addAction(sequence(
+					parallel(rotateBy(-45f, 0.3f), moveBy(5f, 0f, 0.3f),
+							moveBy(0f, -10f, 0.3f)),
+					parallel(rotateBy(-45f, 0.3f), moveBy(5f, 0f, 0.3f),
+							moveBy(0f, 10f, 0.3f)), alpha(0.0f, 0.5f),
+					run(new Runnable() {
+						@Override
+						public void run() {
+							be.notify(this, "dead");
+						}
+					})));
 		}
 	}
-	
+
 	/**
 	 * 返回英雄的职业数据
 	 * 
@@ -732,6 +746,7 @@ public class Role extends Actor {
 	public int getMaxHp() {
 		return maxHp + extMaxHp;
 	}
+
 	/**
 	 * 清除所有额外值
 	 */
@@ -741,35 +756,39 @@ public class Role extends Actor {
 		extDefend = 0;
 		isRoundMove = true;
 	}
+
 	/**
 	 * 设置当前血量
+	 * 
 	 * @param currentHp
 	 */
 	public void setCurrentHp(int currentHp) {
 		this.currentHp = currentHp;
 		ro.notifyRoleObservers(this);
 	}
-	
+
 	public int getCurrentHp() {
 		return currentHp;
 	}
 
 	/**
 	 * 获得被观察者对象
+	 * 
 	 * @return
 	 */
-	public RoleObservable getRoleObserable(){
+	public RoleObservable getRoleObserable() {
 		return ro;
 	}
-	public class RoleObservable extends Observable{
-		public RoleObservable (){}
-		//通知所有的观察者
-		public void notifyRoleObservers(Object args){
+
+	public class RoleObservable extends Observable {
+		public RoleObservable() {
+		}
+
+		// 通知所有的观察者
+		public void notifyRoleObservers(Object args) {
 			this.setChanged();
 			this.notifyObservers(args);
 		}
 	}
-	
+
 }
-
-
