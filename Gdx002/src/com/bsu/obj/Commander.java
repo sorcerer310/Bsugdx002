@@ -543,9 +543,19 @@ public class Commander {
 	 * @param r
 	 *            要致死的Role
 	 */
-	public void commandRoleDead(Role r) {
+	public void commandRoleDead(final Role r) {
 		// 后续处理
 		System.out.println("啊啊啊啊啊，我死了！！！");
+		r.deadAction(new BsuEvent(){
+			@Override
+			public void notify(Object obj,String msg){
+				lactor.removeValue(r, true);
+			}
+		});
+		
+		
+		//heros.removeValue(r, true);
+		//allRoles.removeValue(r,true);
 	}
 
 	public Array<Role> getHeros() {

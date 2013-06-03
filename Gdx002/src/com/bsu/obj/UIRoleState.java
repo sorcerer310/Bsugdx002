@@ -104,10 +104,13 @@ public class UIRoleState implements Observer{
 					rui.hpImg.setScaleY((float) (r.getCurrentHp())
 							/ (float) (r.maxHp));
 				} else {
+					//头像变暗
 					rui.hpImg.setScaleY(0);
 					U.setApha(rui.photoImg, 0.2f);
 					U.setApha(rui.role_classes, 0.2f);
 					U.setApha(rui.nameLabel, 0.2f);
+					//命令commander 执行死亡命令
+					Commander.getInstance().commandRoleDead(r);
 				}
 			}
 		}
@@ -115,7 +118,7 @@ public class UIRoleState implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		changeRoleHp((Role)arg);
+		changeRoleHp((Role)arg);				
 	}
 }
 

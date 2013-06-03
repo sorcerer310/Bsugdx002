@@ -620,9 +620,26 @@ public class Role extends Actor {
 	 */
 	public void assaultAction(float x,float y,final Role obj,final BsuEvent be){
 		if(face==FACE.left){
-//		r.addAction(sequence(rotateBy(15.0f,1f),moveBy(-15.0f,0.0f,1f))moveTo(x,r.getY(),0.1f));
+			this.setOrigin(32, 0);
+			addAction(sequence(
+					//后仰
+					parallel(rotateBy(-15.0f,0.3f),moveBy(10.0f,0.0f,0.3f)),
+					//冲锋
+					parallel(rotateBy(15.0f,0.2f),moveTo(x,y,0.3f)),
+					//处理冲锋结束后的动作
+					run(new Runnable(){
+						@Override
+						public void run() {
+							Commander.getInstance().stopedCommand(obj);
+							if (be != null)
+								be.notify(this, "assaultAcion_finished");
+							
+						}
+					})
+					));
 		}
 		else if(face==FACE.right){
+			this.setOrigin(0, 0);
 			addAction(sequence(
 					//后仰
 					parallel(rotateBy(15.0f,0.3f),moveBy(-10.0f,0.0f,0.3f)),
@@ -633,13 +650,40 @@ public class Role extends Actor {
 						@Override
 						public void run() {
 							Commander.getInstance().stopedCommand(obj);
-//							set_ani_from_state(STATE.idle);
 							if (be != null)
 								be.notify(this, "assaultAcion_finished");
 							
 						}
 					})
 					));
+		}
+	}
+	/**
+	 * 死亡动作
+	 */
+	public void deadAction(final BsuEvent be){
+		if(face==FACE.right){
+			this.setOrigin(0, 0);
+			addAction(sequence(parallel(rotateBy(45f,0.3f),moveBy(-5f,0f,0.3f),moveBy(0f,10f,0.3f)),
+								parallel(rotateBy(45f,0.3f),moveBy(-5f,0f,0.3f),moveBy(0f,-10f,0.3f)),
+								alpha(0.0f,0.5f),run(new Runnable(){
+									@Override
+									public void run(){
+										be.notify(this, "dead");
+									}
+								})
+					));
+		}else if(face==FACE.left){
+			this.setOrigin(32,0);
+			addAction(sequence(parallel(rotateBy(-45f,0.3f),moveBy(5f,0f,0.3f),moveBy(0f,-10f,0.3f)),
+					parallel(rotateBy(-s45f,0.3f),moveBy(5f,0f,0.3f),moveBy(0f,10f,0.3f)),
+					alpha(0.0f,0.5f),run(new Runnable(){
+						@Override
+						public void run(){
+							be.notify(this, "dead");
+						}
+					})
+		));
 		}
 	}
 	
