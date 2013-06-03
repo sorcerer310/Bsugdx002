@@ -165,12 +165,15 @@ public class RoleScreen extends CubocScreen implements Observer,
 					RoleInfoStage, new Vector2(40 + i * 60, 170));
 			final Vector2 v = new Vector2(img.getX(), img.getY());
 			skillImg[i] = img;
+
 			img.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
-					TipsWindows.getInstance().showSkillInfo(
-							r.skill_array.get(index), v, RoleInfoStage);
+					if (r.skill_array.get(index).enable) {
+						TipsWindows.getInstance().showSkillInfo(
+								r.skill_array.get(index), v, RoleInfoStage);
+					}
 					return true;
 				}
 
@@ -233,17 +236,17 @@ public class RoleScreen extends CubocScreen implements Observer,
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
-				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix + numsPur
-						* 40, iy + 70));
+				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
+						+ numsPur * 40, iy + 70));
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
-				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix + numsOra
-						* 40, iy + 105));
+				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
+						+ numsOra * 40, iy + 105));
 				numsOra++;
 			}
 			final Vector2 vs = new Vector2(skill_img.getX(), skill_img.getY());
-			if (!s.enable) {
+			if (s.enable) {
 				skill_img.addListener(new InputListener() {
 					@Override
 					public boolean touchDown(InputEvent event, float x,
@@ -278,15 +281,14 @@ public class RoleScreen extends CubocScreen implements Observer,
 			Image img1) {
 		r.skill_array.set(index, s);
 		r.cskill = r.skill_array.get(0);
-		Skin skin = new Skin();
-		skin.add("Img", new TextureRegion(s.icon));
 		if (index == 0) {
-			img.setDrawable(skin.getDrawable("Img"));
+			img = wfy.showSkillImg(r.skill_array.get(index),
+					RoleInfoStage, new Vector2(img.getX(),img.getY()));
 		} else {
-			img1.setDrawable(skin.getDrawable("Img"));
+			img1 = wfy.showSkillImg(r.skill_array.get(index),
+					RoleInfoStage, new Vector2(img1.getX(),img1.getY()));
 		}
-		skin.dispose();
-		skin = null;
+		
 	}
 
 	@Override

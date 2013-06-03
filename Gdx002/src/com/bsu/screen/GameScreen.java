@@ -22,7 +22,7 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
 import com.bsu.obj.AttackEffect;
 import com.bsu.obj.Commander;
-import com.bsu.obj.GameFightUI;
+import com.bsu.obj.UIRoleState;
 import com.bsu.obj.MapBox;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
@@ -35,7 +35,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	private Stage UIStage; // UI场景对象
 	private Commander commander; // 指挥官对象，指挥所有对象交互
 	private MapBox mb; // 地图块对象
-	private GameFightUI fightUI;
+	private UIRoleState fightUI;
 	private OrthographicCamera c;
 	private boolean action_start; // 是否回合开始
 	private boolean controlled;
@@ -74,7 +74,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		setBornPosition(GameMap.map, Type.HERO, Configure.object_layer_hero);
 		setBornPosition(GameMap.map, Type.ENEMY, Configure.object_layer_enemy);
 		if (fightUI == null) {
-			fightUI = new GameFightUI(UIStage);
+			fightUI = new UIRoleState(UIStage);
 		} else {
 			fightUI.show_hero_state();
 		}
@@ -378,7 +378,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		return false;
 	}
 
-	public GameFightUI getFightUI() {
+	public UIRoleState getFightUI() {
 		return fightUI;
 	}
 

@@ -193,12 +193,14 @@ public class WidgetFactory {
 	}
 
 	/**
-	 * 返回一个pixMap绘制的图像
+	 * 返回一个pixMap绘制的图像，用于头像技能边框及其填充。
 	 * 
 	 * @param maxValue
 	 *            宽高
+	 * @param dc
+	 *            背景色
 	 * @param c
-	 *            颜色
+	 *            边框色
 	 * @param a
 	 *            透明度
 	 * @return
@@ -214,6 +216,26 @@ public class WidgetFactory {
 		pixmap.fillRectangle(1, 1, w, h);
 		Texture pixmaptex = new Texture(pixmap);
 		temp_box = new TextureRegion(pixmaptex, w + 2, h + 2);
+		pixmap.dispose();
+		return temp_box;
+	}
+
+	/**
+	 * 取得一个填充的图像
+	 * 
+	 * @param w
+	 * @param h
+	 * @param c
+	 * @return
+	 */
+	public TextureRegion getTextureFill(int w, int h, Color c) {
+		TextureRegion temp_box = null;
+		Pixmap pixmap;
+		pixmap = new Pixmap(w, h, Format.RGBA8888);
+		pixmap.setColor(c);
+		pixmap.fillRectangle(0, 0, w, h);
+		Texture pixmaptex = new Texture(pixmap);
+		temp_box = new TextureRegion(pixmaptex, w, h);
 		pixmap.dispose();
 		return temp_box;
 	}
@@ -251,15 +273,21 @@ public class WidgetFactory {
 	 *            坐标
 	 */
 	public Image showSkillImg(Skill skill, Stage s, Vector2 v) {
-		Image img = new Image(skill.icon);
-		TextureRegion tr = getTexture(26, 26,
-				Configure.getQualityColor(skill.quality), Color.BLACK, 1);
-		Image skillImgEffect = new Image(tr);
-		s.addActor(skillImgEffect);
+		Image img = null;
+		if (skill.enable) {
+			img = new Image(skill.icon);
+			TextureRegion tr = getTexture(26, 26,
+					Configure.getQualityColor(skill.quality), Color.BLACK, 1);
+			Image skillImgEffect = new Image(tr);
+			s.addActor(skillImgEffect);
+			skillImgEffect.setPosition(v.x - 1, v.y - 1);
+			makeLabel("" + skill.lev, s, 0.5f, (int) (v.x) + 28,
+					(int) (v.y) - 7);
+		} else {
+			img = new Image(GameTextureClass.getInstance().getSkillIcon(0));
+		}
 		s.addActor(img);
 		img.setPosition(v.x, v.y);
-		skillImgEffect.setPosition(v.x - 1, v.y - 1);
-		makeLabel("" + skill.lev, s, 0.5f, (int)(v.x) + 28, (int)(v.y) - 7);
 		return img;
 	}
 }
