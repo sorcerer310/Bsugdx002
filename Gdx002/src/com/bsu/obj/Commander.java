@@ -258,24 +258,20 @@ public class Commander {
 					r.extDefend += (int) css.val;
 				} else if (css.cstype == CSType.buff_hp) {
 					r.extMaxHp += (int) css.val;
-					r.currentHp += (int) css.val;
+					r.setCurrentHp(r.getCurrentHp()+(int) css.val); 
 				} else if (css.cstype == CSType.debuff_atk) {
 					r.extAttack += (int) -css.val;
 				} else if (css.cstype == CSType.debuff_def) {
 					r.extDefend += (int) -css.val;
 				} else if (css.cstype == CSType.debuff_hp) {
 					r.extMaxHp += (int) -css.val;
-					r.currentHp += (int) -css.val;
+					r.setCurrentHp(r.getCurrentHp()-(int)css.val);
 				} else if (css.cstype == CSType.dot) {
-					r.currentHp = (int) (r.currentHp - css.val > 0 ? r.currentHp
-							- css.val
-							: 0);
-					if (r.currentHp == 0)
+					r.setCurrentHp((int) (r.getCurrentHp() - css.val > 0 ? r.getCurrentHp()- css.val: 0));
+					if (r.getCurrentHp() == 0)
 						commandRoleDead(r);
 				} else if (css.cstype == CSType.hot) {
-					r.currentHp = (int) (r.currentHp + css.val < (r.getMaxHp()) ? r.currentHp
-							+ css.val
-							: r.getMaxHp());
+					r.setCurrentHp((int) (r.getCurrentHp() + css.val < (r.getMaxHp()) ? r.getCurrentHp()+ css.val: r.getMaxHp()));
 					// 致盲
 				} else if (css.cstype == CSType.blind) {
 					r.isRoundMove = false;
@@ -383,10 +379,10 @@ public class Commander {
 					}
 				});
 				//测试血条用，位置不合适，，
-				for (Role e : atkrs) {
-					e.currentHp -= r.getAttack() - e.getDefend()>0?r.getAttack()-e.getDefend():0;
-					gamescreen.getFightUI().changeRoleHp(e);
-				}
+//				for (Role e : atkrs) {
+//					e.currentHp -= r.getAttack() - e.getDefend()>0?r.getAttack()-e.getDefend():0;
+//					gamescreen.getFightUI().changeRoleHp(e);
+//				}
 			} else {
 				currTaskComFlag = true;
 			}

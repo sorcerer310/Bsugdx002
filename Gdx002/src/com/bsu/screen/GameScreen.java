@@ -29,6 +29,7 @@ import com.bsu.obj.Role.Type;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameMap;
 
+
 public class GameScreen extends CubocScreen implements Observer,
 		GestureListener {
 	private Stage stage; // 场景对象
@@ -78,6 +79,11 @@ public class GameScreen extends CubocScreen implements Observer,
 		} else {
 			fightUI.show_hero_state();
 		}
+		//为role增加观察者
+		for(int i=0;i<rols.size;i++)
+			rols.get(i).getRoleObserable().addObserver(fightUI);
+		
+		
 		c = (OrthographicCamera) stage.getCamera();
 		if (attack_effect == null) {
 			attack_effect = AttackEffect.getInstance();
@@ -248,7 +254,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		for(Role r:commander.allRoles){
 			r.setSelected(false);
 			r.setControlled(false);
-			r.currentHp=r.maxHp;
+			r.setCurrentHp(r.maxHp);
 			r.clearExtValue();
 			r.getPass_array().clear();
 			r.getAttack_array().clear();

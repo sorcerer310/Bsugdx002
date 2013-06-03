@@ -1,5 +1,7 @@
 package com.bsu.obj;
 
+import java.util.Observable;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,6 +22,7 @@ import com.bsu.tools.Configure.STATE;
 import com.bsu.tools.U;
 
 public class Role extends Actor {
+	private RoleObservable ro = new RoleObservable();
 	public static enum Type {
 		HERO, ENEMY
 	}; // 英雄还是NPC
@@ -37,7 +40,7 @@ public class Role extends Actor {
 	public TextureRegion roleTexture;
 	public int maxHp = 100; // 总血量
 	public int extMaxHp = 0; // 额外的血量上限
-	public int currentHp = 30; // 当前血量
+	private int currentHp = 30; // 当前血量
 	private int attack; // 自身攻击力
 	public int extAttack = 0; // 额外的攻击力
 	private int defend;// 自身防御力
@@ -678,6 +681,14 @@ public class Role extends Actor {
 	}
 
 	/**
+	 * 获得人物总hp上限
+	 * 
+	 * @return
+	 */
+	public int getMaxHp() {
+		return maxHp + extMaxHp;
+	}
+	/**
 	 * 清除所有额外值
 	 */
 	public void clearExtValue() {
@@ -686,14 +697,35 @@ public class Role extends Actor {
 		extDefend = 0;
 		isRoundMove = true;
 	}
-
 	/**
-	 * 获得人物总hp上限
-	 * 
-	 * @return
+	 * 设置当前血量
+	 * @param currentHp
 	 */
-	public int getMaxHp() {
-		return maxHp + extMaxHp;
+	public void setCurrentHp(int currentHp) {
+		this.currentHp = currentHp;
+		ro.notifyRoleObservers(this);
+	}
+	
+	public int getCurrentHp() {
+		return currentHp;
 	}
 
+	/**
+	 * 获得被观察者对象
+	 * @return
+	 */
+	public RoleObservable getRoleObserable(){
+		return ro;
+	}
+	public class RoleObservable extends Observable{
+		public RoleObservable (){}
+		//通知所有的观察者
+		public void notifyRoleObservers(Object args){
+			this.setChanged();
+			this.notifyObservers(args);
+		}
+	}
+	
 }
+
+

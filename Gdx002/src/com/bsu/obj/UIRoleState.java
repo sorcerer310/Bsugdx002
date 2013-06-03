@@ -1,5 +1,8 @@
 package com.bsu.obj;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -22,7 +25,7 @@ import com.bsu.tools.U;
  * @author zhangyongchen
  * 
  */
-public class UIRoleState {
+public class UIRoleState implements Observer{
 
 	Stage stage;
 	TextButton bt_endround;
@@ -97,8 +100,8 @@ public class UIRoleState {
 		for (int i = 0; i < Player.getInstance().playerFightRole.size; i++) {
 			if (Player.getInstance().playerFightRole.get(i).equals(r)) {
 				roleUIInfo rui = hpArray.get(i);
-				if (r.currentHp > 0) {
-					rui.hpImg.setScaleY((float) (r.currentHp)
+				if (r.getCurrentHp() > 0) {
+					rui.hpImg.setScaleY((float) (r.getCurrentHp())
 							/ (float) (r.maxHp));
 				} else {
 					rui.hpImg.setScaleY(0);
@@ -108,6 +111,11 @@ public class UIRoleState {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		changeRoleHp((Role)arg);
 	}
 }
 
