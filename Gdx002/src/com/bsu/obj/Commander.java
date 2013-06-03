@@ -68,6 +68,7 @@ public class Commander {
 		allRoles.addAll(heros);
 		allRoles.addAll(npcs);
 	}
+
 	/**
 	 * commander对象开始线程，进行监视
 	 */
@@ -105,8 +106,8 @@ public class Commander {
 		roundEndCompleted = false; // 回合操作开始设置完成标示为false
 		resetRoles();
 		resetHeroValue();
-		
-		//增加对站在特殊地图块上的英雄进行处理的任务
+
+		// 增加对站在特殊地图块上的英雄进行处理的任务
 		CommandQueue.getInstance().put(new CommandTask() {
 			@Override
 			public void opTask(BsuEvent be) {
@@ -114,20 +115,20 @@ public class Commander {
 				mapEvent(be);
 			}
 		});
-		//检测Role是否有持续状态
-		CommandQueue.getInstance().put(new CommandTask(){
+		// 检测Role是否有持续状态
+		CommandQueue.getInstance().put(new CommandTask() {
 			@Override
-			public void opTask(BsuEvent be){
+			public void opTask(BsuEvent be) {
 				roleContinuedSkillState(be);
 			}
 		});
-		//增加命令英雄任务
+		// 增加命令英雄任务
 		CommandQueue.getInstance().put(new CommandTask() {
 			@Override
 			public void opTask(BsuEvent be) {
 				try {
-//					commandHeros(be);
-					commandRoles(be,Role.Type.HERO);
+					// commandHeros(be);
+					commandRoles(be, Role.Type.HERO);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -136,12 +137,21 @@ public class Commander {
 		});
 		
 		//增加命令敌人任务
+		// 检测Role是否有持续状态
+		// CommandQueue.getInstance().put(new CommandTask(){
+		// @Override
+		// public void opTask(BsuEvent be){
+		// roleContinuedSkillState(be);
+		// }
+		// });
+		// 增加命令敌人任务
+
 		CommandQueue.getInstance().put(new CommandTask() {
 			@Override
 			public void opTask(BsuEvent be) {
 				try {
-//					commandNpcs(be);
-					commandRoles(be,Role.Type.ENEMY);
+					// commandNpcs(be);
+					commandRoles(be, Role.Type.ENEMY);
 					roundEndCompleted = true;
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -153,9 +163,13 @@ public class Commander {
 
 	/**
 	 * 移动动作
-	 * @param r	要移动的Role
-	 * @param d	移动方向
-	 * @param be	移动动作结束后从这里获得结束的消息
+	 * 
+	 * @param r
+	 *            要移动的Role
+	 * @param d
+	 *            移动方向
+	 * @param be
+	 *            移动动作结束后从这里获得结束的消息
 	 */
 	public void moveDirectCommand(Role r, DIRECTION d, BsuEvent be) {
 		int x = 0, y = 0;
@@ -169,16 +183,24 @@ public class Commander {
 			y = -Configure.map_box_value;
 		r.moveAction(x, y, be);
 	}
+
 	/**
 	 * 击退移动
-	 * @param r	被击退的Role
+	 * 
+	 * @param r
+	 *            被击退的Role
 	 */
-	public void heatCommand(Role r){
-		if(r.face==FACE.left && !U.hasRoleInPos(allRoles, new Vector2(r.getBoxX()+1,r.getBoxY())))
+	public void heatCommand(Role r) {
+		if (r.face == FACE.left
+				&& !U.hasRoleInPos(allRoles,
+						new Vector2(r.getBoxX() + 1, r.getBoxY())))
 			r.heatAction(Configure.map_box_value, 0);
-		else if(r.face == FACE.right && !U.hasRoleInPos(allRoles, new Vector2(r.getBoxX()-1,r.getBoxY())))
+		else if (r.face == FACE.right
+				&& !U.hasRoleInPos(allRoles,
+						new Vector2(r.getBoxX() - 1, r.getBoxY())))
 			r.heatAction(-Configure.map_box_value, 0);
 	}
+
 	/**
 	 * 冲锋动作
 	 * @param r		要冲锋的Role
@@ -199,74 +221,82 @@ public class Commander {
 	
 	/**
 	 * 被攻击命令，命令一个单位被攻击
+	 * 
 	 * @param r
 	 */
-	public void hitedCommand(Role r){
+	public void hitedCommand(Role r) {
 		r.hitedAction();
 	}
+
 	/**
 	 * 被阻挡命令
-	 * @param r	受到阻挡的人
+	 * 
+	 * @param r
+	 *            受到阻挡的人
 	 */
-	public void stopedCommand(Role r){
+	public void stopedCommand(Role r) {
 		r.stopedAction();
 	}
-	
-	
 	/**
 	 * 对所有的Role进行持续技能状态处理
-	 * @param be	持续技能操作完成事件
+	 * 
+	 * @param be
+	 *            持续技能操作完成事件
 	 */
-	private void roleContinuedSkillState(BsuEvent be){
-		for(Role r:allRoles){
-//		for(int i=0;i<allRoles.size)
-			if(r.csstate.size==0)
+	private void roleContinuedSkillState(BsuEvent be) {
+		for (Role r : allRoles) {
+			// for(int i=0;i<allRoles.size)
+			if (r.csstate.size == 0)
 				continue;
 			r.clearExtValue();
-			for(ContinuedSkillState css:r.csstate){
-				if(css.ani!=null)
-					r.ani_role_continue(css);				//播放持续技能效果动画
-				if(css.cstype==CSType.buff_atk){
-					r.extAttack += (int) css.val; 
-				}else if(css.cstype==CSType.buff_def){
+			for (ContinuedSkillState css : r.csstate) {
+				if (css.ani != null)
+					r.ani_role_continue(css); // 播放持续技能效果动画
+				if (css.cstype == CSType.buff_atk) {
+					r.extAttack += (int) css.val;
+				} else if (css.cstype == CSType.buff_def) {
 					r.extDefend += (int) css.val;
-				}else if(css.cstype==CSType.buff_hp){
-					r.extMaxHp += (int)css.val;
-					r.currentHp += (int)css.val;
-				}else if(css.cstype==CSType.debuff_atk){
+				} else if (css.cstype == CSType.buff_hp) {
+					r.extMaxHp += (int) css.val;
+					r.currentHp += (int) css.val;
+				} else if (css.cstype == CSType.debuff_atk) {
 					r.extAttack += (int) -css.val;
-				}else if(css.cstype==CSType.debuff_def){
+				} else if (css.cstype == CSType.debuff_def) {
 					r.extDefend += (int) -css.val;
-				}else if(css.cstype==CSType.debuff_hp){
-					r.extMaxHp += (int)-css.val;
-					r.currentHp += (int)-css.val;
-				}else if(css.cstype==CSType.dot){
-					r.currentHp = (int) (r.currentHp-css.val >0 ?r.currentHp-css.val:0);
-					if(r.currentHp==0)
+				} else if (css.cstype == CSType.debuff_hp) {
+					r.extMaxHp += (int) -css.val;
+					r.currentHp += (int) -css.val;
+				} else if (css.cstype == CSType.dot) {
+					r.currentHp = (int) (r.currentHp - css.val > 0 ? r.currentHp
+							- css.val
+							: 0);
+					if (r.currentHp == 0)
 						commandRoleDead(r);
-				}else if(css.cstype==CSType.hot){
-					r.currentHp = (int)(r.currentHp + css.val<(r.getMaxHp())?r.currentHp+css.val:r.getMaxHp());
-				//致盲
-				}else if(css.cstype==CSType.blind){
+				} else if (css.cstype == CSType.hot) {
+					r.currentHp = (int) (r.currentHp + css.val < (r.getMaxHp()) ? r.currentHp
+							+ css.val
+							: r.getMaxHp());
+					// 致盲
+				} else if (css.cstype == CSType.blind) {
 					r.isRoundMove = false;
-				//眩晕
-				}else if(css.cstype==CSType.dizzy){
+					// 眩晕
+				} else if (css.cstype == CSType.dizzy) {
 					r.isRoundMove = false;
 				}
-				//如果持续效果动画不为空，播放动画
-//				if(css.ani!=null)
-//					r.ani_role_continue(css);
-//					r.ani_role_isAttacked(css.ani);
-				//持续回合数减1
-				css.remainRound -=1;
-				//如果持续效果剩余回合数为0，从人物的持续效果队列中移除该持续效果
-				if(css.remainRound<=0)
+				// 如果持续效果动画不为空，播放动画
+				// if(css.ani!=null)
+				// r.ani_role_continue(css);
+				// r.ani_role_isAttacked(css.ani);
+				// 持续回合数减1
+				css.remainRound -= 1;
+				// 如果持续效果剩余回合数为0，从人物的持续效果队列中移除该持续效果
+				if (css.remainRound <= 0)
 					r.csstate.removeValue(css, true);
 			}
 		}
 		be.notify(this, "continue_state_completed");
 	}
-	
+
 	/**
 	 * 处理地图块事件，检查地图上特殊属性的块是否有Role在 有则对Role对象进行处理
 	 * 
@@ -294,24 +324,25 @@ public class Commander {
 	 * 指挥英雄们进行行动
 	 */
 	boolean waitRoleFlag = false; // 等待标示，用来标记是否继续循环对下一英雄进行操作
-	boolean currTaskComFlag = false;	//当前任务是否完成标示
+	boolean currTaskComFlag = false; // 当前任务是否完成标示
 	boolean loopCompleted = false;
-	int skillAniCompletedCount = 0;		//技能动画完成数量		
-//	boolean moveAfterSkillFlag = false;	//指示释放技能后人物是否继续移动
-	private void commandRoles(BsuEvent be,Role.Type rt) throws InterruptedException {
+	int skillAniCompletedCount = 0; // 技能动画完成数量
+	// boolean moveAfterSkillFlag = false; //指示释放技能后人物是否继续移动
+
+	private void commandRoles(BsuEvent be, Role.Type rt)
+			throws InterruptedException {
 		Array<Role> attackRoles = null;
-//		Array<Role> beAttackedRoles = null;
+		// Array<Role> beAttackedRoles = null;
 		DIRECTION direct = DIRECTION.right;
-		//判断进攻方为英雄还是npc
-		if(rt==Type.HERO){
+		// 判断进攻方为英雄还是npc
+		if (rt == Type.HERO) {
 			attackRoles = heros;
 			direct = DIRECTION.right;
-		}
-		else if(rt==Type.ENEMY){
+		} else if (rt == Type.ENEMY) {
 			attackRoles = npcs;
 			direct = DIRECTION.left;
-		} 
-			
+		}
+
 		for (int i = 0; i < attackRoles.size; i++) {
 			final Role r = attackRoles.get(i);
 			if(!r.isRoundMove) {r.isRoundMove=true;continue;}	//如果本回合该英雄不行动则跳过该英雄
@@ -327,16 +358,18 @@ public class Commander {
 					boolean ani_assault_finished = false;			//判断位移动画是否完成
 					boolean skill_logic = false;					//判断技能逻辑函数返回值，返回true为自身释放技能，返回false为对其他单位释放技能
 					@Override
-					public void notify(Object obj,String msg){
-						if(!skill_logic && r.cskill.skillLogic(r, atkrs))
+					public void notify(Object obj, String msg) {
+						if (!skill_logic && r.cskill.skillLogic(r, atkrs))
 							atkrs.clear();
 						skill_logic = true;
-						//判断攻击动画是否完成
-						if(msg.equals("ani_attack_finished") || r.getCskill().ani_self==null)
+						// 判断攻击动画是否完成
+						if (msg.equals("ani_attack_finished")
+								|| r.getCskill().ani_self == null)
 							ani_attack_finished = true;
 
-						//判断被攻击动画是否完成
-						if(msg.equals("ani_beattacked_finished") || r.getCskill().ani_object==null)
+						// 判断被攻击动画是否完成
+						if (msg.equals("ani_beattacked_finished")
+								|| r.getCskill().ani_object == null)
 							ani_beattacked_finished = true;
 						
 						//判断位移动画是否完成
@@ -349,35 +382,31 @@ public class Commander {
 						}
 					}
 				});
-			}else{currTaskComFlag = true;}
-			
+				//测试血条用，位置不合适，，
+				for (Role e : atkrs) {
+					e.currentHp -= r.getAttack() - e.getDefend()>0?r.getAttack()-e.getDefend():0;
+					gamescreen.getFightUI().changeRoleHp(e);
+				}
+			} else {
+				currTaskComFlag = true;
+			}
+
 			while (!currTaskComFlag) {
 				System.out.println("currTaskComFlag");
 				Thread.sleep(500);
 			}
-			
 			//2:执行移动命令
 			if(atkrs.size == 0){
-				//如果为冲锋技能，不执行下面的普通位移
-//				if(r.cskill.type==Skill.Type.p_assault){
-//					assaultCommand(r,new BsuEvent(){
-//						@Override
-//						public void notify(Object obj,String msg){
-//							waitRoleFlag = false;
-//						}
-//					});
-//				//普通行走指令
-//				}else{
-					if(!r.hasAnatherRole(allRoles)){
-						Commander.this.moveDirectCommand(r, direct, new BsuEvent(){
-							@Override
-							public void notify(Object obj, String msg) {
-								waitRoleFlag = false;
-							}
-						});
-					}else{stopedCommand(r);waitRoleFlag = false;}
-//				}
+				if(!r.hasAnatherRole(allRoles)){
+					Commander.this.moveDirectCommand(r, direct, new BsuEvent(){
+						@Override
+						public void notify(Object obj, String msg) {
+							waitRoleFlag = false;
+						}
+					});
+				}else{stopedCommand(r);waitRoleFlag = false;}
 			}else{waitRoleFlag = false;}
+
 
 			// 等待动作完成
 			while (waitRoleFlag) {
@@ -396,15 +425,14 @@ public class Commander {
 	 */
 	private Array<Role> getRolesInSkillRange(Role h) {
 		Skill s = h.cskill;
-		Array<Vector2> vs = h.type==Type.HERO?s.getRange():s.flipRange();					//技能作用范围
-		//如果技能为f_box类型，重新计算技能攻击范围
-		if(s.type==Skill.Type.f_box){
+		Array<Vector2> vs = h.type == Type.HERO ? s.getRange() : s.flipRange(); // 技能作用范围
+		// 如果技能为f_box类型，重新计算技能攻击范围
+		if (s.type == Skill.Type.f_box) {
 			vs.clear();
-			int offset = h.type==Type.HERO?1:-1;
-			for(int i=0;i<s.val;i++)
-				vs.add(new Vector2(i+offset,0));
+			int offset = h.type == Type.HERO ? 1 : -1;
+			for (int i = 0; i < s.val; i++)
+				vs.add(new Vector2(i + offset, 0));
 		}
-		
 		Array<Role> retrs = new Array<Role>();				//返回符合类型的英雄
 		Array<Role> checkrs = null;							//要检查的单位群体类型，伤害类技能检查敌人，回血buff类检查hero
 		if(s.type==Skill.Type.f_damage ||s.type==Skill.Type.f_shifhp ||s.type==Skill.Type.f_box ||s.type==Skill.Type.p_atkbeat ||
@@ -414,24 +442,22 @@ public class Commander {
 		else if(s.type==Skill.Type.f_healing ||s.type==Skill.Type.p_healing  ||s.type==Skill.Type.pbuff_atk ||
 				s.type==Skill.Type.pbuff_def ||s.type==Skill.Type.pbuff_healing ||s.type==Skill.Type.pbuff_hp )
 			checkrs = h.type==Type.HERO?heros:npcs;
-
-			
 		//如果没有指定检查Role直接返回retrs
 		if(checkrs == null)
 			return retrs;
-		
 		for (Vector2 v : vs) {
 			for (Role r : checkrs) {
-				//如果技能为全图技能，加入作用单位继续循环
-				if(s.otype==ObjectType.all){
+				// 如果技能为全图技能，加入作用单位继续循环
+				if (s.otype == ObjectType.all) {
 					retrs.add(r);
 					continue;
 				}
-				
-				if ((v.x+h.getBoxX()) == r.getBoxX() && (v.y+h.getBoxY()) == r.getBoxY()){
+
+				if ((v.x + h.getBoxX()) == r.getBoxX()
+						&& (v.y + h.getBoxY()) == r.getBoxY()) {
 					retrs.add(r);
-					//如果技能为单体技能，直接返回结果数组
-					if(s.otype==ObjectType.single)
+					// 如果技能为单体技能，直接返回结果数组
+					if (s.otype == ObjectType.single)
 						return retrs;
 				}
 			}
@@ -441,6 +467,7 @@ public class Commander {
 
 	/**
 	 * 向role下命令，命令其如何移动,只针对hero方
+	 * 
 	 * @param mx
 	 * @param my
 	 */
@@ -513,15 +540,18 @@ public class Commander {
 			}
 		}
 	}
+
 	/**
 	 * 命令一个Role死亡
-	 * @param r	要致死的Role
+	 * 
+	 * @param r
+	 *            要致死的Role
 	 */
-	public void commandRoleDead(Role r){
-		//后续处理
+	public void commandRoleDead(Role r) {
+		// 后续处理
 		System.out.println("啊啊啊啊啊，我死了！！！");
 	}
-	
+
 	public Array<Role> getHeros() {
 		return heros;
 	}
