@@ -36,24 +36,29 @@ public class AttackEffect extends Actor {
 	 */
 	public void startEffect(TextureRegion tr, Role r, Vector2 v) {
 		currentFrame = new TextureRegion(tr);
-		if (v != null) {
-			cx = r.getX() + v.x;
-			cy = r.getY() + v.y;
-		}else{
-			cx = r.getX() ;
-			cy = r.getY() ;
-		}
-		if(r.type==Type.HERO){
-			flip_flag=false;
-		}else{
-			flip_flag=true;
+		if (r.type == Type.HERO) {
+			flip_flag = false;
+		} else {
+			flip_flag = true;
 			currentFrame.flip(true, false);
 		}
+		if (v != null) {
+			if (flip_flag) {
+				cx = r.getX() + 32 - v.x;
+			} else {
+				cx = r.getX() + v.x;
+			}
+			cy = r.getY() + v.y;
+		} else {
+			cx = r.getX();
+			cy = r.getY();
+		}
+
 	}
 
 	public void setFrame(TextureRegion tr) {
 		currentFrame = new TextureRegion(tr);
-		if(flip_flag){
+		if (flip_flag) {
 			currentFrame.flip(true, false);
 		}
 	}
