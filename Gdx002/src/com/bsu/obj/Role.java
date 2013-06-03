@@ -230,9 +230,16 @@ public class Role extends Actor {
 			beAttack_effect = ani;
 			if (v != null) {
 				if (type == Type.HERO) {
-					//px = 32-v.x;
+					px = 32 - v.x - ani.getKeyFrame(0).getRegionWidth();
 				} else {
-					px = v.x;	
+					px = v.x;
+				}
+				py = v.y;
+			}else{
+				if (type == Type.HERO) {
+					px = 32 - ani.getKeyFrame(0).getRegionWidth();
+				} else {
+					px = v.x;
 				}
 				py = v.y;
 			}
@@ -324,15 +331,14 @@ public class Role extends Actor {
 				if (bevent != null) {
 					System.out.println(this.name
 							+ "attact_skill_effect_completed");
-					// bevent.notify(this, this.name);
 					bevent.notify(this, "ani_attack_finished");
 				}
 			}
-		}// else{if(bevent!=null)bevent.notify(this,"ani_attack_finished");}
-
+		}
 		if (beAttack_effect != null) {
-			current_beattack_frame = beAttack_effect.getKeyFrame(time_effect,
-					false);
+			current_beattack_frame=null;
+			current_beattack_frame = new TextureRegion(
+					beAttack_effect.getKeyFrame(time_effect, false));
 			if (type == Type.HERO) {
 				current_beattack_frame.flip(true, false);
 			}
@@ -345,11 +351,10 @@ public class Role extends Actor {
 				if (bevent != null) {
 					System.out.println(this.name
 							+ "beattacked_effect_completed");
-					// bevent.notify(this, this.name);
 					bevent.notify(this, "ani_beattacked_finished");
 				}
 			}
-		}// else{if(bevent!=null)bevent.notify(this,"ani_beattacked_finished");}
+		}
 
 		if (isSelected()) {
 			if (state == STATE.idle) {
