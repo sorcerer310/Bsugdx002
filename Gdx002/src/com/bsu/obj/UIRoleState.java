@@ -123,7 +123,6 @@ class roleUIInfo {
 	Image hpImg;
 	Image photoImg,role_classes;
 	Label nameLabel;
-	
 
 	public roleUIInfo(Role r, Stage stage, int x, int y) {
 		TextureRegion hpBack = WidgetFactory.getInstance().getTextureFill(4,
