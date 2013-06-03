@@ -550,6 +550,7 @@ public class Commander {
 			@Override
 			public void notify(Object obj,String msg){
 				lactor.removeValue(r, true);
+				
 			}
 		});
 		

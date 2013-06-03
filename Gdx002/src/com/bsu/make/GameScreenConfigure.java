@@ -40,8 +40,9 @@ public class GameScreenConfigure {
 		
 		//加入3个敌人
 		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GameTextureClass.getInstance().zyc_photo,96));
-		//npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GameTextureClass.getInstance().zyc_photo,96));
-		//npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GameTextureClass.getInstance().zyc_photo,95));
+		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GameTextureClass.getInstance().zyc_photo,96));
+		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GameTextureClass.getInstance().zyc_photo,96));
+
 		
 		roles.addAll(heroRoles);
 		roles.addAll(npcRoles);

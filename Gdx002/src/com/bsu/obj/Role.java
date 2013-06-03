@@ -688,6 +688,8 @@ public class Role extends Actor {
 						@Override
 						public void run() {
 							be.notify(this, "dead");
+							//让头像回到初始位置
+							addAction(sequence(rotateBy(-90,.0f),moveBy(10f,0f,0f)));
 						}
 					})));
 		} else if (face == FACE.left) {
@@ -701,6 +703,8 @@ public class Role extends Actor {
 						@Override
 						public void run() {
 							be.notify(this, "dead");
+							//让头像回到初始位置
+							addAction(sequence(rotateBy(90,.0f),moveBy(-10f,0f,0f)));
 						}
 					})));
 		}
