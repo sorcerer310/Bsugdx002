@@ -676,7 +676,7 @@ public class Role extends Actor {
 		}else if(face==FACE.left){
 			this.setOrigin(32,0);
 			addAction(sequence(parallel(rotateBy(-45f,0.3f),moveBy(5f,0f,0.3f),moveBy(0f,-10f,0.3f)),
-					parallel(rotateBy(-s45f,0.3f),moveBy(5f,0f,0.3f),moveBy(0f,10f,0.3f)),
+					parallel(rotateBy(-45f,0.3f),moveBy(5f,0f,0.3f),moveBy(0f,10f,0.3f)),
 					alpha(0.0f,0.5f),run(new Runnable(){
 						@Override
 						public void run(){
