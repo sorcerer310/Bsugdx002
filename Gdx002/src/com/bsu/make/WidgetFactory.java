@@ -272,7 +272,7 @@ public class WidgetFactory {
 	 * @param v
 	 *            坐标
 	 */
-	public Image showSkillImg(Skill skill, Stage s, Vector2 v) {
+	public Image showSkillImg(Skill skill, Stage s, Vector2 v,boolean lvFlag) {
 		Image img = null;
 		if (skill.enable) {
 			img = new Image(skill.icon);
@@ -281,6 +281,7 @@ public class WidgetFactory {
 			Image skillImgEffect = new Image(tr);
 			s.addActor(skillImgEffect);
 			skillImgEffect.setPosition(v.x - 1, v.y - 1);
+			if(lvFlag)
 			makeLabel("" + skill.lev, s, 0.5f, (int) (v.x) + 28,
 					(int) (v.y) - 7);
 		} else {

@@ -162,7 +162,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < 2; i++) {
 			final int index = i;
 			final Image img = wfy.showSkillImg(r.skill_array.get(index),
-					RoleInfoStage, new Vector2(40 + i * 60, 170));
+					RoleInfoStage, new Vector2(40 + i * 60, 170),true);
 			final Vector2 v = new Vector2(img.getX(), img.getY());
 			skillImg[i] = img;
 
@@ -227,22 +227,22 @@ public class RoleScreen extends CubocScreen implements Observer,
 			Image skill_img = null;
 			if (s.quality == QUALITY.green) {
 				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
-						+ numsGreen * 40, iy));
+						+ numsGreen * 40, iy),true);
 				numsGreen++;
 			}
 			if (s.quality == QUALITY.blue) {
 				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
-						+ numsBlue * 40, iy + 35));
+						+ numsBlue * 40, iy + 35),true);
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
 				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
-						+ numsPur * 40, iy + 70));
+						+ numsPur * 40, iy + 70),true);
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
 				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
-						+ numsOra * 40, iy + 105));
+						+ numsOra * 40, iy + 105),true);
 				numsOra++;
 			}
 			final Vector2 vs = new Vector2(skill_img.getX(), skill_img.getY());
@@ -283,10 +283,10 @@ public class RoleScreen extends CubocScreen implements Observer,
 		r.cskill = r.skill_array.get(0);
 		if (index == 0) {
 			img = wfy.showSkillImg(r.skill_array.get(index),
-					RoleInfoStage, new Vector2(img.getX(),img.getY()));
+					RoleInfoStage, new Vector2(img.getX(),img.getY()),true);
 		} else {
 			img1 = wfy.showSkillImg(r.skill_array.get(index),
-					RoleInfoStage, new Vector2(img1.getX(),img1.getY()));
+					RoleInfoStage, new Vector2(img1.getX(),img1.getY()),true);
 		}
 		
 	}

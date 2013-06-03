@@ -70,7 +70,7 @@ public class UIRoleState implements Observer{
 				final int tempIndex = j;
 				Image skillImg = WidgetFactory.getInstance().showSkillImg(
 						r.skill_array.get(j), stage,
-						new Vector2(x + 50, y + 24 - j * 26));
+						new Vector2(x + 50, y + 24 - j * 26),false);
 				if (r.skill_array.get(tempIndex).enable) {
 					skillImg.addListener(new InputListener() {
 						@Override
