@@ -3,6 +3,7 @@ package com.bsu.obj;
 import java.util.Observable;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.make.WidgetFactory;
 import com.bsu.obj.skilltree.ContinuedSkillState;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.BsuEvent;
@@ -71,6 +73,7 @@ public class Role extends Actor {
 	private TextureRegion current_attack_frame; // 当前攻击效果动画对应的某一帧
 	private Animation beAttack_effect; // 被攻击效果动画
 	private TextureRegion current_beattack_frame; // 当前被攻击效果动画对应的某一帧
+	private TextureRegion hp_back, hp;
 	private boolean selected; // 被选中等待操作？
 	private boolean controlled;// 此轮是否被操作过
 	private Array<Vector2> pass_array = new Array<Vector2>(); // 人物可以移动的格子数组
@@ -124,9 +127,12 @@ public class Role extends Actor {
 				roleTexture);
 		ani_move = GameAnimationClass.getInstance().getRoleAnimation(
 				roleTexture);
-
 		ani_disapper = GameAnimationClass.getInstance().getEffectDisapper();
 		ani_apper = GameAnimationClass.getInstance().getEffectApper();
+		hp_back = WidgetFactory.getInstance().getTextureFill(
+				Configure.map_box_value, 2, Color.BLACK);
+		hp = WidgetFactory.getInstance().getTextureFill(
+				Configure.map_box_value, 2, Color.RED);
 		set_ani_from_state(STATE.idle);
 	}
 
@@ -136,11 +142,21 @@ public class Role extends Actor {
 
 		if (current_action_frame != null) {
 			batch.draw(current_action_frame, getX(), getY(), getOriginX(),
-					getOriginY(), 32, 32, getScaleX(), getScaleY(),
+					getOriginY(), Configure.map_box_value,
+					Configure.map_box_value, getScaleX(), getScaleY(),
 					getRotation());
 		}
 		if (current_beattack_frame != null) {
 			batch.draw(current_beattack_frame, getX() + px, getY() + py);
+		}
+		if (currentHp > 0) {
+			batch.draw(hp_back, getX(), getY() + Configure.map_box_value - 2,
+					getOriginX(), getOriginY(), Configure.map_box_value, 2,
+					getScaleX(), getScaleY(), getRotation());
+			batch.draw(hp, getX(), getY() + Configure.map_box_value - 2,
+					getOriginX(), getOriginY(), Configure.map_box_value
+							* currentHp / maxHp, 2, getScaleX(), getScaleY(),
+					getRotation());
 		}
 		Role_logic();
 	}
@@ -230,20 +246,20 @@ public class Role extends Actor {
 			beAttack_effect = ani;
 
 			if (v != null) {
- 				if (type == Type.HERO) {
+				if (type == Type.HERO) {
 					px = 32 - v.x - ani.getKeyFrame(0).getRegionWidth();
- 				} else {
-					px = v.x;	
+				} else {
+					px = v.x;
 				}
 				py = v.y;
-			}else{
+			} else {
 				if (type == Type.HERO) {
 					px = 32 - ani.getKeyFrame(0).getRegionWidth();
 				} else {
 					px = 0;
- 				}
- 				py = 0;
- 			}
+				}
+				py = 0;
+			}
 		}
 	}
 
@@ -683,8 +699,7 @@ public class Role extends Actor {
 					parallel(rotateBy(45f, 0.3f), moveBy(-5f, 0f, 0.3f),
 							moveBy(0f, 10f, 0.3f)),
 					parallel(rotateBy(45f, 0.3f), moveBy(-5f, 0f, 0.3f),
-							moveBy(0f, -10f, 0.3f)), 
-					alpha(0.0f, 0.5f),
+							moveBy(0f, -10f, 0.3f)), alpha(0.0f, 0.5f),
 					run(new Runnable() {
 						@Override
 						public void run() {

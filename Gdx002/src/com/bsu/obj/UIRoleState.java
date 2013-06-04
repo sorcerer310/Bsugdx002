@@ -66,11 +66,16 @@ public class UIRoleState implements Observer{
 			rui.photoImg = photo.role;
 			rui.role_classes=photo.role_classes;
 			hpArray.add(rui);
+			final Array<Image> imgArray=new Array<Image>();
 			for (int j = 0; j < r.skill_array.size; j++) {
 				final int tempIndex = j;
-				Image skillImg = WidgetFactory.getInstance().showSkillImg(
+				final Image skillImg = WidgetFactory.getInstance().showSkillImg(
 						r.skill_array.get(j), stage,
 						new Vector2(x + 50, y + 24 - j * 26),false);
+				imgArray.add(skillImg);
+				if(j==0){
+					U.setApha(skillImg, 1);
+				}
 				if (r.skill_array.get(tempIndex).enable) {
 					skillImg.addListener(new InputListener() {
 						@Override
@@ -83,6 +88,7 @@ public class UIRoleState implements Observer{
 						public void touchUp(InputEvent event, float x, float y,
 								int pointer, int button) {
 							r.cskill = r.skill_array.get(tempIndex);
+							U.setSkillImg(imgArray, skillImg);
 							super.touchUp(event, x, y, pointer, button);
 						}
 					});

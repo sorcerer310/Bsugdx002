@@ -165,6 +165,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 					RoleInfoStage, new Vector2(40 + i * 60, 170), true);
 			final Vector2 v = new Vector2(img.getX(), img.getY());
 			skillImg.add(img);
+			if (i == 0) {
+				U.setApha(img, 1);
+			}
 			if (r.skill_array.get(index).enable) {
 				img.addListener(new InputListener() {
 					@Override
@@ -286,17 +289,14 @@ public class RoleScreen extends CubocScreen implements Observer,
 			Image img1) {
 		r.skill_array.set(index, s);
 		r.cskill = r.skill_array.get(0);
-		Skin skin = new Skin();
-		skin.add("img", s.icon);
-		System.out.println(skin.getDrawable("img"));
+		Image img_temp = new Image(s.icon);
 		if (index == 0) {
-			img.setDrawable(skin.getDrawable("img"));
+			img.setDrawable(img_temp.getDrawable());
 			U.setApha(img, 1);
 		} else {
-			img1.setDrawable(skin.getDrawable("img"));
+			img1.setDrawable(img_temp.getDrawable());
 			U.setApha(img1, 1);
 		}
-		skin.dispose();
 	}
 
 	@Override
