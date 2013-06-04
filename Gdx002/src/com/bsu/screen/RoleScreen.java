@@ -158,36 +158,37 @@ public class RoleScreen extends CubocScreen implements Observer,
 		U.showRoleSelect(Player.getInstance().playerRole, r);
 		skillIndex = 0;
 		showRoleBaseInfo(r);
-		Image[] skillImg = new Image[2];
+		final Array<Image> skillImg = new Array<Image>();
 		for (int i = 0; i < 2; i++) {
 			final int index = i;
 			final Image img = wfy.showSkillImg(r.skill_array.get(index),
-					RoleInfoStage, new Vector2(40 + i * 60, 170),true);
+					RoleInfoStage, new Vector2(40 + i * 60, 170), true);
 			final Vector2 v = new Vector2(img.getX(), img.getY());
-			skillImg[i] = img;
+			skillImg.add(img);
+			if (r.skill_array.get(index).enable) {
+				img.addListener(new InputListener() {
+					@Override
+					public boolean touchDown(InputEvent event, float x,
+							float y, int pointer, int button) {
 
-			img.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
-					if (r.skill_array.get(index).enable) {
 						TipsWindows.getInstance().showSkillInfo(
 								r.skill_array.get(index), v, RoleInfoStage);
+						U.setSkillImg(skillImg, img);
+						return true;
 					}
-					return true;
-				}
 
-				@Override
-				public void touchUp(InputEvent event, float x, float y,
-						int pointer, int button) {
-					skillIndex = index;
-					super.touchUp(event, x, y, pointer, button);
-				}
-			});
+					@Override
+					public void touchUp(InputEvent event, float x, float y,
+							int pointer, int button) {
+						skillIndex = index;
+						super.touchUp(event, x, y, pointer, button);
+					}
+				});
+			}
 		}
 		// wfy.makeImg(r.weapon.texture, RoleInfoStage, 1f, 40, 100);
 		// wfy.makeImg(r.armor.texture, RoleInfoStage, 1f, 100, 100);
-		showSkillTree(r, skillImg[0], skillImg[1]);
+		showSkillTree(r, skillImg.get(0), skillImg.get(1));
 	}
 
 	/**
@@ -223,36 +224,40 @@ public class RoleScreen extends CubocScreen implements Observer,
 		int numsPur = 0;
 		int numsOra = 0;
 		int ix = 200, iy = 125;
+		final Array<Image> skillImg = new Array<Image>();
 		for (final Skill s : r.skill_tree) {
 			Image skill_img = null;
 			if (s.quality == QUALITY.green) {
 				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
-						+ numsGreen * 40, iy),true);
+						+ numsGreen * 40, iy), true);
 				numsGreen++;
 			}
 			if (s.quality == QUALITY.blue) {
 				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
-						+ numsBlue * 40, iy + 35),true);
+						+ numsBlue * 40, iy + 35), true);
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
 				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
-						+ numsPur * 40, iy + 70),true);
+						+ numsPur * 40, iy + 70), true);
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
 				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
-						+ numsOra * 40, iy + 105),true);
+						+ numsOra * 40, iy + 105), true);
 				numsOra++;
 			}
+			skillImg.add(skill_img);
 			final Vector2 vs = new Vector2(skill_img.getX(), skill_img.getY());
+			final Image sImg = skill_img;
 			if (s.enable) {
-				skill_img.addListener(new InputListener() {
+				sImg.addListener(new InputListener() {
 					@Override
 					public boolean touchDown(InputEvent event, float x,
 							float y, int pointer, int button) {
 						TipsWindows.getInstance().showSkillInfo(s, vs,
 								RoleInfoStage);
+						U.setSkillImg(skillImg, sImg);
 						return true;
 					}
 
@@ -281,14 +286,17 @@ public class RoleScreen extends CubocScreen implements Observer,
 			Image img1) {
 		r.skill_array.set(index, s);
 		r.cskill = r.skill_array.get(0);
+		Skin skin = new Skin();
+		skin.add("img", s.icon);
+		System.out.println(skin.getDrawable("img"));
 		if (index == 0) {
-			img = wfy.showSkillImg(r.skill_array.get(index),
-					RoleInfoStage, new Vector2(img.getX(),img.getY()),true);
+			img.setDrawable(skin.getDrawable("img"));
+			U.setApha(img, 1);
 		} else {
-			img1 = wfy.showSkillImg(r.skill_array.get(index),
-					RoleInfoStage, new Vector2(img1.getX(),img1.getY()),true);
+			img1.setDrawable(skin.getDrawable("img"));
+			U.setApha(img1, 1);
 		}
-		
+		skin.dispose();
 	}
 
 	@Override

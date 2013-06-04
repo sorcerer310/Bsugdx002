@@ -76,7 +76,7 @@ public class Player {
 			playerRole.add(rf.getFighter("张永臣", Type.HERO, QUALITY.purple,
 					GameTextureClass.getInstance().zyc_photo,96));
 			playerRole.add(rf.getFighter("11", Type.HERO, QUALITY.orange,
-					GameTextureClass.getInstance().zyc_photo,96));
+					GameTextureClass.getInstance().zyc_photo,95));
 
 		}
 		resetRoleArray(playerRole);

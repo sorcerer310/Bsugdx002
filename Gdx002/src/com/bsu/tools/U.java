@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role;
+import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.Configure.CLASSES;
 import com.bsu.tools.Configure.QUALITY;
 
@@ -221,7 +222,18 @@ public class U {
 		return labelArray;
 	}
 	/**
-	 * 设置一个widget透明度，目前只有image
+	 * 选择的技能设置高亮（apha==1）
+	 * @param skillArray
+	 * @param s
+	 */
+	public static void setSkillImg(Array<Image> skillArray,Image s){
+		for(Image img:skillArray){
+			setApha(img, 0.5f);
+		}
+		setApha(s, 1);
+	}
+	/**
+	 * 设置一个widget透明度
 	 * @param img
 	 * @param a
 	 */
