@@ -29,18 +29,20 @@ import com.bsu.tools.U;
  * @author zhangyongchen
  * 
  */
-public class UIRoleEffect implements Observer{
+public class UIRoleEffect implements Observer {
 
 	Stage stage;
 	TextButton bt_endround;
 	Commander c;
+	GameScreen g;
 	Array<roleUIInfo> hpArray = new Array<roleUIInfo>();
 
-	public UIRoleEffect(Stage s) {
+	public UIRoleEffect(Stage s, GameScreen game) {
 		// TODO Auto-generated constructor stub
 		stage = s;
 		stage.clear();
 		c = Commander.getInstance();
+		g = game;
 		show_hero_state();
 	}
 
@@ -68,16 +70,17 @@ public class UIRoleEffect implements Observer{
 			RoleEffect photo = new RoleEffect(r, stage, v, false);
 			roleUIInfo rui = new roleUIInfo(r, stage, x, y);
 			rui.photoImg = photo.role;
-			rui.role_classes=photo.role_classes;
+			rui.role_classes = photo.role_classes;
 			hpArray.add(rui);
-			final Array<Image> imgArray=new Array<Image>();
+			final Array<Image> imgArray = new Array<Image>();
 			for (int j = 0; j < r.skill_array.size; j++) {
-				Skill skill=r.skill_array.get(j);
+				Skill skill = r.skill_array.get(j);
 				final int tempIndex = j;
-				SkillEffect se=new SkillEffect(skill, stage,new Vector2(x + 50, y + 24 - j * 26),false);
-				final Image skillImg=se.skillImg;
+				SkillEffect se = new SkillEffect(skill, stage, new Vector2(
+						x + 50, y + 24 - j * 26), false);
+				final Image skillImg = se.skillImg;
 				imgArray.add(skillImg);
-				if(j==0){
+				if (j == 0) {
 					U.setApha(skillImg, 1);
 				}
 				if (r.skill_array.get(tempIndex).enable) {
@@ -91,14 +94,26 @@ public class UIRoleEffect implements Observer{
 						@Override
 						public void touchUp(InputEvent event, float x, float y,
 								int pointer, int button) {
-							r.cskill = r.skill_array.get(tempIndex);
-							U.setSkillImg(imgArray, skillImg);
+							if (!g.isAction_start()) {
+								r.cskill = r.skill_array.get(tempIndex);
+								U.setSkillImg(imgArray, skillImg);
+							}
 							super.touchUp(event, x, y, pointer, button);
 						}
 					});
 				}
 			}
 		}
+	}
+	/**
+	 * 显示正在执行动作的role
+	 * @param r
+	 */
+	public void actingRole(Role r) {
+		for(Role e:Player.getInstance().playerFightRole){
+			e.photo.showEffect(false);
+		}
+		r.photo.showEffect(true);
 	}
 
 	/**
@@ -114,7 +129,7 @@ public class UIRoleEffect implements Observer{
 					rui.hpImg.setScaleY((float) (r.getCurrentHp())
 							/ (float) (r.maxHp));
 				} else {
-					//头像变暗
+					// 头像变暗
 					rui.hpImg.setScaleY(0);
 					U.setApha(rui.photoImg, 0.2f);
 					U.setApha(rui.role_classes, 0.2f);
@@ -126,13 +141,13 @@ public class UIRoleEffect implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		changeRoleHp((Role)arg);				
+		changeRoleHp((Role) arg);
 	}
 }
 
 class roleUIInfo {
 	Image hpImg;
-	Image photoImg,role_classes;
+	Image photoImg, role_classes;
 	Label nameLabel;
 
 	public roleUIInfo(Role r, Stage stage, int x, int y) {

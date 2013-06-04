@@ -74,7 +74,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		setBornPosition(GameMap.map, Type.HERO, Configure.object_layer_hero);
 		setBornPosition(GameMap.map, Type.ENEMY, Configure.object_layer_enemy);
 		if (fightUI == null) {
-			fightUI = new UIRoleEffect(UIStage);
+			fightUI = new UIRoleEffect(UIStage,this);
 		} else {
 			fightUI.show_hero_state();
 		}
@@ -250,15 +250,24 @@ public class GameScreen extends CubocScreen implements Observer,
 	 * 初始化role
 	 */
 	private void initRoles(Array<Role> roles) {
-		//for (Role r : commander.allRoles) {
 		for(Role r:roles){
 			r.gsstartinit();
 			MapBox.attack_array.clear();
 			MapBox.pass_array.clear();
 			mb.block_array.clear();
 		}
+		newRound();
 	}
-
+	/**
+	 * 新回合开始
+	 */
+	public void newRound(){
+		setAction_start(false);
+		heroSelected(commander.heros.get(0));
+		heroControllor(commander.heros.get(0));
+		set_map_value(commander.heros.get(0));
+		commander.heros.get(0).photo.showEffect(true);
+	}
 	/**
 	 * 用来检查角色是否被本轮选择，若被选择，则其他不被选择，
 	 * 
@@ -268,8 +277,10 @@ public class GameScreen extends CubocScreen implements Observer,
 		for (Role r : commander.heros) {
 			if (r.getType() == Type.HERO) {
 				r.setSelected(false);
+				r.photo.showEffect(false);
 				if (hero == r) {
 					hero.setSelected(true);
+					hero.photo.showEffect(true);
 				}
 			}
 		}
@@ -307,7 +318,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	/*
 	 * 根据Role对象，设置相应的MapBox的pass数组
 	 */
-	private void set_map_value(Role r) {
+	public void set_map_value(Role r) {
 		MapBox.pass_array.clear();
 		for (Vector2 v : r.getPass_array()) {
 			Vector2 tempV = new Vector2();

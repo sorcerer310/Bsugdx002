@@ -141,7 +141,6 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 			final Role r = roleArray.get(i);
 			Vector2 v = new Vector2(x + i % 7 * w, y - i / 7 * w);
 			final RoleEffect photo = new RoleEffect(r, sRoleStage, v, false);
-			r.photo = photo;
 			photo.role.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,

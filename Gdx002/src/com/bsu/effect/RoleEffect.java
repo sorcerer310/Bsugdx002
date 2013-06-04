@@ -67,6 +67,7 @@ public class RoleEffect {
 		role.setPosition(v.x, v.y);
 		role_v = v;
 		role_classes.setPosition(v.x + 32, v.y);
+		r.photo=this;
 		showEffect(b);
 	}
 

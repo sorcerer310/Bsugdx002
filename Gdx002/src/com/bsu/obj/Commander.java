@@ -146,7 +146,7 @@ public class Commander {
 					// commandNpcs(be);
 					commandRoles(be, Role.Type.ENEMY);
 					roundEndCompleted = true;
-					gamescreen.setAction_start(false);
+					gamescreen.newRound();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -339,7 +339,7 @@ public class Commander {
 			if(!r.isRoundMove) {r.isRoundMove=true;continue;}	//如果本回合该英雄不行动则跳过该英雄
 			waitRoleFlag = true; 			// 初始化等待循环flag为true
 			currTaskComFlag = false;		//只是当前处理技能任务是否完成
-			
+			//gamescreen.getFightUI().actingRole(r);
 			final Array<Role> atkrs = getRolesInSkillRange(r);
 			//1:执行技能命令
 			if(atkrs.size!=0){
