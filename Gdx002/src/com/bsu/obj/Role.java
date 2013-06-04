@@ -36,6 +36,7 @@ public class Role extends Actor {
 	public Equip weapon;// 人物武器
 	public Equip armor;// 人物护甲
 
+	public boolean isDead = false;			//角色死亡标识
 	private BsuEvent bevent = null; // 用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
 	public QUALITY quality;// 品质
@@ -108,10 +109,23 @@ public class Role extends Actor {
 		skill_array.add(skill_tree.get(0));
 		skill_array.add(skill_tree.get(1));
 		exp = baseExp();
+		isDead = false;
 		set_actor_base(type);
 		levelUp();
 	}
 
+	public void gsstartinit(){
+		setSelected(false);
+		setControlled(false);
+		setCurrentHp(maxHp);
+		clearExtValue();
+		getPass_array().clear();
+		getAttack_array().clear();
+		clearActions();
+		cskill = skill_array.get(0);
+		isDead = false;
+	}
+	
 	/**
 	 * 根据类型获得资源
 	 * 
@@ -702,13 +716,13 @@ public class Role extends Actor {
 							moveBy(0f, 10f, 0.3f)),
 					parallel(rotateBy(45f, 0.3f), moveBy(-5f, 0f, 0.3f),
 							moveBy(0f, -10f, 0.3f)), alpha(0.0f, 0.5f),
+//					fadeOut(0f),
+					// 让头像回到初始位置
+					parallel(rotateBy(-90, .0f),moveBy(10f, 0f, 0f)),
 					run(new Runnable() {
 						@Override
 						public void run() {
 							be.notify(this, "dead");
-							// 让头像回到初始位置
-							addAction(sequence(rotateBy(-90, .0f),
-									moveBy(10f, 0f, 0f)));
 						}
 					})));
 		} else if (face == FACE.left) {
@@ -718,18 +732,30 @@ public class Role extends Actor {
 							moveBy(0f, -10f, 0.3f)),
 					parallel(rotateBy(-45f, 0.3f), moveBy(5f, 0f, 0.3f),
 							moveBy(0f, 10f, 0.3f)), alpha(0.0f, 0.5f),
+//					fadeOut(0f),
+					// 让头像回到初始位置
+					parallel(rotateBy(90, .0f),moveBy(-10f, 0f, 0f)),
 					run(new Runnable() {
 						@Override
 						public void run() {
 							be.notify(this, "dead");
-							// 让头像回到初始位置
-							addAction(sequence(rotateBy(90, .0f),
-									moveBy(-10f, 0f, 0f)));
+
 						}
-					})));
+					})
+					));
 		}
 	}
-
+	/**
+	 * 将角色由死亡状态转为站立状态
+	 */
+	public void deadToStand(){
+		if(face==FACE.right){
+			addAction(parallel(rotateBy(-90, .0f),moveBy(10f, 0f, 0f)));
+		}else if(face==FACE.left){
+			addAction(parallel(rotateBy(90, .0f),moveBy(-10f, 0f, 0f)));	
+		}
+	}
+	
 	/**
 	 * 返回英雄的职业数据
 	 * 

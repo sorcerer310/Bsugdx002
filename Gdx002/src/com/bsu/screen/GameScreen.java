@@ -53,10 +53,10 @@ public class GameScreen extends CubocScreen implements Observer,
 	 * 
 	 * @param mindex
 	 *            关卡索引数，系统会根据这个参数判断载入哪个地图
-	 * @param rols
+	 * @param roles
 	 *            关卡初始化英雄与敌人的数组，出生地点在地图中已经设置好
 	 */
-	public void game_init(int mindex, Array<Role> rols) {
+	public void game_init(int mindex, Array<Role> roles) {
 		stage.clear();
 		GameMap.make_map(mindex);
 		setAction_start(false);
@@ -65,8 +65,8 @@ public class GameScreen extends CubocScreen implements Observer,
 			mb = new MapBox();
 		}
 		stage.addActor(mb); // 增加地图方格显示
-		for (int i = 0; i < rols.size; i++) {
-			stage.addActor(rols.get(i));
+		for (int i = 0; i < roles.size; i++) {
+			stage.addActor(roles.get(i));
 		}
 		commander = Commander.getInstance(stage, this);
 		commander.resetRoles();
@@ -79,14 +79,14 @@ public class GameScreen extends CubocScreen implements Observer,
 			fightUI.show_hero_state();
 		}
 		// 为role增加观察者
-		for (int i = 0; i < rols.size; i++)
-			rols.get(i).getRoleObserable().addObserver(fightUI);
+		for (int i = 0; i < roles.size; i++)
+			roles.get(i).getRoleObserable().addObserver(fightUI);
 
 		c = (OrthographicCamera) stage.getCamera();
 		if (attack_effect == null) {
 			attack_effect = AttackEffect.getInstance();
 		}
-		initRoles();
+		initRoles(roles);
 		stage.addActor(attack_effect);
 	}
 
@@ -249,16 +249,10 @@ public class GameScreen extends CubocScreen implements Observer,
 	/**
 	 * 初始化role
 	 */
-	private void initRoles() {
-		for (Role r : commander.allRoles) {
-			r.setSelected(false);
-			r.setControlled(false);
-			r.setCurrentHp(r.maxHp);
-			r.clearExtValue();
-			r.getPass_array().clear();
-			r.getAttack_array().clear();
-			r.clearActions();
-			r.cskill = r.skill_array.get(0);
+	private void initRoles(Array<Role> roles) {
+		//for (Role r : commander.allRoles) {
+		for(Role r:roles){
+			r.gsstartinit();
 			MapBox.attack_array.clear();
 			MapBox.pass_array.clear();
 			mb.block_array.clear();

@@ -59,6 +59,7 @@ public class Commander {
 		// 此处区分处英雄与敌人npc
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
+				((Role)act).isDead = false;
 				if (((Role) act).getType() == Type.HERO) {
 					heros.add((Role) act);
 				} else if (((Role) act).getType() == Type.ENEMY)
@@ -136,17 +137,8 @@ public class Commander {
 				}
 			}
 		});
-		
-		//增加命令敌人任务
-		// 检测Role是否有持续状态
-		// CommandQueue.getInstance().put(new CommandTask(){
-		// @Override
-		// public void opTask(BsuEvent be){
-		// roleContinuedSkillState(be);
-		// }
-		// });
-		// 增加命令敌人任务
 
+		// 增加命令敌人任务
 		CommandQueue.getInstance().put(new CommandTask() {
 			@Override
 			public void opTask(BsuEvent be) {
@@ -343,6 +335,7 @@ public class Commander {
 
 		for (int i = 0; i < attackRoles.size; i++) {
 			final Role r = attackRoles.get(i);
+			if(r.isDead) continue;								//如果当前role死亡，不进行操作
 			if(!r.isRoundMove) {r.isRoundMove=true;continue;}	//如果本回合该英雄不行动则跳过该英雄
 			waitRoleFlag = true; 			// 初始化等待循环flag为true
 			currTaskComFlag = false;		//只是当前处理技能任务是否完成
@@ -440,6 +433,7 @@ public class Commander {
 			return retrs;
 		for (Vector2 v : vs) {
 			for (Role r : checkrs) {
+				if(r.isDead) continue;	//如果单位死亡跳过检查
 				// 如果技能为全图技能，加入作用单位继续循环
 				if (s.otype == ObjectType.all) {
 					retrs.add(r);
@@ -542,18 +536,15 @@ public class Commander {
 	 */
 	public void commandRoleDead(final Role r) {
 		// 后续处理
-		System.out.println("啊啊啊啊啊，我死了！！！");
+		System.out.println(r.name+"说:啊啊啊啊啊，我死了！！！");
 		r.deadAction(new BsuEvent(){
 			@Override
 			public void notify(Object obj,String msg){
+				r.isDead = true;
 				lactor.removeValue(r, true);
-				
 			}
 		});
 		
-		
-		//heros.removeValue(r, true);
-		//allRoles.removeValue(r,true);
 	}
 
 	public Array<Role> getHeros() {
