@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.WidgetFactory;
+import com.bsu.obj.skilltree.Skill;
 import com.bsu.screen.GameScreen;
 import com.bsu.tools.U;
 
@@ -61,17 +62,17 @@ public class UIRoleState implements Observer{
 			int y = 10;
 			final Role r = Player.getInstance().playerFightRole.get(i);
 			Vector2 v = new Vector2(x, y);
-			RolePhoto photo = new RolePhoto(r, stage, v, false);
+			RoleEffect photo = new RoleEffect(r, stage, v, false);
 			roleUIInfo rui = new roleUIInfo(r, stage, x, y);
 			rui.photoImg = photo.role;
 			rui.role_classes=photo.role_classes;
 			hpArray.add(rui);
 			final Array<Image> imgArray=new Array<Image>();
 			for (int j = 0; j < r.skill_array.size; j++) {
+				Skill skill=r.skill_array.get(j);
 				final int tempIndex = j;
-				final Image skillImg = WidgetFactory.getInstance().showSkillImg(
-						r.skill_array.get(j), stage,
-						new Vector2(x + 50, y + 24 - j * 26),false);
+				SkillEffect se=new SkillEffect(skill, stage,new Vector2(x + 50, y + 24 - j * 26),false);
+				final Image skillImg=se.skillImg;
 				imgArray.add(skillImg);
 				if(j==0){
 					U.setApha(skillImg, 1);

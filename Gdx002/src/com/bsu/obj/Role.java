@@ -30,7 +30,7 @@ public class Role extends Actor {
 		HERO, ENEMY
 	}; // 英雄还是NPC
 
-	public RolePhoto photo;
+	public RoleEffect photo;
 	public Equip weapon;// 人物武器
 	public Equip armor;// 人物护甲
 

@@ -21,7 +21,7 @@ import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
-import com.bsu.obj.RolePhoto;
+import com.bsu.obj.RoleEffect;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.GameTextureClass;
@@ -73,7 +73,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < playerRols.size; i++) {
 			final Role r = playerRols.get(i);
 			Vector2 v = new Vector2(48, 246 - 55 * i);
-			RolePhoto photo = new RolePhoto(r, roleStage, v, true);
+			RoleEffect photo = new RoleEffect(r, roleStage, v, true);
 			photo.role.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
@@ -88,7 +88,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		if (frlength < 5) {
 			for (int i = frlength; i < 5; i++) {
 				Vector2 v = new Vector2(46, 244 - 55 * i);
-				RolePhoto photo = new RolePhoto(roleStage, QUALITY.orange, v);
+				RoleEffect photo = new RoleEffect(roleStage, QUALITY.orange, v);
 				photo.role_k.addListener(new InputListener() {
 					@Override
 					public boolean touchDown(InputEvent event, float x,

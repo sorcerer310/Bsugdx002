@@ -22,7 +22,7 @@ import com.bsu.tools.GameTextureClass;
  * @author zhangyongchen
  * 
  */
-public class RolePhoto {
+public class RoleEffect {
 
 	public Image role;// 角色图像
 	private Image[] role_effect1 = new Image[1];// 选中角色后的特效图片
@@ -33,7 +33,7 @@ public class RolePhoto {
 	public Vector2 role_v;// 坐标
 	public Image role_classes;// 角色职业图标
 
-	public RolePhoto(Role r, Stage s, Vector2 v, boolean b) {
+	public RoleEffect(Role r, Stage s, Vector2 v, boolean b) {
 		role = new Image(r.roleTexture);
 		role_k = new Image(WidgetFactory.getInstance().getTexture(48, 48,
 				Configure.getQualityColor(r.quality), Color.BLACK, 0.2f));
@@ -75,7 +75,7 @@ public class RolePhoto {
 	 * @param q
 	 * @param v
 	 */
-	public RolePhoto(Stage s, QUALITY q, Vector2 v) {
+	public RoleEffect(Stage s, QUALITY q, Vector2 v) {
 		role_k = new Image(WidgetFactory.getInstance().getTexture(50, 50,
 				Configure.getQualityColor(q), Color.BLACK, 0.2f));
 		s.addActor(role_k);

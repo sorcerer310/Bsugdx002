@@ -30,7 +30,8 @@ import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
-import com.bsu.obj.RolePhoto;
+import com.bsu.obj.RoleEffect;
+import com.bsu.obj.SkillEffect;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.Configure;
 import com.bsu.tools.TipsWindows;
@@ -125,9 +126,10 @@ public class RoleScreen extends CubocScreen implements Observer,
 		clingX = 0;
 		c.position.x = Configure.rect_width / 2;
 		for (int i = 0; i < roleArray.size; i++) {
+			final int index = i;
 			final Role r = roleArray.get(i);
 			Vector2 v = new Vector2(20 + 60 * i, 50);
-			final RolePhoto photo = new RolePhoto(r, sRoleStage, v, false);
+			final RoleEffect photo = new RoleEffect(r, sRoleStage, v, false);
 			r.photo = photo;
 			photo.role.addListener(new InputListener() {
 				@Override
@@ -143,6 +145,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 					super.touchUp(event, x, y, pointer, button);
 				}
 			});
+		}
+		if (roleArray.size > 0) {
+			showRoleInfo(roleArray.get(0));
 		}
 	}
 
@@ -161,10 +166,14 @@ public class RoleScreen extends CubocScreen implements Observer,
 		final Array<Image> skillImg = new Array<Image>();
 		for (int i = 0; i < 2; i++) {
 			final int index = i;
-			final Image img = wfy.showSkillImg(r.skill_array.get(index),
-					RoleInfoStage, new Vector2(40 + i * 60, 170), true);
+			Skill skill = r.skill_array.get(index);
+			SkillEffect se = new SkillEffect(skill, RoleInfoStage, new Vector2(
+					40 + i * 60, 170), true);
+			skill.skillEffect = se;
+			final Image img = se.skillImg;
 			final Vector2 v = new Vector2(img.getX(), img.getY());
 			skillImg.add(img);
+			skillImg.add(se.skillImgEffect);
 			if (i == 0) {
 				U.setApha(img, 1);
 			}
@@ -191,7 +200,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		}
 		// wfy.makeImg(r.weapon.texture, RoleInfoStage, 1f, 40, 100);
 		// wfy.makeImg(r.armor.texture, RoleInfoStage, 1f, 100, 100);
-		showSkillTree(r, skillImg.get(0), skillImg.get(1));
+		showSkillTree(r,skillImg);
 	}
 
 	/**
@@ -216,12 +225,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * 
 	 * @param r
 	 *            角色
-	 * @param img0
-	 *            第一个携带技能图标
-	 * @param img1
-	 *            第二个携带技能图标
 	 */
-	public void showSkillTree(final Role r, final Image img0, final Image img1) {
+	public void showSkillTree(final Role r,final Array<Image> imgAarray) {
 		int numsGreen = 0;
 		int numsBlue = 0;
 		int numsPur = 0;
@@ -229,38 +234,39 @@ public class RoleScreen extends CubocScreen implements Observer,
 		int ix = 200, iy = 125;
 		final Array<Image> skillImg = new Array<Image>();
 		for (final Skill s : r.skill_tree) {
-			Image skill_img = null;
+			SkillEffect se = null;
 			if (s.quality == QUALITY.green) {
-				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
+				se = new SkillEffect(s, RoleInfoStage, new Vector2(ix
 						+ numsGreen * 40, iy), true);
 				numsGreen++;
 			}
 			if (s.quality == QUALITY.blue) {
-				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
+				se = new SkillEffect(s, RoleInfoStage, new Vector2(ix
 						+ numsBlue * 40, iy + 35), true);
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
-				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
-						+ numsPur * 40, iy + 70), true);
+				se = new SkillEffect(s, RoleInfoStage, new Vector2(ix + numsPur
+						* 40, iy + 70), true);
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
-				skill_img = wfy.showSkillImg(s, RoleInfoStage, new Vector2(ix
-						+ numsOra * 40, iy + 105), true);
+				se = new SkillEffect(s, RoleInfoStage, new Vector2(ix + numsOra
+						* 40, iy + 105), true);
 				numsOra++;
 			}
+			final Image skill_img = se.skillImg;
+			s.skillEffect = se;
 			skillImg.add(skill_img);
 			final Vector2 vs = new Vector2(skill_img.getX(), skill_img.getY());
-			final Image sImg = skill_img;
 			if (s.enable) {
-				sImg.addListener(new InputListener() {
+				se.skillImg.addListener(new InputListener() {
 					@Override
 					public boolean touchDown(InputEvent event, float x,
 							float y, int pointer, int button) {
 						TipsWindows.getInstance().showSkillInfo(s, vs,
 								RoleInfoStage);
-						U.setSkillImg(skillImg, sImg);
+						U.setSkillImg(skillImg, skill_img);
 						return true;
 					}
 
@@ -270,7 +276,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 						if ((selectSkill == null) || selectSkill != s) {
 							selectSkill = s;
 						} else {
-							setAnotherSkill(r, skillIndex, s, img0, img1);
+							setAnotherSkill(r, skillIndex, s,imgAarray);
 						}
 						super.touchUp(event, x, y, pointer, button);
 					}
@@ -285,18 +291,11 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param s
 	 * @param img
 	 */
-	private void setAnotherSkill(Role r, int index, Skill s, Image img,
-			Image img1) {
+	private void setAnotherSkill(Role r, int index, Skill s,Array<Image> imgArray) {
 		r.skill_array.set(index, s);
 		r.cskill = r.skill_array.get(0);
-		Image img_temp = new Image(s.icon);
-		if (index == 0) {
-			img.setDrawable(img_temp.getDrawable());
-			U.setApha(img, 1);
-		} else {
-			img1.setDrawable(img_temp.getDrawable());
-			U.setApha(img1, 1);
-		}
+		imgArray.get(index*2).setDrawable(s.skillEffect.skillImg.getDrawable());
+		imgArray.get(index*2+1).setDrawable(s.skillEffect.skillImgEffect.getDrawable());
 	}
 
 	@Override

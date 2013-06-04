@@ -40,7 +40,7 @@ import com.bsu.make.GameScreenConfigure;
 import com.bsu.make.RoleFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
-import com.bsu.obj.RolePhoto;
+import com.bsu.obj.RoleEffect;
 import com.bsu.tools.Configure;
 import com.bsu.tools.MessageObject;
 import com.bsu.tools.TipsWindows;
@@ -140,7 +140,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
 			Vector2 v = new Vector2(x + i % 7 * w, y - i / 7 * w);
-			final RolePhoto photo = new RolePhoto(r, sRoleStage, v, false);
+			final RoleEffect photo = new RoleEffect(r, sRoleStage, v, false);
 			r.photo = photo;
 			photo.role.addListener(new InputListener() {
 				@Override
@@ -185,7 +185,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		}
 		for (int i = frlength; i < 21; i++) {
 			Vector2 v = new Vector2(x + i % 7 * w, y - i / 7 * w);
-			RolePhoto photo = new RolePhoto(sRoleStage, QUALITY.orange, v);
+			RoleEffect photo = new RoleEffect(sRoleStage, QUALITY.orange, v);
 			photo.role_k.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,

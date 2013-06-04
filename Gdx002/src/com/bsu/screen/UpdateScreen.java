@@ -26,7 +26,7 @@ import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
-import com.bsu.obj.RolePhoto;
+import com.bsu.obj.RoleEffect;
 import com.bsu.tools.Configure;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.Configure.QualityS;
@@ -97,7 +97,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < playerRoles.size; i++) {
 			final Role r = playerRoles.get(i);
 			Vector2 v = new Vector2(48, 246 - 55 * i);
-			RolePhoto photo = new RolePhoto(r, upRoleStage, v, false);
+			RoleEffect photo = new RoleEffect(r, upRoleStage, v, false);
 			r.photo = photo;
 			photo.role.addListener(new InputListener() {
 				@Override
@@ -168,7 +168,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
 			final Vector2 v = new Vector2(x + i % 5 * w, y - i / 5 * w);
-			RolePhoto photo = new RolePhoto(r, sRoleStage, v, false);
+			RoleEffect photo = new RoleEffect(r, sRoleStage, v, false);
 			r.photo = photo;
 			photo.role.addListener(new InputListener() {
 				@Override
@@ -188,7 +188,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		}
 		for (int i = frlength; i < 15; i++) {
 			Vector2 v = new Vector2(x + i % 5 * w, y - i / 5 * w);
-			RolePhoto photo = new RolePhoto(sRoleStage, QUALITY.orange, v);
+			RoleEffect photo = new RoleEffect(sRoleStage, QUALITY.orange, v);
 			photo.role_k.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
