@@ -39,7 +39,7 @@ public class TipsWindows {
 		skin = new Skin();
 		skin.add("draw", new TextureRegion(
 				GameTextureClass.getInstance().tipsPanel, windowWidth, 60));
-		Window.WindowStyle ws = new WindowStyle(Configure.get_font(),
+		Window.WindowStyle ws = new WindowStyle(U.get_font(),
 				Color.BLACK, skin.getDrawable("draw"));
 		tipsWindows = new Window("", ws);
 		tipsWindows.align(Align.left);
@@ -60,13 +60,13 @@ public class TipsWindows {
 		tipsWindows.align(Align.center);
 		tipsWindows.padTop(10);
 		tipsWindows.padBottom(10);
-		tipsWindows.add(new Label("" + r.name, Configure.get_sytle()));
+		tipsWindows.add(new Label("" + r.name, U.get_sytle()));
 		tipsWindows.row();
-		tipsWindows.add(new Label("" + U.getClasses(r), Configure.get_sytle()));
+		tipsWindows.add(new Label("" + U.getClasses(r), U.get_sytle()));
 		tipsWindows.row();
-		tipsWindows.add(new Label("lv:" + r.level, Configure.get_sytle()));
+		tipsWindows.add(new Label("lv:" + r.level, U.get_sytle()));
 		tipsWindows.row();
-		tipsWindows.add(new Label("" + r.exp + "/" + r.expUp, Configure
+		tipsWindows.add(new Label("" + r.exp + "/" + r.expUp, U
 				.get_sytle()));
 		tipsWindows.row();
 		Table t = new Table();
@@ -74,7 +74,7 @@ public class TipsWindows {
 			t.defaults().align(Align.center);
 			if (skill.enable) {
 				t.add(new Image(skill.icon));
-				Label l = new Label("" + skill.lev, Configure.get_sytle());
+				Label l = new Label("" + skill.lev, U.get_sytle());
 				l.setFontScale(0.5f);
 				t.defaults().align(Align.bottom);
 				t.add(l);
@@ -109,8 +109,8 @@ public class TipsWindows {
 		tipsWindows.padBottom(10);
 		tipsWindows.defaults().padLeft(10);
 		tipsWindows.defaults().padRight(10);
-		Label nameLabel = new Label(s.name, Configure.get_sytle());
-		nameLabel.setColor(Configure.getQualityColor(s.quality));
+		Label nameLabel = new Label(s.name, U.get_sytle());
+		nameLabel.setColor(U.getQualityColor(s.quality));
 		tipsWindows.add(nameLabel);
 		tipsWindows.defaults().align(Align.left);
 		Array<String> infoArray = new Array<String>();
@@ -118,7 +118,7 @@ public class TipsWindows {
 		infoArray = U.getMuLabel(s.info, scaleValue, windowWidth);
 		for (int i = 0; i < infoArray.size; i++) {
 			tipsWindows.row();
-			Label label = new Label(infoArray.get(i), Configure.get_sytle());
+			Label label = new Label(infoArray.get(i), U.get_sytle());
 			label.setFontScale(scaleValue);
 			tipsWindows.add(label);
 		}
@@ -158,7 +158,7 @@ public class TipsWindows {
 		tipsArray = U.getMuLabel(s, scaleValue, tipsWindows.getWidth());
 		for (String as : tipsArray) {
 			tipsWindows.row();
-			tipsWindows.add(new Label(as, Configure.get_sytle()));
+			tipsWindows.add(new Label(as, U.get_sytle()));
 		}
 		tipsWindows.pack();
 		stage.addActor(tipsWindows);
@@ -195,7 +195,7 @@ public class TipsWindows {
 			if (s.quality == QUALITY.green) {
 				skill_img = new Image(s.icon);
 				tg.add(skill_img);
-				Label l = new Label("" + s.lev, Configure.get_sytle());
+				Label l = new Label("" + s.lev, U.get_sytle());
 				l.setFontScale(0.5f);
 				tg.defaults().align(Align.bottom);
 				tg.add(l);
@@ -203,7 +203,7 @@ public class TipsWindows {
 			if (s.quality == QUALITY.blue) {
 				skill_img = new Image(s.icon);
 				tb.add(skill_img);
-				Label l = new Label("" + s.lev, Configure.get_sytle());
+				Label l = new Label("" + s.lev, U.get_sytle());
 				l.setFontScale(0.5f);
 				tb.defaults().align(Align.bottom);
 				tb.add(l);
@@ -211,7 +211,7 @@ public class TipsWindows {
 			if (s.quality == QUALITY.purple) {
 				skill_img = new Image(s.icon);
 				tp.add(skill_img);
-				Label l = new Label("" + s.lev, Configure.get_sytle());
+				Label l = new Label("" + s.lev, U.get_sytle());
 				l.setFontScale(0.5f);
 				tp.defaults().align(Align.bottom);
 				tp.add(l);
@@ -219,13 +219,13 @@ public class TipsWindows {
 			if (s.quality == QUALITY.orange) {
 				skill_img = new Image(s.icon);
 				to.add(skill_img);
-				Label l = new Label("" + s.lev, Configure.get_sytle());
+				Label l = new Label("" + s.lev, U.get_sytle());
 				l.setFontScale(0.5f);
 				to.defaults().align(Align.bottom);
 				to.add(l);
 			}
 		}
-		tipsWindows.add(new Label("lv:" + r.level, Configure.get_sytle()));
+		tipsWindows.add(new Label("lv:" + r.level, U.get_sytle()));
 		tipsWindows.row();
 		tipsWindows.add(to);
 		tipsWindows.row();

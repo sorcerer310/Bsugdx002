@@ -1,4 +1,4 @@
-package com.bsu.obj;
+package com.bsu.effect;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -29,7 +29,7 @@ public class SkillEffect {
 		if (skill.enable) {
 			skillImg = new Image(skill.icon);
 			quality_frame = WidgetFactory.getInstance().getTexture(26, 26,
-					Configure.getQualityColor(skill.quality), Color.BLACK, 1);
+					U.getQualityColor(skill.quality), Color.BLACK, 1);
 			skillImgEffect = new Image(quality_frame);
 			s.addActor(skillImgEffect);
 			skillImgEffect.setPosition(v.x - 1, v.y - 1);

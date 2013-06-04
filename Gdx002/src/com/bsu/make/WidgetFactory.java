@@ -150,7 +150,7 @@ public class WidgetFactory {
 	 *            position
 	 */
 	public Label makeLabel(String ls, Stage s, float scaleValue, int x, int y) {
-		Label l = new Label(ls, Configure.get_sytle());
+		Label l = new Label(ls, U.get_sytle());
 		l.setPosition(x, y);
 		l.setFontScale(scaleValue);
 		s.addActor(l);
@@ -159,7 +159,7 @@ public class WidgetFactory {
 
 	public Label makeLabel(String ls, Stage s, float scaleValue, int x, int y,
 			Color c) {
-		Label l = new Label(ls, Configure.get_sytle());
+		Label l = new Label(ls, U.get_sytle());
 		l.setPosition(x, y);
 		l.setFontScale(scaleValue);
 		if (c != null) {

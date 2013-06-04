@@ -1,4 +1,4 @@
-package com.bsu.obj;
+package com.bsu.effect;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
@@ -11,10 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.make.WidgetFactory;
+import com.bsu.obj.Role;
 import com.bsu.tools.Configure.CLASSES;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.U;
 
 /**
  * 绘制头像类，专门处理头像，因为用到的地方太多了
@@ -36,7 +38,7 @@ public class RoleEffect {
 	public RoleEffect(Role r, Stage s, Vector2 v, boolean b) {
 		role = new Image(r.roleTexture);
 		role_k = new Image(WidgetFactory.getInstance().getTexture(48, 48,
-				Configure.getQualityColor(r.quality), Color.BLACK, 0.2f));
+				U.getQualityColor(r.quality), Color.BLACK, 0.2f));
 		role_classes = getClassesImg(r);
 		role.setScale(0.5f);
 		role_effect1[0] = new Image(GameTextureClass.getInstance().start_zero);
@@ -77,7 +79,7 @@ public class RoleEffect {
 	 */
 	public RoleEffect(Stage s, QUALITY q, Vector2 v) {
 		role_k = new Image(WidgetFactory.getInstance().getTexture(50, 50,
-				Configure.getQualityColor(q), Color.BLACK, 0.2f));
+				U.getQualityColor(q), Color.BLACK, 0.2f));
 		s.addActor(role_k);
 		role_k.setPosition(v.x - 1, v.y - 1);
 	}

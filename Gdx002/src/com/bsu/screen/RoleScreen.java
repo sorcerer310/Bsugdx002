@@ -26,12 +26,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.effect.RoleEffect;
+import com.bsu.effect.SkillEffect;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
-import com.bsu.obj.RoleEffect;
-import com.bsu.obj.SkillEffect;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.Configure;
 import com.bsu.tools.TipsWindows;
@@ -210,14 +210,13 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 */
 	private void showRoleBaseInfo(Role r) {
 		wfy.makeLabel(r.name, RoleInfoStage, 0.6f, 40, 240,
-				Configure.getQualityColor(r.quality));
+				U.getQualityColor(r.quality));
 		wfy.makeLabel("等级:" + r.level, RoleInfoStage, 0.6f, 100, 240);
 		wfy.makeLabel("生命:" + r.maxHp, RoleInfoStage, 0.6f, 40, 220);
 		wfy.makeLabel("经验:" + r.exp + "/" + r.expUp, RoleInfoStage, 0.6f, 100,
 				220);
 		wfy.makeLabel("攻击:" + r.getAttack(), RoleInfoStage, 0.6f, 40, 200);
 		wfy.makeLabel("防御:" + r.getDefend(), RoleInfoStage, 0.6f, 100, 200);
-
 	}
 
 	/**

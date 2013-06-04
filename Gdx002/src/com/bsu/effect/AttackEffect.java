@@ -1,10 +1,11 @@
-package com.bsu.obj;
+package com.bsu.effect;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.screen.GameScreen;
 import com.bsu.tools.GameTextureClass;

@@ -1,4 +1,4 @@
-package com.bsu.obj;
+package com.bsu.effect;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -16,6 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.WidgetFactory;
+import com.bsu.obj.Commander;
+import com.bsu.obj.Player;
+import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.screen.GameScreen;
 import com.bsu.tools.U;
@@ -26,14 +29,14 @@ import com.bsu.tools.U;
  * @author zhangyongchen
  * 
  */
-public class UIRoleState implements Observer{
+public class UIRoleEffect implements Observer{
 
 	Stage stage;
 	TextButton bt_endround;
 	Commander c;
 	Array<roleUIInfo> hpArray = new Array<roleUIInfo>();
 
-	public UIRoleState(Stage s) {
+	public UIRoleEffect(Stage s) {
 		// TODO Auto-generated constructor stub
 		stage = s;
 		stage.clear();
