@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.RoleEffect;
 import com.bsu.head.CubocScreen;
+import com.bsu.make.TipsWindows;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
@@ -32,7 +33,6 @@ import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.Configure.QualityS;
 import com.bsu.tools.GameTextureClass;
 import com.bsu.tools.MessageObject;
-import com.bsu.tools.TipsWindows;
 import com.bsu.tools.U;
 
 public class UpdateScreen extends CubocScreen implements Observer,
@@ -111,7 +111,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		}
 		U.showRoleSelect(playerRoles, playerRoles.get(0));
 		selectUpdateRole = playerRoles.get(0);
-		showUpRoleInfo();
 	}
 
 	/**
@@ -125,6 +124,9 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		upButton.setColor(upButton.getColor().r, upButton.getColor().g,
 				upButton.getColor().b,
 				(selectUpdateRole.exp > selectUpdateRole.expUp ? 1 : 0f));
+		if(selectUpdateRole.exp >= selectUpdateRole.expUp){
+			TipsWindows.getInstance().showTips(Configure.roleUp, sRoleStage, Color.ORANGE);
+		}
 	}
 
 	/**
@@ -200,6 +202,10 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				}
 			});
 		}
+		if(roleArray.size<1){
+			TipsWindows.getInstance().showTips("没有相应品质的卡片，请通关来收集", sRoleStage, Color.GRAY);
+		}
+		showUpRoleInfo();
 	}
 
 	/**
@@ -235,7 +241,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			Player.getInstance().playerRole.removeValue(e, false);
 		}
 		eatRoles.clear();
-		showUpRoleInfo();
 		Player.getInstance().getPlayerPackageRole();
 		addRoleToStage(quality);
 	}
@@ -288,6 +293,8 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
+		sRoleStage.clear();
+		upRoleStage.clear();
 	}
 
 	@Override
@@ -431,6 +438,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				selectUpdateRole.levelUp();
+				TipsWindows.getInstance().removeFromStage();
 				showUpRoleInfo();
 				super.touchUp(event, x, y, pointer, button);
 			}

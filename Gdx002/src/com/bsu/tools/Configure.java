@@ -94,6 +94,10 @@ public class Configure {
 	public static int baseExpUpBlue = 200;
 	public static int baseExpUpPurple = 500;
 	public static int baseExpUpOrange = 1000;
+	
+	public static String noCard="没有相应品质卡片，请通关进行收集";
+	public static String noOpen="功能暂未开放";
+	public static String roleUp="可以升级了，升级可以增加属性，开启新技能";
 
 	public static enum STATE { // 人物状态
 		idle, attack_normal, move, attack_v, attack_h, disapper, apper,hited,stoped

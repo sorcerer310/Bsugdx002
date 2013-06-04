@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.RoleEffect;
 import com.bsu.head.CubocScreen;
+import com.bsu.make.TipsWindows;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
@@ -126,6 +127,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
+		roleStage.clear();
 	}
 
 	@Override
@@ -144,8 +146,9 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				setChanged();
-				notifyObservers(new MessageObject(null, Configure.screen_shop));
+//				setChanged();
+//				notifyObservers(new MessageObject(null, Configure.screen_shop));
+				TipsWindows.getInstance().showTips("暂未开放，敬请期待",roleStage,Color.GRAY);
 				ib_mb_shop.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}

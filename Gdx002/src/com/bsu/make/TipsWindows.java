@@ -1,4 +1,4 @@
-package com.bsu.tools;
+package com.bsu.make;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,10 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Equip;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.Skill;
+import com.bsu.tools.Configure;
+import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.U;
 import com.bsu.tools.Configure.QUALITY;
 
 public class TipsWindows {
@@ -53,10 +55,7 @@ public class TipsWindows {
 	 * @param s
 	 */
 	public void showRoleInfo(Role r, Vector2 v, Stage s) {
-		if (tipsWindows.getStage() != null) {
-			tipsWindows.getParent().removeActor(tipsWindows);
-		}
-		tipsWindows.clear();
+		removeFromStage();
 		tipsWindows.align(Align.center);
 		tipsWindows.padTop(10);
 		tipsWindows.padBottom(10);
@@ -100,10 +99,7 @@ public class TipsWindows {
 	 * @param s
 	 */
 	public void showSkillInfo(Skill s, Vector2 v, Stage stage) {
-		if (tipsWindows.getStage() != null) {
-			tipsWindows.getParent().removeActor(tipsWindows);
-		}
-		tipsWindows.clear();
+		removeFromStage();
 		tipsWindows.defaults().align(Align.center);
 		tipsWindows.padTop(10);
 		tipsWindows.padBottom(10);
@@ -145,23 +141,33 @@ public class TipsWindows {
 	/**
 	 * 显示一条基本信息，tips 固定位置，屏幕中间
 	 */
-	private void showTips(String s, Stage stage) {
-		if (tipsWindows.getStage() != null) {
-			tipsWindows.getParent().removeActor(tipsWindows);
-		}
+	public void showTips(String s, Stage stage,Color r) {
+		removeFromStage();
 		tipsWindows.clear();
-		tipsWindows.setPosition(100, 100);
-		tipsWindows.defaults().spaceBottom(10);
-		tipsWindows.defaults().spaceRight(20);
+		tipsWindows.defaults().align(Align.center);
+		tipsWindows.padTop(10);
+		tipsWindows.padBottom(10);
+		tipsWindows.defaults().padLeft(10);
+		tipsWindows.defaults().padRight(10);
+		tipsWindows.setPosition(200, 140);
 		Array<String> tipsArray = new Array<String>();
 		float scaleValue = 0.7f;
-		tipsArray = U.getMuLabel(s, scaleValue, tipsWindows.getWidth());
+		tipsArray = U.getMuLabel(s, scaleValue, windowWidth);
 		for (String as : tipsArray) {
 			tipsWindows.row();
-			tipsWindows.add(new Label(as, U.get_sytle()));
+			Label l=new Label(as, U.get_sytle());
+			l.setFontScale(scaleValue);
+			l.setColor(r);
+			tipsWindows.add(l);
 		}
 		tipsWindows.pack();
 		stage.addActor(tipsWindows);
+		tipsWindows.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				tipsWindows.getParent().removeActor(tipsWindows);
+			}
+		});
 	}
 
 	/**
@@ -171,11 +177,7 @@ public class TipsWindows {
 	 * @param stage
 	 */
 	public void showEatInfo(Role r, Vector2 v, Stage stage) {
-
-		if (tipsWindows.getStage() != null) {
-			tipsWindows.getParent().removeActor(tipsWindows);
-		}
-		tipsWindows.clear();
+		removeFromStage();
 		tipsWindows.setHeight(10);
 		tipsWindows.align(Align.center);
 		tipsWindows.defaults().spaceBottom(5);
@@ -189,7 +191,6 @@ public class TipsWindows {
 		tb.align(Align.center);
 		Table tg = new Table();
 		tg.align(Align.center);
-
 		for (final Skill s : r.skill_tree) {
 			Image skill_img = null;
 			if (s.quality == QUALITY.green) {
@@ -265,5 +266,14 @@ public class TipsWindows {
 		v.y = ay < 0 ? tv.y + Configure.map_box_value : tv.y
 				- tipsWindows.getHeight();
 		return v;
+	}
+	/**
+	 * 移除tips
+	 */
+	public void removeFromStage(){
+		if (tipsWindows.getStage() != null) {
+			tipsWindows.getParent().removeActor(tipsWindows);
+		}
+		tipsWindows.clear();
 	}
 }

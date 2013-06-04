@@ -29,12 +29,12 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.RoleEffect;
 import com.bsu.effect.SkillEffect;
 import com.bsu.head.CubocScreen;
+import com.bsu.make.TipsWindows;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.Configure;
-import com.bsu.tools.TipsWindows;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.GameTextureClass;
 import com.bsu.tools.Configure.QualityS;
@@ -126,7 +126,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 		clingX = 0;
 		c.position.x = Configure.rect_width / 2;
 		for (int i = 0; i < roleArray.size; i++) {
-			final int index = i;
 			final Role r = roleArray.get(i);
 			Vector2 v = new Vector2(20 + 60 * i, 50);
 			final RoleEffect photo = new RoleEffect(r, sRoleStage, v, false);
@@ -148,6 +147,10 @@ public class RoleScreen extends CubocScreen implements Observer,
 		}
 		if (roleArray.size > 0) {
 			showRoleInfo(roleArray.get(0));
+		} else {
+			RoleInfoStage.clear();
+			TipsWindows.getInstance().showTips("没有相应品质卡片，通过可收集", RoleInfoStage,
+					Color.GRAY);
 		}
 	}
 
@@ -200,7 +203,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		}
 		// wfy.makeImg(r.weapon.texture, RoleInfoStage, 1f, 40, 100);
 		// wfy.makeImg(r.armor.texture, RoleInfoStage, 1f, 100, 100);
-		showSkillTree(r,skillImg);
+		showSkillTree(r, skillImg);
 	}
 
 	/**
@@ -225,7 +228,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param r
 	 *            角色
 	 */
-	public void showSkillTree(final Role r,final Array<Image> imgAarray) {
+	public void showSkillTree(final Role r, final Array<Image> imgAarray) {
 		int numsGreen = 0;
 		int numsBlue = 0;
 		int numsPur = 0;
@@ -275,7 +278,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 						if ((selectSkill == null) || selectSkill != s) {
 							selectSkill = s;
 						} else {
-							setAnotherSkill(r, skillIndex, s,imgAarray);
+							setAnotherSkill(r, skillIndex, s, imgAarray);
 						}
 						super.touchUp(event, x, y, pointer, button);
 					}
@@ -290,11 +293,14 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param s
 	 * @param img
 	 */
-	private void setAnotherSkill(Role r, int index, Skill s,Array<Image> imgArray) {
+	private void setAnotherSkill(Role r, int index, Skill s,
+			Array<Image> imgArray) {
 		r.skill_array.set(index, s);
 		r.cskill = r.skill_array.get(0);
-		imgArray.get(index*2).setDrawable(s.skillEffect.skillImg.getDrawable());
-		imgArray.get(index*2+1).setDrawable(s.skillEffect.skillImgEffect.getDrawable());
+		imgArray.get(index * 2).setDrawable(
+				s.skillEffect.skillImg.getDrawable());
+		imgArray.get(index * 2 + 1).setDrawable(
+				s.skillEffect.skillImgEffect.getDrawable());
 	}
 
 	@Override
@@ -334,6 +340,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
 		selectRole = null;
+		sRoleStage.clear();
+		RoleInfoStage.clear();
 	}
 
 	@Override
@@ -370,7 +378,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QualityS.pselect);
-				showRoleInfo(null);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
@@ -387,7 +394,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QualityS.oselect);
-				showRoleInfo(null);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
@@ -404,7 +410,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QualityS.bselect);
-				showRoleInfo(null);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
@@ -421,7 +426,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QualityS.gselect);
-				showRoleInfo(null);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
