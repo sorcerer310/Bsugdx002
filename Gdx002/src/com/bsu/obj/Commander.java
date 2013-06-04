@@ -101,8 +101,9 @@ public class Commander {
 	boolean roundEndCompleted = true; // 回合结束标示，为true时，表示当前回合结束
 
 	public void roundEnd() {
-		if (!roundEndCompleted)
+		if (!roundEndCompleted||gamescreen.isAction_start())
 			return;
+		gamescreen.setAction_start(true);
 		roundEndCompleted = false; // 回合操作开始设置完成标示为false
 		resetRoles();
 		resetHeroValue();
@@ -153,6 +154,7 @@ public class Commander {
 					// commandNpcs(be);
 					commandRoles(be, Role.Type.ENEMY);
 					roundEndCompleted = true;
+					gamescreen.setAction_start(false);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

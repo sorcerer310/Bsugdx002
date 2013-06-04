@@ -29,7 +29,6 @@ import com.bsu.obj.Role.Type;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameMap;
 
-
 public class GameScreen extends CubocScreen implements Observer,
 		GestureListener {
 	private Stage stage; // 场景对象
@@ -38,7 +37,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	private MapBox mb; // 地图块对象
 	private UIRoleState fightUI;
 	private OrthographicCamera c;
-	private boolean action_start; // 是否回合开始
+	private boolean action_start; // 是否回合开始,未开始为人物操作阶段
 	private boolean controlled;
 	private int clingX;// 地图移动位移
 	private AttackEffect attack_effect;
@@ -60,7 +59,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	public void game_init(int mindex, Array<Role> rols) {
 		stage.clear();
 		GameMap.make_map(mindex);
-		setAction_start(true);
+		setAction_start(false);
 		setControlled(true);
 		if (mb == null) {
 			mb = new MapBox();
@@ -79,11 +78,10 @@ public class GameScreen extends CubocScreen implements Observer,
 		} else {
 			fightUI.show_hero_state();
 		}
-		//为role增加观察者
-		for(int i=0;i<rols.size;i++)
+		// 为role增加观察者
+		for (int i = 0; i < rols.size; i++)
 			rols.get(i).getRoleObserable().addObserver(fightUI);
-		
-		
+
 		c = (OrthographicCamera) stage.getCamera();
 		if (attack_effect == null) {
 			attack_effect = AttackEffect.getInstance();
@@ -195,7 +193,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		stage.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (isAction_start() && (isControlled())) {
+				if (!isAction_start() && (isControlled())) {
 					int input_x = (int) (x / Configure.map_box_value);
 					int input_y = (int) (y / Configure.map_box_value);
 					for (Actor act : stage.getActors()) {
@@ -247,18 +245,20 @@ public class GameScreen extends CubocScreen implements Observer,
 			}
 		}
 	}
+
 	/**
 	 * 初始化role
 	 */
-	private void initRoles(){
-		for(Role r:commander.allRoles){
+	private void initRoles() {
+		for (Role r : commander.allRoles) {
 			r.setSelected(false);
 			r.setControlled(false);
 			r.setCurrentHp(r.maxHp);
 			r.clearExtValue();
 			r.getPass_array().clear();
 			r.getAttack_array().clear();
-			r.cskill=r.skill_array.get(0);
+			r.clearActions();
+			r.cskill = r.skill_array.get(0);
 			MapBox.attack_array.clear();
 			MapBox.pass_array.clear();
 			mb.block_array.clear();

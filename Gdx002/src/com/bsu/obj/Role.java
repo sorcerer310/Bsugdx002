@@ -228,21 +228,14 @@ public class Role extends Actor {
 		if (ani != null) {
 			bevent = be;
 			beAttack_effect = ani;
-			if (v != null) {
-				if (type == Type.HERO) {
-					px = 32 - v.x - ani.getKeyFrame(0).getRegionWidth();
-				} else {
-					px = v.x;
-				}
-				py = v.y;
-			}else{
-				if (type == Type.HERO) {
-					px = 32 - ani.getKeyFrame(0).getRegionWidth();
-				} else {
-					px = v.x;
-				}
-				py = v.y;
+
+			if (type == Type.HERO) {
+				px = (v != null) ? v.x : 0 - ani.getKeyFrame(0)
+						.getRegionWidth() + 32;
+			} else {
+				px =(v != null) ? v.x : 0;
 			}
+			py = (v != null) ? v.y : 0;
 		}
 	}
 
@@ -336,7 +329,6 @@ public class Role extends Actor {
 			}
 		}
 		if (beAttack_effect != null) {
-			current_beattack_frame=null;
 			current_beattack_frame = new TextureRegion(
 					beAttack_effect.getKeyFrame(time_effect, false));
 			if (type == Type.HERO) {
@@ -689,8 +681,9 @@ public class Role extends Actor {
 						@Override
 						public void run() {
 							be.notify(this, "dead");
-							//让头像回到初始位置
-							addAction(sequence(rotateBy(-90,.0f),moveBy(10f,0f,0f)));
+							// 让头像回到初始位置
+							addAction(sequence(rotateBy(-90, .0f),
+									moveBy(10f, 0f, 0f)));
 						}
 					})));
 		} else if (face == FACE.left) {
@@ -704,8 +697,9 @@ public class Role extends Actor {
 						@Override
 						public void run() {
 							be.notify(this, "dead");
-							//让头像回到初始位置
-							addAction(sequence(rotateBy(90,.0f),moveBy(-10f,0f,0f)));
+							// 让头像回到初始位置
+							addAction(sequence(rotateBy(90, .0f),
+									moveBy(-10f, 0f, 0f)));
 						}
 					})));
 		}

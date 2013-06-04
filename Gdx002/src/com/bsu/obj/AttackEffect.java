@@ -64,7 +64,6 @@ public class AttackEffect extends Actor {
 	}
 
 	public void setFrame(TextureRegion tr) {
-		currentFrame = null;
 		currentFrame = new TextureRegion(tr);
 		if (flip_flag) {
 			currentFrame.flip(true, false);
