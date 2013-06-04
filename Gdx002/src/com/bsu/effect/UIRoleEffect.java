@@ -119,8 +119,6 @@ public class UIRoleEffect implements Observer{
 					U.setApha(rui.photoImg, 0.2f);
 					U.setApha(rui.role_classes, 0.2f);
 					U.setApha(rui.nameLabel, 0.2f);
-					//命令commander 执行死亡命令
-					Commander.getInstance().commandRoleDead(r);
 				}
 			}
 		}

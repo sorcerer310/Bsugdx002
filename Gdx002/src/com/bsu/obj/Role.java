@@ -794,6 +794,9 @@ public class Role extends Actor {
 	public void setCurrentHp(int currentHp) {
 		this.currentHp = currentHp;
 		ro.notifyRoleObservers(this);
+		if(this.currentHp<=0)
+			//命令commander 执行死亡命令
+			Commander.getInstance().commandRoleDead(this);
 	}
 
 	public int getCurrentHp() {
