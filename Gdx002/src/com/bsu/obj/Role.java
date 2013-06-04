@@ -230,7 +230,7 @@ public class Role extends Actor {
 			beAttack_effect = ani;
 
 			if (type == Type.HERO) {
-				px = (v != null) ? v.x : 0 - ani.getKeyFrame(0)
+				px = (v != null) ? -v.x : 0 - ani.getKeyFrame(0)
 						.getRegionWidth() + 32;
 			} else {
 				px =(v != null) ? v.x : 0;

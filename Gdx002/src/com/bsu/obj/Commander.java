@@ -380,11 +380,6 @@ public class Commander {
 						}
 					}
 				});
-				//测试血条用，位置不合适，，
-//				for (Role e : atkrs) {
-//					e.currentHp -= r.getAttack() - e.getDefend()>0?r.getAttack()-e.getDefend():0;
-//					gamescreen.getFightUI().changeRoleHp(e);
-//				}
 			} else {
 				currTaskComFlag = true;
 			}
