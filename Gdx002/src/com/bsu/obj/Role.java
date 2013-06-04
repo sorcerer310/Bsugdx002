@@ -229,13 +229,21 @@ public class Role extends Actor {
 			bevent = be;
 			beAttack_effect = ani;
 
-			if (type == Type.HERO) {
-				px = (v != null) ? -v.x : 0 - ani.getKeyFrame(0)
-						.getRegionWidth() + 32;
-			} else {
-				px =(v != null) ? v.x : 0;
-			}
-			py = (v != null) ? v.y : 0;
+			if (v != null) {
+ 				if (type == Type.HERO) {
+					px = 32 - v.x - ani.getKeyFrame(0).getRegionWidth();
+ 				} else {
+					px = v.x;	
+				}
+				py = v.y;
+			}else{
+				if (type == Type.HERO) {
+					px = 32 - ani.getKeyFrame(0).getRegionWidth();
+				} else {
+					px = 0;
+ 				}
+ 				py = 0;
+ 			}
 		}
 	}
 
