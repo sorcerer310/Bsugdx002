@@ -26,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.Configure;
 import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.U;
 
 public class WidgetFactory {
 	private static WidgetFactory instance = null;
@@ -289,6 +290,7 @@ public class WidgetFactory {
 		}
 		s.addActor(img);
 		img.setPosition(v.x, v.y);
+		U.setApha(img, 0.5f);
 		return img;
 	}
 }

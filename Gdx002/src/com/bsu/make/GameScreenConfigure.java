@@ -43,6 +43,7 @@ public class GameScreenConfigure {
 		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GameTextureClass.getInstance().zyc_photo,95));
 		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GameTextureClass.getInstance().zyc_photo,95));
 
+
 		
 		roles.addAll(heroRoles);
 		roles.addAll(npcRoles);
