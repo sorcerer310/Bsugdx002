@@ -16,8 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Role.Type;
-import com.bsu.tools.Configure;
-import com.bsu.tools.GameAnimationClass;
+import com.bsu.tools.CG;
+import com.bsu.tools.GAC;
 import com.bsu.tools.GameMap;
 
 /**
@@ -129,31 +129,31 @@ public class MapBox extends Actor {
 
 		for (int i = 0; i < block_array.size; i++) {
 			batch.draw(map_block, block_array.get(i).x
-					* Configure.map_box_value, (block_array.get(i).y)
-					* Configure.map_box_value);
+					* CG.map_box_value, (block_array.get(i).y)
+					* CG.map_box_value);
 		}
 		for (int i = 0; i < pass_array.size; i++) {
-			batch.draw(map_pass, pass_array.get(i).x * Configure.map_box_value,
-					(pass_array.get(i).y) * Configure.map_box_value);
+			batch.draw(map_pass, pass_array.get(i).x * CG.map_box_value,
+					(pass_array.get(i).y) * CG.map_box_value);
 		}
 		for (int i = 0; i < attack_array.size; i++) {
 			batch.draw(map_attack, attack_array.get(i).x
-					* Configure.map_box_value, (attack_array.get(i).y)
-					* Configure.map_box_value);
+					* CG.map_box_value, (attack_array.get(i).y)
+					* CG.map_box_value);
 		}
 		current_hero_home_frame = ani_hero_home.getKeyFrame(hero_home_time,
 				true);
 		for (int i = 0; i < hero_home_array.size; i++) {
 			batch.draw(current_hero_home_frame, hero_home_array.get(i).x
-					* Configure.map_box_value, (hero_home_array.get(i).y)
-					* Configure.map_box_value);
+					* CG.map_box_value, (hero_home_array.get(i).y)
+					* CG.map_box_value);
 		}
 		current_enemy_home_frame = ani_enemy_home.getKeyFrame(enemy_home_time,
 				true);
 		for (int i = 0; i < enemy_home_array.size; i++) {
 			batch.draw(current_enemy_home_frame, enemy_home_array.get(i).x
-					* Configure.map_box_value, (enemy_home_array.get(i).y)
-					* Configure.map_box_value);
+					* CG.map_box_value, (enemy_home_array.get(i).y)
+					* CG.map_box_value);
 		}
 	}
 
@@ -164,34 +164,34 @@ public class MapBox extends Actor {
 	 */
 	private void init_box_value() {
 		map_pass = WidgetFactory.getInstance().getTexture(
-				Configure.map_box_value, Configure.map_box_value, Color.BLACK,
+				CG.map_box_value, CG.map_box_value, Color.BLACK,
 				Color.GREEN, 0.5f);
 		map_block = WidgetFactory.getInstance().getTexture(
-				Configure.map_box_value, Configure.map_box_value, Color.BLACK,
+				CG.map_box_value, CG.map_box_value, Color.BLACK,
 				Color.RED, 0.5f);
 		map_attack = WidgetFactory.getInstance().getTexture(
-				Configure.map_box_value, Configure.map_box_value, Color.BLACK,
+				CG.map_box_value, CG.map_box_value, Color.BLACK,
 				Color.BLUE, 0.5f);
-		ani_enemy_home = GameAnimationClass.getInstance().getEffectApper();
-		ani_hero_home = GameAnimationClass.getInstance().getEffectDisapper();
+		ani_enemy_home = GAC.getInstance().getEffectApper();
+		ani_hero_home = GAC.getInstance().getEffectDisapper();
 		hero_home_time = 0;
 		enemy_home_time = 0;
 		for (TiledObjectGroup group : GameMap.map.objectGroups) {
 			for (TiledObject object : group.objects) {
 				if (object.type == null)
 					continue;
-				int x = (object.x) / Configure.map_box_value;
+				int x = (object.x) / CG.map_box_value;
 				int y = (GameMap.map_render.getMapHeightUnits()
-						- Configure.map_box_value - object.y)
-						/ Configure.map_box_value;
+						- CG.map_box_value - object.y)
+						/ CG.map_box_value;
 				Vector2 v = new Vector2(x, y);
-				if (object.type.equals(Configure.map_type_block))
+				if (object.type.equals(CG.map_type_block))
 					block_array.add(v);
-				else if (object.type.equals(Configure.map_type_box))
+				else if (object.type.equals(CG.map_type_box))
 					box_array.add(v);
-				else if (object.type.equals(Configure.map_type_hp_rarise))
+				else if (object.type.equals(CG.map_type_hp_rarise))
 					hpRaise_array.add(v);
-				else if (object.type.equals(Configure.map_type_value)) {
+				else if (object.type.equals(CG.map_type_value)) {
 					/*
 					 * raw_min = Integer.parseInt(object.properties
 					 * .get(Configure.map_raw_min_key)); raw_max =
@@ -204,9 +204,9 @@ public class MapBox extends Actor {
 					 * Integer.parseInt(object.properties
 					 * .get(Configure.map_coll_min_key)) - 1;
 					 */
-				} else if (object.type.equals(Configure.map_type_hero_home)) {
+				} else if (object.type.equals(CG.map_type_hero_home)) {
 					hero_home_array.add(v);
-				} else if (object.type.equals(Configure.map_type_enemy_home)) {
+				} else if (object.type.equals(CG.map_type_enemy_home)) {
 					enemy_home_array.add(v);
 				}
 			}

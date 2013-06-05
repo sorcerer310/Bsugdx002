@@ -34,10 +34,10 @@ import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.Skill;
-import com.bsu.tools.Configure;
-import com.bsu.tools.Configure.QUALITY;
-import com.bsu.tools.GameTextureClass;
-import com.bsu.tools.Configure.QualityS;
+import com.bsu.tools.CG;
+import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GTC;
+import com.bsu.tools.CG.QualityS;
 import com.bsu.tools.U;
 
 public class RoleScreen extends CubocScreen implements Observer,
@@ -66,26 +66,26 @@ public class RoleScreen extends CubocScreen implements Observer,
 
 	public RoleScreen(Game game) {
 		super(game);
-		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
-		sRoleStage = new Stage(Configure.rect_width, Configure.rect_height,
+		stage = new Stage(CG.rect_width, CG.rect_height, false);
+		sRoleStage = new Stage(CG.rect_width, CG.rect_height,
 				false);
-		RoleInfoStage = new Stage(Configure.rect_width, Configure.rect_height,
+		RoleInfoStage = new Stage(CG.rect_width, CG.rect_height,
 				false);
 		wfy = WidgetFactory.getInstance();
 		c = (OrthographicCamera) sRoleStage.getCamera();
-		background = new Image(GameTextureClass.getInstance().rolePanel);
+		background = new Image(GTC.getInstance().rolePanel);
 		stage.addActor(background);
-		ib_back = wfy.makeImageButton(Configure.button_back, stage, 375, 272,1);
+		ib_back = wfy.makeImageButton(CG.button_back, stage, 375, 272,1);
 		allImg = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_all, stage, 20, 20,0.5f);
+				CG.button_all, stage, 20, 20,0.5f);
 		greenImg = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_green, stage, 83, 20,0.5f);
+				CG.button_green, stage, 83, 20,0.5f);
 		blueImg = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_blue, stage, 146, 20,0.5f);
+				CG.button_blue, stage, 146, 20,0.5f);
 		purpleImg = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_purple, stage, 209, 20,0.5f);
+				CG.button_purple, stage, 209, 20,0.5f);
 		orangeImg = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_orange, stage, 272, 20,0.5f);
+				CG.button_orange, stage, 272, 20,0.5f);
 		bImg.add(allImg);
 		bImg.add(greenImg);
 		bImg.add(blueImg);
@@ -137,7 +137,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		sRoleStage.clear();
 		RoleInfoStage.clear();
 		clingX = 0;
-		c.position.x = Configure.rect_width / 2;
+		c.position.x = CG.rect_width / 2;
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
 			Vector2 v = new Vector2(20 + 60 * i, 50);
@@ -333,9 +333,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 		if (clingX != 0) {
 			int mx = clingX > 0 ? -1 : 1;
 			cameraWidth = 60 * Player.getInstance().playerRole.size + 20;
-			int maxW = (int) (cameraWidth - Configure.rect_width < 0 ? 0
-					: cameraWidth - Configure.rect_width);
-			int w = Configure.rect_width / 2;
+			int maxW = (int) (cameraWidth - CG.rect_width < 0 ? 0
+					: cameraWidth - CG.rect_width);
+			int w = CG.rect_width / 2;
 			if (c.position.x + mx >= w && c.position.x + mx <= maxW + w) {
 				c.position.x += mx;
 			}
@@ -373,7 +373,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(Configure.button_back);
+				notifyObservers(CG.button_back);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
@@ -483,8 +483,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
 		// TODO Auto-generated method stub
-		clingX = velocityX > 0 ? Configure.rect_width / 2
-				: -Configure.rect_width / 2;
+		clingX = velocityX > 0 ? CG.rect_width / 2
+				: -CG.rect_width / 2;
 		return false;
 	}
 

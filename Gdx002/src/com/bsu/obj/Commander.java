@@ -13,11 +13,11 @@ import com.bsu.obj.skilltree.Skill.ObjectType;
 import com.bsu.screen.GameScreen;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.CommandQueue;
-import com.bsu.tools.Configure;
+import com.bsu.tools.CG;
 import com.bsu.tools.U;
-import com.bsu.tools.Configure.FACE;
-import com.bsu.tools.Configure.DIRECTION;
-import com.bsu.tools.Configure.STATE;
+import com.bsu.tools.CG.FACE;
+import com.bsu.tools.CG.DIRECTION;
+import com.bsu.tools.CG.STATE;
 
 /**
  * 指挥官对象，用来指挥stage上所有的角色
@@ -168,13 +168,13 @@ public class Commander {
 	public void moveDirectCommand(Role r, DIRECTION d, BsuEvent be) {
 		int x = 0, y = 0;
 		if (d == DIRECTION.left)
-			x = -Configure.map_box_value;
+			x = -CG.map_box_value;
 		else if (d == DIRECTION.right)
-			x = Configure.map_box_value;
+			x = CG.map_box_value;
 		else if (d == DIRECTION.up)
-			y = Configure.map_box_value;
+			y = CG.map_box_value;
 		else if (d == DIRECTION.down)
-			y = -Configure.map_box_value;
+			y = -CG.map_box_value;
 		r.moveAction(x, y, be);
 	}
 
@@ -188,11 +188,11 @@ public class Commander {
 		if (r.face == FACE.left
 				&& !U.hasRoleInPos(allRoles,
 						new Vector2(r.getBoxX() + 1, r.getBoxY())))
-			r.heatAction(Configure.map_box_value, 0);
+			r.heatAction(CG.map_box_value, 0);
 		else if (r.face == FACE.right
 				&& !U.hasRoleInPos(allRoles,
 						new Vector2(r.getBoxX() - 1, r.getBoxY())))
-			r.heatAction(-Configure.map_box_value, 0);
+			r.heatAction(-CG.map_box_value, 0);
 	}
 
 	/**
@@ -205,9 +205,9 @@ public class Commander {
 			int x = ((int) (r.type==Type.HERO ? (
 					(int)(r.getBoxX()+path.get(path.size-1).x)>15?15:(r.getBoxX()+path.get(path.size-1).x)
 					):(int)(r.getBoxX()-path.get(path.size-1).x)<0?0:(r.getBoxX()-path.get(path.size-1).x)
-							))*Configure.map_box_value; 
+							))*CG.map_box_value; 
 			if(obj.size>0){
-				x = (int) (r.type==Type.HERO ?obj.get(0).getX()-Configure.map_box_value:obj.get(0).getX()+Configure.map_box_value);
+				x = (int) (r.type==Type.HERO ?obj.get(0).getX()-CG.map_box_value:obj.get(0).getX()+CG.map_box_value);
 				r.assaultAction((float)x,r.getY(),obj.get(0),be);
 			}
 			

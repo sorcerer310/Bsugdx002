@@ -17,12 +17,12 @@ import com.bsu.make.WidgetFactory;
 import com.bsu.obj.skilltree.ContinuedSkillState;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.BsuEvent;
-import com.bsu.tools.Configure;
-import com.bsu.tools.Configure.CLASSES;
-import com.bsu.tools.Configure.QUALITY;
-import com.bsu.tools.GameAnimationClass;
-import com.bsu.tools.Configure.FACE;
-import com.bsu.tools.Configure.STATE;
+import com.bsu.tools.CG;
+import com.bsu.tools.CG.CLASSES;
+import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GAC;
+import com.bsu.tools.CG.FACE;
+import com.bsu.tools.CG.STATE;
 import com.bsu.tools.U;
 
 public class Role extends Actor {
@@ -36,7 +36,7 @@ public class Role extends Actor {
 	public Equip weapon;// 人物武器
 	public Equip armor;// 人物护甲
 
-	public boolean isDead = false;			//角色死亡标识
+	public boolean isDead = false; // 角色死亡标识
 	private BsuEvent bevent = null; // 用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
 	public QUALITY quality;// 品质
@@ -114,7 +114,7 @@ public class Role extends Actor {
 		levelUp();
 	}
 
-	public void gsstartinit(){
+	public void gsstartinit() {
 		setSelected(false);
 		setControlled(false);
 		setCurrentHp(maxHp);
@@ -125,7 +125,7 @@ public class Role extends Actor {
 		cskill = skill_array.get(0);
 		isDead = false;
 	}
-	
+
 	/**
 	 * 根据类型获得资源
 	 * 
@@ -139,16 +139,14 @@ public class Role extends Actor {
 			face = FACE.left;
 			roleTexture.flip(true, false);
 		}
-		ani_idle = GameAnimationClass.getInstance().getRoleAnimation(
-				roleTexture);
-		ani_move = GameAnimationClass.getInstance().getRoleAnimation(
-				roleTexture);
-		ani_disapper = GameAnimationClass.getInstance().getEffectDisapper();
-		ani_apper = GameAnimationClass.getInstance().getEffectApper();
-		hp_back = WidgetFactory.getInstance().getTextureFill(
-				Configure.map_box_value, 2, Color.BLACK);
-		hp = WidgetFactory.getInstance().getTextureFill(
-				Configure.map_box_value, 2, Color.RED);
+		ani_idle = GAC.getInstance().getRoleAnimation(roleTexture);
+		ani_move = GAC.getInstance().getRoleAnimation(roleTexture);
+		ani_disapper = GAC.getInstance().getEffectDisapper();
+		ani_apper = GAC.getInstance().getEffectApper();
+		hp_back = WidgetFactory.getInstance().getTextureFill(CG.map_box_value,
+				2, Color.BLACK);
+		hp = WidgetFactory.getInstance().getTextureFill(CG.map_box_value, 2,
+				Color.RED);
 		set_ani_from_state(STATE.idle);
 	}
 
@@ -158,21 +156,19 @@ public class Role extends Actor {
 
 		if (current_action_frame != null) {
 			batch.draw(current_action_frame, getX(), getY(), getOriginX(),
-					getOriginY(), Configure.map_box_value,
-					Configure.map_box_value, getScaleX(), getScaleY(),
-					getRotation());
+					getOriginY(), CG.map_box_value, CG.map_box_value,
+					getScaleX(), getScaleY(), getRotation());
 		}
 		if (current_beattack_frame != null) {
 			batch.draw(current_beattack_frame, getX() + px, getY() + py);
 		}
 		if (currentHp > 0) {
-			batch.draw(hp_back, getX(), getY() + Configure.map_box_value - 2,
-					getOriginX(), getOriginY(), Configure.map_box_value, 2,
+			batch.draw(hp_back, getX(), getY() + CG.map_box_value - 2,
+					getOriginX(), getOriginY(), CG.map_box_value, 2,
 					getScaleX(), getScaleY(), getRotation());
-			batch.draw(hp, getX(), getY() + Configure.map_box_value - 2,
-					getOriginX(), getOriginY(), Configure.map_box_value
-							* currentHp / maxHp, 2, getScaleX(), getScaleY(),
-					getRotation());
+			batch.draw(hp, getX(), getY() + CG.map_box_value - 2, getOriginX(),
+					getOriginY(), CG.map_box_value * currentHp / maxHp, 2,
+					getScaleX(), getScaleY(), getRotation());
 		}
 		Role_logic();
 	}
@@ -184,7 +180,7 @@ public class Role extends Actor {
 
 	public void hero_apper(int mx, int my, BsuEvent be) {
 		set_ani_from_state(STATE.apper);
-		setPosition(mx * Configure.map_box_value, my * Configure.map_box_value);
+		setPosition(mx * CG.map_box_value, my * CG.map_box_value);
 		bevent = be;
 	}
 
@@ -413,7 +409,7 @@ public class Role extends Actor {
 	 * @return
 	 */
 	public int getBoxX() {
-		return (int) ((this.getX() + Configure.extra_value) / Configure.map_box_value);
+		return (int) ((this.getX() + CG.extra_value) / CG.map_box_value);
 	}
 
 	/**
@@ -422,7 +418,7 @@ public class Role extends Actor {
 	 * @return
 	 */
 	public int getBoxY() {
-		return (int) ((this.getY() + Configure.extra_value) / Configure.map_box_value);
+		return (int) ((this.getY() + CG.extra_value) / CG.map_box_value);
 	}
 
 	/**
@@ -441,9 +437,9 @@ public class Role extends Actor {
 	public Array<Vector2> getCurrSkillRange() {
 		realrange.clear();
 		Array<Vector2> rs = null;
-		if (this.face == Configure.FACE.right)
+		if (this.face == CG.FACE.right)
 			rs = cskill.getRange();
-		else if (this.face == Configure.FACE.left)
+		else if (this.face == CG.FACE.left)
 			rs = cskill.flipRange();
 		for (Vector2 v : rs) {
 			realrange.add(new Vector2(this.getBoxX() + v.x, v.y
@@ -530,13 +526,13 @@ public class Role extends Actor {
 	public int baseExp() {
 		int exp = 0;
 		if (quality == QUALITY.green)
-			exp = Configure.baseExpGreen;
+			exp = CG.baseExpGreen;
 		if (quality == QUALITY.blue)
-			exp = Configure.baseExpBlue;
+			exp = CG.baseExpBlue;
 		if (quality == QUALITY.purple)
-			exp = Configure.baseExpPurple;
+			exp = CG.baseExpPurple;
 		if (quality == QUALITY.orange)
-			exp = Configure.baseExpOrange;
+			exp = CG.baseExpOrange;
 		return exp;
 	}
 
@@ -563,7 +559,7 @@ public class Role extends Actor {
 	 *            事件对象
 	 */
 	public void moveAction(int x, int y, final BsuEvent be) {
-		float dur = Configure.duration_ani / 2;
+		float dur = CG.duration_ani / 2;
 		if (get_ani_from_state() != STATE.idle)
 			return;
 		set_ani_from_state(STATE.move);
@@ -576,8 +572,7 @@ public class Role extends Actor {
 							rotateBy(-10, dur), rotateBy(10, dur)
 					// rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur),
 					// rotateBy(10, dur)
-					), moveBy(x, y, Configure.duration_move_box),
-					run(new Runnable() {
+					), moveBy(x, y, CG.duration_move_box), run(new Runnable() {
 						@Override
 						public void run() {
 							set_ani_from_state(STATE.idle);
@@ -594,8 +589,7 @@ public class Role extends Actor {
 							rotateBy(10, dur), rotateBy(-10, dur)
 					// rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur),
 					// rotateBy(-10, dur)
-					), moveBy(x, y, Configure.duration_move_box),
-					run(new Runnable() {
+					), moveBy(x, y, CG.duration_move_box), run(new Runnable() {
 						@Override
 						public void run() {
 							set_ani_from_state(STATE.idle);
@@ -610,7 +604,7 @@ public class Role extends Actor {
 	 * 移动过程中被阻挡执行此动作
 	 */
 	public void stopedAction() {
-		float dur = Configure.duration_ani / 1.6f;
+		float dur = CG.duration_ani / 1.6f;
 		if (face == FACE.right) {
 			addAction(sequence(moveBy(16, 0, dur), moveBy(-16, 0, dur),
 					moveBy(12, 0, dur), moveBy(-12, 0, dur), moveBy(8, 0, dur),
@@ -628,7 +622,7 @@ public class Role extends Actor {
 	 * 受到攻击动画
 	 */
 	public void hitedAction() {
-		float dur = Configure.duration_ani / 2;
+		float dur = CG.duration_ani / 2;
 		if (face == FACE.right) {
 			this.setOrigin(0, 0);
 			addAction(sequence(
@@ -655,7 +649,7 @@ public class Role extends Actor {
 	 *            击退到的位置y坐标
 	 */
 	public void heatAction(int x, int y) {
-		addAction(moveBy(x, y, Configure.duration_ani / 10));
+		addAction(moveBy(x, y, CG.duration_ani / 10));
 	}
 
 	/**
@@ -715,10 +709,11 @@ public class Role extends Actor {
 					parallel(rotateBy(45f, 0.3f), moveBy(-5f, 0f, 0.3f),
 							moveBy(0f, 10f, 0.3f)),
 					parallel(rotateBy(45f, 0.3f), moveBy(-5f, 0f, 0.3f),
-							moveBy(0f, -10f, 0.3f)), alpha(0.0f, 0.5f),
-//					fadeOut(0f),
+							moveBy(0f, -10f, 0.3f)),
+					alpha(0.0f, 0.5f),
+					// fadeOut(0f),
 					// 让头像回到初始位置
-					parallel(rotateBy(-90, .0f),moveBy(10f, 0f, 0f)),
+					parallel(rotateBy(-90, .0f), moveBy(10f, 0f, 0f)),
 					run(new Runnable() {
 						@Override
 						public void run() {
@@ -731,31 +726,32 @@ public class Role extends Actor {
 					parallel(rotateBy(-45f, 0.3f), moveBy(5f, 0f, 0.3f),
 							moveBy(0f, -10f, 0.3f)),
 					parallel(rotateBy(-45f, 0.3f), moveBy(5f, 0f, 0.3f),
-							moveBy(0f, 10f, 0.3f)), alpha(0.0f, 0.5f),
-//					fadeOut(0f),
+							moveBy(0f, 10f, 0.3f)),
+					alpha(0.0f, 0.5f),
+					// fadeOut(0f),
 					// 让头像回到初始位置
-					parallel(rotateBy(90, .0f),moveBy(-10f, 0f, 0f)),
+					parallel(rotateBy(90, .0f), moveBy(-10f, 0f, 0f)),
 					run(new Runnable() {
 						@Override
 						public void run() {
 							be.notify(this, "dead");
 
 						}
-					})
-					));
+					})));
 		}
 	}
+
 	/**
 	 * 将角色由死亡状态转为站立状态
 	 */
-	public void deadToStand(){
-		if(face==FACE.right){
-			addAction(parallel(rotateBy(-90, .0f),moveBy(10f, 0f, 0f)));
-		}else if(face==FACE.left){
-			addAction(parallel(rotateBy(90, .0f),moveBy(-10f, 0f, 0f)));	
+	public void deadToStand() {
+		if (face == FACE.right) {
+			addAction(parallel(rotateBy(-90, .0f), moveBy(10f, 0f, 0f)));
+		} else if (face == FACE.left) {
+			addAction(parallel(rotateBy(90, .0f), moveBy(-10f, 0f, 0f)));
 		}
 	}
-	
+
 	/**
 	 * 返回英雄的职业数据
 	 * 
@@ -820,8 +816,8 @@ public class Role extends Actor {
 	public void setCurrentHp(int currentHp) {
 		this.currentHp = currentHp;
 		ro.notifyRoleObservers(this);
-		if(this.currentHp<=0)
-			//命令commander 执行死亡命令
+		if (this.currentHp <= 0)
+			// 命令commander 执行死亡命令
 			Commander.getInstance().commandRoleDead(this);
 	}
 

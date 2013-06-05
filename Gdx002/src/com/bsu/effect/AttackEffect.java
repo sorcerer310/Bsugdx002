@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.screen.GameScreen;
-import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.GTC;
 
 public class AttackEffect extends Actor {
 

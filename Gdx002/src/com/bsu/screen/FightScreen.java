@@ -20,8 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
-import com.bsu.tools.Configure;
-import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.CG;
+import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
 public class FightScreen extends CubocScreen implements Observer {
@@ -31,11 +31,11 @@ public class FightScreen extends CubocScreen implements Observer {
 	private Image level1;
 	public FightScreen(Game game) {
 		super(game);
-		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
-		background = new Image(GameTextureClass.getInstance().fightPanel);
+		stage = new Stage(CG.rect_width,CG.rect_height,false);
+		background = new Image(GTC.getInstance().fightPanel);
 		stage.addActor(background);
-		ib_back = WidgetFactory.getInstance().makeImageButton(Configure.button_back,stage,360,262,1);
-		level1=WidgetFactory.getInstance().makeImageButton(Configure.button_level,stage, 140, 230,1);
+		ib_back = WidgetFactory.getInstance().makeImageButton(CG.button_back,stage,360,262,1);
+		level1=WidgetFactory.getInstance().makeImageButton(CG.button_level,stage, 140, 230,1);
 		setListener();
 	}
 	@Override
@@ -72,7 +72,7 @@ public class FightScreen extends CubocScreen implements Observer {
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(Configure.button_back);
+				notifyObservers(CG.button_back);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
@@ -88,7 +88,7 @@ public class FightScreen extends CubocScreen implements Observer {
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(Configure.screen_game);
+				notifyObservers(CG.screen_game);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}

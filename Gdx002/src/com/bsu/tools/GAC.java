@@ -13,16 +13,16 @@ import com.badlogic.gdx.utils.Array;
  * @author zhangyongchen
  * 
  */
-public class GameAnimationClass {
-	private static GameAnimationClass instance = null;
+public class GAC {
+	private static GAC instance = null;
 
-	public static GameAnimationClass getInstance() {
+	public static GAC getInstance() {
 		if (instance == null)
-			instance = new GameAnimationClass();
+			instance = new GAC();
 		return instance;
 	}
 
-	public GameAnimationClass() {
+	public GAC() {
 		// TODO Auto-generated constructor stub
 		gameAnimations();
 	}
@@ -35,11 +35,11 @@ public class GameAnimationClass {
 	private TextureAtlas texture_effect_skills;
 
 	private void gameAnimations() {
-		effect_texture = GameTextureClass.getInstance().effect_texture;
+		effect_texture = GTC.getInstance().effect_texture;
 		effect_spilt = TextureRegion.split(effect_texture, 32, 32);
-		card_texture = GameTextureClass.getInstance().role_texture;
+		card_texture = GTC.getInstance().role_texture;
 		role_spilt = TextureRegion.split(card_texture, 96, 96);
-		texture_effect_skills = GameTextureClass.getInstance().texture_skills_effect;
+		texture_effect_skills = GTC.getInstance().texture_skills_effect;
 	}
 	public Animation getRoleAnimation(TextureRegion tr){
 		TextureRegion[] region_idle = new TextureRegion[1];
@@ -270,7 +270,7 @@ public class GameAnimationClass {
 			break;
 		}
 		if(tr.size>0)
-			retani = new Animation(Configure.duration_skill_effect,tr);
+			retani = new Animation(CG.duration_skill_effect,tr);
 		return retani;
 	}
 	/**
@@ -479,7 +479,7 @@ public class GameAnimationClass {
 			break;
 		}
 		if(tr.size>0)
-			retani = new Animation(Configure.duration_skill_effect,tr);
+			retani = new Animation(CG.duration_skill_effect,tr);
 		return retani;
 	}
 	/**
@@ -549,7 +549,7 @@ public class GameAnimationClass {
 			break;
 		}
 		if(tr.size>0)
-			retani = new Animation(Configure.duration_skill_effect,tr);
+			retani = new Animation(CG.duration_skill_effect,tr);
 		return retani;
 	}
 }

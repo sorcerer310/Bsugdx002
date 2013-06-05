@@ -14,8 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.Skill;
-import com.bsu.tools.Configure.CLASSES;
-import com.bsu.tools.Configure.QUALITY;
+import com.bsu.tools.CG.CLASSES;
+import com.bsu.tools.CG.QUALITY;
 
 public class U {
 	// public void waitWhile(boolean f) throws InterruptedException{
@@ -104,13 +104,13 @@ public class U {
 		int maxhp = 0;
 		int basehp = 0;
 		if (r.quality == QUALITY.green)
-			basehp = Configure.baseHpGreen;
+			basehp = CG.baseHpGreen;
 		if (r.quality == QUALITY.blue)
-			basehp = Configure.baseHpBlue;
+			basehp = CG.baseHpBlue;
 		if (r.quality == QUALITY.purple)
-			basehp = Configure.baseHpPurple;
+			basehp = CG.baseHpPurple;
 		if (r.quality == QUALITY.orange)
-			basehp = Configure.baseHpOrange;
+			basehp = CG.baseHpOrange;
 		maxhp = basehp * r.level;
 		return maxhp;
 	}
@@ -125,13 +125,13 @@ public class U {
 		int maxattack = 0;
 		int base = 0;
 		if (r.quality == QUALITY.green)
-			base = Configure.baseAttackGreen;
+			base = CG.baseAttackGreen;
 		if (r.quality == QUALITY.blue)
-			base = Configure.baseAttackBlue;
+			base = CG.baseAttackBlue;
 		if (r.quality == QUALITY.purple)
-			base = Configure.baseAttackPurple;
+			base = CG.baseAttackPurple;
 		if (r.quality == QUALITY.orange)
-			base = Configure.baseAttackOrange;
+			base = CG.baseAttackOrange;
 		maxattack = base * r.level;
 		return maxattack;
 	}
@@ -146,13 +146,13 @@ public class U {
 		int defend = 0;
 		int base = 0;
 		if (r.quality == QUALITY.green)
-			base = Configure.baseDefendGreen;
+			base = CG.baseDefendGreen;
 		if (r.quality == QUALITY.blue)
-			base = Configure.baseDefendBlue;
+			base = CG.baseDefendBlue;
 		if (r.quality == QUALITY.purple)
-			base = Configure.baseDefendPurple;
+			base = CG.baseDefendPurple;
 		if (r.quality == QUALITY.orange)
-			base = Configure.baseDefendOrange;
+			base = CG.baseDefendOrange;
 		defend = base * r.level;
 		return defend;
 	}
@@ -167,13 +167,13 @@ public class U {
 		int exp = 0;
 		int base = 0;
 		if (r.quality == QUALITY.green)
-			base = Configure.baseExpUpGreen;
+			base = CG.baseExpUpGreen;
 		if (r.quality == QUALITY.blue)
-			base = Configure.baseExpUpBlue;
+			base = CG.baseExpUpBlue;
 		if (r.quality == QUALITY.purple)
-			base = Configure.baseExpUpPurple;
+			base = CG.baseExpUpPurple;
 		if (r.quality == QUALITY.orange)
-			base = Configure.baseExpUpOrange;
+			base = CG.baseExpUpOrange;
 		exp = base * r.level;
 		return exp;
 	}

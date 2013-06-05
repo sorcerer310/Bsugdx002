@@ -11,12 +11,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * @author zhangyongchen
  * 
  */
-public class GameTextureClass {
-	private static GameTextureClass instance = null;
+public class GTC {
+	private static GTC instance = null;
 
-	public static GameTextureClass getInstance() {
+	public static GTC getInstance() {
 		if (instance == null)
-			instance = new GameTextureClass();
+			instance = new GTC();
 		return instance;
 	}
 
@@ -44,7 +44,7 @@ public class GameTextureClass {
 	public TextureRegion start_zero, start_one, start_two, start_three,
 			start_four;
 
-	private GameTextureClass() {
+	private GTC() {
 		// TODO Auto-generated constructor stub
 		effect_texture = new Texture(
 				Gdx.files.internal("data/game/hero/effect.png"));

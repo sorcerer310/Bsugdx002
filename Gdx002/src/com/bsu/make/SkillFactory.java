@@ -6,10 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.obj.skilltree.Skill.ObjectType;
 import com.bsu.obj.skilltree.Skill.Type;
-import com.bsu.tools.Configure.CLASSES;
-import com.bsu.tools.Configure.QUALITY;
-import com.bsu.tools.GameAnimationClass;
-import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.CG.CLASSES;
+import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GAC;
+import com.bsu.tools.GTC;
 
 /**
  * 技能工厂，用来初始化所有技能，并保存在hashmap中

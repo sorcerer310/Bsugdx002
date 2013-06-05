@@ -29,7 +29,7 @@ import com.bsu.obj.Commander;
 import com.bsu.obj.MapBox;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
-import com.bsu.tools.Configure;
+import com.bsu.tools.CG;
 import com.bsu.tools.GameMap;
 
 public class GameScreen extends CubocScreen implements Observer,
@@ -44,11 +44,12 @@ public class GameScreen extends CubocScreen implements Observer,
 	private boolean controlled;
 	private int clingX;// 地图移动位移
 	private AttackEffect attack_effect;
+	private Label fpsLabel;
 
 	public GameScreen(Game mxg) {
 		super(mxg);
-		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
-		UIStage = new Stage(Configure.rect_width, Configure.rect_height, false);
+		stage = new Stage(CG.rect_width, CG.rect_height, false);
+		UIStage = new Stage(CG.rect_width, CG.rect_height, false);
 	}
 
 	/**
@@ -74,8 +75,8 @@ public class GameScreen extends CubocScreen implements Observer,
 		commander = Commander.getInstance(stage, this);
 		commander.resetRoles();
 		this.addActorListener();
-		setBornPosition(GameMap.map, Type.HERO, Configure.object_layer_hero);
-		setBornPosition(GameMap.map, Type.ENEMY, Configure.object_layer_enemy);
+		setBornPosition(GameMap.map, Type.HERO, CG.object_layer_hero);
+		setBornPosition(GameMap.map, Type.ENEMY, CG.object_layer_enemy);
 		if (fightUI == null) {
 			fightUI = new UIRoleEffect(UIStage, this);
 		} else {
@@ -90,6 +91,9 @@ public class GameScreen extends CubocScreen implements Observer,
 			attack_effect = AttackEffect.getInstance();
 		}
 		initRoles(roles);
+		fpsLabel=WidgetFactory.getInstance().makeLabel(
+				"" + Gdx.graphics.getFramesPerSecond(), stage, 1, 420, 30,
+				Color.RED);
 		stage.addActor(attack_effect);
 	}
 
@@ -133,24 +137,18 @@ public class GameScreen extends CubocScreen implements Observer,
 		if (clingX != 0) {
 			int mx = clingX > 0 ? -1 : 1;
 			int maxW = GameMap.map_render.getMapWidthUnits()
-					- Configure.rect_width;
-			int w = Configure.rect_width / 2;
+					- CG.rect_width;
+			int w = CG.rect_width / 2;
 			if (c.position.x + mx >= w && c.position.x + mx <= maxW + w) {
 				c.position.x += mx;
 			}
 		}
 		GameMap.map_render.render(c);
-		WidgetFactory.getInstance().makeLabel(
-				"" + Gdx.graphics.getFramesPerSecond(), stage, 1, 100, 100,
-				Color.RED);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		UIStage.act(Gdx.graphics.getDeltaTime());
 		UIStage.draw();
-		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			setChanged();
-			notifyObservers(Configure.screen_mpanel);
-		}
+		fpsLabel.setText("fps:"+Gdx.graphics.getFramesPerSecond());
 	}
 
 	@Override
@@ -200,8 +198,8 @@ public class GameScreen extends CubocScreen implements Observer,
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (!isAction_start() && (isControlled())) {
-					int input_x = (int) (x / Configure.map_box_value);
-					int input_y = (int) (y / Configure.map_box_value);
+					int input_x = (int) (x / CG.map_box_value);
+					int input_y = (int) (y / CG.map_box_value);
 					for (Actor act : stage.getActors()) {
 						if (act instanceof Role) {
 							Role r = (Role) act;
@@ -273,7 +271,6 @@ public class GameScreen extends CubocScreen implements Observer,
 		heroSelected(commander.heros.get(0));
 		heroControllor(commander.heros.get(0));
 		set_map_value(commander.heros.get(0));
-		commander.heros.get(0).photo.showEffect(true);
 	}
 
 	/**
@@ -373,8 +370,8 @@ public class GameScreen extends CubocScreen implements Observer,
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
 		// TODO Auto-generated method stub
-		clingX = velocityX > 0 ? Configure.rect_width / 2
-				: -Configure.rect_width / 2;
+		clingX = velocityX > 0 ? CG.rect_width / 2
+				: -CG.rect_width / 2;
 		return false;
 	}
 

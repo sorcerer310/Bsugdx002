@@ -8,11 +8,11 @@ import com.bsu.effect.SkillEffect;
 import com.bsu.obj.Commander;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.ContinuedSkillState.CSType;
-import com.bsu.tools.GameAnimationClass;
-import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.GAC;
+import com.bsu.tools.GTC;
 import com.bsu.tools.U;
-import com.bsu.tools.Configure.CLASSES;
-import com.bsu.tools.Configure.QUALITY;
+import com.bsu.tools.CG.CLASSES;
+import com.bsu.tools.CG.QUALITY;
 
 /**
  * 技能对象
@@ -135,10 +135,10 @@ public class Skill {
 		uval = uv;
 		classes = ac;
 		info = i;
-		icon = GameTextureClass.getInstance().getSkillIcon(pi);
-		ani_self = GameAnimationClass.getInstance().getSkillOwnerEffect(pi);
-		ani_object = GameAnimationClass.getInstance().getSkillObjectEffect(pi);
-		ani_continue = GameAnimationClass.getInstance().getContinuedEffect(pi);
+		icon = GTC.getInstance().getSkillIcon(pi);
+		ani_self = GAC.getInstance().getSkillOwnerEffect(pi);
+		ani_object = GAC.getInstance().getSkillObjectEffect(pi);
+		ani_continue = GAC.getInstance().getContinuedEffect(pi);
 		range.addAll(r);
 	}
 

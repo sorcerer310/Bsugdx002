@@ -14,9 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
-import com.bsu.tools.Configure;
+import com.bsu.tools.CG;
 import com.bsu.tools.GameMap;
-import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.GTC;
 
 public class MenuScreen extends CubocScreen implements Observer {
 	private Image backgroundImage;// backgroud
@@ -30,7 +30,7 @@ public class MenuScreen extends CubocScreen implements Observer {
 	public MenuScreen(Game mxg) {
 		super(mxg);
 
-		stage = new Stage(Configure.rect_width, Configure.rect_height, true);
+		stage = new Stage(CG.rect_width, CG.rect_height, true);
 		atlas = new TextureAtlas(Gdx.files.internal("data/menu/pack")); // ���pack�ļ���ȡ����ͼƬ
 		backgroundImage = new Image(atlas.findRegion("mainMenu")); // ��ȡ��ΪmainMenu��ͼƬ��������һ��Image����
 		backgroundImage.setScale(0.5f, 1);
@@ -50,7 +50,7 @@ public class MenuScreen extends CubocScreen implements Observer {
 		stage.addActor(play_image);
 		stage.addActor(set_image);
 		fight_button = WidgetFactory.getInstance().makeImageButton(
-				Configure.screen_fight, stage, 100, 50,1);
+				CG.screen_fight, stage, 100, 50,1);
 
 		play_image.addListener(new InputListener() {
 			@Override
@@ -58,7 +58,7 @@ public class MenuScreen extends CubocScreen implements Observer {
 					int pointer, int button) {
 				// TODO Auto-generated method stub
 				setChanged();
-				notifyObservers(Configure.screen_mpanel);
+				notifyObservers(CG.screen_mpanel);
 				super.touchUp(event, x, y, pointer, button);
 			}
 
@@ -76,7 +76,7 @@ public class MenuScreen extends CubocScreen implements Observer {
 				// TODO Auto-generated method stub
 
 				setChanged();
-				notifyObservers(Configure.screen_setting);
+				notifyObservers(CG.screen_setting);
 				super.touchUp(event, x, y, pointer, button);
 			}
 
@@ -93,7 +93,7 @@ public class MenuScreen extends CubocScreen implements Observer {
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(Configure.screen_game);
+				notifyObservers(CG.screen_game);
 				fight_button.setScale(1.0f);
 			}
 

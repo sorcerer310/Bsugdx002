@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.skilltree.Skill;
-import com.bsu.tools.Configure;
-import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.CG;
+import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
 public class SkillEffect {
@@ -37,7 +37,7 @@ public class SkillEffect {
 				WidgetFactory.getInstance().makeLabel("" + skill.lev, s, 0.5f,
 						(int) (v.x) + 28, (int) (v.y) - 7);
 		} else {
-			skillImg = new Image(GameTextureClass.getInstance().getSkillIcon(0));
+			skillImg = new Image(GTC.getInstance().getSkillIcon(0));
 		}
 		s.addActor(skillImg);
 		skillImg.setPosition(v.x, v.y);

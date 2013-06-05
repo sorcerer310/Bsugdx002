@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitm
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
-public class Configure {
+public class CG {
 
 	public static int rect_width = 480; // 屏幕宽
 	public static int rect_height = 320; // 屏幕高

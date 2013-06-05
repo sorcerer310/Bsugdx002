@@ -24,8 +24,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.bsu.obj.skilltree.Skill;
-import com.bsu.tools.Configure;
-import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.CG;
+import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
 public class WidgetFactory {
@@ -74,61 +74,61 @@ public class WidgetFactory {
 	 */
 	public Image makeImageButton(String bname, Stage s, int x, int y, float a) {
 		Image img_nomal = null;
-		if (bname.equals(Configure.screen_fight))
+		if (bname.equals(CG.screen_fight))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_mbutton
+					GTC.getInstance().texture_atlas_mbutton
 							.findRegion("mb_fight"));
-		else if (bname.equals(Configure.screen_role))
+		else if (bname.equals(CG.screen_role))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_mbutton
+					GTC.getInstance().texture_atlas_mbutton
 							.findRegion("mb_role"));
-		else if (bname.equals(Configure.screen_update))
+		else if (bname.equals(CG.screen_update))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_mbutton
+					GTC.getInstance().texture_atlas_mbutton
 							.findRegion("mb_update"));
-		else if (bname.equals(Configure.screen_shop))
+		else if (bname.equals(CG.screen_shop))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_mbutton
+					GTC.getInstance().texture_atlas_mbutton
 							.findRegion("mb_shop"));
-		else if (bname.equals(Configure.button_back))
+		else if (bname.equals(CG.button_back))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_button
+					GTC.getInstance().texture_atlas_button
 							.findRegion("back"));
-		else if (bname.equals(Configure.button_green))
+		else if (bname.equals(CG.button_green))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_button
+					GTC.getInstance().texture_atlas_button
 							.findRegion("green"));
-		else if (bname.equals(Configure.button_blue))
+		else if (bname.equals(CG.button_blue))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_button
+					GTC.getInstance().texture_atlas_button
 							.findRegion("blue"));
-		else if (bname.equals(Configure.button_purple))
+		else if (bname.equals(CG.button_purple))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_button
+					GTC.getInstance().texture_atlas_button
 							.findRegion("purple"));
-		else if (bname.equals(Configure.button_orange))
+		else if (bname.equals(CG.button_orange))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_button
+					GTC.getInstance().texture_atlas_button
 							.findRegion("orange"));
-		else if (bname.equals(Configure.button_eat))
+		else if (bname.equals(CG.button_eat))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_button
+					GTC.getInstance().texture_atlas_button
 							.findRegion("eat"));
-		else if (bname.equals(Configure.button_eatall))
+		else if (bname.equals(CG.button_eatall))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_button
+					GTC.getInstance().texture_atlas_button
 							.findRegion("eatall"));
-		else if (bname.equals(Configure.button_level))
+		else if (bname.equals(CG.button_level))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_button
+					GTC.getInstance().texture_atlas_button
 							.findRegion("level"));
-		else if (bname.equals(Configure.button_up))
+		else if (bname.equals(CG.button_up))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_button
+					GTC.getInstance().texture_atlas_button
 							.findRegion("up"));
-		else if (bname.equals(Configure.button_all))
+		else if (bname.equals(CG.button_all))
 			img_nomal = new Image(
-					GameTextureClass.getInstance().texture_atlas_button
+					GTC.getInstance().texture_atlas_button
 							.findRegion("all"));
 		img_nomal
 				.setOrigin(img_nomal.getWidth() / 2, img_nomal.getHeight() / 2);
@@ -222,7 +222,6 @@ public class WidgetFactory {
 
 	/**
 	 * 取得一个填充的图像
-	 * 
 	 * @param w
 	 * @param h
 	 * @param c

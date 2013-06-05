@@ -18,10 +18,10 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Equip;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.Skill;
-import com.bsu.tools.Configure;
-import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.CG;
+import com.bsu.tools.GTC;
 import com.bsu.tools.U;
-import com.bsu.tools.Configure.QUALITY;
+import com.bsu.tools.CG.QUALITY;
 
 public class TipsWindows {
 
@@ -40,7 +40,7 @@ public class TipsWindows {
 	private TipsWindows() {
 		skin = new Skin();
 		skin.add("draw", new TextureRegion(
-				GameTextureClass.getInstance().tipsPanel, windowWidth, 60));
+				GTC.getInstance().tipsPanel, windowWidth, 60));
 		Window.WindowStyle ws = new WindowStyle(U.get_font(),
 				Color.BLACK, skin.getDrawable("draw"));
 		tipsWindows = new Window("", ws);
@@ -77,7 +77,7 @@ public class TipsWindows {
 				t.defaults().align(Align.bottom);
 				t.add(l);
 			} else {
-				t.add(new Image(GameTextureClass.getInstance().getSkillIcon(0)));
+				t.add(new Image(GTC.getInstance().getSkillIcon(0)));
 			}
 		}
 		tipsWindows.add(t);
@@ -255,15 +255,15 @@ public class TipsWindows {
 	private Vector2 getPosition(Vector2 tv) {
 		Vector2 v = new Vector2();
 		int ax = 0, ay = 0;
-		if (tv.x <= Configure.rect_width / 2) {
+		if (tv.x <= CG.rect_width / 2) {
 			ax = -1;
 		}
-		if (tv.y <= Configure.rect_height / 2) {
+		if (tv.y <= CG.rect_height / 2) {
 			ay = -1;
 		}
-		v.x = ax < 0 ? tv.x + Configure.map_box_value : tv.x
+		v.x = ax < 0 ? tv.x + CG.map_box_value : tv.x
 				- tipsWindows.getWidth();
-		v.y = ay < 0 ? tv.y + Configure.map_box_value : tv.y
+		v.y = ay < 0 ? tv.y + CG.map_box_value : tv.y
 				- tipsWindows.getHeight();
 		return v;
 	}

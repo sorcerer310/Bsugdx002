@@ -28,10 +28,10 @@ import com.bsu.make.TipsWindows;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
-import com.bsu.tools.Configure;
-import com.bsu.tools.Configure.QUALITY;
-import com.bsu.tools.Configure.QualityS;
-import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.CG;
+import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.CG.QualityS;
+import com.bsu.tools.GTC;
 import com.bsu.tools.MessageObject;
 import com.bsu.tools.U;
 
@@ -58,33 +58,33 @@ public class UpdateScreen extends CubocScreen implements Observer,
 
 	public UpdateScreen(Game game) {
 		super(game);
-		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
-		sRoleStage = new Stage(Configure.rect_width, Configure.rect_height,
+		stage = new Stage(CG.rect_width, CG.rect_height, false);
+		sRoleStage = new Stage(CG.rect_width, CG.rect_height,
 				false);
-		upRoleStage = new Stage(Configure.rect_width, Configure.rect_height,
+		upRoleStage = new Stage(CG.rect_width, CG.rect_height,
 				false);
-		background = new Image(GameTextureClass.getInstance().updatePanel);
+		background = new Image(GTC.getInstance().updatePanel);
 		stage.addActor(background);
 		quality = QualityS.gselect;
 		infos = WidgetFactory.getInstance().makeLabel("", stage, 1, 135, 280);
 		upButton = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_up, stage, 320, 270, 1);
+				CG.button_up, stage, 320, 270, 1);
 		ib_back = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_back, stage, 380, 270, 1f);
+				CG.button_back, stage, 380, 270, 1f);
 		allImg = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_all, stage, 135, 50, 0.5f);
+				CG.button_all, stage, 135, 50, 0.5f);
 		greenImg = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_green, stage, 198, 50, 0.5f);
+				CG.button_green, stage, 198, 50, 0.5f);
 		blueImg = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_blue, stage, 261, 50, 0.5f);
+				CG.button_blue, stage, 261, 50, 0.5f);
 		purpleImg = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_purple, stage, 324, 50, 0.5f);
+				CG.button_purple, stage, 324, 50, 0.5f);
 		orangeImg = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_orange, stage, 387, 50, 0.5f);
+				CG.button_orange, stage, 387, 50, 0.5f);
 		eatButton = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_eat, stage, 250, 20, 1f);
+				CG.button_eat, stage, 250, 20, 1f);
 		eatAllButton = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_eatall, stage, 350, 15, 1);
+				CG.button_eatall, stage, 350, 15, 1);
 		bImg.add(allImg);
 		bImg.add(greenImg);
 		bImg.add(blueImg);
@@ -129,7 +129,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				upButton.getColor().b,
 				(selectUpdateRole.exp > selectUpdateRole.expUp ? 1 : 0f));
 		if (selectUpdateRole.exp >= selectUpdateRole.expUp) {
-			TipsWindows.getInstance().showTips(Configure.roleUp, sRoleStage,
+			TipsWindows.getInstance().showTips(CG.roleUp, sRoleStage,
 					Color.ORANGE);
 		}
 	}
@@ -209,7 +209,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 						int pointer, int button) {
 					setChanged();
 					notifyObservers(new MessageObject(null,
-							Configure.screen_selectRole));
+							CG.screen_selectRole));
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
@@ -327,7 +327,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(Configure.button_back);
+				notifyObservers(CG.button_back);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}

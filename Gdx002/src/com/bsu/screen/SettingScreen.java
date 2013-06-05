@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.bsu.head.CubocScreen;
-import com.bsu.tools.Configure;
+import com.bsu.tools.CG;
 
 public class SettingScreen extends CubocScreen implements Observer {
 	Stage stage;
@@ -25,7 +25,7 @@ public class SettingScreen extends CubocScreen implements Observer {
 	public SettingScreen(Game mxg) {
 		// TODO Auto-generated constructor stub
 		super(mxg);
-		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
+		stage = new Stage(CG.rect_width, CG.rect_height, false);
 		actor_init();
 		stage.addActor(backgroundImage);
 		stage.addActor(back_image);

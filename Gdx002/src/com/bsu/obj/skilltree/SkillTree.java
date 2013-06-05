@@ -2,9 +2,9 @@ package com.bsu.obj.skilltree;
 
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.SkillFactory;
-import com.bsu.tools.Configure;
-import com.bsu.tools.Configure.CLASSES;
-import com.bsu.tools.Configure.QUALITY;
+import com.bsu.tools.CG;
+import com.bsu.tools.CG.CLASSES;
+import com.bsu.tools.CG.QUALITY;
 /**
  * 保存技能树的基本信息。st_forGreenHero中Array<Integer>保存的是改数所有技能的索引。
  * 其他配置数据同上
@@ -93,7 +93,7 @@ public class SkillTree {
 	 * @param cfgidx	配置索引
 	 * @return
 	 */
-	public Array<Skill> getSkillTree(Configure.QUALITY h_quality,int cfgidx){
+	public Array<Skill> getSkillTree(CG.QUALITY h_quality,int cfgidx){
 		Array<Integer> st = null;
 		if(h_quality==QUALITY.green){
 			st = st_forGreenHero.get(cfgidx);

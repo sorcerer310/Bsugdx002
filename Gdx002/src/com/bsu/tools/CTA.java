@@ -11,13 +11,13 @@ import com.badlogic.gdx.graphics.g2d.tiled.TileAtlas;
 import com.badlogic.gdx.graphics.g2d.tiled.TileSet;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 
-public class CustomerTiledAlisa extends TileAtlas {
+public class CTA extends TileAtlas {
 
-	public CustomerTiledAlisa() {
+	public CTA() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CustomerTiledAlisa(TiledMap map, FileHandle inputDir) {
+	public CTA(TiledMap map, FileHandle inputDir) {
 		// TODO Auto-generated constructor stub
 		for (TileSet set : map.tileSets) {
 			if (set.imageName == null) {

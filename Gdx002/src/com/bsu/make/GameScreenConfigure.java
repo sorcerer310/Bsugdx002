@@ -6,9 +6,9 @@ import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.obj.skilltree.SkillTree;
 import com.bsu.screen.GameScreen;
-import com.bsu.tools.Configure.CLASSES;
-import com.bsu.tools.Configure.QUALITY;
-import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.CG.CLASSES;
+import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
 public class GameScreenConfigure {
@@ -39,9 +39,9 @@ public class GameScreenConfigure {
 			heroRoles.add(r);
 		
 		//加入3个敌人
-		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GameTextureClass.getInstance().zyc_photo,95));
-		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GameTextureClass.getInstance().zyc_photo,95));
-		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GameTextureClass.getInstance().zyc_photo,95));
+		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,95));
+		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,95));
+		npcRoles.add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,95));
 
 
 		
@@ -54,12 +54,12 @@ public class GameScreenConfigure {
 	public void makeGameScreen1(GameScreen gs) {
 
 		Array<Role> rols = new Array<Role>();
-		rols.add(RoleFactory.getInstance().getFighter("hero1", Type.HERO, QUALITY.green,GameTextureClass.getInstance().zyc_photo));
-		rols.add(RoleFactory.getInstance().getFighter("hero2", Type.HERO, QUALITY.green,GameTextureClass.getInstance().zyc_photo));
-		rols.add(RoleFactory.getInstance().getFighter("hero3", Type.HERO, QUALITY.green,GameTextureClass.getInstance().zyc_photo));
-		rols.add(RoleFactory.getInstance().getFighter("enemy1", Type.ENEMY, QUALITY.green,GameTextureClass.getInstance().zyc_photo));
-		rols.add(RoleFactory.getInstance().getFighter("enemy2", Type.ENEMY, QUALITY.green,GameTextureClass.getInstance().zyc_photo));
-		rols.add(RoleFactory.getInstance().getFighter("enemy3", Type.ENEMY, QUALITY.green,GameTextureClass.getInstance().zyc_photo));
+		rols.add(RoleFactory.getInstance().getFighter("hero1", Type.HERO, QUALITY.green,GTC.getInstance().zyc_photo));
+		rols.add(RoleFactory.getInstance().getFighter("hero2", Type.HERO, QUALITY.green,GTC.getInstance().zyc_photo));
+		rols.add(RoleFactory.getInstance().getFighter("hero3", Type.HERO, QUALITY.green,GTC.getInstance().zyc_photo));
+		rols.add(RoleFactory.getInstance().getFighter("enemy1", Type.ENEMY, QUALITY.green,GTC.getInstance().zyc_photo));
+		rols.add(RoleFactory.getInstance().getFighter("enemy2", Type.ENEMY, QUALITY.green,GTC.getInstance().zyc_photo));
+		rols.add(RoleFactory.getInstance().getFighter("enemy3", Type.ENEMY, QUALITY.green,GTC.getInstance().zyc_photo));
 
 		gs.game_init(0, rols);
 	}
@@ -78,7 +78,7 @@ public class GameScreenConfigure {
 		npcRoles.add(new Role(Role.Type.ENEMY,QUALITY.green,CLASSES.fighter,"测试敌人1",U.getRandom(100, -6, 6),8,10
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getSkillTreeFixedSkill(10)
-				,GameTextureClass.getInstance().zyc_photo));				//测试技能用
+				,GTC.getInstance().zyc_photo));				//测试技能用
 //		npcRoles.add(new Role(Role.Type.ENEMY,QUALITY.green,CLASSES.fighter,"测试敌人2",U.getRandom(100, -6, 6),8,10
 //				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 //				new SkillTree().getSkillTreeFixedSkill(10)

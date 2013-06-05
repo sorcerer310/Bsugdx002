@@ -12,10 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Role;
-import com.bsu.tools.Configure.CLASSES;
-import com.bsu.tools.Configure.QUALITY;
-import com.bsu.tools.Configure;
-import com.bsu.tools.GameTextureClass;
+import com.bsu.tools.CG.CLASSES;
+import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.CG;
+import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
 /**
@@ -41,12 +41,12 @@ public class RoleEffect {
 				U.getQualityColor(r.quality), Color.BLACK, 0.2f));
 		role_classes = getClassesImg(r);
 		role.setScale(0.5f);
-		role_effect1[0] = new Image(GameTextureClass.getInstance().start_zero);
+		role_effect1[0] = new Image(GTC.getInstance().start_zero);
 		role_effect2[0] = new Image(
-				GameTextureClass.getInstance().start_zero);
+				GTC.getInstance().start_zero);
 		
-		role_effect3[0] = new Image(GameTextureClass.getInstance().start_zero);
-		role_effect4[0] = new Image(GameTextureClass.getInstance().start_zero);
+		role_effect3[0] = new Image(GTC.getInstance().start_zero);
+		role_effect4[0] = new Image(GTC.getInstance().start_zero);
 		
 		s.addActor(role_k);
 		s.addActor(role);
@@ -147,19 +147,19 @@ public class RoleEffect {
 	private Image getClassesImg(Role r) {
 		Image img = null;
 		if (r.classes == CLASSES.fighter) {
-			img = new Image(GameTextureClass.getInstance().fight_texture);
+			img = new Image(GTC.getInstance().fight_texture);
 		}
 		if (r.classes == CLASSES.wizard) {
-			img = new Image(GameTextureClass.getInstance().wizard_texture);
+			img = new Image(GTC.getInstance().wizard_texture);
 		}
 		if (r.classes == CLASSES.archer) {
-			img = new Image(GameTextureClass.getInstance().archer_texture);
+			img = new Image(GTC.getInstance().archer_texture);
 		}
 		if (r.classes == CLASSES.cleric) {
-			img = new Image(GameTextureClass.getInstance().cleric_texture);
+			img = new Image(GTC.getInstance().cleric_texture);
 		}
 		if (r.classes == CLASSES.sorcerer) {
-			img = new Image(GameTextureClass.getInstance().sorcerer_texture);
+			img = new Image(GTC.getInstance().sorcerer_texture);
 		}
 		return img;
 	}
