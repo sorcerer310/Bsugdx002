@@ -30,7 +30,7 @@ public class MenuScreen extends CubocScreen implements Observer {
 	public MenuScreen(Game mxg) {
 		super(mxg);
 
-		stage = new Stage(Configure.rect_width, Configure.rect_height, false);
+		stage = new Stage(Configure.rect_width, Configure.rect_height, true);
 		atlas = new TextureAtlas(Gdx.files.internal("data/menu/pack")); // ���pack�ļ���ȡ����ͼƬ
 		backgroundImage = new Image(atlas.findRegion("mainMenu")); // ��ȡ��ΪmainMenu��ͼƬ��������һ��Image����
 		backgroundImage.setScale(0.5f, 1);
@@ -50,7 +50,7 @@ public class MenuScreen extends CubocScreen implements Observer {
 		stage.addActor(play_image);
 		stage.addActor(set_image);
 		fight_button = WidgetFactory.getInstance().makeImageButton(
-				Configure.screen_fight, stage, 100, 50);
+				Configure.screen_fight, stage, 100, 50,1);
 
 		play_image.addListener(new InputListener() {
 			@Override

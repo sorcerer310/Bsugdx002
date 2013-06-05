@@ -25,7 +25,7 @@ public class EquipScreen extends CubocScreen implements Observer {
 		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
 		background = new Image(GameTextureClass.getInstance().equipPanel);
 		stage.addActor(background);
-		ib_back = WidgetFactory.getInstance().makeImageButton(Configure.button_back,stage,360,262);
+		ib_back = WidgetFactory.getInstance().makeImageButton(Configure.button_back,stage,360,262,1);
 		ib_back.addListener(new InputListener(){
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,

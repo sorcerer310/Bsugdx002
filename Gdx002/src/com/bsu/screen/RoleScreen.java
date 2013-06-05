@@ -49,11 +49,11 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private Stage RoleInfoStage;// Role信息舞台
 	private Image background;
 	private Image ib_back;
-	private Image allButton;
-	private Image greenButton;
-	private Image blueButton;
-	private Image purpleButton;
-	private Image orangeButton;
+	private Image allImg;
+	private Image greenImg;
+	private Image blueImg;
+	private Image purpleImg;
+	private Image orangeImg;
 	private QualityS quality;// 当前选择显示的品质
 	private Role selectRole;// 选择显示的Role
 	private Skill selectSkill;// 选择要更换的skill
@@ -62,6 +62,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private int cameraWidth;// 显示人物时的界面宽度
 	private WidgetFactory wfy;// 界面工厂类
 	private int skillIndex;// 希望改变的技能
+	private Array<Image> bImg=new Array<Image>();
 
 	public RoleScreen(Game game) {
 		super(game);
@@ -74,17 +75,22 @@ public class RoleScreen extends CubocScreen implements Observer,
 		c = (OrthographicCamera) sRoleStage.getCamera();
 		background = new Image(GameTextureClass.getInstance().rolePanel);
 		stage.addActor(background);
-		ib_back = wfy.makeImageButton(Configure.button_back, stage, 375, 272);
-		allButton = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_all, stage, 20, 20);
-		greenButton = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_green, stage, 83, 20);
-		blueButton = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_blue, stage, 146, 20);
-		purpleButton = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_purple, stage, 209, 20);
-		orangeButton = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_orange, stage, 272, 20);
+		ib_back = wfy.makeImageButton(Configure.button_back, stage, 375, 272,1);
+		allImg = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_all, stage, 20, 20,0.5f);
+		greenImg = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_green, stage, 83, 20,0.5f);
+		blueImg = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_blue, stage, 146, 20,0.5f);
+		purpleImg = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_purple, stage, 209, 20,0.5f);
+		orangeImg = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_orange, stage, 272, 20,0.5f);
+		bImg.add(allImg);
+		bImg.add(greenImg);
+		bImg.add(blueImg);
+		bImg.add(purpleImg);
+		bImg.add(orangeImg);
 		setListener();
 	}
 
@@ -93,25 +99,32 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 */
 	private void addRoleToStage(QualityS q) {
 		quality = q;
+		Image simg=null;
 		if (quality == QualityS.allselect) {
 			showQualityRole(Player.getInstance().playerRole);
+			simg=allImg;
 		}
 		if (quality == QualityS.gselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
 					Player.getInstance().playerRole, QUALITY.green));
+			simg=greenImg;
 		}
 		if (quality == QualityS.bselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
 					Player.getInstance().playerRole, QUALITY.blue));
+			simg=blueImg;
 		}
 		if (quality == QualityS.pselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
 					Player.getInstance().playerRole, QUALITY.purple));
+			simg=purpleImg;
 		}
 		if (quality == QualityS.oselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
 					Player.getInstance().playerRole, QUALITY.orange));
+			simg=orangeImg;
 		}
+		U.setSelectImg(bImg, simg);
 	}
 
 	/**
@@ -187,7 +200,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 
 						TipsWindows.getInstance().showSkillInfo(
 								r.skill_array.get(index), v, RoleInfoStage);
-						U.setSkillImg(skillImg, img);
+						U.setSelectImg(skillImg, img);
 						return true;
 					}
 
@@ -211,14 +224,14 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param r
 	 */
 	private void showRoleBaseInfo(Role r) {
-		wfy.makeLabel(r.name, RoleInfoStage, 0.6f, 40, 240,
+		wfy.makeLabel(r.name, RoleInfoStage, 1f, 40, 240,
 				U.getQualityColor(r.quality));
-		wfy.makeLabel("等级:" + r.level, RoleInfoStage, 0.6f, 100, 240);
-		wfy.makeLabel("生命:" + r.maxHp, RoleInfoStage, 0.6f, 40, 220);
-		wfy.makeLabel("经验:" + r.exp + "/" + r.expUp, RoleInfoStage, 0.6f, 100,
+		wfy.makeLabel("等级:" + r.level, RoleInfoStage, 0.5f, 100, 240);
+		wfy.makeLabel("生命:" + r.maxHp, RoleInfoStage, 0.5f, 40, 220);
+		wfy.makeLabel("经验:" + r.exp + "/" + r.expUp, RoleInfoStage, 0.5f, 100,
 				220);
-		wfy.makeLabel("攻击:" + r.getAttack(), RoleInfoStage, 0.6f, 40, 200);
-		wfy.makeLabel("防御:" + r.getDefend(), RoleInfoStage, 0.6f, 100, 200);
+		wfy.makeLabel("攻击:" + r.getAttack(), RoleInfoStage, 0.5f, 40, 200);
+		wfy.makeLabel("防御:" + r.getDefend(), RoleInfoStage, 0.5f, 100, 200);
 	}
 
 	/**
@@ -267,7 +280,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 							float y, int pointer, int button) {
 						TipsWindows.getInstance().showSkillInfo(s, vs,
 								RoleInfoStage);
-						U.setSkillImg(skillImg, skill_img);
+						U.setSelectImg(skillImg, skill_img);
 						return true;
 					}
 
@@ -365,7 +378,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		purpleButton.addListener(new InputListener() {
+		purpleImg.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -381,7 +394,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		orangeButton.addListener(new InputListener() {
+		orangeImg.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -397,7 +410,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		blueButton.addListener(new InputListener() {
+		blueImg.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -413,7 +426,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		greenButton.addListener(new InputListener() {
+		greenImg.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -429,7 +442,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		allButton.addListener(new InputListener() {
+		allImg.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {

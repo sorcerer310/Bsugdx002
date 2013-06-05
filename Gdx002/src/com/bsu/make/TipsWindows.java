@@ -74,7 +74,6 @@ public class TipsWindows {
 			if (skill.enable) {
 				t.add(new Image(skill.icon));
 				Label l = new Label("" + skill.lev, U.get_sytle());
-				l.setFontScale(0.5f);
 				t.defaults().align(Align.bottom);
 				t.add(l);
 			} else {
@@ -151,7 +150,7 @@ public class TipsWindows {
 		tipsWindows.defaults().padRight(10);
 		tipsWindows.setPosition(200, 140);
 		Array<String> tipsArray = new Array<String>();
-		float scaleValue = 0.7f;
+		float scaleValue = 0.5f;
 		tipsArray = U.getMuLabel(s, scaleValue, windowWidth);
 		for (String as : tipsArray) {
 			tipsWindows.row();
@@ -191,13 +190,14 @@ public class TipsWindows {
 		tb.align(Align.center);
 		Table tg = new Table();
 		tg.align(Align.center);
+		float fonts=0.5f;
 		for (final Skill s : r.skill_tree) {
 			Image skill_img = null;
 			if (s.quality == QUALITY.green) {
 				skill_img = new Image(s.icon);
 				tg.add(skill_img);
 				Label l = new Label("" + s.lev, U.get_sytle());
-				l.setFontScale(0.5f);
+				l.setFontScale(fonts);
 				tg.defaults().align(Align.bottom);
 				tg.add(l);
 			}
@@ -205,7 +205,7 @@ public class TipsWindows {
 				skill_img = new Image(s.icon);
 				tb.add(skill_img);
 				Label l = new Label("" + s.lev, U.get_sytle());
-				l.setFontScale(0.5f);
+				l.setFontScale(fonts);
 				tb.defaults().align(Align.bottom);
 				tb.add(l);
 			}
@@ -213,7 +213,7 @@ public class TipsWindows {
 				skill_img = new Image(s.icon);
 				tp.add(skill_img);
 				Label l = new Label("" + s.lev, U.get_sytle());
-				l.setFontScale(0.5f);
+				l.setFontScale(fonts);
 				tp.defaults().align(Align.bottom);
 				tp.add(l);
 			}
@@ -221,7 +221,7 @@ public class TipsWindows {
 				skill_img = new Image(s.icon);
 				to.add(skill_img);
 				Label l = new Label("" + s.lev, U.get_sytle());
-				l.setFontScale(0.5f);
+				l.setFontScale(fonts);
 				to.defaults().align(Align.bottom);
 				to.add(l);
 			}

@@ -44,6 +44,7 @@ import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.tools.Configure;
 import com.bsu.tools.MessageObject;
+import com.bsu.tools.U;
 import com.bsu.tools.Configure.QUALITY;
 import com.bsu.tools.Configure.QualityS;
 import com.bsu.tools.Configure.STATE;
@@ -57,13 +58,14 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	private QualityS quality;
 	private Image background;
 	private Image ib_back;
-	private Image allButton;
-	private Image greenButton;
-	private Image blueButton;
-	private Image purpleButton;
-	private Image orangeButton;
+	private Image allImg;
+	private Image greenImg;
+	private Image blueImg;
+	private Image purpleImg;
+	private Image orangeImg;
 	private Role changeRole;
 	private Role selectRole;
+	private Array<Image> bImg = new Array<Image>();
 
 	public SelectRoleScreen(Game game) {
 		super(game);
@@ -73,19 +75,24 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		background = new Image(GameTextureClass.getInstance().selectRolePanel);
 		stage.addActor(background);
 		ib_back = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_back, stage, 380, 272);
-		allButton = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_all, stage, 100, 20);
-		greenButton = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_green, stage, 163, 20);
-		blueButton = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_blue, stage, 226, 20);
-		purpleButton = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_purple, stage, 289, 20);
-		orangeButton = WidgetFactory.getInstance().makeImageButton(
-				Configure.button_orange, stage, 352, 20);
+				Configure.button_back, stage, 380, 272, 0.5f);
+		allImg = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_all, stage, 100, 20, 0.5f);
+		greenImg = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_green, stage, 163, 20, 0.5f);
+		blueImg = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_blue, stage, 226, 20, 0.5f);
+		purpleImg = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_purple, stage, 289, 20, 0.5f);
+		orangeImg = WidgetFactory.getInstance().makeImageButton(
+				Configure.button_orange, stage, 352, 20, 0.5f);
 		quality = QualityS.allselect;
 		addRoleToStage(QualityS.allselect);
+		bImg.add(allImg);
+		bImg.add(greenImg);
+		bImg.add(blueImg);
+		bImg.add(purpleImg);
+		bImg.add(orangeImg);
 		setListener();
 	}
 
@@ -104,25 +111,32 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	private void addRoleToStage(QualityS qs) {
 		quality = qs;
 		selectRole = null;
+		Image simg = null;
 		if (quality == QualityS.gselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
 					Player.getInstance().playerIdelRole, QUALITY.green));
+			simg = greenImg;
 		}
 		if (quality == QualityS.bselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
 					Player.getInstance().playerIdelRole, QUALITY.blue));
+			simg = blueImg;
 		}
 		if (quality == QualityS.pselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
 					Player.getInstance().playerIdelRole, QUALITY.purple));
+			simg = purpleImg;
 		}
 		if (quality == QualityS.oselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
 					Player.getInstance().playerIdelRole, QUALITY.orange));
+			simg = orangeImg;
 		}
 		if (quality == QualityS.allselect) {
 			showQualityRole(Player.getInstance().playerIdelRole);
+			simg = allImg;
 		}
+		U.setSelectImg(bImg, simg);
 	}
 
 	/**
@@ -264,7 +278,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		purpleButton.addListener(new InputListener() {
+		purpleImg.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -278,7 +292,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		orangeButton.addListener(new InputListener() {
+		orangeImg.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -292,7 +306,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		blueButton.addListener(new InputListener() {
+		blueImg.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -306,7 +320,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		greenButton.addListener(new InputListener() {
+		greenImg.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -320,7 +334,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		allButton.addListener(new InputListener() {
+		allImg.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {

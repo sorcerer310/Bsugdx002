@@ -263,13 +263,13 @@ public class U {
 	}
 
 	/**
-	 * 选择的技能设置高亮（apha==1）
+	 * 选择的图片设置高亮（apha==1）
 	 * 
 	 * @param skillArray
 	 * @param s
 	 */
-	public static void setSkillImg(Array<Image> skillArray, Image s) {
-		for (Image img : skillArray) {
+	public static void setSelectImg(Array<Image> allArray, Image s) {
+		for (Image img : allArray) {
 			setApha(img, 0.5f);
 		}
 		setApha(s, 1);
@@ -322,8 +322,6 @@ public class U {
 		if (Generator == null) {
 			Generator = new FreeTypeFontGenerator(
 					Gdx.files.internal("data/font/game.TTF"));
-			// fontData=Generator.generateData(fontSize,
-			// Generator.DEFAULT_CHARS, false);
 			fontData = Generator
 					.generateData(
 							fontSize,
@@ -332,6 +330,9 @@ public class U {
 							false);
 			font = new BitmapFont(fontData, fontData.getTextureRegion(), false);
 		}
+//		font = new BitmapFont(Gdx.files.internal("data/font/font.fnt"),
+//				Gdx.files.internal("data/font/font.png"), false);
+//		font.setColor(Color.GREEN);
 		return font;
 	}
 

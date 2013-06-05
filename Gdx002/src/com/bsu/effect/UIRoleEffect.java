@@ -19,6 +19,7 @@ import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Commander;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
+import com.bsu.obj.Role.Type;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.screen.GameScreen;
 import com.bsu.tools.U;
@@ -96,7 +97,7 @@ public class UIRoleEffect implements Observer {
 								int pointer, int button) {
 							if (!g.isAction_start()) {
 								r.cskill = r.skill_array.get(tempIndex);
-								U.setSkillImg(imgArray, skillImg);
+								U.setSelectImg(imgArray, skillImg);
 							}
 							super.touchUp(event, x, y, pointer, button);
 						}
@@ -105,15 +106,19 @@ public class UIRoleEffect implements Observer {
 			}
 		}
 	}
+
 	/**
 	 * 显示正在执行动作的role
+	 * 
 	 * @param r
 	 */
 	public void actingRole(Role r) {
-		for(Role e:Player.getInstance().playerFightRole){
+		for (Role e : Player.getInstance().playerFightRole) {
 			e.photo.showEffect(false);
 		}
-		r.photo.showEffect(true);
+		if (r != null && r.type == Type.HERO) {
+			r.photo.showEffect(true);
+		}
 	}
 
 	/**
@@ -157,7 +162,7 @@ class roleUIInfo {
 				new Color(255, 0, 0, 1));
 		WidgetFactory.getInstance().makeImg(hpBack, stage, 1, x - 10, y);
 		hpImg = WidgetFactory.getInstance().makeImg(hp, stage, 1, x - 10, y);
-		nameLabel = WidgetFactory.getInstance().makeLabel(r.name, stage, 0.8f,
+		nameLabel = WidgetFactory.getInstance().makeLabel(r.name, stage, 0.5f,
 				x, y + 50);
 	}
 }

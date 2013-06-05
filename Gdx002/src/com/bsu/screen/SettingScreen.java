@@ -5,17 +5,13 @@ import java.util.Observer;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.bsu.head.CubocScreen;
 import com.bsu.tools.Configure;
 
@@ -33,7 +29,6 @@ public class SettingScreen extends CubocScreen implements Observer {
 		actor_init();
 		stage.addActor(backgroundImage);
 		stage.addActor(back_image);
-
 		back_image.addListener(new InputListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y,

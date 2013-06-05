@@ -48,18 +48,18 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		background = new Image(timg);
 		stage.addActor(background);
 		ib_mb_update = WidgetFactory.getInstance().makeImageButton(
-				Configure.screen_update, stage, 135, 225);
+				Configure.screen_update, stage, 135, 225,1);
 		ib_mb_update.setPosition(135, 225);
 		ib_mb_role = WidgetFactory.getInstance().makeImageButton(
-				Configure.screen_role, stage, 300, 225);
+				Configure.screen_role, stage, 300, 225,1);
 		// ib_mb_role = WidgetFactory.getInstance().makeImageButton(
 		// Configure.screen_role, stage, 300, 135);
 		// ib_mb_role.setPosition(300, 135);
 		ib_mb_fight = WidgetFactory.getInstance().makeImageButton(
-				Configure.screen_fight, stage, 135, 50);
+				Configure.screen_fight, stage, 135, 50,1);
 		ib_mb_fight.setPosition(135, 50);
 		ib_mb_shop = WidgetFactory.getInstance().makeImageButton(
-				Configure.screen_shop, stage, 300, 50);
+				Configure.screen_shop, stage, 300, 50,1);
 		ib_mb_shop.setPosition(300, 50);
 		// 增加上阵英雄头像
 		setFightRoles();

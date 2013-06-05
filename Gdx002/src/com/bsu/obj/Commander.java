@@ -339,7 +339,7 @@ public class Commander {
 			if(!r.isRoundMove) {r.isRoundMove=true;continue;}	//如果本回合该英雄不行动则跳过该英雄
 			waitRoleFlag = true; 			// 初始化等待循环flag为true
 			currTaskComFlag = false;		//只是当前处理技能任务是否完成
-			//gamescreen.getFightUI().actingRole(r);
+			gamescreen.getFightUI().actingRole(r);//ui显示当前执行动作人物。。
 			final Array<Role> atkrs = getRolesInSkillRange(r);
 			//1:执行技能命令
 			if(atkrs.size!=0){

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
@@ -17,11 +18,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.AttackEffect;
 import com.bsu.effect.UIRoleEffect;
 import com.bsu.head.CubocScreen;
+import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Commander;
 import com.bsu.obj.MapBox;
 import com.bsu.obj.Role;
@@ -74,7 +77,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		setBornPosition(GameMap.map, Type.HERO, Configure.object_layer_hero);
 		setBornPosition(GameMap.map, Type.ENEMY, Configure.object_layer_enemy);
 		if (fightUI == null) {
-			fightUI = new UIRoleEffect(UIStage,this);
+			fightUI = new UIRoleEffect(UIStage, this);
 		} else {
 			fightUI.show_hero_state();
 		}
@@ -137,6 +140,9 @@ public class GameScreen extends CubocScreen implements Observer,
 			}
 		}
 		GameMap.map_render.render(c);
+		WidgetFactory.getInstance().makeLabel(
+				"" + Gdx.graphics.getFramesPerSecond(), stage, 1, 100, 100,
+				Color.RED);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		UIStage.act(Gdx.graphics.getDeltaTime());
@@ -250,7 +256,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	 * 初始化role
 	 */
 	private void initRoles(Array<Role> roles) {
-		for(Role r:roles){
+		for (Role r : roles) {
 			r.gsstartinit();
 			MapBox.attack_array.clear();
 			MapBox.pass_array.clear();
@@ -258,16 +264,18 @@ public class GameScreen extends CubocScreen implements Observer,
 		}
 		newRound();
 	}
+
 	/**
 	 * 新回合开始
 	 */
-	public void newRound(){
+	public void newRound() {
 		setAction_start(false);
 		heroSelected(commander.heros.get(0));
 		heroControllor(commander.heros.get(0));
 		set_map_value(commander.heros.get(0));
 		commander.heros.get(0).photo.showEffect(true);
 	}
+
 	/**
 	 * 用来检查角色是否被本轮选择，若被选择，则其他不被选择，
 	 * 

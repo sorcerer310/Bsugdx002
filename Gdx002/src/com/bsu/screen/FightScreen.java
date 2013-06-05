@@ -34,8 +34,8 @@ public class FightScreen extends CubocScreen implements Observer {
 		stage = new Stage(Configure.rect_width,Configure.rect_height,false);
 		background = new Image(GameTextureClass.getInstance().fightPanel);
 		stage.addActor(background);
-		ib_back = WidgetFactory.getInstance().makeImageButton(Configure.button_back,stage,360,262);
-		level1=WidgetFactory.getInstance().makeImageButton(Configure.button_level,stage, 140, 230);
+		ib_back = WidgetFactory.getInstance().makeImageButton(Configure.button_back,stage,360,262,1);
+		level1=WidgetFactory.getInstance().makeImageButton(Configure.button_level,stage, 140, 230,1);
 		setListener();
 	}
 	@Override

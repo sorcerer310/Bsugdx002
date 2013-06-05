@@ -72,10 +72,8 @@ public class WidgetFactory {
 	 *            按钮的名字
 	 * @return 返回按钮的图片
 	 */
-	Image img_nomal = null;
-
-	public Image makeImageButton(String bname, Stage s, int x, int y) {
-
+	public Image makeImageButton(String bname, Stage s, int x, int y, float a) {
+		Image img_nomal = null;
 		if (bname.equals(Configure.screen_fight))
 			img_nomal = new Image(
 					GameTextureClass.getInstance().texture_atlas_mbutton
@@ -136,6 +134,7 @@ public class WidgetFactory {
 				.setOrigin(img_nomal.getWidth() / 2, img_nomal.getHeight() / 2);
 		img_nomal.setPosition(x, y);
 		s.addActor(img_nomal);
+		U.setApha(img_nomal, a);
 		return img_nomal;
 	}
 
