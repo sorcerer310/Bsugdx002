@@ -713,7 +713,7 @@ public class Role extends Actor {
 					alpha(0.0f, 0.5f),
 					// fadeOut(0f),
 					// 让头像回到初始位置
-					parallel(rotateBy(-90, .0f), moveBy(10f, 0f, 0f)),
+					parallel(rotateTo(0, .0f), moveBy(10f, 0f, 0f)),
 					run(new Runnable() {
 						@Override
 						public void run() {
@@ -730,7 +730,7 @@ public class Role extends Actor {
 					alpha(0.0f, 0.5f),
 					// fadeOut(0f),
 					// 让头像回到初始位置
-					parallel(rotateBy(90, .0f), moveBy(-10f, 0f, 0f)),
+					parallel(rotateTo(0, .0f), moveBy(-10f, 0f, 0f)),
 					run(new Runnable() {
 						@Override
 						public void run() {
