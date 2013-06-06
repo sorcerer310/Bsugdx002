@@ -39,6 +39,7 @@ public class SkillEffect {
 						(int) (v.x) + 34, (int) (v.y) - 7);
 		} else {
 			skillImg = new Image(GTC.getInstance().getSkillIcon(0));
+			skillImgEffect = new Image(skill.icon);
 		}
 		s.addActor(skillImg);
 		skillImg.setScale(1.2f);

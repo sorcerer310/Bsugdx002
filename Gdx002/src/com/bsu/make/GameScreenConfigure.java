@@ -48,7 +48,7 @@ public class GameScreenConfigure {
 		roles.addAll(heroRoles);
 		roles.addAll(npcRoles);
 		
-		gs.game_init(0, roles);
+		gs.game_init(roles);
 	}
 	
 	public void makeGameScreen1(GameScreen gs) {
@@ -61,7 +61,7 @@ public class GameScreenConfigure {
 		rols.add(RoleFactory.getInstance().getFighter("enemy2", Type.ENEMY, QUALITY.green,GTC.getInstance().zyc_photo));
 		rols.add(RoleFactory.getInstance().getFighter("enemy3", Type.ENEMY, QUALITY.green,GTC.getInstance().zyc_photo));
 
-		gs.game_init(0, rols);
+		gs.game_init(rols);
 	}
 
 	public void makeGameScreen2(GameScreen gs) {
@@ -89,7 +89,7 @@ public class GameScreenConfigure {
 //				,GameTextureClass.getInstance().h3_photo));				//测试技能用
 		roles.addAll(heroRoles);
 		roles.addAll(npcRoles);
-		gs.game_init(0, roles);
+		gs.game_init(roles);
 	}
 
 	public Array<Role> getRols() {

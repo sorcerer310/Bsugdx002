@@ -52,11 +52,11 @@ public class GameScreen extends CubocScreen implements Observer,
 	private boolean action_start; // 是否回合开始,未开始为人物操作阶段
 	private boolean controlled;
 	private boolean battleEndFlag = false; // 用来标识当前战役是否结束
-
+	public static int lv;// 关卡索引
 	private int clingX;// 地图移动位移
 	private AttackEffect attack_effect;
 	private Label fpsLabel;
-	Image endBackImg;
+	private Image endBackImg;
 
 	public GameScreen(Game mxg) {
 		super(mxg);
@@ -73,9 +73,9 @@ public class GameScreen extends CubocScreen implements Observer,
 	 * @param roles
 	 *            关卡初始化英雄与敌人的数组，出生地点在地图中已经设置好
 	 */
-	public void game_init(int mindex, Array<Role> roles) {
+	public void game_init(Array<Role> roles) {
 		stage.clear();
-		GameMap.make_map(mindex);
+		GameMap.make_map(lv);
 		setAction_start(false);
 		setControlled(true);
 		if (mb == null) {
@@ -323,10 +323,12 @@ public class GameScreen extends CubocScreen implements Observer,
 	 */
 	public void battleEnd(boolean victflag) {
 		String endname = "victory";
-		if (victflag)
+		if (victflag) {
 			endname = "victory";
-		else
+			lv++;
+		} else {
 			endname = "defeat";
+		}
 
 		TextureRegion tr = GTC.getInstance().battle_end.findRegion(endname);
 		Image img = new Image(tr);

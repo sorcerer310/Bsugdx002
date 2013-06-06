@@ -52,7 +52,7 @@ public class BsuGame extends Game {
 			public void update(Observable o, Object arg) {
 				if (arg.toString().equals(CG.screen_game)) {
 					BsuGame.this.setScreen(this);
-					this.game_init(0, GameScreenConfigure.getInstance().getRols());
+					this.game_init(GameScreenConfigure.getInstance().getRols());
 				}
 			}
 		};
