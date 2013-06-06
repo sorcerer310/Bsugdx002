@@ -93,44 +93,34 @@ public class WidgetFactory {
 							.findRegion("mb_shop"));
 		else if (bname.equals(CG.button_back))
 			img_nomal = new Image(
-					GTC.getInstance().texture_atlas_mbutton
-							.findRegion("back"));
+					GTC.getInstance().texture_atlas_mbutton.findRegion("back"));
 		else if (bname.equals(CG.button_green))
 			img_nomal = new Image(
-					GTC.getInstance().texture_atlas_button
-							.findRegion("green"));
+					GTC.getInstance().texture_atlas_button.findRegion("green"));
 		else if (bname.equals(CG.button_blue))
 			img_nomal = new Image(
-					GTC.getInstance().texture_atlas_button
-							.findRegion("blue"));
+					GTC.getInstance().texture_atlas_button.findRegion("blue"));
 		else if (bname.equals(CG.button_purple))
 			img_nomal = new Image(
-					GTC.getInstance().texture_atlas_button
-							.findRegion("purple"));
+					GTC.getInstance().texture_atlas_button.findRegion("purple"));
 		else if (bname.equals(CG.button_orange))
 			img_nomal = new Image(
-					GTC.getInstance().texture_atlas_button
-							.findRegion("orange"));
+					GTC.getInstance().texture_atlas_button.findRegion("orange"));
 		else if (bname.equals(CG.button_eat))
 			img_nomal = new Image(
-					GTC.getInstance().texture_atlas_button
-							.findRegion("eat"));
+					GTC.getInstance().texture_atlas_button.findRegion("eat"));
 		else if (bname.equals(CG.button_eatall))
 			img_nomal = new Image(
-					GTC.getInstance().texture_atlas_button
-							.findRegion("eatall"));
+					GTC.getInstance().texture_atlas_button.findRegion("eatall"));
 		else if (bname.equals(CG.button_level))
 			img_nomal = new Image(
-					GTC.getInstance().texture_atlas_button
-							.findRegion("level"));
+					GTC.getInstance().texture_atlas_button.findRegion("level"));
 		else if (bname.equals(CG.button_up))
 			img_nomal = new Image(
-					GTC.getInstance().texture_atlas_button
-							.findRegion("up"));
+					GTC.getInstance().texture_atlas_button.findRegion("up"));
 		else if (bname.equals(CG.button_all))
 			img_nomal = new Image(
-					GTC.getInstance().texture_atlas_button
-							.findRegion("all"));
+					GTC.getInstance().texture_atlas_button.findRegion("all"));
 		img_nomal
 				.setOrigin(img_nomal.getWidth() / 2, img_nomal.getHeight() / 2);
 		img_nomal.setPosition(x, y);
@@ -223,14 +213,16 @@ public class WidgetFactory {
 
 	/**
 	 * 取得一个填充的图像
+	 * 
 	 * @param w
 	 * @param h
 	 * @param c
 	 * @return
 	 */
-	public TextureRegion getTextureFill(int w, int h, Color c) {
+	public TextureRegion getTextureFill(int w, int h, Color c, float a) {
 		TextureRegion temp_box = null;
 		Pixmap pixmap;
+		c.a = a;
 		pixmap = new Pixmap(w, h, Format.RGBA8888);
 		pixmap.setColor(c);
 		pixmap.fillRectangle(0, 0, w, h);

@@ -145,9 +145,9 @@ public class Role extends Actor {
 		ani_disapper = GAC.getInstance().getEffectDisapper();
 		ani_apper = GAC.getInstance().getEffectApper();
 		hp_back = WidgetFactory.getInstance().getTextureFill(CG.map_box_value,
-				2, Color.BLACK);
+				2, Color.BLACK,1);
 		hp = WidgetFactory.getInstance().getTextureFill(CG.map_box_value, 2,
-				Color.RED);
+				Color.RED,1);
 		set_ani_from_state(STATE.idle);	
 	}
 

@@ -214,12 +214,14 @@ public class TipsWindows {
 			}
 			String lvs = s.enable ? s.lev + "" : "  ";
 			Label l = new Label(lvs, U.get_sytle());
-			l.setFontScale(0.5f);
+			l.setFontScale(fonts);
 			t.add(skill_img);
 			t.defaults().align(Align.bottom);
 			t.add(l);
 		}
 		tipsWindows.add(new Label("lv:" + r.level, U.get_sytle()));
+		tipsWindows.row();
+		tipsWindows.add(new Label("exp:" + r.exp, U.get_sytle()));
 		tipsWindows.row();
 		tipsWindows.add(to);
 		tipsWindows.row();

@@ -50,7 +50,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	private Image eatImg;
 	private Image eatAllImg;// 一键吞噬所有某种品质
 	private Image upButton;// 升级按钮
-	private Role selectUpdateRole;
+	private Role suRole;
 	private Array<Role> eatRoles = new Array<Role>();
 	private QualityS quality;// 当前选择显示的品质
 	private Array<Image> bImg = new Array<Image>();
@@ -108,13 +108,13 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 					U.showRoleSelect(playerRoles, r);
-					selectUpdateRole = r;
+					suRole = r;
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
 		}
 		U.showRoleSelect(playerRoles, playerRoles.get(0));
-		selectUpdateRole = playerRoles.get(0);
+		suRole = playerRoles.get(0);
 	}
 
 	/**
@@ -122,13 +122,13 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	 */
 	private void showUpRoleInfo() {
 		infos.setFontScale(0.7f);
-		infos.setText(selectUpdateRole.name + "  lv:" + selectUpdateRole.level
-				+ "  exp:" + selectUpdateRole.exp + "/"
-				+ selectUpdateRole.expUp);
+		infos.setText(suRole.name + "  lv:" + suRole.level
+				+ "  exp:" + suRole.exp + "/"
+				+ suRole.expUp);
 		upButton.setColor(upButton.getColor().r, upButton.getColor().g,
 				upButton.getColor().b,
-				(selectUpdateRole.exp > selectUpdateRole.expUp ? 1 : 0f));
-		if (selectUpdateRole.exp >= selectUpdateRole.expUp) {
+				(suRole.exp > suRole.expUp ? 1 : 0f));
+		if (suRole.exp >= suRole.expUp) {
 			TipsWindows.getInstance().showTips(CG.roleUp, sRoleStage,
 					Color.ORANGE);
 		}
@@ -250,7 +250,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			}
 		}
 		for (Role e : eatRoles) {
-			selectUpdateRole.exp += e.exp;
+			suRole.exp += e.classes.equals(suRole.classes)?e.exp*1.2f:e.exp;
 			Player.getInstance().playerRole.removeValue(e, false);
 		}
 		eatRoles.clear();
@@ -450,8 +450,8 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				if (selectUpdateRole.exp > selectUpdateRole.expUp) {
-					selectUpdateRole.levelUp();
+				if (suRole.exp > suRole.expUp) {
+					suRole.levelUp();
 					TipsWindows.getInstance().removeFromStage();
 					showUpRoleInfo();
 				}

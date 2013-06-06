@@ -39,24 +39,25 @@ public class GameScreen extends CubocScreen implements Observer,
 		GestureListener {
 	private Stage stage; // 场景对象
 	private Stage UIStage; // UI场景对象
-	private Stage endStage;//结束场景
+	private Stage endStage;// 结束场景
 	private Commander commander; // 指挥官对象，指挥所有对象交互
 	private MapBox mb; // 地图块对象
 	private UIRoleEffect fightUI;
 	private OrthographicCamera c;
 	private boolean action_start; // 是否回合开始,未开始为人物操作阶段
 	private boolean controlled;
-	private boolean battleEndFlag = false;	//用来标识当前战役是否结束
+	private boolean battleEndFlag = false; // 用来标识当前战役是否结束
 
 	private int clingX;// 地图移动位移
 	private AttackEffect attack_effect;
 	private Label fpsLabel;
+	Image endBackImg;
 
 	public GameScreen(Game mxg) {
 		super(mxg);
 		stage = new Stage(CG.rect_width, CG.rect_height, false);
 		UIStage = new Stage(CG.rect_width, CG.rect_height, false);
-		endStage = new Stage(CG.rect_width,CG.rect_height,false);
+		endStage = new Stage(CG.rect_width, CG.rect_height, false);
 	}
 
 	/**
@@ -97,8 +98,12 @@ public class GameScreen extends CubocScreen implements Observer,
 		if (attack_effect == null) {
 			attack_effect = AttackEffect.getInstance();
 		}
+		if (endBackImg == null) {
+			endBackImg = new Image(WidgetFactory.getInstance().getTextureFill(
+					CG.rect_width, CG.rect_height, Color.GRAY, 0.3f));
+		}
 		initRoles(roles);
-		fpsLabel=WidgetFactory.getInstance().makeLabel(
+		fpsLabel = WidgetFactory.getInstance().makeLabel(
 				"" + Gdx.graphics.getFramesPerSecond(), stage, 1, 420, 30,
 				Color.RED);
 		stage.addActor(attack_effect);
@@ -143,8 +148,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		if (clingX != 0) {
 			int mx = clingX > 0 ? -1 : 1;
-			int maxW = GameMap.map_render.getMapWidthUnits()
-					- CG.rect_width;
+			int maxW = GameMap.map_render.getMapWidthUnits() - CG.rect_width;
 			int w = CG.rect_width / 2;
 			if (c.position.x + mx >= w && c.position.x + mx <= maxW + w) {
 				c.position.x += mx;
@@ -155,13 +159,13 @@ public class GameScreen extends CubocScreen implements Observer,
 		stage.draw();
 		UIStage.act(Gdx.graphics.getDeltaTime());
 		UIStage.draw();
-		//如果当前战役结束，显示结束画面
-		if(battleEndFlag){
+		// 如果当前战役结束，显示结束画面
+		if (battleEndFlag) {
 			endStage.act(Gdx.graphics.getDeltaTime());
 			endStage.draw();
 		}
-		fpsLabel.setText("fps:"+Gdx.graphics.getFramesPerSecond());
-		
+		fpsLabel.setText("fps:" + Gdx.graphics.getFramesPerSecond());
+
 	}
 
 	@Override
@@ -220,11 +224,11 @@ public class GameScreen extends CubocScreen implements Observer,
 				}
 			}
 		});
-		
-		endStage.addListener(new ClickListener(){
+
+		endStage.addListener(new ClickListener() {
 			@Override
-			public void clicked(InputEvent event,float x,float y){
-				//通知切换到主界面
+			public void clicked(InputEvent event, float x, float y) {
+				// 通知切换到主界面
 				setChanged();
 				notifyObservers(CG.screen_mpanel);
 			}
@@ -290,26 +294,28 @@ public class GameScreen extends CubocScreen implements Observer,
 		heroControllor(commander.heros.get(0));
 		set_map_value(commander.heros.get(0));
 	}
+
 	/**
 	 * 战斗结束
 	 */
-	public void battleEnd(boolean victflag){
+	public void battleEnd(boolean victflag) {
 		String endname = "victory";
-		if(victflag)
-			endname="victory";
+		if (victflag)
+			endname = "victory";
 		else
-			endname="defeat";
-			
+			endname = "defeat";
+
 		TextureRegion tr = GTC.getInstance().battle_end.findRegion(endname);
 		Image img = new Image(tr);
-		img.setPosition((CG.rect_width-img.getWidth())/2,(CG.rect_height-img.getHeight())/2+50);
-		
+		img.setPosition((CG.rect_width - img.getWidth()) / 2,
+				(CG.rect_height - img.getHeight()) / 2 + 50);
+
 		endStage.clear();
+		endStage.addActor(endBackImg);
 		endStage.addActor(img);
 		battleEndFlag = true;
 		setBattleEndFlag(battleEndFlag);
 	}
-	
 
 	/**
 	 * 用来检查角色是否被本轮选择，若被选择，则其他不被选择，
@@ -408,8 +414,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
 		// TODO Auto-generated method stub
-		clingX = velocityX > 0 ? CG.rect_width / 2
-				: -CG.rect_width / 2;
+		clingX = velocityX > 0 ? CG.rect_width / 2 : -CG.rect_width / 2;
 		return false;
 	}
 
@@ -439,15 +444,17 @@ public class GameScreen extends CubocScreen implements Observer,
 	public Stage getStage() {
 		return stage;
 	}
+
 	/**
 	 * 设置游戏是否结束标识
+	 * 
 	 * @param battleEnd
 	 */
 	public void setBattleEndFlag(boolean flag) {
 		this.battleEndFlag = flag;
-		if(battleEndFlag){
+		if (battleEndFlag) {
 			Gdx.input.setInputProcessor(endStage);
-		}else{
+		} else {
 			Gdx.input.setInputProcessor(null);
 			InputMultiplexer inputMultiplexer = new InputMultiplexer();
 			inputMultiplexer.addProcessor(UIStage);// 必须先加这个。。。。
