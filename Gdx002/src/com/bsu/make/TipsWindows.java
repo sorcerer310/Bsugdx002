@@ -1,5 +1,6 @@
 package com.bsu.make;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -36,11 +37,14 @@ public class TipsWindows {
 			instance = new TipsWindows();
 		return instance;
 	}
-
+       
 	private TipsWindows() {
 		skin = new Skin();
 		skin.add("draw", new TextureRegion(GTC.getInstance().tipsPanel,
 				windowWidth, 60));
+		
+//		Skin skin1 = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
+//		Window.WindowStyle ws = skin1.get(WindowStyle.class);
 		Window.WindowStyle ws = new WindowStyle(U.get_font(), Color.BLACK,
 				skin.getDrawable("draw"));
 		tipsWindows = new Window("", ws);
@@ -214,12 +218,14 @@ public class TipsWindows {
 			}
 			String lvs = s.enable ? s.lev + "" : "  ";
 			Label l = new Label(lvs, U.get_sytle());
-			l.setFontScale(0.5f);
+			l.setFontScale(fonts);
 			t.add(skill_img);
 			t.defaults().align(Align.bottom);
 			t.add(l);
 		}
 		tipsWindows.add(new Label("lv:" + r.level, U.get_sytle()));
+		tipsWindows.row();
+		tipsWindows.add(new Label("exp:" + r.exp, U.get_sytle()));
 		tipsWindows.row();
 		tipsWindows.add(to);
 		tipsWindows.row();
