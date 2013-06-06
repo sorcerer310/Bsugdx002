@@ -21,6 +21,10 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.AttackEffect;
@@ -34,6 +38,7 @@ import com.bsu.obj.Role.Type;
 import com.bsu.tools.CG;
 import com.bsu.tools.GTC;
 import com.bsu.tools.GameMap;
+import com.bsu.tools.U;
 
 public class GameScreen extends CubocScreen implements Observer,
 		GestureListener {
@@ -57,6 +62,8 @@ public class GameScreen extends CubocScreen implements Observer,
 		stage = new Stage(CG.rect_width, CG.rect_height, false);
 		UIStage = new Stage(CG.rect_width, CG.rect_height, false);
 		endStage = new Stage(CG.rect_width,CG.rect_height,false);
+		
+		
 	}
 
 	/**
@@ -102,6 +109,24 @@ public class GameScreen extends CubocScreen implements Observer,
 				"" + Gdx.graphics.getFramesPerSecond(), stage, 1, 420, 30,
 				Color.RED);
 		stage.addActor(attack_effect);
+		
+/*
+ * 测试代码		
+ */
+		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
+		Window win = new Window("testWindow",skin.get(WindowStyle.class));
+		win.setWidth(100);
+		win.setHeight(100);
+		win.setPosition(50, 50);
+//		Label label = new Label("测试label",skin.get(LabelStyle.class));
+		Label label = new Label("测试label",U.get_sytle());
+		label.setWidth(100);
+		label.setHeight(100);
+		label.setPosition(80, 80);
+		win.addActor(label);
+//		stage.addActor(win);
+		stage.addActor(label);
+
 	}
 
 	/**
