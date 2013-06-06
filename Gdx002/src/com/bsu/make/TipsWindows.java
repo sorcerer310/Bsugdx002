@@ -39,10 +39,10 @@ public class TipsWindows {
 
 	private TipsWindows() {
 		skin = new Skin();
-		skin.add("draw", new TextureRegion(
-				GTC.getInstance().tipsPanel, windowWidth, 60));
-		Window.WindowStyle ws = new WindowStyle(U.get_font(),
-				Color.BLACK, skin.getDrawable("draw"));
+		skin.add("draw", new TextureRegion(GTC.getInstance().tipsPanel,
+				windowWidth, 60));
+		Window.WindowStyle ws = new WindowStyle(U.get_font(), Color.BLACK,
+				skin.getDrawable("draw"));
 		tipsWindows = new Window("", ws);
 		tipsWindows.align(Align.left);
 		tipsWindows.setWidth(200);
@@ -65,20 +65,18 @@ public class TipsWindows {
 		tipsWindows.row();
 		tipsWindows.add(new Label("lv:" + r.level, U.get_sytle()));
 		tipsWindows.row();
-		tipsWindows.add(new Label("" + r.exp + "/" + r.expUp, U
-				.get_sytle()));
+		tipsWindows.add(new Label("" + r.exp + "/" + r.expUp, U.get_sytle()));
 		tipsWindows.row();
 		Table t = new Table();
 		for (Skill skill : r.skill_array) {
 			t.defaults().align(Align.center);
-			if (skill.enable) {
-				t.add(new Image(skill.icon));
-				Label l = new Label("" + skill.lev, U.get_sytle());
-				t.defaults().align(Align.bottom);
-				t.add(l);
-			} else {
-				t.add(new Image(GTC.getInstance().getSkillIcon(0)));
-			}
+			t.add(new Image(skill.enable ? skill.icon : GTC.getInstance()
+					.getSkillIcon(0)));
+			String lvs = skill.enable ? skill.lev + "" : "  ";
+			Label l = new Label(lvs, U.get_sytle());
+			l.setFontScale(0.5f);
+			t.defaults().align(Align.bottom);
+			t.add(l);
 		}
 		tipsWindows.add(t);
 		tipsWindows.pack();
@@ -140,7 +138,7 @@ public class TipsWindows {
 	/**
 	 * 显示一条基本信息，tips 固定位置，屏幕中间
 	 */
-	public void showTips(String s, Stage stage,Color r) {
+	public void showTips(String s, Stage stage, Color r) {
 		removeFromStage();
 		tipsWindows.clear();
 		tipsWindows.defaults().align(Align.center);
@@ -154,7 +152,7 @@ public class TipsWindows {
 		tipsArray = U.getMuLabel(s, scaleValue, windowWidth);
 		for (String as : tipsArray) {
 			tipsWindows.row();
-			Label l=new Label(as, U.get_sytle());
+			Label l = new Label(as, U.get_sytle());
 			l.setFontScale(scaleValue);
 			l.setColor(r);
 			tipsWindows.add(l);
@@ -190,41 +188,36 @@ public class TipsWindows {
 		tb.align(Align.center);
 		Table tg = new Table();
 		tg.align(Align.center);
-		float fonts=0.5f;
+		float fonts = 0.5f;
 		for (final Skill s : r.skill_tree) {
 			Image skill_img = null;
+			Table t = null;
 			if (s.quality == QUALITY.green) {
-				skill_img = new Image(s.icon);
-				tg.add(skill_img);
-				Label l = new Label("" + s.lev, U.get_sytle());
-				l.setFontScale(fonts);
-				tg.defaults().align(Align.bottom);
-				tg.add(l);
+				skill_img = new Image(s.enable ? s.icon : GTC.getInstance()
+						.getSkillIcon(0));
+				t = tg;
 			}
 			if (s.quality == QUALITY.blue) {
-				skill_img = new Image(s.icon);
-				tb.add(skill_img);
-				Label l = new Label("" + s.lev, U.get_sytle());
-				l.setFontScale(fonts);
-				tb.defaults().align(Align.bottom);
-				tb.add(l);
+				skill_img = new Image(s.enable ? s.icon : GTC.getInstance()
+						.getSkillIcon(0));
+				t = tb;
 			}
 			if (s.quality == QUALITY.purple) {
-				skill_img = new Image(s.icon);
-				tp.add(skill_img);
-				Label l = new Label("" + s.lev, U.get_sytle());
-				l.setFontScale(fonts);
-				tp.defaults().align(Align.bottom);
-				tp.add(l);
+				skill_img = new Image(s.enable ? s.icon : GTC.getInstance()
+						.getSkillIcon(0));
+				t = tp;
 			}
 			if (s.quality == QUALITY.orange) {
-				skill_img = new Image(s.icon);
-				to.add(skill_img);
-				Label l = new Label("" + s.lev, U.get_sytle());
-				l.setFontScale(fonts);
-				to.defaults().align(Align.bottom);
-				to.add(l);
+				skill_img = new Image(s.enable ? s.icon : GTC.getInstance()
+						.getSkillIcon(0));
+				t = to;
 			}
+			String lvs = s.enable ? s.lev + "" : "  ";
+			Label l = new Label(lvs, U.get_sytle());
+			l.setFontScale(0.5f);
+			t.add(skill_img);
+			t.defaults().align(Align.bottom);
+			t.add(l);
 		}
 		tipsWindows.add(new Label("lv:" + r.level, U.get_sytle()));
 		tipsWindows.row();
@@ -261,16 +254,15 @@ public class TipsWindows {
 		if (tv.y <= CG.rect_height / 2) {
 			ay = -1;
 		}
-		v.x = ax < 0 ? tv.x + CG.map_box_value : tv.x
-				- tipsWindows.getWidth();
-		v.y = ay < 0 ? tv.y + CG.map_box_value : tv.y
-				- tipsWindows.getHeight();
+		v.x = ax < 0 ? tv.x + CG.map_box_value : tv.x - tipsWindows.getWidth();
+		v.y = ay < 0 ? tv.y + CG.map_box_value : tv.y - tipsWindows.getHeight();
 		return v;
 	}
+
 	/**
 	 * 移除tips
 	 */
-	public void removeFromStage(){
+	public void removeFromStage() {
 		if (tipsWindows.getStage() != null) {
 			tipsWindows.getParent().removeActor(tipsWindows);
 		}

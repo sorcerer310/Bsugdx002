@@ -36,7 +36,7 @@ public class SkillEffect {
 			skillImgEffect.setPosition(v.x - 1, v.y - 1);
 			if (lvFlag)
 				WidgetFactory.getInstance().makeLabel("" + skill.lev, s, 0.5f,
-						(int) (v.x) + 28, (int) (v.y) - 7);
+						(int) (v.x) + 34, (int) (v.y) - 7);
 		} else {
 			skillImg = new Image(GTC.getInstance().getSkillIcon(0));
 		}

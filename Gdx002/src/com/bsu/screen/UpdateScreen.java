@@ -47,8 +47,8 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	private Image blueImg;
 	private Image purpleImg;
 	private Image orangeImg;
-	private Image eatButton;
-	private Image eatAllButton;// 一键吞噬所有某种品质
+	private Image eatImg;
+	private Image eatAllImg;// 一键吞噬所有某种品质
 	private Image upButton;// 升级按钮
 	private Role selectUpdateRole;
 	private Array<Role> eatRoles = new Array<Role>();
@@ -81,9 +81,9 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				CG.button_purple, stage, 324, 50, 0.5f);
 		orangeImg = WidgetFactory.getInstance().makeImageButton(
 				CG.button_orange, stage, 387, 50, 0.5f);
-		eatButton = WidgetFactory.getInstance().makeImageButton(
+		eatImg = WidgetFactory.getInstance().makeImageButton(
 				CG.button_eat, stage, 250, 20, 1f);
-		eatAllButton = WidgetFactory.getInstance().makeImageButton(
+		eatAllImg = WidgetFactory.getInstance().makeImageButton(
 				CG.button_eatall, stage, 350, 15, 1);
 		bImg.add(allImg);
 		bImg.add(greenImg);
@@ -412,7 +412,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		eatButton.addListener(new InputListener() {
+		eatImg.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -426,7 +426,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		eatAllButton.addListener(new InputListener() {
+		eatAllImg.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
