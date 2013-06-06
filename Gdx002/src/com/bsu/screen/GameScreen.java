@@ -9,6 +9,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
@@ -30,18 +32,22 @@ import com.bsu.obj.MapBox;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.tools.CG;
+import com.bsu.tools.GTC;
 import com.bsu.tools.GameMap;
 
 public class GameScreen extends CubocScreen implements Observer,
 		GestureListener {
 	private Stage stage; // 场景对象
 	private Stage UIStage; // UI场景对象
+	private Stage endStage;//结束场景
 	private Commander commander; // 指挥官对象，指挥所有对象交互
 	private MapBox mb; // 地图块对象
 	private UIRoleEffect fightUI;
 	private OrthographicCamera c;
 	private boolean action_start; // 是否回合开始,未开始为人物操作阶段
 	private boolean controlled;
+	private boolean battleEndFlag = false;	//用来标识当前战役是否结束
+
 	private int clingX;// 地图移动位移
 	private AttackEffect attack_effect;
 	private Label fpsLabel;
@@ -50,6 +56,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		super(mxg);
 		stage = new Stage(CG.rect_width, CG.rect_height, false);
 		UIStage = new Stage(CG.rect_width, CG.rect_height, false);
+		endStage = new Stage(CG.rect_width,CG.rect_height,false);
 	}
 
 	/**
@@ -148,7 +155,13 @@ public class GameScreen extends CubocScreen implements Observer,
 		stage.draw();
 		UIStage.act(Gdx.graphics.getDeltaTime());
 		UIStage.draw();
+		//如果当前战役结束，显示结束画面
+		if(battleEndFlag){
+			endStage.act(Gdx.graphics.getDeltaTime());
+			endStage.draw();
+		}
 		fpsLabel.setText("fps:"+Gdx.graphics.getFramesPerSecond());
+		
 	}
 
 	@Override
@@ -158,17 +171,13 @@ public class GameScreen extends CubocScreen implements Observer,
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(null);
-		InputMultiplexer inputMultiplexer = new InputMultiplexer();
-		inputMultiplexer.addProcessor(UIStage);// 必须先加这个。。。。
-		inputMultiplexer.addProcessor(stage);
-		inputMultiplexer.addProcessor(new GestureDetector(this));
-		Gdx.input.setInputProcessor(inputMultiplexer);
+		setBattleEndFlag(false);
 	}
 
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
+		endStage.clear();
 		UIStage.clear();
 		stage.clear();
 	}
@@ -209,6 +218,15 @@ public class GameScreen extends CubocScreen implements Observer,
 						}
 					}
 				}
+			}
+		});
+		
+		endStage.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event,float x,float y){
+				//通知切换到主界面
+				setChanged();
+				notifyObservers(CG.screen_mpanel);
 			}
 		});
 	}
@@ -272,6 +290,26 @@ public class GameScreen extends CubocScreen implements Observer,
 		heroControllor(commander.heros.get(0));
 		set_map_value(commander.heros.get(0));
 	}
+	/**
+	 * 战斗结束
+	 */
+	public void battleEnd(boolean victflag){
+		String endname = "victory";
+		if(victflag)
+			endname="victory";
+		else
+			endname="defeat";
+			
+		TextureRegion tr = GTC.getInstance().battle_end.findRegion(endname);
+		Image img = new Image(tr);
+		img.setPosition((CG.rect_width-img.getWidth())/2,(CG.rect_height-img.getHeight())/2+50);
+		
+		endStage.clear();
+		endStage.addActor(img);
+		battleEndFlag = true;
+		setBattleEndFlag(battleEndFlag);
+	}
+	
 
 	/**
 	 * 用来检查角色是否被本轮选择，若被选择，则其他不被选择，
@@ -400,5 +438,22 @@ public class GameScreen extends CubocScreen implements Observer,
 
 	public Stage getStage() {
 		return stage;
+	}
+	/**
+	 * 设置游戏是否结束标识
+	 * @param battleEnd
+	 */
+	public void setBattleEndFlag(boolean flag) {
+		this.battleEndFlag = flag;
+		if(battleEndFlag){
+			Gdx.input.setInputProcessor(endStage);
+		}else{
+			Gdx.input.setInputProcessor(null);
+			InputMultiplexer inputMultiplexer = new InputMultiplexer();
+			inputMultiplexer.addProcessor(UIStage);// 必须先加这个。。。。
+			inputMultiplexer.addProcessor(stage);
+			inputMultiplexer.addProcessor(new GestureDetector(this));
+			Gdx.input.setInputProcessor(inputMultiplexer);
+		}
 	}
 }

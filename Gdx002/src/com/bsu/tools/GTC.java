@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
+ * GameTextureClass
  * 加载游戏中所有Texture，其他资源加载之前加载
  * 
  * @author zhangyongchen
@@ -39,11 +40,13 @@ public class GTC {
 	public Texture tipsPanel;
 	public TextureAtlas role_effect;// 人物头像效果
 	private TextureAtlas role_classes;// 人物职业图像
+	public TextureAtlas battle_end;	//战场结束使用图片效果 
 	public TextureRegion fight_texture, cleric_texture, wizard_texture,
 			sorcerer_texture, archer_texture;
 	public TextureRegion start_zero, start_one, start_two, start_three,
 			start_four;
-
+	
+	
 	private GTC() {
 		// TODO Auto-generated constructor stub
 		effect_texture = new Texture(
@@ -86,10 +89,11 @@ public class GTC {
 				Gdx.files.internal("data/game/effect/skilleffect.txt"));
 		texture_skills_icon = new TextureAtlas(
 				Gdx.files.internal("data/game/icon/skillicon.txt"));
+		battle_end = new TextureAtlas(Gdx.files.internal("data/game/effect/battleend.txt"));
 	}
 
 	/**
-	 * 根据技能索引返回技能的纹理
+	 * 根据技能索引返回技能图标的纹理
 	 * 
 	 * @param idx
 	 *            技能索引

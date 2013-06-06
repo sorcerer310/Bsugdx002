@@ -3,6 +3,8 @@ package com.bsu.obj;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role.Type;
@@ -14,6 +16,7 @@ import com.bsu.screen.GameScreen;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.CommandQueue;
 import com.bsu.tools.CG;
+import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 import com.bsu.tools.CG.FACE;
 import com.bsu.tools.CG.DIRECTION;
@@ -146,6 +149,7 @@ public class Commander {
 					// commandNpcs(be);
 					commandRoles(be, Role.Type.ENEMY);
 					roundEndCompleted = true;
+					decideGameEnd();							//判断游戏是否结束
 					gamescreen.newRound();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -540,11 +544,30 @@ public class Commander {
 		r.deadAction(new BsuEvent(){
 			@Override
 			public void notify(Object obj,String msg){
-				r.isDead = true;
-				lactor.removeValue(r, true);
+				r.isDead = true;					//设置人物死亡
+				lactor.removeValue(r, true);		//将人物从lactor中移除
 			}
 		});
+	}
+	
+	/**
+	 * 回合结束后判断战斗是否结束，胜利或失败
+	 */
+	private void decideGameEnd(){
+		int heroRemainCount = 0;
+		int npcRemainCount = 0;
+		for(Role r:heros)
+			if(!r.isDead)
+				heroRemainCount ++;
 		
+		if(heroRemainCount==0){gamescreen.battleEnd(false);}
+			//战斗失败
+		
+		for(Role r:npcs)
+			if(!r.isDead)
+				npcRemainCount ++;
+		if(npcRemainCount==0){gamescreen.battleEnd(true);}
+			//战斗胜利
 	}
 
 	public Array<Role> getHeros() {
