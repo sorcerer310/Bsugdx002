@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -92,7 +93,7 @@ public class WidgetFactory {
 							.findRegion("mb_shop"));
 		else if (bname.equals(CG.button_back))
 			img_nomal = new Image(
-					GTC.getInstance().texture_atlas_button
+					GTC.getInstance().texture_atlas_mbutton
 							.findRegion("back"));
 		else if (bname.equals(CG.button_green))
 			img_nomal = new Image(
@@ -193,7 +194,7 @@ public class WidgetFactory {
 	}
 
 	/**
-	 * 返回一个pixMap绘制的图像，用于头像技能边框及其填充。
+	 * 返回一个pixMap绘制的矩形图像，用于头像技能边框及其填充。
 	 * 
 	 * @param maxValue
 	 *            宽高

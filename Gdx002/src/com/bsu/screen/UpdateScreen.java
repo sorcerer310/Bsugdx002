@@ -68,9 +68,9 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		quality = QualityS.gselect;
 		infos = WidgetFactory.getInstance().makeLabel("", stage, 1, 135, 280);
 		upButton = WidgetFactory.getInstance().makeImageButton(
-				CG.button_up, stage, 320, 270, 1);
+				CG.button_up, stage, 320, 274, 1);
 		ib_back = WidgetFactory.getInstance().makeImageButton(
-				CG.button_back, stage, 380, 270, 1f);
+				CG.button_back, stage, 366, 267, 1f);
 		allImg = WidgetFactory.getInstance().makeImageButton(
 				CG.button_all, stage, 135, 50, 0.5f);
 		greenImg = WidgetFactory.getInstance().makeImageButton(

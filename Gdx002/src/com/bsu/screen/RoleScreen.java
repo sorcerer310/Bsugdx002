@@ -62,30 +62,29 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private int cameraWidth;// 显示人物时的界面宽度
 	private WidgetFactory wfy;// 界面工厂类
 	private int skillIndex;// 希望改变的技能
-	private Array<Image> bImg=new Array<Image>();
-	private int width=70;
+	private Array<Image> bImg = new Array<Image>();
+	private int width = 70;
+
 	public RoleScreen(Game game) {
 		super(game);
 		stage = new Stage(CG.rect_width, CG.rect_height, false);
-		sRoleStage = new Stage(CG.rect_width, CG.rect_height,
-				false);
-		RoleInfoStage = new Stage(CG.rect_width, CG.rect_height,
-				false);
+		sRoleStage = new Stage(CG.rect_width, CG.rect_height, false);
+		RoleInfoStage = new Stage(CG.rect_width, CG.rect_height, false);
 		wfy = WidgetFactory.getInstance();
 		c = (OrthographicCamera) sRoleStage.getCamera();
 		background = new Image(GTC.getInstance().rolePanel);
 		stage.addActor(background);
-		ib_back = wfy.makeImageButton(CG.button_back, stage, 375, 272,1);
-		allImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_all, stage, 20, 20,0.5f);
-		greenImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_green, stage, 83, 20,0.5f);
-		blueImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_blue, stage, 146, 20,0.5f);
+		ib_back = wfy.makeImageButton(CG.button_back, stage, 375, 272, 1);
+		allImg = WidgetFactory.getInstance().makeImageButton(CG.button_all,
+				stage, 20, 20, 0.5f);
+		greenImg = WidgetFactory.getInstance().makeImageButton(CG.button_green,
+				stage, 83, 20, 0.5f);
+		blueImg = WidgetFactory.getInstance().makeImageButton(CG.button_blue,
+				stage, 146, 20, 0.5f);
 		purpleImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_purple, stage, 209, 20,0.5f);
+				CG.button_purple, stage, 209, 20, 0.5f);
 		orangeImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_orange, stage, 272, 20,0.5f);
+				CG.button_orange, stage, 272, 20, 0.5f);
 		bImg.add(allImg);
 		bImg.add(greenImg);
 		bImg.add(blueImg);
@@ -99,30 +98,30 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 */
 	private void addRoleToStage(QualityS q) {
 		quality = q;
-		Image simg=null;
+		Image simg = null;
 		if (quality == QualityS.allselect) {
 			showQualityRole(Player.getInstance().playerRole);
-			simg=allImg;
+			simg = allImg;
 		}
 		if (quality == QualityS.gselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
 					Player.getInstance().playerRole, QUALITY.green));
-			simg=greenImg;
+			simg = greenImg;
 		}
 		if (quality == QualityS.bselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
 					Player.getInstance().playerRole, QUALITY.blue));
-			simg=blueImg;
+			simg = blueImg;
 		}
 		if (quality == QualityS.pselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
 					Player.getInstance().playerRole, QUALITY.purple));
-			simg=purpleImg;
+			simg = purpleImg;
 		}
 		if (quality == QualityS.oselect) {
 			showQualityRole(Player.getInstance().getQualityRole(
 					Player.getInstance().playerRole, QUALITY.orange));
-			simg=orangeImg;
+			simg = orangeImg;
 		}
 		U.setSelectImg(bImg, simg);
 	}
@@ -138,7 +137,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		RoleInfoStage.clear();
 		clingX = 0;
 		c.position.x = CG.rect_width / 2;
-		int x=20,y=50;
+		int x = 20, y = 50;
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
 			Vector2 v = new Vector2(x + width * i, y);
@@ -184,7 +183,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			final int index = i;
 			Skill skill = r.skill_array.get(index);
 			SkillEffect se = new SkillEffect(skill, RoleInfoStage, new Vector2(
-					40 + i * 60, 170), true);
+					40 + i * 60, 160), true);
 			skill.skillEffect = se;
 			final Image img = se.skillImg;
 			final Vector2 v = new Vector2(img.getX(), img.getY());
@@ -246,7 +245,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		int numsBlue = 0;
 		int numsPur = 0;
 		int numsOra = 0;
-		int ix = 200, iy = 125;
+		int ix = 200, iy = 125, height = 35;
 		final Array<Image> skillImg = new Array<Image>();
 		for (final Skill s : r.skill_tree) {
 			SkillEffect se = null;
@@ -257,17 +256,17 @@ public class RoleScreen extends CubocScreen implements Observer,
 			}
 			if (s.quality == QUALITY.blue) {
 				se = new SkillEffect(s, RoleInfoStage, new Vector2(ix
-						+ numsBlue * 40, iy + 35), true);
+						+ numsBlue * 40, iy + height), true);
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
 				se = new SkillEffect(s, RoleInfoStage, new Vector2(ix + numsPur
-						* 40, iy + 70), true);
+						* 40, iy + height * 2), true);
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
 				se = new SkillEffect(s, RoleInfoStage, new Vector2(ix + numsOra
-						* 40, iy + 105), true);
+						* 40, iy + height * 3), true);
 				numsOra++;
 			}
 			final Image skill_img = se.skillImg;
@@ -334,8 +333,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 		if (clingX != 0) {
 			int mx = clingX > 0 ? -1 : 1;
 			cameraWidth = width * Player.getInstance().playerRole.size + 20;
-			int maxW = (int) (cameraWidth - CG.rect_width < 0 ? 0
-					: cameraWidth - CG.rect_width);
+			int maxW = (int) (cameraWidth - CG.rect_width < 0 ? 0 : cameraWidth
+					- CG.rect_width);
 			int w = CG.rect_width / 2;
 			if (c.position.x + mx >= w && c.position.x + mx <= maxW + w) {
 				c.position.x += mx;
@@ -484,8 +483,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
 		// TODO Auto-generated method stub
-		clingX = velocityX > 0 ? CG.rect_width / 2
-				: -CG.rect_width / 2;
+		clingX = velocityX > 0 ? CG.rect_width / 2 : -CG.rect_width / 2;
 		return false;
 	}
 

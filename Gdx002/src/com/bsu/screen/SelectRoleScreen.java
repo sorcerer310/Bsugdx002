@@ -74,7 +74,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		background = new Image(GTC.getInstance().selectRolePanel);
 		stage.addActor(background);
 		ib_back = WidgetFactory.getInstance().makeImageButton(CG.button_back,
-				stage, 380, 272, 0.5f);
+				stage, 375, 266, 1f);
 		allImg = WidgetFactory.getInstance().makeImageButton(CG.button_all,
 				stage, 100, 20, 0.5f);
 		greenImg = WidgetFactory.getInstance().makeImageButton(CG.button_green,

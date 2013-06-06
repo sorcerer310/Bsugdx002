@@ -5,6 +5,7 @@ import java.util.Observable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -147,13 +148,12 @@ public class Role extends Actor {
 				2, Color.BLACK);
 		hp = WidgetFactory.getInstance().getTextureFill(CG.map_box_value, 2,
 				Color.RED);
-		set_ani_from_state(STATE.idle);
+		set_ani_from_state(STATE.idle);	
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
-
 		if (current_action_frame != null) {
 			batch.draw(current_action_frame, getX(), getY(), getOriginX(),
 					getOriginY(), CG.map_box_value, CG.map_box_value,

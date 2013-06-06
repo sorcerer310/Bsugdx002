@@ -31,6 +31,7 @@ public class SkillEffect {
 			quality_frame = WidgetFactory.getInstance().getTexture(26, 26,
 					U.getQualityColor(skill.quality), Color.BLACK, 1);
 			skillImgEffect = new Image(quality_frame);
+			skillImgEffect.setScale(1.2f);
 			s.addActor(skillImgEffect);
 			skillImgEffect.setPosition(v.x - 1, v.y - 1);
 			if (lvFlag)
@@ -40,6 +41,7 @@ public class SkillEffect {
 			skillImg = new Image(GTC.getInstance().getSkillIcon(0));
 		}
 		s.addActor(skillImg);
+		skillImg.setScale(1.2f);
 		skillImg.setPosition(v.x, v.y);
 		U.setApha(skillImg, 0.5f);
 		skill.skillEffect=this;

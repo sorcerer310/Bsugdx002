@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,6 +23,7 @@ import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.screen.GameScreen;
+import com.bsu.tools.CG;
 import com.bsu.tools.U;
 
 /**
@@ -56,7 +58,7 @@ public class UIRoleEffect implements Observer {
 		stage.clear();
 		hpArray.clear();
 		bt_endround = WidgetFactory.getInstance().makeOneTextButton("end",
-				stage, 200, 70);
+				stage, 200, 90);
 		bt_endround.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -65,7 +67,7 @@ public class UIRoleEffect implements Observer {
 		});
 		for (int i = 0; i < Player.getInstance().playerFightRole.size; i++) {
 			int x = 20 + i * 90;
-			int y = 10;
+			int y = 10;	
 			final Role r = Player.getInstance().playerFightRole.get(i);
 			Vector2 v = new Vector2(x, y);
 			RoleEffect photo = new RoleEffect(r, stage, v, false);
@@ -73,12 +75,24 @@ public class UIRoleEffect implements Observer {
 			rui.photoImg = photo.role;
 			rui.role_classes = photo.role_classes;
 			hpArray.add(rui);
+			photo.role.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					if (!r.isSelected()) {
+						g.heroSelected(r);
+						if (!r.isControlled()) {
+							g.heroControllor(r);
+						}
+					}
+					g.set_map_value(r);
+				}
+			});
 			final Array<Image> imgArray = new Array<Image>();
 			for (int j = 0; j < r.skill_array.size; j++) {
 				Skill skill = r.skill_array.get(j);
 				final int tempIndex = j;
 				SkillEffect se = new SkillEffect(skill, stage, new Vector2(
-						x + 50, y + 24 - j * 26), false);
+						x + 50, y+32 - j * 33), false);
 				final Image skillImg = se.skillImg;
 				imgArray.add(skillImg);
 				if (j == 0) {
