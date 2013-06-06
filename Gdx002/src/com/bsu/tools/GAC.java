@@ -35,11 +35,11 @@ public class GAC {
 	private TextureAtlas texture_effect_skills;
 
 	private void gameAnimations() {
-		effect_texture = GTC.getInstance().effect_texture;
+		effect_texture = GTC.getInstance().effect;
 		effect_spilt = TextureRegion.split(effect_texture, 32, 32);
-		card_texture = GTC.getInstance().role_texture;
+		card_texture = GTC.getInstance().role;
 		role_spilt = TextureRegion.split(card_texture, 96, 96);
-		texture_effect_skills = GTC.getInstance().texture_skills_effect;
+		texture_effect_skills = GTC.getInstance().skills_effect;
 	}
 	public Animation getRoleAnimation(TextureRegion tr){
 		TextureRegion[] region_idle = new TextureRegion[1];

@@ -9,21 +9,22 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitmapFontData;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+
 /**
  * 
  * @author fengchong
- *
+ * 
  */
 public class CG {
 
 	public static int rect_width = 480; // 屏幕宽
 	public static int rect_height = 320; // 屏幕高
-	public static int rect_box_width = 15;//屏幕宽格子数
-	public static int rect_box_height = 7;//屏幕高格子数
-	
+	public static int rect_box_width = 15;// 屏幕宽格子数
+	public static int rect_box_height = 7;// 屏幕高格子数
+
 	public static int map_box_value = 32;
 	public static float duration_move_box = 0.5f; // 移动一格需要的时间
-	public static float duration_ani = 0.1f;		//标准动画时间
+	public static float duration_ani = 0.1f; // 标准动画时间
 	public static float duration_skill_effect = 0.08f; // 技能效果释放时间
 	public static int extra_value = 10; // 根据坐标判断人物所在格子的额外数值，以免出现格子错误，因为太接近了。
 
@@ -44,16 +45,16 @@ public class CG {
 	public static String screen_selectRole = "mselect";
 	public static String button_all = "btall";
 	public static String button_back = "btback";
-	public static String button_green="btgreen";
-	public static String button_blue="btblue";
-	public static String button_purple="btpurple";
-	public static String button_orange="btorange";
-	public static String button_up="btup";
-	public static String button_eat="bteat";
-	public static String button_eatall="bteatall";
-	public static String button_level="btlevel";
+	public static String button_green = "btgreen";
+	public static String button_blue = "btblue";
+	public static String button_purple = "btpurple";
+	public static String button_orange = "btorange";
+	public static String button_up = "btup";
+	public static String button_eat = "bteat";
+	public static String button_eatall = "bteatall";
+	public static String button_level = "btlevel";
 
-	public static String[] game_map_path_string = { "teaching","map1", "map2" };// 地图关卡名称（路径）
+	public static String[] game_map_path_string = { "teaching", "teaching", "teaching" };// 地图关卡名称（路径）
 
 	public static String map_raw_min_key = "raw_min";// 记录地图长宽数据key
 	public static String map_raw_max_key = "raw_max";
@@ -98,22 +99,18 @@ public class CG {
 	public static int baseExpUpBlue = 200;
 	public static int baseExpUpPurple = 500;
 	public static int baseExpUpOrange = 1000;
-	
-	public static String noCard="没有相应品质卡片，请通关进行收集";
-	public static String noOpen="功能暂未开放";
-	public static String roleUp="可以升级了，升级可以增加属性，开启新技能";
+
+	public static String noCard = "没有相应品质卡片，请通关进行收集";
+	public static String noOpen = "功能暂未开放";
+	public static String roleUp = "可以升级了，升级可以增加属性，开启新技能";
 
 	public static enum STATE { // 人物状态
-		idle, attack_normal, move, attack_v, attack_h, disapper, apper,hited,stoped
+		idle, attack_normal, move, attack_v, attack_h, disapper, apper, hited, stoped
 	};
 
 	public static enum QUALITY {
-		green, blue, purple, orange
+		green, blue, purple, orange, all
 	}// 品质数据
-
-	public enum QualityS {
-		gselect, bselect, pselect, oselect, allselect
-	}
 
 	public static enum FACE {
 		left, right
@@ -127,4 +124,7 @@ public class CG {
 		fighter, cleric, wizard, sorcerer, archer, all
 	};// 人物职业，战士，牧师，元素法师，黑暗法师，射手
 
+	public static enum LEVELYTPE {
+		 chapter1, chapter2, chapter3, chapter4
+	};// 关卡类别，第一章，第二章。。。。。
 }
