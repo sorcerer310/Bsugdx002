@@ -79,10 +79,10 @@ public class RoleEffect {
 	 * @param v
 	 */
 	public RoleEffect(Stage s, QUALITY q, Vector2 v) {
-		role_k = new Image(WidgetFactory.getInstance().getTexture(50, 50,
+		role_k = new Image(WidgetFactory.getInstance().getTexture(48, 48,
 				U.getQualityColor(q), Color.BLACK, 0.2f));
 		s.addActor(role_k);
-		role_k.setPosition(v.x - 1, v.y - 1);
+		role_k.setPosition(v.x-1 , v.y-1 );
 	}
 
 	/**

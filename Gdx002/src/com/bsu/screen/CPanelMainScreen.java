@@ -42,24 +42,23 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 	public CPanelMainScreen(Game game) {
 		super(game);
 		stage = new Stage(CG.rect_width, CG.rect_height, false);
-		roleStage = new Stage(CG.rect_width, CG.rect_height,
-				false);
+		roleStage = new Stage(CG.rect_width, CG.rect_height, false);
 		timg = GTC.getInstance().mPanel;
 		background = new Image(timg);
 		stage.addActor(background);
 		ib_mb_update = WidgetFactory.getInstance().makeImageButton(
-				CG.screen_update, stage, 135, 225,1);
+				CG.screen_update, stage, 135, 225, 1);
 		ib_mb_update.setPosition(135, 225);
 		ib_mb_role = WidgetFactory.getInstance().makeImageButton(
-				CG.screen_role, stage, 300, 225,1);
+				CG.screen_role, stage, 300, 225, 1);
 		// ib_mb_role = WidgetFactory.getInstance().makeImageButton(
 		// Configure.screen_role, stage, 300, 135);
 		// ib_mb_role.setPosition(300, 135);
 		ib_mb_fight = WidgetFactory.getInstance().makeImageButton(
-				CG.screen_fight, stage, 135, 50,1);
+				CG.screen_fight, stage, 135, 50, 1);
 		ib_mb_fight.setPosition(135, 50);
 		ib_mb_shop = WidgetFactory.getInstance().makeImageButton(
-				CG.screen_shop, stage, 300, 50,1);
+				CG.screen_shop, stage, 300, 50, 1);
 		ib_mb_shop.setPosition(300, 50);
 		// 增加上阵英雄头像
 		setFightRoles();
@@ -68,27 +67,27 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 
 	private void setFightRoles() {
 		roleStage.clear();
-		int frlength = 0;
+		int frlength = 0,max=5;
+		int x = 48, y = 248, w = 56;
 		Array<Role> playerRols = Player.getInstance().playerFightRole;
 		frlength = playerRols.size;
 		for (int i = 0; i < playerRols.size; i++) {
 			final Role r = playerRols.get(i);
-			Vector2 v = new Vector2(48, 246 - 55 * i);
+			Vector2 v = new Vector2(x, y - w * i);
 			RoleEffect photo = new RoleEffect(r, roleStage, v, true);
 			photo.role.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 					setChanged();
-					notifyObservers(new MessageObject(r,
-							CG.screen_selectRole));
+					notifyObservers(new MessageObject(r, CG.screen_selectRole));
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
 		}
-		if (frlength < 5) {
-			for (int i = frlength; i < 5; i++) {
-				Vector2 v = new Vector2(46, 244 - 55 * i);
+		if (frlength < max) {
+			for (int i = frlength; i < max; i++) {
+				Vector2 v = new Vector2(x, y - w * i);
 				RoleEffect photo = new RoleEffect(roleStage, QUALITY.orange, v);
 				photo.role_k.addListener(new InputListener() {
 					@Override
@@ -146,9 +145,11 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-//				setChanged();
-//				notifyObservers(new MessageObject(null, Configure.screen_shop));
-				TipsWindows.getInstance().showTips("暂未开放，敬请期待",roleStage,Color.GRAY);
+				// setChanged();
+				// notifyObservers(new MessageObject(null,
+				// Configure.screen_shop));
+				TipsWindows.getInstance().showTips("暂未开放，敬请期待", roleStage,
+						Color.GRAY);
 				ib_mb_shop.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}

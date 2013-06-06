@@ -63,7 +63,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private WidgetFactory wfy;// 界面工厂类
 	private int skillIndex;// 希望改变的技能
 	private Array<Image> bImg=new Array<Image>();
-
+	private int width=70;
 	public RoleScreen(Game game) {
 		super(game);
 		stage = new Stage(CG.rect_width, CG.rect_height, false);
@@ -138,9 +138,10 @@ public class RoleScreen extends CubocScreen implements Observer,
 		RoleInfoStage.clear();
 		clingX = 0;
 		c.position.x = CG.rect_width / 2;
+		int x=20,y=50;
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			Vector2 v = new Vector2(20 + 60 * i, 50);
+			Vector2 v = new Vector2(x + width * i, y);
 			final RoleEffect photo = new RoleEffect(r, sRoleStage, v, false);
 			photo.role.addListener(new InputListener() {
 				@Override
@@ -332,7 +333,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		if (clingX != 0) {
 			int mx = clingX > 0 ? -1 : 1;
-			cameraWidth = 60 * Player.getInstance().playerRole.size + 20;
+			cameraWidth = width * Player.getInstance().playerRole.size + 20;
 			int maxW = (int) (cameraWidth - CG.rect_width < 0 ? 0
 					: cameraWidth - CG.rect_width);
 			int w = CG.rect_width / 2;

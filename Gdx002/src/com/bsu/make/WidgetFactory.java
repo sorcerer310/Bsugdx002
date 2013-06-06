@@ -215,7 +215,7 @@ public class WidgetFactory {
 		pixmap.setColor(c);
 		pixmap.fillRectangle(1, 1, w, h);
 		Texture pixmaptex = new Texture(pixmap);
-		temp_box = new TextureRegion(pixmaptex, w + 2, h + 2);
+		temp_box = new TextureRegion(pixmaptex);
 		pixmap.dispose();
 		return temp_box;
 	}

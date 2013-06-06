@@ -29,8 +29,7 @@ public class MenuScreen extends CubocScreen implements Observer {
 
 	public MenuScreen(Game mxg) {
 		super(mxg);
-
-		stage = new Stage(CG.rect_width, CG.rect_height, true);
+		stage = new Stage(CG.rect_width, CG.rect_height, false);
 		atlas = new TextureAtlas(Gdx.files.internal("data/menu/pack")); // ���pack�ļ���ȡ����ͼƬ
 		backgroundImage = new Image(atlas.findRegion("mainMenu")); // ��ȡ��ΪmainMenu��ͼƬ��������һ��Image����
 		backgroundImage.setScale(0.5f, 1);

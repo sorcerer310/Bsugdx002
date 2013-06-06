@@ -70,18 +70,17 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	public SelectRoleScreen(Game game) {
 		super(game);
 		stage = new Stage(CG.rect_width, CG.rect_height, false);
-		sRoleStage = new Stage(CG.rect_width, CG.rect_height,
-				false);
+		sRoleStage = new Stage(CG.rect_width, CG.rect_height, false);
 		background = new Image(GTC.getInstance().selectRolePanel);
 		stage.addActor(background);
-		ib_back = WidgetFactory.getInstance().makeImageButton(
-				CG.button_back, stage, 380, 272, 0.5f);
-		allImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_all, stage, 100, 20, 0.5f);
-		greenImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_green, stage, 163, 20, 0.5f);
-		blueImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_blue, stage, 226, 20, 0.5f);
+		ib_back = WidgetFactory.getInstance().makeImageButton(CG.button_back,
+				stage, 380, 272, 0.5f);
+		allImg = WidgetFactory.getInstance().makeImageButton(CG.button_all,
+				stage, 100, 20, 0.5f);
+		greenImg = WidgetFactory.getInstance().makeImageButton(CG.button_green,
+				stage, 163, 20, 0.5f);
+		blueImg = WidgetFactory.getInstance().makeImageButton(CG.button_blue,
+				stage, 226, 20, 0.5f);
 		purpleImg = WidgetFactory.getInstance().makeImageButton(
 				CG.button_purple, stage, 289, 20, 0.5f);
 		orangeImg = WidgetFactory.getInstance().makeImageButton(
@@ -148,12 +147,14 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	private void showQualityRole(final Array<Role> roleArray) {
 		sRoleStage.clear();
 		int frlength = roleArray.size;
-		int x = 35;
+		int x = 40;
 		int y = 200;
-		int w = 60;
+		int w = 68;
+		int value=6;
+		int max=18;
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			Vector2 v = new Vector2(x + i % 7 * w, y - i / 7 * w);
+			Vector2 v = new Vector2(x + i % value * w, y - i / value* w);
 			final RoleEffect photo = new RoleEffect(r, sRoleStage, v, false);
 			photo.role.addListener(new InputListener() {
 				@Override
@@ -196,8 +197,8 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 				}
 			});
 		}
-		for (int i = frlength; i < 21; i++) {
-			Vector2 v = new Vector2(x + i % 7 * w, y - i / 7 * w);
+		for (int i = frlength; i < max; i++) {
+			Vector2 v = new Vector2(x + i % value * w, y - i / value * w);
 			RoleEffect photo = new RoleEffect(sRoleStage, QUALITY.orange, v);
 			photo.role_k.addListener(new InputListener() {
 				@Override

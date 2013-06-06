@@ -164,13 +164,13 @@ public class MapBox extends Actor {
 	 */
 	private void init_box_value() {
 		map_pass = WidgetFactory.getInstance().getTexture(
-				CG.map_box_value, CG.map_box_value, Color.BLACK,
+				CG.map_box_value-2, CG.map_box_value-2, Color.BLACK,
 				Color.GREEN, 0.5f);
 		map_block = WidgetFactory.getInstance().getTexture(
-				CG.map_box_value, CG.map_box_value, Color.BLACK,
+				CG.map_box_value-2, CG.map_box_value-2, Color.BLACK,
 				Color.RED, 0.5f);
 		map_attack = WidgetFactory.getInstance().getTexture(
-				CG.map_box_value, CG.map_box_value, Color.BLACK,
+				CG.map_box_value-2, CG.map_box_value-2, Color.BLACK,
 				Color.BLUE, 0.5f);
 		ani_enemy_home = GAC.getInstance().getEffectApper();
 		ani_hero_home = GAC.getInstance().getEffectDisapper();
