@@ -321,8 +321,8 @@ public class U {
 	public static BitmapFont get_font() {
 		if (Generator == null) {
 			Generator = new FreeTypeFontGenerator(
-//					Gdx.files.internal("data/font/game.TTF"));
-					Gdx.files.internal("data/font/DroidSansFallback.ttf"));
+					Gdx.files.internal("data/font/game.png"));
+//					Gdx.files.internal("data/font/DroidSansFallback.ttf"));
 			fontData = Generator
 					.generateData(
 							fontSize,
