@@ -210,8 +210,10 @@ public class U {
 	public static void showRoleSelect(Array<Role> roleArray, Role r) {
 		for (Role e : roleArray) {
 			e.photo.showEffect(false);
+			if(e.photo2!=null)e.photo2.showEffect(false);
 		}
 		r.photo.showEffect(true);
+		if(r.photo2!=null)r.photo2.showEffect(true);
 	}
 
 	public static void showRolesSelect(Array<Role> roleArray, Array<Role> r) {

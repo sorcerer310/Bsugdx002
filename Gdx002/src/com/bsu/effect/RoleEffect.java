@@ -2,6 +2,8 @@ package com.bsu.effect;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -9,7 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Role;
 import com.bsu.tools.CG.CLASSES;
@@ -39,12 +43,10 @@ public class RoleEffect {
 		role = new Image(r.roleTexture);
 		role_k = new Image(WidgetFactory.getInstance().getTexture(48, 48,
 				U.getQualityColor(r.quality), Color.BLACK, 0.2f));
-		role_classes = getClassesImg(r);
+		role_classes = GTC.getInstance().getClassesIconImg(r);
 		role.setScale(0.5f);
 		role_effect1[0] = new Image(GTC.getInstance().start_zero);
-		role_effect2[0] = new Image(
-				GTC.getInstance().start_zero);
-		
+		role_effect2[0] = new Image(GTC.getInstance().start_zero);
 		role_effect3[0] = new Image(GTC.getInstance().start_zero);
 		role_effect4[0] = new Image(GTC.getInstance().start_zero);
 		
@@ -71,6 +73,7 @@ public class RoleEffect {
 		showEffect(b);
 	}
 
+		
 	/**
 	 * 无头像
 	 * 
@@ -137,30 +140,5 @@ public class RoleEffect {
 			ra.setCount(RepeatAction.FOREVER);
 			reffect[i].addAction(sequence(mba,ra));
 		}
-	}
-	/**
-	 * 根据role 返回角色职业图标
-	 * 
-	 * @param r
-	 * @return
-	 */
-	private Image getClassesImg(Role r) {
-		Image img = null;
-		if (r.classes == CLASSES.fighter) {
-			img = new Image(GTC.getInstance().fight_texture);
-		}
-		if (r.classes == CLASSES.wizard) {
-			img = new Image(GTC.getInstance().wizard_texture);
-		}
-		if (r.classes == CLASSES.archer) {
-			img = new Image(GTC.getInstance().archer_texture);
-		}
-		if (r.classes == CLASSES.cleric) {
-			img = new Image(GTC.getInstance().cleric_texture);
-		}
-		if (r.classes == CLASSES.sorcerer) {
-			img = new Image(GTC.getInstance().sorcerer_texture);
-		}
-		return img;
 	}
 }

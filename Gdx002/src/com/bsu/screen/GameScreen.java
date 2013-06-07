@@ -22,8 +22,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
@@ -118,17 +120,21 @@ public class GameScreen extends CubocScreen implements Observer,
  */
 //		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
 //		Window win = new Window("testWindow",skin.get(WindowStyle.class));
-//		win.setWidth(100);
-//		win.setHeight(100);
+//		win.setWidth(200);
+//		win.setHeight(200);
 //		win.setPosition(50, 50);
-////		Label label = new Label("测试label",skin.get(LabelStyle.class));
-//		Label label = new Label("测试label",U.get_sytle());
+//		
+//		Label label = new Label("阿迪考虑放假快乐的设计费刻录机的思考了房价肯定是减肥了开始的减肥了开始的",U.get_sytle());
 //		label.setWidth(100);
 //		label.setHeight(100);
-//		label.setPosition(80, 80);
-//		win.addActor(label);
-////		stage.addActor(win);
-//		stage.addActor(label);
+//		label.setPosition(50, 50);
+//		ScrollPane sp = new ScrollPane(label,skin.get(ScrollPaneStyle.class));
+//		sp.setWidth(80);
+//		sp.setHeight(80);
+//		sp.setPosition(0, 0);
+//		
+//		win.add(sp).expand().fill();
+//		stage.addActor(win);
 
 	}
 

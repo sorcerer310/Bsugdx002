@@ -20,12 +20,22 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.RoleEffect;
+import com.bsu.effect.RoleEffect2;
 import com.bsu.effect.SkillEffect;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.TipsWindows;
@@ -37,6 +47,7 @@ import com.bsu.tools.CG;
 import com.bsu.tools.CG.QUALITY;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
+import com.esotericsoftware.tablelayout.BaseTableLayout;
 
 public class RoleScreen extends CubocScreen implements Observer,
 		GestureListener {
@@ -65,7 +76,10 @@ public class RoleScreen extends CubocScreen implements Observer,
 		super(game);
 		stage = new Stage(CG.rect_width, CG.rect_height, false);
 		sRoleStage = new Stage(CG.rect_width, CG.rect_height, false);
+//		sRoleStage = new Stage(200,50,true);
 		RoleInfoStage = new Stage(CG.rect_width, CG.rect_height, false);
+//		RoleInfoStage = new Stage(600,480,true);
+		
 		wfy = WidgetFactory.getInstance();
 		c = (OrthographicCamera) sRoleStage.getCamera();
 		background = new Image(GTC.getInstance().rolePanel);
@@ -134,14 +148,35 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private void showQualityRole(Array<Role> roleArray) {
 		sRoleStage.clear();
 		RoleInfoStage.clear();
+		
+		/*
+		 * 测试代码
+		 */
+		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
+		Table table = new Table();
+		ScrollPane sp = new ScrollPane(table,skin.get(ScrollPaneStyle.class));
+		sp.setWidth(441);
+		sp.setHeight(65);
+		sp.setPosition(20, 45);
+		sp.setScrollingDisabled(false, true);
+		sRoleStage.addActor(sp);
+		
 		clingX = 0;
 		c.position.x = CG.rect_width / 2;
 		int x = 20, y = 50;
+//		int x = 20, y = 20;
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
 			Vector2 v = new Vector2(x + width * i, y);
-			final RoleEffect photo = new RoleEffect(r, sRoleStage, v, false);
-			photo.role.addListener(new InputListener() {
+//			final RoleEffect photo = new RoleEffect(r, sRoleStage, v, false);
+			final RoleEffect2 photo = new RoleEffect2(r,false);
+			table.add(photo)
+					.width(r.roleTexture.getRegionWidth()/2).height(r.roleTexture.getRegionHeight()/2)		//设置photo宽度和高度
+					.padTop(2f).align(BaseTableLayout.TOP)//没起作用。。。
+					.spaceLeft(10f).spaceRight(10f);														//设置各photo之间的边距
+			
+//			photo.role.addListener(new InputListener() {
+			photo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
@@ -156,6 +191,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 				}
 			});
 		}
+		table.row();
 		if (roleArray.size > 0) {
 			showRoleInfo(roleArray.get(0));
 		} else {

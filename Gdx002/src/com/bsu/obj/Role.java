@@ -10,15 +10,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.AttackEffect;
 import com.bsu.effect.RoleEffect;
+import com.bsu.effect.RoleEffect2;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.skilltree.ContinuedSkillState;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.CG;
+import com.bsu.tools.GTC;
 import com.bsu.tools.CG.CLASSES;
 import com.bsu.tools.CG.QUALITY;
 import com.bsu.tools.GAC;
@@ -34,6 +38,7 @@ public class Role extends Actor {
 	}; // 英雄还是NPC
 
 	public RoleEffect photo;
+	public RoleEffect2 photo2;
 	public Equip weapon;// 人物武器
 	public Equip armor;// 人物护甲
 
@@ -825,6 +830,8 @@ public class Role extends Actor {
 		return currentHp;
 	}
 
+	
+	
 	/**
 	 * 获得被观察者对象
 	 * 

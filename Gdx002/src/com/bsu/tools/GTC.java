@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.bsu.obj.Role;
+import com.bsu.tools.CG.CLASSES;
 
 /**
  * GameTextureClass
@@ -244,5 +247,29 @@ public class GTC {
 		if (tr == null)
 			tr = skills_icon.findRegion("siq-");
 		return tr;
+	}
+	/**
+	 * 根据角色获得职业图标
+	 * @param r	角色
+	 * @return	返回该角色对应的图标
+	 */
+	public Image getClassesIconImg(Role r){
+		Image img = null;
+		if (r.classes == CLASSES.fighter) {
+			img = new Image(GTC.getInstance().fight_texture);
+		}
+		if (r.classes == CLASSES.wizard) {
+			img = new Image(GTC.getInstance().wizard_texture);
+		}
+		if (r.classes == CLASSES.archer) {
+			img = new Image(GTC.getInstance().archer_texture);
+		}
+		if (r.classes == CLASSES.cleric) {
+			img = new Image(GTC.getInstance().cleric_texture);
+		}
+		if (r.classes == CLASSES.sorcerer) {
+			img = new Image(GTC.getInstance().sorcerer_texture);
+		}
+		return img;
 	}
 }

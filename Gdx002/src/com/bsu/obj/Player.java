@@ -73,6 +73,14 @@ public class Player {
 					GTC.getInstance().zyc_photo));
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
 					GTC.getInstance().zyc_photo));
+			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
+					GTC.getInstance().zyc_photo));
+			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
+					GTC.getInstance().zyc_photo));
+			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
+					GTC.getInstance().zyc_photo));
+			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
+					GTC.getInstance().zyc_photo));
 			playerRole.add(rf.getFighter("张永臣", Type.HERO, QUALITY.purple,
 					GTC.getInstance().zyc_photo,96));
 			playerRole.add(rf.getFighter("11", Type.HERO, QUALITY.orange,

@@ -174,28 +174,28 @@ public class MakeSkillTreeConfigInfo {
 		System.out.println("new Array<Integer>(new Integer[]{"+sbs.substring(0,sbs.length()-1)+"})");
 	}
 	
-	public static void main(String[] args){
-		MakeSkillTreeConfigInfo stci = new MakeSkillTreeConfigInfo();
-		System.out.println("green hero skill tree:");
-		stci.makeSkillTree(QUALITY.green,CLASSES.fighter);
-		
-		System.out.println("blue hero skill tree:");
-		stci.makeSkillTree(QUALITY.blue,CLASSES.fighter);
-		
-		System.out.println("purple hero skill tree:");
-		stci.makeSkillTree(QUALITY.purple,CLASSES.fighter);
-		
-		System.out.println("orange hero skill tree:");
-		stci.makeSkillTree(QUALITY.orange,CLASSES.fighter);
-//		Array<Integer> arr = new Array<Integer>();
-//		arr.add(1);arr.add(2);arr.add(3);
-//		for(int j=0;j<5;j++){
-//			for(Integer i:arr)
-//				System.out.println(i);
-//			System.out.println("-------------");
-//		}
-		
-	}
+//	public static void main(String[] args){
+//		MakeSkillTreeConfigInfo stci = new MakeSkillTreeConfigInfo();
+//		System.out.println("green hero skill tree:");
+//		stci.makeSkillTree(QUALITY.green,CLASSES.fighter);
+//		
+//		System.out.println("blue hero skill tree:");
+//		stci.makeSkillTree(QUALITY.blue,CLASSES.fighter);
+//		
+//		System.out.println("purple hero skill tree:");
+//		stci.makeSkillTree(QUALITY.purple,CLASSES.fighter);
+//		
+//		System.out.println("orange hero skill tree:");
+//		stci.makeSkillTree(QUALITY.orange,CLASSES.fighter);
+////		Array<Integer> arr = new Array<Integer>();
+////		arr.add(1);arr.add(2);arr.add(3);
+////		for(int j=0;j<5;j++){
+////			for(Integer i:arr)
+////				System.out.println(i);
+////			System.out.println("-------------");
+////		}
+//		
+//	}
 }
 /**
  * 简单技能类信息，只包括三种数据，技能ID，技能品质，技能价值
