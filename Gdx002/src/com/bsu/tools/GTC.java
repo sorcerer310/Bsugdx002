@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.obj.Role;
 import com.bsu.tools.CG.CLASSES;
+import com.bsu.tools.CG.QUALITY;
 
 /**
  * GameTextureClass
@@ -43,6 +44,7 @@ public class GTC {
 	public Texture tipsPanel;
 	public TextureAtlas role_effect;// 人物头像效果
 	private TextureAtlas role_classes;// 人物职业图像
+	private TextureAtlas role_head_frame;	//人物头像边框
 	public TextureAtlas battle_end;	//战场结束使用图片效果 
 	public TextureRegion fight_texture, cleric_texture, wizard_texture,
 			sorcerer_texture, archer_texture;
@@ -93,6 +95,7 @@ public class GTC {
 		skills_icon = new TextureAtlas(
 				Gdx.files.internal("data/game/icon/skillicon.txt"));
 		battle_end = new TextureAtlas(Gdx.files.internal("data/game/effect/battleend.txt"));
+		role_head_frame = new TextureAtlas(Gdx.files.internal("data/game/hero/frame.txt"));
 	}
 
 	/**
@@ -270,6 +273,23 @@ public class GTC {
 		if (r.classes == CLASSES.sorcerer) {
 			img = new Image(GTC.getInstance().sorcerer_texture);
 		}
+		return img;
+	}
+	/**
+	 * 返回图片边框
+	 * @param r	角色对象
+	 * @return	返回对应品质的边框
+	 */
+	public Image getImageFrame(Role r){
+		Image img = null;
+		if(r.quality==QUALITY.green)
+			img = new Image(role_head_frame.findRegion("frame_green"));
+		else if(r.quality==QUALITY.blue)
+			img = new Image(role_head_frame.findRegion("frame_blue"));
+		else if(r.quality==QUALITY.purple)
+			img = new Image(role_head_frame.findRegion("frame_purple"));
+		else if(r.quality==QUALITY.orange)
+			img = new Image(role_head_frame.findRegion("frame_orange"));
 		return img;
 	}
 }

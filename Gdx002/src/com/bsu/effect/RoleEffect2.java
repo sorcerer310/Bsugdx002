@@ -32,10 +32,10 @@ public class RoleEffect2 extends WidgetGroup{
 	public RoleEffect2(Role r,boolean b){
 		img_head = new Image(r.roleTexture);	//头像图片
 		img_head.setScale(0.5f);
-		img_frame = new Image(WidgetFactory.getInstance().getTexture(
-				48, 48, U.getQualityColor(r.quality), Color.CLEAR, 0.1f));	//边框
+		img_frame = GTC.getInstance().getImageFrame(r);
+		
 		img_classes = GTC.getInstance().getClassesIconImg(r);
-		img_classes.setPosition(img_head.getWidth()/2-img_classes.getWidth(), 0);
+		img_classes.setPosition(img_head.getWidth()/2-img_classes.getWidth()-2, 2);
 
 		this.addActor(img_head);
 		this.addActor(img_classes);

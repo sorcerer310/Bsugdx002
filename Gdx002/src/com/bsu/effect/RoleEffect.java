@@ -41,7 +41,7 @@ public class RoleEffect {
 
 	public RoleEffect(Role r, Stage s, Vector2 v, boolean b) {
 		role = new Image(r.roleTexture);
-		role_k = new Image(WidgetFactory.getInstance().getTexture(48, 48,
+		role_k = new Image(WidgetFactory.getInstance().getPixmapFrame(48, 48,
 				U.getQualityColor(r.quality), Color.BLACK, 0.2f));
 		role_classes = GTC.getInstance().getClassesIconImg(r);
 		role.setScale(0.5f);
@@ -82,7 +82,7 @@ public class RoleEffect {
 	 * @param v
 	 */
 	public RoleEffect(Stage s, QUALITY q, Vector2 v) {
-		role_k = new Image(WidgetFactory.getInstance().getTexture(48, 48,
+		role_k = new Image(WidgetFactory.getInstance().getPixmapFrame(48, 48,
 				U.getQualityColor(q), Color.BLACK, 0.2f));
 		s.addActor(role_k);
 		role_k.setPosition(v.x-1 , v.y-1 );

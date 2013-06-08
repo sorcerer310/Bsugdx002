@@ -28,7 +28,7 @@ public class SkillEffect {
 	public SkillEffect(Skill skill, Stage s, Vector2 v, boolean lvFlag) {
 		if (skill.enable) {
 			skillImg = new Image(skill.icon);
-			quality_frame = WidgetFactory.getInstance().getTexture(26, 26,
+			quality_frame = WidgetFactory.getInstance().getPixmapFrame(26, 26,
 					U.getQualityColor(skill.quality), Color.BLACK, 1);
 			skillImgEffect = new Image(quality_frame);
 			skillImgEffect.setScale(1.2f);

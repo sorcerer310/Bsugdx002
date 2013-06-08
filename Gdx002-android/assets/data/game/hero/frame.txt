@@ -1,0 +1,39 @@
+frame.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+frame_blue
+  rotate: false
+  xy: 0, 192
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+frame_orange
+  rotate: false
+  xy: 0, 0
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+frame_yellow
+  rotate: false
+  xy: 0, 48
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+frame_green
+  rotate: false
+  xy: 0, 144
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+frame_purple
+  rotate: false
+  xy: 0, 96
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1

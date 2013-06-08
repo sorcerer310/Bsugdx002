@@ -252,7 +252,7 @@ public class WidgetFactory {
 	 *            透明度
 	 * @return
 	 */
-	public TextureRegion getTexture(int w, int h, Color dc, Color c, float a) {
+	public TextureRegion getPixmapFrame(int w, int h, Color dc, Color c, float a) {
 		c.a = a;
 		TextureRegion temp_box = null;
 		Pixmap pixmap;
@@ -266,7 +266,7 @@ public class WidgetFactory {
 		pixmap.dispose();
 		return temp_box;
 	}
-
+	
 	/**
 	 * 取得一个填充的图像
 	 * 
