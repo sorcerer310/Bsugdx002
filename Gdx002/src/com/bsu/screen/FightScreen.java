@@ -17,7 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.TipsWindows;
@@ -53,8 +57,19 @@ public class FightScreen extends CubocScreen implements Observer {
 	}
 
 	public void initFight() {
+		//滑动容器
+		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
+		Table table = new Table();
+		ScrollPane sp = new ScrollPane(table,skin.get(ScrollPaneStyle.class));
+		sp.setWidth(102);
+		sp.setHeight(280);
+		sp.setPosition(20, 20);
+		sp.setScrollingDisabled(true, false);
+		stage.addActor(sp);
+		
+		
 		int x = 35, y = 250, h = 50, max = 16;// 4大章位置
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 10; i++) {
 			final int index = i;
 			final Image chapterImg = new Image(
 					GTC.getInstance().atlas_button.findRegion("level"));
@@ -64,7 +79,12 @@ public class FightScreen extends CubocScreen implements Observer {
 			} else {
 				U.setApha(chapterImg, 0.5f);
 			}
-			stage.addActor(chapterImg);
+//			stage.addActor(chapterImg);
+			table.add(chapterImg)
+				.width(chapterImg.getWidth()).height(chapterImg.getHeight())
+				.space(20f);
+			table.row();
+			
 			chapterImg.setPosition(x, y - i * h);
 			chapterImg.addListener(new InputListener() {
 				@Override

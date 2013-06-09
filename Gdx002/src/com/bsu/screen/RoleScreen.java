@@ -150,7 +150,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		RoleInfoStage.clear();
 		
 		/*
-		 * 测试代码
+		 * 滑动容器
 		 */
 		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
 		Table table = new Table();
