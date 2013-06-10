@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitmapFontData;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -272,9 +273,9 @@ public class U {
 	 */
 	public static void setSelectImg(Array<Image> allArray, Image s) {
 		for (Image img : allArray) {
-			setApha(img, 0.5f);
+			setAlpha(img, 0.5f);
 		}
-		setApha(s, 1);
+		setAlpha(s, 1);
 	}
 
 	/**
@@ -283,10 +284,15 @@ public class U {
 	 * @param img
 	 * @param a
 	 */
-	public static void setApha(Widget img, float a) {
+	public static void setAlpha(Widget img, float a) {
 		img.setColor(img.getColor().r, img.getColor().g, img.getColor().b, a);
 	}
 
+	public static void setAlpha(Actor actor,float a){
+		Color c = actor.getColor();
+		actor.setColor(c.r,c.g,c.b,a);
+	}
+	
 	/**
 	 * 取得品质对应文字颜色
 	 * 

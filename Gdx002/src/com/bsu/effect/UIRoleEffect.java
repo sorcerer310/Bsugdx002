@@ -96,7 +96,7 @@ public class UIRoleEffect implements Observer {
 				final Image skillImg = se.skillImg;
 				imgArray.add(skillImg);
 				if (j == 0) {
-					U.setApha(skillImg, 1);
+					U.setAlpha(skillImg, 1);
 				}
 				if (r.skill_array.get(tempIndex).enable) {
 					skillImg.addListener(new InputListener() {
@@ -150,9 +150,9 @@ public class UIRoleEffect implements Observer {
 				} else {
 					// 头像变暗
 					rui.hpImg.setScaleY(0);
-					U.setApha(rui.photoImg, 0.2f);
-					U.setApha(rui.role_classes, 0.2f);
-					U.setApha(rui.nameLabel, 0.2f);
+					U.setAlpha(rui.photoImg, 0.2f);
+					U.setAlpha(rui.role_classes, 0.2f);
+					U.setAlpha(rui.nameLabel, 0.2f);
 				}
 			}
 		}

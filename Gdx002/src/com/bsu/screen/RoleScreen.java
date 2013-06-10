@@ -87,19 +87,19 @@ public class RoleScreen extends CubocScreen implements Observer,
 		ib_back = wfy.makeImageButton(CG.button_back, stage, 375, 272, 1);
 		allImg = WidgetFactory.getInstance().makeImageButton(CG.button_all,
 				stage, 20, 20, 0.5f);
-//		greenImg = WidgetFactory.getInstance().makeImageButton(CG.button_green,
-//				stage, 83, 20, 0.5f);
-//		blueImg = WidgetFactory.getInstance().makeImageButton(CG.button_blue,
-//				stage, 146, 20, 0.5f);
-//		purpleImg = WidgetFactory.getInstance().makeImageButton(
-//				CG.button_purple, stage, 209, 20, 0.5f);
-//		orangeImg = WidgetFactory.getInstance().makeImageButton(
-//				CG.button_orange, stage, 272, 20, 0.5f);
-//		bImg.add(allImg);
-//		bImg.add(greenImg);
-//		bImg.add(blueImg);
-//		bImg.add(purpleImg);
-//		bImg.add(orangeImg);
+		greenImg = WidgetFactory.getInstance().makeImageButton(CG.button_green,
+				stage, 83, 20, 0.5f);
+		blueImg = WidgetFactory.getInstance().makeImageButton(CG.button_blue,
+				stage, 146, 20, 0.5f);
+		purpleImg = WidgetFactory.getInstance().makeImageButton(
+				CG.button_purple, stage, 209, 20, 0.5f);
+		orangeImg = WidgetFactory.getInstance().makeImageButton(
+				CG.button_orange, stage, 272, 20, 0.5f);
+		bImg.add(allImg);
+		bImg.add(greenImg);
+		bImg.add(blueImg);
+		bImg.add(purpleImg);
+		bImg.add(orangeImg);
 		setListener();
 	}
 
@@ -225,7 +225,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			skillImg.add(img);
 			skillImg.add(se.skillImgEffect);
 			if (i == 0) {
-				U.setApha(img, 1);
+				U.setAlpha(img, 1);
 			}
 			if (r.skill_array.get(index).enable) {
 				img.addListener(new InputListener() {
@@ -413,86 +413,102 @@ public class RoleScreen extends CubocScreen implements Observer,
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-//		purpleImg.addListener(new InputListener() {
-//			@Override
-//			public boolean touchDown(InputEvent event, float x, float y,
-//					int pointer, int button) {
+		purpleImg.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
 //				ib_back.setScale(0.95f);
-//				return true;
-//			}
-//
-//			@Override
-//			public void touchUp(InputEvent event, float x, float y,
-//					int pointer, int button) {
-//				addRoleToStage(QUALITY.purple);
+//				U.setApha(event.getTarget(), 1f);
+				for(Image img:bImg)
+					U.setAlpha(img, 0.5f);
+				U.setAlpha(event.getListenerActor(),1.0f);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				addRoleToStage(QUALITY.purple);
 //				ib_back.setScale(1f);
-//				super.touchUp(event, x, y, pointer, button);
-//			}
-//		});
-//		orangeImg.addListener(new InputListener() {
-//			@Override
-//			public boolean touchDown(InputEvent event, float x, float y,
-//					int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+		orangeImg.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
 //				ib_back.setScale(0.95f);
-//				return true;
-//			}
-//
-//			@Override
-//			public void touchUp(InputEvent event, float x, float y,
-//					int pointer, int button) {
-//				addRoleToStage(QUALITY.orange);
+				for(Image img:bImg)
+					U.setAlpha(img, 0.5f);
+				U.setAlpha(event.getListenerActor(),1.0f);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				addRoleToStage(QUALITY.orange);
 //				ib_back.setScale(1f);
-//				super.touchUp(event, x, y, pointer, button);
-//			}
-//		});
-//		blueImg.addListener(new InputListener() {
-//			@Override
-//			public boolean touchDown(InputEvent event, float x, float y,
-//					int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+		blueImg.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
 //				ib_back.setScale(0.95f);
-//				return true;
-//			}
-//
-//			@Override
-//			public void touchUp(InputEvent event, float x, float y,
-//					int pointer, int button) {
-//				addRoleToStage(QUALITY.blue);
+				for(Image img:bImg)
+					U.setAlpha(img, 0.5f);
+				U.setAlpha(event.getListenerActor(),1.0f);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				addRoleToStage(QUALITY.blue);
 //				ib_back.setScale(1f);
-//				super.touchUp(event, x, y, pointer, button);
-//			}
-//		});
-//		greenImg.addListener(new InputListener() {
-//			@Override
-//			public boolean touchDown(InputEvent event, float x, float y,
-//					int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+		greenImg.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
 //				ib_back.setScale(0.95f);
-//				return true;
-//			}
-//
-//			@Override
-//			public void touchUp(InputEvent event, float x, float y,
-//					int pointer, int button) {
-//				addRoleToStage(QUALITY.green);
+				for(Image img:bImg)
+					U.setAlpha(img, 0.5f);
+				U.setAlpha(event.getListenerActor(),1.0f);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				addRoleToStage(QUALITY.green);
 //				ib_back.setScale(1f);
-//				super.touchUp(event, x, y, pointer, button);
-//			}
-//		});
-//		allImg.addListener(new InputListener() {
-//			@Override
-//			public boolean touchDown(InputEvent event, float x, float y,
-//					int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+		allImg.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
 //				ib_back.setScale(0.95f);
-//				return true;
-//			}
-//
-//			@Override
-//			public void touchUp(InputEvent event, float x, float y,
-//					int pointer, int button) {
-//				addRoleToStage(QUALITY.all);
+				for(Image img:bImg)
+					U.setAlpha(img, 0.5f);
+				U.setAlpha(event.getListenerActor(),1.0f);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				addRoleToStage(QUALITY.all);
 //				ib_back.setScale(1f);
-//				super.touchUp(event, x, y, pointer, button);
-//			}
-//		});
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
 	}
 
 	@Override

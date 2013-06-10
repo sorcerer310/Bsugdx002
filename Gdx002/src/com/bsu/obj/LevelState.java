@@ -33,7 +33,7 @@ public class LevelState {
 		level = lv;
 		icon = new Image(GTC.getInstance().atlas_button.findRegion("level"));
 		enable = b;
-		U.setApha(icon, 0.4f);
+		U.setAlpha(icon, 0.4f);
 	}
 
 	/**
@@ -41,6 +41,6 @@ public class LevelState {
 	 */
 	public void enableLevel() {
 		enable = true;
-		U.setApha(icon, 1);
+		U.setAlpha(icon, 1);
 	}
 }

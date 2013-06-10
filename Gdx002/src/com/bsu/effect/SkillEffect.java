@@ -44,13 +44,13 @@ public class SkillEffect {
 		s.addActor(skillImg);
 		skillImg.setScale(1.2f);
 		skillImg.setPosition(v.x, v.y);
-		U.setApha(skillImg, 0.5f);
+		U.setAlpha(skillImg, 0.5f);
 		skill.skillEffect=this;
 	}
 	public void changeSkillEffect(SkillEffect se){
 		skillImg.setDrawable(se.skillImg.getDrawable());
 		skillImgEffect.setDrawable(se.skillImgEffect.getDrawable());
-		U.setApha(skillImg, 1);
-		U.setApha(se.skillImg, 1);
+		U.setAlpha(skillImg, 1);
+		U.setAlpha(se.skillImg, 1);
 	}
 }

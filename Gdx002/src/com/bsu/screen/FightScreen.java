@@ -75,9 +75,9 @@ public class FightScreen extends CubocScreen implements Observer {
 					GTC.getInstance().atlas_button.findRegion("level"));
 			lvArray_chapter.add(chapterImg);
 			if (i == 0) {
-				U.setApha(chapterImg, 1);
+				U.setAlpha(chapterImg, 1);
 			} else {
-				U.setApha(chapterImg, 0.5f);
+				U.setAlpha(chapterImg, 0.5f);
 			}
 //			stage.addActor(chapterImg);
 			table.add(chapterImg)

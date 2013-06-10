@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -139,7 +140,7 @@ public class WidgetFactory {
 			
 		});
 		s.addActor(img_nomal);
-		U.setApha(img_nomal, a);													//设置按钮的alpha值
+		U.setAlpha(img_nomal, a);													//设置按钮的alpha值
 		return img_nomal;
 	}
 	/**
@@ -201,6 +202,8 @@ public class WidgetFactory {
 //		U.setApha(img_nomal, a);
 		return img_nomal;
 	}
+	
+
 	
 
 	/**
