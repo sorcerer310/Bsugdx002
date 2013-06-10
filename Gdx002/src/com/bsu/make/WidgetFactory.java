@@ -121,15 +121,34 @@ public class WidgetFactory {
 		else if (bname.equals(CG.button_all))
 			img_nomal = new Image(
 					GTC.getInstance().atlas_button.findRegion("all"));
-		img_nomal
-				.setOrigin(img_nomal.getWidth() / 2, img_nomal.getHeight() / 2);
-		img_nomal.setPosition(x, y);
+		img_nomal.setOrigin(img_nomal.getWidth() / 2, img_nomal.getHeight() / 2);	//设置原点为中心
+		img_nomal.setPosition(x, y);												//设置位置
+		img_nomal.addListener(new InputListener(){									//设置监听器，按下时候缩小按钮0.95倍，抬起时还原为1倍 
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				event.getListenerActor().setScale(0.95f);
+				return super.touchDown(event, x, y, pointer, button);
+			}
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				event.getListenerActor().setScale(1.0f);
+				super.touchUp(event, x, y, pointer, button);
+			}
+			
+		});
 		s.addActor(img_nomal);
-		U.setApha(img_nomal, a);
+		U.setApha(img_nomal, a);													//设置按钮的alpha值
 		return img_nomal;
 	}
-	
-	public Image makeImageButton(String bname, int x, int y, float a) {
+	/**
+	 * 直接返回个Image按钮对象。
+	 * @param bname	按钮名称
+	 * @return
+	 */
+//	public Image makeImageButton(String bname, int x, int y, float a) {
+	public Image makeImageButton(String bname) {
 		Image img_nomal = null;
 		if (bname.equals(CG.screen_fight))
 			img_nomal = new Image(
@@ -177,10 +196,9 @@ public class WidgetFactory {
 		else if (bname.equals(CG.button_all))
 			img_nomal = new Image(
 					GTC.getInstance().atlas_button.findRegion("all"));
-		img_nomal
-				.setOrigin(img_nomal.getWidth() / 2, img_nomal.getHeight() / 2);
-		img_nomal.setPosition(x, y);
-		U.setApha(img_nomal, a);
+		img_nomal.setOrigin(img_nomal.getWidth() / 2, img_nomal.getHeight() / 2);
+//		img_nomal.setPosition(x, y);
+//		U.setApha(img_nomal, a);
 		return img_nomal;
 	}
 	
