@@ -8,7 +8,10 @@ import com.badlogic.gdx.utils.Array;
  *
  */
 public class BattleZone {
+	private String name = "教学关卡";							//区域名称
 	private Array<Battle> battles = new Array<Battle>();	//一个战场区域包括多个战场
+	
+	
 }
 
 /**
