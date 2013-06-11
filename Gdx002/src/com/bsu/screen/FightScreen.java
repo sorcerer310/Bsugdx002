@@ -56,7 +56,7 @@ public class FightScreen extends CubocScreen implements Observer {
 	public void initFight() {
 		//滑动容器
 //		Skin skin = new Skin(Gdx.files.internal("data/skin/bsuskin.json"));
-		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
+		Skin skin = new Skin(Gdx.files.internal("data/skin/bsuuiskin.json"));
 		Table table = new Table();
 		ScrollPane sp = new ScrollPane(table,skin.get(ScrollPaneStyle.class));
 		sp.setWidth(102);
@@ -94,7 +94,7 @@ public class FightScreen extends CubocScreen implements Observer {
 			 */
 //			CheckBox button = new CheckBox("bar"+i,skin.get(CheckBoxStyle.class));
 //			button.setName("ahaha");
-			Button button = new Button(skin.get(ButtonStyle.class));
+			Button button = new Button(skin.get("toggle",ButtonStyle.class));
 			
 			table.add(button)
 					.width(button.getWidth()).height(button.getHeight());
