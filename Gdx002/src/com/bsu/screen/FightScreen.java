@@ -94,8 +94,18 @@ public class FightScreen extends CubocScreen implements Observer {
 			 */
 //			CheckBox button = new CheckBox("bar"+i,skin.get(CheckBoxStyle.class));
 //			button.setName("ahaha");
-			Button button = new Button(skin.get("toggle",ButtonStyle.class));
+			TextButtonStyle textButtonStyle = new TextButtonStyle();
+			textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
+			textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
+			textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
+			textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
+			textButtonStyle.font = skin.getFont("default-font");
+			skin.add("bsutoggle", textButtonStyle);			
+			TextButton button = new TextButton("a", skin.get("bsutoggle",TextButtonStyle.class));
 			
+			
+			
+			button.setWidth(20f);
 			table.add(button)
 					.width(button.getWidth()).height(button.getHeight());
 			table.row();
