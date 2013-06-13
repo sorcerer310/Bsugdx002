@@ -30,7 +30,7 @@ public class ItemFactory {
 			break;
 		case 101:
 			item = new Item("绿色战士卡片",Item.Type.rolecard,GTC.getInstance().fight_texture,GTC.getInstance().role_head_frame.findRegion("frame_green"));
-			break;
+			break; 
 		case 102:
 			item = new Item("蓝色战士卡片",Item.Type.rolecard,GTC.getInstance().fight_texture,GTC.getInstance().role_head_frame.findRegion("frame_blue"));
 			break;
@@ -64,12 +64,29 @@ public class ItemFactory {
 		case 112:
 			item = new Item("橙色元素法师卡片",Item.Type.rolecard,GTC.getInstance().fight_texture,GTC.getInstance().role_head_frame.findRegion("frame_orange"));
 			break;
-//		case 113:
-//			item = new Item("绿色战士卡片",Item.Type.rolecard,GTC.getInstance().fight_texture,GTC.getInstance().role_head_frame.findRegion("frame_yellow"));
-//			break;
-//		case 101:
-//			item = new Item("绿色战士卡片",Item.Type.rolecard,GTC.getInstance().fight_texture,GTC.getInstance().role_head_frame.findRegion("frame_yellow"));
-			
+		case 113:
+			item = new Item("绿色黑暗法师卡片",Item.Type.rolecard,GTC.getInstance().fight_texture,GTC.getInstance().role_head_frame.findRegion("frame_green"));
+			break;
+		case 114:
+			item = new Item("蓝色黑暗法师卡片",Item.Type.rolecard,GTC.getInstance().fight_texture,GTC.getInstance().role_head_frame.findRegion("frame_blue"));
+			break;
+		case 115:
+			item = new Item("紫色黑暗法师卡片",Item.Type.rolecard,GTC.getInstance().fight_texture,GTC.getInstance().role_head_frame.findRegion("frame_purple"));
+			break;
+		case 116:
+			item = new Item("橙色黑暗法师卡片",Item.Type.rolecard,GTC.getInstance().fight_texture,GTC.getInstance().role_head_frame.findRegion("frame_orange"));
+			break;
+		case 117:
+			item = new Item("绿色牧师法师卡片",Item.Type.rolecard,GTC.getInstance().fight_texture,GTC.getInstance().role_head_frame.findRegion("frame_green"));
+			break;
+		case 118:
+			item = new Item("蓝色牧师法师卡片",Item.Type.rolecard,GTC.getInstance().fight_texture,GTC.getInstance().role_head_frame.findRegion("frame_blue"));
+			break;
+		case 119:
+			item = new Item("紫色牧师法师卡片",Item.Type.rolecard,GTC.getInstance().fight_texture,GTC.getInstance().role_head_frame.findRegion("frame_purple"));
+			break;
+		case 120:
+			item = new Item("橙色牧师法师卡片",Item.Type.rolecard,GTC.getInstance().fight_texture,GTC.getInstance().role_head_frame.findRegion("frame_orange"));
 			break;
 		}
 		return item;
