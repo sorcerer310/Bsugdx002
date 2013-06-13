@@ -136,6 +136,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 		sp.setHeight(65);
 		sp.setPosition(20, 45);
 		sp.setScrollingDisabled(false, true);
+		sp.setupFadeScrollBars(0f, 0f);
+		
 		sRoleStage.addActor(sp);
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);

@@ -664,10 +664,10 @@ public class Role extends Actor {
 		if (face == FACE.left) {
 			this.setOrigin(32, 0);
 			addAction(sequence(
-			// 后仰
+					// 后仰
 					parallel(rotateBy(-15.0f, 0.3f), moveBy(10.0f, 0.0f, 0.3f)),
 					// 冲锋
-					parallel(rotateBy(15.0f, 0.2f), moveTo(x, y, 0.3f)),
+					parallel(rotateBy(15.0f, 0.0f), moveTo(x, y, 0.2f)),
 					// 处理冲锋结束后的动作
 					run(new Runnable() {
 						@Override

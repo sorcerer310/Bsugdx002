@@ -63,13 +63,9 @@ public class FightScreen extends CubocScreen implements Observer {
 		sp.setHeight(280);
 		sp.setPosition(20, 20);
 		sp.setScrollingDisabled(true, false);
+		sp.setupFadeScrollBars(0f, 0f);
 		stage.addActor(sp);
 		ButtonGroup bg = new ButtonGroup();
-		
-//		bg.setMaxCheckCount(2);
-//		bg.setMinCheckCount(2);
-//		bg.setChecked("");
-		
 		
 		int x = 35, y = 250, h = 50, max = 16;// 4大章位置
 		for (int i = 0; i < 20; i++) {
