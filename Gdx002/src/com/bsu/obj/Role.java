@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.AttackEffect;
-import com.bsu.effect.RoleEffect;
+import com.bsu.effect.RoleIcon;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.skilltree.ContinuedSkillState;
 import com.bsu.obj.skilltree.Skill;
@@ -32,7 +32,7 @@ public class Role extends Actor {
 		HERO, ENEMY
 	}; // 英雄还是NPC
 
-	public RoleEffect roleEffect;
+	public RoleIcon roleEffect;
 	public Equip weapon;// 人物武器
 	public Equip armor;// 人物护甲
 
@@ -107,7 +107,7 @@ public class Role extends Actor {
 		roleTexture = new TextureRegion(tr);
 		cskill = skill_tree.get(0);
 		skill_array.add(skill_tree.get(0));
-		skill_array.add(skill_tree.get(1));
+		skill_array.add(skill_tree.get(0));
 		exp = baseExp();
 		isDead = false;
 		set_actor_base(type);

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.bsu.effect.SkillEffect;
+import com.bsu.effect.SkillIcon;
 import com.bsu.obj.Commander;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.ContinuedSkillState.CSType;
@@ -56,7 +56,7 @@ public class Skill {
 	public Vector2 offset_ani_continue = null; // 持续技能承受者动画偏移量
 
 	public boolean enable = false; // 该技能是否开启使用
-	public SkillEffect skillEffect;//技能图标相关
+	public SkillIcon skillEffect;//技能图标相关
 	/**
 	 * 技能初始化构造函数，
 	 * 

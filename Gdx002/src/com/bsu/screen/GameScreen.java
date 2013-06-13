@@ -339,7 +339,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		TextureRegion tr = GTC.getInstance().battle_end.findRegion(endname);
 		Image img = new Image(tr);
 		img.setPosition((CG.rect_width - img.getWidth()) / 2,
-				(CG.rect_height - img.getHeight()) / 2 + 50);
+				(CG.rect_height - img.getHeight()) / 2 + 100);
 
 		endStage.clear();
 		endStage.addActor(endBackImg);
@@ -484,6 +484,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	public void setBattleEndFlag(boolean flag) {
 		this.battleEndFlag = flag;
 		if (battleEndFlag) {
+			Gdx.input.setInputProcessor(null);
 			Gdx.input.setInputProcessor(endStage);
 		} else {
 			Gdx.input.setInputProcessor(null);

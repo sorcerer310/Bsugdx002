@@ -82,7 +82,7 @@ public class SkillTree {
 			skills.add(sf.getSkillByIdx(st.get(i).getId()));
 		skills.get(0).enable = true;							//设置生成好的技能树的第一个技能默认开启
 		for(Skill s:skills){
-			//s.enable=true;
+			s.enable=true;
 		}
 			return skills;
 	}

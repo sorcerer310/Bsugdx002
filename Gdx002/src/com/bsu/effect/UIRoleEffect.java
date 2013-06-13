@@ -70,7 +70,7 @@ public class UIRoleEffect implements Observer {
 			int y = 10;	
 			final Role r = Player.getInstance().playerFightRole.get(i);
 			Vector2 v = new Vector2(x, y);
-			RoleEffect photo = new RoleEffect(r, false);
+			RoleIcon photo = new RoleIcon(r, false);
 			stage.addActor(photo);
 			photo.setPosition(v.x, v.y);
 			roleUIInfo rui = new roleUIInfo(r, stage, x, y);
@@ -93,7 +93,7 @@ public class UIRoleEffect implements Observer {
 			for (int j = 0; j < r.skill_array.size; j++) {
 				Skill skill = r.skill_array.get(j);
 				final int tempIndex = j;
-				SkillEffect se = new SkillEffect(skill, stage, new Vector2(
+				SkillIcon se = new SkillIcon(skill, stage, new Vector2(
 						x + 50, y+32 - j * 33), false);
 				final Image skillImg = se.skillImg;
 				imgArray.add(skillImg);

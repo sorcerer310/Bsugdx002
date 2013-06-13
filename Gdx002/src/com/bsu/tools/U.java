@@ -19,11 +19,7 @@ import com.bsu.tools.CG.CLASSES;
 import com.bsu.tools.CG.QUALITY;
 
 public class U {
-	// public void waitWhile(boolean f) throws InterruptedException{
-	// while (f) {
-	// Thread.sleep(200);
-	// }
-	// }
+
 	private static Random rnd = new Random();
 
 	/**
@@ -277,6 +273,18 @@ public class U {
 		}
 		setAlpha(s, 1);
 	}
+	/**
+	 * 当前技能
+	 * @param allArray
+	 * @param s
+	 * @param b 是否含有边框
+	 */
+	public static void setCurrentSkillImg(Array<Image> allArray, Image s) {
+		for (int i=0;i<allArray.size;i+=2) {
+			setAlpha(allArray.get(i), 0.5f);
+		}
+		setAlpha(s, 1);
+	}
 
 	/**
 	 * 设置一个widget透明度
@@ -284,9 +292,6 @@ public class U {
 	 * @param img
 	 * @param a
 	 */
-	public static void setAlpha(Widget img, float a) {
-		img.setColor(img.getColor().r, img.getColor().g, img.getColor().b, a);
-	}
 
 	public static void setAlpha(Actor actor,float a){
 		Color c = actor.getColor();
@@ -330,7 +335,6 @@ public class U {
 		if (Generator == null) {
 			Generator = new FreeTypeFontGenerator(
 					Gdx.files.internal("data/font/game.png"));
-//					Gdx.files.internal("data/font/DroidSansFallback.ttf"));
 			fontData = Generator
 					.generateData(
 							fontSize,
