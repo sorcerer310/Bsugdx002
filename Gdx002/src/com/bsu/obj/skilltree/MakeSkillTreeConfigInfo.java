@@ -73,22 +73,22 @@ public class MakeSkillTreeConfigInfo {
 		Array<SimpleSkill> useSkills = new Array<SimpleSkill>();
 		Random rnd = new Random();
 		if(hqual == QUALITY.green){
-			greencount = 3;bluecount = 3;purplecount = 0;orangecount = 0;
+			greencount = 2;bluecount = 2;purplecount = 0;orangecount = 0;
 			useSkills.addAll(getSameQualitySkill(rnd,greenskill,greencount,useprice_green,c));
 			useSkills.addAll(getSameQualitySkill(rnd,blueskill,bluecount,useprice_blue,c));
 		}else if(hqual == QUALITY.blue){
-			greencount = 3;bluecount = 3;purplecount = 1;orangecount = 0;
+			greencount = 2;bluecount = 2;purplecount = 1;orangecount = 0;
 			useSkills.addAll(getSameQualitySkill(rnd,greenskill,greencount,useprice_green,c));
 			useSkills.addAll(getSameQualitySkill(rnd,blueskill,bluecount,useprice_blue,c));
 			useSkills.addAll(getSameQualitySkill(rnd,purpleskill,purplecount,useprice_purple,c));
 		}else if(hqual == QUALITY.purple){
-			greencount = 3;bluecount = 3;purplecount = 3;orangecount = 1;
+			greencount = 2;bluecount = 2;purplecount = 2;orangecount = 1;
 			useSkills.addAll(getSameQualitySkill(rnd,greenskill,greencount,useprice_green,c));
 			useSkills.addAll(getSameQualitySkill(rnd,blueskill,bluecount,useprice_blue,c));
 			useSkills.addAll(getSameQualitySkill(rnd,purpleskill,purplecount,useprice_purple,c));
 			useSkills.addAll(getSameQualitySkill(rnd,orangeskill,orangecount,useprice_orange,c));
 		}else if(hqual == QUALITY.orange){
-			greencount = 1;bluecount = 3;purplecount = 3;orangecount = 2;
+			greencount = 1;bluecount = 2;purplecount = 2;orangecount = 2;
 			useSkills.addAll(getSameQualitySkill(rnd,greenskill,greencount,useprice_green,c));
 			useSkills.addAll(getSameQualitySkill(rnd,blueskill,bluecount,useprice_blue,c));
 			useSkills.addAll(getSameQualitySkill(rnd,purpleskill,purplecount,useprice_purple,c));

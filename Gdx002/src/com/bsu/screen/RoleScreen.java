@@ -128,7 +128,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 		/*
 		 * 滑动容器
 		 */
-		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
+//		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
+		Skin skin = new Skin(Gdx.files.internal("data/skin/bsuuiskin.json"));
 		Table table = new Table();
 		ScrollPane sp = new ScrollPane(table, skin.get(ScrollPaneStyle.class));
 		sp.setWidth(441);
