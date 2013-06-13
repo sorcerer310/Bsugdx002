@@ -357,10 +357,10 @@ public class GameScreen extends CubocScreen implements Observer,
 		for (Role r : commander.heros) {
 			if (r.getType() == Type.HERO) {
 				r.setSelected(false);
-				r.photo.showEffect(false);
+				r.roleEffect.showEffect(false);
 				if (hero == r) {
 					hero.setSelected(true);
-					hero.photo.showEffect(true);
+					hero.roleEffect.showEffect(true);
 				}
 			}
 		}

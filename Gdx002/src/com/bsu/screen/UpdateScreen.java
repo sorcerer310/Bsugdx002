@@ -5,22 +5,16 @@ import java.util.Observer;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.RoleEffect;
 import com.bsu.head.CubocScreen;
@@ -92,7 +86,9 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		setListener();
 		addRoleToStage(QUALITY.all);
 	}
-
+	/**
+	 * 显示要强化角色列表
+	 */
 	private void getRoles() {
 		eatRoles.clear();
 		upRoleStage.clear();
@@ -100,8 +96,11 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < playerRoles.size; i++) {
 			final Role r = playerRoles.get(i);
 			Vector2 v = new Vector2(48, 246 - 55 * i);
-			RoleEffect photo = new RoleEffect(r, upRoleStage, v, false);
-			photo.role.addListener(new InputListener() {
+			RoleEffect photo = new RoleEffect(r, false);
+			photo.setPosition(v.x, v.y);
+			upRoleStage.addActor(photo);
+			r.roleEffect=photo;
+			photo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
@@ -180,9 +179,11 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
 			final Vector2 v = new Vector2(x + i % 5 * w, y - i / 5 * w);
-			RoleEffect photo = new RoleEffect(r, sRoleStage, v, false);
-			r.photo = photo;
-			photo.role.addListener(new InputListener() {
+			RoleEffect photo = new RoleEffect(r,false);
+			r.roleEffect = photo;
+			photo.setPosition(v.x, v.y);
+			sRoleStage.addActor(photo);
+			photo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
@@ -200,8 +201,10 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		}
 		for (int i = frlength; i < 15; i++) {
 			Vector2 v = new Vector2(x + i % 5 * w, y - i / 5 * w);
-			RoleEffect photo = new RoleEffect(sRoleStage, QUALITY.orange, v);
-			photo.role_k.addListener(new InputListener() {
+			Image img_frame = GTC.getInstance().getImageFrame(null);
+			img_frame.setPosition(v.x, v.y);
+			sRoleStage.addActor(img_frame);
+			img_frame.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {

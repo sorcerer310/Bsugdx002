@@ -134,9 +134,12 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		int max=18;
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			Vector2 v = new Vector2(x + i % value * w, y - i / value* w);
-			final RoleEffect photo = new RoleEffect(r, sRoleStage, v, false);
-			photo.role.addListener(new InputListener() {
+			final Vector2 v = new Vector2(x + i % value * w, y - i / value* w);
+			final RoleEffect photo = new RoleEffect(r, false);
+			photo.setPosition(v.x, v.y);
+			sRoleStage.addActor(photo);
+			r.roleEffect=photo;
+			photo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
@@ -148,7 +151,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 						int pointer, int button) {
 					if (selectRole != r) {
 						selectRole = r;// 选定人物。。
-						TipsWindows.getInstance().showRoleInfo(r, photo.role_v,
+						TipsWindows.getInstance().showRoleInfo(r, v,
 								sRoleStage);
 						resetRole(r);
 						return;
@@ -179,8 +182,10 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		}
 		for (int i = frlength; i < max; i++) {
 			Vector2 v = new Vector2(x + i % value * w, y - i / value * w);
-			RoleEffect photo = new RoleEffect(sRoleStage, QUALITY.orange, v);
-			photo.role_k.addListener(new InputListener() {
+			Image img_frame = GTC.getInstance().getImageFrame(null);
+			img_frame.setPosition(v.x, v.y);
+			sRoleStage.addActor(img_frame);
+			img_frame.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
@@ -200,12 +205,12 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	 */
 	private void resetRole(Role r) {
 		for (Role e : Player.getInstance().playerIdelRole) {
-			e.photo.showEffect(false);
+			e.roleEffect.showEffect(false);
 		}
 		for (Actor act : sRoleStage.getActors()) {
-			if (act instanceof Image) {
-				if (act.equals(r.photo.role)) {
-					r.photo.showEffect(true);
+			if (act instanceof RoleEffect) {
+				if (act.equals(r.roleEffect)) {
+					r.roleEffect.showEffect(true);
 				}
 			}
 		}
