@@ -2,7 +2,6 @@ package com.bsu.screen;
 
 import java.util.Observable;
 import java.util.Observer;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -51,9 +50,6 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		ib_mb_update.setPosition(135, 225);
 		ib_mb_role = WidgetFactory.getInstance().makeImageButton(
 				CG.screen_role, stage, 300, 225, 1);
-		// ib_mb_role = WidgetFactory.getInstance().makeImageButton(
-		// Configure.screen_role, stage, 300, 135);
-		// ib_mb_role.setPosition(300, 135);
 		ib_mb_fight = WidgetFactory.getInstance().makeImageButton(
 				CG.screen_fight, stage, 135, 50, 1);
 		ib_mb_fight.setPosition(135, 50);
@@ -74,8 +70,10 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < playerRols.size; i++) {
 			final Role r = playerRols.get(i);
 			Vector2 v = new Vector2(x, y - w * i);
-			RoleEffect photo = new RoleEffect(r, roleStage, v, true);
-			photo.role.addListener(new InputListener() {
+			RoleEffect photo = new RoleEffect(r, true);
+			roleStage.addActor(photo);
+			photo.setPosition(v.x, v.y);
+			photo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
@@ -88,8 +86,10 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		if (frlength < max) {
 			for (int i = frlength; i < max; i++) {
 				Vector2 v = new Vector2(x, y - w * i);
-				RoleEffect photo = new RoleEffect(roleStage, QUALITY.orange, v);
-				photo.role_k.addListener(new InputListener() {
+				Image img_frame = GTC.getInstance().getImageFrame(null);
+				img_frame.setPosition(v.x, v.y);
+				roleStage.addActor(img_frame);
+				img_frame.addListener(new InputListener() {
 					@Override
 					public boolean touchDown(InputEvent event, float x,
 							float y, int pointer, int button) {

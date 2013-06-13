@@ -210,19 +210,19 @@ public class U {
 	 */
 	public static void showRoleSelect(Array<Role> roleArray, Role r) {
 		for (Role e : roleArray) {
-			e.photo.showEffect(false);
-			if(e.photo2!=null)e.photo2.showEffect(false);
+			e.roleEffect.showEffect(false);
+			if(e.roleEffect!=null)e.roleEffect.showEffect(false);
 		}
-		r.photo.showEffect(true);
-		if(r.photo2!=null)r.photo2.showEffect(true);
+		r.roleEffect.showEffect(true);
+		if(r.roleEffect!=null)r.roleEffect.showEffect(true);
 	}
 
 	public static void showRolesSelect(Array<Role> roleArray, Array<Role> r) {
 		for (Role e : roleArray) {
-			e.photo.showEffect(false);
+			e.roleEffect.showEffect(false);
 		}
 		for (Role e : r) {
-			e.photo.showEffect(true);
+			e.roleEffect.showEffect(true);
 		}
 	}
 

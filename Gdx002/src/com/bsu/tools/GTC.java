@@ -10,8 +10,7 @@ import com.bsu.tools.CG.CLASSES;
 import com.bsu.tools.CG.QUALITY;
 
 /**
- * GameTextureClass
- * 加载游戏中所有Texture，其他资源加载之前加载
+ * GameTextureClass 加载游戏中所有Texture，其他资源加载之前加载
  * 
  * @author zhangyongchen
  * 
@@ -29,7 +28,7 @@ public class GTC {
 	public Texture logoGame;
 	public Texture logo66Rpg;
 
-	public Texture effect;//消失效果
+	public Texture effect;// 消失效果
 	public Texture role;
 	public Texture mPanel;
 	public Texture equipPanel;
@@ -44,18 +43,16 @@ public class GTC {
 	public Texture tipsPanel;
 	public TextureAtlas role_effect;// 人物头像效果
 	private TextureAtlas role_classes;// 人物职业图像
-	private TextureAtlas role_head_frame;	//人物头像边框
-	public TextureAtlas battle_end;	//战场结束使用图片效果 
+	private TextureAtlas role_head_frame; // 人物头像边框
+	public TextureAtlas battle_end; // 战场结束使用图片效果
 	public TextureRegion fight_texture, cleric_texture, wizard_texture,
 			sorcerer_texture, archer_texture;
 	public TextureRegion start_zero, start_one, start_two, start_three,
 			start_four;
-	
-	
+
 	private GTC() {
 		// TODO Auto-generated constructor stub
-		effect = new Texture(
-				Gdx.files.internal("data/game/hero/effect.png"));
+		effect = new Texture(Gdx.files.internal("data/game/hero/effect.png"));
 		role_classes = new TextureAtlas(
 				Gdx.files.internal("data/game/icon/classes.txt"));
 		fight_texture = role_classes.findRegion("fighter");
@@ -77,10 +74,8 @@ public class GTC {
 
 		atlas_mbutton = new TextureAtlas(
 				Gdx.files.internal("data/menu/mbutton.txt"));
-		atlas_button = new TextureAtlas(
-				Gdx.files.internal("data/button/pack"));
-		role = new Texture(
-				Gdx.files.internal("data/game/hero/Actor1.png"));
+		atlas_button = new TextureAtlas(Gdx.files.internal("data/button/pack"));
+		role = new Texture(Gdx.files.internal("data/game/hero/Actor1.png"));
 		fc_photo = new TextureRegion(role, 0, 0, 96, 96);
 		zyc_photo = new TextureRegion(role, 96, 0, 96, 96);
 		role_effect = new TextureAtlas(
@@ -94,8 +89,10 @@ public class GTC {
 				Gdx.files.internal("data/game/effect/skilleffect.txt"));
 		skills_icon = new TextureAtlas(
 				Gdx.files.internal("data/game/icon/skillicon.txt"));
-		battle_end = new TextureAtlas(Gdx.files.internal("data/game/effect/battleend.txt"));
-		role_head_frame = new TextureAtlas(Gdx.files.internal("data/game/hero/frame.txt"));
+		battle_end = new TextureAtlas(
+				Gdx.files.internal("data/game/effect/battleend.txt"));
+		role_head_frame = new TextureAtlas(
+				Gdx.files.internal("data/game/hero/frame.txt"));
 	}
 
 	/**
@@ -251,12 +248,15 @@ public class GTC {
 			tr = skills_icon.findRegion("siq-");
 		return tr;
 	}
+
 	/**
 	 * 根据角色获得职业图标
-	 * @param r	角色
-	 * @return	返回该角色对应的图标
+	 * 
+	 * @param r
+	 *            角色
+	 * @return 返回该角色对应的图标
 	 */
-	public Image getClassesIconImg(Role r){
+	public Image getClassesIconImg(Role r) {
 		Image img = null;
 		if (r.classes == CLASSES.fighter) {
 			img = new Image(GTC.getInstance().fight_texture);
@@ -275,21 +275,28 @@ public class GTC {
 		}
 		return img;
 	}
+
 	/**
 	 * 返回图片边框
-	 * @param r	角色对象
-	 * @return	返回对应品质的边框
+	 * 
+	 * @param r
+	 *            角色对象
+	 * @return 返回对应品质的边框
 	 */
-	public Image getImageFrame(Role r){
+	public Image getImageFrame(Role r) {
 		Image img = null;
-		if(r.quality==QUALITY.green)
-			img = new Image(role_head_frame.findRegion("frame_green"));
-		else if(r.quality==QUALITY.blue)
-			img = new Image(role_head_frame.findRegion("frame_blue"));
-		else if(r.quality==QUALITY.purple)
-			img = new Image(role_head_frame.findRegion("frame_purple"));
-		else if(r.quality==QUALITY.orange)
+		if (r != null) {
+			if (r.quality == QUALITY.green)
+				img = new Image(role_head_frame.findRegion("frame_green"));
+			else if (r.quality == QUALITY.blue)
+				img = new Image(role_head_frame.findRegion("frame_blue"));
+			else if (r.quality == QUALITY.purple)
+				img = new Image(role_head_frame.findRegion("frame_purple"));
+			else if (r.quality == QUALITY.orange)
+				img = new Image(role_head_frame.findRegion("frame_orange"));
+		} else {
 			img = new Image(role_head_frame.findRegion("frame_orange"));
+		}
 		return img;
 	}
 }

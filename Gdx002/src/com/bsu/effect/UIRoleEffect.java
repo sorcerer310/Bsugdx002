@@ -70,12 +70,14 @@ public class UIRoleEffect implements Observer {
 			int y = 10;	
 			final Role r = Player.getInstance().playerFightRole.get(i);
 			Vector2 v = new Vector2(x, y);
-			RoleEffect photo = new RoleEffect(r, stage, v, false);
+			RoleEffect photo = new RoleEffect(r, false);
+			stage.addActor(photo);
+			photo.setPosition(v.x, v.y);
 			roleUIInfo rui = new roleUIInfo(r, stage, x, y);
-			rui.photoImg = photo.role;
-			rui.role_classes = photo.role_classes;
+			rui.photoImg = photo.img_head;
+			rui.role_classes = photo.img_classes;
 			hpArray.add(rui);
-			photo.role.addListener(new ClickListener() {
+			photo.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					if (!r.isSelected()) {
@@ -128,10 +130,10 @@ public class UIRoleEffect implements Observer {
 	 */
 	public void actingRole(Role r) {
 		for (Role e : Player.getInstance().playerFightRole) {
-			e.photo.showEffect(false);
+			e.roleEffect.showEffect(false);
 		}
 		if (r != null && r.type == Type.HERO) {
-			r.photo.showEffect(true);
+			r.roleEffect.showEffect(true);
 		}
 	}
 
