@@ -30,6 +30,18 @@ public class Player {
 	public Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
 	public Array<Role> playerFightRole = new Array<Role>();// 玩家拥有的出战英雄
 	public Array<Role> playerIdelRole = new Array<Role>();// 玩家背�
+	public int crystal_blue=0;
+	public int crystal_purple_f=0;//战士紫色技能碎片数量
+	public int crystal_orange_f=0;//战士橙色技能碎片数量
+	public int crystal_purple_w=0;//元素紫色技能碎片数量
+	public int crystal_orange_w=0;//元素橙色技能碎片数量
+	public int crystal_purple_c=0;//牧师紫色技能碎片数量
+	public int crystal_orange_c=0;//牧师橙色技能碎片数量
+	public int crystal_purple_s=0;//黑暗紫色技能碎片数量
+	public int crystal_orange_s=0;//黑暗橙色技能碎片数量
+	public int crystal_purple_a=0;//弓手紫色技能碎片数量
+	public int crystal_orange_a=0;//弓手橙色技能碎片数量
+	
 
 	private Player() {
 		// TODO Auto-generated constructor stub

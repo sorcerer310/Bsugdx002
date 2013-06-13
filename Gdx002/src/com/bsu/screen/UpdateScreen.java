@@ -60,7 +60,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		stage.addActor(background);
 		infos = WidgetFactory.getInstance().makeLabel("", stage, 1, 135, 280);
 		upButton = WidgetFactory.getInstance().makeImageButton(
-				CG.button_up, stage, 320, 274, 1);
+				CG.button_up, stage, 300, 274, 1);
 		ib_back = WidgetFactory.getInstance().makeImageButton(
 				CG.button_back, stage, 366, 267, 1f);
 		allImg = WidgetFactory.getInstance().makeImageButton(
