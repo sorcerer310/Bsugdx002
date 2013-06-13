@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
@@ -20,7 +19,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import com.bsu.effect.RoleEffect2;
+import com.bsu.effect.RoleEffect;
+//import com.bsu.effect.RoleEffect2;
 import com.bsu.effect.SkillEffect;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.TipsWindows;
@@ -48,9 +48,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private Image orangeImg;
 	private Role selectRole;// 选择显示的Role
 	private Skill selectSkill;// 选择要更换的skill
-	private int clingX;// 地图移动位移
-	private OrthographicCamera c;
-	private int cameraWidth;// 显示人物时的界面宽度
 	private WidgetFactory wfy;// 界面工厂类
 	private int skillIndex;// 希望改变的技能
 	private Array<Image> bImg = new Array<Image>();
@@ -61,12 +58,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 		super(game);
 		stage = new Stage(CG.rect_width, CG.rect_height, false);
 		sRoleStage = new Stage(CG.rect_width, CG.rect_height, false);
-//		sRoleStage = new Stage(200,50,true);
 		RoleInfoStage = new Stage(CG.rect_width, CG.rect_height, false);
-//		RoleInfoStage = new Stage(600,480,true);
-		
 		wfy = WidgetFactory.getInstance();
-		c = (OrthographicCamera) sRoleStage.getCamera();
 		background = new Image(GTC.getInstance().rolePanel);
 		stage.addActor(background);
 		ib_back = wfy.makeImageButton(CG.button_back, stage, 375, 272, 1);
@@ -121,7 +114,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 					Player.getInstance().playerRole, QUALITY.orange));
 			simg = orangeImg;
 		}
-//		U.setSelectImg(bImg, simg);
+		U.setSelectImg(bImg, simg);
 	}
 
 	/**
@@ -133,7 +126,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private void showQualityRole(Array<Role> roleArray) {
 		sRoleStage.clear();
 		RoleInfoStage.clear();
-		
 		/*
 		 * 滑动容器
 		 */
@@ -146,29 +138,19 @@ public class RoleScreen extends CubocScreen implements Observer,
 		sp.setPosition(20, 45);
 		sp.setScrollingDisabled(false, true);
 		sRoleStage.addActor(sp);
-		
-		clingX = 0;
-		c.position.x = CG.rect_width / 2;
-		int x = 20, y = 50;
-//		int x = 20, y = 20;
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			Vector2 v = new Vector2(x + width * i, y);
-//			final RoleEffect photo = new RoleEffect(r, sRoleStage, v, false);
-			final RoleEffect2 photo = new RoleEffect2(r,false);
+			final RoleEffect photo = new RoleEffect(r,false);
 			table.add(photo)
 					.width(r.roleTexture.getRegionWidth()/2).height(r.roleTexture.getRegionHeight()/2)		//设置photo宽度和高度
 					.padTop(2f).align(BaseTableLayout.TOP)//没起作用。。。
 					.spaceLeft(10f).spaceRight(10f);														//设置各photo之间的边距
-			
-//			photo.role.addListener(new InputListener() {
 			photo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 					return true;
 				}
-
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
@@ -351,16 +333,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		if (clingX != 0) {
-			int mx = clingX > 0 ? -2 : 2;
-			cameraWidth = width * Player.getInstance().playerRole.size + 20;
-			int maxW = (int) (cameraWidth - CG.rect_width < 0 ? 0 : cameraWidth
-					- CG.rect_width);
-			int w = CG.rect_width / 2;
-			if (c.position.x + mx >= w && c.position.x + mx <= maxW + w) {
-				c.position.x += mx;
-			}
-		}
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		sRoleStage.act(Gdx.graphics.getDeltaTime());
@@ -373,6 +345,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
 		selectRole = null;
+		quality=null;
 		sRoleStage.clear();
 		RoleInfoStage.clear();
 	}
@@ -403,8 +376,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-//				ib_back.setScale(0.95f);
-//				U.setApha(event.getTarget(), 1f);
 				for(Image img:bImg)
 					U.setAlpha(img, 0.5f);
 				U.setAlpha(event.getListenerActor(),1.0f);
@@ -415,7 +386,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QUALITY.purple);
-//				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
@@ -423,7 +393,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-//				ib_back.setScale(0.95f);
 				for(Image img:bImg)
 					U.setAlpha(img, 0.5f);
 				U.setAlpha(event.getListenerActor(),1.0f);
@@ -434,7 +403,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QUALITY.orange);
-//				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
@@ -442,7 +410,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-//				ib_back.setScale(0.95f);
 				for(Image img:bImg)
 					U.setAlpha(img, 0.5f);
 				U.setAlpha(event.getListenerActor(),1.0f);
@@ -453,7 +420,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QUALITY.blue);
-//				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
@@ -461,7 +427,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-//				ib_back.setScale(0.95f);
 				for(Image img:bImg)
 					U.setAlpha(img, 0.5f);
 				U.setAlpha(event.getListenerActor(),1.0f);
@@ -472,7 +437,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QUALITY.green);
-//				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
@@ -480,7 +444,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-//				ib_back.setScale(0.95f);
 				for(Image img:bImg)
 					U.setAlpha(img, 0.5f);
 				U.setAlpha(event.getListenerActor(),1.0f);
@@ -491,7 +454,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QUALITY.all);
-//				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
@@ -500,7 +462,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) {
 		// TODO Auto-generated method stub
-		clingX = 0;
 		return false;
 	}
 
@@ -519,7 +480,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
 		// TODO Auto-generated method stub
-		clingX = velocityX > 0 ? CG.rect_width / 2 : -CG.rect_width / 2;
 		return false;
 	}
 
