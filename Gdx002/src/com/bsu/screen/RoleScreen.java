@@ -1,7 +1,5 @@
 package com.bsu.screen;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import java.util.Observable;
 import java.util.Observer;
 import com.badlogic.gdx.Game;
@@ -10,31 +8,18 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Array;
-import com.bsu.effect.RoleEffect;
 import com.bsu.effect.RoleEffect2;
 import com.bsu.effect.SkillEffect;
 import com.bsu.head.CubocScreen;
@@ -152,7 +137,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 		/*
 		 * 滑动容器
 		 */
-		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
+//		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
+		Skin skin = new Skin(Gdx.files.internal("data/skin/bsuuiskin.json"));
 		Table table = new Table();
 		ScrollPane sp = new ScrollPane(table,skin.get(ScrollPaneStyle.class));
 		sp.setWidth(441);

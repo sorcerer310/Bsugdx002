@@ -55,8 +55,8 @@ public class FightScreen extends CubocScreen implements Observer {
 
 	public void initFight() {
 		//滑动容器
-//		Skin skin = new Skin(Gdx.files.internal("data/skin/bsuskin.json"));
 		Skin skin = new Skin(Gdx.files.internal("data/skin/bsuuiskin.json"));
+//		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
 		Table table = new Table();
 		ScrollPane sp = new ScrollPane(table,skin.get(ScrollPaneStyle.class));
 		sp.setWidth(102);
@@ -66,8 +66,8 @@ public class FightScreen extends CubocScreen implements Observer {
 		stage.addActor(sp);
 		ButtonGroup bg = new ButtonGroup();
 		
-//		bg.setMaxCheckCount(1);
-//		bg.setMinCheckCount(1);
+//		bg.setMaxCheckCount(2);
+//		bg.setMinCheckCount(2);
 //		bg.setChecked("");
 		
 		
@@ -99,19 +99,19 @@ public class FightScreen extends CubocScreen implements Observer {
 			textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
 			textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
 			textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
-			textButtonStyle.font = skin.getFont("default-font");
+			textButtonStyle.font = U.get_font();
+			textButtonStyle.font.setScale(0.8f);
 			skin.add("bsutoggle", textButtonStyle);			
-			TextButton button = new TextButton("a", skin.get("bsutoggle",TextButtonStyle.class));
+			TextButton button = new TextButton("第一关", skin.get("bsutoggle",TextButtonStyle.class));
 			
 			
-			
-			button.setWidth(20f);
+			button.setWidth(50f);
 			table.add(button)
-					.width(button.getWidth()).height(button.getHeight());
+					.width(button.getWidth()).height(button.getHeight())
+					.pad(10.0f);
 			table.row();
-			button.setChecked(true);
+//			button.setChecked(true);
 			bg.add(button);
-			
 			bg.setChecked("bar1");
 			
 			chapterImg.setPosition(x, y - i * h);
