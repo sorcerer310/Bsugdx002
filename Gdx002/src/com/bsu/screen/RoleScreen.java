@@ -20,7 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.RoleIcon;
-//import com.bsu.effect.RoleEffect2;
 import com.bsu.effect.SkillIcon;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.TipsWindows;
@@ -85,11 +84,11 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * 当点击卡片按钮时添加背包中卡片到舞台，并根据当前所选类型显示
 	 */
 	private void addRoleToStage(QUALITY q) {
-		if(quality==q){
+		if (quality == q) {
 			return;
 		}
 		Image simg = null;
-		quality=q;
+		quality = q;
 		if (q == QUALITY.all) {
 			showQualityRole(Player.getInstance().playerRole);
 			simg = allImg;
@@ -132,7 +131,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 //		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
 		Skin skin = new Skin(Gdx.files.internal("data/skin/bsuuiskin.json"));
 		Table table = new Table();
-		ScrollPane sp = new ScrollPane(table,skin.get(ScrollPaneStyle.class));
+		ScrollPane sp = new ScrollPane(table, skin.get(ScrollPaneStyle.class));
 		sp.setWidth(441);
 		sp.setHeight(65);
 		sp.setPosition(20, 45);
@@ -140,17 +139,20 @@ public class RoleScreen extends CubocScreen implements Observer,
 		sRoleStage.addActor(sp);
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			final RoleIcon photo = new RoleIcon(r,false);
-			table.add(photo)
-					.width(r.roleTexture.getRegionWidth()/2).height(r.roleTexture.getRegionHeight()/2)		//设置photo宽度和高度
-					.padTop(2f).align(BaseTableLayout.TOP)//没起作用。。。
-					.spaceLeft(10f).spaceRight(10f);														//设置各photo之间的边距
+
+			final RoleIcon photo = new RoleIcon(r, false);
+			table.add(photo).width(r.roleTexture.getRegionWidth() / 2)
+					.height(r.roleTexture.getRegionHeight() / 2) // 设置photo宽度和高度
+					.padTop(2f).align(BaseTableLayout.TOP)// 没起作用。。。
+					.spaceLeft(10f).spaceRight(10f); // 设置各photo之间的边距
+
 			photo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 					return true;
 				}
+
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
@@ -187,34 +189,31 @@ public class RoleScreen extends CubocScreen implements Observer,
 			Skill skill = r.skill_array.get(index);
 			SkillIcon se = new SkillIcon(skill, RoleInfoStage, new Vector2(
 					40 + i * 60, 160), true);
-			skill.skillEffect = se;
 			final Image img = se.skillImg;
+			skill.skillEffect = se;
 			final Vector2 v = new Vector2(img.getX(), img.getY());
 			skillImg.add(img);
 			skillImg.add(se.skillImgEffect);
 			if (i == 0) {
 				U.setAlpha(img, 1);
 			}
-			if (r.skill_array.get(index).enable) {
-				img.addListener(new InputListener() {
-					@Override
-					public boolean touchDown(InputEvent event, float x,
-							float y, int pointer, int button) {
+			img.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y,
+						int pointer, int button) {
 
-						TipsWindows.getInstance().showSkillInfo(
-								r.skill_array.get(index), v, RoleInfoStage);
-						U.setSelectImg(skillImg, img);
-						return true;
-					}
-
-					@Override
-					public void touchUp(InputEvent event, float x, float y,
-							int pointer, int button) {
-						skillIndex = index;
-						super.touchUp(event, x, y, pointer, button);
-					}
-				});
-			}
+					TipsWindows.getInstance().showSkillInfo(
+							r.skill_array.get(index), v, RoleInfoStage);
+					U.setCurrentSkillImg(skillImg, img);
+					return true;
+				}
+				@Override
+				public void touchUp(InputEvent event, float x, float y,
+						int pointer, int button) {
+					skillIndex = index;
+					super.touchUp(event, x, y, pointer, button);
+				}
+			});
 		}
 		// wfy.makeImg(r.weapon.texture, RoleInfoStage, 1f, 40, 100);
 		// wfy.makeImg(r.armor.texture, RoleInfoStage, 1f, 100, 100);
@@ -277,7 +276,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			skillImg.add(skill_img);
 			final Vector2 vs = new Vector2(skill_img.getX(), skill_img.getY());
 			if (s.enable) {
-				se.skillImg.addListener(new InputListener() {
+				skill_img.addListener(new InputListener() {
 					@Override
 					public boolean touchDown(InputEvent event, float x,
 							float y, int pointer, int button) {
@@ -345,7 +344,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
 		selectRole = null;
-		quality=null;
+		quality = null;
 		sRoleStage.clear();
 		RoleInfoStage.clear();
 	}
@@ -376,9 +375,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				for(Image img:bImg)
+				for (Image img : bImg)
 					U.setAlpha(img, 0.5f);
-				U.setAlpha(event.getListenerActor(),1.0f);
+				U.setAlpha(event.getListenerActor(), 1.0f);
 				return true;
 			}
 
@@ -393,9 +392,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				for(Image img:bImg)
+				for (Image img : bImg)
 					U.setAlpha(img, 0.5f);
-				U.setAlpha(event.getListenerActor(),1.0f);
+				U.setAlpha(event.getListenerActor(), 1.0f);
 				return true;
 			}
 
@@ -410,9 +409,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				for(Image img:bImg)
+				for (Image img : bImg)
 					U.setAlpha(img, 0.5f);
-				U.setAlpha(event.getListenerActor(),1.0f);
+				U.setAlpha(event.getListenerActor(), 1.0f);
 				return true;
 			}
 
@@ -427,9 +426,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				for(Image img:bImg)
+				for (Image img : bImg)
 					U.setAlpha(img, 0.5f);
-				U.setAlpha(event.getListenerActor(),1.0f);
+				U.setAlpha(event.getListenerActor(), 1.0f);
 				return true;
 			}
 
@@ -444,9 +443,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				for(Image img:bImg)
+				for (Image img : bImg)
 					U.setAlpha(img, 0.5f);
-				U.setAlpha(event.getListenerActor(),1.0f);
+				U.setAlpha(event.getListenerActor(), 1.0f);
 				return true;
 			}
 
