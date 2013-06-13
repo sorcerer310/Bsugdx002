@@ -24,7 +24,7 @@ import com.bsu.tools.CG.QUALITY;
  * @author fengchong
  * 
  */
-public class RoleEffect extends WidgetGroup {
+public class RoleIcon extends WidgetGroup {
 	Image[] role_effect1 = new Image[] { new Image(GTC.getInstance().start_zero) };
 	Image[] role_effect2 = new Image[] { new Image(GTC.getInstance().start_zero) };
 	Image[] role_effect3 = new Image[] { new Image(GTC.getInstance().start_zero) };
@@ -33,7 +33,7 @@ public class RoleEffect extends WidgetGroup {
 	public Image img_frame = null;
 	public Image img_classes = null;
 
-	public RoleEffect(Role r, boolean b) {
+	public RoleIcon(Role r, boolean b) {
 		img_head = new Image(r.roleTexture); // 头像图片
 		img_head.setScale(0.5f);
 		img_frame = GTC.getInstance().getImageFrame(r);

@@ -19,9 +19,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import com.bsu.effect.RoleEffect;
+import com.bsu.effect.RoleIcon;
 //import com.bsu.effect.RoleEffect2;
-import com.bsu.effect.SkillEffect;
+import com.bsu.effect.SkillIcon;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.TipsWindows;
 import com.bsu.make.WidgetFactory;
@@ -140,7 +140,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		sRoleStage.addActor(sp);
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			final RoleEffect photo = new RoleEffect(r,false);
+			final RoleIcon photo = new RoleIcon(r,false);
 			table.add(photo)
 					.width(r.roleTexture.getRegionWidth()/2).height(r.roleTexture.getRegionHeight()/2)		//设置photo宽度和高度
 					.padTop(2f).align(BaseTableLayout.TOP)//没起作用。。。
@@ -185,7 +185,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < 2; i++) {
 			final int index = i;
 			Skill skill = r.skill_array.get(index);
-			SkillEffect se = new SkillEffect(skill, RoleInfoStage, new Vector2(
+			SkillIcon se = new SkillIcon(skill, RoleInfoStage, new Vector2(
 					40 + i * 60, 160), true);
 			skill.skillEffect = se;
 			final Image img = se.skillImg;
@@ -251,24 +251,24 @@ public class RoleScreen extends CubocScreen implements Observer,
 		int ix = 200, iy = 125, height = 35;
 		final Array<Image> skillImg = new Array<Image>();
 		for (final Skill s : r.skill_tree) {
-			SkillEffect se = null;
+			SkillIcon se = null;
 			if (s.quality == QUALITY.green) {
-				se = new SkillEffect(s, RoleInfoStage, new Vector2(ix
+				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix
 						+ numsGreen * 40, iy), true);
 				numsGreen++;
 			}
 			if (s.quality == QUALITY.blue) {
-				se = new SkillEffect(s, RoleInfoStage, new Vector2(ix
+				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix
 						+ numsBlue * 40, iy + height), true);
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
-				se = new SkillEffect(s, RoleInfoStage, new Vector2(ix + numsPur
+				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsPur
 						* 40, iy + height * 2), true);
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
-				se = new SkillEffect(s, RoleInfoStage, new Vector2(ix + numsOra
+				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsOra
 						* 40, iy + height * 3), true);
 				numsOra++;
 			}

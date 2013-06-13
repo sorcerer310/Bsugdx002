@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
-import com.bsu.effect.RoleEffect;
+import com.bsu.effect.RoleIcon;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.TipsWindows;
 import com.bsu.make.WidgetFactory;
@@ -70,7 +70,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < playerRols.size; i++) {
 			final Role r = playerRols.get(i);
 			Vector2 v = new Vector2(x, y - w * i);
-			RoleEffect photo = new RoleEffect(r, true);
+			RoleIcon photo = new RoleIcon(r, true);
 			roleStage.addActor(photo);
 			photo.setPosition(v.x, v.y);
 			photo.addListener(new InputListener() {

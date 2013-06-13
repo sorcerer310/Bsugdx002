@@ -11,7 +11,7 @@ import com.bsu.tools.CG;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
-public class SkillEffect {
+public class SkillIcon {
 	private TextureRegion quality_frame;
 	public Image skillImgEffect;
 	public Image skillImg;
@@ -25,7 +25,7 @@ public class SkillEffect {
 	 * @param v
 	 *            坐标
 	 */
-	public SkillEffect(Skill skill, Stage s, Vector2 v, boolean lvFlag) {
+	public SkillIcon(Skill skill, Stage s, Vector2 v, boolean lvFlag) {
 		if (skill.enable) {
 			skillImg = new Image(skill.icon);
 			quality_frame = WidgetFactory.getInstance().getPixmapFrame(26, 26,
@@ -47,7 +47,7 @@ public class SkillEffect {
 		U.setAlpha(skillImg, 0.5f);
 		skill.skillEffect=this;
 	}
-	public void changeSkillEffect(SkillEffect se){
+	public void changeSkillEffect(SkillIcon se){
 		skillImg.setDrawable(se.skillImg.getDrawable());
 		skillImgEffect.setDrawable(se.skillImgEffect.getDrawable());
 		U.setAlpha(skillImg, 1);

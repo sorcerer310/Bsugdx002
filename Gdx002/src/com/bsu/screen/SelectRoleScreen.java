@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
-import com.bsu.effect.RoleEffect;
+import com.bsu.effect.RoleIcon;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.TipsWindows;
 import com.bsu.make.WidgetFactory;
@@ -135,7 +135,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
 			final Vector2 v = new Vector2(x + i % value * w, y - i / value* w);
-			final RoleEffect photo = new RoleEffect(r, false);
+			final RoleIcon photo = new RoleIcon(r, false);
 			photo.setPosition(v.x, v.y);
 			sRoleStage.addActor(photo);
 			r.roleEffect=photo;
@@ -208,7 +208,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 			e.roleEffect.showEffect(false);
 		}
 		for (Actor act : sRoleStage.getActors()) {
-			if (act instanceof RoleEffect) {
+			if (act instanceof RoleIcon) {
 				if (act.equals(r.roleEffect)) {
 					r.roleEffect.showEffect(true);
 				}
