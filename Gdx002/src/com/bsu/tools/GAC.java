@@ -265,7 +265,7 @@ public class GAC {
 			break;
 		}
 		if(tr.size>0)
-			retani = new Animation(CG.duration_skill_effect,tr);
+			retani = new Animation(GC.duration_skill_effect,tr);
 		return retani;
 	}
 	/**
@@ -474,7 +474,7 @@ public class GAC {
 			break;
 		}
 		if(tr.size>0)
-			retani = new Animation(CG.duration_skill_effect,tr);
+			retani = new Animation(GC.duration_skill_effect,tr);
 		return retani;
 	}
 	/**
@@ -544,7 +544,7 @@ public class GAC {
 			break;
 		}
 		if(tr.size>0)
-			retani = new Animation(CG.duration_skill_effect,tr);
+			retani = new Animation(GC.duration_skill_effect,tr);
 		return retani;
 	}
 }

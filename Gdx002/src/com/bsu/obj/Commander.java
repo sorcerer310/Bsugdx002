@@ -1,5 +1,7 @@
 package com.bsu.obj;
 
+import java.util.Random;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,12 +17,12 @@ import com.bsu.obj.skilltree.Skill.ObjectType;
 import com.bsu.screen.GameScreen;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.CommandQueue;
-import com.bsu.tools.CG;
+import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
-import com.bsu.tools.CG.FACE;
-import com.bsu.tools.CG.DIRECTION;
-import com.bsu.tools.CG.STATE;
+import com.bsu.tools.GC.FACE;
+import com.bsu.tools.GC.DIRECTION;
+import com.bsu.tools.GC.STATE;
 
 /**
  * 指挥官对象，用来指挥stage上所有的角色
@@ -172,13 +174,13 @@ public class Commander {
 	public void moveDirectCommand(Role r, DIRECTION d, BsuEvent be) {
 		int x = 0, y = 0;
 		if (d == DIRECTION.left)
-			x = -CG.map_box_value;
+			x = -GC.map_box_value;
 		else if (d == DIRECTION.right)
-			x = CG.map_box_value;
+			x = GC.map_box_value;
 		else if (d == DIRECTION.up)
-			y = CG.map_box_value;
+			y = GC.map_box_value;
 		else if (d == DIRECTION.down)
-			y = -CG.map_box_value;
+			y = -GC.map_box_value;
 		r.moveAction(x, y, be);
 	}
 
@@ -192,11 +194,11 @@ public class Commander {
 		if (r.face == FACE.left
 				&& !U.hasRoleInPos(allRoles,
 						new Vector2(r.getBoxX() + 1, r.getBoxY())))
-			r.heatAction(CG.map_box_value, 0);
+			r.heatAction(GC.map_box_value, 0);
 		else if (r.face == FACE.right
 				&& !U.hasRoleInPos(allRoles,
 						new Vector2(r.getBoxX() - 1, r.getBoxY())))
-			r.heatAction(-CG.map_box_value, 0);
+			r.heatAction(-GC.map_box_value, 0);
 	}
 
 	/**
@@ -209,9 +211,9 @@ public class Commander {
 			int x = ((int) (r.type==Type.HERO ? (
 					(int)(r.getBoxX()+path.get(path.size-1).x)>15?15:(r.getBoxX()+path.get(path.size-1).x)
 					):(int)(r.getBoxX()-path.get(path.size-1).x)<0?0:(r.getBoxX()-path.get(path.size-1).x)
-							))*CG.map_box_value; 
+							))*GC.map_box_value; 
 			if(obj.size>0){
-				x = (int) (r.type==Type.HERO ?obj.get(0).getX()-CG.map_box_value:obj.get(0).getX()+CG.map_box_value);
+				x = (int) (r.type==Type.HERO ?obj.get(0).getX()-GC.map_box_value:obj.get(0).getX()+GC.map_box_value);
 				r.assaultAction((float)x,r.getY(),obj.get(0),be);
 			}
 			
@@ -546,6 +548,11 @@ public class Commander {
 			public void notify(Object obj,String msg){
 				r.isDead = true;					//设置人物死亡
 				lactor.removeValue(r, true);		//将人物从lactor中移除
+				//将role从heros活npcs中移除
+				if(npcs.contains(r, true))			
+					npcs.removeValue(r, true);
+				if(heros.contains(r, true))
+					heros.removeValue(r, true);
 			}
 		});
 	}
@@ -569,7 +576,24 @@ public class Commander {
 		if(npcRemainCount==0){gamescreen.battleEnd(true);}
 			//战斗胜利
 	}
-
+	/**
+	 * 敌人出现函数
+	 * @param pos	出生地参数
+	 * @param npcs	包含所有剩余的敌人，操作出现敌人时要用pop操作，
+	 * 				敌人出现在战场后即从数组中移除
+	 */
+	private Random rnd = new Random(); 
+	private void commandNpcArise(Array<Vector2> ppos,Array<Role> pnpcs){
+		Vector2 pos = ppos.get(rnd.nextInt(ppos.size));				//获得一个随机位置
+		if(npcs.size<ppos.size){
+			Role r = pnpcs.pop();
+			r.setPosition(pos.x*GC.rect_box_width, pos.y*GC.rect_box_height);
+			npcs.add(r);
+			stage.addActor(r);
+		}
+	}
+	
+	
 	public Array<Role> getHeros() {
 		return heros;
 	}

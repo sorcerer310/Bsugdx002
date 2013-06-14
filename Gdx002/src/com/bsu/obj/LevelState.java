@@ -3,10 +3,10 @@ package com.bsu.obj;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.make.WidgetFactory;
-import com.bsu.tools.CG;
+import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
-import com.bsu.tools.CG.LEVELYTPE;
+import com.bsu.tools.GC.LEVELYTPE;
 
 public class LevelState {
 	public int level;// 关卡

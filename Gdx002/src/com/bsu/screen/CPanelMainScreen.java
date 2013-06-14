@@ -22,8 +22,8 @@ import com.bsu.make.TipsWindows;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
-import com.bsu.tools.CG;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC;
+import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 import com.bsu.tools.MessageObject;
 
@@ -40,21 +40,21 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 
 	public CPanelMainScreen(Game game) {
 		super(game);
-		stage = new Stage(CG.rect_width, CG.rect_height, false);
-		roleStage = new Stage(CG.rect_width, CG.rect_height, false);
+		stage = new Stage(GC.rect_width, GC.rect_height, false);
+		roleStage = new Stage(GC.rect_width, GC.rect_height, false);
 		timg = GTC.getInstance().mPanel;
 		background = new Image(timg);
 		stage.addActor(background);
 		ib_mb_update = WidgetFactory.getInstance().makeImageButton(
-				CG.screen_update, stage, 135, 225, 1);
+				GC.screen_update, stage, 135, 225, 1);
 		ib_mb_update.setPosition(135, 225);
 		ib_mb_role = WidgetFactory.getInstance().makeImageButton(
-				CG.screen_role, stage, 300, 225, 1);
+				GC.screen_role, stage, 300, 225, 1);
 		ib_mb_fight = WidgetFactory.getInstance().makeImageButton(
-				CG.screen_fight, stage, 135, 50, 1);
+				GC.screen_fight, stage, 135, 50, 1);
 		ib_mb_fight.setPosition(135, 50);
 		ib_mb_shop = WidgetFactory.getInstance().makeImageButton(
-				CG.screen_shop, stage, 300, 50, 1);
+				GC.screen_shop, stage, 300, 50, 1);
 		ib_mb_shop.setPosition(300, 50);
 		// 增加上阵英雄头像
 		setFightRoles();
@@ -78,7 +78,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 					setChanged();
-					notifyObservers(new MessageObject(r, CG.screen_selectRole));
+					notifyObservers(new MessageObject(r, GC.screen_selectRole));
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
@@ -95,7 +95,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 							float y, int pointer, int button) {
 						setChanged();
 						notifyObservers(new MessageObject(null,
-								CG.screen_selectRole));
+								GC.screen_selectRole));
 						return super.touchDown(event, x, y, pointer, button);
 					}
 				});
@@ -166,7 +166,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(new MessageObject(null, CG.screen_fight));
+				notifyObservers(new MessageObject(null, GC.screen_fight));
 				ib_mb_fight.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
@@ -183,7 +183,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(new MessageObject(null, CG.screen_role));
+				notifyObservers(new MessageObject(null, GC.screen_role));
 				ib_mb_role.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
@@ -200,7 +200,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(new MessageObject(null, CG.screen_update));
+				notifyObservers(new MessageObject(null, GC.screen_update));
 				ib_mb_update.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}

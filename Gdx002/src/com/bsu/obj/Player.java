@@ -5,8 +5,8 @@ import com.bsu.make.EquipFactory;
 import com.bsu.make.RoleFactory;
 import com.bsu.obj.Role.Type;
 import com.bsu.obj.skilltree.SkillTree;
-import com.bsu.tools.CG.CLASSES;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.CLASSES;
+import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 

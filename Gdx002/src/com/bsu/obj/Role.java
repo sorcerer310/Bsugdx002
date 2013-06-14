@@ -17,12 +17,12 @@ import com.bsu.make.WidgetFactory;
 import com.bsu.obj.skilltree.ContinuedSkillState;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.BsuEvent;
-import com.bsu.tools.CG;
-import com.bsu.tools.CG.CLASSES;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC;
+import com.bsu.tools.GC.CLASSES;
+import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GAC;
-import com.bsu.tools.CG.FACE;
-import com.bsu.tools.CG.STATE;
+import com.bsu.tools.GC.FACE;
+import com.bsu.tools.GC.STATE;
 import com.bsu.tools.U;
 
 public class Role extends Actor {
@@ -110,6 +110,7 @@ public class Role extends Actor {
 		skill_array.add(skill_tree.get(0));
 		exp = baseExp();
 		isDead = false;
+		this.setVisible(false);
 		set_actor_base(type);
 		levelUp();
 	}
@@ -143,9 +144,9 @@ public class Role extends Actor {
 		ani_move = GAC.getInstance().getRoleAnimation(roleTexture);
 		ani_disapper = GAC.getInstance().getEffectDisapper();
 		ani_apper = GAC.getInstance().getEffectApper();
-		hp_back = WidgetFactory.getInstance().getTextureFill(CG.map_box_value,
+		hp_back = WidgetFactory.getInstance().getTextureFill(GC.map_box_value,
 				2, Color.BLACK,1);
-		hp = WidgetFactory.getInstance().getTextureFill(CG.map_box_value, 2,
+		hp = WidgetFactory.getInstance().getTextureFill(GC.map_box_value, 2,
 				Color.RED,1);
 		set_ani_from_state(STATE.idle);	
 	}
@@ -155,18 +156,18 @@ public class Role extends Actor {
 		// TODO Auto-generated method stub
 		if (current_action_frame != null) {
 			batch.draw(current_action_frame, getX(), getY(), getOriginX(),
-					getOriginY(), CG.map_box_value, CG.map_box_value,
+					getOriginY(), GC.map_box_value, GC.map_box_value,
 					getScaleX(), getScaleY(), getRotation());
 		}
 		if (current_beattack_frame != null) {
 			batch.draw(current_beattack_frame, getX() + px, getY() + py);
 		}
 		if (currentHp > 0) {
-			batch.draw(hp_back, getX(), getY() + CG.map_box_value - 2,
-					getOriginX(), getOriginY(), CG.map_box_value, 2,
+			batch.draw(hp_back, getX(), getY() + GC.map_box_value - 2,
+					getOriginX(), getOriginY(), GC.map_box_value, 2,
 					getScaleX(), getScaleY(), getRotation());
-			batch.draw(hp, getX(), getY() + CG.map_box_value - 2, getOriginX(),
-					getOriginY(), CG.map_box_value * currentHp / maxHp, 2,
+			batch.draw(hp, getX(), getY() + GC.map_box_value - 2, getOriginX(),
+					getOriginY(), GC.map_box_value * currentHp / maxHp, 2,
 					getScaleX(), getScaleY(), getRotation());
 		}
 		Role_logic();
@@ -179,7 +180,7 @@ public class Role extends Actor {
 
 	public void hero_apper(int mx, int my, BsuEvent be) {
 		set_ani_from_state(STATE.apper);
-		setPosition(mx * CG.map_box_value, my * CG.map_box_value);
+		setPosition(mx * GC.map_box_value, my * GC.map_box_value);
 		bevent = be;
 	}
 
@@ -408,7 +409,7 @@ public class Role extends Actor {
 	 * @return
 	 */
 	public int getBoxX() {
-		return (int) ((this.getX() + CG.extra_value) / CG.map_box_value);
+		return (int) ((this.getX() + GC.extra_value) / GC.map_box_value);
 	}
 
 	/**
@@ -417,7 +418,7 @@ public class Role extends Actor {
 	 * @return
 	 */
 	public int getBoxY() {
-		return (int) ((this.getY() + CG.extra_value) / CG.map_box_value);
+		return (int) ((this.getY() + GC.extra_value) / GC.map_box_value);
 	}
 
 	/**
@@ -436,9 +437,9 @@ public class Role extends Actor {
 	public Array<Vector2> getCurrSkillRange() {
 		realrange.clear();
 		Array<Vector2> rs = null;
-		if (this.face == CG.FACE.right)
+		if (this.face == GC.FACE.right)
 			rs = cskill.getRange();
-		else if (this.face == CG.FACE.left)
+		else if (this.face == GC.FACE.left)
 			rs = cskill.flipRange();
 		for (Vector2 v : rs) {
 			realrange.add(new Vector2(this.getBoxX() + v.x, v.y
@@ -525,13 +526,13 @@ public class Role extends Actor {
 	public int baseExp() {
 		int exp = 0;
 		if (quality == QUALITY.green)
-			exp = CG.baseExpGreen;
+			exp = GC.baseExpGreen;
 		if (quality == QUALITY.blue)
-			exp = CG.baseExpBlue;
+			exp = GC.baseExpBlue;
 		if (quality == QUALITY.purple)
-			exp = CG.baseExpPurple;
+			exp = GC.baseExpPurple;
 		if (quality == QUALITY.orange)
-			exp = CG.baseExpOrange;
+			exp = GC.baseExpOrange;
 		return exp;
 	}
 
@@ -558,7 +559,7 @@ public class Role extends Actor {
 	 *            事件对象
 	 */
 	public void moveAction(int x, int y, final BsuEvent be) {
-		float dur = CG.duration_ani / 2;
+		float dur = GC.duration_ani / 2;
 		if (get_ani_from_state() != STATE.idle)
 			return;
 		set_ani_from_state(STATE.move);
@@ -571,7 +572,7 @@ public class Role extends Actor {
 							rotateBy(-10, dur), rotateBy(10, dur)
 					// rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur),
 					// rotateBy(10, dur)
-					), moveBy(x, y, CG.duration_move_box), run(new Runnable() {
+					), moveBy(x, y, GC.duration_move_box), run(new Runnable() {
 						@Override
 						public void run() {
 							set_ani_from_state(STATE.idle);
@@ -588,7 +589,7 @@ public class Role extends Actor {
 							rotateBy(10, dur), rotateBy(-10, dur)
 					// rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur),
 					// rotateBy(-10, dur)
-					), moveBy(x, y, CG.duration_move_box), run(new Runnable() {
+					), moveBy(x, y, GC.duration_move_box), run(new Runnable() {
 						@Override
 						public void run() {
 							set_ani_from_state(STATE.idle);
@@ -603,7 +604,7 @@ public class Role extends Actor {
 	 * 移动过程中被阻挡执行此动作
 	 */
 	public void stopedAction() {
-		float dur = CG.duration_ani / 1.6f;
+		float dur = GC.duration_ani / 1.6f;
 		if (face == FACE.right) {
 			addAction(sequence(moveBy(16, 0, dur), moveBy(-16, 0, dur),
 					moveBy(12, 0, dur), moveBy(-12, 0, dur), moveBy(8, 0, dur),
@@ -621,7 +622,7 @@ public class Role extends Actor {
 	 * 受到攻击动画
 	 */
 	public void hitedAction() {
-		float dur = CG.duration_ani / 2;
+		float dur = GC.duration_ani / 2;
 		if (face == FACE.right) {
 			this.setOrigin(0, 0);
 			addAction(sequence(
@@ -648,7 +649,7 @@ public class Role extends Actor {
 	 *            击退到的位置y坐标
 	 */
 	public void heatAction(int x, int y) {
-		addAction(moveBy(x, y, CG.duration_ani / 10));
+		addAction(moveBy(x, y, GC.duration_ani / 10));
 	}
 
 	/**

@@ -15,8 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.Skill;
-import com.bsu.tools.CG.CLASSES;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.CLASSES;
+import com.bsu.tools.GC.QUALITY;
 
 public class U {
 
@@ -101,13 +101,13 @@ public class U {
 		int maxhp = 0;
 		int basehp = 0;
 		if (r.quality == QUALITY.green)
-			basehp = CG.baseHpGreen;
+			basehp = GC.baseHpGreen;
 		if (r.quality == QUALITY.blue)
-			basehp = CG.baseHpBlue;
+			basehp = GC.baseHpBlue;
 		if (r.quality == QUALITY.purple)
-			basehp = CG.baseHpPurple;
+			basehp = GC.baseHpPurple;
 		if (r.quality == QUALITY.orange)
-			basehp = CG.baseHpOrange;
+			basehp = GC.baseHpOrange;
 		maxhp = basehp * r.level;
 		return maxhp;
 	}
@@ -122,13 +122,13 @@ public class U {
 		int maxattack = 0;
 		int base = 0;
 		if (r.quality == QUALITY.green)
-			base = CG.baseAttackGreen;
+			base = GC.baseAttackGreen;
 		if (r.quality == QUALITY.blue)
-			base = CG.baseAttackBlue;
+			base = GC.baseAttackBlue;
 		if (r.quality == QUALITY.purple)
-			base = CG.baseAttackPurple;
+			base = GC.baseAttackPurple;
 		if (r.quality == QUALITY.orange)
-			base = CG.baseAttackOrange;
+			base = GC.baseAttackOrange;
 		maxattack = base * r.level;
 		return maxattack;
 	}
@@ -143,13 +143,13 @@ public class U {
 		int defend = 0;
 		int base = 0;
 		if (r.quality == QUALITY.green)
-			base = CG.baseDefendGreen;
+			base = GC.baseDefendGreen;
 		if (r.quality == QUALITY.blue)
-			base = CG.baseDefendBlue;
+			base = GC.baseDefendBlue;
 		if (r.quality == QUALITY.purple)
-			base = CG.baseDefendPurple;
+			base = GC.baseDefendPurple;
 		if (r.quality == QUALITY.orange)
-			base = CG.baseDefendOrange;
+			base = GC.baseDefendOrange;
 		defend = base * r.level;
 		return defend;
 	}
@@ -164,13 +164,13 @@ public class U {
 		int exp = 0;
 		int base = 0;
 		if (r.quality == QUALITY.green)
-			base = CG.baseExpUpGreen;
+			base = GC.baseExpUpGreen;
 		if (r.quality == QUALITY.blue)
-			base = CG.baseExpUpBlue;
+			base = GC.baseExpUpBlue;
 		if (r.quality == QUALITY.purple)
-			base = CG.baseExpUpPurple;
+			base = GC.baseExpUpPurple;
 		if (r.quality == QUALITY.orange)
-			base = CG.baseExpUpOrange;
+			base = GC.baseExpUpOrange;
 		exp = base * r.level;
 		return exp;
 	}

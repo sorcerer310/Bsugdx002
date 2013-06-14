@@ -11,8 +11,8 @@ import com.bsu.obj.skilltree.ContinuedSkillState.CSType;
 import com.bsu.tools.GAC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
-import com.bsu.tools.CG.CLASSES;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.CLASSES;
+import com.bsu.tools.GC.QUALITY;
 
 /**
  * 技能对象

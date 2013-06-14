@@ -21,26 +21,21 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.AttackEffect;
 import com.bsu.effect.UIRoleEffect;
 import com.bsu.head.CubocScreen;
-import com.bsu.make.WidgetFactory;
+import com.bsu.make.*;
 import com.bsu.obj.Commander;
+import com.bsu.obj.GameScreenData;
 import com.bsu.obj.MapBox;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
-import com.bsu.tools.CG;
+import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.GameMap;
-import com.bsu.tools.U;
+
 
 public class GameScreen extends CubocScreen implements Observer,
 		GestureListener {
@@ -59,12 +54,15 @@ public class GameScreen extends CubocScreen implements Observer,
 	private AttackEffect attack_effect;
 	private Label fpsLabel;
 	private Image endBackImg;
+	private Array<Role> heros = new Array<Role>();		//该图所有英雄
+	private Array<Role> npcs = new Array<Role>();		//该图所有npc
+	private Array<Role> roles = new Array<Role>();		//所有的角色
 
 	public GameScreen(Game mxg) {
 		super(mxg);
-		stage = new Stage(CG.rect_width, CG.rect_height, false);
-		UIStage = new Stage(CG.rect_width, CG.rect_height, false);
-		endStage = new Stage(CG.rect_width,CG.rect_height,false);
+		stage = new Stage(GC.rect_width, GC.rect_height, false);
+		UIStage = new Stage(GC.rect_width, GC.rect_height, false);
+		endStage = new Stage(GC.rect_width,GC.rect_height,false);
 	}
 
 	/**
@@ -75,23 +73,33 @@ public class GameScreen extends CubocScreen implements Observer,
 	 * @param roles
 	 *            关卡初始化英雄与敌人的数组，出生地点在地图中已经设置好
 	 */
-	public void game_init(Array<Role> roles) {
+	public void game_init(GameScreenData gsd){
+		this.heros = gsd.getHeroRoles();
+		this.npcs = gsd.getNpcRoles();
+		//将所有role放入同一Role中便于操作
+		roles.addAll(heros);
+		roles.addAll(npcs);
+		
 		stage.clear();
-		GameMap.make_map(lv);
+		GameMap.make_map(gsd.getMapName());
 		setAction_start(false);
 		setControlled(true);
-		if (mb == null) {
+		if (mb == null) 
 			mb = new MapBox();
-		}
 		stage.addActor(mb); // 增加地图方格显示
-		for (int i = 0; i < roles.size; i++) {
-			stage.addActor(roles.get(i));
-		}
+		
+		//增加敌人
+		for(Role r:npcs)
+			stage.addActor(r);
+		//增加英雄
+		for(Role r:heros)
+			stage.addActor(r);
+		
 		commander = Commander.getInstance(stage, this);
 		commander.resetRoles();
 		this.addActorListener();
-		setBornPosition(GameMap.map, Type.HERO, CG.object_layer_hero);
-		setBornPosition(GameMap.map, Type.ENEMY, CG.object_layer_enemy);
+		setBornPosition(GameMap.map, Type.HERO, GC.object_layer_hero);
+		setBornPosition(GameMap.map, Type.ENEMY, GC.object_layer_enemy);
 		if (fightUI == null) {
 			fightUI = new UIRoleEffect(UIStage, this);
 		} else {
@@ -101,13 +109,14 @@ public class GameScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < roles.size; i++)
 			roles.get(i).getRoleObserable().addObserver(fightUI);
 
+
 		c = (OrthographicCamera) stage.getCamera();
 		if (attack_effect == null) {
 			attack_effect = AttackEffect.getInstance();
 		}
 		if (endBackImg == null) {
 			endBackImg = new Image(WidgetFactory.getInstance().getTextureFill(
-					CG.rect_width, CG.rect_height, Color.GRAY, 0.3f));
+					GC.rect_width, GC.rect_height, Color.GRAY, 0.3f));
 		}
 		initRoles(roles);
 		fpsLabel = WidgetFactory.getInstance().makeLabel(
@@ -160,15 +169,12 @@ public class GameScreen extends CubocScreen implements Observer,
 				}
 			}
 		}
-		int index = 0;
-		for (Actor act : stage.getActors()) {
-			if (act instanceof Role) {
-				Role r = (Role) act;
-				if (r.getType().equals(p) && v.size > 0) {
-					r.setPosition(v.get(index).x, v.get(index).y);
-					index++;
-				}
-			}
+		
+		Array<Role> rs = p==Type.HERO?heros:npcs;
+		for(int i=0;i<(rs.size<v.size?rs.size:v.size);i++){
+			Role r = rs.get(i);
+			r.setVisible(true);
+			r.setPosition(v.get(i).x, v.get(i).y);
 		}
 	}
 
@@ -177,8 +183,8 @@ public class GameScreen extends CubocScreen implements Observer,
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		if (clingX != 0) {
 			int mx = clingX > 0 ? -1 : 1;
-			int maxW = GameMap.map_render.getMapWidthUnits() - CG.rect_width;
-			int w = CG.rect_width / 2;
+			int maxW = GameMap.map_render.getMapWidthUnits() - GC.rect_width;
+			int w = GC.rect_width / 2;
 			if (c.position.x + mx >= w && c.position.x + mx <= maxW + w) {
 				c.position.x += mx;
 			}
@@ -240,8 +246,8 @@ public class GameScreen extends CubocScreen implements Observer,
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (!isAction_start() && (isControlled())) {
-					int input_x = (int) (x / CG.map_box_value);
-					int input_y = (int) (y / CG.map_box_value);
+					int input_x = (int) (x / GC.map_box_value);
+					int input_y = (int) (y / GC.map_box_value);
 					for (Actor act : stage.getActors()) {
 						if (act instanceof Role) {
 							Role r = (Role) act;
@@ -259,7 +265,7 @@ public class GameScreen extends CubocScreen implements Observer,
 			public void clicked(InputEvent event, float x, float y) {
 				// 通知切换到主界面
 				setChanged();
-				notifyObservers(CG.screen_mpanel);
+				notifyObservers(GC.screen_mpanel);
 			}
 		});
 	}
@@ -338,8 +344,8 @@ public class GameScreen extends CubocScreen implements Observer,
 
 		TextureRegion tr = GTC.getInstance().battle_end.findRegion(endname);
 		Image img = new Image(tr);
-		img.setPosition((CG.rect_width - img.getWidth()) / 2,
-				(CG.rect_height - img.getHeight()) / 2 + 100);
+		img.setPosition((GC.rect_width - img.getWidth()) / 2,
+				(GC.rect_height - img.getHeight()) / 2 + 100);
 
 		endStage.clear();
 		endStage.addActor(endBackImg);
@@ -445,7 +451,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
 		// TODO Auto-generated method stub
-		clingX = velocityX > 0 ? CG.rect_width / 2 : -CG.rect_width / 2;
+		clingX = velocityX > 0 ? GC.rect_width / 2 : -GC.rect_width / 2;
 		return false;
 	}
 

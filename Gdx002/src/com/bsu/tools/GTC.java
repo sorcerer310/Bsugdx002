@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.obj.Role;
-import com.bsu.tools.CG.CLASSES;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.CLASSES;
+import com.bsu.tools.GC.QUALITY;
 
 /**
  * GameTextureClass 加载游戏中所有Texture，其他资源加载之前加载

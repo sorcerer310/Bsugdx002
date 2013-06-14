@@ -16,7 +16,7 @@ import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Role;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.QUALITY;
 
 /**
  * 头像图标改进类

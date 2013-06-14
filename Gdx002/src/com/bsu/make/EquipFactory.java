@@ -2,7 +2,7 @@ package com.bsu.make;
 
 import com.bsu.obj.Equip;
 import com.bsu.obj.Equip.Type;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.QUALITY;
 
 public class EquipFactory {
 	private static EquipFactory instance = null;

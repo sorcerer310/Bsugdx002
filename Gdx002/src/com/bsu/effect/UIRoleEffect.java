@@ -23,7 +23,7 @@ import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.screen.GameScreen;
-import com.bsu.tools.CG;
+import com.bsu.tools.GC;
 import com.bsu.tools.U;
 
 /**

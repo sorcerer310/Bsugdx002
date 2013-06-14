@@ -1,7 +1,7 @@
 package com.bsu.obj;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.QUALITY;
 
 /**
  * 装备类，包括各种装备，目前只代表武器，防具

@@ -19,10 +19,10 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Equip;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.Skill;
-import com.bsu.tools.CG;
+import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.QUALITY;
 
 public class TipsWindows {
 
@@ -254,14 +254,14 @@ public class TipsWindows {
 	private Vector2 getPosition(Vector2 tv) {
 		Vector2 v = new Vector2();
 		int ax = 0, ay = 0;
-		if (tv.x <= CG.rect_width / 2) {
+		if (tv.x <= GC.rect_width / 2) {
 			ax = -1;
 		}
-		if (tv.y <= CG.rect_height / 2) {
+		if (tv.y <= GC.rect_height / 2) {
 			ay = -1;
 		}
-		v.x = ax < 0 ? tv.x + CG.map_box_value : tv.x - tipsWindows.getWidth();
-		v.y = ay < 0 ? tv.y + CG.map_box_value : tv.y - tipsWindows.getHeight();
+		v.x = ax < 0 ? tv.x + GC.map_box_value : tv.x - tipsWindows.getWidth();
+		v.y = ay < 0 ? tv.y + GC.map_box_value : tv.y - tipsWindows.getHeight();
 		return v;
 	}
 

@@ -19,13 +19,13 @@ import com.bsu.effect.RoleIcon;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.TipsWindows;
 import com.bsu.make.WidgetFactory;
-import com.bsu.make.GameScreenConfigure;
+import com.bsu.make.GameScreenFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
-import com.bsu.tools.CG;
+import com.bsu.tools.GC;
 import com.bsu.tools.MessageObject;
 import com.bsu.tools.U;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 
 public class SelectRoleScreen extends CubocScreen implements Observer,
@@ -47,22 +47,22 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 
 	public SelectRoleScreen(Game game) {
 		super(game);
-		stage = new Stage(CG.rect_width, CG.rect_height, false);
-		sRoleStage = new Stage(CG.rect_width, CG.rect_height, false);
+		stage = new Stage(GC.rect_width, GC.rect_height, false);
+		sRoleStage = new Stage(GC.rect_width, GC.rect_height, false);
 		background = new Image(GTC.getInstance().selectRolePanel);
 		stage.addActor(background);
-		ib_back = WidgetFactory.getInstance().makeImageButton(CG.button_back,
+		ib_back = WidgetFactory.getInstance().makeImageButton(GC.button_back,
 				stage, 375, 266, 1f);
-		allImg = WidgetFactory.getInstance().makeImageButton(CG.button_all,
+		allImg = WidgetFactory.getInstance().makeImageButton(GC.button_all,
 				stage, 100, 20, 0.5f);
-		greenImg = WidgetFactory.getInstance().makeImageButton(CG.button_green,
+		greenImg = WidgetFactory.getInstance().makeImageButton(GC.button_green,
 				stage, 163, 20, 0.5f);
-		blueImg = WidgetFactory.getInstance().makeImageButton(CG.button_blue,
+		blueImg = WidgetFactory.getInstance().makeImageButton(GC.button_blue,
 				stage, 226, 20, 0.5f);
 		purpleImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_purple, stage, 289, 20, 0.5f);
+				GC.button_purple, stage, 289, 20, 0.5f);
 		orangeImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_orange, stage, 352, 20, 0.5f);
+				GC.button_orange, stage, 352, 20, 0.5f);
 		addRoleToStage(QUALITY.all);
 		bImg.add(allImg);
 		bImg.add(greenImg);
@@ -171,10 +171,10 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 						Player.getInstance().addRoleToFIght(r, 100);
 					}
 					Player.getInstance().getPlayerPackageRole();
-					GameScreenConfigure.getInstance().setHeroRoles(
-							Player.getInstance().playerFightRole);
+//					GameScreenFactory.getInstance().setHeroRoles(
+//							Player.getInstance().playerFightRole);
 					setChanged();
-					notifyObservers(CG.button_back);
+					notifyObservers(GC.button_back);
 					ib_back.setScale(1f);
 					super.touchUp(event, x, y, pointer, button);
 				}
@@ -191,7 +191,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 						int pointer, int button) {
 					setChanged();
 					notifyObservers(new MessageObject(null,
-							CG.screen_selectRole));
+							GC.screen_selectRole));
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
@@ -259,7 +259,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(CG.button_back);
+				notifyObservers(GC.button_back);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}

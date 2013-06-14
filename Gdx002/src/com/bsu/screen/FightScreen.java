@@ -24,11 +24,11 @@ import com.bsu.head.CubocScreen;
 import com.bsu.make.TipsWindows;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.LevelState;
-import com.bsu.tools.CG;
+import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
-import com.bsu.tools.CG.LEVELYTPE;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.LEVELYTPE;
+import com.bsu.tools.GC.QUALITY;
 import com.sun.java.swing.plaf.gtk.GTKConstants.ArrowType;
 
 public class FightScreen extends CubocScreen implements Observer {
@@ -44,10 +44,10 @@ public class FightScreen extends CubocScreen implements Observer {
 
 	public FightScreen(Game game) {
 		super(game);
-		stage = new Stage(CG.rect_width, CG.rect_height, false);
+		stage = new Stage(GC.rect_width, GC.rect_height, false);
 		background = new Image(GTC.getInstance().fightPanel);
 		stage.addActor(background);
-		ib_back = WidgetFactory.getInstance().makeImageButton(CG.button_back,
+		ib_back = WidgetFactory.getInstance().makeImageButton(GC.button_back,
 				stage, 360, 262, 1);
 		initFight();
 		setListener();
@@ -203,7 +203,7 @@ public class FightScreen extends CubocScreen implements Observer {
 					if (l.enable) {
 						GameScreen.lv = l.level;
 						setChanged();
-						notifyObservers(CG.screen_game);
+						notifyObservers(GC.screen_game);
 					}else{
 						TipsWindows.getInstance().showTips("关卡未开启，请通关上一关卡", stage, Color.RED);
 					}
@@ -277,7 +277,7 @@ public class FightScreen extends CubocScreen implements Observer {
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(CG.button_back);
+				notifyObservers(GC.button_back);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}

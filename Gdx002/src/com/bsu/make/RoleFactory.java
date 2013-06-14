@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.obj.skilltree.SkillTree;
-import com.bsu.tools.CG.CLASSES;
+import com.bsu.tools.GC.CLASSES;
 import com.bsu.tools.U;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.QUALITY;
 
 /**
  * 用来生成角色，现在只有英雄和NPC角色
