@@ -66,7 +66,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		purpleImg = WidgetFactory.getInstance().makeImageButton(
 				GC.button_purple, stage, 289, 20, 0.5f);
 		orangeImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_orange, stage, 352, 20, 0.5f);
+			GC.button_orange, stage, 352, 20, 0.5f);
 		bImg.add(allImg);
 		bImg.add(greenImg);
 		bImg.add(blueImg);
@@ -193,25 +193,6 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 				}
 			});
 		}
-<<<<<<< HEAD
-=======
-		for (int i = frlength; i < max; i++) {
-			Vector2 v = new Vector2(x + i % value * w, y - i / value * w);
-			Image img_frame = GTC.getInstance().getImageFrame(null);
-			img_frame.setPosition(v.x, v.y);
-			sRoleStage.addActor(img_frame);
-			img_frame.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
-					setChanged();
-					notifyObservers(new MessageObject(null,
-							GC.screen_selectRole));
-					return super.touchDown(event, x, y, pointer, button);
-				}
-			});
-		}
->>>>>>> 9aabffd98880e3afc2c104b53689d7fbf9adf137
 	}
 
 	/**

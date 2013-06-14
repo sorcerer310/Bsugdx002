@@ -215,22 +215,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				}
 			});
 		}
-		for (int i = frlength; i < 15; i++) {
-			Vector2 v = new Vector2(x + i % 5 * w, y - i / 5 * w);
-			Image img_frame = GTC.getInstance().getImageFrame(null);
-			img_frame.setPosition(v.x, v.y);
-			sRoleStage.addActor(img_frame);
-			img_frame.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
-					setChanged();
-					notifyObservers(new MessageObject(null,
-							GC.screen_selectRole));
-					return super.touchDown(event, x, y, pointer, button);
-				}
-			});
-		}
 		if (roleArray.size < 1) {
 			TipsWindows.getInstance().showTips("没有相应品质的卡片，请通关来收集", sRoleStage,
 					Color.GRAY);

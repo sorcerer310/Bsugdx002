@@ -26,9 +26,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.AttackEffect;
@@ -52,6 +54,7 @@ import com.bsu.obj.Role.Type;
 import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.GameMap;
+import com.bsu.tools.U;
 
 public class GameScreen extends CubocScreen implements Observer,
 		GestureListener {
@@ -77,9 +80,9 @@ public class GameScreen extends CubocScreen implements Observer,
 	public GameScreen(Game mxg) {
 		super(mxg);
 
-		stage = new Stage(CG.rect_width, CG.rect_height, false);
-		UIStage = new Stage(CG.rect_width, CG.rect_height, false);
-		endStage = new Stage(CG.rect_width,CG.rect_height,false);
+		stage = new Stage(GC.rect_width, GC.rect_height, false);
+		UIStage = new Stage(GC.rect_width, GC.rect_height, false);
+		endStage = new Stage(GC.rect_width,GC.rect_height,false);
 		U.get_skin();
 		U.get_font();
 		U.get_sytle();
@@ -355,8 +358,8 @@ public class GameScreen extends CubocScreen implements Observer,
 		TextureRegion tr = GTC.getInstance().battle_end.findRegion(endname);
 		Image img = new Image(tr);
 
-		img.setPosition((CG.rect_width - img.getWidth()) / 2,
-				(CG.rect_height - img.getHeight()) / 2 + 100);
+		img.setPosition((GC.rect_width - img.getWidth()) / 2,
+				(GC.rect_height - img.getHeight()) / 2 + 100);
 		roleIcon.clear();
 		endStage.clear();
 		endStage.addActor(endBackImg);
@@ -374,7 +377,7 @@ public class GameScreen extends CubocScreen implements Observer,
 				ItemIcon icon=new ItemIcon(item);
 				tableRole.add(icon).width(icon.img_frame.getWidth())
 						.height(icon.img_frame.getHeight()) // 设置photo宽度和高度
-						.padTop(2f).align(Align.top)// 没起作用。。。
+						.padTop(2f).align(Align.top)
 						.spaceLeft(10f).spaceRight(10f); // 设置各photo之间的边距
 				roleIcon.add(item);
 			}

@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Role;
-import com.bsu.tools.CG.CLASSES;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 import com.bsu.tools.GC.QUALITY;

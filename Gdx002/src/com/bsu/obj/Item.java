@@ -2,9 +2,8 @@ package com.bsu.obj;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.bsu.effect.ItemIcon;
-import com.bsu.tools.CG.CLASSES;
-import com.bsu.tools.CG.QUALITY;
-import com.bsu.tools.GTC;
+import com.bsu.tools.GC.CLASSES;
+import com.bsu.tools.GC.QUALITY;
 
 /**
  * 道具类
