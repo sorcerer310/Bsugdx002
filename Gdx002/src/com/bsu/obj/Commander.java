@@ -64,7 +64,7 @@ public class Commander {
 		// 此处区分处英雄与敌人npc
 		for (Actor act : lactor) {
 			if (act instanceof Role) {
-				((Role)act).isDead = false;
+//				((Role)act).isDead = false;
 				if (((Role) act).getType() == Type.HERO) {
 					heros.add((Role) act);
 				} else if (((Role) act).getType() == Type.ENEMY)
@@ -148,15 +148,23 @@ public class Commander {
 			@Override
 			public void opTask(BsuEvent be) {
 				try {
-					// commandNpcs(be);
 					commandRoles(be, Role.Type.ENEMY);
-					roundEndCompleted = true;
-					decideGameEnd();							//判断游戏是否结束
-					gamescreen.newRound();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+		});
+		
+		//回合结束，为新一回合准备，
+		CommandQueue.getInstance().put(new CommandTask(){
+			@Override
+			public void opTask(BsuEvent be){
+
+				decideGameEnd();							//判断游戏是否结束
+				gamescreen.newRound();
+				be.notify(this, "roundEndCompleted");
+				roundEndCompleted = true;
 			}
 		});
 	}
@@ -301,7 +309,7 @@ public class Commander {
 	 */
 	private void mapEvent(BsuEvent be) {
 		// 从stage中获得mb
-		Array<Actor> acts = lactor;
+		Array<Actor> acts = stage.getActors();
 		MapBox mb = null;
 		for (Actor act : acts) {
 			if (act instanceof MapBox) {
@@ -385,7 +393,7 @@ public class Commander {
 
 			while (!currTaskComFlag) {
 				System.out.println("currTaskComFlag");
-				Thread.sleep(500);
+				Thread.sleep(200);
 			}
 			//2:执行移动命令
 			if(atkrs.size == 0){
@@ -402,7 +410,7 @@ public class Commander {
 
 			// 等待动作完成
 			while (waitRoleFlag) {
-				Thread.sleep(500);
+				Thread.sleep(200);
 			}
 		}
 		be.notify(this, "command_heros_completed");
@@ -439,7 +447,7 @@ public class Commander {
 			return retrs;
 		for (Vector2 v : vs) {
 			for (Role r : checkrs) {
-				if(r.isDead) continue;	//如果单位死亡跳过检查
+				if(r.isDead || !r.isVisible()) continue;	//如果单位死亡或未启用跳过检查
 				// 如果技能为全图技能，加入作用单位继续循环
 				if (s.otype == ObjectType.all) {
 					retrs.add(r);
@@ -541,18 +549,14 @@ public class Commander {
 	 *            要致死的Role
 	 */
 	public void commandRoleDead(final Role r) {
+//		deadRole = r;
 		// 后续处理
-		System.out.println(r.name+"说:啊啊啊啊啊，我死了！！！");
+//		System.out.println(r.name+"说:啊啊啊啊啊，我死了！！！");
 		r.deadAction(new BsuEvent(){
 			@Override
 			public void notify(Object obj,String msg){
 				r.isDead = true;					//设置人物死亡
-				lactor.removeValue(r, true);		//将人物从lactor中移除
-				//将role从heros活npcs中移除
-				if(npcs.contains(r, true))			
-					npcs.removeValue(r, true);
-				if(heros.contains(r, true))
-					heros.removeValue(r, true);
+				r.setVisible(false);				//设置人物不显示
 			}
 		});
 	}
@@ -561,8 +565,9 @@ public class Commander {
 	 * 回合结束后判断战斗是否结束，胜利或失败
 	 */
 	private void decideGameEnd(){
-		int heroRemainCount = 0;
-		int npcRemainCount = 0;
+		int heroRemainCount = 0;						//英雄剩余数量
+		int npcRemainCount = 0;							//敌人剩余数量
+		int npcVisibleCount = 0;						//敌人上场数量
 		for(Role r:heros)
 			if(!r.isDead)
 				heroRemainCount ++;
@@ -570,27 +575,49 @@ public class Commander {
 		if(heroRemainCount==0){gamescreen.battleEnd(false);}
 			//战斗失败
 		
-		for(Role r:npcs)
+		
+		for(Role r:npcs){
 			if(!r.isDead)
 				npcRemainCount ++;
+			if(r.isVisible())
+				npcVisibleCount++;
+		}
+		//如果剩余的npc为0，游戏胜利
 		if(npcRemainCount==0){gamescreen.battleEnd(true);}
-			//战斗胜利
+		else{
+			//否则剩余npc数量不为0，并且npcVisibleCount为0了，命令加入其他的敌人
+			if(npcVisibleCount==0)
+				commandNpcArise(gamescreen.npcArisePos,npcs);
+		}
 	}
 	/**
 	 * 敌人出现函数
 	 * @param pos	出生地参数
-	 * @param npcs	包含所有剩余的敌人，操作出现敌人时要用pop操作，
-	 * 				敌人出现在战场后即从数组中移除
+	 * @param npcs	所有敌人
 	 */
-	private Random rnd = new Random(); 
-	private void commandNpcArise(Array<Vector2> ppos,Array<Role> pnpcs){
-		Vector2 pos = ppos.get(rnd.nextInt(ppos.size));				//获得一个随机位置
-		if(npcs.size<ppos.size){
-			Role r = pnpcs.pop();
-			r.setPosition(pos.x*GC.rect_box_width, pos.y*GC.rect_box_height);
-			npcs.add(r);
-			stage.addActor(r);
+//	private Random rnd = new Random();
+	private void commandNpcArise(Array<Vector2> v,Array<Role> rs){
+		Array<Role> npcsIsLived = new Array<Role>();		//要加入的敌人
+		for(Role r:rs){
+			if(!r.isDead && !r.isVisible())
+				npcsIsLived.add(r);
 		}
+		
+		for(int i=0;i<(npcsIsLived.size<v.size?npcsIsLived.size:v.size);i++){
+			Role r = npcsIsLived.get(i);
+			if(r.isDead)
+				continue;
+			r.setVisible(true);
+			r.setPosition(v.get(i).x, v.get(i).y);
+		}
+		
+		
+//		Vector2 pos = ppos.get(rnd.nextInt(ppos.size));				//获得一个随机位置
+//		if(npcs.size<ppos.size){
+//			Role r = pnpcs.pop();
+//			r.setPosition(pos.x*GC.rect_box_width, pos.y*GC.rect_box_height);
+//			r.setVisible(true);
+//		}
 	}
 	
 	

@@ -31,7 +31,6 @@ public class CommandQueue {
 		ct.opTask(new BsuEvent(){
 			@Override
 			public void notify(Object obj, String msg) {
-//				System.out.println("taskCompleted");
 				taskCompleted = true;
 			}
 		});

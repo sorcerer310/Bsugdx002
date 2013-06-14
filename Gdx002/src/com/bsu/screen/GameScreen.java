@@ -73,9 +73,11 @@ public class GameScreen extends CubocScreen implements Observer,
 	private AttackEffect attack_effect;
 	private Label fpsLabel;
 	private Image endBackImg;
-	private Array<Role> heros = new Array<Role>();		//该图所有英雄
-	private Array<Role> npcs = new Array<Role>();		//该图所有npc
-	private Array<Role> roles = new Array<Role>();		//所有的角色
+	public Array<Role> heros = new Array<Role>();					//该图所有英雄
+	public Array<Role> npcs = new Array<Role>();					//该图所有npc
+	private Array<Role> roles = new Array<Role>();					//所有的角色
+	public Array<Vector2> heroArisePos = new Array<Vector2>();		//英雄出生地
+	public Array<Vector2> npcArisePos = new Array<Vector2>();		//敌人出生地
 
 	public GameScreen(Game mxg) {
 		super(mxg);
@@ -173,6 +175,11 @@ public class GameScreen extends CubocScreen implements Observer,
 				}
 			}
 		}
+		if(p==Type.HERO)
+			heroArisePos.addAll(v);
+		else
+			npcArisePos.addAll(v);
+		
 		
 		Array<Role> rs = p==Type.HERO?heros:npcs;
 		for(int i=0;i<(rs.size<v.size?rs.size:v.size);i++){

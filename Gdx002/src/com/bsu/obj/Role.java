@@ -717,7 +717,10 @@ public class Role extends Actor {
 					run(new Runnable() {
 						@Override
 						public void run() {
+//							Role.this.isDead = true;
+//							Role.this.setVisible(false);
 							be.notify(this, "dead");
+
 						}
 					})));
 		} else if (face == FACE.left) {
