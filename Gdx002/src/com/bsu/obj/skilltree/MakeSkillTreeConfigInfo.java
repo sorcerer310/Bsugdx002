@@ -3,9 +3,9 @@ package com.bsu.obj.skilltree;
 import java.util.Random;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role;
-import com.bsu.tools.CG;
-import com.bsu.tools.CG.CLASSES;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC;
+import com.bsu.tools.GC.CLASSES;
+import com.bsu.tools.GC.QUALITY;
 
 /**
  * 用于生成技能树的类，详细用法见main函数

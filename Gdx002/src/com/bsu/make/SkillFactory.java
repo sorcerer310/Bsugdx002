@@ -6,8 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.obj.skilltree.Skill.ObjectType;
 import com.bsu.obj.skilltree.Skill.Type;
-import com.bsu.tools.CG.CLASSES;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.CLASSES;
+import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GAC;
 import com.bsu.tools.GTC;
 

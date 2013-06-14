@@ -19,10 +19,11 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Equip;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.Skill;
-import com.bsu.tools.CG;
+import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
-import com.bsu.tools.CG.QUALITY;
+
 
 public class TipsWindows {
 
@@ -42,9 +43,6 @@ public class TipsWindows {
 		skin = new Skin();
 		skin.add("draw", new TextureRegion(GTC.getInstance().tipsPanel,
 				windowWidth, 60));
-		
-//		Skin skin1 = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
-//		Window.WindowStyle ws = skin1.get(WindowStyle.class);
 		Window.WindowStyle ws = new WindowStyle(U.get_font(), Color.BLACK,
 				skin.getDrawable("draw"));
 		tipsWindows = new Window("", ws);
@@ -84,7 +82,7 @@ public class TipsWindows {
 		}
 		tipsWindows.add(t);
 		tipsWindows.pack();
-		tipsWindows.setPosition(getPosition(v).x, getPosition(v).y);
+		tipsWindows.setPosition(getPosition(v,48).x, getPosition(v,48).y);
 		tipsWindows.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -111,7 +109,7 @@ public class TipsWindows {
 		tipsWindows.add(nameLabel);
 		tipsWindows.defaults().align(Align.left);
 		Array<String> infoArray = new Array<String>();
-		float scaleValue = 0.7f;
+		float scaleValue = 0.6f;
 		infoArray = U.getMuLabel(s.info, scaleValue, windowWidth);
 		for (int i = 0; i < infoArray.size; i++) {
 			tipsWindows.row();
@@ -120,7 +118,7 @@ public class TipsWindows {
 			tipsWindows.add(label);
 		}
 		tipsWindows.pack();
-		tipsWindows.setPosition(getPosition(v).x, getPosition(v).y);
+		tipsWindows.setPosition(getPosition(v,32).x, getPosition(v,32).y);
 		tipsWindows.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -235,7 +233,7 @@ public class TipsWindows {
 		tipsWindows.row();
 		tipsWindows.add(tg);
 		tipsWindows.pack();
-		tipsWindows.setPosition(getPosition(v).x, getPosition(v).y);
+		tipsWindows.setPosition(getPosition(v,50).x, getPosition(v,50).y);
 		stage.addActor(tipsWindows);
 		tipsWindows.addListener(new ClickListener() {
 			@Override
@@ -251,17 +249,17 @@ public class TipsWindows {
 	 * @param f
 	 * @param g
 	 */
-	private Vector2 getPosition(Vector2 tv) {
+	private Vector2 getPosition(Vector2 tv,int w) {
 		Vector2 v = new Vector2();
 		int ax = 0, ay = 0;
-		if (tv.x <= CG.rect_width / 2) {
+		if (tv.x <= GC.rect_width / 2) {
 			ax = -1;
 		}
-		if (tv.y <= CG.rect_height / 2) {
+		if (tv.y <= GC.rect_height / 2) {
 			ay = -1;
 		}
-		v.x = ax < 0 ? tv.x + CG.map_box_value : tv.x - tipsWindows.getWidth();
-		v.y = ay < 0 ? tv.y + CG.map_box_value : tv.y - tipsWindows.getHeight();
+		v.x = ax < 0 ? tv.x + w : tv.x - tipsWindows.getWidth();
+		v.y = ay < 0 ? tv.y + w : tv.y - tipsWindows.getHeight();
 		return v;
 	}
 

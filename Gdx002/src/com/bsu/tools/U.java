@@ -10,13 +10,14 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitm
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.Skill;
-import com.bsu.tools.CG.CLASSES;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.CLASSES;
+import com.bsu.tools.GC.QUALITY;
 
 public class U {
 
@@ -101,13 +102,13 @@ public class U {
 		int maxhp = 0;
 		int basehp = 0;
 		if (r.quality == QUALITY.green)
-			basehp = CG.baseHpGreen;
+			basehp = GC.baseHpGreen;
 		if (r.quality == QUALITY.blue)
-			basehp = CG.baseHpBlue;
+			basehp = GC.baseHpBlue;
 		if (r.quality == QUALITY.purple)
-			basehp = CG.baseHpPurple;
+			basehp = GC.baseHpPurple;
 		if (r.quality == QUALITY.orange)
-			basehp = CG.baseHpOrange;
+			basehp = GC.baseHpOrange;
 		maxhp = basehp * r.level;
 		return maxhp;
 	}
@@ -122,13 +123,13 @@ public class U {
 		int maxattack = 0;
 		int base = 0;
 		if (r.quality == QUALITY.green)
-			base = CG.baseAttackGreen;
+			base = GC.baseAttackGreen;
 		if (r.quality == QUALITY.blue)
-			base = CG.baseAttackBlue;
+			base = GC.baseAttackBlue;
 		if (r.quality == QUALITY.purple)
-			base = CG.baseAttackPurple;
+			base = GC.baseAttackPurple;
 		if (r.quality == QUALITY.orange)
-			base = CG.baseAttackOrange;
+			base = GC.baseAttackOrange;
 		maxattack = base * r.level;
 		return maxattack;
 	}
@@ -143,13 +144,13 @@ public class U {
 		int defend = 0;
 		int base = 0;
 		if (r.quality == QUALITY.green)
-			base = CG.baseDefendGreen;
+			base = GC.baseDefendGreen;
 		if (r.quality == QUALITY.blue)
-			base = CG.baseDefendBlue;
+			base = GC.baseDefendBlue;
 		if (r.quality == QUALITY.purple)
-			base = CG.baseDefendPurple;
+			base = GC.baseDefendPurple;
 		if (r.quality == QUALITY.orange)
-			base = CG.baseDefendOrange;
+			base = GC.baseDefendOrange;
 		defend = base * r.level;
 		return defend;
 	}
@@ -164,13 +165,13 @@ public class U {
 		int exp = 0;
 		int base = 0;
 		if (r.quality == QUALITY.green)
-			base = CG.baseExpUpGreen;
+			base = GC.baseExpUpGreen;
 		if (r.quality == QUALITY.blue)
-			base = CG.baseExpUpBlue;
+			base = GC.baseExpUpBlue;
 		if (r.quality == QUALITY.purple)
-			base = CG.baseExpUpPurple;
+			base = GC.baseExpUpPurple;
 		if (r.quality == QUALITY.orange)
-			base = CG.baseExpUpOrange;
+			base = GC.baseExpUpOrange;
 		exp = base * r.level;
 		return exp;
 	}
@@ -206,19 +207,19 @@ public class U {
 	 */
 	public static void showRoleSelect(Array<Role> roleArray, Role r) {
 		for (Role e : roleArray) {
-			e.roleEffect.showEffect(false);
-			if(e.roleEffect!=null)e.roleEffect.showEffect(false);
+			e.roleIcon.showEffect(false);
+			if(e.roleIcon!=null)e.roleIcon.showEffect(false);
 		}
-		r.roleEffect.showEffect(true);
-		if(r.roleEffect!=null)r.roleEffect.showEffect(true);
+		r.roleIcon.showEffect(true);
+		if(r.roleIcon!=null)r.roleIcon.showEffect(true);
 	}
 
 	public static void showRolesSelect(Array<Role> roleArray, Array<Role> r) {
 		for (Role e : roleArray) {
-			e.roleEffect.showEffect(false);
+			e.roleIcon.showEffect(false);
 		}
 		for (Role e : r) {
-			e.roleEffect.showEffect(true);
+			e.roleIcon.showEffect(true);
 		}
 	}
 
@@ -343,21 +344,26 @@ public class U {
 							false);
 			font = new BitmapFont(fontData, fontData.getTextureRegion(), false);
 		}
-//		font = new BitmapFont(Gdx.files.internal("data/font/font.fnt"),
-//				Gdx.files.internal("data/font/font.png"), false);
-//		font.setColor(Color.GREEN);
 		return font;
 	}
-
+	static LabelStyle style;
 	/**
 	 * 取得目标色label样式
 	 * 
 	 * @return
 	 */
 	public static LabelStyle get_sytle() {
-		LabelStyle style;
-		BitmapFont f = get_font();
-		style = new LabelStyle(f, f.getColor());
+		if (style==null) {
+			BitmapFont f = get_font();
+			style = new LabelStyle(f, f.getColor());	
+		}
 		return style;
+	}
+	static Skin skin;
+	public static Skin get_skin(){
+		if (skin==null) {
+			skin = new Skin(Gdx.files.internal("data/skin/bsuuiskin.json"));	
+		}
+		return skin;
 	}
 }

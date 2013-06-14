@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.obj.Role;
-import com.bsu.tools.CG.CLASSES;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.CLASSES;
+import com.bsu.tools.GC.QUALITY;
 
 /**
  * GameTextureClass 加载游戏中所有Texture，其他资源加载之前加载
@@ -256,21 +256,21 @@ public class GTC {
 	 *            角色
 	 * @return 返回该角色对应的图标
 	 */
-	public Image getClassesIconImg(Role r) {
+	public Image getClassesIconImg(CLASSES es) {
 		Image img = null;
-		if (r.classes == CLASSES.fighter) {
+		if (es == CLASSES.fighter) {
 			img = new Image(GTC.getInstance().fight_texture);
 		}
-		if (r.classes == CLASSES.wizard) {
+		if (es == CLASSES.wizard) {
 			img = new Image(GTC.getInstance().wizard_texture);
 		}
-		if (r.classes == CLASSES.archer) {
+		if (es == CLASSES.archer) {
 			img = new Image(GTC.getInstance().archer_texture);
 		}
-		if (r.classes == CLASSES.cleric) {
+		if (es == CLASSES.cleric) {
 			img = new Image(GTC.getInstance().cleric_texture);
 		}
-		if (r.classes == CLASSES.sorcerer) {
+		if (es == CLASSES.sorcerer) {
 			img = new Image(GTC.getInstance().sorcerer_texture);
 		}
 		return img;
@@ -283,16 +283,16 @@ public class GTC {
 	 *            角色对象
 	 * @return 返回对应品质的边框
 	 */
-	public Image getImageFrame(Role r) {
+	public Image getImageFrame(QUALITY q) {
 		Image img = null;
-		if (r != null) {
-			if (r.quality == QUALITY.green)
+		if (q!= null) {
+			if (q == QUALITY.green)
 				img = new Image(role_head_frame.findRegion("frame_green"));
-			else if (r.quality == QUALITY.blue)
+			else if (q == QUALITY.blue)
 				img = new Image(role_head_frame.findRegion("frame_blue"));
-			else if (r.quality == QUALITY.purple)
+			else if (q == QUALITY.purple)
 				img = new Image(role_head_frame.findRegion("frame_purple"));
-			else if (r.quality == QUALITY.orange)
+			else if (q == QUALITY.orange)
 				img = new Image(role_head_frame.findRegion("frame_orange"));
 		} else {
 			img = new Image(role_head_frame.findRegion("frame_yellow"));

@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
  * @author fengchong
  * 
  */
-public class CG {
+public class GC {
 
 	public static int rect_width = 480; // 屏幕宽
 	public static int rect_height = 320; // 屏幕高
@@ -28,6 +28,8 @@ public class CG {
 	public static float duration_skill_effect = 0.08f; // 技能效果释放时间
 	public static int extra_value = 10; // 根据坐标判断人物所在格子的额外数值，以免出现格子错误，因为太接近了。
 
+	public static int enemy_birth_pos_count = 5;	//一方出生点的最大值，暂定为5个出生点
+	
 	public static String logo_0_texture_string = "data/logo/BsuLogo.png";
 	public static String logo_0_sound_string = "data/snd/chicken.wav";
 

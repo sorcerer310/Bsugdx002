@@ -15,6 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.RoleIcon;
 import com.bsu.head.CubocScreen;
@@ -22,8 +26,8 @@ import com.bsu.make.TipsWindows;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
-import com.bsu.tools.CG;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC;
+import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 import com.bsu.tools.MessageObject;
 import com.bsu.tools.U;
@@ -51,32 +55,32 @@ public class UpdateScreen extends CubocScreen implements Observer,
 
 	public UpdateScreen(Game game) {
 		super(game);
-		stage = new Stage(CG.rect_width, CG.rect_height, false);
-		sRoleStage = new Stage(CG.rect_width, CG.rect_height,
+		stage = new Stage(GC.rect_width, GC.rect_height, false);
+		sRoleStage = new Stage(GC.rect_width, GC.rect_height,
 				false);
-		upRoleStage = new Stage(CG.rect_width, CG.rect_height,
+		upRoleStage = new Stage(GC.rect_width, GC.rect_height,
 				false);
 		background = new Image(GTC.getInstance().updatePanel);
 		stage.addActor(background);
 		infos = WidgetFactory.getInstance().makeLabel("", stage, 1, 135, 280);
 		upButton = WidgetFactory.getInstance().makeImageButton(
-				CG.button_up, stage, 300, 274, 1);
+				GC.button_up, stage, 300, 274, 1);
 		ib_back = WidgetFactory.getInstance().makeImageButton(
-				CG.button_back, stage, 366, 267, 1f);
+				GC.button_back, stage, 366, 267, 1f);
 		allImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_all, stage, 135, 50, 0.5f);
+				GC.button_all, stage, 135, 50, 0.5f);
 		greenImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_green, stage, 198, 50, 0.5f);
+				GC.button_green, stage, 198, 50, 0.5f);
 		blueImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_blue, stage, 261, 50, 0.5f);
+				GC.button_blue, stage, 261, 50, 0.5f);
 		purpleImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_purple, stage, 324, 50, 0.5f);
+				GC.button_purple, stage, 324, 50, 0.5f);
 		orangeImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_orange, stage, 387, 50, 0.5f);
+				GC.button_orange, stage, 387, 50, 0.5f);
 		eatImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_eat, stage, 250, 20, 1f);
+				GC.button_eat, stage, 250, 20, 1f);
 		eatAllImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_eatall, stage, 350, 15, 1);
+				GC.button_eatall, stage, 350, 15, 1);
 		bImg.add(allImg);
 		bImg.add(greenImg);
 		bImg.add(blueImg);
@@ -99,7 +103,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			RoleIcon photo = new RoleIcon(r, false);
 			photo.setPosition(v.x, v.y);
 			upRoleStage.addActor(photo);
-			r.roleEffect=photo;
+			r.roleIcon=photo;
 			photo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
@@ -126,7 +130,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				upButton.getColor().b,
 				(suRole.exp > suRole.expUp ? 1 : 0f));
 		if (suRole.exp >= suRole.expUp) {
-			TipsWindows.getInstance().showTips(CG.roleUp, sRoleStage,
+			TipsWindows.getInstance().showTips(GC.roleUp, sRoleStage,
 					Color.ORANGE);
 		}
 	}
@@ -172,17 +176,29 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	 */
 	private void showQualityRole(Array<Role> roleArray) {
 		sRoleStage.clear();
-		int frlength = roleArray.size;
 		int x = 150;
-		int y = 210;
-		int w = 60;
+		int y = 70;
+		int value=5;
+		Table table = new Table();
+		ScrollPane sp = new ScrollPane(table, U.get_skin().get(ScrollPaneStyle.class));
+		sp.setWidth(300);
+		sp.setHeight(180);
+		sp.setPosition(x, y);
+		sp.setScrollingDisabled(true, false);
+		sp.setupFadeScrollBars(0f, 0f);
+		sRoleStage.addActor(sp);
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			final Vector2 v = new Vector2(x + i % 5 * w, y - i / 5 * w);
 			RoleIcon photo = new RoleIcon(r,false);
-			r.roleEffect = photo;
-			photo.setPosition(v.x, v.y);
-			sRoleStage.addActor(photo);
+			r.roleIcon = photo;
+			if(i%value==0&&i>0){
+				table.row();
+			}
+			table.add(photo).width(photo.img_frame.getWidth())
+					.height(photo.img_frame.getHeight()) // 设置photo宽度和高度
+					.padTop(2f).padBottom(2)
+					.spaceLeft(10f).spaceRight(10f); // 设置各photo之间的边距
+			final Vector2 v = new Vector2(x+10 + i % 5 * 58, y+140 - i / 5 * 48);
 			photo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
@@ -210,7 +226,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 						int pointer, int button) {
 					setChanged();
 					notifyObservers(new MessageObject(null,
-							CG.screen_selectRole));
+							GC.screen_selectRole));
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
@@ -328,7 +344,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(CG.button_back);
+				notifyObservers(GC.button_back);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}

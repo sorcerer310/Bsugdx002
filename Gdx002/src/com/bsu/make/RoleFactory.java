@@ -3,12 +3,13 @@ package com.bsu.make;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.bsu.obj.Item;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.obj.skilltree.SkillTree;
-import com.bsu.tools.CG.CLASSES;
+import com.bsu.tools.GC.CLASSES;
 import com.bsu.tools.U;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.QUALITY;
 
 /**
  * 用来生成角色，现在只有英雄和NPC角色
@@ -89,5 +90,24 @@ public class RoleFactory {
 		return new Role(t,q,CLASSES.archer,n,U.getRandom(80, -2, 2),10,16
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.archer),tr);
+	}
+	public Role getRole(Item item){
+		Role e=null;
+		if(item.classes==CLASSES.fighter){
+			e=getFighter(item.name, Type.HERO, item.q, item.tr_item);
+		}
+		if(item.classes==CLASSES.archer){
+			e=getArcher(item.name, Type.HERO, item.q, item.tr_item);
+		}
+		if(item.classes==CLASSES.cleric){
+			e=getCleric(item.name, Type.HERO, item.q, item.tr_item);
+		}
+		if(item.classes==CLASSES.sorcerer){
+			e=getSorcerer(item.name, Type.HERO, item.q, item.tr_item);
+		}
+		if(item.classes==CLASSES.wizard){
+			e=getWizard(item.name, Type.HERO, item.q, item.tr_item);
+		}
+		return e;
 	}
 }

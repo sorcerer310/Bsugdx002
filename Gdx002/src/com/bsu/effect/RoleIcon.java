@@ -14,9 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Role;
+import com.bsu.tools.CG.CLASSES;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.QUALITY;
 
 /**
  * 头像图标改进类
@@ -36,8 +37,8 @@ public class RoleIcon extends WidgetGroup {
 	public RoleIcon(Role r, boolean b) {
 		img_head = new Image(r.roleTexture); // 头像图片
 		img_head.setScale(0.5f);
-		img_frame = GTC.getInstance().getImageFrame(r);
-		img_classes = GTC.getInstance().getClassesIconImg(r);
+		img_frame = GTC.getInstance().getImageFrame(r.quality);
+		img_classes = GTC.getInstance().getClassesIconImg(r.classes);
 		img_classes.setPosition(
 				img_head.getWidth() / 2 - img_classes.getWidth() - 2, 2);
 		this.addActor(img_head);
@@ -53,7 +54,7 @@ public class RoleIcon extends WidgetGroup {
 			if (role_effect4[i] != null)
 				this.addActor(role_effect4[i]);
 		}
-		r.roleEffect = this;
+		r.roleIcon = this;
 		showEffect(b);
 	}
 	/**

@@ -5,8 +5,8 @@ import com.bsu.make.EquipFactory;
 import com.bsu.make.RoleFactory;
 import com.bsu.obj.Role.Type;
 import com.bsu.obj.skilltree.SkillTree;
-import com.bsu.tools.CG.CLASSES;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.CLASSES;
+import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
@@ -30,18 +30,9 @@ public class Player {
 	public Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
 	public Array<Role> playerFightRole = new Array<Role>();// 玩家拥有的出战英雄
 	public Array<Role> playerIdelRole = new Array<Role>();// 玩家背�
-	public int crystal_blue=0;
-	public int crystal_purple_f=0;//战士紫色技能碎片数量
-	public int crystal_orange_f=0;//战士橙色技能碎片数量
-	public int crystal_purple_w=0;//元素紫色技能碎片数量
-	public int crystal_orange_w=0;//元素橙色技能碎片数量
-	public int crystal_purple_c=0;//牧师紫色技能碎片数量
-	public int crystal_orange_c=0;//牧师橙色技能碎片数量
-	public int crystal_purple_s=0;//黑暗紫色技能碎片数量
-	public int crystal_orange_s=0;//黑暗橙色技能碎片数量
-	public int crystal_purple_a=0;//弓手紫色技能碎片数量
-	public int crystal_orange_a=0;//弓手橙色技能碎片数量
-	
+	public int crystal_blue = 0;
+	public int crystal_purple = 0;// 紫色技能碎片数量
+	public int crystal_orange = 0;// 橙色技能碎片数量
 
 	private Player() {
 		// TODO Auto-generated constructor stub
@@ -70,8 +61,8 @@ public class Player {
 					CLASSES.fighter, "测试人物", U.getRandom(100, -6, 6), 8, 10,
 					EquipFactory.getInstance().getWeaponByIdx(1), EquipFactory
 							.getInstance().getArmorByIdx(1), new SkillTree()
-							.getSkillTreeFixedSkill(103), GTC
-							.getInstance().fc_photo)); // 测试技能用
+							.getSkillTreeFixedSkill(103),
+					GTC.getInstance().fc_photo)); // 测试技能用
 
 			playerRole.add(rf.getFighter("fc", Role.Type.HERO, QUALITY.green,
 					GTC.getInstance().fc_photo));
@@ -94,9 +85,9 @@ public class Player {
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
 					GTC.getInstance().zyc_photo));
 			playerRole.add(rf.getFighter("张永臣", Type.HERO, QUALITY.purple,
-					GTC.getInstance().zyc_photo,96));
+					GTC.getInstance().zyc_photo, 96));
 			playerRole.add(rf.getFighter("11", Type.HERO, QUALITY.orange,
-					GTC.getInstance().zyc_photo,95));
+					GTC.getInstance().zyc_photo, 95));
 
 		}
 		resetRoleArray(playerRole);
@@ -112,6 +103,19 @@ public class Player {
 		if (playerFightRole.size == 0)
 			playerFightRole.add(playerRole.get(0));
 		return playerFightRole;
+	}
+
+	/**
+	 * 添加新Role
+	 * @param r
+	 * @param index
+	 */
+	public void addRole(Array<Role> roles) {
+		for(Role r:roles){
+			playerRole.add(r);
+		}
+		resetRoleArray(playerRole);
+		getPlayerPackageRole();
 	}
 
 	/**
@@ -157,7 +161,7 @@ public class Player {
 	}
 
 	/**
-	 * 取得某一个数组中的某一品质的card
+	 * 取得某一个数组中的某一品质的  card
 	 * 
 	 * @param q
 	 *            某品质

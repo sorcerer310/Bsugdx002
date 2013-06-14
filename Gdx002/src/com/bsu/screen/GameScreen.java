@@ -2,6 +2,9 @@ package com.bsu.screen;
 
 import java.util.Observable;
 import java.util.Observer;
+
+import sun.tools.jps.Arguments;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -21,26 +24,35 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+<<<<<<< HEAD
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.AttackEffect;
+import com.bsu.effect.ItemIcon;
+import com.bsu.effect.RoleIcon;
 import com.bsu.effect.UIRoleEffect;
 import com.bsu.head.CubocScreen;
+import com.bsu.make.EquipFactory;
+import com.bsu.make.ItemFactory;
+import com.bsu.make.RoleFactory;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Commander;
+import com.bsu.obj.Item;
+import com.bsu.make.*;
+import com.bsu.obj.Commander;
+import com.bsu.obj.GameScreenData;
 import com.bsu.obj.MapBox;
+import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
-import com.bsu.tools.CG;
+import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.GameMap;
-import com.bsu.tools.U;
 
 public class GameScreen extends CubocScreen implements Observer,
 		GestureListener {
@@ -59,12 +71,24 @@ public class GameScreen extends CubocScreen implements Observer,
 	private AttackEffect attack_effect;
 	private Label fpsLabel;
 	private Image endBackImg;
+	private Array<Role> heros = new Array<Role>();		//该图所有英雄
+	private Array<Role> npcs = new Array<Role>();		//该图所有npc
+	private Array<Role> roles = new Array<Role>();		//所有的角色
 
 	public GameScreen(Game mxg) {
 		super(mxg);
+<<<<<<< HEAD
 		stage = new Stage(CG.rect_width, CG.rect_height, false);
 		UIStage = new Stage(CG.rect_width, CG.rect_height, false);
 		endStage = new Stage(CG.rect_width,CG.rect_height,false);
+		U.get_skin();
+		U.get_font();
+		U.get_sytle();
+=======
+		stage = new Stage(GC.rect_width, GC.rect_height, false);
+		UIStage = new Stage(GC.rect_width, GC.rect_height, false);
+		endStage = new Stage(GC.rect_width,GC.rect_height,false);
+>>>>>>> 9aabffd98880e3afc2c104b53689d7fbf9adf137
 	}
 
 	/**
@@ -75,23 +99,33 @@ public class GameScreen extends CubocScreen implements Observer,
 	 * @param roles
 	 *            关卡初始化英雄与敌人的数组，出生地点在地图中已经设置好
 	 */
-	public void game_init(Array<Role> roles) {
+	public void game_init(GameScreenData gsd){
+		this.heros = gsd.getHeroRoles();
+		this.npcs = gsd.getNpcRoles();
+		//将所有role放入同一Role中便于操作
+		roles.addAll(heros);
+		roles.addAll(npcs);
+		
 		stage.clear();
-		GameMap.make_map(lv);
+		GameMap.make_map(gsd.getMapName());
 		setAction_start(false);
 		setControlled(true);
-		if (mb == null) {
+		if (mb == null) 
 			mb = new MapBox();
-		}
 		stage.addActor(mb); // 增加地图方格显示
-		for (int i = 0; i < roles.size; i++) {
-			stage.addActor(roles.get(i));
-		}
+		
+		//增加敌人
+		for(Role r:npcs)
+			stage.addActor(r);
+		//增加英雄
+		for(Role r:heros)
+			stage.addActor(r);
+		
 		commander = Commander.getInstance(stage, this);
 		commander.resetRoles();
 		this.addActorListener();
-		setBornPosition(GameMap.map, Type.HERO, CG.object_layer_hero);
-		setBornPosition(GameMap.map, Type.ENEMY, CG.object_layer_enemy);
+		setBornPosition(GameMap.map, Type.HERO, GC.object_layer_hero);
+		setBornPosition(GameMap.map, Type.ENEMY, GC.object_layer_enemy);
 		if (fightUI == null) {
 			fightUI = new UIRoleEffect(UIStage, this);
 		} else {
@@ -101,41 +135,20 @@ public class GameScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < roles.size; i++)
 			roles.get(i).getRoleObserable().addObserver(fightUI);
 
+
 		c = (OrthographicCamera) stage.getCamera();
 		if (attack_effect == null) {
 			attack_effect = AttackEffect.getInstance();
 		}
 		if (endBackImg == null) {
 			endBackImg = new Image(WidgetFactory.getInstance().getTextureFill(
-					CG.rect_width, CG.rect_height, Color.GRAY, 0.3f));
+					GC.rect_width, GC.rect_height, Color.GRAY, 0.3f));
 		}
 		initRoles(roles);
 		fpsLabel = WidgetFactory.getInstance().makeLabel(
 				"" + Gdx.graphics.getFramesPerSecond(), stage, 1, 420, 30,
 				Color.RED);
 		stage.addActor(attack_effect);
-		
-/*
- * 测试代码		
- */
-//		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
-//		Window win = new Window("testWindow",skin.get(WindowStyle.class));
-//		win.setWidth(200);
-//		win.setHeight(200);
-//		win.setPosition(50, 50);
-//		
-//		Label label = new Label("阿迪考虑放假快乐的设计费刻录机的思考了房价肯定是减肥了开始的减肥了开始的",U.get_sytle());
-//		label.setWidth(100);
-//		label.setHeight(100);
-//		label.setPosition(50, 50);
-//		ScrollPane sp = new ScrollPane(label,skin.get(ScrollPaneStyle.class));
-//		sp.setWidth(80);
-//		sp.setHeight(80);
-//		sp.setPosition(0, 0);
-//		
-//		win.add(sp).expand().fill();
-//		stage.addActor(win);
-
 	}
 
 	/**
@@ -160,15 +173,12 @@ public class GameScreen extends CubocScreen implements Observer,
 				}
 			}
 		}
-		int index = 0;
-		for (Actor act : stage.getActors()) {
-			if (act instanceof Role) {
-				Role r = (Role) act;
-				if (r.getType().equals(p) && v.size > 0) {
-					r.setPosition(v.get(index).x, v.get(index).y);
-					index++;
-				}
-			}
+		
+		Array<Role> rs = p==Type.HERO?heros:npcs;
+		for(int i=0;i<(rs.size<v.size?rs.size:v.size);i++){
+			Role r = rs.get(i);
+			r.setVisible(true);
+			r.setPosition(v.get(i).x, v.get(i).y);
 		}
 	}
 
@@ -177,8 +187,8 @@ public class GameScreen extends CubocScreen implements Observer,
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		if (clingX != 0) {
 			int mx = clingX > 0 ? -1 : 1;
-			int maxW = GameMap.map_render.getMapWidthUnits() - CG.rect_width;
-			int w = CG.rect_width / 2;
+			int maxW = GameMap.map_render.getMapWidthUnits() - GC.rect_width;
+			int w = GC.rect_width / 2;
 			if (c.position.x + mx >= w && c.position.x + mx <= maxW + w) {
 				c.position.x += mx;
 			}
@@ -240,8 +250,8 @@ public class GameScreen extends CubocScreen implements Observer,
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (!isAction_start() && (isControlled())) {
-					int input_x = (int) (x / CG.map_box_value);
-					int input_y = (int) (y / CG.map_box_value);
+					int input_x = (int) (x / GC.map_box_value);
+					int input_y = (int) (y / GC.map_box_value);
 					for (Actor act : stage.getActors()) {
 						if (act instanceof Role) {
 							Role r = (Role) act;
@@ -258,8 +268,16 @@ public class GameScreen extends CubocScreen implements Observer,
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// 通知切换到主界面
+				if(roleIcon.size>0){
+					Array<Role> roles=new Array<Role>();
+					for(Item icon:roleIcon){
+						Role r=RoleFactory.getInstance().getRole(icon);
+						roles.add(r);
+					}	
+					Player.getInstance().addRole(roles);
+				}
 				setChanged();
-				notifyObservers(CG.screen_mpanel);
+				notifyObservers(GC.screen_mpanel);
 			}
 		});
 	}
@@ -323,7 +341,8 @@ public class GameScreen extends CubocScreen implements Observer,
 		heroControllor(commander.heros.get(0));
 		set_map_value(commander.heros.get(0));
 	}
-
+	
+	Array<Item> roleIcon=new Array<Item>();
 	/**
 	 * 战斗结束
 	 */
@@ -338,12 +357,51 @@ public class GameScreen extends CubocScreen implements Observer,
 
 		TextureRegion tr = GTC.getInstance().battle_end.findRegion(endname);
 		Image img = new Image(tr);
+<<<<<<< HEAD
 		img.setPosition((CG.rect_width - img.getWidth()) / 2,
 				(CG.rect_height - img.getHeight()) / 2 + 100);
+		roleIcon.clear();
+=======
+		img.setPosition((GC.rect_width - img.getWidth()) / 2,
+				(GC.rect_height - img.getHeight()) / 2 + 100);
 
+>>>>>>> 9aabffd98880e3afc2c104b53689d7fbf9adf137
 		endStage.clear();
 		endStage.addActor(endBackImg);
 		endStage.addActor(img);
+		if(victflag){
+			Table tableRole = new Table();
+			ScrollPane spRole = new ScrollPane(tableRole, U.get_skin().get(ScrollPaneStyle.class));
+			spRole.setWidth(400);
+			spRole.setHeight(70);
+			spRole.setPosition(20, 150);
+			spRole.setScrollingDisabled(false, true);
+			spRole.setupFadeScrollBars(0, 0);
+			for(int i=0;i<10;i++){
+				Item item=ItemFactory.getInstance().getItemById(101);
+				ItemIcon icon=new ItemIcon(item);
+				tableRole.add(icon).width(icon.img_frame.getWidth())
+						.height(icon.img_frame.getHeight()) // 设置photo宽度和高度
+						.padTop(2f).align(Align.top)// 没起作用。。。
+						.spaceLeft(10f).spaceRight(10f); // 设置各photo之间的边距
+				roleIcon.add(item);
+			}
+			Table table = new Table();
+			ScrollPane sp = new ScrollPane(table, U.get_skin().get(ScrollPaneStyle.class));
+			sp.setWidth(400);
+			sp.setHeight(70);
+			sp.setPosition(20, 90);
+			sp.setScrollingDisabled(false, true);
+			sp.setupFadeScrollBars(0, 0);
+			for(int i=0;i<10;i++){
+				table.defaults().padRight(10);
+				table.defaults().padTop(10);
+				Image icon=new Image(ItemFactory.getInstance().getItemById(1).tr_item);
+				table.add(icon);
+			}
+			endStage.addActor(spRole);
+			endStage.addActor(sp);
+		}
 		battleEndFlag = true;
 		setBattleEndFlag(battleEndFlag);
 	}
@@ -357,10 +415,10 @@ public class GameScreen extends CubocScreen implements Observer,
 		for (Role r : commander.heros) {
 			if (r.getType() == Type.HERO) {
 				r.setSelected(false);
-				r.roleEffect.showEffect(false);
+				r.roleIcon.showEffect(false);
 				if (hero == r) {
 					hero.setSelected(true);
-					hero.roleEffect.showEffect(true);
+					hero.roleIcon.showEffect(true);
 				}
 			}
 		}
@@ -445,7 +503,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
 		// TODO Auto-generated method stub
-		clingX = velocityX > 0 ? CG.rect_width / 2 : -CG.rect_width / 2;
+		clingX = velocityX > 0 ? GC.rect_width / 2 : -GC.rect_width / 2;
 		return false;
 	}
 

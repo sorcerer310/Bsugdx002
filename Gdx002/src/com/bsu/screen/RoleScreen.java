@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.RoleIcon;
 import com.bsu.effect.SkillIcon;
@@ -27,8 +28,8 @@ import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.Skill;
-import com.bsu.tools.CG;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC;
+import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 import com.esotericsoftware.tablelayout.BaseTableLayout;
@@ -50,28 +51,27 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private WidgetFactory wfy;// 界面工厂类
 	private int skillIndex;// 希望改变的技能
 	private Array<Image> bImg = new Array<Image>();
-	private int width = 70;
 	private QUALITY quality;// 当前选择显示的品质
 
 	public RoleScreen(Game game) {
 		super(game);
-		stage = new Stage(CG.rect_width, CG.rect_height, false);
-		sRoleStage = new Stage(CG.rect_width, CG.rect_height, false);
-		RoleInfoStage = new Stage(CG.rect_width, CG.rect_height, false);
+		stage = new Stage(GC.rect_width, GC.rect_height, false);
+		sRoleStage = new Stage(GC.rect_width, GC.rect_height, false);
+		RoleInfoStage = new Stage(GC.rect_width, GC.rect_height, false);
 		wfy = WidgetFactory.getInstance();
 		background = new Image(GTC.getInstance().rolePanel);
 		stage.addActor(background);
-		ib_back = wfy.makeImageButton(CG.button_back, stage, 375, 272, 1);
-		allImg = WidgetFactory.getInstance().makeImageButton(CG.button_all,
+		ib_back = wfy.makeImageButton(GC.button_back, stage, 375, 272, 1);
+		allImg = WidgetFactory.getInstance().makeImageButton(GC.button_all,
 				stage, 20, 20, 0.5f);
-		greenImg = WidgetFactory.getInstance().makeImageButton(CG.button_green,
+		greenImg = WidgetFactory.getInstance().makeImageButton(GC.button_green,
 				stage, 83, 20, 0.5f);
-		blueImg = WidgetFactory.getInstance().makeImageButton(CG.button_blue,
+		blueImg = WidgetFactory.getInstance().makeImageButton(GC.button_blue,
 				stage, 146, 20, 0.5f);
 		purpleImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_purple, stage, 209, 20, 0.5f);
+				GC.button_purple, stage, 209, 20, 0.5f);
 		orangeImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_orange, stage, 272, 20, 0.5f);
+				GC.button_orange, stage, 272, 20, 0.5f);
 		bImg.add(allImg);
 		bImg.add(greenImg);
 		bImg.add(blueImg);
@@ -128,24 +128,21 @@ public class RoleScreen extends CubocScreen implements Observer,
 		/*
 		 * 滑动容器
 		 */
-//		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
-		Skin skin = new Skin(Gdx.files.internal("data/skin/bsuuiskin.json"));
 		Table table = new Table();
-		ScrollPane sp = new ScrollPane(table, skin.get(ScrollPaneStyle.class));
+		ScrollPane sp = new ScrollPane(table, U.get_skin().get(ScrollPaneStyle.class));
 		sp.setWidth(441);
 		sp.setHeight(65);
 		sp.setPosition(20, 45);
 		sp.setScrollingDisabled(false, true);
+		sp.setupFadeScrollBars(0f, 0f);
 		sRoleStage.addActor(sp);
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-
 			final RoleIcon photo = new RoleIcon(r, false);
-			table.add(photo).width(r.roleTexture.getRegionWidth() / 2)
-					.height(r.roleTexture.getRegionHeight() / 2) // 设置photo宽度和高度
-					.padTop(2f).align(BaseTableLayout.TOP)// 没起作用。。。
+			table.add(photo).width(photo.img_frame.getWidth())
+					.height(photo.img_frame.getHeight()) // 设置photo宽度和高度
+					.padTop(2f).align(Align.top)// 没起作用。。。
 					.spaceLeft(10f).spaceRight(10f); // 设置各photo之间的边距
-
 			photo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
@@ -161,7 +158,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 				}
 			});
 		}
-		table.row();
 		if (roleArray.size > 0) {
 			showRoleInfo(roleArray.get(0));
 		} else {
@@ -366,7 +362,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(CG.button_back);
+				notifyObservers(GC.button_back);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}

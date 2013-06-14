@@ -23,7 +23,7 @@ import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.screen.GameScreen;
-import com.bsu.tools.CG;
+import com.bsu.tools.GC;
 import com.bsu.tools.U;
 
 /**
@@ -130,10 +130,10 @@ public class UIRoleEffect implements Observer {
 	 */
 	public void actingRole(Role r) {
 		for (Role e : Player.getInstance().playerFightRole) {
-			e.roleEffect.showEffect(false);
+			e.roleIcon.showEffect(false);
 		}
 		if (r != null && r.type == Type.HERO) {
-			r.roleEffect.showEffect(true);
+			r.roleIcon.showEffect(true);
 		}
 	}
 

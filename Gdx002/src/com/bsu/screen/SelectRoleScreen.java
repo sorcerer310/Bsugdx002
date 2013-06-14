@@ -14,18 +14,22 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.RoleIcon;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.TipsWindows;
 import com.bsu.make.WidgetFactory;
-import com.bsu.make.GameScreenConfigure;
+import com.bsu.make.GameScreenFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
-import com.bsu.tools.CG;
+import com.bsu.tools.GC;
 import com.bsu.tools.MessageObject;
 import com.bsu.tools.U;
-import com.bsu.tools.CG.QUALITY;
+import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 
 public class SelectRoleScreen extends CubocScreen implements Observer,
@@ -47,23 +51,22 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 
 	public SelectRoleScreen(Game game) {
 		super(game);
-		stage = new Stage(CG.rect_width, CG.rect_height, false);
-		sRoleStage = new Stage(CG.rect_width, CG.rect_height, false);
+		stage = new Stage(GC.rect_width, GC.rect_height, false);
+		sRoleStage = new Stage(GC.rect_width, GC.rect_height, false);
 		background = new Image(GTC.getInstance().selectRolePanel);
 		stage.addActor(background);
-		ib_back = WidgetFactory.getInstance().makeImageButton(CG.button_back,
+		ib_back = WidgetFactory.getInstance().makeImageButton(GC.button_back,
 				stage, 375, 266, 1f);
-		allImg = WidgetFactory.getInstance().makeImageButton(CG.button_all,
+		allImg = WidgetFactory.getInstance().makeImageButton(GC.button_all,
 				stage, 100, 20, 0.5f);
-		greenImg = WidgetFactory.getInstance().makeImageButton(CG.button_green,
+		greenImg = WidgetFactory.getInstance().makeImageButton(GC.button_green,
 				stage, 163, 20, 0.5f);
-		blueImg = WidgetFactory.getInstance().makeImageButton(CG.button_blue,
+		blueImg = WidgetFactory.getInstance().makeImageButton(GC.button_blue,
 				stage, 226, 20, 0.5f);
 		purpleImg = WidgetFactory.getInstance().makeImageButton(
-				CG.button_purple, stage, 289, 20, 0.5f);
+				GC.button_purple, stage, 289, 20, 0.5f);
 		orangeImg = WidgetFactory.getInstance().makeImageButton(
 				CG.button_orange, stage, 352, 20, 0.5f);
-		addRoleToStage(QUALITY.all);
 		bImg.add(allImg);
 		bImg.add(greenImg);
 		bImg.add(blueImg);
@@ -126,19 +129,29 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	 */
 	private void showQualityRole(final Array<Role> roleArray) {
 		sRoleStage.clear();
-		int frlength = roleArray.size;
-		int x = 40;
-		int y = 200;
-		int w = 68;
+		int x = 60;
+		int y = 70;
 		int value=6;
-		int max=18;
+		Table table = new Table();
+		ScrollPane sp = new ScrollPane(table, U.get_skin().get(ScrollPaneStyle.class));
+		sp.setWidth(360);
+		sp.setHeight(180);
+		sp.setPosition(x, y);
+		sp.setScrollingDisabled(true, false);
+		sp.setupFadeScrollBars(0f, 0f);
+		sRoleStage.addActor(sp);
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			final Vector2 v = new Vector2(x + i % value * w, y - i / value* w);
-			final RoleIcon photo = new RoleIcon(r, false);
-			photo.setPosition(v.x, v.y);
-			sRoleStage.addActor(photo);
-			r.roleEffect=photo;
+			RoleIcon photo = new RoleIcon(r, false);
+			if(i%value==0&&i>0){
+				table.row();
+			}
+			table.add(photo).width(photo.img_frame.getWidth())
+					.height(photo.img_frame.getHeight()) // 设置photo宽度和高度
+					.padTop(2f).align(Align.top)// 没起作用。。。
+					.spaceLeft(10f).spaceRight(10f); // 设置各photo之间的边距
+			r.roleIcon=photo;
+			final Vector2 v = new Vector2(x + i % value * 68, y - i / value* 68);
 			photo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
@@ -171,15 +184,17 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 						Player.getInstance().addRoleToFIght(r, 100);
 					}
 					Player.getInstance().getPlayerPackageRole();
-					GameScreenConfigure.getInstance().setHeroRoles(
-							Player.getInstance().playerFightRole);
+//					GameScreenFactory.getInstance().setHeroRoles(
+//							Player.getInstance().playerFightRole);
 					setChanged();
-					notifyObservers(CG.button_back);
+					notifyObservers(GC.button_back);
 					ib_back.setScale(1f);
 					super.touchUp(event, x, y, pointer, button);
 				}
 			});
 		}
+<<<<<<< HEAD
+=======
 		for (int i = frlength; i < max; i++) {
 			Vector2 v = new Vector2(x + i % value * w, y - i / value * w);
 			Image img_frame = GTC.getInstance().getImageFrame(null);
@@ -191,11 +206,12 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 						int pointer, int button) {
 					setChanged();
 					notifyObservers(new MessageObject(null,
-							CG.screen_selectRole));
+							GC.screen_selectRole));
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
 		}
+>>>>>>> 9aabffd98880e3afc2c104b53689d7fbf9adf137
 	}
 
 	/**
@@ -205,12 +221,12 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	 */
 	private void resetRole(Role r) {
 		for (Role e : Player.getInstance().playerIdelRole) {
-			e.roleEffect.showEffect(false);
+			e.roleIcon.showEffect(false);
 		}
 		for (Actor act : sRoleStage.getActors()) {
 			if (act instanceof RoleIcon) {
-				if (act.equals(r.roleEffect)) {
-					r.roleEffect.showEffect(true);
+				if (act.equals(r.roleIcon)) {
+					r.roleIcon.showEffect(true);
 				}
 			}
 		}
@@ -234,11 +250,11 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		stage.draw();
 		sRoleStage.act(Gdx.graphics.getDeltaTime());
 		sRoleStage.draw();
-
 	}
 
 	@Override
 	public void hide() {
+		quality=null;
 		Gdx.input.setInputProcessor(null);
 	}
 
@@ -259,7 +275,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				setChanged();
-				notifyObservers(CG.button_back);
+				notifyObservers(GC.button_back);
 				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
