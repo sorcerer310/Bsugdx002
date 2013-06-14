@@ -24,7 +24,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-<<<<<<< HEAD
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -77,18 +76,16 @@ public class GameScreen extends CubocScreen implements Observer,
 
 	public GameScreen(Game mxg) {
 		super(mxg);
-<<<<<<< HEAD
+
 		stage = new Stage(CG.rect_width, CG.rect_height, false);
 		UIStage = new Stage(CG.rect_width, CG.rect_height, false);
 		endStage = new Stage(CG.rect_width,CG.rect_height,false);
 		U.get_skin();
 		U.get_font();
 		U.get_sytle();
-=======
 		stage = new Stage(GC.rect_width, GC.rect_height, false);
 		UIStage = new Stage(GC.rect_width, GC.rect_height, false);
 		endStage = new Stage(GC.rect_width,GC.rect_height,false);
->>>>>>> 9aabffd98880e3afc2c104b53689d7fbf9adf137
 	}
 
 	/**
@@ -357,15 +354,10 @@ public class GameScreen extends CubocScreen implements Observer,
 
 		TextureRegion tr = GTC.getInstance().battle_end.findRegion(endname);
 		Image img = new Image(tr);
-<<<<<<< HEAD
+
 		img.setPosition((CG.rect_width - img.getWidth()) / 2,
 				(CG.rect_height - img.getHeight()) / 2 + 100);
 		roleIcon.clear();
-=======
-		img.setPosition((GC.rect_width - img.getWidth()) / 2,
-				(GC.rect_height - img.getHeight()) / 2 + 100);
-
->>>>>>> 9aabffd98880e3afc2c104b53689d7fbf9adf137
 		endStage.clear();
 		endStage.addActor(endBackImg);
 		endStage.addActor(img);

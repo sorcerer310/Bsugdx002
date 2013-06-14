@@ -24,7 +24,6 @@ import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
-
 public class TipsWindows {
 
 	private static TipsWindows instance = null;

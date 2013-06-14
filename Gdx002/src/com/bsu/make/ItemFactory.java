@@ -89,7 +89,6 @@ public class ItemFactory {
 			break;
 		case 120:
 			item = new Item("橙色牧师法师卡片",Item.Type.rolecard,GTC.getInstance().fight_texture,GTC.getInstance().role_head_frame.findRegion("frame_orange"));
->>>>>>> 9aabffd98880e3afc2c104b53689d7fbf9adf137
 			break;
 		}
 		return item;

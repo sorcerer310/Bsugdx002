@@ -1,6 +1,8 @@
 package com.bsu.obj;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.bsu.make.WidgetFactory;
+import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 import com.bsu.tools.GC.LEVELYTPE;
