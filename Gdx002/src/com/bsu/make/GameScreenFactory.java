@@ -55,15 +55,17 @@ public class GameScreenFactory {
 		for(Role r:Player.getInstance().playerFightRole)
 			gsd.getHeroRoles().add(r);
 		//加入敌人
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,3));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手1", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,3));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手2", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手3", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手4", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手5", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手6", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手7", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手8", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手9", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手10", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手11", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
 
 		return gsd;
 	}

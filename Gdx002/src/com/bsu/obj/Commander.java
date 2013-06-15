@@ -88,7 +88,7 @@ public class Commander {
 			public void run() {
 				try {
 					while (true) {
-						Thread.sleep(100);
+						Thread.sleep(200);
 						CommandQueue.getInstance().runTask();
 					}
 				} catch (InterruptedException e) {
@@ -109,8 +109,8 @@ public class Commander {
 	public void roundEnd() {
 		if (!roundEndCompleted||gamescreen.isAction_start())
 			return;
-		gamescreen.setAction_start(true);
 		roundEndCompleted = false; // 回合操作开始设置完成标示为false
+		gamescreen.setAction_start(true);
 		resetRoles();
 		resetHeroValue();
 
@@ -160,11 +160,11 @@ public class Commander {
 		CommandQueue.getInstance().put(new CommandTask(){
 			@Override
 			public void opTask(BsuEvent be){
-
-				decideGameEnd();							//判断游戏是否结束
-				gamescreen.newRound();
 				be.notify(this, "roundEndCompleted");
 				roundEndCompleted = true;
+				gamescreen.newRound();
+				decideGameEnd();							//判断游戏是否结束
+
 			}
 		});
 	}
@@ -349,7 +349,7 @@ public class Commander {
 
 		for (int i = 0; i < attackRoles.size; i++) {
 			final Role r = attackRoles.get(i);
-			if(r.isDead) continue;								//如果当前role死亡，不进行操作
+			if(r.isDead || !r.isVisible()) continue;			//如果当前role死亡，不进行操作
 			if(!r.isRoundMove) {r.isRoundMove=true;continue;}	//如果本回合该英雄不行动则跳过该英雄
 			waitRoleFlag = true; 			// 初始化等待循环flag为true
 			currTaskComFlag = false;		//只是当前处理技能任务是否完成
@@ -401,6 +401,7 @@ public class Commander {
 					Commander.this.moveDirectCommand(r, direct, new BsuEvent(){
 						@Override
 						public void notify(Object obj, String msg) {
+//							System.out.println("msg:"+msg+" waitRoleFlag1:"+waitRoleFlag+" role:"+r.name);
 							waitRoleFlag = false;
 						}
 					});
@@ -410,10 +411,11 @@ public class Commander {
 
 			// 等待动作完成
 			while (waitRoleFlag) {
+//				System.out.println("thread waitRoleFlag:"+waitRoleFlag);
 				Thread.sleep(200);
 			}
 		}
-		be.notify(this, "command_heros_completed");
+		be.notify(this, "command_roles_completed");
 	}
 
 	/**
@@ -473,6 +475,7 @@ public class Commander {
 	 * @param my
 	 */
 	public void moveAction(final Role r, final int mx, final int my) {
+		
 		// GameScreen.setControlled(false);
 		gamescreen.setControlled(false);
 		waitRoleFlag = true;
@@ -605,10 +608,9 @@ public class Commander {
 		
 		for(int i=0;i<(npcsIsLived.size<v.size?npcsIsLived.size:v.size);i++){
 			Role r = npcsIsLived.get(i);
-			if(r.isDead)
-				continue;
-			r.setVisible(true);
 			r.setPosition(v.get(i).x, v.get(i).y);
+//			r.set_ani_from_state(STATE.idle);			
+			r.setVisible(true);
 		}
 		
 		

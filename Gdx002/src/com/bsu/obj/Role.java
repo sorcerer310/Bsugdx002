@@ -565,6 +565,21 @@ public class Role extends Actor {
 		set_ani_from_state(STATE.move);
 		if (face == FACE.right) {
 			this.setOrigin(0, 0);
+//			addAction(sequence(parallel(
+//					sequence(rotateBy(15, dur), rotateBy(-15, dur),
+//							rotateBy(-10, dur), rotateBy(10, dur),
+//							rotateBy(15, dur), rotateBy(-15, dur),
+//							rotateBy(-10, dur), rotateBy(10, dur)
+//					// rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur),
+//					// rotateBy(10, dur)
+//					), moveBy(x, y, GC.duration_move_box)), run(new Runnable() {
+//						@Override
+//						public void run() {
+//							if (be != null)
+//								be.notify(this, name);
+//							set_ani_from_state(STATE.idle);
+//						}
+//					})));
 			addAction(parallel(
 					sequence(rotateBy(15, dur), rotateBy(-15, dur),
 							rotateBy(-10, dur), rotateBy(10, dur),
@@ -575,13 +590,29 @@ public class Role extends Actor {
 					), moveBy(x, y, GC.duration_move_box), run(new Runnable() {
 						@Override
 						public void run() {
-							set_ani_from_state(STATE.idle);
 							if (be != null)
 								be.notify(this, name);
+							set_ani_from_state(STATE.idle);
 						}
 					})));
 		} else if (face == FACE.left) {
 			this.setOrigin(32, 0);
+//			addAction(sequence(parallel(
+//					sequence(rotateBy(-15, dur), rotateBy(15, dur),
+//							rotateBy(10, dur), rotateBy(-10, dur),
+//							rotateBy(-15, dur), rotateBy(15, dur),
+//							rotateBy(10, dur), rotateBy(-10, dur)
+//					// rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur),
+//					// rotateBy(-10, dur)
+//					), moveBy(x, y, GC.duration_move_box)), run(new Runnable() {
+//						@Override
+//						public void run() {
+//							if (be != null){
+//								be.notify(this, name);
+//							}
+//							set_ani_from_state(STATE.idle);
+//						}
+//					})));
 			addAction(parallel(
 					sequence(rotateBy(-15, dur), rotateBy(15, dur),
 							rotateBy(10, dur), rotateBy(-10, dur),
@@ -592,9 +623,10 @@ public class Role extends Actor {
 					), moveBy(x, y, GC.duration_move_box), run(new Runnable() {
 						@Override
 						public void run() {
-							set_ani_from_state(STATE.idle);
-							if (be != null)
+							if (be != null){
 								be.notify(this, name);
+							}
+							set_ani_from_state(STATE.idle);
 						}
 					})));
 		}

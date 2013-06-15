@@ -25,13 +25,14 @@ public class CommandQueue {
 		//当任务队列中有任务，或上一任务完成了，继续下一个任务
 		if(queue.isEmpty() || !taskCompleted)
 			return;
-//		System.out.println("poll task");
 		taskCompleted = false;
 		CommandTask ct = queue.poll();
 		ct.opTask(new BsuEvent(){
 			@Override
 			public void notify(Object obj, String msg) {
+				System.out.println("taskCompleted:"+msg);
 				taskCompleted = true;
+				
 			}
 		});
 	}
