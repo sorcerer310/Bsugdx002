@@ -61,6 +61,7 @@ public class FightScreen extends CubocScreen implements Observer {
 		ScrollPane sp = new ScrollPane(table,skin.get(ScrollPaneStyle.class));
 		sp.setWidth(102);
 		sp.setHeight(280);
+		
 		sp.setPosition(20, 20);
 		sp.setScrollingDisabled(true, false);
 		sp.setupFadeScrollBars(0f, 0f);

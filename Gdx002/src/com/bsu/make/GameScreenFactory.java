@@ -2,6 +2,7 @@ package com.bsu.make;
 
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Player;
+import com.bsu.obj.Reward;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.screen.GameScreen;
@@ -67,6 +68,12 @@ public class GameScreenFactory {
 		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手10", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
 		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手11", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
 
+		Array<Reward> reward = new Array<Reward>();
+		reward.add(new Reward(ItemFactory.getInstance().getItemById(1),1.0f));
+		reward.add(new Reward(ItemFactory.getInstance().getItemById(101),1.0f));
+		
+		gsd.setReward(reward);
+		
 		return gsd;
 	}
 	

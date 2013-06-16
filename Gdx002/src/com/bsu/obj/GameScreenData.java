@@ -13,6 +13,7 @@ public class GameScreenData{
 	private Array<Role> heroRoles=new Array<Role>();			//出战的所有英雄
 	private Array<Role> npcRoles=new Array<Role>();				//出战的所有敌人
 	private String mapName = "";								//对应地图名称 
+	private Array<Reward> reward = new Array<Reward>();			//地图奖励
 	
 	public Array<Role> getRols() {
 		roles.clear();
@@ -43,6 +44,14 @@ public class GameScreenData{
 
 	public void setMapName(String mapName) {
 		this.mapName = mapName;
+	}
+
+	public Array<Reward> getReward() {
+		return reward;
+	}
+
+	public void setReward(Array<Reward> reward) {
+		this.reward = reward;
 	}
 }
 
