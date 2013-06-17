@@ -22,10 +22,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.RoleIcon;
 import com.bsu.head.CubocScreen;
-import com.bsu.make.TipsWindows;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
+import com.bsu.obj.TipsWindows;
 import com.bsu.tools.GC;
 import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
@@ -187,6 +187,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		sp.setScrollingDisabled(true, false);
 		sp.setupFadeScrollBars(0f, 0f);
 		sRoleStage.addActor(sp);
+		table.align(Align.top);
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
 			RoleIcon photo = new RoleIcon(r,false);
@@ -198,7 +199,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 					.height(photo.img_frame.getHeight()) // 设置photo宽度和高度
 					.padTop(2f).padBottom(2)
 					.spaceLeft(10f).spaceRight(10f); // 设置各photo之间的边距
-			final Vector2 v = new Vector2(x+10 + i % 5 * 58, y+140 - i / 5 * 48);
+			final Vector2 v = new Vector2(x+10 + i % 5 * 58, y+2 - i / 5 * 50);
 			photo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,

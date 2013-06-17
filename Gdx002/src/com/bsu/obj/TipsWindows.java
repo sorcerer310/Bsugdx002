@@ -1,4 +1,4 @@
-package com.bsu.make;
+package com.bsu.obj;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -16,8 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.bsu.obj.Equip;
-import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.GC;
 import com.bsu.tools.GC.QUALITY;
@@ -33,7 +31,6 @@ public class TipsWindows {
 
 	public static TipsWindows getInstance() {
 		if (instance == null)
-
 			instance = new TipsWindows();
 		return instance;
 	}
@@ -48,7 +45,6 @@ public class TipsWindows {
 		tipsWindows.align(Align.left);
 		tipsWindows.setWidth(200);
 	}
-
 	/**
 	 * 显示更换的人物信息，位置动态
 	 * 
