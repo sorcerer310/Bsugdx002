@@ -470,8 +470,9 @@ public class Role extends Actor {
 		for (Role r : rs) {
 			if (this != r) {
 				num = face == FACE.right ? 1 : -1;
+				//如果这个单位不是自己，并且在地图上存在，且没有死亡，返回true
 				if ((r.getBoxY() == this.getBoxY())
-						&& (r.getBoxX() == this.getBoxX() + num)) {
+						&& (r.getBoxX() == this.getBoxX() + num) && r.isVisible() && !r.isDead) {
 					return true;
 				}
 			}
@@ -565,14 +566,27 @@ public class Role extends Actor {
 		set_ani_from_state(STATE.move);
 		if (face == FACE.right) {
 			this.setOrigin(0, 0);
-//			addAction(sequence(parallel(
+						addAction(sequence(parallel(
+								sequence(rotateBy(15, dur), rotateBy(-15, dur),
+										rotateBy(-10, dur), rotateBy(10, dur),
+										rotateBy(15, dur), rotateBy(-15, dur),
+										rotateBy(-10, dur), rotateBy(10, dur)
+								// rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur),
+								// rotateBy(10, dur)
+								), moveBy(x, y, GC.duration_move_box)), run(new Runnable() {
+									@Override
+									public void run() {
+										if (be != null)
+											be.notify(this, name);
+										set_ani_from_state(STATE.idle);
+									}
+								})));
+//			addAction(parallel(
 //					sequence(rotateBy(15, dur), rotateBy(-15, dur),
 //							rotateBy(-10, dur), rotateBy(10, dur),
 //							rotateBy(15, dur), rotateBy(-15, dur),
 //							rotateBy(-10, dur), rotateBy(10, dur)
-//					// rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur),
-//					// rotateBy(10, dur)
-//					), moveBy(x, y, GC.duration_move_box)), run(new Runnable() {
+//					), moveBy(x, y, GC.duration_move_box), run(new Runnable() {
 //						@Override
 //						public void run() {
 //							if (be != null)
@@ -580,31 +594,30 @@ public class Role extends Actor {
 //							set_ani_from_state(STATE.idle);
 //						}
 //					})));
-			addAction(parallel(
-					sequence(rotateBy(15, dur), rotateBy(-15, dur),
-							rotateBy(-10, dur), rotateBy(10, dur),
-							rotateBy(15, dur), rotateBy(-15, dur),
-							rotateBy(-10, dur), rotateBy(10, dur)
-					// rotateBy(15, dur), rotateBy(-15, dur),rotateBy(-10, dur),
-					// rotateBy(10, dur)
-					), moveBy(x, y, GC.duration_move_box), run(new Runnable() {
-						@Override
-						public void run() {
-							if (be != null)
-								be.notify(this, name);
-							set_ani_from_state(STATE.idle);
-						}
-					})));
 		} else if (face == FACE.left) {
 			this.setOrigin(32, 0);
-//			addAction(sequence(parallel(
+						addAction(sequence(parallel(
+								sequence(rotateBy(-15, dur), rotateBy(15, dur),
+										rotateBy(10, dur), rotateBy(-10, dur),
+										rotateBy(-15, dur), rotateBy(15, dur),
+										rotateBy(10, dur), rotateBy(-10, dur)
+								// rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur),
+								// rotateBy(-10, dur)
+								), moveBy(x, y, GC.duration_move_box)), run(new Runnable() {
+									@Override
+									public void run() {
+										if (be != null){
+											be.notify(this, name);
+										}
+										set_ani_from_state(STATE.idle);
+									}
+								})));
+//			addAction(parallel(
 //					sequence(rotateBy(-15, dur), rotateBy(15, dur),
 //							rotateBy(10, dur), rotateBy(-10, dur),
 //							rotateBy(-15, dur), rotateBy(15, dur),
 //							rotateBy(10, dur), rotateBy(-10, dur)
-//					// rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur),
-//					// rotateBy(-10, dur)
-//					), moveBy(x, y, GC.duration_move_box)), run(new Runnable() {
+//					), moveBy(x, y, GC.duration_move_box), run(new Runnable() {
 //						@Override
 //						public void run() {
 //							if (be != null){
@@ -613,22 +626,6 @@ public class Role extends Actor {
 //							set_ani_from_state(STATE.idle);
 //						}
 //					})));
-			addAction(parallel(
-					sequence(rotateBy(-15, dur), rotateBy(15, dur),
-							rotateBy(10, dur), rotateBy(-10, dur),
-							rotateBy(-15, dur), rotateBy(15, dur),
-							rotateBy(10, dur), rotateBy(-10, dur)
-					// rotateBy(-15, dur), rotateBy(15, dur),rotateBy(10, dur),
-					// rotateBy(-10, dur)
-					), moveBy(x, y, GC.duration_move_box), run(new Runnable() {
-						@Override
-						public void run() {
-							if (be != null){
-								be.notify(this, name);
-							}
-							set_ani_from_state(STATE.idle);
-						}
-					})));
 		}
 	}
 
