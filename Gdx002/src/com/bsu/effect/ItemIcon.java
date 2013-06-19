@@ -15,7 +15,7 @@ public class ItemIcon extends WidgetGroup{
 		img_item.setScale(0.5f);
 		img_frame = GTC.getInstance().getImageFrame(i.q);	//边框图片
 		img_class=GTC.getInstance().getClassesIconImg(i.classes);
-		img_class.setPosition(img_item.getWidth()-img_class.getWidth()-2, 2);
+		img_class.setPosition(img_item.getWidth()/2-img_class.getWidth()-2, 2);
 		this.addActor(img_item);
 		this.addActor(img_class);
 		this.addActor(img_frame);

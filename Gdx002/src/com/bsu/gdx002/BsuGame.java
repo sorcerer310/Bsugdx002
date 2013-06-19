@@ -53,7 +53,7 @@ public class BsuGame extends Game {
 				if (arg.toString().equals(GC.screen_game)) {
 					BsuGame.this.setScreen(this);
 //					this.game_init(GameScreenConfigure.getInstance().getHeroRoles(),GameScreenConfigure.getInstance().getNpcRoles());
-					this.game_init(GameScreenFactory.getInstance().makeGameScreen(0));
+					this.game_init(GameScreenFactory.getInstance().makeGameScreen(GameScreen.lv));
 				}
 			}
 		};

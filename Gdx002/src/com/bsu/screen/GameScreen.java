@@ -49,6 +49,7 @@ import com.bsu.obj.Commander;
 import com.bsu.obj.GameScreenData;
 import com.bsu.obj.MapBox;
 import com.bsu.obj.Player;
+import com.bsu.obj.Reward;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.tools.GC;
@@ -73,24 +74,24 @@ public class GameScreen extends CubocScreen implements Observer,
 	private AttackEffect attack_effect;
 	private Label fpsLabel;
 	private Image endBackImg;
-	public Array<Role> heros = new Array<Role>();					//该图所有英雄
-	public Array<Role> npcs = new Array<Role>();					//该图所有npc
-	private Array<Role> roles = new Array<Role>();					//所有的角色
-	public Array<Vector2> heroArisePos = new Array<Vector2>();		//英雄出生地
-	public Array<Vector2> npcArisePos = new Array<Vector2>();		//敌人出生地
+	public Array<Role> heros = new Array<Role>(); // 该图所有英雄
+	public Array<Role> npcs = new Array<Role>(); // 该图所有npc
+	private Array<Role> roles = new Array<Role>(); // 所有的角色
+	public Array<Vector2> heroArisePos = new Array<Vector2>(); // 英雄出生地
+	public Array<Vector2> npcArisePos = new Array<Vector2>(); // 敌人出生地
 
 	public GameScreen(Game mxg) {
 		super(mxg);
 
 		stage = new Stage(GC.rect_width, GC.rect_height, false);
 		UIStage = new Stage(GC.rect_width, GC.rect_height, false);
-		endStage = new Stage(GC.rect_width,GC.rect_height,false);
+		endStage = new Stage(GC.rect_width, GC.rect_height, false);
 		U.get_skin();
 		U.get_font();
 		U.get_sytle();
 		stage = new Stage(GC.rect_width, GC.rect_height, false);
 		UIStage = new Stage(GC.rect_width, GC.rect_height, false);
-		endStage = new Stage(GC.rect_width,GC.rect_height,false);
+		endStage = new Stage(GC.rect_width, GC.rect_height, false);
 	}
 
 	/**
@@ -101,28 +102,28 @@ public class GameScreen extends CubocScreen implements Observer,
 	 * @param roles
 	 *            关卡初始化英雄与敌人的数组，出生地点在地图中已经设置好
 	 */
-	public void game_init(GameScreenData gsd){
+	public void game_init(GameScreenData gsd) {
 		this.heros = gsd.getHeroRoles();
 		this.npcs = gsd.getNpcRoles();
-		//将所有role放入同一Role中便于操作
+		// 将所有role放入同一Role中便于操作
 		roles.addAll(heros);
 		roles.addAll(npcs);
-		
+
 		stage.clear();
 		GameMap.make_map(gsd.getMapName());
 		setAction_start(false);
 		setControlled(true);
-		if (mb == null) 
+		if (mb == null)
 			mb = new MapBox();
 		stage.addActor(mb); // 增加地图方格显示
-		
-		//增加敌人
-		for(Role r:npcs)
+
+		// 增加敌人
+		for (Role r : npcs)
 			stage.addActor(r);
-		//增加英雄
-		for(Role r:heros)
+		// 增加英雄
+		for (Role r : heros)
 			stage.addActor(r);
-		
+
 		commander = Commander.getInstance(stage, this);
 		commander.resetRoles();
 		this.addActorListener();
@@ -136,7 +137,6 @@ public class GameScreen extends CubocScreen implements Observer,
 		// 为role增加观察者
 		for (int i = 0; i < roles.size; i++)
 			roles.get(i).getRoleObserable().addObserver(fightUI);
-
 
 		c = (OrthographicCamera) stage.getCamera();
 		if (attack_effect == null) {
@@ -175,14 +175,13 @@ public class GameScreen extends CubocScreen implements Observer,
 				}
 			}
 		}
-		if(p==Type.HERO)
+		if (p == Type.HERO)
 			heroArisePos.addAll(v);
 		else
 			npcArisePos.addAll(v);
-		
-		
-		Array<Role> rs = p==Type.HERO?heros:npcs;
-		for(int i=0;i<(rs.size<v.size?rs.size:v.size);i++){
+
+		Array<Role> rs = p == Type.HERO ? heros : npcs;
+		for (int i = 0; i < (rs.size < v.size ? rs.size : v.size); i++) {
 			Role r = rs.get(i);
 			r.setVisible(true);
 			r.setPosition(v.get(i).x, v.get(i).y);
@@ -275,12 +274,12 @@ public class GameScreen extends CubocScreen implements Observer,
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// 通知切换到主界面
-				if(roleIcon.size>0){
-					Array<Role> roles=new Array<Role>();
-					for(Item icon:roleIcon){
-						Role r=RoleFactory.getInstance().getRole(icon);
+				if (roleIcon.size > 0) {
+					Array<Role> roles = new Array<Role>();
+					for (Item icon : roleIcon) {
+						Role r = RoleFactory.getInstance().getRole(icon);
 						roles.add(r);
-					}	
+					}
 					Player.getInstance().addRole(roles);
 				}
 				setChanged();
@@ -348,8 +347,9 @@ public class GameScreen extends CubocScreen implements Observer,
 		heroControllor(commander.heros.get(0));
 		set_map_value(commander.heros.get(0));
 	}
-	
-	Array<Item> roleIcon=new Array<Item>();
+
+	Array<Item> roleIcon = new Array<Item>();
+
 	/**
 	 * 战斗结束
 	 */
@@ -371,35 +371,42 @@ public class GameScreen extends CubocScreen implements Observer,
 		endStage.clear();
 		endStage.addActor(endBackImg);
 		endStage.addActor(img);
-		if(victflag){
+		if (victflag) {
 			Table tableRole = new Table();
-			ScrollPane spRole = new ScrollPane(tableRole, U.get_skin().get(ScrollPaneStyle.class));
+			ScrollPane spRole = new ScrollPane(tableRole, U.get_skin().get(
+					ScrollPaneStyle.class));
 			spRole.setWidth(400);
 			spRole.setHeight(70);
 			spRole.setPosition(20, 150);
 			spRole.setScrollingDisabled(false, true);
 			spRole.setupFadeScrollBars(0, 0);
-			for(int i=0;i<10;i++){
-				Item item=ItemFactory.getInstance().getItemById(101);
-				ItemIcon icon=new ItemIcon(item);
-				tableRole.add(icon).width(icon.img_frame.getWidth())
-						.height(icon.img_frame.getHeight()) // 设置photo宽度和高度
-						.padTop(2f).align(Align.top)
-						.spaceLeft(10f).spaceRight(10f); // 设置各photo之间的边距
-				roleIcon.add(item);
+			for (Reward r : GameScreenFactory.getInstance().gsd.getReward()) {
+				if (r.item.type == com.bsu.obj.Item.Type.rolecard) {
+					ItemIcon icon = new ItemIcon(r.item);
+					tableRole.add(icon).width(icon.img_frame.getWidth())
+							.height(icon.img_frame.getHeight())
+							// 设置photo宽度和高度
+							.padTop(2f).align(Align.top).spaceLeft(10f)
+							.spaceRight(10f); // 设置各photo之间的边距
+					roleIcon.add(r.item);
+				}
 			}
 			Table table = new Table();
-			ScrollPane sp = new ScrollPane(table, U.get_skin().get(ScrollPaneStyle.class));
+			ScrollPane sp = new ScrollPane(table, U.get_skin().get(
+					ScrollPaneStyle.class));
 			sp.setWidth(400);
 			sp.setHeight(70);
 			sp.setPosition(20, 90);
 			sp.setScrollingDisabled(false, true);
 			sp.setupFadeScrollBars(0, 0);
-			for(int i=0;i<10;i++){
-				table.defaults().padRight(10);
-				table.defaults().padTop(10);
-				Image icon=new Image(ItemFactory.getInstance().getItemById(1).tr_item);
-				table.add(icon);
+			for (Reward r : GameScreenFactory.getInstance().gsd.getReward()) {
+				if (r.item.type == com.bsu.obj.Item.Type.skillpart) {
+					table.defaults().padRight(10);
+					table.defaults().padTop(10);
+					Image icon = new Image(ItemFactory.getInstance()
+							.getItemById(1).tr_item);
+					table.add(icon);
+				}
 			}
 			endStage.addActor(spRole);
 			endStage.addActor(sp);

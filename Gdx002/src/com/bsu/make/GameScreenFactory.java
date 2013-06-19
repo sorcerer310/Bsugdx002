@@ -21,18 +21,20 @@ public class GameScreenFactory {
 			instance = new GameScreenFactory();
 		return instance;
 	}
+	
+	public GameScreenData gsd = null;
 	/**
 	 * 根据索引生成一个关卡
 	 * @param id
 	 * @return
 	 */
 	public GameScreenData makeGameScreen(int id){
-		GameScreenData gsd = null;
 		switch(id){
 		case 0:
 			gsd = makeGameScreenTeaching();
 			break;
 		case 1:
+			gsd=makeGameScreenLv2();
 			break;
 		case 2:
 			break;
@@ -48,48 +50,39 @@ public class GameScreenFactory {
 	 */
 	private  GameScreenData makeGameScreenTeaching(){
 		GameScreenData gsd = new GameScreenData();
-
 		gsd.setId(0);
 		gsd.setMapName("teaching");
-		
 		//加入玩家的上场英雄
 		for(Role r:Player.getInstance().playerFightRole)
 			gsd.getHeroRoles().add(r);
 		//加入敌人
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手1", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,3));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手2", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手3", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手4", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手5", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手6", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手7", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手8", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手9", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手10", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("撒手11", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
-
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("NPC", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,3));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("NPC", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
 		Array<Reward> reward = new Array<Reward>();
 		reward.add(new Reward(ItemFactory.getInstance().getItemById(1),1.0f));
 		reward.add(new Reward(ItemFactory.getInstance().getItemById(101),1.0f));
-		
 		gsd.setReward(reward);
-		
 		return gsd;
 	}
-	
-	private void makeGameScreen1(GameScreen gs) {
-
-		Array<Role> rols = new Array<Role>();
-		rols.add(RoleFactory.getInstance().getFighter("hero1", Type.HERO, QUALITY.green,GTC.getInstance().zyc_photo));
-		rols.add(RoleFactory.getInstance().getFighter("hero2", Type.HERO, QUALITY.green,GTC.getInstance().zyc_photo));
-		rols.add(RoleFactory.getInstance().getFighter("hero3", Type.HERO, QUALITY.green,GTC.getInstance().zyc_photo));
-		rols.add(RoleFactory.getInstance().getFighter("enemy1", Type.ENEMY, QUALITY.green,GTC.getInstance().zyc_photo));
-		rols.add(RoleFactory.getInstance().getFighter("enemy2", Type.ENEMY, QUALITY.green,GTC.getInstance().zyc_photo));
-		rols.add(RoleFactory.getInstance().getFighter("enemy3", Type.ENEMY, QUALITY.green,GTC.getInstance().zyc_photo));
-
-//		gs.game_init(rols);
+	private  GameScreenData makeGameScreenLv2(){
+		GameScreenData gsd = new GameScreenData();
+		gsd.setId(1);
+		gsd.setMapName("1");
+		//加入玩家的上场英雄
+		for(Role r:Player.getInstance().playerFightRole)
+			gsd.getHeroRoles().add(r);
+		//加入敌人
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("NPC", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,3));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("NPC", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("NPC", Type.ENEMY, QUALITY.green, GTC.getInstance().zyc_photo,5));
+		Array<Reward> reward = new Array<Reward>();
+		reward.add(new Reward(ItemFactory.getInstance().getItemById(1),1.0f));
+		reward.add(new Reward(ItemFactory.getInstance().getItemById(101),1.0f));
+		reward.add(new Reward(ItemFactory.getInstance().getItemById(101),1.0f));
+		gsd.setReward(reward);
+		return gsd;
 	}
-
+	//lv3
 	private void makeGameScreen2(GameScreen gs) {
 //		roles.clear();
 //		heroRoles.clear();
