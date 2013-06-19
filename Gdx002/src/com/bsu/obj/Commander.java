@@ -355,16 +355,23 @@ public class Commander {
 			currTaskComFlag = false;		//只是当前处理技能任务是否完成
 			gamescreen.getFightUI().actingRole(r);//ui显示当前执行动作人物。。
 			final Array<Role> atkrs = getRolesInSkillRange(r);
+			
+			//处理技能逻辑，处理技能逻辑时会对攻击的对象进行数值运算，处理结束后返回boolean值，指示是否继续移动			
+			boolean isMove = r.cskill.skillLogic(r, atkrs);
 			//1:执行技能命令
-			if(atkrs.size!=0){
-				r.ani_role_attack(atkrs,r.getCskill(),new BsuEvent(){
+//			if(atkrs.size!=0){
+			if(!isMove){
+
+				r.ani_role_attack(atkrs,r.cskill,new BsuEvent(){
 					boolean ani_attack_finished = false;			//判断攻击动画是否完成
 					boolean ani_beattacked_finished = false;		//判断被攻击动画是否完成
 					boolean ani_assault_finished = false;			//判断位移动画是否完成
 					boolean skill_logic = false;					//判断技能逻辑函数返回值，返回true为自身释放技能，返回false为对其他单位释放技能
 					@Override
 					public void notify(Object obj, String msg) {
-						if (!skill_logic && r.cskill.skillLogic(r, atkrs))
+//						if (!skill_logic && r.cskill.skillLogic(r, atkrs))
+//							atkrs.clear();
+						if(!skill_logic)
 							atkrs.clear();
 						skill_logic = true;
 						// 判断攻击动画是否完成
@@ -396,7 +403,7 @@ public class Commander {
 				Thread.sleep(200);
 			}
 			//2:执行移动命令
-			if(atkrs.size == 0){
+			if(isMove){
 				if(!r.hasAnatherRole(allRoles)){
 					Commander.this.moveDirectCommand(r, direct, new BsuEvent(){
 						@Override
@@ -555,10 +562,11 @@ public class Commander {
 //		deadRole = r;
 		// 后续处理
 //		System.out.println(r.name+"说:啊啊啊啊啊，我死了！！！");
+		r.isDead = true;					//设置人物死亡
+
 		r.deadAction(new BsuEvent(){
 			@Override
 			public void notify(Object obj,String msg){
-				r.isDead = true;					//设置人物死亡
 				r.setVisible(false);				//设置人物不显示
 			}
 		});

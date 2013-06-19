@@ -166,6 +166,9 @@ public class Skill {
 	 * @return 返回一个布尔值，表示owner是否还继续向前移动
 	 */
 	public boolean skillLogic(Role owner, Array<Role> objects) {
+		//如果攻击范围内没有敌人，返回true前进
+		if(objects.size==0)
+			return true;
 		if (type == Skill.Type.f_damage || type == Skill.Type.f_shifhp
 				|| type == Skill.Type.f_box 
 				|| type == Skill.Type.p_atkbeat
