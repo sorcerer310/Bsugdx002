@@ -30,17 +30,17 @@ public class ItemFactory {
 		case 3:
 			item = new Item("史诗级技能精华",Item.Type.skillpart,GTC.getInstance().getSkillIcon(0));
 			break;
-		case 101:
-			item = new Item("绿色战士卡片",Item.Type.rolecard,GTC.getInstance().zyc_photo,QUALITY.green,CLASSES.fighter);
+		case 101://绿色战士卡片
+			item = new Item("green",Item.Type.rolecard,GTC.getInstance().zyc_photo,QUALITY.green,CLASSES.fighter);
 			break; 
-		case 102:
-			item = new Item("蓝色战士卡片",Item.Type.rolecard,GTC.getInstance().zyc_photo,QUALITY.blue,CLASSES.fighter);
+		case 102://蓝色战士卡片
+			item = new Item("blue",Item.Type.rolecard,GTC.getInstance().zyc_photo,QUALITY.blue,CLASSES.fighter);
 			break;
-		case 103:
-			item = new Item("紫色战士卡片",Item.Type.rolecard,GTC.getInstance().zyc_photo,QUALITY.green,CLASSES.fighter);
+		case 103://紫色战士卡片
+			item = new Item("purple",Item.Type.rolecard,GTC.getInstance().zyc_photo,QUALITY.green,CLASSES.fighter);
 			break;
-		case 104:
-			item = new Item("橙色战士卡片",Item.Type.rolecard,GTC.getInstance().zyc_photo,QUALITY.green,CLASSES.fighter);
+		case 104://橙色战士卡片
+			item = new Item("orange",Item.Type.rolecard,GTC.getInstance().zyc_photo,QUALITY.green,CLASSES.fighter);
 			break;
 		case 105:
 			item = new Item("绿色射手卡片",Item.Type.rolecard,GTC.getInstance().zyc_photo,QUALITY.green,CLASSES.archer);

@@ -10,22 +10,14 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 
 public class GameMap {
 	public static TiledMap map;										
-	private static TileAtlas atlas;						//
-	public static TileMapRenderer map_render; 			//
-  /**
-   * 
-   * @param level 关卡索引，根据索引加载不同地图
-   */
-//	public GameMap(int level) {
-//		// TODO Auto-generated constructor stub
-//		get_map(level);
-//	}
+	private static TileAtlas atlas;						
+	public static TileMapRenderer map_render; 			
 	/**
 	 * 
 	 * @param level 关卡索引，此方法不使用packfield
 	 */
 	public static void make_map(String mapName){
-		FileHandle mapHandle = Gdx.files.internal("data/map/output/"+mapName+".tmx");
+		FileHandle mapHandle = Gdx.files.internal("data/map/output/"+"teaching"+".tmx");
 		map = TiledLoader.createMap(mapHandle);
 		FileHandle packages=Gdx.files.internal("data/map");   
         atlas = new CTA(map, packages); 
