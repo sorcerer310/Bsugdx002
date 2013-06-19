@@ -107,7 +107,7 @@ public class Role extends Actor {
 		roleTexture = new TextureRegion(tr);
 		cskill = skill_tree.get(0);
 		skill_array.add(skill_tree.get(0));
-		skill_array.add(skill_tree.get(0));
+		skill_array.add(skill_tree.get(1));
 		exp = baseExp();
 		isDead = false;
 		this.setVisible(false);

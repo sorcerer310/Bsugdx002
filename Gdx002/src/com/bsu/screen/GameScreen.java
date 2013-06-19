@@ -296,6 +296,9 @@ public class GameScreen extends CubocScreen implements Observer,
 	 * @param r
 	 */
 	private void hero_controll_rule(int mx, int my, Role r) {
+		if(r.isDead){
+			return;
+		}
 		int hero_x = r.getBoxX();
 		int hero_y = r.getBoxY();
 		if (mx == hero_x) {
@@ -343,9 +346,14 @@ public class GameScreen extends CubocScreen implements Observer,
 	 */
 	public void newRound() {
 		setAction_start(false);
-		heroSelected(commander.heros.get(0));
-		heroControllor(commander.heros.get(0));
-		set_map_value(commander.heros.get(0));
+		for(Role r:commander.heros){
+			if(!r.isDead){
+				heroSelected(r);
+				heroControllor(r);
+				set_map_value(r);
+				break;
+			}
+		}
 	}
 
 	Array<Item> roleIcon = new Array<Item>();
@@ -442,6 +450,9 @@ public class GameScreen extends CubocScreen implements Observer,
 	 */
 	public boolean isOtherHero(int inputX, int inputY) {
 		for (Role r : commander.allRoles) {
+			if(r.isDead){
+				return false;
+			}
 			Vector2 hv = new Vector2(r.getBoxX(), r.getBoxY());
 			if ((inputX == hv.x) && (inputY == hv.y)) {
 				return true;

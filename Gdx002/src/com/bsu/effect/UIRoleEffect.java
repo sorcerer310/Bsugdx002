@@ -67,7 +67,7 @@ public class UIRoleEffect implements Observer {
 		});
 		for (int i = 0; i < Player.getInstance().playerFightRole.size; i++) {
 			int x = 20 + i * 90;
-			int y = 10;	
+			int y = 10;
 			final Role r = Player.getInstance().playerFightRole.get(i);
 			Vector2 v = new Vector2(x, y);
 			RoleIcon photo = new RoleIcon(r, false);
@@ -80,21 +80,23 @@ public class UIRoleEffect implements Observer {
 			photo.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					if (!r.isSelected()) {
-						g.heroSelected(r);
-						if (!r.isControlled()) {
-							g.heroControllor(r);
+					if (!r.isDead) {
+						if (!r.isSelected()) {
+							g.heroSelected(r);
+							if (!r.isControlled()) {
+								g.heroControllor(r);
+							}
 						}
+						g.set_map_value(r);
 					}
-					g.set_map_value(r);
 				}
 			});
 			final Array<Image> imgArray = new Array<Image>();
 			for (int j = 0; j < r.skill_array.size; j++) {
 				Skill skill = r.skill_array.get(j);
 				final int tempIndex = j;
-				SkillIcon se = new SkillIcon(skill, stage, new Vector2(
-						x + 50, y+32 - j * 33), false);
+				SkillIcon se = new SkillIcon(skill, stage, new Vector2(x + 50,
+						y + 32 - j * 33), false);
 				final Image skillImg = se.skillImg;
 				imgArray.add(skillImg);
 				if (j == 0) {
@@ -173,9 +175,9 @@ class roleUIInfo {
 
 	public roleUIInfo(Role r, Stage stage, int x, int y) {
 		TextureRegion hpBack = WidgetFactory.getInstance().getTextureFill(4,
-				48, Color.BLACK,1);
+				48, Color.BLACK, 1);
 		TextureRegion hp = WidgetFactory.getInstance().getTextureFill(4, 48,
-				new Color(255, 0, 0, 1),1);
+				new Color(255, 0, 0, 1), 1);
 		WidgetFactory.getInstance().makeImg(hpBack, stage, 1, x - 10, y);
 		hpImg = WidgetFactory.getInstance().makeImg(hp, stage, 1, x - 10, y);
 		nameLabel = WidgetFactory.getInstance().makeLabel(r.name, stage, 0.5f,
