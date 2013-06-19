@@ -429,7 +429,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	public void heroSelected(Role hero) {
 		for (Role r : commander.heros) {
 			if(r.isDead){
-				return;
+				continue;
 			}
 			if (r.getType() == Type.HERO) {
 				r.setSelected(false);
