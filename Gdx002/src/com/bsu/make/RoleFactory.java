@@ -1,7 +1,5 @@
 package com.bsu.make;
 
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.bsu.obj.Item;
 import com.bsu.obj.Role;
@@ -38,6 +36,20 @@ public class RoleFactory {
 	}
 	
 	public Role getFighter(String n,Type t,QUALITY q,TextureRegion tr,int sklidx){
+		return new Role(t,q,CLASSES.fighter,n,U.getRandom(100, -6, 6),8,10
+				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
+				new SkillTree().getSkillTreeFixedSkill(sklidx),tr);
+	}
+	/**
+	 * 获得一个固定技能树的战士
+	 * @param n			战士名称 
+	 * @param t			战士的类型，英雄还是敌人
+	 * @param q			战士的品质 
+	 * @param tr		使用的纹理
+	 * @param sklidx	若干的技能id
+	 * @return
+	 */
+	public Role getFighter(String n,Type t,QUALITY q,TextureRegion tr,int[] sklidx){
 		return new Role(t,q,CLASSES.fighter,n,U.getRandom(100, -6, 6),8,10
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getSkillTreeFixedSkill(sklidx),tr);

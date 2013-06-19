@@ -125,4 +125,16 @@ public class SkillTree {
 		skills.add(SkillFactory.getInstance().getSkillByIdx(idx));
 		return skills;
 	}
+	/**
+	 * 获得一棵拥有固定技能的技能树
+	 * @param idx	指定的若干技能的id
+	 * @return		返回指定技能的技能树
+	 */
+	public Array<Skill> getSkillTreeFixedSkill(int[] idx){
+		Array<Skill> skills = new Array<Skill>();
+		for(int i:idx)
+			skills.add(SkillFactory.getInstance().getSkillByIdx(i));
+		return skills;
+	}
+	
 }
