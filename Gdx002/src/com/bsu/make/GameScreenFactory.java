@@ -36,7 +36,7 @@ public class GameScreenFactory {
 			gsd = makeGameScreenTeaching();
 			break;
 		default:
-			gsd = makeGameScreenLv(id);
+			gsd = makeGameScreenLv(id + 1);
 			break;
 		}
 		return gsd;
@@ -78,22 +78,55 @@ public class GameScreenFactory {
 		// 加入玩家的上场英雄
 		for (Role r : Player.getInstance().playerFightRole)
 			gsd.getHeroRoles().add(r);
-		if (lv == 1)
+		if (lv == 2)
 			setLv(gsd, reward, rf, fy, new int[] { 3, 0, 0, 0 }, null, null,
 					null, null, new int[] { 2, 0, 0, 0 }, null, null, null,
 					null, 1, 0, 0);
-		if (lv == 2)
+		if (lv == 3)
 			setLv(gsd, reward, rf, fy, new int[] { 4, 0, 0, 0 }, null, null,
 					null, null, new int[] { 3, 0, 0, 0 }, null, null, null,
 					null, 1, 0, 0);
-		if (lv == 3)
+		if (lv == 4)
 			setLv(gsd, reward, rf, fy, new int[] { 5, 0, 0, 0 }, null, null,
 					null, null, new int[] { 3, 0, 0, 0 }, null, null, null,
 					null, 1, 0, 0);
-		if (lv == 4)
+		if (lv == 5)
 			setLv(gsd, reward, rf, fy, new int[] { 10, 0, 0, 0 }, null, null,
 					null, null, new int[] { 5, 0, 0, 0 }, null, null, null,
 					null, 1, 0, 0);
+		if (lv == 6)
+			setLv(gsd, reward, rf, fy, new int[] { 10, 0, 0, 0 }, new int[] {
+					2, 0, 0, 0 }, null, null, null, new int[] { 5, 0, 0, 0 },
+					new int[] { 1, 0, 0, 0 }, null, null, null, 3, 0, 0);
+		if (lv == 7)
+			setLv(gsd, reward, rf, fy, new int[] { 5, 0, 0, 0 }, new int[] { 2,
+					0, 0, 0 }, new int[] { 3, 0, 0, 0 }, null, null, new int[] {
+					5, 0, 0, 0 }, new int[] { 1, 0, 0, 0 }, new int[] { 2, 0,
+					0, 0 }, null, null, 6, 0, 0);
+		if (lv == 8)
+			setLv(gsd, reward, rf, fy, new int[] { 5, 0, 0, 0 }, new int[] { 2,
+					0, 0, 0 }, new int[] { 2, 0, 0, 0 },
+					new int[] { 2, 0, 0, 0 }, null, new int[] { 2, 0, 0, 0 },
+					new int[] { 1, 0, 0, 0 }, new int[] { 1, 0, 0, 0 },
+					new int[] { 1, 0, 0, 0 }, null, 8, 0, 0);
+		if (lv == 9)
+			setLv(gsd, reward, rf, fy, new int[] { 5, 0, 0, 0 }, new int[] { 2,
+					0, 0, 0 }, new int[] { 2, 0, 0, 0 },
+					new int[] { 2, 0, 0, 0 }, new int[] { 2, 0, 0, 0 },
+					new int[] { 2, 0, 0, 0 }, new int[] { 1, 0, 0, 0 },
+					new int[] { 1, 0, 0, 0 }, new int[] { 1, 0, 0, 0 },
+					new int[] { 1, 0, 0, 0 }, 10, 0, 0);
+		if (lv == 10)
+			setLv(gsd, reward, rf, fy, new int[] { 10, 0, 0, 0 }, new int[] {
+					5, 0, 0, 0 }, new int[] { 5, 0, 0, 0 }, new int[] { 5, 0,
+					0, 0 }, new int[] { 5, 0, 0, 0 }, new int[] { 5, 0, 0, 0 },
+					new int[] { 2, 0, 0, 0 }, new int[] { 2, 0, 0, 0 },
+					new int[] { 2, 0, 0, 0 }, new int[] { 2, 0, 0, 0 }, 15, 0,
+					0);
+		if (lv == 11)
+			setLv(gsd, reward, rf, fy, new int[] { 5, 2, 0, 0 }, new int[] {
+					5, 2, 0, 0 }, null, null, null, new int[] { 3, 1, 0, 0 },
+					new int[] { 3, 1, 0, 0 }, null, null, null, 6, 2, 0);
 		gsd.setReward(reward);
 		return gsd;
 	}
@@ -127,10 +160,10 @@ public class GameScreenFactory {
 		fg = targetInt(fg);
 		wg = targetInt(wg);
 		sg = targetInt(sg);
-		cg = targetInt(cg);
 		ag = targetInt(ag);
+		cg = targetInt(cg);
 		getNpcRole(gsd, rf, fe, we, se, ae, ce);
-		getRoleVictory(gsd, reward, fy, fg, wg, sg, cg, ag, pj, gj, sj);
+		getRoleVictory(gsd, reward, fy, fg, wg, sg, ag, cg, pj, gj, sj);
 	}
 
 	// 取得出战NPC
@@ -167,7 +200,7 @@ public class GameScreenFactory {
 
 	// 取得某种通关卡片,精华
 	private void getRoleVictory(GameScreenData gsd, Array<Reward> reward,
-			ItemFactory fy, int[] fg, int[] wg, int[] sg, int[] cg, int[] ag,
+			ItemFactory fy, int[] fg, int[] wg, int[] sg, int[] ag, int[] cg,
 			int a, int b, int c) {
 		for (int i = 0; i < 4; i++) {
 			for (int k = 0; k < fg[i]; k++) {

@@ -131,6 +131,9 @@ public class SkillTree {
 		Array<Skill> skills = new Array<Skill>();
 		for(int i:idx)
 			skills.add(SkillFactory.getInstance().getSkillByIdx(i));
+		for(Skill s:skills){//开启指定的role的所有技能
+			s.enable=true;
+		}
 		return skills;
 	}
 	
