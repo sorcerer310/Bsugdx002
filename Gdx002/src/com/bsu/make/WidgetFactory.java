@@ -1,31 +1,20 @@
 package com.bsu.make;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
-import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
@@ -148,7 +137,6 @@ public class WidgetFactory {
 	 * @param bname	按钮名称
 	 * @return
 	 */
-//	public Image makeImageButton(String bname, int x, int y, float a) {
 	public Image makeImageButton(String bname) {
 		Image img_nomal = null;
 		if (bname.equals(GC.screen_fight))
@@ -198,8 +186,6 @@ public class WidgetFactory {
 			img_nomal = new Image(
 					GTC.getInstance().atlas_button.findRegion("all"));
 		img_nomal.setOrigin(img_nomal.getWidth() / 2, img_nomal.getHeight() / 2);
-//		img_nomal.setPosition(x, y);
-//		U.setApha(img_nomal, a);
 		return img_nomal;
 	}
 	

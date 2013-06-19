@@ -5,7 +5,6 @@ import com.bsu.obj.Player;
 import com.bsu.obj.Reward;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
-import com.bsu.screen.GameScreen;
 import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 import com.bsu.obj.GameScreenData;

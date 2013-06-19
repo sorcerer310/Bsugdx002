@@ -301,14 +301,12 @@ public class GameScreen extends CubocScreen implements Observer,
 		}
 		int hero_x = r.getBoxX();
 		int hero_y = r.getBoxY();
-		if (mx == hero_x) {
-			if (my == hero_y) {
+		if (mx == hero_x&&my == hero_y) {
 				if (!r.isSelected()) {
 					heroSelected(r);
 					if (!r.isControlled()) {
 						heroControllor(r);
 					}
-				}
 				set_map_value(r);
 				return;
 			}
@@ -430,6 +428,9 @@ public class GameScreen extends CubocScreen implements Observer,
 	 */
 	public void heroSelected(Role hero) {
 		for (Role r : commander.heros) {
+			if(r.isDead){
+				return;
+			}
 			if (r.getType() == Type.HERO) {
 				r.setSelected(false);
 				r.roleIcon.showEffect(false);
@@ -467,6 +468,9 @@ public class GameScreen extends CubocScreen implements Observer,
 	 * @author 张永臣
 	 */
 	public void heroControllor(Role r) {
+		if(r.isDead){
+			return;
+		}
 		r.setControlled(true);
 		if (r.getType() == Type.HERO) {
 			r.setPass_array(mb.set_hero_pass_box(r, commander.npcs));

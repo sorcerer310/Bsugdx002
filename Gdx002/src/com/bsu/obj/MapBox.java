@@ -192,18 +192,6 @@ public class MapBox extends Actor {
 				else if (object.type.equals(GC.map_type_hp_rarise))
 					hpRaise_array.add(v);
 				else if (object.type.equals(GC.map_type_value)) {
-					/*
-					 * raw_min = Integer.parseInt(object.properties
-					 * .get(Configure.map_raw_min_key)); raw_max =
-					 * Integer.parseInt(object.properties
-					 * .get(Configure.map_raw_max_key)); coll_min =
-					 * GameMap.map_render.getMapHeightUnits() -
-					 * Integer.parseInt(object.properties
-					 * .get(Configure.map_coll_max_key)) - 1; coll_max =
-					 * GameMap.map_render.getMapHeightUnits() -
-					 * Integer.parseInt(object.properties
-					 * .get(Configure.map_coll_min_key)) - 1;
-					 */
 				} else if (object.type.equals(GC.map_type_hero_home)) {
 					hero_home_array.add(v);
 				} else if (object.type.equals(GC.map_type_enemy_home)) {
@@ -246,11 +234,6 @@ public class MapBox extends Actor {
 	 * @return
 	 */
 	private  boolean blocked(int raw, int coll) {
-		/*
-		 * for (int i = 0; i < block_array.size; i++) { if (raw ==
-		 * block_array.get(i).y) { if (coll >= block_array.get(i).x) { return
-		 * true; } } }
-		 */
 		for (int i = 0; i < enemy_array.size; i++) {
 			if (raw == enemy_array.get(i).y) {
 				if (coll >= enemy_array.get(i).x) {

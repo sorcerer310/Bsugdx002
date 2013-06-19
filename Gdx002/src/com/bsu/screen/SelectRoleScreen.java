@@ -185,8 +185,6 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 						Player.getInstance().addRoleToFIght(r, 100);
 					}
 					Player.getInstance().getPlayerPackageRole();
-//					GameScreenFactory.getInstance().setHeroRoles(
-//							Player.getInstance().playerFightRole);
 					setChanged();
 					notifyObservers(GC.button_back);
 					ib_back.setScale(1f);
