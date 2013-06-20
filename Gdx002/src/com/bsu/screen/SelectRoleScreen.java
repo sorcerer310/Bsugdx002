@@ -167,7 +167,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 						selectRole = r;// 选定人物。。
 						TipsWindows.getInstance().showRoleInfo(r, v,
 								sRoleStage);
-						resetRole(r);
+						U.showRoleSelect(Player.getInstance().playerIdelRole, r);
 						return;
 					}
 					if (changeRole != null) {
@@ -185,32 +185,12 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 						Player.getInstance().addRoleToFIght(r, 100);
 					}
 					Player.getInstance().getPlayerPackageRole();
-//					GameScreenFactory.getInstance().setHeroRoles(
-//							Player.getInstance().playerFightRole);
 					setChanged();
 					notifyObservers(GC.button_back);
 					ib_back.setScale(1f);
 					super.touchUp(event, x, y, pointer, button);
 				}
 			});
-		}
-	}
-
-	/**
-	 * 设置被选中的角色
-	 * 
-	 * @param r
-	 */
-	private void resetRole(Role r) {
-		for (Role e : Player.getInstance().playerIdelRole) {
-			e.roleIcon.showEffect(false);
-		}
-		for (Actor act : sRoleStage.getActors()) {
-			if (act instanceof RoleIcon) {
-				if (act.equals(r.roleIcon)) {
-					r.roleIcon.showEffect(true);
-				}
-			}
 		}
 	}
 

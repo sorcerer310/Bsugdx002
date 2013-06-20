@@ -5,7 +5,6 @@ import com.bsu.obj.Player;
 import com.bsu.obj.Reward;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
-import com.bsu.screen.GameScreen;
 import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 import com.bsu.obj.GameScreenData;
@@ -63,6 +62,7 @@ public class GameScreenFactory {
 						QUALITY.green, GTC.getInstance().zyc_photo, 5));
 		Array<Reward> reward = new Array<Reward>();
 		reward.add(new Reward(ItemFactory.getInstance().getItemById(1), 1.0f));
+		reward.add(new Reward(ItemFactory.getInstance().getItemById(1), 1.0f));
 		reward.add(new Reward(ItemFactory.getInstance().getItemById(101), 1.0f));
 		gsd.setReward(reward);
 		return gsd;
@@ -81,7 +81,7 @@ public class GameScreenFactory {
 		if (lv == 2)
 			setLv(gsd, reward, rf, fy, new int[] { 3, 0, 0, 0 }, null, null,
 					null, null, new int[] { 2, 0, 0, 0 }, null, null, null,
-					null, 1, 0, 0);
+					null, 2, 0, 0);
 		if (lv == 3)
 			setLv(gsd, reward, rf, fy, new int[] { 4, 0, 0, 0 }, null, null,
 					null, null, new int[] { 3, 0, 0, 0 }, null, null, null,
