@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitmapFontData;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -365,5 +366,17 @@ public class U {
 			skin = new Skin(Gdx.files.internal("data/skin/bsuuiskin.json"));	
 		}
 		return skin;
+	}
+	/**
+	 * 将TiledMap中的坐标转换为gdx中的块坐标
+	 * @param x	TiledMap中的坐标x
+	 * @param y	TiledMap中的坐标y
+	 * @return	返回转换为box的坐标
+	 */
+	public static Vector2 TiledPos2GdxBoxPos(int x,int y){
+		int retx = x/GC.map_box_value;
+		
+		int rety = (GC.rect_height - y)/GC.map_box_value; 
+		return new Vector2(retx,rety);
 	}
 }

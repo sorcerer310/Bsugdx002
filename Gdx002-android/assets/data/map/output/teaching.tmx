@@ -27,4 +27,11 @@
   <object gid="9" name="h4" type="hero" x="32" y="160"/>
   <object gid="9" name="h5" type="hero" x="32" y="192"/>
  </objectgroup>
+ <objectgroup height="10" name="box" width="15">
+  <object gid="9" name="b1" type="show" x="192" y="96">
+   <properties>
+    <property name="itemid" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

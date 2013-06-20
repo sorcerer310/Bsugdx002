@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.math.MathUtils;
@@ -38,13 +39,13 @@ public class MapBox extends Actor {
 
 	public static Array<Vector2> pass_array = new Array<Vector2>();// 选择人物后，显示地图上可移动范围
 	public static Array<Vector2> attack_array = new Array<Vector2>();// 选择人物后，显示人物可攻击范围
-	public  Array<Vector2> block_array = new Array<Vector2>(); // 地图上障碍格子数组
-	public  Array<Vector2> box_array = new Array<Vector2>(); // 宝箱格子
-	public  Array<Vector2> hpRaise_array = new Array<Vector2>(); // 加血格子
-	public  Array<Vector2> enemy_array = new Array<Vector2>(); // 地图上所有NPC所在位置的格子数组
-	public  Array<Vector2> hero_array = new Array<Vector2>(); // 角色人物所在格子数组
-	public  Array<Vector2> hero_home_array = new Array<Vector2>(); // 角色基地所在格子数组
-	public  Array<Vector2> enemy_home_array = new Array<Vector2>(); // NPC基地所在格子数组
+	public Array<Vector2> block_array = new Array<Vector2>(); // 地图上障碍格子数组
+	public Array<TiledObject> box_array = new Array<TiledObject>(); // 宝箱格子
+	public Array<Vector2> hpRaise_array = new Array<Vector2>(); // 加血格子
+	public Array<Vector2> enemy_array = new Array<Vector2>(); // 地图上所有NPC所在位置的格子数组
+	public Array<Vector2> hero_array = new Array<Vector2>(); // 角色人物所在格子数组
+	public Array<Vector2> hero_home_array = new Array<Vector2>(); // 角色基地所在格子数组
+	public Array<Vector2> enemy_home_array = new Array<Vector2>(); // NPC基地所在格子数组
 
 	private static int raw_max = 8; // 可以移动的最高格子数，应该定义在MAP TXM文件里，以下同
 	private static int raw_min = 4; // 可以移动的最低格子数，靠近屏幕下方
@@ -74,8 +75,7 @@ public class MapBox extends Actor {
 	 * @param enemy
 	 *            NPC角色，理论应该为NPC数组集合，目前为单体。
 	 */
-	public  Array<Vector2> set_hero_pass_box(Role hero,
-			Array<Role> enemyArray) {
+	public Array<Vector2> set_hero_pass_box(Role hero, Array<Role> enemyArray) {
 		pass_array.clear();
 		enemy_array = get_role_block(enemyArray, enemy_array);
 		int hero_coll = hero.getBoxX();
@@ -128,18 +128,16 @@ public class MapBox extends Actor {
 		enemy_home_time += Gdx.graphics.getDeltaTime();
 
 		for (int i = 0; i < block_array.size; i++) {
-			batch.draw(map_block, block_array.get(i).x
-					* GC.map_box_value, (block_array.get(i).y)
-					* GC.map_box_value);
+			batch.draw(map_block, block_array.get(i).x * GC.map_box_value,
+					(block_array.get(i).y) * GC.map_box_value);
 		}
 		for (int i = 0; i < pass_array.size; i++) {
 			batch.draw(map_pass, pass_array.get(i).x * GC.map_box_value,
 					(pass_array.get(i).y) * GC.map_box_value);
 		}
 		for (int i = 0; i < attack_array.size; i++) {
-			batch.draw(map_attack, attack_array.get(i).x
-					* GC.map_box_value, (attack_array.get(i).y)
-					* GC.map_box_value);
+			batch.draw(map_attack, attack_array.get(i).x * GC.map_box_value,
+					(attack_array.get(i).y) * GC.map_box_value);
 		}
 		current_hero_home_frame = ani_hero_home.getKeyFrame(hero_home_time,
 				true);
@@ -164,50 +162,56 @@ public class MapBox extends Actor {
 	 */
 	private void init_box_value() {
 		map_pass = WidgetFactory.getInstance().getPixmapFrame(
-				GC.map_box_value-2, GC.map_box_value-2, Color.BLACK,
+				GC.map_box_value - 2, GC.map_box_value - 2, Color.BLACK,
 				Color.GREEN, 0.5f);
 		map_block = WidgetFactory.getInstance().getPixmapFrame(
-				GC.map_box_value-2, GC.map_box_value-2, Color.BLACK,
+				GC.map_box_value - 2, GC.map_box_value - 2, Color.BLACK,
 				Color.RED, 0.5f);
 		map_attack = WidgetFactory.getInstance().getPixmapFrame(
-				GC.map_box_value-2, GC.map_box_value-2, Color.BLACK,
+				GC.map_box_value - 2, GC.map_box_value - 2, Color.BLACK,
 				Color.BLUE, 0.5f);
 		ani_enemy_home = GAC.getInstance().getEffectApper();
 		ani_hero_home = GAC.getInstance().getEffectDisapper();
 		hero_home_time = 0;
 		enemy_home_time = 0;
 		for (TiledObjectGroup group : GameMap.map.objectGroups) {
-			for (TiledObject object : group.objects) {
-				if (object.type == null)
-					continue;
-				int x = (object.x) / GC.map_box_value;
-				int y = (GameMap.map_render.getMapHeightUnits()
-						- GC.map_box_value - object.y)
-						/ GC.map_box_value;
-				Vector2 v = new Vector2(x, y);
-				if (object.type.equals(GC.map_type_block))
-					block_array.add(v);
-				else if (object.type.equals(GC.map_type_box))
-					box_array.add(v);
-				else if (object.type.equals(GC.map_type_hp_rarise))
-					hpRaise_array.add(v);
-				else if (object.type.equals(GC.map_type_value)) {
-					/*
-					 * raw_min = Integer.parseInt(object.properties
-					 * .get(Configure.map_raw_min_key)); raw_max =
-					 * Integer.parseInt(object.properties
-					 * .get(Configure.map_raw_max_key)); coll_min =
-					 * GameMap.map_render.getMapHeightUnits() -
-					 * Integer.parseInt(object.properties
-					 * .get(Configure.map_coll_max_key)) - 1; coll_max =
-					 * GameMap.map_render.getMapHeightUnits() -
-					 * Integer.parseInt(object.properties
-					 * .get(Configure.map_coll_min_key)) - 1;
-					 */
-				} else if (object.type.equals(GC.map_type_hero_home)) {
-					hero_home_array.add(v);
-				} else if (object.type.equals(GC.map_type_enemy_home)) {
-					enemy_home_array.add(v);
+			if (group.name.equals("box")) {
+				//当object组为box组时遍历改组的所有对象
+				for (TiledObject object : group.objects) 
+					box_array.add(object);
+			} else {
+				for (TiledObject object : group.objects) {
+					if (object.type == null)
+						continue;
+					int x = (object.x) / GC.map_box_value;
+					int y = (GameMap.map_render.getMapHeightUnits()
+							- GC.map_box_value - object.y)
+							/ GC.map_box_value;
+					Vector2 v = new Vector2(x, y);
+					if (object.type.equals(GC.map_type_block))
+						block_array.add(v);
+					// else if (object.type.equals(GC.map_type_box))
+					// box_array.add(object);
+					else if (object.type.equals(GC.map_type_hp_rarise))
+						hpRaise_array.add(v);
+					else if (object.type.equals(GC.map_type_value)) {
+						/*
+						 * raw_min = Integer.parseInt(object.properties
+						 * .get(Configure.map_raw_min_key)); raw_max =
+						 * Integer.parseInt(object.properties
+						 * .get(Configure.map_raw_max_key)); coll_min =
+						 * GameMap.map_render.getMapHeightUnits() -
+						 * Integer.parseInt(object.properties
+						 * .get(Configure.map_coll_max_key)) - 1; coll_max =
+						 * GameMap.map_render.getMapHeightUnits() -
+						 * Integer.parseInt(object.properties
+						 * .get(Configure.map_coll_min_key)) - 1;
+						 */
+					} else if (object.type.equals(GC.map_type_hero_home)) {
+						hero_home_array.add(v);
+					} else if (object.type.equals(GC.map_type_enemy_home)) {
+						enemy_home_array.add(v);
+					}
 				}
 			}
 		}
@@ -245,7 +249,7 @@ public class MapBox extends Actor {
 	 * @param coll
 	 * @return
 	 */
-	private  boolean blocked(int raw, int coll) {
+	private boolean blocked(int raw, int coll) {
 		/*
 		 * for (int i = 0; i < block_array.size; i++) { if (raw ==
 		 * block_array.get(i).y) { if (coll >= block_array.get(i).x) { return

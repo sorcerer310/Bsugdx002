@@ -124,7 +124,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		for (Role r : heros)
 			stage.addActor(r);
 
-		commander = Commander.getInstance(stage, this);
+		commander = Commander.initInstance(stage, this);
 		commander.resetRoles();
 		this.addActorListener();
 		setBornPosition(GameMap.map, Type.HERO, GC.object_layer_hero);
@@ -187,7 +187,8 @@ public class GameScreen extends CubocScreen implements Observer,
 			r.setPosition(v.get(i).x, v.get(i).y);
 		}
 	}
-
+	
+	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);

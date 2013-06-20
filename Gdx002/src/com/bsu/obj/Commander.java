@@ -2,13 +2,16 @@ package com.bsu.obj;
 
 import java.util.Random;
 
+import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.make.ItemFactory;
 import com.bsu.obj.Role.Type;
 import com.bsu.obj.skilltree.ContinuedSkillState;
 import com.bsu.obj.skilltree.ContinuedSkillState.CSType;
@@ -19,6 +22,7 @@ import com.bsu.tools.BsuEvent;
 import com.bsu.tools.CommandQueue;
 import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
+import com.bsu.tools.GameMap;
 import com.bsu.tools.U;
 import com.bsu.tools.GC.FACE;
 import com.bsu.tools.GC.DIRECTION;
@@ -32,10 +36,10 @@ import com.bsu.tools.GC.STATE;
  */
 public class Commander {
 	private static Commander instance = null;
-
-	public static Commander getInstance(Stage s, GameScreen gs) {
-		if (instance == null)
-			instance = new Commander(s, gs);
+	//每次调用这这个函数时，重新初始化instance
+	public static Commander initInstance(Stage s, GameScreen gs) {
+//		if (instance == null)
+		instance = new Commander(s, gs);
 		return instance;
 	}
 
@@ -45,6 +49,7 @@ public class Commander {
 
 	private Stage stage;
 	private GameScreen gamescreen = null;
+	private MapBox mb = null;
 	private Array<Actor> lactor = null;
 	public Array<Role> heros = new Array<Role>();
 	public Array<Role> npcs = new Array<Role>();
@@ -53,6 +58,15 @@ public class Commander {
 	private Commander(Stage s, GameScreen gs) {
 		gamescreen = gs;
 		stage = s;
+		// 从stage中获得mb
+		Array<Actor> acts = stage.getActors();
+		for (Actor act : acts) {
+			if (act instanceof MapBox) {
+				mb = (MapBox) act;
+				break;
+			}
+		}
+		
 		commanderStart();
 	}
 
@@ -308,19 +322,32 @@ public class Commander {
 	 *            地图操作完成事件
 	 */
 	private void mapEvent(BsuEvent be) {
-		// 从stage中获得mb
-		Array<Actor> acts = stage.getActors();
-		MapBox mb = null;
-		for (Actor act : acts) {
-			if (act instanceof MapBox) {
-				mb = (MapBox) act;
-				break;
+		for(TiledObject obj:mb.box_array){
+			for(Role r :heros){
+//				int ox = (obj.x) / GC.map_box_value;
+//				int oy = (GameMap.map_render.getMapHeightUnits()
+//						- GC.map_box_value - obj.y)
+//						/ GC.map_box_value;
+				Vector2 v = U.TiledPos2GdxBoxPos(obj.x,obj.y);
+				if(v.x==r.getBoxX() && v.y==r.getBoxY()){
+					String itemid = obj.properties.get("itemid");					//获得该位置的物品id
+					Player.getInstance().giveItem(Integer.parseInt(itemid));		//为宝箱位置的英雄增加对应物品
+					System.out.println("add a item:"+itemid);
+					//如果宝箱类型为显式类型
+					if(obj.type.equals("show")){
+						
+					//如果宝箱类型为隐式类型
+					}else if(obj.type.equals("hide")){
+						
+					}
+					mb.box_array.removeValue(obj, true);							//将该宝箱从地图上移除
+				}
 			}
 		}
-		if (mb == null)
-			return;
-
+		
 		// 处理一些地图块事件
+//		mb.box_array
+//		
 		be.notify(this, "map_event_completed");
 	}
 
