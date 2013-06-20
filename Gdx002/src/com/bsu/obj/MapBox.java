@@ -234,9 +234,11 @@ public class MapBox extends Actor {
 		mbv.clear();
 		for (int i = 0; i < role.size; i++) {
 			Role r = (Role) role.get(i);
-			int role_coll = r.getBoxX();
-			int role_raw = r.getBoxY();
-			mbv.add(new Vector2(role_coll, role_raw));
+			if (!r.isDead) {
+				int role_coll = r.getBoxX();
+				int role_raw = r.getBoxY();
+				mbv.add(new Vector2(role_coll, role_raw));
+			}
 			r = null;
 		}
 		return mbv;
@@ -255,6 +257,7 @@ public class MapBox extends Actor {
 		 * block_array.get(i).y) { if (coll >= block_array.get(i).x) { return
 		 * true; } } }
 		 */
+
 		for (int i = 0; i < enemy_array.size; i++) {
 			if (raw == enemy_array.get(i).y) {
 				if (coll >= enemy_array.get(i).x) {
