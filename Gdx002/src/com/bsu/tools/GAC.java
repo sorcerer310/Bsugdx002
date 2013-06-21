@@ -65,13 +65,17 @@ public class GAC {
 	 * @return	返回一段表现发现宝藏的动画
 	 */
 	public Animation getTreasure(){
-		TextureRegion[] tr = new TextureRegion[4];
-		tr[0] = effect_split[7][6];
-		tr[1] = effect_split[6][6];
-		tr[2] = effect_split[5][6];
-		tr[3] = effect_split[4][6];
+		Array<TextureRegion> tr = new Array<TextureRegion>();
+		tr.add(texture_effect_skills.findRegion("box",6));
+		tr.add(texture_effect_skills.findRegion("box",7));
+		tr.add(texture_effect_skills.findRegion("box",6));
+		tr.add(texture_effect_skills.findRegion("box",7));
+		tr.add(texture_effect_skills.findRegion("box",1));
+		tr.add(texture_effect_skills.findRegion("box",2));
+		tr.add(texture_effect_skills.findRegion("box",3));
+		tr.add(texture_effect_skills.findRegion("box",4));
+		tr.add(texture_effect_skills.findRegion("box",5));
 		Animation ani = new Animation(0.1f,tr);
-		ani.setPlayMode(Animation.NORMAL);
 		return ani;
 	}
 	

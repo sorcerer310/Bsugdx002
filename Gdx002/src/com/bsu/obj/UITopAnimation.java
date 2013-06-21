@@ -20,7 +20,7 @@ public class UITopAnimation extends Actor{
 	private boolean flag_play_treasure = false;		//设置动画是否播放标志
 	
 	public UITopAnimation(){
-		ani_treasure = GAC.getInstance().getSkillObjectEffect(1);
+		ani_treasure = GAC.getInstance().getTreasure();
 	}
 	private Vector2 pos_treasure = new Vector2();
 	/**

@@ -329,8 +329,8 @@ public class Commander {
 						
 					}
 					uita.playTreasure(v.x*GC.map_box_value, v.y*GC.map_box_value);	//播放发现宝藏动画
+					mb.box_array.removeValue(obj, true);							//将该宝箱从地图上移除
 					
-//					mb.box_array.removeValue(obj, true);							//将该宝箱从地图上移除
 				}
 			}
 		}
