@@ -2,13 +2,9 @@ package com.bsu.obj;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.math.MathUtils;
@@ -16,7 +12,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.WidgetFactory;
-import com.bsu.obj.Role.Type;
 import com.bsu.tools.GC;
 import com.bsu.tools.GAC;
 import com.bsu.tools.GameMap;
@@ -36,6 +31,8 @@ public class MapBox extends Actor {
 	private TextureRegion current_hero_home_frame;// 当前人物动画所对应的TextureRegion
 	private Animation ani_enemy_home; // 效果动画
 	private TextureRegion current_enemy_home_frame; // 当前效果动画对应的某一帧
+//	private Animation ani_treasure;					//宝物效果动画
+//	private TextureRegion current_treasure_frame;	//宝物动画当前帧
 
 	public static Array<Vector2> pass_array = new Array<Vector2>();// 选择人物后，显示地图上可移动范围
 	public static Array<Vector2> attack_array = new Array<Vector2>();// 选择人物后，显示人物可攻击范围
@@ -52,8 +49,11 @@ public class MapBox extends Actor {
 	private static int coll_max = 13; // 可以移动的最远格子数，屏幕右侧
 	private static int coll_min = 1; // 可以移动的最左格子数
 
-	private float hero_home_time; // 角色基地动画时间
-	private float enemy_home_time; // 角色基地动画时间
+	private float time_hero_home; // 角色基地动画时间
+	private float time_enemy_home; // 角色基地动画时间
+//	private float time_treasure;	//宝藏动画时间
+	
+//	private boolean flag_play_treasure = false; //设置动画是否播放标志
 
 	public static enum BOX {
 		PASS, BLOCK, EVENT, ATTACK
@@ -124,35 +124,47 @@ public class MapBox extends Actor {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
-		hero_home_time += Gdx.graphics.getDeltaTime();
-		enemy_home_time += Gdx.graphics.getDeltaTime();
-
+		time_hero_home += Gdx.graphics.getDeltaTime();
+		time_enemy_home += Gdx.graphics.getDeltaTime();
+//		time_treasure += Gdx.graphics.getDeltaTime();
+		//障碍格绘制
 		for (int i = 0; i < block_array.size; i++) {
 			batch.draw(map_block, block_array.get(i).x * GC.map_box_value,
 					(block_array.get(i).y) * GC.map_box_value);
 		}
+		//通过格绘制
 		for (int i = 0; i < pass_array.size; i++) {
 			batch.draw(map_pass, pass_array.get(i).x * GC.map_box_value,
 					(pass_array.get(i).y) * GC.map_box_value);
 		}
+		//攻击范围绘制
 		for (int i = 0; i < attack_array.size; i++) {
 			batch.draw(map_attack, attack_array.get(i).x * GC.map_box_value,
 					(attack_array.get(i).y) * GC.map_box_value);
 		}
-		current_hero_home_frame = ani_hero_home.getKeyFrame(hero_home_time,
-				true);
+		
+		current_hero_home_frame = ani_hero_home.getKeyFrame(time_hero_home,true);
 		for (int i = 0; i < hero_home_array.size; i++) {
 			batch.draw(current_hero_home_frame, hero_home_array.get(i).x
 					* GC.map_box_value, (hero_home_array.get(i).y)
 					* GC.map_box_value);
 		}
-		current_enemy_home_frame = ani_enemy_home.getKeyFrame(enemy_home_time,
-				true);
+		
+		current_enemy_home_frame = ani_enemy_home.getKeyFrame(time_enemy_home,true);
 		for (int i = 0; i < enemy_home_array.size; i++) {
 			batch.draw(current_enemy_home_frame, enemy_home_array.get(i).x
 					* GC.map_box_value, (enemy_home_array.get(i).y)
 					* GC.map_box_value);
 		}
+		
+		//播放宝藏动画
+//		if(flag_play_treasure){
+//			current_treasure_frame = ani_treasure.getKeyFrame(time_treasure, false);
+//			batch.draw(current_treasure_frame, pos_treasure.x,pos_treasure.y);
+//			//如果播放完毕设置flag_play_treasure为false
+//			if(ani_treasure.isAnimationFinished(time_treasure))
+//				flag_play_treasure = false;
+//		}
 	}
 
 	/**
@@ -172,8 +184,9 @@ public class MapBox extends Actor {
 				Color.BLUE, 0.5f);
 		ani_enemy_home = GAC.getInstance().getEffectApper();
 		ani_hero_home = GAC.getInstance().getEffectDisapper();
-		hero_home_time = 0;
-		enemy_home_time = 0;
+//		ani_treasure = GAC.getInstance().getTreasure();					//宝藏动画
+		time_hero_home = 0;
+		time_enemy_home = 0;
 		for (TiledObjectGroup group : GameMap.map.objectGroups) {
 			if (group.name.equals("box")) {
 				//当object组为box组时遍历改组的所有对象
@@ -267,4 +280,6 @@ public class MapBox extends Actor {
 		}
 		return false;
 	}
+	
+
 }

@@ -3,11 +3,9 @@ package com.bsu.screen;
 import java.util.Observable;
 import java.util.Observer;
 
-import sun.tools.jps.Arguments;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -24,34 +22,29 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.AttackEffect;
 import com.bsu.effect.ItemIcon;
-import com.bsu.effect.RoleIcon;
 import com.bsu.effect.UIRoleEffect;
 import com.bsu.head.CubocScreen;
-import com.bsu.make.EquipFactory;
 import com.bsu.make.ItemFactory;
 import com.bsu.make.RoleFactory;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Commander;
 import com.bsu.obj.Item;
 import com.bsu.make.*;
-import com.bsu.obj.Commander;
 import com.bsu.obj.GameScreenData;
 import com.bsu.obj.MapBox;
 import com.bsu.obj.Player;
 import com.bsu.obj.Reward;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
+import com.bsu.obj.UITopAnimation;
 import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.GameMap;
@@ -64,6 +57,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	private Stage endStage;// 结束场景
 	private Commander commander; // 指挥官对象，指挥所有对象交互
 	private MapBox mb; // 地图块对象
+	private UITopAnimation uita;	//顶层的一些动画效果
 	private UIRoleEffect fightUI;
 	private OrthographicCamera c;
 	private boolean action_start; // 是否回合开始,未开始为人物操作阶段
@@ -83,9 +77,9 @@ public class GameScreen extends CubocScreen implements Observer,
 	public GameScreen(Game mxg) {
 		super(mxg);
 
-		stage = new Stage(GC.rect_width, GC.rect_height, false);
-		UIStage = new Stage(GC.rect_width, GC.rect_height, false);
-		endStage = new Stage(GC.rect_width, GC.rect_height, false);
+//		stage = new Stage(GC.rect_width, GC.rect_height, false);
+//		UIStage = new Stage(GC.rect_width, GC.rect_height, false);
+//		endStage = new Stage(GC.rect_width, GC.rect_height, false);
 		U.get_skin();
 		U.get_font();
 		U.get_sytle();
@@ -103,6 +97,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	 *            关卡初始化英雄与敌人的数组，出生地点在地图中已经设置好
 	 */
 	public void game_init(GameScreenData gsd) {
+		uita = new UITopAnimation();
 		this.heros = gsd.getHeroRoles();
 		this.npcs = gsd.getNpcRoles();
 		// 将所有role放入同一Role中便于操作
@@ -124,6 +119,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		for (Role r : heros)
 			stage.addActor(r);
 
+		stage.addActor(uita);
 		commander = Commander.initInstance(stage, this);
 		commander.resetRoles();
 		this.addActorListener();
@@ -151,6 +147,7 @@ public class GameScreen extends CubocScreen implements Observer,
 				"" + Gdx.graphics.getFramesPerSecond(), stage, 1, 420, 30,
 				Color.RED);
 		stage.addActor(attack_effect);
+
 	}
 
 	/**
@@ -578,4 +575,12 @@ public class GameScreen extends CubocScreen implements Observer,
 			Gdx.input.setInputProcessor(inputMultiplexer);
 		}
 	}
+//
+//	public MapBox getMapBox() {
+//		return mb;
+//	}
+//	
+//	public UITopAnimation getUITopAnimation(){
+//		return uita;
+//	}
 }

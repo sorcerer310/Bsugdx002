@@ -349,8 +349,7 @@ public class Role extends Actor {
 			}
 		}
 		if (attack_effect != null) {
-			current_attack_frame = attack_effect
-					.getKeyFrame(time_effect, false);
+			current_attack_frame = attack_effect.getKeyFrame(time_effect, false);
 			AttackEffect.getInstance().setFrame(current_attack_frame);
 			if (attack_effect.isAnimationFinished(time_effect)) {
 				current_attack_frame = null;

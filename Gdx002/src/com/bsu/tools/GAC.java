@@ -28,12 +28,12 @@ public class GAC {
 	}
 
 	private Texture effect_texture;
-	private TextureRegion[][] effect_spilt;
+	private TextureRegion[][] effect_split;
 	private TextureAtlas texture_effect_skills;
 
 	private void gameAnimations() {
 		effect_texture = GTC.getInstance().effect;
-		effect_spilt = TextureRegion.split(effect_texture, 32, 32);
+		effect_split = TextureRegion.split(effect_texture, 32, 32);
 		texture_effect_skills = GTC.getInstance().skills_effect;
 	}
 	public Animation getRoleAnimation(TextureRegion tr){
@@ -44,21 +44,35 @@ public class GAC {
 	}
 	public Animation getEffectApper(){
 		TextureRegion[] region_effect_apper = new TextureRegion[4];
-		region_effect_apper[0] = effect_spilt[4][6];
-		region_effect_apper[1] = effect_spilt[5][6];
-		region_effect_apper[2] = effect_spilt[6][6];
-		region_effect_apper[3] = effect_spilt[7][6];
+		region_effect_apper[0] = effect_split[4][6];
+		region_effect_apper[1] = effect_split[5][6];
+		region_effect_apper[2] = effect_split[6][6];
+		region_effect_apper[3] = effect_split[7][6];
 		Animation ani_effect_apper = new Animation(0.1f, region_effect_apper);
 		return ani_effect_apper;
 	}
 	public Animation getEffectDisapper(){
 		TextureRegion[] region_effect_disapper = new TextureRegion[4];
-		region_effect_disapper[0] = effect_spilt[7][6];
-		region_effect_disapper[1] = effect_spilt[6][6];
-		region_effect_disapper[2] = effect_spilt[5][6];
-		region_effect_disapper[3] = effect_spilt[4][6];
+		region_effect_disapper[0] = effect_split[7][6];
+		region_effect_disapper[1] = effect_split[6][6];
+		region_effect_disapper[2] = effect_split[5][6];
+		region_effect_disapper[3] = effect_split[4][6];
 		Animation ani_effect_disapper = new Animation(0.1f, region_effect_disapper);
 		return ani_effect_disapper;
+	}
+	/**
+	 * 获得宝藏动画
+	 * @return	返回一段表现发现宝藏的动画
+	 */
+	public Animation getTreasure(){
+		TextureRegion[] tr = new TextureRegion[4];
+		tr[0] = effect_split[7][6];
+		tr[1] = effect_split[6][6];
+		tr[2] = effect_split[5][6];
+		tr[3] = effect_split[4][6];
+		Animation ani = new Animation(0.1f,tr);
+		ani.setPlayMode(Animation.NORMAL);
+		return ani;
 	}
 	
 	/**
