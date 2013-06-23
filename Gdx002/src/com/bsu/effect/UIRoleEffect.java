@@ -66,7 +66,7 @@ public class UIRoleEffect implements Observer {
 			}
 		});
 		for (int i = 0; i < Player.getInstance().playerFightRole.size; i++) {
-			int x = 20 + i * 90;
+			int x = 20 + i * 95;
 			int y = 10;
 			final Role r = Player.getInstance().playerFightRole.get(i);
 			Vector2 v = new Vector2(x, y);
