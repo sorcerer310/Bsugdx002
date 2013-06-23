@@ -1,25 +1,16 @@
 package com.bsu.obj;
 
-
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
-
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -31,7 +22,7 @@ import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
-public class TipsWindows{
+public class TipsWindows extends WidgetGroup {
 
 	private static TipsWindows instance = null;
 	private Skin skin;
@@ -53,6 +44,7 @@ public class TipsWindows{
 		tipsWindows = new Window("", ws);
 		tipsWindows.align(Align.left);
 		tipsWindows.setWidth(200);
+		this.addActor(tipsWindows);
 	}
 
 	/**
@@ -91,10 +83,10 @@ public class TipsWindows{
 		tipsWindows.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				tipsWindows.getParent().removeActor(tipsWindows);
+				removeFromStage();
 			}
 		});
-		addToStage(stage,10);
+		addToStage(stage, 10);
 	}
 
 	/**
@@ -127,10 +119,10 @@ public class TipsWindows{
 		tipsWindows.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				tipsWindows.getParent().removeActor(tipsWindows);
+				removeFromStage();
 			}
 		});
-		addToStage(stage,10);
+		addToStage(stage, 10);
 	}
 
 	/**
@@ -168,10 +160,10 @@ public class TipsWindows{
 		tipsWindows.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				tipsWindows.getParent().removeActor(tipsWindows);
+				removeFromStage();
 			}
 		});
-		addToStage(stage,4);
+		addToStage(stage, 4);
 	}
 
 	/**
@@ -239,7 +231,7 @@ public class TipsWindows{
 		tipsWindows.add(tg);
 		tipsWindows.pack();
 		tipsWindows.setPosition(getPosition(v, 50).x, getPosition(v, 50).y);
-		addToStage(stage,10);
+		addToStage(stage, 10);
 		tipsWindows.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -272,27 +264,34 @@ public class TipsWindows{
 	 * 移除tips及其自身
 	 */
 	public void removeFromStage() {
-		if (tipsWindows.getParent() != null) {
-			tipsWindows.getParent().removeActor(tipsWindows);
-		}
-		for(Action action:tipsWindows.getActions()){
-			if(action instanceof SequenceAction){
-				//tipsWindows.removeAction(action);
-			}
-		}
 		tipsWindows.clear();
+		tips_flag = false;
+		start_time=0;
+		if (this.getParent() != null) {
+			this.getParent().removeActor(this);
+		}
 	}
 
 	/**
 	 * 添加自身及tips到相应位置
 	 */
-	private void addToStage(Stage s,float ds) {
-		s.addActor(tipsWindows);
-		tipsWindows.addAction(sequence(moveBy(0f, 0f, ds), run(new Runnable() {
-			@Override
-			public void run() {
+	private void addToStage(Stage s, float ds) {
+		dua_time = ds;
+		tips_flag = true;
+		start_time =0;
+		s.addActor(this);
+	}
+
+	float start_time, dua_time,current_time;
+	boolean tips_flag;
+
+	@Override
+	public void act(float delta) {
+		if (tips_flag) {
+			start_time+=delta;
+			if (start_time >= dua_time) {
 				removeFromStage();
 			}
-		})));
+		}
 	}
 }
