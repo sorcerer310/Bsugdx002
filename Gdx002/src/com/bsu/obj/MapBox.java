@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.make.WidgetFactory;
 import com.bsu.tools.GC;
 import com.bsu.tools.GAC;
+import com.bsu.tools.GTC;
 import com.bsu.tools.GameMap;
 
 /**
@@ -31,8 +32,7 @@ public class MapBox extends Actor {
 	private TextureRegion current_hero_home_frame;// 当前人物动画所对应的TextureRegion
 	private Animation ani_enemy_home; // 效果动画
 	private TextureRegion current_enemy_home_frame; // 当前效果动画对应的某一帧
-//	private Animation ani_treasure;					//宝物效果动画
-//	private TextureRegion current_treasure_frame;	//宝物动画当前帧
+	private TextureRegion current_treasure_frame; // 宝物动画当前帧
 
 	public static Array<Vector2> pass_array = new Array<Vector2>();// 选择人物后，显示地图上可移动范围
 	public static Array<Vector2> attack_array = new Array<Vector2>();// 选择人物后，显示人物可攻击范围
@@ -51,9 +51,6 @@ public class MapBox extends Actor {
 
 	private float time_hero_home; // 角色基地动画时间
 	private float time_enemy_home; // 角色基地动画时间
-//	private float time_treasure;	//宝藏动画时间
-	
-//	private boolean flag_play_treasure = false; //设置动画是否播放标志
 
 	public static enum BOX {
 		PASS, BLOCK, EVENT, ATTACK
@@ -126,45 +123,44 @@ public class MapBox extends Actor {
 		// TODO Auto-generated method stub
 		time_hero_home += Gdx.graphics.getDeltaTime();
 		time_enemy_home += Gdx.graphics.getDeltaTime();
-//		time_treasure += Gdx.graphics.getDeltaTime();
-		//障碍格绘制
+		// 绘制宝箱
+		for (int i = 0; i < box_array.size; i++) {
+			if(box_array.get(i).type=="show"){
+			batch.draw(current_treasure_frame, box_array.get(i).x,
+					GameMap.map_render.getMapHeightUnits()-box_array.get(i).y);
+			}
+		}
+		// 障碍格绘制
 		for (int i = 0; i < block_array.size; i++) {
 			batch.draw(map_block, block_array.get(i).x * GC.map_box_value,
 					(block_array.get(i).y) * GC.map_box_value);
 		}
-		//通过格绘制
+		// 通过格绘制
 		for (int i = 0; i < pass_array.size; i++) {
 			batch.draw(map_pass, pass_array.get(i).x * GC.map_box_value,
 					(pass_array.get(i).y) * GC.map_box_value);
 		}
-		//攻击范围绘制
+		// 攻击范围绘制
 		for (int i = 0; i < attack_array.size; i++) {
 			batch.draw(map_attack, attack_array.get(i).x * GC.map_box_value,
 					(attack_array.get(i).y) * GC.map_box_value);
 		}
-		
-		current_hero_home_frame = ani_hero_home.getKeyFrame(time_hero_home,true);
+
+		current_hero_home_frame = ani_hero_home.getKeyFrame(time_hero_home,
+				true);
 		for (int i = 0; i < hero_home_array.size; i++) {
 			batch.draw(current_hero_home_frame, hero_home_array.get(i).x
 					* GC.map_box_value, (hero_home_array.get(i).y)
 					* GC.map_box_value);
 		}
-		
-		current_enemy_home_frame = ani_enemy_home.getKeyFrame(time_enemy_home,true);
+
+		current_enemy_home_frame = ani_enemy_home.getKeyFrame(time_enemy_home,
+				true);
 		for (int i = 0; i < enemy_home_array.size; i++) {
 			batch.draw(current_enemy_home_frame, enemy_home_array.get(i).x
 					* GC.map_box_value, (enemy_home_array.get(i).y)
 					* GC.map_box_value);
 		}
-		
-		//播放宝藏动画
-//		if(flag_play_treasure){
-//			current_treasure_frame = ani_treasure.getKeyFrame(time_treasure, false);
-//			batch.draw(current_treasure_frame, pos_treasure.x,pos_treasure.y);
-//			//如果播放完毕设置flag_play_treasure为false
-//			if(ani_treasure.isAnimationFinished(time_treasure))
-//				flag_play_treasure = false;
-//		}
 	}
 
 	/**
@@ -182,15 +178,16 @@ public class MapBox extends Actor {
 		map_attack = WidgetFactory.getInstance().getPixmapFrame(
 				GC.map_box_value - 2, GC.map_box_value - 2, Color.BLACK,
 				Color.BLUE, 0.5f);
+		current_treasure_frame = GTC.getInstance().skills_effect.findRegion(
+				"box", 1);
 		ani_enemy_home = GAC.getInstance().getEffectApper();
 		ani_hero_home = GAC.getInstance().getEffectDisapper();
-//		ani_treasure = GAC.getInstance().getTreasure();					//宝藏动画
 		time_hero_home = 0;
 		time_enemy_home = 0;
 		for (TiledObjectGroup group : GameMap.map.objectGroups) {
 			if (group.name.equals("box")) {
-				//当object组为box组时遍历改组的所有对象
-				for (TiledObject object : group.objects) 
+				// 当object组为box组时遍历改组的所有对象
+				for (TiledObject object : group.objects)
 					box_array.add(object);
 			} else {
 				for (TiledObject object : group.objects) {
@@ -203,8 +200,6 @@ public class MapBox extends Actor {
 					Vector2 v = new Vector2(x, y);
 					if (object.type.equals(GC.map_type_block))
 						block_array.add(v);
-					// else if (object.type.equals(GC.map_type_box))
-					// box_array.add(object);
 					else if (object.type.equals(GC.map_type_hp_rarise))
 						hpRaise_array.add(v);
 					else if (object.type.equals(GC.map_type_value)) {
@@ -280,6 +275,5 @@ public class MapBox extends Actor {
 		}
 		return false;
 	}
-	
 
 }
