@@ -1,6 +1,5 @@
 package com.bsu.obj;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -16,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.make.ItemFactory;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.GC;
 import com.bsu.tools.GC.QUALITY;
@@ -43,7 +43,7 @@ public class TipsWindows extends WidgetGroup {
 				skin.getDrawable("draw"));
 		tipsWindows = new Window("", ws);
 		tipsWindows.align(Align.left);
-		tipsWindows.setWidth(200);
+		tipsWindows.setWidth(500);
 		this.addActor(tipsWindows);
 	}
 
@@ -241,6 +241,28 @@ public class TipsWindows extends WidgetGroup {
 	}
 
 	/**
+	 * 显示宝箱内道具
+	 * 
+	 * @param s
+	 */
+	public void showBoxItem(Stage s) {
+		removeFromStage();
+		tipsWindows.clear();
+		tipsWindows.defaults().align(Align.center);
+		tipsWindows.setPosition(200, 140);
+		Image icon = new Image(ItemFactory.getInstance().getItemById(1).tr_item);
+		tipsWindows.add(icon);
+		tipsWindows.pack();
+		tipsWindows.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				removeFromStage();
+			}
+		});
+		addToStage(s, 2);
+	}
+
+	/**
 	 * 根据传入坐标，返回tips应该所在位置
 	 * 
 	 * @param f
@@ -266,7 +288,7 @@ public class TipsWindows extends WidgetGroup {
 	public void removeFromStage() {
 		tipsWindows.clear();
 		tips_flag = false;
-		start_time=0;
+		start_time = 0;
 		if (this.getParent() != null) {
 			this.getParent().removeActor(this);
 		}
@@ -278,17 +300,20 @@ public class TipsWindows extends WidgetGroup {
 	private void addToStage(Stage s, float ds) {
 		dua_time = ds;
 		tips_flag = true;
-		start_time =0;
+		start_time = 0;
 		s.addActor(this);
 	}
 
-	float start_time, dua_time,current_time;
+	float start_time, dua_time, current_time;
 	boolean tips_flag;
 
 	@Override
 	public void act(float delta) {
 		if (tips_flag) {
-			start_time+=delta;
+			start_time += delta;
+			float a = (dua_time - start_time) / (dua_time / 2);
+			a = a >= 1 ? 1 : a;
+			U.setAlpha(tipsWindows, a);
 			if (start_time >= dua_time) {
 				removeFromStage();
 			}

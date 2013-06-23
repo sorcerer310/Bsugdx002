@@ -43,6 +43,7 @@ public class UITopAnimation extends Actor{
 			batch.draw(current_treasure_frame, pos_treasure.x, pos_treasure.y);
 			if(ani_treasure.isAnimationFinished(time_treasure))
 				flag_play_treasure = false;
+				TipsWindows.getInstance().showBoxItem(getStage());
 		}
 	}
 }
