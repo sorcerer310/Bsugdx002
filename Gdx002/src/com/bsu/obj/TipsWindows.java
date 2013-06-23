@@ -38,7 +38,7 @@ public class TipsWindows extends WidgetGroup {
 	private TipsWindows() {
 		skin = new Skin();
 		skin.add("draw", new TextureRegion(GTC.getInstance().tipsPanel,
-				windowWidth, 60));
+				40, 40));
 		Window.WindowStyle ws = new WindowStyle(U.get_font(), Color.BLACK,
 				skin.getDrawable("draw"));
 		tipsWindows = new Window("", ws);

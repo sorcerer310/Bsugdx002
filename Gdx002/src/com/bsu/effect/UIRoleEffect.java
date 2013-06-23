@@ -179,7 +179,7 @@ class roleUIInfo {
 		TextureRegion hp = WidgetFactory.getInstance().getTextureFill(4, 48,
 				new Color(255, 0, 0, 1), 1);
 		WidgetFactory.getInstance().makeImg(hpBack, stage, 1, x - 10, y);
-		hpImg = WidgetFactory.getInstance().makeImg(hp, stage, 1, x - 10, y);
+		hpImg = WidgetFactory.getInstance().makeImg(hp, stage, 1, x - 6, y);
 		nameLabel = WidgetFactory.getInstance().makeLabel(r.name, stage, 0.5f,
 				x, y + 50);
 	}

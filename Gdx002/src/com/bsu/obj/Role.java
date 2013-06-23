@@ -121,7 +121,6 @@ public class Role extends Actor {
 		setControlled(false);
 		setCurrentHp(maxHp);
 		setColor(roleColor);
-		System.out.println(roleColor);
 		clearExtValue();
 		getPass_array().clear();
 		getAttack_array().clear();
