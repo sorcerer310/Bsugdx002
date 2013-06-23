@@ -1,27 +1,25 @@
 package com.bsu.obj;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
+
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.rotateBy;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.rotateTo;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -33,7 +31,7 @@ import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
-public class TipsWindows extends WidgetGroup {
+public class TipsWindows{
 
 	private static TipsWindows instance = null;
 	private Skin skin;
@@ -167,13 +165,13 @@ public class TipsWindows extends WidgetGroup {
 			tipsWindows.add(l);
 		}
 		tipsWindows.pack();
-		addToStage(stage,4);
 		tipsWindows.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				tipsWindows.getParent().removeActor(tipsWindows);
 			}
 		});
+		addToStage(stage,4);
 	}
 
 	/**
@@ -274,20 +272,23 @@ public class TipsWindows extends WidgetGroup {
 	 * 移除tips及其自身
 	 */
 	public void removeFromStage() {
-		if (this.getParent() != null) {
-			this.getParent().removeActor(this);
-			this.removeActor(tipsWindows);
-			tipsWindows.clear();
+		if (tipsWindows.getParent() != null) {
+			tipsWindows.getParent().removeActor(tipsWindows);
 		}
+		for(Action action:tipsWindows.getActions()){
+			if(action instanceof SequenceAction){
+				//tipsWindows.removeAction(action);
+			}
+		}
+		tipsWindows.clear();
 	}
 
 	/**
 	 * 添加自身及tips到相应位置
 	 */
 	private void addToStage(Stage s,float ds) {
-		this.addActor(tipsWindows);
-		s.addActor(this);
-		addAction(sequence(moveBy(0f, 0f, ds), run(new Runnable() {
+		s.addActor(tipsWindows);
+		tipsWindows.addAction(sequence(moveBy(0f, 0f, ds), run(new Runnable() {
 			@Override
 			public void run() {
 				removeFromStage();
