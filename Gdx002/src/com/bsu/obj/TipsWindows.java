@@ -1,6 +1,18 @@
 package com.bsu.obj;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.rotateBy;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.rotateTo;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -9,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -20,7 +33,7 @@ import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
-public class TipsWindows {
+public class TipsWindows extends WidgetGroup {
 
 	private static TipsWindows instance = null;
 	private Skin skin;
@@ -32,7 +45,7 @@ public class TipsWindows {
 			instance = new TipsWindows();
 		return instance;
 	}
-       
+
 	private TipsWindows() {
 		skin = new Skin();
 		skin.add("draw", new TextureRegion(GTC.getInstance().tipsPanel,
@@ -43,13 +56,14 @@ public class TipsWindows {
 		tipsWindows.align(Align.left);
 		tipsWindows.setWidth(200);
 	}
+
 	/**
 	 * 显示更换的人物信息，位置动态
 	 * 
 	 * @param r
 	 * @param s
 	 */
-	public void showRoleInfo(Role r, Vector2 v, Stage s) {
+	public void showRoleInfo(Role r, Vector2 v, Stage stage) {
 		removeFromStage();
 		tipsWindows.align(Align.center);
 		tipsWindows.padTop(10);
@@ -75,14 +89,14 @@ public class TipsWindows {
 		}
 		tipsWindows.add(t);
 		tipsWindows.pack();
-		tipsWindows.setPosition(getPosition(v,48).x, getPosition(v,48).y);
+		tipsWindows.setPosition(getPosition(v, 48).x, getPosition(v, 48).y);
 		tipsWindows.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				tipsWindows.getParent().removeActor(tipsWindows);
 			}
 		});
-		s.addActor(tipsWindows);
+		addToStage(stage,10);
 	}
 
 	/**
@@ -111,14 +125,14 @@ public class TipsWindows {
 			tipsWindows.add(label);
 		}
 		tipsWindows.pack();
-		tipsWindows.setPosition(getPosition(v,32).x, getPosition(v,32).y);
+		tipsWindows.setPosition(getPosition(v, 32).x, getPosition(v, 32).y);
 		tipsWindows.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				tipsWindows.getParent().removeActor(tipsWindows);
 			}
 		});
-		stage.addActor(tipsWindows);
+		addToStage(stage,10);
 	}
 
 	/**
@@ -153,7 +167,7 @@ public class TipsWindows {
 			tipsWindows.add(l);
 		}
 		tipsWindows.pack();
-		stage.addActor(tipsWindows);
+		addToStage(stage,4);
 		tipsWindows.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -226,12 +240,12 @@ public class TipsWindows {
 		tipsWindows.row();
 		tipsWindows.add(tg);
 		tipsWindows.pack();
-		tipsWindows.setPosition(getPosition(v,50).x, getPosition(v,50).y);
-		stage.addActor(tipsWindows);
+		tipsWindows.setPosition(getPosition(v, 50).x, getPosition(v, 50).y);
+		addToStage(stage,10);
 		tipsWindows.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				tipsWindows.getParent().removeActor(tipsWindows);
+				removeFromStage();
 			}
 		});
 	}
@@ -242,7 +256,7 @@ public class TipsWindows {
 	 * @param f
 	 * @param g
 	 */
-	private Vector2 getPosition(Vector2 tv,int w) {
+	private Vector2 getPosition(Vector2 tv, int w) {
 		Vector2 v = new Vector2();
 		int ax = 0, ay = 0;
 		if (tv.x <= GC.rect_width / 2) {
@@ -257,12 +271,27 @@ public class TipsWindows {
 	}
 
 	/**
-	 * 移除tips
+	 * 移除tips及其自身
 	 */
 	public void removeFromStage() {
-		if (tipsWindows.getStage() != null) {
-			tipsWindows.getParent().removeActor(tipsWindows);
+		if (this.getParent() != null) {
+			this.getParent().removeActor(this);
+			this.removeActor(tipsWindows);
+			tipsWindows.clear();
 		}
-		tipsWindows.clear();
+	}
+
+	/**
+	 * 添加自身及tips到相应位置
+	 */
+	private void addToStage(Stage s,float ds) {
+		this.addActor(tipsWindows);
+		s.addActor(this);
+		addAction(sequence(moveBy(0f, 0f, ds), run(new Runnable() {
+			@Override
+			public void run() {
+				removeFromStage();
+			}
+		})));
 	}
 }

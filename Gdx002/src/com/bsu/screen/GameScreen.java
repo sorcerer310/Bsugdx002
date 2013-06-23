@@ -575,12 +575,4 @@ public class GameScreen extends CubocScreen implements Observer,
 			Gdx.input.setInputProcessor(inputMultiplexer);
 		}
 	}
-//
-//	public MapBox getMapBox() {
-//		return mb;
-//	}
-//	
-//	public UITopAnimation getUITopAnimation(){
-//		return uita;
-//	}
 }
