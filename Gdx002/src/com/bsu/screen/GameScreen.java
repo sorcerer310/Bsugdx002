@@ -76,10 +76,6 @@ public class GameScreen extends CubocScreen implements Observer,
 
 	public GameScreen(Game mxg) {
 		super(mxg);
-
-//		stage = new Stage(GC.rect_width, GC.rect_height, false);
-//		UIStage = new Stage(GC.rect_width, GC.rect_height, false);
-//		endStage = new Stage(GC.rect_width, GC.rect_height, false);
 		U.get_skin();
 		U.get_font();
 		U.get_sytle();
@@ -110,6 +106,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		setControlled(true);
 		if (mb == null)
 			mb = new MapBox();
+		mb.init_box_value();
 		stage.addActor(mb); // 增加地图方格显示
 
 		// 增加敌人

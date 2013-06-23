@@ -60,8 +60,19 @@ public class MapBox extends Actor {
 	 * 地图格子类，处理地图上所有格子，包括动态的Role所在格子，障碍格子等
 	 */
 	public MapBox() {
-		// TODO Auto-generated constructor stub
-		init_box_value();
+		map_pass = WidgetFactory.getInstance().getPixmapFrame(
+				GC.map_box_value - 2, GC.map_box_value - 2, Color.BLACK,
+				Color.GREEN, 0.5f);
+		map_block = WidgetFactory.getInstance().getPixmapFrame(
+				GC.map_box_value - 2, GC.map_box_value - 2, Color.BLACK,
+				Color.RED, 0.5f);
+		map_attack = WidgetFactory.getInstance().getPixmapFrame(
+				GC.map_box_value - 2, GC.map_box_value - 2, Color.BLACK,
+				Color.BLUE, 0.5f);
+		current_treasure_frame = GTC.getInstance().skills_effect.findRegion(
+				"box", 1);
+		ani_enemy_home = GAC.getInstance().getEffectApper();
+		ani_hero_home = GAC.getInstance().getEffectDisapper();
 	}
 
 	/**
@@ -168,20 +179,7 @@ public class MapBox extends Actor {
 	 * 
 	 * @return
 	 */
-	private void init_box_value() {
-		map_pass = WidgetFactory.getInstance().getPixmapFrame(
-				GC.map_box_value - 2, GC.map_box_value - 2, Color.BLACK,
-				Color.GREEN, 0.5f);
-		map_block = WidgetFactory.getInstance().getPixmapFrame(
-				GC.map_box_value - 2, GC.map_box_value - 2, Color.BLACK,
-				Color.RED, 0.5f);
-		map_attack = WidgetFactory.getInstance().getPixmapFrame(
-				GC.map_box_value - 2, GC.map_box_value - 2, Color.BLACK,
-				Color.BLUE, 0.5f);
-		current_treasure_frame = GTC.getInstance().skills_effect.findRegion(
-				"box", 1);
-		ani_enemy_home = GAC.getInstance().getEffectApper();
-		ani_hero_home = GAC.getInstance().getEffectDisapper();
+	public void init_box_value() {
 		time_hero_home = 0;
 		time_enemy_home = 0;
 		for (TiledObjectGroup group : GameMap.map.objectGroups) {

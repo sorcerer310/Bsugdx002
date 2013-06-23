@@ -31,7 +31,7 @@ public class Role extends Actor {
 	public static enum Type {
 		HERO, ENEMY
 	}; // 英雄还是NPC
-
+	private Color roleColor;
 	public RoleIcon roleIcon;
 	public Equip weapon;// 人物武器
 	public Equip armor;// 人物护甲
@@ -103,6 +103,7 @@ public class Role extends Actor {
 		defend = dv;
 		weapon = w;
 		armor = a;
+		roleColor=new Color(getColor());
 		skill_tree = as;
 		roleTexture = new TextureRegion(tr);
 		cskill = skill_tree.get(0);
@@ -119,6 +120,8 @@ public class Role extends Actor {
 		setSelected(false);
 		setControlled(false);
 		setCurrentHp(maxHp);
+		setColor(roleColor);
+		System.out.println(roleColor);
 		clearExtValue();
 		getPass_array().clear();
 		getAttack_array().clear();
@@ -154,6 +157,7 @@ public class Role extends Actor {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
+		batch.setColor(getColor());
 		if (current_action_frame != null) {
 			batch.draw(current_action_frame, getX(), getY(), getOriginX(),
 					getOriginY(), GC.map_box_value, GC.map_box_value,
@@ -349,7 +353,8 @@ public class Role extends Actor {
 			}
 		}
 		if (attack_effect != null) {
-			current_attack_frame = attack_effect.getKeyFrame(time_effect, false);
+			current_attack_frame = attack_effect
+					.getKeyFrame(time_effect, false);
 			AttackEffect.getInstance().setFrame(current_attack_frame);
 			if (attack_effect.isAnimationFinished(time_effect)) {
 				current_attack_frame = null;
@@ -571,8 +576,8 @@ public class Role extends Actor {
 							sequence(rotateBy(15, dur), rotateBy(-15, dur),
 									rotateBy(-10, dur), rotateBy(10, dur),
 									rotateBy(15, dur), rotateBy(-15, dur),
-									rotateBy(-10, dur), rotateBy(10, dur)
-							), moveBy(x, y, GC.duration_move_box)),
+									rotateBy(-10, dur), rotateBy(10, dur)),
+							moveBy(x, y, GC.duration_move_box)),
 					run(new Runnable() {
 						@Override
 						public void run() {
@@ -705,45 +710,51 @@ public class Role extends Actor {
 	 * 死亡动作
 	 */
 	public void deadAction(final BsuEvent be) {
-		if (face == FACE.right) {
-			this.setOrigin(0, 0);
-			addAction(sequence(
-					parallel(rotateBy(45f, 0.3f), moveBy(-5f, 0f, 0.3f),
-							moveBy(0f, 10f, 0.3f)),
-					parallel(rotateBy(45f, 0.3f), moveBy(-5f, 0f, 0.3f),
-							moveBy(0f, -10f, 0.3f)),
-					alpha(0.0f, 0.5f),
-					// fadeOut(0f),
-					// 让头像回到初始位置
-					parallel(rotateTo(0, .0f), moveBy(10f, 0f, 0f)),
-					run(new Runnable() {
-						@Override
-						public void run() {
-							// Role.this.isDead = true;
-							// Role.this.setVisible(false);
-							be.notify(this, "dead");
-
-						}
-					})));
-		} else if (face == FACE.left) {
-			this.setOrigin(32, 0);
-			addAction(sequence(
-					parallel(rotateBy(-45f, 0.3f), moveBy(5f, 0f, 0.3f),
-							moveBy(0f, -10f, 0.3f)),
-					parallel(rotateBy(-45f, 0.3f), moveBy(5f, 0f, 0.3f),
-							moveBy(0f, 10f, 0.3f)),
-					alpha(0.0f, 0.5f),
-					// fadeOut(0f),
-					// 让头像回到初始位置
-					parallel(rotateTo(0, .0f), moveBy(-10f, 0f, 0f)),
-					run(new Runnable() {
-						@Override
-						public void run() {
-							be.notify(this, "dead");
-
-						}
-					})));
-		}
+		addAction(sequence(alpha(0.0f, 2f), run(new Runnable() {
+			@Override
+			public void run() {
+				be.notify(this, "dead");
+			}
+		})));
+		// if (face == FACE.right) {
+		// this.setOrigin(0, 0);
+			// addAction(sequence(
+			// parallel(rotateBy(45f, 0.3f), moveBy(-5f, 0f, 0.3f),
+			// moveBy(0f, 10f, 0.3f)),
+			// parallel(rotateBy(45f, 0.3f), moveBy(-5f, 0f, 0.3f),
+			// moveBy(0f, -10f, 0.3f)),
+			// alpha(0.0f, 0.5f),
+			// // fadeOut(0f),
+			// // 让头像回到初始位置
+			// parallel(rotateTo(0, .0f), moveBy(10f, 0f, 0f)),
+			// run(new Runnable() {
+			// @Override
+			// public void run() {
+			// // Role.this.isDead = true;
+			// // Role.this.setVisible(false);
+			// be.notify(this, "dead");
+			//
+			// }
+			// })));
+//		} else if (face == FACE.left) {
+//			this.setOrigin(32, 0);
+			// addAction(sequence(
+			// parallel(rotateBy(-45f, 0.3f), moveBy(5f, 0f, 0.3f),
+			// moveBy(0f, -10f, 0.3f)),
+			// parallel(rotateBy(-45f, 0.3f), moveBy(5f, 0f, 0.3f),
+			// moveBy(0f, 10f, 0.3f)),
+			// alpha(0.0f, 0.5f),
+			// // fadeOut(0f),
+			// // 让头像回到初始位置
+			// parallel(rotateTo(0, .0f), moveBy(-10f, 0f, 0f)),
+			// run(new Runnable() {
+			// @Override
+			// public void run() {
+			// be.notify(this, "dead");
+			//
+			// }
+			// })));
+//		}
 	}
 
 	/**
