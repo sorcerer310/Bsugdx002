@@ -125,7 +125,7 @@ public class MapBox extends Actor {
 		time_enemy_home += Gdx.graphics.getDeltaTime();
 		// 绘制宝箱
 		for (int i = 0; i < box_array.size; i++) {
-			if(box_array.get(i).type=="show"){
+			if(box_array.get(i).type.equals("show")){
 			batch.draw(current_treasure_frame, box_array.get(i).x,
 					GameMap.map_render.getMapHeightUnits()-box_array.get(i).y);
 			}
