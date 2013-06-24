@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -58,26 +59,47 @@ public class RoleScreen extends CubocScreen implements Observer,
 		stage = new Stage(GC.rect_width, GC.rect_height, false);
 		sRoleStage = new Stage(GC.rect_width, GC.rect_height, false);
 		RoleInfoStage = new Stage(GC.rect_width, GC.rect_height, false);
-		wfy = WidgetFactory.getInstance();
-		background = new Image(GTC.getInstance().rolePanel);
+	}
+
+	public void initScreen() {
+		stage.clear();
+		bImg.clear();
+		if (wfy == null)
+			wfy = WidgetFactory.getInstance();
+		if (background == null)
+			background = new Image(GTC.getInstance().rolePanel);
 		stage.addActor(background);
-		ib_back = wfy.makeImageButton(GC.button_back, stage, 375, 272, 1);
-		allImg = WidgetFactory.getInstance().makeImageButton(GC.button_all,
-				stage, 20, 20, 0.5f);
-		greenImg = WidgetFactory.getInstance().makeImageButton(GC.button_green,
-				stage, 83, 20, 0.5f);
-		blueImg = WidgetFactory.getInstance().makeImageButton(GC.button_blue,
-				stage, 146, 20, 0.5f);
-		purpleImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_purple, stage, 209, 20, 0.5f);
-		orangeImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_orange, stage, 272, 20, 0.5f);
+		if (ib_back == null)
+			ib_back = wfy.makeImageButton(GC.button_back, 375, 272, 1);
+		stage.addActor(ib_back);
+		if (allImg == null)
+			allImg = WidgetFactory.getInstance().makeImageButton(GC.button_all,
+					20, 20, 0.5f);
+		stage.addActor(allImg);
+		if (greenImg == null)
+			greenImg = WidgetFactory.getInstance().makeImageButton(
+					GC.button_green, 83, 20, 0.5f);
+		stage.addActor(greenImg);
+		if (blueImg == null)
+			blueImg = WidgetFactory.getInstance().makeImageButton(
+					GC.button_blue,  146, 20, 0.5f);
+		stage.addActor(blueImg);
+		if (purpleImg == null)
+			purpleImg = WidgetFactory.getInstance().makeImageButton(
+					GC.button_purple,  209, 20, 0.5f);
+		stage.addActor(purpleImg);
+		if (orangeImg == null)
+			orangeImg = WidgetFactory.getInstance().makeImageButton(
+					GC.button_orange, 272, 20, 0.5f);
+		stage.addActor(orangeImg);
 		bImg.add(allImg);
 		bImg.add(greenImg);
 		bImg.add(blueImg);
 		bImg.add(purpleImg);
 		bImg.add(orangeImg);
+		quality=null;
 		setListener();
+		addRoleToStage(QUALITY.all);
 	}
 
 	/**
@@ -129,7 +151,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 		 * 滑动容器
 		 */
 		Table table = new Table();
-		ScrollPane sp = new ScrollPane(table, U.get_skin().get(ScrollPaneStyle.class));
+		ScrollPane sp = new ScrollPane(table, U.get_skin().get(
+				ScrollPaneStyle.class));
 		sp.setWidth(441);
 		sp.setHeight(65);
 		sp.setPosition(20, 45);
@@ -203,6 +226,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 					U.setCurrentSkillImg(skillImg, img);
 					return true;
 				}
+
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
@@ -222,14 +246,20 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param r
 	 */
 	private void showRoleBaseInfo(Role r) {
-		wfy.makeLabel(r.name, RoleInfoStage, 1f, 40, 240,
+		Label name=wfy.makeLabel(r.name, 1f, 40, 240,
 				U.getQualityColor(r.quality));
-		wfy.makeLabel("等级:" + r.level, RoleInfoStage, 0.5f, 100, 240);
-		wfy.makeLabel("生命:" + r.maxHp, RoleInfoStage, 0.5f, 40, 220);
-		wfy.makeLabel("经验:" + r.exp + "/" + r.expUp, RoleInfoStage, 0.5f, 100,
+		Label lv=wfy.makeLabel("等级:" + r.level, 0.5f, 100, 240);
+		Label hp=wfy.makeLabel("生命:" + r.maxHp, 0.5f, 40, 220);
+		Label exp=wfy.makeLabel("经验:" + r.exp + "/" + r.expUp, 0.5f, 100,
 				220);
-		wfy.makeLabel("攻击:" + r.getAttack(), RoleInfoStage, 0.5f, 40, 200);
-		wfy.makeLabel("防御:" + r.getDefend(), RoleInfoStage, 0.5f, 100, 200);
+		Label attack=wfy.makeLabel("攻击:" + r.getAttack(), 0.5f, 40, 200);
+		Label defend=wfy.makeLabel("防御:" + r.getDefend(), 0.5f, 100, 200);
+		RoleInfoStage.addActor(name);
+		RoleInfoStage.addActor(lv);
+		RoleInfoStage.addActor(hp);
+		RoleInfoStage.addActor(exp);
+		RoleInfoStage.addActor(attack);
+		RoleInfoStage.addActor(defend);
 	}
 
 	/**
@@ -248,13 +278,13 @@ public class RoleScreen extends CubocScreen implements Observer,
 		for (final Skill s : r.skill_tree) {
 			SkillIcon se = null;
 			if (s.quality == QUALITY.green) {
-				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix
-						+ numsGreen * 40, iy), true);
+				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsGreen
+						* 40, iy), true);
 				numsGreen++;
 			}
 			if (s.quality == QUALITY.blue) {
-				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix
-						+ numsBlue * 40, iy + height), true);
+				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsBlue
+						* 40, iy + height), true);
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
@@ -322,7 +352,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 		inputMultiplexer.addProcessor(stage);
 		inputMultiplexer.addProcessor(new GestureDetector(this));
 		Gdx.input.setInputProcessor(inputMultiplexer);
-		addRoleToStage(QUALITY.all);
 	}
 
 	@Override

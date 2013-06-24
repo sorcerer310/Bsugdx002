@@ -93,10 +93,12 @@ public class GameScreen extends CubocScreen implements Observer,
 	 *            关卡初始化英雄与敌人的数组，出生地点在地图中已经设置好
 	 */
 	public void game_init(GameScreenData gsd) {
+		if(uita==null)
 		uita = new UITopAnimation();
 		this.heros = gsd.getHeroRoles();
 		this.npcs = gsd.getNpcRoles();
 		// 将所有role放入同一Role中便于操作
+		roles.clear();
 		roles.addAll(heros);
 		roles.addAll(npcs);
 
@@ -119,14 +121,14 @@ public class GameScreen extends CubocScreen implements Observer,
 		stage.addActor(uita);
 		commander = Commander.initInstance(stage, this);
 		commander.resetRoles();
-		this.addActorListener();
+		addActorListener();
 		setBornPosition(GameMap.map, Type.HERO, GC.object_layer_hero);
 		setBornPosition(GameMap.map, Type.ENEMY, GC.object_layer_enemy);
 		if (fightUI == null) {
 			fightUI = new UIRoleEffect(UIStage, this);
-		} else {
-			fightUI.show_hero_state();
-		}
+		} 
+		fightUI.show_hero_state();
+		
 		// 为role增加观察者
 		for (int i = 0; i < roles.size; i++)
 			roles.get(i).getRoleObserable().addObserver(fightUI);
@@ -141,10 +143,10 @@ public class GameScreen extends CubocScreen implements Observer,
 		}
 		initRoles(roles);
 		fpsLabel = WidgetFactory.getInstance().makeLabel(
-				"" + Gdx.graphics.getFramesPerSecond(), stage, 1, 420, 30,
+				"" + Gdx.graphics.getFramesPerSecond(), 1, 420, 30,
 				Color.RED);
+		stage.addActor(fpsLabel);
 		stage.addActor(attack_effect);
-
 	}
 
 	/**

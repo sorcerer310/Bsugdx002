@@ -28,9 +28,13 @@ public class ShopScreen extends CubocScreen implements Observer {
 	public ShopScreen(Game game) {
 		super(game);
 		stage = new Stage(GC.rect_width,GC.rect_height,false);
+	}
+	public void initScreen(){
+		stage.clear();
 		background = new Image(GTC.getInstance().shopPanel);
 		stage.addActor(background);
-		ib_back = WidgetFactory.getInstance().makeImageButton(GC.button_back,stage,360,262,1);
+		ib_back = WidgetFactory.getInstance().makeImageButton(GC.button_back,360,262,1);
+		stage.addActor(ib_back);
 		ib_back.addListener(new InputListener(){
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -47,9 +51,6 @@ public class ShopScreen extends CubocScreen implements Observer {
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		
-		
-	
 	}
 
 	@Override

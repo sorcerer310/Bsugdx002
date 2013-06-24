@@ -178,9 +178,12 @@ class roleUIInfo {
 				48, Color.BLACK, 1);
 		TextureRegion hp = WidgetFactory.getInstance().getTextureFill(4, 48,
 				new Color(255, 0, 0, 1), 1);
-		WidgetFactory.getInstance().makeImg(hpBack, stage, 1, x - 10, y);
-		hpImg = WidgetFactory.getInstance().makeImg(hp, stage, 1, x - 6, y);
-		nameLabel = WidgetFactory.getInstance().makeLabel(r.name, stage, 0.5f,
+		Image img=WidgetFactory.getInstance().makeImg(hpBack, 1, x - 10, y);
+		hpImg = WidgetFactory.getInstance().makeImg(hp, 1, x - 6, y);
+		nameLabel = WidgetFactory.getInstance().makeLabel(r.name, 0.5f,
 				x, y + 50);
+		stage.addActor(img);
+		stage.addActor(hpImg);
+		stage.addActor(nameLabel);
 	}
 }

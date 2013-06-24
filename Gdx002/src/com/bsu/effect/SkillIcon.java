@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.GC;
@@ -34,9 +35,11 @@ public class SkillIcon {
 			skillImgEffect.setScale(1.2f);
 			s.addActor(skillImgEffect);
 			skillImgEffect.setPosition(v.x - 1, v.y - 1);
-			if (lvFlag)
-				WidgetFactory.getInstance().makeLabel("" + skill.lev, s, 0.5f,
+			if (lvFlag){
+				Label lv= WidgetFactory.getInstance().makeLabel("" + skill.lev, 0.5f,
 						(int) (v.x) + 34, (int) (v.y) - 7);
+				s.addActor(lv);
+			}
 		} else {
 			skillImg = new Image(GTC.getInstance().getSkillIcon(0));
 			skillImgEffect = new Image(skill.icon);

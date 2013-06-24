@@ -60,34 +60,59 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				false);
 		upRoleStage = new Stage(GC.rect_width, GC.rect_height,
 				false);
+	}
+	public void initScreen(){
+		stage.clear();
+		bImg.clear();
+		if(background==null)
 		background = new Image(GTC.getInstance().updatePanel);
 		stage.addActor(background);
-		infos = WidgetFactory.getInstance().makeLabel("", stage, 1, 135, 280);
+		if(infos==null)
+		infos = WidgetFactory.getInstance().makeLabel("", 1, 135, 280);
+		stage.addActor(infos);
+		if(upButton==null)
 		upButton = WidgetFactory.getInstance().makeImageButton(
-				GC.button_up, stage, 300, 274, 1);
+				GC.button_up, 300, 274, 1);
+		stage.addActor(upButton);
+		if(ib_back==null)
 		ib_back = WidgetFactory.getInstance().makeImageButton(
-				GC.button_back, stage, 366, 267, 1f);
+				GC.button_back, 366, 267, 1f);
+		stage.addActor(ib_back);
+		if(allImg==null)
 		allImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_all, stage, 135, 50, 0.5f);
+				GC.button_all, 135, 50, 0.5f);
+		stage.addActor(allImg);
+		if(greenImg==null)
 		greenImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_green, stage, 198, 50, 0.5f);
+				GC.button_green, 198, 50, 0.5f);
+		stage.addActor(greenImg);
+		if(blueImg==null)
 		blueImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_blue, stage, 261, 50, 0.5f);
+				GC.button_blue,  261, 50, 0.5f);
+		stage.addActor(blueImg);
+		if(purpleImg==null)
 		purpleImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_purple, stage, 324, 50, 0.5f);
+				GC.button_purple,324, 50, 0.5f);
+		stage.addActor(purpleImg);
+		if(orangeImg==null)
 		orangeImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_orange, stage, 387, 50, 0.5f);
+				GC.button_orange, 387, 50, 0.5f);
+		stage.addActor(orangeImg);
+		if(eatImg==null)
 		eatImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_eat, stage, 250, 20, 1f);
+				GC.button_eat, 250, 20, 1f);
+		stage.addActor(eatImg);
+		if(eatAllImg==null)
 		eatAllImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_eatall, stage, 350, 15, 1);
+				GC.button_eatall,  350, 15, 1);
+		stage.addActor(eatAllImg);
 		bImg.add(allImg);
 		bImg.add(greenImg);
 		bImg.add(blueImg);
 		bImg.add(purpleImg);
 		bImg.add(orangeImg);
-		getRoles();
 		setListener();
+		getRoles();
 		addRoleToStage(QUALITY.all);
 	}
 	/**
@@ -290,8 +315,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		inputMultiplexer.addProcessor(stage);
 		inputMultiplexer.addProcessor(new GestureDetector(this));
 		Gdx.input.setInputProcessor(inputMultiplexer);
-		getRoles();
-		addRoleToStage(QUALITY.all);
 	}
 
 	@Override

@@ -53,26 +53,45 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		super(game);
 		stage = new Stage(GC.rect_width, GC.rect_height, false);
 		sRoleStage = new Stage(GC.rect_width, GC.rect_height, false);
-		background = new Image(GTC.getInstance().selectRolePanel);
+	}
+
+	public void initScreen() {
+		stage.clear();
+		bImg.clear();
+		if (background == null)
+			background = new Image(GTC.getInstance().selectRolePanel);
 		stage.addActor(background);
-		ib_back = WidgetFactory.getInstance().makeImageButton(GC.button_back,
-				stage, 375, 266, 1f);
-		allImg = WidgetFactory.getInstance().makeImageButton(GC.button_all,
-				stage, 100, 20, 0.5f);
-		greenImg = WidgetFactory.getInstance().makeImageButton(GC.button_green,
-				stage, 163, 20, 0.5f);
-		blueImg = WidgetFactory.getInstance().makeImageButton(GC.button_blue,
-				stage, 226, 20, 0.5f);
-		purpleImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_purple, stage, 289, 20, 0.5f);
-		orangeImg = WidgetFactory.getInstance().makeImageButton(
-			GC.button_orange, stage, 352, 20, 0.5f);
+		if (ib_back == null)
+			ib_back = WidgetFactory.getInstance().makeImageButton(
+					GC.button_back, 375, 266, 1f);
+		stage.addActor(ib_back);
+		if (allImg == null)
+			allImg = WidgetFactory.getInstance().makeImageButton(GC.button_all,
+					100, 20, 0.5f);
+		stage.addActor(allImg);
+		if (greenImg == null)
+			greenImg = WidgetFactory.getInstance().makeImageButton(
+					GC.button_green, 163, 20, 0.5f);
+		stage.addActor(greenImg);
+		if (blueImg == null)
+			blueImg = WidgetFactory.getInstance().makeImageButton(
+					GC.button_blue, 226, 20, 0.5f);
+		stage.addActor(blueImg);
+		if (purpleImg == null)
+			purpleImg = WidgetFactory.getInstance().makeImageButton(
+					GC.button_purple, 289, 20, 0.5f);
+		stage.addActor(purpleImg);
+		if (orangeImg == null)
+			orangeImg = WidgetFactory.getInstance().makeImageButton(
+					GC.button_orange, 352, 20, 0.5f);
+		stage.addActor(orangeImg);
 		bImg.add(allImg);
 		bImg.add(greenImg);
 		bImg.add(blueImg);
 		bImg.add(purpleImg);
 		bImg.add(orangeImg);
 		setListener();
+		addRoleToStage(QUALITY.all);
 	}
 
 	/**
@@ -88,12 +107,12 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	 * 当点击卡片按钮时添加背包中卡片到舞台，并根据当前所选类型显示
 	 */
 	private void addRoleToStage(QUALITY q) {
-		if(quality==q){
+		if (quality == q) {
 			return;
 		}
 		selectRole = null;
 		Image simg = null;
-		quality=q;
+		quality = q;
 		if (q == QUALITY.green) {
 			showQualityRole(Player.getInstance().getQualityRole(
 					Player.getInstance().playerIdelRole, QUALITY.green));
@@ -131,9 +150,10 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		sRoleStage.clear();
 		int x = 60;
 		int y = 70;
-		int value=6;
+		int value = 6;
 		Table table = new Table();
-		ScrollPane sp = new ScrollPane(table, U.get_skin().get(ScrollPaneStyle.class));
+		ScrollPane sp = new ScrollPane(table, U.get_skin().get(
+				ScrollPaneStyle.class));
 		sp.setWidth(360);
 		sp.setHeight(180);
 		sp.setPosition(x, y);
@@ -144,15 +164,16 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
 			RoleIcon photo = new RoleIcon(r, false);
-			if(i%value==0&&i>0){
+			if (i % value == 0 && i > 0) {
 				table.row();
 			}
 			table.add(photo).width(photo.img_frame.getWidth())
 					.height(photo.img_frame.getHeight()) // 设置photo宽度和高度
 					.padTop(2f).align(Align.top)// 没起作用。。。
 					.spaceLeft(10f).spaceRight(10f); // 设置各photo之间的边距
-			r.roleIcon=photo;
-			final Vector2 v = new Vector2(x+10 + i % value * 58, y+2 - i / value* 50);
+			r.roleIcon = photo;
+			final Vector2 v = new Vector2(x + 10 + i % value * 58, y + 2 - i
+					/ value * 50);
 			photo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
@@ -165,8 +186,8 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 						int pointer, int button) {
 					if (selectRole != r) {
 						selectRole = r;// 选定人物。。
-						TipsWindows.getInstance().showRoleInfo(r, v,
-								sRoleStage);
+						TipsWindows.getInstance()
+								.showRoleInfo(r, v, sRoleStage);
 						U.showRoleSelect(Player.getInstance().playerIdelRole, r);
 						return;
 					}
@@ -202,7 +223,6 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		inputMultiplexer.addProcessor(stage);
 		inputMultiplexer.addProcessor(new GestureDetector(this));
 		Gdx.input.setInputProcessor(inputMultiplexer);
-		addRoleToStage(QUALITY.all);
 	}
 
 	@Override
@@ -216,7 +236,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 
 	@Override
 	public void hide() {
-		quality=null;
+		quality = null;
 		Gdx.input.setInputProcessor(null);
 	}
 

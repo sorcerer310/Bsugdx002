@@ -45,29 +45,38 @@ public class FightScreen extends CubocScreen implements Observer {
 	public FightScreen(Game game) {
 		super(game);
 		stage = new Stage(GC.rect_width, GC.rect_height, false);
+	}
+	public void initScreen(){
+		stage.clear();
+		if(background==null)
 		background = new Image(GTC.getInstance().fightPanel);
 		stage.addActor(background);
+		if(ib_back==null)
 		ib_back = WidgetFactory.getInstance().makeImageButton(GC.button_back,
-				stage, 360, 262, 1);
-		initFight();
+				 360, 262, 1);
+		stage.addActor(ib_back);
 		setListener();
+		initFight();
+		show_chapter_info(LEVELYTPE.chapter1);
 	}
 
 	public void initFight() {
+		lvArray_chapter.clear();
+		lvArray_one.clear();
+		lvArray_two.clear();
+		lvArray_three.clear();
+		lvArray_four.clear();
 		//滑动容器
 		Skin skin = new Skin(Gdx.files.internal("data/skin/bsuuiskin.json"));
-//		Skin skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
 		Table table = new Table();
 		ScrollPane sp = new ScrollPane(table,skin.get(ScrollPaneStyle.class));
 		sp.setWidth(102);
 		sp.setHeight(280);
-		
 		sp.setPosition(20, 20);
 		sp.setScrollingDisabled(true, false);
 		sp.setupFadeScrollBars(0f, 0f);
 		stage.addActor(sp);
 		ButtonGroup bg = new ButtonGroup();
-		
 		int x = 35, y = 250, h = 50, max = 16;// 4大章位置
 		for (int i = 0; i < 20; i++) {
 			final int index = i;
@@ -79,18 +88,6 @@ public class FightScreen extends CubocScreen implements Observer {
 			} else {
 				U.setAlpha(chapterImg, 0.7f);
 			}
-//			stage.addActor(chapterImg);
-			//将区域按钮增加至滑动容器中
-//			table.add(chapterImg)
-//				.width(chapterImg.getWidth()).height(chapterImg.getHeight())
-//				.space(20f);
-//			table.row();
-			
-			/*
-			 * 测试代码
-			 */
-//			CheckBox button = new CheckBox("bar"+i,skin.get(CheckBoxStyle.class));
-//			button.setName("ahaha");
 			TextButtonStyle textButtonStyle = new TextButtonStyle();
 			textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
 			textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
@@ -107,7 +104,6 @@ public class FightScreen extends CubocScreen implements Observer {
 					.width(button.getWidth()).height(button.getHeight())
 					.pad(10.0f);
 			table.row();
-//			button.setChecked(true);
 			bg.add(button);
 			bg.setChecked("bar1");
 			
@@ -245,7 +241,6 @@ public class FightScreen extends CubocScreen implements Observer {
 	public void show() {
 		Gdx.input.setInputProcessor(null);
 		Gdx.input.setInputProcessor(stage);
-		show_chapter_info(LEVELYTPE.chapter1);
 	}
 
 	@Override

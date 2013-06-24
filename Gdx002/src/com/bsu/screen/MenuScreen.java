@@ -37,20 +37,16 @@ public class MenuScreen extends CubocScreen implements Observer {
 		play_image.setPosition(100, 200);
 		set_image = new Image(atlas.findRegion("settingsButton"));
 		set_image.setPosition(100, 120);
-		// fight_button =
-		// ButtonFactory.getInstance().makeOneTextButton("战斗吧！！骚年们", 100, 50);
-		// fight_button = GameTextureClass.getInstance().mb_fight;
-
-		// TextureAtlas mb_atlas = new
-		// TextureAtlas(Gdx.files.internal("data/menu/mbutton.txt"));
-		// fight_button = new Image(mb_atlas.findRegion("mb_fight"));
-
+	}
+	public void initScreen(){
+		stage.clear();
 		stage.addActor(backgroundImage);
 		stage.addActor(play_image);
 		stage.addActor(set_image);
+		if(fight_button==null)
 		fight_button = WidgetFactory.getInstance().makeImageButton(
-				GC.screen_fight, stage, 100, 50,1);
-
+				GC.screen_fight, 100, 50,1);
+		stage.addActor(fight_button);
 		play_image.addListener(new InputListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y,

@@ -42,20 +42,32 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		super(game);
 		stage = new Stage(GC.rect_width, GC.rect_height, false);
 		roleStage = new Stage(GC.rect_width, GC.rect_height, false);
+	}
+	public void initScreen(){
+		stage.clear();
 		timg = GTC.getInstance().mPanel;
+		if(background==null)
 		background = new Image(timg);
 		stage.addActor(background);
+		if(ib_mb_update==null)
 		ib_mb_update = WidgetFactory.getInstance().makeImageButton(
-				GC.screen_update, stage, 135, 225, 1);
+				GC.screen_update, 135, 225, 1);
+		stage.addActor(ib_mb_update);
 		ib_mb_update.setPosition(135, 225);
+		if(ib_mb_role==null)
 		ib_mb_role = WidgetFactory.getInstance().makeImageButton(
-				GC.screen_role, stage, 300, 225, 1);
+				GC.screen_role,300, 225, 1);
+		stage.addActor(ib_mb_role);
+		if(ib_mb_fight==null)
 		ib_mb_fight = WidgetFactory.getInstance().makeImageButton(
-				GC.screen_fight, stage, 135, 50, 1);
+				GC.screen_fight, 135, 50, 1);
 		ib_mb_fight.setPosition(135, 50);
+		stage.addActor(ib_mb_fight);
+		if(ib_mb_shop==null)
 		ib_mb_shop = WidgetFactory.getInstance().makeImageButton(
-				GC.screen_shop, stage, 300, 50, 1);
+				GC.screen_shop, 300, 50, 1);
 		ib_mb_shop.setPosition(300, 50);
+		stage.addActor(ib_mb_shop);
 		// 增加上阵英雄头像
 		setFightRoles();
 		setListener();
@@ -120,7 +132,6 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		inputMultiplexer.addProcessor(stage);
 		inputMultiplexer.addProcessor(new GestureDetector(this));
 		Gdx.input.setInputProcessor(inputMultiplexer);
-		setFightRoles();
 	}
 
 	@Override

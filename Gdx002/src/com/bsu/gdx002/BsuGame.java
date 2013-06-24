@@ -21,105 +21,114 @@ import com.bsu.tools.MessageObject;
 public class BsuGame extends Game {
 	@Override
 	public void create() {
-		GTC.getInstance();//执行一次加载所有资源
-		Rectangle rect = new Rectangle(0, 0, GC.rect_width,
-				GC.rect_height);
-		//logo1界面
-		HeadScreen hs_logo1 = new HeadScreen(this,
-				GC.logo_0_texture_string, GC.logo_0_sound_string,
-				rect);
-		//logo2界面
-		HeadScreen hs_logo2 = new HeadScreen(this,
-				GC.logo_1_texture_string, GC.logo_1_sound_string,
-				rect) {
+		Rectangle rect = new Rectangle(0, 0, GC.rect_width, GC.rect_height);
+		// logo1界面
+		HeadScreen hs_logo1 = new HeadScreen(this, GC.logo_0_texture_string,
+				GC.logo_0_sound_string, rect);
+		// logo2界面
+		HeadScreen hs_logo2 = new HeadScreen(this, GC.logo_1_texture_string,
+				GC.logo_1_sound_string, rect) {
 			@Override
 			public void update(Observable o, Object arg) {
 				BsuGame.this.setScreen(this);
+				this.addAssets();
 			}
 		};
-		//设置界面
+		// 设置界面
 		SettingScreen ss = new SettingScreen(this) {
 			@Override
 			public void update(Observable o, Object arg) {
 				if (arg.toString().equals(GC.screen_setting)) {
 					BsuGame.this.setScreen(this);
+					// this.initScreen();
 				}
 			}
 		};
-		//游戏界面
+		// 游戏界面
 		GameScreen gs = new GameScreen(this) {
 			@Override
 			public void update(Observable o, Object arg) {
 				if (arg.toString().equals(GC.screen_game)) {
 					BsuGame.this.setScreen(this);
-//					this.game_init(GameScreenConfigure.getInstance().getHeroRoles(),GameScreenConfigure.getInstance().getNpcRoles());
-					this.game_init(GameScreenFactory.getInstance().makeGameScreen(GameScreen.lv));
+					this.game_init(GameScreenFactory.getInstance()
+							.makeGameScreen(GameScreen.lv));
 				}
 			}
 		};
-//		GameScreenConfigure.getInstance().makeGameScreen2(gs);	
-//		GameScreenConfigure.getInstance().makeGameScreen1(gs);					//配置游戏关卡为第一关
-//		GameScreenFactory.getInstance().makeGameScreenTeaching(gs);			//教学关卡
-		//菜单界面
+		// 菜单界面
 		MenuScreen ms = new MenuScreen(this) {
 			@Override
 			public void update(Observable o, Object arg) {
-					BsuGame.this.setScreen(this);
+				BsuGame.this.setScreen(this);
+				this.initScreen();
 			}
 		};
-		//主菜单面板
-		CPanelMainScreen cpms = new CPanelMainScreen(this){
+		// 主菜单面板
+		CPanelMainScreen cpms = new CPanelMainScreen(this) {
 			@Override
-			public void update(Observable o,Object arg){
-				if(arg.toString().equals(GC.screen_mpanel) 
-						|| arg.toString().equals(GC.button_back))
+			public void update(Observable o, Object arg) {
+				if (arg.toString().equals(GC.screen_mpanel)
+						|| arg.toString().equals(GC.button_back)) {
 					BsuGame.this.setScreen(this);
+					this.initScreen();
+				}
 			}
 		};
-		//升级界面
-		UpdateScreen us = new UpdateScreen(this){
+		// 升级界面
+		UpdateScreen us = new UpdateScreen(this) {
 			@Override
-			public void update(Observable o,Object arg){
-				MessageObject mo=(MessageObject)arg;
-				if(mo.message.equals(GC.screen_update))
+			public void update(Observable o, Object arg) {
+				MessageObject mo = (MessageObject) arg;
+				if (mo.message.equals(GC.screen_update)) {
 					BsuGame.this.setScreen(this);
+					this.initScreen();
+				}
 			}
 		};
-		//战斗选择副本界面
-		FightScreen fs = new FightScreen(this){
+		// 战斗选择副本界面
+		FightScreen fs = new FightScreen(this) {
 			@Override
-			public void update(Observable o,Object arg){
-				MessageObject mo=(MessageObject)arg;
-				if(mo.message.equals(GC.screen_fight))
+			public void update(Observable o, Object arg) {
+				MessageObject mo = (MessageObject) arg;
+				if (mo.message.equals(GC.screen_fight)) {
 					BsuGame.this.setScreen(this);
+					this.initScreen();
+				}
 			}
 		};
-		//人物界面
-		RoleScreen rs = new RoleScreen(this){
+		// 人物界面
+		RoleScreen rs = new RoleScreen(this) {
 			@Override
-			public void update(Observable o,Object arg){
-				MessageObject mo=(MessageObject)arg;
-				if(mo.message.equals(GC.screen_role))
+			public void update(Observable o, Object arg) {
+				MessageObject mo = (MessageObject) arg;
+				if (mo.message.equals(GC.screen_role)) {
 					BsuGame.this.setScreen(this);
+					this.initScreen();
+				}
 			}
 		};
-		//商店界面
-		ShopScreen shops = new ShopScreen(this){
+		// 商店界面
+		ShopScreen shops = new ShopScreen(this) {
 			@Override
-			public void update(Observable o,Object arg){
-				MessageObject mo=(MessageObject)arg;
-				if(mo.message.equals(GC.screen_shop))
+			public void update(Observable o, Object arg) {
+				MessageObject mo = (MessageObject) arg;
+				if (mo.message.equals(GC.screen_shop)) {
 					BsuGame.this.setScreen(this);
+					this.initScreen();
+				}
 			}
 		};
-		//队伍更换界面
-		SelectRoleScreen srs=new SelectRoleScreen(this){
+		// 队伍更换界面
+		SelectRoleScreen srs = new SelectRoleScreen(this) {
 			@Override
-			public void update(Observable o,Object arg){
-				MessageObject mo=(MessageObject)arg;
-				if(mo.message.equals(GC.screen_selectRole))
+			public void update(Observable o, Object arg) {
+				MessageObject mo = (MessageObject) arg;
+				if (mo.message.equals(GC.screen_selectRole)) {
 					BsuGame.this.setScreen(this);
 					this.setChangeRole(mo.o);
+					this.initScreen();
+				}
+
 			}
 		};
 		setScreen(hs_logo1);

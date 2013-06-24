@@ -63,7 +63,7 @@ public class WidgetFactory {
 	 *            按钮的名字
 	 * @return 返回按钮的图片
 	 */
-	public Image makeImageButton(String bname, Stage s, int x, int y, float a) {
+	public Image makeImageButton(String bname, int x, int y, float a) {
 		Image img_nomal = null;
 		if (bname.equals(GC.screen_fight))
 			img_nomal = new Image(
@@ -128,7 +128,6 @@ public class WidgetFactory {
 			}
 			
 		});
-		s.addActor(img_nomal);
 		U.setAlpha(img_nomal, a);													//设置按钮的alpha值
 		return img_nomal;
 	}
@@ -193,7 +192,7 @@ public class WidgetFactory {
 	
 
 	/**
-	 * 将一个label 初始化并做好设置，加入指定stage
+	 * 将一个label 初始化并做好设置
 	 * 
 	 * @param ls
 	 *            文字
@@ -202,15 +201,14 @@ public class WidgetFactory {
 	 * @param v
 	 *            position
 	 */
-	public Label makeLabel(String ls, Stage s, float scaleValue, int x, int y) {
+	public Label makeLabel(String ls, float scaleValue, int x, int y) {
 		Label l = new Label(ls, U.get_sytle());
 		l.setPosition(x, y);
 		l.setFontScale(scaleValue);
-		s.addActor(l);
 		return l;
 	}
 
-	public Label makeLabel(String ls, Stage s, float scaleValue, int x, int y,
+	public Label makeLabel(String ls, float scaleValue, int x, int y,
 			Color c) {
 		Label l = new Label(ls, U.get_sytle());
 		l.setPosition(x, y);
@@ -218,12 +216,11 @@ public class WidgetFactory {
 		if (c != null) {
 			l.setColor(c);
 		}
-		s.addActor(l);
 		return l;
 	}
 
 	/**
-	 * 将一个image初始化，并加入指定stage
+	 * 将一个image初始化
 	 * 
 	 * @param tr
 	 * @param s
@@ -232,7 +229,7 @@ public class WidgetFactory {
 	 * @param y
 	 * @return
 	 */
-	public Image makeImg(TextureRegion tr, Stage s, float scaleValue, int x,
+	public Image makeImg(TextureRegion tr, float scaleValue, int x,
 			int y) {
 		Image img;
 		if (tr == null) {
@@ -242,7 +239,6 @@ public class WidgetFactory {
 		}
 		img.setScale(scaleValue);
 		img.setPosition(x, y);
-		s.addActor(img);
 		return img;
 	}
 

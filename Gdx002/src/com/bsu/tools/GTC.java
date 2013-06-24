@@ -1,7 +1,9 @@
 package com.bsu.tools;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -30,10 +32,9 @@ public class GTC {
 
 	public Texture effect;// 消失效果
 	public Texture role;
-	public Texture mPanel;
-	public Texture equipPanel;
+	public Texture mPanel;;
 	public Texture fightPanel, rolePanel, selectRolePanel, shopPanel,
-			skillPanel, updatePanel;
+			updatePanel;
 	public TextureAtlas atlas_mbutton;
 	public TextureAtlas skills_effect; // 技能效果纹理
 	public TextureAtlas skills_icon; // 技能图标纹理
@@ -49,50 +50,69 @@ public class GTC {
 			sorcerer_texture, archer_texture;
 	public TextureRegion start_zero, start_one, start_two, start_three,
 			start_four;
+	public AssetManager assetManager;
 
 	private GTC() {
-		// TODO Auto-generated constructor stub
-		effect = new Texture(Gdx.files.internal("data/game/hero/effect.png"));
-		role_classes = new TextureAtlas(
-				Gdx.files.internal("data/game/icon/classes.txt"));
+		if (assetManager == null) {
+			assetManager = new AssetManager();
+		}
+	}
+
+	public void loadAssets() {
+		assetManager.load("data/game/hero/effect.png", Texture.class);
+		assetManager.load("data/menu/mpanel.png", Texture.class);
+		assetManager.load("data/menu/equippanel.png", Texture.class);
+		assetManager.load("data/menu/fightpanel.png", Texture.class);
+		assetManager.load("data/menu/fightpanel.png", Texture.class);
+		assetManager.load("data/menu/rolespanel.png", Texture.class);
+		assetManager.load("data/menu/wback.png", Texture.class);
+		assetManager.load("data/menu/selectrolepanel.png", Texture.class);
+		assetManager.load("data/menu/shoppanel.png", Texture.class);
+		assetManager.load("data/menu/skillpanel.png", Texture.class);
+		assetManager.load("data/menu/updatepanel.png", Texture.class);
+		assetManager.load("data/game/hero/Actor1.png", Texture.class);
+		assetManager.load("data/game/icon/classes.txt", TextureAtlas.class);
+		assetManager.load("data/menu/mbutton.txt", TextureAtlas.class);
+		assetManager.load("data/button/pack", TextureAtlas.class);
+		assetManager.load("data/game/effect/othereffect.txt",
+				TextureAtlas.class);
+		assetManager.load("data/game/effect/skilleffect.txt",
+				TextureAtlas.class);
+		assetManager.load("data/game/icon/skillicon.txt", TextureAtlas.class);
+		assetManager.load("data/game/effect/battleend.txt", TextureAtlas.class);
+		assetManager.load("data/game/hero/frame.txt", TextureAtlas.class);
+	}
+
+	public void setAssets() {
+		role = assetManager.get("data/game/hero/Actor1.png");
+		effect = assetManager.get("data/game/hero/effect.png");
+		mPanel = assetManager.get("data/menu/mpanel.png");
+		fightPanel = assetManager.get("data/menu/fightpanel.png");
+		rolePanel = assetManager.get("data/menu/rolespanel.png");
+		tipsPanel = assetManager.get("data/menu/wback.png");
+		selectRolePanel = assetManager.get("data/menu/selectrolepanel.png");
+		shopPanel = assetManager.get("data/menu/shoppanel.png");
+		updatePanel = assetManager.get("data/menu/updatepanel.png");
+		role_classes = assetManager.get("data/game/icon/classes.txt");
 		fight_texture = role_classes.findRegion("fighter");
 		cleric_texture = role_classes.findRegion("cleric");
 		wizard_texture = role_classes.findRegion("wizard");
 		sorcerer_texture = role_classes.findRegion("sorcerer");
 		archer_texture = role_classes.findRegion("archer");
-		mPanel = new Texture(Gdx.files.internal("data/menu/mpanel.png"));
-		equipPanel = new Texture(Gdx.files.internal("data/menu/equippanel.png"));
-		fightPanel = new Texture(Gdx.files.internal("data/menu/fightpanel.png"));
-		rolePanel = new Texture(Gdx.files.internal("data/menu/rolespanel.png"));
-		tipsPanel = new Texture(Gdx.files.internal("data/menu/wback.png"));
-		selectRolePanel = new Texture(
-				Gdx.files.internal("data/menu/selectrolepanel.png"));
-		shopPanel = new Texture(Gdx.files.internal("data/menu/shoppanel.png"));
-		skillPanel = new Texture(Gdx.files.internal("data/menu/skillpanel.png"));
-		updatePanel = new Texture(
-				Gdx.files.internal("data/menu/updatepanel.png"));
-
-		atlas_mbutton = new TextureAtlas(
-				Gdx.files.internal("data/menu/mbutton.txt"));
-		atlas_button = new TextureAtlas(Gdx.files.internal("data/button/pack"));
-		role = new Texture(Gdx.files.internal("data/game/hero/Actor1.png"));
+		atlas_mbutton = assetManager.get("data/menu/mbutton.txt");
+		atlas_button = assetManager.get("data/button/pack");
 		fc_photo = new TextureRegion(role, 0, 0, 96, 96);
 		zyc_photo = new TextureRegion(role, 96, 0, 96, 96);
-		role_effect = new TextureAtlas(
-				Gdx.files.internal("data/game/effect/othereffect.txt"));
+		role_effect = assetManager.get("data/game/effect/othereffect.txt");
 		start_zero = role_effect.findRegion("star", 1);
 		start_one = role_effect.findRegion("star", 2);
 		start_two = role_effect.findRegion("star", 3);
 		start_three = role_effect.findRegion("star", 4);
 		start_four = role_effect.findRegion("star", 5);
-		skills_effect = new TextureAtlas(
-				Gdx.files.internal("data/game/effect/skilleffect.txt"));
-		skills_icon = new TextureAtlas(
-				Gdx.files.internal("data/game/icon/skillicon.txt"));
-		battle_end = new TextureAtlas(
-				Gdx.files.internal("data/game/effect/battleend.txt"));
-		role_head_frame = new TextureAtlas(
-				Gdx.files.internal("data/game/hero/frame.txt"));
+		skills_effect = assetManager.get("data/game/effect/skilleffect.txt");
+		skills_icon = assetManager.get("data/game/icon/skillicon.txt");
+		battle_end = assetManager.get("data/game/effect/battleend.txt");
+		role_head_frame = assetManager.get("data/game/hero/frame.txt");
 	}
 
 	/**
@@ -285,7 +305,7 @@ public class GTC {
 	 */
 	public Image getImageFrame(QUALITY q) {
 		Image img = null;
-		if (q!= null) {
+		if (q != null) {
 			if (q == QUALITY.green)
 				img = new Image(role_head_frame.findRegion("frame_green"));
 			else if (q == QUALITY.blue)
