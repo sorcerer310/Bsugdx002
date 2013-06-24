@@ -64,6 +64,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	private boolean controlled;
 	private boolean battleEndFlag = false; // 用来标识当前战役是否结束
 	public static int lv;// 关卡索引
+	public static int LvMax;//开启的最大关卡
 	private int clingX;// 地图移动位移
 	private AttackEffect attack_effect;
 	private Label fpsLabel;
@@ -360,7 +361,9 @@ public class GameScreen extends CubocScreen implements Observer,
 		String endname = "victory";
 		if (victflag) {
 			endname = "victory";
-			lv++;
+			if(lv==LvMax){
+				LvMax++;
+			}
 		} else {
 			endname = "defeat";
 		}

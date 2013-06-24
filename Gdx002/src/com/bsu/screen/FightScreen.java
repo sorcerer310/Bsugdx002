@@ -97,8 +97,6 @@ public class FightScreen extends CubocScreen implements Observer {
 			textButtonStyle.font.setScale(0.8f);
 			skin.add("bsutoggle", textButtonStyle);			
 			TextButton button = new TextButton("第一关", skin.get("bsutoggle",TextButtonStyle.class));
-			
-			
 			button.setWidth(50f);
 			table.add(button)
 					.width(button.getWidth()).height(button.getHeight())
@@ -182,7 +180,7 @@ public class FightScreen extends CubocScreen implements Observer {
 		int x = 140, y = 220, w = 80, h = 45;
 		for (final LevelState l : ls) {
 			stage.addActor(l.icon);
-			if (l.level <= GameScreen.lv) {
+			if (l.level <= GameScreen.LvMax) {
 				l.enableLevel();
 			}
 			l.icon.setPosition(x + index % 4 * w, y - index / 4 * h);
