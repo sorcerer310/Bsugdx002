@@ -37,6 +37,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 	private Image ib_mb_role;
 	private Image ib_mb_shop;
 	private Image ib_mb_update;
+	private boolean initFLag;// 是否初始化了
 
 	public CPanelMainScreen(Game game) {
 		super(game);
@@ -45,32 +46,28 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 	}
 	public void initScreen(){
 		stage.clear();
+		if(!initFLag){
 		timg = GTC.getInstance().mPanel;
-		if(background==null)
 		background = new Image(timg);
-		stage.addActor(background);
-		if(ib_mb_update==null)
 		ib_mb_update = WidgetFactory.getInstance().makeImageButton(
 				GC.screen_update, 135, 225, 1);
-		stage.addActor(ib_mb_update);
-		ib_mb_update.setPosition(135, 225);
-		if(ib_mb_role==null)
 		ib_mb_role = WidgetFactory.getInstance().makeImageButton(
 				GC.screen_role,300, 225, 1);
-		stage.addActor(ib_mb_role);
-		if(ib_mb_fight==null)
 		ib_mb_fight = WidgetFactory.getInstance().makeImageButton(
 				GC.screen_fight, 135, 50, 1);
-		ib_mb_fight.setPosition(135, 50);
-		stage.addActor(ib_mb_fight);
-		if(ib_mb_shop==null)
 		ib_mb_shop = WidgetFactory.getInstance().makeImageButton(
 				GC.screen_shop, 300, 50, 1);
-		ib_mb_shop.setPosition(300, 50);
-		stage.addActor(ib_mb_shop);
+		initFLag=true;
+		setListener();
+		}
 		// 增加上阵英雄头像
 		setFightRoles();
-		setListener();
+		stage.addActor(background);
+		stage.addActor(ib_mb_update);
+		stage.addActor(ib_mb_role);
+		stage.addActor(ib_mb_fight);
+		stage.addActor(ib_mb_shop);
+		
 	}
 
 	private void setFightRoles() {

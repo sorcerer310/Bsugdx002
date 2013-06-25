@@ -57,8 +57,9 @@ public class UIRoleEffect implements Observer {
 	public void show_hero_state() {
 		stage.clear();
 		hpArray.clear();
-		bt_endround = WidgetFactory.getInstance().makeOneTextButton("end",
-				stage, 200, 90);
+		bt_endround = WidgetFactory.getInstance().makeOneTextButton("end", 200,
+				90);
+		stage.addActor(bt_endround);
 		bt_endround.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -178,10 +179,10 @@ class roleUIInfo {
 				48, Color.BLACK, 1);
 		TextureRegion hp = WidgetFactory.getInstance().getTextureFill(4, 48,
 				new Color(255, 0, 0, 1), 1);
-		Image img=WidgetFactory.getInstance().makeImg(hpBack, 1, x - 10, y);
+		Image img = WidgetFactory.getInstance().makeImg(hpBack, 1, x - 10, y);
 		hpImg = WidgetFactory.getInstance().makeImg(hp, 1, x - 6, y);
-		nameLabel = WidgetFactory.getInstance().makeLabel(r.name, 0.5f,
-				x, y + 50);
+		nameLabel = WidgetFactory.getInstance().makeLabel(r.name, 0.5f, x,
+				y + 50);
 		stage.addActor(img);
 		stage.addActor(hpImg);
 		stage.addActor(nameLabel);

@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.RoleIcon;
@@ -40,6 +41,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private Stage stage;// 基本舞台
 	private Stage sRoleStage;// Role舞台
 	private Stage RoleInfoStage;// Role信息舞台
+	private boolean initFlag;
 	private Image background;
 	private Image ib_back;
 	private Image allImg;
@@ -53,6 +55,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private int skillIndex;// 希望改变的技能
 	private Array<Image> bImg = new Array<Image>();
 	private QUALITY quality;// 当前选择显示的品质
+	private Label skillPartBlue, skillPartPurple, skillPartOrange;// 普通，高级，史诗精华文本
+	private TextButton up, use;
 
 	public RoleScreen(Game game) {
 		super(game);
@@ -64,41 +68,40 @@ public class RoleScreen extends CubocScreen implements Observer,
 	public void initScreen() {
 		stage.clear();
 		bImg.clear();
-		if (wfy == null)
+		if (!initFlag) {
+			up = WidgetFactory.getInstance().makeOneTextButton("update..", 400,
+					120);
+			use = WidgetFactory.getInstance().makeOneTextButton("used..", 400,
+					120);
 			wfy = WidgetFactory.getInstance();
-		if (background == null)
 			background = new Image(GTC.getInstance().rolePanel);
-		stage.addActor(background);
-		if (ib_back == null)
 			ib_back = wfy.makeImageButton(GC.button_back, 375, 272, 1);
-		stage.addActor(ib_back);
-		if (allImg == null)
 			allImg = WidgetFactory.getInstance().makeImageButton(GC.button_all,
 					20, 20, 0.5f);
-		stage.addActor(allImg);
-		if (greenImg == null)
 			greenImg = WidgetFactory.getInstance().makeImageButton(
 					GC.button_green, 83, 20, 0.5f);
-		stage.addActor(greenImg);
-		if (blueImg == null)
 			blueImg = WidgetFactory.getInstance().makeImageButton(
-					GC.button_blue,  146, 20, 0.5f);
-		stage.addActor(blueImg);
-		if (purpleImg == null)
+					GC.button_blue, 146, 20, 0.5f);
 			purpleImg = WidgetFactory.getInstance().makeImageButton(
-					GC.button_purple,  209, 20, 0.5f);
-		stage.addActor(purpleImg);
-		if (orangeImg == null)
+					GC.button_purple, 209, 20, 0.5f);
 			orangeImg = WidgetFactory.getInstance().makeImageButton(
 					GC.button_orange, 272, 20, 0.5f);
-		stage.addActor(orangeImg);
+			setListener();
+			initFlag = true;
+		}
 		bImg.add(allImg);
 		bImg.add(greenImg);
 		bImg.add(blueImg);
 		bImg.add(purpleImg);
 		bImg.add(orangeImg);
-		quality=null;
-		setListener();
+		quality = null;
+		stage.addActor(background);
+		stage.addActor(ib_back);
+		stage.addActor(allImg);
+		stage.addActor(purpleImg);
+		stage.addActor(blueImg);
+		stage.addActor(orangeImg);
+		stage.addActor(greenImg);
 		addRoleToStage(QUALITY.all);
 	}
 
@@ -196,6 +199,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private void showRoleInfo(final Role r) {
 		RoleInfoStage.clear();
 		selectRole = r;
+		up.remove();
+		use.remove();
 		if (selectRole == null) {
 			return;
 		}
@@ -203,17 +208,17 @@ public class RoleScreen extends CubocScreen implements Observer,
 		skillIndex = 0;
 		showRoleBaseInfo(r);
 		final Array<Image> skillImg = new Array<Image>();
-		for (int i = 0; i < 2; i++) {
-			final int index = i;
-			Skill skill = r.skill_array.get(index);
-			SkillIcon se = new SkillIcon(skill, RoleInfoStage, new Vector2(
-					40 + i * 60, 160), true);
+		int sindex = 0;
+		for (final Skill s : r.skill_array) {
+			final int index = sindex;
+			sindex++;
+			SkillIcon se = new SkillIcon(s, RoleInfoStage, new Vector2(
+					40 + index * 60, 160), true);
 			final Image img = se.skillImg;
-			skill.skillEffect = se;
+			s.skillEffect = se;
 			final Vector2 v = new Vector2(img.getX(), img.getY());
 			skillImg.add(img);
-			skillImg.add(se.skillImgEffect);
-			if (i == 0) {
+			if (index == 0) {
 				U.setAlpha(img, 1);
 			}
 			img.addListener(new InputListener() {
@@ -221,8 +226,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 
-					TipsWindows.getInstance().showSkillInfo(
-							r.skill_array.get(index), v, RoleInfoStage);
+					TipsWindows.getInstance()
+							.showSkillInfo(s, v, RoleInfoStage);
 					U.setCurrentSkillImg(skillImg, img);
 					return true;
 				}
@@ -246,14 +251,14 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param r
 	 */
 	private void showRoleBaseInfo(Role r) {
-		Label name=wfy.makeLabel(r.name, 1f, 40, 240,
+		Label name = wfy.makeLabel(r.name, 1f, 40, 240,
 				U.getQualityColor(r.quality));
-		Label lv=wfy.makeLabel("等级:" + r.level, 0.5f, 100, 240);
-		Label hp=wfy.makeLabel("生命:" + r.maxHp, 0.5f, 40, 220);
-		Label exp=wfy.makeLabel("经验:" + r.exp + "/" + r.expUp, 0.5f, 100,
-				220);
-		Label attack=wfy.makeLabel("攻击:" + r.getAttack(), 0.5f, 40, 200);
-		Label defend=wfy.makeLabel("防御:" + r.getDefend(), 0.5f, 100, 200);
+		Label lv = wfy.makeLabel("等级:" + r.level, 0.5f, 100, 240);
+		Label hp = wfy.makeLabel("生命:" + r.maxHp, 0.5f, 40, 220);
+		Label exp = wfy
+				.makeLabel("经验:" + r.exp + "/" + r.expUp, 0.5f, 100, 220);
+		Label attack = wfy.makeLabel("攻击:" + r.getAttack(), 0.5f, 40, 200);
+		Label defend = wfy.makeLabel("防御:" + r.getDefend(), 0.5f, 100, 200);
 		RoleInfoStage.addActor(name);
 		RoleInfoStage.addActor(lv);
 		RoleInfoStage.addActor(hp);
@@ -273,58 +278,208 @@ public class RoleScreen extends CubocScreen implements Observer,
 		int numsBlue = 0;
 		int numsPur = 0;
 		int numsOra = 0;
-		int ix = 200, iy = 125, height = 35;
+		int spx = 400, spy = 220, sph = 30, spw = 40;
+		for (int i = 0; i < 3; i++) {
+			Image spImg = new Image(GTC.getInstance().getSkillIcon(0));
+			spImg.setPosition(spx, spy - i * sph);
+			String s = "";
+			Color c = null;
+			Label ln = null;
+			if (i == 0) {
+				s = Player.getInstance().crystal_blue + "";
+				skillPartBlue = WidgetFactory.getInstance().makeLabel(s, 1,
+						spx + spw, spy - i * sph, c);
+				c = new Color(0, 0, 255, 1);
+				ln = skillPartBlue;
+			}
+			if (i == 1) {
+				s = Player.getInstance().crystal_purple + "";
+				skillPartPurple = WidgetFactory.getInstance().makeLabel(s, 1,
+						spx + spw, spy - i * sph, c);
+				c = new Color(255, 0, 255, 1);
+				ln = skillPartPurple;
+			}
+			if (i == 2) {
+				s = Player.getInstance().crystal_orange + "";
+				skillPartOrange = WidgetFactory.getInstance().makeLabel(s, 1,
+						spx + spw, spy - i * sph, c);
+				c = Color.ORANGE;
+				ln = skillPartOrange;
+			}
+
+			RoleInfoStage.addActor(spImg);
+			RoleInfoStage.addActor(ln);
+		}
+		int ix = 200, iy = 125, height = 40, sw = 45;
 		final Array<Image> skillImg = new Array<Image>();
 		for (final Skill s : r.skill_tree) {
 			SkillIcon se = null;
 			if (s.quality == QUALITY.green) {
 				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsGreen
-						* 40, iy), true);
+						* sw, iy), true);
 				numsGreen++;
 			}
 			if (s.quality == QUALITY.blue) {
 				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsBlue
-						* 40, iy + height), true);
+						* sw, iy + height), true);
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
 				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsPur
-						* 40, iy + height * 2), true);
+						* sw, iy + height * 2), true);
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
 				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsOra
-						* 40, iy + height * 3), true);
+						* sw, iy + height * 3), true);
 				numsOra++;
 			}
 			final Image skill_img = se.skillImg;
 			s.skillEffect = se;
 			skillImg.add(skill_img);
 			final Vector2 vs = new Vector2(skill_img.getX(), skill_img.getY());
-			if (s.enable) {
-				skill_img.addListener(new InputListener() {
-					@Override
-					public boolean touchDown(InputEvent event, float x,
-							float y, int pointer, int button) {
+			skill_img.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y,
+						int pointer, int button) {
+					if (s.enable) {
 						TipsWindows.getInstance().showSkillInfo(s, vs,
 								RoleInfoStage);
 						U.setSelectImg(skillImg, skill_img);
-						return true;
 					}
+					return true;
+				}
 
-					@Override
-					public void touchUp(InputEvent event, float x, float y,
-							int pointer, int button) {
+				@Override
+				public void touchUp(InputEvent event, float x, float y,
+						int pointer, int button) {
+					if (!s.enable) {
+						selectSkill = s;
+						isReadyToUp(s);
+					} else {
 						if ((selectSkill == null) || selectSkill != s) {
 							selectSkill = s;
 						} else {
 							setAnotherSkill(r, skillIndex, s, imgAarray);
 						}
-						super.touchUp(event, x, y, pointer, button);
+						isReadyToUp(s);
 					}
-				});
+					super.touchUp(event, x, y, pointer, button);
+				}
+			});
+		}
+	}
+
+	/**
+	 * 检测是否可以开启或者升级
+	 * 
+	 * @param s
+	 */
+	private void isReadyToUp(Skill s) {
+		up.remove();
+		use.remove();
+		if ((s.quality == QUALITY.green) || (s.quality == QUALITY.blue)) {
+			if (Player.getInstance().crystal_blue >= 6) {
+				if (s.enable) {
+					RoleInfoStage.addActor(up);
+				} else {
+					RoleInfoStage.addActor(use);
+				}
 			}
 		}
+		if (s.quality == QUALITY.purple) {
+			if (Player.getInstance().crystal_purple >= 6) {
+				if (s.enable) {
+					RoleInfoStage.addActor(up);
+				} else {
+					RoleInfoStage.addActor(use);
+				}
+			}
+		}
+		if (s.quality == QUALITY.orange) {
+			if (Player.getInstance().crystal_orange >= 6) {
+				if (s.enable) {
+					RoleInfoStage.addActor(up);
+				} else {
+					RoleInfoStage.addActor(use);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 开启或者升级技能
+	 * 
+	 * @param b
+	 *            是否升级
+	 */
+	private void upSkill(boolean b) {
+		if ((selectSkill.quality == QUALITY.green)
+				|| (selectSkill.quality == QUALITY.blue)) {
+			if (Player.getInstance().crystal_blue >= 6) {
+				Player.getInstance().crystal_blue -= 6;
+				skillPartBlue.setText(Player.getInstance().crystal_blue + "");
+				selectSkill.enable = true;
+				if (!b) {
+					selectSkill.skillEffect.skillImg
+							.setDrawable(selectSkill.skillEffect.enableImg
+									.getDrawable());
+					TipsWindows.getInstance().showTips(
+							"开启新技能:" + selectSkill.name, RoleInfoStage,
+							U.getQualityColor(selectSkill.quality));
+
+				} else {
+					selectSkill.lev++;
+				}
+				selectSkill.skillEffect.lv.setText(selectSkill.lev + "");
+				for (Skill s : selectRole.skill_array) {
+					s.skillEffect.lv.setText(s.lev + "");
+				}
+			}
+		}
+		if (selectSkill.quality == QUALITY.purple) {
+			if (Player.getInstance().crystal_purple >= 6) {
+				Player.getInstance().crystal_purple -= 6;
+				selectSkill.enable = true;
+				skillPartPurple.setText(Player.getInstance().crystal_purple
+						+ "");
+				if (!b) {
+					selectSkill.skillEffect.skillImg
+							.setDrawable(selectSkill.skillEffect.enableImg
+									.getDrawable());
+					TipsWindows.getInstance().showTips(
+							"开启新技能:" + selectSkill.name, RoleInfoStage,
+							U.getQualityColor(selectSkill.quality));
+				} else {
+					selectSkill.lev++;
+				}
+				selectSkill.skillEffect.lv.setText(selectSkill.lev + "");
+				for (Skill s : selectRole.skill_array) {
+					s.skillEffect.lv.setText(s.lev + "");
+				}
+			}
+		}
+		if (selectSkill.quality == QUALITY.orange) {
+			if (Player.getInstance().crystal_orange >= 6) {
+				Player.getInstance().crystal_orange -= 6;
+				selectSkill.enable = true;
+				if (!b) {
+					selectSkill.skillEffect.skillImg
+							.setDrawable(selectSkill.skillEffect.enableImg
+									.getDrawable());
+					TipsWindows.getInstance().showTips(
+							"开启新技能:" + selectSkill.name, RoleInfoStage,
+							U.getQualityColor(selectSkill.quality));
+				} else {
+					selectSkill.lev++;
+				}
+				selectSkill.skillEffect.lv.setText(selectSkill.lev + "");
+				for (Skill s : selectRole.skill_array) {
+					s.skillEffect.lv.setText(s.lev + "");
+				}
+			}
+		}
+		isReadyToUp(selectSkill);
 	}
 
 	/**
@@ -335,12 +490,14 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 */
 	private void setAnotherSkill(Role r, int index, Skill s,
 			Array<Image> imgArray) {
+		// imgArray.get(index * 2).setDrawable(
+		// s.skillEffect.skillImg.getDrawable());
+		// imgArray.get(index * 2 + 1).setDrawable(
+		// s.skillEffect.skillImgEffect.getDrawable());
+		r.skill_array.get(index).skillEffect = s.skillEffect;
+		r.skill_array.get(index).skillEffect.skillImg = s.skillEffect.skillImg;
 		r.skill_array.set(index, s);
 		r.cskill = r.skill_array.get(0);
-		imgArray.get(index * 2).setDrawable(
-				s.skillEffect.skillImg.getDrawable());
-		imgArray.get(index * 2 + 1).setDrawable(
-				s.skillEffect.skillImgEffect.getDrawable());
 	}
 
 	@Override
@@ -379,6 +536,34 @@ public class RoleScreen extends CubocScreen implements Observer,
 	}
 
 	private void setListener() {
+		up.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				upSkill(true);
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+		use.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				upSkill(false);
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
 		ib_back.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,

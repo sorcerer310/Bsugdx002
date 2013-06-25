@@ -22,13 +22,13 @@ public class ItemFactory {
 		Item item = null;
 		switch(id){
 		case 1:
-			item = new Item("普通技能精华",Item.Type.skillpart,GTC.getInstance().getSkillIcon(0));
+			item = new Item("普通技能精华",Item.Type.skillpart,QUALITY.blue,GTC.getInstance().getSkillIcon(0));
 			break;
 		case 2:
-			item = new Item("高级技能精华",Item.Type.skillpart,GTC.getInstance().getSkillIcon(0));
+			item = new Item("高级技能精华",Item.Type.skillpart,QUALITY.purple,GTC.getInstance().getSkillIcon(0));
 			break;
 		case 3:
-			item = new Item("史诗级技能精华",Item.Type.skillpart,GTC.getInstance().getSkillIcon(0));
+			item = new Item("史诗级技能精华",Item.Type.skillpart,QUALITY.orange,GTC.getInstance().getSkillIcon(0));
 			break;
 		case 101://绿色战士卡片
 			item = new Item("green",Item.Type.rolecard,GTC.getInstance().zyc_photo,QUALITY.green,CLASSES.fighter);

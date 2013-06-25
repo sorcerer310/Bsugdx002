@@ -58,6 +58,8 @@ public class TipsWindows extends WidgetGroup {
 		tipsWindows.align(Align.center);
 		tipsWindows.padTop(10);
 		tipsWindows.padBottom(10);
+		tipsWindows.defaults().padLeft(10);
+		tipsWindows.defaults().padRight(10);
 		tipsWindows.add(new Label("" + r.name, U.get_sytle()));
 		tipsWindows.row();
 		tipsWindows.add(new Label("" + U.getClasses(r), U.get_sytle()));
@@ -79,7 +81,7 @@ public class TipsWindows extends WidgetGroup {
 		}
 		tipsWindows.add(t);
 		tipsWindows.pack();
-		tipsWindows.setPosition(getPosition(v, 48).x, getPosition(v, 48).y);
+		tipsWindows.setPosition(getPosition(v, 50).x, getPosition(v, 50).y);
 		tipsWindows.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -147,7 +149,7 @@ public class TipsWindows extends WidgetGroup {
 		tipsWindows.defaults().padRight(10);
 		tipsWindows.setPosition(200, 140);
 		Array<String> tipsArray = new Array<String>();
-		float scaleValue = 0.5f;
+		float scaleValue = 1f;
 		tipsArray = U.getMuLabel(s, scaleValue, windowWidth);
 		for (String as : tipsArray) {
 			tipsWindows.row();
@@ -174,10 +176,10 @@ public class TipsWindows extends WidgetGroup {
 	 */
 	public void showEatInfo(Role r, Vector2 v, Stage stage) {
 		removeFromStage();
-		tipsWindows.setHeight(10);
 		tipsWindows.align(Align.center);
-		tipsWindows.defaults().spaceBottom(5);
-		tipsWindows.defaults().spaceTop(5);
+		tipsWindows.defaults().padLeft(10);
+		tipsWindows.defaults().padRight(10);
+		tipsWindows.padTop(10);
 		tipsWindows.padBottom(10);
 		Table to = new Table();
 		to.align(Align.center);
@@ -289,9 +291,8 @@ public class TipsWindows extends WidgetGroup {
 		tipsWindows.clear();
 		tips_flag = false;
 		start_time = 0;
-		if (this.getParent() != null) {
-			this.getParent().removeActor(this);
-		}
+		remove();
+		
 	}
 
 	/**

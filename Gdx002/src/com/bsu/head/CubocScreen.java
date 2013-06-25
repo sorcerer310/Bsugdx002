@@ -7,7 +7,6 @@ import com.badlogic.gdx.Screen;
 
 public abstract class CubocScreen extends java.util.Observable implements Screen  {
 	Game game;
-	
 	public CubocScreen (Game game) {
 		this.game = game;
 	}

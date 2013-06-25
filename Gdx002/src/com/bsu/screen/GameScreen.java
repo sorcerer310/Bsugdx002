@@ -3,7 +3,6 @@ package com.bsu.screen;
 import java.util.Observable;
 import java.util.Observer;
 
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -49,6 +48,7 @@ import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.GameMap;
 import com.bsu.tools.U;
+import com.bsu.tools.GC.QUALITY;
 
 public class GameScreen extends CubocScreen implements Observer,
 		GestureListener {
@@ -57,14 +57,14 @@ public class GameScreen extends CubocScreen implements Observer,
 	private Stage endStage;// 结束场景
 	private Commander commander; // 指挥官对象，指挥所有对象交互
 	private MapBox mb; // 地图块对象
-	private UITopAnimation uita;	//顶层的一些动画效果
+	private UITopAnimation uita; // 顶层的一些动画效果
 	private UIRoleEffect fightUI;
 	private OrthographicCamera c;
 	private boolean action_start; // 是否回合开始,未开始为人物操作阶段
 	private boolean controlled;
 	private boolean battleEndFlag = false; // 用来标识当前战役是否结束
 	public static int lv;// 关卡索引
-	public static int LvMax;//开启的最大关卡
+	public static int LvMax;// 开启的最大关卡
 	private int clingX;// 地图移动位移
 	private AttackEffect attack_effect;
 	private Label fpsLabel;
@@ -74,6 +74,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	private Array<Role> roles = new Array<Role>(); // 所有的角色
 	public Array<Vector2> heroArisePos = new Array<Vector2>(); // 英雄出生地
 	public Array<Vector2> npcArisePos = new Array<Vector2>(); // 敌人出生地
+	private boolean initFlag;
 
 	public GameScreen(Game mxg) {
 		super(mxg);
@@ -94,58 +95,48 @@ public class GameScreen extends CubocScreen implements Observer,
 	 *            关卡初始化英雄与敌人的数组，出生地点在地图中已经设置好
 	 */
 	public void game_init(GameScreenData gsd) {
-		if(uita==null)
-		uita = new UITopAnimation();
+		if (!initFlag) {
+			uita = new UITopAnimation();
+			mb = new MapBox();
+			fightUI = new UIRoleEffect(UIStage, this);
+			attack_effect = AttackEffect.getInstance();
+			endBackImg = new Image(WidgetFactory.getInstance().getTextureFill(
+					GC.rect_width, GC.rect_height, Color.GRAY, 0.3f));
+			commander = Commander.initInstance(stage, this);
+			c = (OrthographicCamera) stage.getCamera();
+			fpsLabel = WidgetFactory.getInstance().makeLabel(
+					"" + Gdx.graphics.getFramesPerSecond(), 1, 420, 30,
+					Color.RED);
+			addActorListener();
+			initFlag=true;
+		}
 		this.heros = gsd.getHeroRoles();
 		this.npcs = gsd.getNpcRoles();
 		// 将所有role放入同一Role中便于操作
 		roles.clear();
 		roles.addAll(heros);
 		roles.addAll(npcs);
-
 		stage.clear();
 		GameMap.make_map(gsd.getMapName());
 		setAction_start(false);
 		setControlled(true);
-		if (mb == null)
-			mb = new MapBox();
 		mb.init_box_value();
 		stage.addActor(mb); // 增加地图方格显示
-
 		// 增加敌人
 		for (Role r : npcs)
 			stage.addActor(r);
 		// 增加英雄
 		for (Role r : heros)
 			stage.addActor(r);
-
 		stage.addActor(uita);
-		commander = Commander.initInstance(stage, this);
 		commander.resetRoles();
-		addActorListener();
 		setBornPosition(GameMap.map, Type.HERO, GC.object_layer_hero);
 		setBornPosition(GameMap.map, Type.ENEMY, GC.object_layer_enemy);
-		if (fightUI == null) {
-			fightUI = new UIRoleEffect(UIStage, this);
-		} 
 		fightUI.show_hero_state();
-		
 		// 为role增加观察者
 		for (int i = 0; i < roles.size; i++)
 			roles.get(i).getRoleObserable().addObserver(fightUI);
-
-		c = (OrthographicCamera) stage.getCamera();
-		if (attack_effect == null) {
-			attack_effect = AttackEffect.getInstance();
-		}
-		if (endBackImg == null) {
-			endBackImg = new Image(WidgetFactory.getInstance().getTextureFill(
-					GC.rect_width, GC.rect_height, Color.GRAY, 0.3f));
-		}
 		initRoles(roles);
-		fpsLabel = WidgetFactory.getInstance().makeLabel(
-				"" + Gdx.graphics.getFramesPerSecond(), 1, 420, 30,
-				Color.RED);
 		stage.addActor(fpsLabel);
 		stage.addActor(attack_effect);
 	}
@@ -184,8 +175,7 @@ public class GameScreen extends CubocScreen implements Observer,
 			r.setPosition(v.get(i).x, v.get(i).y);
 		}
 	}
-	
-	
+
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
@@ -272,11 +262,24 @@ public class GameScreen extends CubocScreen implements Observer,
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// 通知切换到主界面
-				if (roleIcon.size > 0) {
+				if (itemArray.size > 0) {
 					Array<Role> roles = new Array<Role>();
-					for (Item icon : roleIcon) {
-						Role r = RoleFactory.getInstance().getRole(icon);
-						roles.add(r);
+					for (Item item : itemArray) {
+						if (item.type == Item.Type.rolecard) {
+							Role r = RoleFactory.getInstance().getRole(item);
+							roles.add(r);
+						}
+						if (item.type == Item.Type.skillpart) {
+							if (item.q == QUALITY.blue) {
+								Player.getInstance().crystal_blue++;
+							}
+							if (item.q == QUALITY.purple) {
+								Player.getInstance().crystal_purple++;
+							}
+							if (item.q == QUALITY.orange) {
+								Player.getInstance().crystal_orange++;
+							}
+						}
 					}
 					Player.getInstance().addRole(roles);
 				}
@@ -294,17 +297,17 @@ public class GameScreen extends CubocScreen implements Observer,
 	 * @param r
 	 */
 	private void hero_controll_rule(int mx, int my, Role r) {
-		if(r.isDead){
+		if (r.isDead) {
 			return;
 		}
 		int hero_x = r.getBoxX();
 		int hero_y = r.getBoxY();
-		if (mx == hero_x&&my == hero_y) {
-				if (!r.isSelected()) {
-					heroSelected(r);
-					if (!r.isControlled()) {
-						heroControllor(r);
-					}
+		if (mx == hero_x && my == hero_y) {
+			if (!r.isSelected()) {
+				heroSelected(r);
+				if (!r.isControlled()) {
+					heroControllor(r);
+				}
 				set_map_value(r);
 				return;
 			}
@@ -342,8 +345,8 @@ public class GameScreen extends CubocScreen implements Observer,
 	 */
 	public void newRound() {
 		setAction_start(false);
-		for(Role r:commander.heros){
-			if(!r.isDead){
+		for (Role r : commander.heros) {
+			if (!r.isDead) {
 				heroSelected(r);
 				heroControllor(r);
 				set_map_value(r);
@@ -352,7 +355,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		}
 	}
 
-	Array<Item> roleIcon = new Array<Item>();
+	Array<Item> itemArray = new Array<Item>();// 通关获得的道具数组
 
 	/**
 	 * 战斗结束
@@ -361,19 +364,17 @@ public class GameScreen extends CubocScreen implements Observer,
 		String endname = "victory";
 		if (victflag) {
 			endname = "victory";
-			if(lv==LvMax){
+			if (lv == LvMax) {
 				LvMax++;
 			}
 		} else {
 			endname = "defeat";
 		}
-
 		TextureRegion tr = GTC.getInstance().battle_end.findRegion(endname);
 		Image img = new Image(tr);
-
 		img.setPosition((GC.rect_width - img.getWidth()) / 2,
 				(GC.rect_height - img.getHeight()) / 2 + 100);
-		roleIcon.clear();
+		itemArray.clear();
 		endStage.clear();
 		endStage.addActor(endBackImg);
 		endStage.addActor(img);
@@ -394,7 +395,7 @@ public class GameScreen extends CubocScreen implements Observer,
 							// 设置photo宽度和高度
 							.padTop(2f).align(Align.top).spaceLeft(10f)
 							.spaceRight(10f); // 设置各photo之间的边距
-					roleIcon.add(r.item);
+					itemArray.add(r.item);
 				}
 			}
 			Table table = new Table();
@@ -409,9 +410,8 @@ public class GameScreen extends CubocScreen implements Observer,
 				if (r.item.type == com.bsu.obj.Item.Type.skillpart) {
 					table.defaults().padRight(10);
 					table.defaults().padTop(10);
-					Image icon = new Image(ItemFactory.getInstance()
-							.getItemById(1).tr_item);
-					table.add(icon);
+					table.add(new Image(r.item.tr_item));
+					itemArray.add(r.item);
 				}
 			}
 			endStage.addActor(spRole);
@@ -428,7 +428,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	 */
 	public void heroSelected(Role hero) {
 		for (Role r : commander.heros) {
-			if(r.isDead){
+			if (r.isDead) {
 				continue;
 			}
 			if (r.getType() == Type.HERO) {
@@ -451,7 +451,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	 */
 	public boolean isOtherHero(int inputX, int inputY) {
 		for (Role r : commander.allRoles) {
-			if(r.isDead){
+			if (r.isDead) {
 				return false;
 			}
 			Vector2 hv = new Vector2(r.getBoxX(), r.getBoxY());
@@ -468,7 +468,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	 * @author 张永臣
 	 */
 	public void heroControllor(Role r) {
-		if(r.isDead){
+		if (r.isDead) {
 			return;
 		}
 		r.setControlled(true);

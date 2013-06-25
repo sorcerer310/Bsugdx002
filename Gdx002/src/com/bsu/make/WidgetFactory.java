@@ -37,7 +37,7 @@ public class WidgetFactory {
 	 * 
 	 * @return
 	 */
-	public TextButton makeOneTextButton(String text, Stage s, float x, float y) {
+	public TextButton makeOneTextButton(String text, float x, float y) {
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
 		pixmap.setColor(Color.WHITE);
 		pixmap.fill();
@@ -52,7 +52,6 @@ public class WidgetFactory {
 		skin.add("default", tbs);
 		TextButton tb = new TextButton(text, skin);
 		tb.setPosition(x, y);
-		s.addActor(tb);
 		return tb;
 	}
 
@@ -125,71 +124,11 @@ public class WidgetFactory {
 					int pointer, int button) {
 				event.getListenerActor().setScale(1.0f);
 				super.touchUp(event, x, y, pointer, button);
-			}
-			
+			}		
 		});
 		U.setAlpha(img_nomal, a);													//设置按钮的alpha值
 		return img_nomal;
-	}
-	/**
-	 * 直接返回个Image按钮对象。
-	 * @param bname	按钮名称
-	 * @return
-	 */
-	public Image makeImageButton(String bname) {
-		Image img_nomal = null;
-		if (bname.equals(GC.screen_fight))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_mbutton
-							.findRegion("mb_fight"));
-		else if (bname.equals(GC.screen_role))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_mbutton
-							.findRegion("mb_role"));
-		else if (bname.equals(GC.screen_update))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_mbutton
-							.findRegion("mb_update"));
-		else if (bname.equals(GC.screen_shop))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_mbutton
-							.findRegion("mb_shop"));
-		else if (bname.equals(GC.button_back))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_mbutton.findRegion("back"));
-		else if (bname.equals(GC.button_green))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("green"));
-		else if (bname.equals(GC.button_blue))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("blue"));
-		else if (bname.equals(GC.button_purple))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("purple"));
-		else if (bname.equals(GC.button_orange))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("orange"));
-		else if (bname.equals(GC.button_eat))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("eat"));
-		else if (bname.equals(GC.button_eatall))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("eatall"));
-		else if (bname.equals(GC.button_level))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("level"));
-		else if (bname.equals(GC.button_up))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("up"));
-		else if (bname.equals(GC.button_all))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("all"));
-		img_nomal.setOrigin(img_nomal.getWidth() / 2, img_nomal.getHeight() / 2);
-		return img_nomal;
-	}
-	
-
-	
+	}	
 
 	/**
 	 * 将一个label 初始化并做好设置

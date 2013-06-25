@@ -41,21 +41,25 @@ public class FightScreen extends CubocScreen implements Observer {
 	private Array<LevelState> lvArray_four = new Array<LevelState>();
 	private Array<Image> lvArray_chapter = new Array<Image>();
 	private LEVELYTPE state;
+	private boolean initFlag;
 
 	public FightScreen(Game game) {
 		super(game);
 		stage = new Stage(GC.rect_width, GC.rect_height, false);
 	}
-	public void initScreen(){
+
+	public void initScreen() {
 		stage.clear();
-		if(background==null)
-		background = new Image(GTC.getInstance().fightPanel);
+		if (!initFlag) {
+			background = new Image(GTC.getInstance().fightPanel);
+
+			ib_back = WidgetFactory.getInstance().makeImageButton(
+					GC.button_back, 360, 262, 1);
+			setListener();
+			initFlag = true;
+		}
 		stage.addActor(background);
-		if(ib_back==null)
-		ib_back = WidgetFactory.getInstance().makeImageButton(GC.button_back,
-				 360, 262, 1);
 		stage.addActor(ib_back);
-		setListener();
 		initFight();
 		show_chapter_info(LEVELYTPE.chapter1);
 	}
@@ -66,10 +70,10 @@ public class FightScreen extends CubocScreen implements Observer {
 		lvArray_two.clear();
 		lvArray_three.clear();
 		lvArray_four.clear();
-		//滑动容器
+		// 滑动容器
 		Skin skin = new Skin(Gdx.files.internal("data/skin/bsuuiskin.json"));
 		Table table = new Table();
-		ScrollPane sp = new ScrollPane(table,skin.get(ScrollPaneStyle.class));
+		ScrollPane sp = new ScrollPane(table, skin.get(ScrollPaneStyle.class));
 		sp.setWidth(102);
 		sp.setHeight(280);
 		sp.setPosition(20, 20);
@@ -95,16 +99,16 @@ public class FightScreen extends CubocScreen implements Observer {
 			textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
 			textButtonStyle.font = U.get_font();
 			textButtonStyle.font.setScale(0.8f);
-			skin.add("bsutoggle", textButtonStyle);			
-			TextButton button = new TextButton("第一关", skin.get("bsutoggle",TextButtonStyle.class));
+			skin.add("bsutoggle", textButtonStyle);
+			TextButton button = new TextButton("第一关", skin.get("bsutoggle",
+					TextButtonStyle.class));
 			button.setWidth(50f);
-			table.add(button)
-					.width(button.getWidth()).height(button.getHeight())
-					.pad(10.0f);
+			table.add(button).width(button.getWidth())
+					.height(button.getHeight()).pad(10.0f);
 			table.row();
 			bg.add(button);
 			bg.setChecked("bar1");
-			
+
 			chapterImg.setPosition(x, y - i * h);
 			chapterImg.addListener(new InputListener() {
 				@Override
@@ -199,8 +203,9 @@ public class FightScreen extends CubocScreen implements Observer {
 						GameScreen.lv = l.level;
 						setChanged();
 						notifyObservers(GC.screen_game);
-					}else{
-						TipsWindows.getInstance().showTips("关卡未开启，请通关上一关卡", stage, Color.RED);
+					} else {
+						TipsWindows.getInstance().showTips("关卡未开启，请通关上一关卡",
+								stage, Color.RED);
 					}
 					super.touchUp(event, x, y, pointer, button);
 				}
@@ -251,7 +256,7 @@ public class FightScreen extends CubocScreen implements Observer {
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
-		state=null;
+		state = null;
 	}
 
 	@Override

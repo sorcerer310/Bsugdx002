@@ -48,6 +48,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	private Role selectRole;
 	private Array<Image> bImg = new Array<Image>();
 	private QUALITY quality;// 当前选择显示的品质
+	private boolean initFlag;
 
 	public SelectRoleScreen(Game game) {
 		super(game);
@@ -56,41 +57,39 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 	}
 
 	public void initScreen() {
-		stage.clear();
-		bImg.clear();
-		if (background == null)
+		if (!initFlag) {
 			background = new Image(GTC.getInstance().selectRolePanel);
-		stage.addActor(background);
-		if (ib_back == null)
 			ib_back = WidgetFactory.getInstance().makeImageButton(
 					GC.button_back, 375, 266, 1f);
-		stage.addActor(ib_back);
-		if (allImg == null)
 			allImg = WidgetFactory.getInstance().makeImageButton(GC.button_all,
 					100, 20, 0.5f);
-		stage.addActor(allImg);
-		if (greenImg == null)
 			greenImg = WidgetFactory.getInstance().makeImageButton(
 					GC.button_green, 163, 20, 0.5f);
-		stage.addActor(greenImg);
-		if (blueImg == null)
+
 			blueImg = WidgetFactory.getInstance().makeImageButton(
 					GC.button_blue, 226, 20, 0.5f);
-		stage.addActor(blueImg);
-		if (purpleImg == null)
+
 			purpleImg = WidgetFactory.getInstance().makeImageButton(
 					GC.button_purple, 289, 20, 0.5f);
-		stage.addActor(purpleImg);
-		if (orangeImg == null)
 			orangeImg = WidgetFactory.getInstance().makeImageButton(
 					GC.button_orange, 352, 20, 0.5f);
+			setListener();
+			initFlag = true;
+		}
+		stage.clear();
+		bImg.clear();
+		stage.addActor(background);
+		stage.addActor(ib_back);
+		stage.addActor(allImg);
+		stage.addActor(greenImg);
+		stage.addActor(blueImg);
+		stage.addActor(purpleImg);
 		stage.addActor(orangeImg);
 		bImg.add(allImg);
 		bImg.add(greenImg);
 		bImg.add(blueImg);
 		bImg.add(purpleImg);
 		bImg.add(orangeImg);
-		setListener();
 		addRoleToStage(QUALITY.all);
 	}
 

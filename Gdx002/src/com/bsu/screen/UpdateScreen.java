@@ -52,6 +52,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	private QUALITY quality;// 当前选择显示的品质
 	private Array<Image> bImg = new Array<Image>();
 	private Label infos;
+	private boolean initFlag;
 
 	public UpdateScreen(Game game) {
 		super(game);
@@ -62,56 +63,48 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				false);
 	}
 	public void initScreen(){
+		if(!initFlag){
+			background = new Image(GTC.getInstance().updatePanel);
+			infos = WidgetFactory.getInstance().makeLabel("", 1, 135, 280);
+			upButton = WidgetFactory.getInstance().makeImageButton(
+						GC.button_up, 300, 274, 1);
+			ib_back = WidgetFactory.getInstance().makeImageButton(
+						GC.button_back, 366, 267, 1f);
+			allImg = WidgetFactory.getInstance().makeImageButton(
+						GC.button_all, 135, 50, 0.5f);
+			greenImg = WidgetFactory.getInstance().makeImageButton(
+						GC.button_green, 198, 50, 0.5f);
+			blueImg = WidgetFactory.getInstance().makeImageButton(
+						GC.button_blue,  261, 50, 0.5f);
+			purpleImg = WidgetFactory.getInstance().makeImageButton(
+						GC.button_purple,324, 50, 0.5f);
+			orangeImg = WidgetFactory.getInstance().makeImageButton(
+						GC.button_orange, 387, 50, 0.5f);
+			eatImg = WidgetFactory.getInstance().makeImageButton(
+						GC.button_eat, 250, 20, 1f);
+			eatAllImg = WidgetFactory.getInstance().makeImageButton(
+						GC.button_eatall,  350, 15, 1);
+			setListener();												
+			initFlag=true;
+		}
 		stage.clear();
 		bImg.clear();
-		if(background==null)
-		background = new Image(GTC.getInstance().updatePanel);
 		stage.addActor(background);
-		if(infos==null)
-		infos = WidgetFactory.getInstance().makeLabel("", 1, 135, 280);
 		stage.addActor(infos);
-		if(upButton==null)
-		upButton = WidgetFactory.getInstance().makeImageButton(
-				GC.button_up, 300, 274, 1);
 		stage.addActor(upButton);
-		if(ib_back==null)
-		ib_back = WidgetFactory.getInstance().makeImageButton(
-				GC.button_back, 366, 267, 1f);
 		stage.addActor(ib_back);
-		if(allImg==null)
-		allImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_all, 135, 50, 0.5f);
 		stage.addActor(allImg);
-		if(greenImg==null)
-		greenImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_green, 198, 50, 0.5f);
 		stage.addActor(greenImg);
-		if(blueImg==null)
-		blueImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_blue,  261, 50, 0.5f);
 		stage.addActor(blueImg);
-		if(purpleImg==null)
-		purpleImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_purple,324, 50, 0.5f);
 		stage.addActor(purpleImg);
-		if(orangeImg==null)
-		orangeImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_orange, 387, 50, 0.5f);
 		stage.addActor(orangeImg);
-		if(eatImg==null)
-		eatImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_eat, 250, 20, 1f);
 		stage.addActor(eatImg);
-		if(eatAllImg==null)
-		eatAllImg = WidgetFactory.getInstance().makeImageButton(
-				GC.button_eatall,  350, 15, 1);
 		stage.addActor(eatAllImg);
 		bImg.add(allImg);
 		bImg.add(greenImg);
 		bImg.add(blueImg);
 		bImg.add(purpleImg);
 		bImg.add(orangeImg);
-		setListener();
 		getRoles();
 		addRoleToStage(QUALITY.all);
 	}
