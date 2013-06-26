@@ -98,12 +98,11 @@ public class GameScreen extends CubocScreen implements Observer,
 		if (!initFlag) {
 			uita = new UITopAnimation();
 			mb = new MapBox();
-			fightUI = new UIRoleEffect(UIStage, this);
+			c = (OrthographicCamera) stage.getCamera();
+			fightUI = new UIRoleEffect();
 			attack_effect = AttackEffect.getInstance();
 			endBackImg = new Image(WidgetFactory.getInstance().getTextureFill(
 					GC.rect_width, GC.rect_height, Color.GRAY, 0.3f));
-			commander = Commander.initInstance(stage, this);
-			c = (OrthographicCamera) stage.getCamera();
 			fpsLabel = WidgetFactory.getInstance().makeLabel(
 					"" + Gdx.graphics.getFramesPerSecond(), 1, 420, 30,
 					Color.RED);
@@ -129,10 +128,11 @@ public class GameScreen extends CubocScreen implements Observer,
 		for (Role r : heros)
 			stage.addActor(r);
 		stage.addActor(uita);
+		commander = Commander.initInstance(stage, this);
 		commander.resetRoles();
+		fightUI.initUI(UIStage, this);
 		setBornPosition(GameMap.map, Type.HERO, GC.object_layer_hero);
 		setBornPosition(GameMap.map, Type.ENEMY, GC.object_layer_enemy);
-		fightUI.show_hero_state();
 		// 为role增加观察者
 		for (int i = 0; i < roles.size; i++)
 			roles.get(i).getRoleObserable().addObserver(fightUI);

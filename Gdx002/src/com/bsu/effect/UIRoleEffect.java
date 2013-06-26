@@ -40,15 +40,17 @@ public class UIRoleEffect implements Observer {
 	GameScreen g;
 	Array<roleUIInfo> hpArray = new Array<roleUIInfo>();
 
-	public UIRoleEffect(Stage s, GameScreen game) {
+	public UIRoleEffect() {
 		// TODO Auto-generated constructor stub
+		
+	}
+	public void initUI(Stage s, GameScreen game){
 		stage = s;
 		stage.clear();
 		c = Commander.getInstance();
 		g = game;
 		show_hero_state();
 	}
-
 	/**
 	 * 绘画每个角色状态
 	 * 

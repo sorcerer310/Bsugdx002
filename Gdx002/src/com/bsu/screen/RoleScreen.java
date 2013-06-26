@@ -57,6 +57,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private QUALITY quality;// 当前选择显示的品质
 	private Label skillPartBlue, skillPartPurple, skillPartOrange;// 普通，高级，史诗精华文本
 	private TextButton up, use;
+	private Array<SkillIcon> skillIconArray = new Array<SkillIcon>();
 
 	public RoleScreen(Game game) {
 		super(game);
@@ -198,6 +199,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 */
 	private void showRoleInfo(final Role r) {
 		RoleInfoStage.clear();
+		skillIconArray.clear();
 		selectRole = r;
 		up.remove();
 		use.remove();
@@ -207,17 +209,17 @@ public class RoleScreen extends CubocScreen implements Observer,
 		U.showRoleSelect(Player.getInstance().playerRole, r);
 		skillIndex = 0;
 		showRoleBaseInfo(r);
-		final Array<Image> skillImg = new Array<Image>();
 		int sindex = 0;
+		final Array<Image> skillImg = new Array<Image>();
 		for (final Skill s : r.skill_array) {
 			final int index = sindex;
 			sindex++;
 			SkillIcon se = new SkillIcon(s, RoleInfoStage, new Vector2(
 					40 + index * 60, 160), true);
+			skillIconArray.add(se);
 			final Image img = se.skillImg;
-			s.skillEffect = se;
-			final Vector2 v = new Vector2(img.getX(), img.getY());
 			skillImg.add(img);
+			final Vector2 v = new Vector2(img.getX(), img.getY());
 			if (index == 0) {
 				U.setAlpha(img, 1);
 			}
@@ -242,7 +244,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		}
 		// wfy.makeImg(r.weapon.texture, RoleInfoStage, 1f, 40, 100);
 		// wfy.makeImg(r.armor.texture, RoleInfoStage, 1f, 100, 100);
-		showSkillTree(r, skillImg);
+		showSkillTree(r);
 	}
 
 	/**
@@ -273,7 +275,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param r
 	 *            角色
 	 */
-	public void showSkillTree(final Role r, final Array<Image> imgAarray) {
+	public void showSkillTree(final Role r) {
 		int numsGreen = 0;
 		int numsBlue = 0;
 		int numsPur = 0;
@@ -335,7 +337,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 				numsOra++;
 			}
 			final Image skill_img = se.skillImg;
-			s.skillEffect = se;
 			skillImg.add(skill_img);
 			final Vector2 vs = new Vector2(skill_img.getX(), skill_img.getY());
 			skill_img.addListener(new InputListener() {
@@ -360,7 +361,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 						if ((selectSkill == null) || selectSkill != s) {
 							selectSkill = s;
 						} else {
-							setAnotherSkill(r, skillIndex, s, imgAarray);
+							setAnotherSkill(r, skillIndex, s);
 						}
 						isReadyToUp(s);
 					}
@@ -416,70 +417,54 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private void upSkill(boolean b) {
 		if ((selectSkill.quality == QUALITY.green)
 				|| (selectSkill.quality == QUALITY.blue)) {
-			if (Player.getInstance().crystal_blue >= 6) {
-				Player.getInstance().crystal_blue -= 6;
-				skillPartBlue.setText(Player.getInstance().crystal_blue + "");
-				selectSkill.enable = true;
-				if (!b) {
-					selectSkill.skillEffect.skillImg
-							.setDrawable(selectSkill.skillEffect.enableImg
-									.getDrawable());
-					TipsWindows.getInstance().showTips(
-							"开启新技能:" + selectSkill.name, RoleInfoStage,
-							U.getQualityColor(selectSkill.quality));
-
-				} else {
-					selectSkill.lev++;
-				}
-				selectSkill.skillEffect.lv.setText(selectSkill.lev + "");
-				for (Skill s : selectRole.skill_array) {
-					s.skillEffect.lv.setText(s.lev + "");
-				}
-			}
+			Player.getInstance().crystal_blue -= 6;
 		}
 		if (selectSkill.quality == QUALITY.purple) {
-			if (Player.getInstance().crystal_purple >= 6) {
-				Player.getInstance().crystal_purple -= 6;
-				selectSkill.enable = true;
-				skillPartPurple.setText(Player.getInstance().crystal_purple
-						+ "");
-				if (!b) {
-					selectSkill.skillEffect.skillImg
-							.setDrawable(selectSkill.skillEffect.enableImg
-									.getDrawable());
-					TipsWindows.getInstance().showTips(
-							"开启新技能:" + selectSkill.name, RoleInfoStage,
-							U.getQualityColor(selectSkill.quality));
-				} else {
-					selectSkill.lev++;
-				}
-				selectSkill.skillEffect.lv.setText(selectSkill.lev + "");
-				for (Skill s : selectRole.skill_array) {
-					s.skillEffect.lv.setText(s.lev + "");
-				}
-			}
+			Player.getInstance().crystal_purple -= 6;
 		}
 		if (selectSkill.quality == QUALITY.orange) {
-			if (Player.getInstance().crystal_orange >= 6) {
-				Player.getInstance().crystal_orange -= 6;
-				selectSkill.enable = true;
-				if (!b) {
-					selectSkill.skillEffect.skillImg
-							.setDrawable(selectSkill.skillEffect.enableImg
-									.getDrawable());
-					TipsWindows.getInstance().showTips(
-							"开启新技能:" + selectSkill.name, RoleInfoStage,
-							U.getQualityColor(selectSkill.quality));
-				} else {
-					selectSkill.lev++;
-				}
-				selectSkill.skillEffect.lv.setText(selectSkill.lev + "");
-				for (Skill s : selectRole.skill_array) {
-					s.skillEffect.lv.setText(s.lev + "");
-				}
+			Player.getInstance().crystal_orange -= 6;
+		}
+		skillPartBlue.setText(Player.getInstance().crystal_blue + "");
+		skillPartPurple.setText(Player.getInstance().crystal_purple + "");
+		skillPartOrange.setText(Player.getInstance().crystal_orange + "");
+		selectSkill.enable = true;
+		showEnabledSkill(selectSkill);
+		if (!b) {
+			selectSkill.skillEffect.skillImg
+					.setDrawable(selectSkill.skillEffect.enableImg
+							.getDrawable());
+			TipsWindows.getInstance().showTips("开启新技能:" + selectSkill.name,
+					RoleInfoStage, U.getQualityColor(selectSkill.quality));
+		} else {
+			selectSkill.lev++;
+		}
+		selectSkill.skillEffect.lv.setText(selectSkill.lev + "");
+		for (int i = 0; i < selectRole.skill_array.size; i++) {
+			if (selectRole.skill_array.get(i).equals(selectSkill)) {
+				skillIconArray.get(i).skillImg
+						.setDrawable(selectSkill.skillEffect.skillImg
+								.getDrawable());
+				skillIconArray.get(i).skillImgEffect
+						.setDrawable(selectSkill.skillEffect.skillImgEffect
+								.getDrawable());
+				skillIconArray.get(i).lv.setText(selectSkill.lev + "");
 			}
 		}
 		isReadyToUp(selectSkill);
+	}
+
+	/**
+	 * 显示刚开启的技能
+	 */
+	private void showEnabledSkill(Skill ss) {
+		for (Skill s : selectRole.skill_tree) {
+			if (s != ss) {
+				U.setAlpha(s.skillEffect.skillImg, 0.5f);
+			} else {
+				U.setAlpha(ss.skillEffect.skillImg, 1);
+			}
+		}
 	}
 
 	/**
@@ -488,14 +473,12 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param s
 	 * @param img
 	 */
-	private void setAnotherSkill(Role r, int index, Skill s,
-			Array<Image> imgArray) {
-		// imgArray.get(index * 2).setDrawable(
-		// s.skillEffect.skillImg.getDrawable());
-		// imgArray.get(index * 2 + 1).setDrawable(
-		// s.skillEffect.skillImgEffect.getDrawable());
-		r.skill_array.get(index).skillEffect = s.skillEffect;
-		r.skill_array.get(index).skillEffect.skillImg = s.skillEffect.skillImg;
+	private void setAnotherSkill(Role r, int index, Skill s) {
+		skillIconArray.get(index).skillImg.setDrawable(s.skillEffect.skillImg
+				.getDrawable());
+		skillIconArray.get(index).skillImgEffect
+				.setDrawable(s.skillEffect.skillImgEffect.getDrawable());
+		skillIconArray.get(index).lv.setText(s.lev + "");
 		r.skill_array.set(index, s);
 		r.cskill = r.skill_array.get(0);
 	}
