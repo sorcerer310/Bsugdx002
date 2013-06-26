@@ -1,5 +1,8 @@
 package com.bsu.screen;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -14,9 +17,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
+import com.bsu.obj.Player;
 import com.bsu.tools.GC;
 import com.bsu.tools.GameMap;
 import com.bsu.tools.GTC;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
 
 public class MenuScreen extends CubocScreen implements Observer {
 	private Image backgroundImage;// backgroud
@@ -37,6 +43,9 @@ public class MenuScreen extends CubocScreen implements Observer {
 		play_image.setPosition(100, 200);
 		set_image = new Image(atlas.findRegion("settingsButton"));
 		set_image.setPosition(100, 120);
+		
+//		Player player = Player.getInstance();
+
 	}
 	public void initScreen(){
 		stage.clear();

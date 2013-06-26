@@ -1,10 +1,15 @@
 package com.bsu.gdx002;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.Observable;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Rectangle;
 import com.bsu.head.HeadScreen;
 import com.bsu.make.GameScreenFactory;
+import com.bsu.obj.Player;
 import com.bsu.screen.CPanelMainScreen;
 import com.bsu.screen.FightScreen;
 import com.bsu.screen.GameScreen;
@@ -14,13 +19,51 @@ import com.bsu.screen.SelectRoleScreen;
 import com.bsu.screen.SettingScreen;
 import com.bsu.screen.ShopScreen;
 import com.bsu.screen.UpdateScreen;
+import com.bsu.test.TestObject;
 import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.MessageObject;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 public class BsuGame extends Game {
 	@Override
 	public void create() {
+		
+		
+		//数据序列化测试代码
+//		try {
+//			TestObject to = new TestObject();
+//			to.intvar = 9999;
+//			to.doublevar = 9999.99;
+//			to.strvar = "hahaha";
+//			
+//			Kryo kryo = new Kryo();
+//			Output output = new Output(new FileOutputStream("save.bin"));
+//			kryo.writeObject(output, to);
+//			output.close();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		
+//		File file = new File("save.bin");
+//		if(file.exists()){
+//			System.out.println("save.bin is exists");
+//			try {
+//				Kryo kryo = new Kryo();
+//				Input input = new Input(new FileInputStream("save.bin"));
+//				TestObject to = kryo.readObject(input,TestObject.class);
+//				System.out.println(to.toString());
+//			} catch (FileNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+
+		
 		Rectangle rect = new Rectangle(0, 0, GC.rect_width, GC.rect_height);
 		// logo1界面
 		HeadScreen hs_logo1 = new HeadScreen(this, GC.logo_0_texture_string,

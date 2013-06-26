@@ -1,6 +1,9 @@
 package com.bsu.obj;
 
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -19,6 +22,8 @@ import com.bsu.tools.U;
 import com.bsu.tools.GC.FACE;
 import com.bsu.tools.GC.DIRECTION;
 import com.bsu.tools.GC.STATE;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Output;
 
 /**
  * 指挥官对象，用来指挥stage上所有的角色
@@ -600,7 +605,10 @@ public class Commander {
 			if(!r.isDead)
 				heroRemainCount ++;
 		
-		if(heroRemainCount==0){gamescreen.battleEnd(false);}
+		if(heroRemainCount==0){
+			gamescreen.battleEnd(false);
+			saveGame();	
+		}
 			//战斗失败
 		
 		
@@ -611,13 +619,21 @@ public class Commander {
 				npcVisibleCount++;
 		}
 		//如果剩余的npc为0，游戏胜利
-		if(npcRemainCount==0){gamescreen.battleEnd(true);}
+		if(npcRemainCount==0){
+			gamescreen.battleEnd(true);
+			saveGame();
+		}
 		else{
 			//否则剩余npc数量不为0，并且npcVisibleCount为0了，命令加入其他的敌人
 			if(npcVisibleCount==0)
 				commandNpcArise(gamescreen.npcArisePos,npcs);
 		}
 	}
+	
+	private void saveGame(){
+
+	}
+	
 	/**
 	 * 敌人出现函数
 	 * @param pos	出生地参数

@@ -25,7 +25,15 @@ public class Player {
 			instance = new Player();
 		return instance;
 	}
-
+	
+	/**
+	 * 此函数只能在加载游戏时使用，其他情况严禁使用
+	 * @param p
+	 */
+	public static void loadPlayer(Player p){
+		instance = p;
+	}
+	
 	private int money;// 玩家金钱
 	public Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
 	public Array<Role> playerFightRole = new Array<Role>();// 玩家拥有的出战英雄

@@ -1,5 +1,8 @@
 package com.bsu.screen;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Observable;
 import java.util.Observer;
 import com.badlogic.gdx.Game;
@@ -26,6 +29,8 @@ import com.bsu.tools.GC;
 import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 import com.bsu.tools.MessageObject;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
 
 public class CPanelMainScreen extends CubocScreen implements Observer,
 		GestureListener {
@@ -67,6 +72,21 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		stage.addActor(ib_mb_role);
 		stage.addActor(ib_mb_fight);
 		stage.addActor(ib_mb_shop);
+		
+		
+		//初始化Player对象
+//		File file = new File("save.bin");
+//		if(file.exists()){
+//			System.out.println("save.bin is exists");
+//			try {
+//				Kryo kryo = new Kryo();
+//				Input input = new Input(new FileInputStream("save.bin"));
+//				Player.loadPlayer(kryo.readObject(input,Player.class));
+//			} catch (FileNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 		
 	}
 

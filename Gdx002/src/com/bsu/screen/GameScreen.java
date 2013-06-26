@@ -1,5 +1,8 @@
 package com.bsu.screen;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -49,6 +52,8 @@ import com.bsu.tools.GTC;
 import com.bsu.tools.GameMap;
 import com.bsu.tools.U;
 import com.bsu.tools.GC.QUALITY;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
 
 public class GameScreen extends CubocScreen implements Observer,
 		GestureListener {
@@ -139,6 +144,8 @@ public class GameScreen extends CubocScreen implements Observer,
 		initRoles(roles);
 		stage.addActor(fpsLabel);
 		stage.addActor(attack_effect);
+		
+
 	}
 
 	/**
