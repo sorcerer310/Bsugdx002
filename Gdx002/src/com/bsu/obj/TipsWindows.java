@@ -88,7 +88,7 @@ public class TipsWindows extends WidgetGroup {
 				removeFromStage();
 			}
 		});
-		addToStage(stage, 10);
+		addToStage(stage, 5);
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class TipsWindows extends WidgetGroup {
 				removeFromStage();
 			}
 		});
-		addToStage(stage, 10);
+		addToStage(stage, 5);
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class TipsWindows extends WidgetGroup {
 				removeFromStage();
 			}
 		});
-		addToStage(stage, 4);
+		addToStage(stage, 2);
 	}
 
 	/**
@@ -233,7 +233,7 @@ public class TipsWindows extends WidgetGroup {
 		tipsWindows.add(tg);
 		tipsWindows.pack();
 		tipsWindows.setPosition(getPosition(v, 50).x, getPosition(v, 50).y);
-		addToStage(stage, 10);
+		addToStage(stage, 5);
 		tipsWindows.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {

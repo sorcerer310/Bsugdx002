@@ -55,7 +55,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private WidgetFactory wfy;// 界面工厂类
 	private int skillIndex;// 希望改变的技能
 	private Array<Image> bImg = new Array<Image>();
-	private Vector2 particleVec=new Vector2();//粒子应该出现位置
+	private Vector2 particleVec = new Vector2();// 粒子应该出现位置
 	private QUALITY quality;// 当前选择显示的品质
 	private Label skillPartBlue, skillPartPurple, skillPartOrange;// 普通，高级，史诗精华文本
 	private TextButton up, use;
@@ -367,8 +367,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 						}
 						isReadyToUp(s);
 					}
-					particleVec.x=vs.x+skill_img.getWidth()/2;
-					particleVec.y=vs.y+skill_img.getHeight()/2;
+					particleVec.x = vs.x + skill_img.getWidth() / 2;
+					particleVec.y = vs.y + skill_img.getHeight() / 2;
 					super.touchUp(event, x, y, pointer, button);
 				}
 			});
@@ -433,18 +433,21 @@ public class RoleScreen extends CubocScreen implements Observer,
 		skillPartPurple.setText(Player.getInstance().crystal_purple + "");
 		skillPartOrange.setText(Player.getInstance().crystal_orange + "");
 		selectSkill.enable = true;
-		MyParticle mpe=new MyParticle(GTC.getInstance().particleEffect,1,particleVec);
-		RoleInfoStage.addActor(mpe);
+		String tipsString = "";
 		showEnabledSkill(selectSkill);
 		if (!b) {
 			selectSkill.skillEffect.skillImg
 					.setDrawable(selectSkill.skillEffect.enableImg
 							.getDrawable());
-			TipsWindows.getInstance().showTips("开启新技能:" + selectSkill.name,
-					RoleInfoStage, U.getQualityColor(selectSkill.quality));
+			tipsString = "开启新技能" + selectSkill.name;
 		} else {
+			tipsString = "技能" + selectSkill.name + "升级";
 			selectSkill.lev++;
 		}
+		MyParticle mpe = new MyParticle(GTC.getInstance().particleEffect, 1,
+				particleVec, RoleInfoStage, tipsString,
+				U.getQualityColor(selectSkill.quality));
+		RoleInfoStage.addActor(mpe);
 		selectSkill.skillEffect.lv.setText(selectSkill.lev + "");
 		for (int i = 0; i < selectRole.skill_array.size; i++) {
 			if (selectRole.skill_array.get(i).equals(selectSkill)) {
