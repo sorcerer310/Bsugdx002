@@ -601,18 +601,30 @@ public class Commander {
 		int heroRemainCount = 0;						//英雄剩余数量
 		int npcRemainCount = 0;							//敌人剩余数量
 		int npcVisibleCount = 0;						//敌人上场数量
+		
 		for(Role r:heros)
 			if(!r.isDead)
 				heroRemainCount ++;
-		
+		//如果地图上没有英雄,战斗失败		
 		if(heroRemainCount==0){
 			gamescreen.battleEnd(false);
-			saveGame();	
+			saveGame();
+			return;
 		}
-			//战斗失败
-		
+
+		Array<Vector2> hap = gamescreen.heroArisePos;
 		
 		for(Role r:npcs){
+			for(Vector2 v:hap){
+				//如果某个敌人没死且在地图上显示，并且位置与英雄的某个出生点重合，游戏失败
+				Vector2 bv = U.realPost2BoxPos((int)v.x, (int)v.y);
+				if(!r.isDead && r.isVisible() && r.getBoxX()==bv.x && r.getBoxY()==bv.y){
+					gamescreen.battleEnd(false);
+					saveGame();
+					return;
+				}
+			}
+			
 			if(!r.isDead)
 				npcRemainCount ++;
 			if(r.isVisible())
@@ -622,9 +634,12 @@ public class Commander {
 		if(npcRemainCount==0){
 			gamescreen.battleEnd(true);
 			saveGame();
+			return;
 		}
+		//否则剩余npc数量不为0，
 		else{
-			//否则剩余npc数量不为0，并且npcVisibleCount为0了，命令加入其他的敌人
+			
+			//npcVisibleCount为0了，命令加入其他的敌人
 			if(npcVisibleCount==0)
 				commandNpcArise(gamescreen.npcArisePos,npcs);
 		}

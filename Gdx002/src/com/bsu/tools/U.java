@@ -379,4 +379,13 @@ public class U {
 		int rety = (GC.rect_height - y)/GC.map_box_value; 
 		return new Vector2(retx,rety);
 	}
+	/**
+	 * 将真实坐标转为格子坐标
+	 * @param x		真实坐标
+	 * @param y		真实坐标
+	 * @return		返回对应的格子坐标
+	 */
+	public static Vector2 realPost2BoxPos(int x,int y){
+		return new Vector2(x/GC.map_box_value,y/GC.map_box_value);
+	}
 }
