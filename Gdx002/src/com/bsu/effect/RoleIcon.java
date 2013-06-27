@@ -4,6 +4,8 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -32,6 +34,7 @@ public class RoleIcon extends WidgetGroup {
 	public Image img_head = null; // 头像图片
 	public Image img_frame = null;
 	public Image img_classes = null;
+	public MyParticle particle;
 
 	public RoleIcon(Role r, boolean b) {
 		img_head = new Image(r.roleTexture); // 头像图片

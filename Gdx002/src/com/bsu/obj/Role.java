@@ -173,7 +173,6 @@ public class Role extends Actor {
 					getOriginY(), GC.map_box_value * currentHp / maxHp, 2,
 					getScaleX(), getScaleY(), getRotation());
 		}
-		Role_logic();
 	}
 
 	public void hero_disapper(BsuEvent be) {
@@ -859,6 +858,12 @@ public class Role extends Actor {
 			this.setChanged();
 			this.notifyObservers(args);
 		}
+	}
+
+	@Override
+	public void act(float delta) {
+		Role_logic();
+		super.act(delta);
 	}
 
 }

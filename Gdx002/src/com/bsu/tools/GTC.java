@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -25,7 +26,7 @@ public class GTC {
 			instance = new GTC();
 		return instance;
 	}
-
+	public ParticleEffect particleEffect;
 	public Texture logoCompany;
 	public Texture logoGame;
 	public Texture logo66Rpg;
@@ -81,6 +82,8 @@ public class GTC {
 		assetManager.load("data/game/icon/skillicon.txt", TextureAtlas.class);
 		assetManager.load("data/game/effect/battleend.txt", TextureAtlas.class);
 		assetManager.load("data/game/hero/frame.txt", TextureAtlas.class);
+		particleEffect=new ParticleEffect();
+		particleEffect.load(Gdx.files.internal("data/particle/particle"), Gdx.files.internal("data/particle/"));
 	}
 
 	public void setAssets() {
