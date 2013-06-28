@@ -249,24 +249,25 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	 */
 	private void eatRolesUpdate(boolean flag) {
 		if (flag) {
+			eatRoles.clear();
 			if (quality == QUALITY.all) {
-				eatRoles = Player.getInstance().playerIdelRole;
+				eatRoles = new Array<Role>(Player.getInstance().playerIdelRole);
 			}
 			if (quality == QUALITY.green) {
-				eatRoles = Player.getInstance().getQualityRole(
-						Player.getInstance().playerIdelRole, QUALITY.green);
+				eatRoles = new Array<Role>(Player.getInstance().getQualityRole(
+						Player.getInstance().playerIdelRole, QUALITY.green));
 			}
 			if (quality == QUALITY.blue) {
-				eatRoles = Player.getInstance().getQualityRole(
-						Player.getInstance().playerIdelRole, QUALITY.blue);
+				eatRoles = new Array<Role>(Player.getInstance().getQualityRole(
+						Player.getInstance().playerIdelRole, QUALITY.blue));
 			}
 			if (quality == QUALITY.purple) {
-				eatRoles = Player.getInstance().getQualityRole(
-						Player.getInstance().playerIdelRole, QUALITY.purple);
+				eatRoles = new Array<Role>(Player.getInstance().getQualityRole(
+						Player.getInstance().playerIdelRole, QUALITY.purple));
 			}
 			if (quality == QUALITY.orange) {
-				eatRoles = Player.getInstance().getQualityRole(
-						Player.getInstance().playerIdelRole, QUALITY.orange);
+				eatRoles = new Array<Role>(Player.getInstance().getQualityRole(
+						Player.getInstance().playerIdelRole, QUALITY.orange));
 			}
 		}
 		for (Role e : eatRoles) {

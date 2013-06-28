@@ -84,6 +84,10 @@ public class HeadScreen extends CubocScreen implements Observer {
 					200);
 			batch.draw(loadBackImg, lx, ly, lw, lh);
 			batch.draw(loadFrontImg, lx, ly, pl*lw/100, lh);
+		}else{
+			setChanged();
+			notifyObservers(this);
+			return;
 		}
 		batch.end();
 		Gdx.app.debug("HeadScreen", "render");

@@ -85,19 +85,19 @@ public class GameScreenFactory {
 		if (lv == 3)
 			setLv(gsd, reward, rf, fy, new int[] { 4, 0, 0, 0 }, null, null,
 					null, null, new int[] { 3, 0, 0, 0 }, null, null, null,
-					null, 1, 0, 0);
+					null, 3, 0, 0);
 		if (lv == 4)
 			setLv(gsd, reward, rf, fy, new int[] { 5, 0, 0, 0 }, null, null,
 					null, null, new int[] { 3, 0, 0, 0 }, null, null, null,
-					null, 1, 0, 0);
+					null, 3, 0, 0);
 		if (lv == 5)
 			setLv(gsd, reward, rf, fy, new int[] { 10, 0, 0, 0 }, null, null,
 					null, null, new int[] { 5, 0, 0, 0 }, null, null, null,
-					null, 1, 0, 0);
+					null, 3, 0, 0);
 		if (lv == 6)
 			setLv(gsd, reward, rf, fy, new int[] { 10, 0, 0, 0 }, new int[] {
 					2, 0, 0, 0 }, null, null, null, new int[] { 5, 0, 0, 0 },
-					new int[] { 1, 0, 0, 0 }, null, null, null, 3, 0, 0);
+					new int[] { 1, 0, 0, 0 }, null, null, null, 4, 0, 0);
 		if (lv == 7)
 			setLv(gsd, reward, rf, fy, new int[] { 5, 0, 0, 0 }, new int[] { 2,
 					0, 0, 0 }, new int[] { 3, 0, 0, 0 }, null, null, new int[] {
@@ -126,7 +126,7 @@ public class GameScreenFactory {
 		if (lv == 11)
 			setLv(gsd, reward, rf, fy, new int[] { 5, 2, 0, 0 }, new int[] {
 					5, 2, 0, 0 }, null, null, null, new int[] { 3, 1, 0, 0 },
-					new int[] { 3, 1, 0, 0 }, null, null, null, 6, 2, 0);
+					new int[] { 3, 1, 0, 0 }, null, null, null, 15, 2, 0);
 		gsd.setReward(reward);
 		return gsd;
 	}

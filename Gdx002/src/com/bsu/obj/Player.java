@@ -69,7 +69,8 @@ public class Player {
 					GTC.getInstance().fc_photo));
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
 					GTC.getInstance().zyc_photo,new int[]{1,2}));
-
+			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
+					GTC.getInstance().zyc_photo,new int[]{1,2}));
 		}
 		resetRoleArray(playerRole);
 		return playerRole;
@@ -83,7 +84,7 @@ public class Player {
 	private Array<Role> getPlayerFightRole() {
 		if (playerFightRole.size == 0){
 			playerFightRole.add(playerRole.get(0));
-			playerFightRole.add(playerRole.get(1));
+			//playerFightRole.add(playerRole.get(1));
 		}
 		return playerFightRole;
 	}
@@ -96,6 +97,7 @@ public class Player {
 	public void addRole(Array<Role> roles) {
 		for(Role r:roles){
 			playerRole.add(r);
+			System.out.println("add a new role");
 		}
 		resetRoleArray(playerRole);
 		getPlayerPackageRole();
