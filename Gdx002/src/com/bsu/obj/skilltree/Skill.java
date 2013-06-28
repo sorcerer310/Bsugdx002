@@ -338,10 +338,11 @@ public class Skill {
 							offset_ani_continue));
 				}
 			}
-			if (owner == objects.get(0))
-				return true;
-			else
-				return false;
+			return true;
+//			if (owner == objects.get(0))
+//				return true;
+//			else
+//				return false;
 		} else
 			return false;
 	}

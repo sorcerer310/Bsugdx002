@@ -80,7 +80,7 @@ public class HeadScreen extends CubocScreen implements Observer {
 			int pl=(int)(am.getProgress() * 100);
 			font.setColor(Color.GRAY);
 			font.draw(batch,
-					"loading::" + pl + "%", 200,
+					"loading:" + pl + "%", 200,
 					200);
 			batch.draw(loadBackImg, lx, ly, lw, lh);
 			batch.draw(loadFrontImg, lx, ly, pl*lw/100, lh);

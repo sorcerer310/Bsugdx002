@@ -382,7 +382,8 @@ public class Commander {
 			boolean isMove = r.cskill.skillLogic(r, atkrs);
 			//1:执行技能命令
 //			if(atkrs.size!=0){
-			if(!isMove){
+			//如果拥有释放目标，释放技能
+			if(atkrs.size!=0){
 
 				r.ani_role_attack(atkrs,r.cskill,new BsuEvent(){
 					boolean ani_attack_finished = false;			//判断攻击动画是否完成
