@@ -55,7 +55,6 @@ public class Role extends Actor {
 	public int expUp = 0;
 	public Array<ContinuedSkillState> csstate = new Array<ContinuedSkillState>(); // 当前在人物身上的各种持续效果
 	public boolean isRoundMove = true; // 本回合是否移动
-	public boolean locked;// 是否被锁住
 	private float time_state; // 行动状态时间
 	private float time_effect; // 技能特效时间
 	private float px, py;// 动画偏移量
@@ -115,7 +114,9 @@ public class Role extends Actor {
 		set_actor_base(type);
 		levelUp();
 	}
-
+	/**
+	 * 每局开始之前的初始化工作
+	 */
 	public void gsstartinit() {
 		setSelected(false);
 		setControlled(false);

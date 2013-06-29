@@ -18,6 +18,7 @@ import com.bsu.screen.GameScreen;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.CommandQueue;
 import com.bsu.tools.GC;
+import com.bsu.tools.Saver;
 import com.bsu.tools.U;
 import com.bsu.tools.GC.FACE;
 import com.bsu.tools.GC.DIRECTION;
@@ -77,7 +78,9 @@ public class Commander {
 			if (act instanceof Role) {
 //				((Role)act).isDead = false;
 				if (((Role) act).getType() == Type.HERO) {
-					heros.add((Role) act);
+					Role r = (Role)act;
+					r.gsstartinit();						//重置人物的动态数据
+					heros.add(r);
 				} else if (((Role) act).getType() == Type.ENEMY)
 					npcs.add((Role) act);
 			}
@@ -647,7 +650,7 @@ public class Commander {
 	}
 	
 	private void saveGame(){
-
+		Saver.getInstance().save();
 	}
 	
 	/**

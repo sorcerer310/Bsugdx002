@@ -71,17 +71,15 @@ public class GTC {
 		assetManager.load("data/menu/shoppanel.png", Texture.class);
 		assetManager.load("data/menu/skillpanel.png", Texture.class);
 		assetManager.load("data/menu/updatepanel.png", Texture.class);
+		assetManager.load("data/menu/mbutton.txt", TextureAtlas.class);
 		assetManager.load("data/game/hero/Actor1.png", Texture.class);
 		assetManager.load("data/game/icon/classes.txt", TextureAtlas.class);
-		assetManager.load("data/menu/mbutton.txt", TextureAtlas.class);
-		assetManager.load("data/button/pack", TextureAtlas.class);
-		assetManager.load("data/game/effect/othereffect.txt",
-				TextureAtlas.class);
-		assetManager.load("data/game/effect/skilleffect.txt",
-				TextureAtlas.class);
+		assetManager.load("data/game/effect/othereffect.txt",TextureAtlas.class);
+		assetManager.load("data/game/effect/skilleffect.txt",TextureAtlas.class);
 		assetManager.load("data/game/icon/skillicon.txt", TextureAtlas.class);
 		assetManager.load("data/game/effect/battleend.txt", TextureAtlas.class);
 		assetManager.load("data/game/hero/frame.txt", TextureAtlas.class);
+		assetManager.load("data/button/pack", TextureAtlas.class);
 		particleEffect=new ParticleEffect();
 		particleEffect.load(Gdx.files.internal("data/particle/particle"), Gdx.files.internal("data/particle/"));
 	}

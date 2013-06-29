@@ -23,6 +23,7 @@ import com.bsu.test.TestObject;
 import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.MessageObject;
+import com.bsu.tools.Saver;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
@@ -63,7 +64,6 @@ public class BsuGame extends Game {
 //			}
 //		}
 
-		
 		Rectangle rect = new Rectangle(0, 0, GC.rect_width, GC.rect_height);
 		// logo1界面
 		HeadScreen hs_logo1 = new HeadScreen(this, GC.logo_0_texture_string,
@@ -102,6 +102,14 @@ public class BsuGame extends Game {
 		MenuScreen ms = new MenuScreen(this) {
 			@Override
 			public void update(Observable o, Object arg) {
+
+				//当转换到主菜单界面前，加载游戏数据
+//				File file = new File("save.bin");
+//				if(file.exists()){
+//					Saver saver = Saver.getInstance();
+//					saver.load();
+//				}
+				
 				BsuGame.this.setScreen(this);
 				this.initScreen();
 			}
