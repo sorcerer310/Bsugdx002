@@ -117,5 +117,5 @@ class RoleData{
 
 class SkillData{
 	public int id;								//技能索引
-	
+	public int lev;								//技能级别
 }

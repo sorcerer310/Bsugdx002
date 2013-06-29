@@ -465,7 +465,7 @@ public class Commander {
 		if (s.type == Skill.Type.f_box) {
 			vs.clear();
 			int offset = h.type == Type.HERO ? 1 : -1;
-			for (int i = 0; i < s.val; i++)
+			for (int i = 0; i < s.getVal(); i++)
 				vs.add(new Vector2(i + offset, 0));
 		}
 		Array<Role> retrs = new Array<Role>();				//返回符合类型的英雄

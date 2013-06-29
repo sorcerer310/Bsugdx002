@@ -38,8 +38,8 @@ public class Skill {
 	public QUALITY quality = QUALITY.green; // 技能品质，默认为绿色
 	public Type type = Type.f_damage; // 设置默认类型为攻击类型
 	public ObjectType otype = ObjectType.single; // 指定技能为单体还是群体
-	public float val = 0; // 技能效果值ֵ
-	public float uval = 0; // 下级升级递增值
+	private float val = 0; // 技能效果值ֵ
+	private float uval = 0; // 下级升级递增值
 	public int lev = 1; // 技能级别，默认为1级，满级6级
 	private CLASSES[] classes = null; // 技能适用的职业范围
 	public String info = ""; // 技能描述
@@ -345,6 +345,35 @@ public class Skill {
 //				return false;
 		} else
 			return false;
+	}
+	/**
+	 * 升级函数，如果级别大于6返回false
+	 * @return 返回升级是否成功
+	 */
+	public boolean levUp(){
+		if(lev<6){
+			lev++;
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * 设置级别数，最大为6
+	 * @param l	级别参数
+	 */
+	public boolean setLev(int l){
+		if(l<=6){
+			lev = l;
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * 返回当前技能的值，每次根据级别计算值
+	 * @return	返回计算后的值
+	 */
+	public float getVal() {
+		return val+lev*uval;
 	}
 
 }

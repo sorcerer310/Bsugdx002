@@ -442,8 +442,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 			tipsString = "开启新技能" + selectSkill.name;
 		} else {
 			tipsString = "技能" + selectSkill.name + "升级";
-			selectSkill.lev++;
-			selectSkill.val+=selectSkill.uval;
+			selectSkill.levUp();
+//			selectSkill.lev++;
+//			selectSkill.val+=selectSkill.uval;
 		}
 		MyParticle mpe = new MyParticle(GTC.getInstance().particleEffect, 1,
 				particleVec, RoleInfoStage, tipsString,
