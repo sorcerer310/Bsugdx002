@@ -115,6 +115,8 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		eatRoles.clear();
 		upRoleStage.clear();
 		final Array<Role> playerRoles = Player.getInstance().playerFightRole;
+		suRole = playerRoles.get(0);
+		U.showRoleSelect(playerRoles, suRole);	
 		for (int i = 0; i < playerRoles.size; i++) {
 			final Role r = playerRoles.get(i);
 			Vector2 v = new Vector2(48, 246 - 55 * i);
@@ -128,12 +130,12 @@ public class UpdateScreen extends CubocScreen implements Observer,
 						int pointer, int button) {
 					U.showRoleSelect(playerRoles, r);
 					suRole = r;
+					showUpRoleInfo();
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
 		}
-		U.showRoleSelect(playerRoles, playerRoles.get(0));
-		suRole = playerRoles.get(0);
+		showUpRoleInfo();
 	}
 
 	/**
