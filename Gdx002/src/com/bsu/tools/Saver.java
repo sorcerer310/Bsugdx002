@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 
 import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.Player;
+import com.bsu.obj.Role;
 import com.bsu.obj.data.RoleData;
 import com.bsu.obj.skilltree.Skill;
 import com.esotericsoftware.kryo.Kryo;
@@ -56,14 +57,15 @@ public class Saver {
 	
 	private void savePlayer(){
 		Player player = Player.getInstance();
-//		playerData.playerRole = player.playerRole;
-//		playerData.playerFightRole = player.playerFightRole;
-//		playerData.playerIdelRole = player.playerIdelRole;
-//		for(Role r:player.playerFightRole){
-
-//			playerData.playerFightRole.add(new RoleData());
-//		}
-		
+		//转换上场战斗角色数据为存档数据
+		for(Role r:player.playerFightRole)
+			playerData.playerFightRole.add(r.toRoleData());
+		//转换闲置角色数据为存档数据
+		for(Role r:player.playerIdelRole)
+			playerData.playerIdelRole.add(r.toRoleData());
+		//转换所有角色数据为存档数据
+		for(Role r:player.playerRole)
+			playerData.playerRole.add(r.toRoleData());
 		
 		playerData.crystal_blue = player.crystal_blue;
 		playerData.crystal_orange = player.crystal_orange;

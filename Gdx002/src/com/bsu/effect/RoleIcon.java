@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -116,9 +117,9 @@ public class RoleIcon extends WidgetGroup {
 			reffect[i].getActions().clear();
 			reffect[i].setPosition(offsetX, offsetY);
 			MoveByAction mba = moveBy(0, 0, moveDura / 5 * i);
-			RepeatAction ra = new RepeatAction();
-			ra.setAction(seq);
-			ra.setCount(RepeatAction.FOREVER);
+			RepeatAction ra = Actions.repeat(RepeatAction.FOREVER, seq);
+//			ra.setAction(seq);
+//			ra.setCount(RepeatAction.FOREVER);
 			reffect[i].addAction(sequence(mba, ra));
 		}
 	}
