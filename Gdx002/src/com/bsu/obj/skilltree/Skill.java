@@ -182,9 +182,9 @@ public class Skill {
 			if (type == Skill.Type.f_damage) {
 				for (Role object : objects) {
 					object.setCurrentHp((int) (object.getCurrentHp()
-							- U.realDamage((int) (owner.getAttack() + val),
+							- U.realDamage((int) (owner.getAttack() + getVal()),
 									object.getDefend()) >= 0 ? object.getCurrentHp()
-							- U.realDamage((int) (owner.getAttack() + val),
+							- U.realDamage((int) (owner.getAttack() + getVal()),
 									object.getDefend()) : 0));
 					Commander.getInstance().hitedCommand(object);
 				}
@@ -202,17 +202,17 @@ public class Skill {
 			} else if (type == Skill.Type.f_shifhp) {
 				for (Role object : objects) {
 					object.setCurrentHp((int) (object.getCurrentHp()
-							- U.realDamage((int) (owner.getAttack() + val),
+							- U.realDamage((int) (owner.getAttack() + getVal()),
 									object.getDefend()) >= 0 ? object.getCurrentHp()
-							- U.realDamage((int) (owner.getAttack() + val),
+							- U.realDamage((int) (owner.getAttack() + getVal()),
 									object.getDefend()) : 0)); // 伤害敌人
 					owner.setCurrentHp((int) (owner.getCurrentHp() + U
-							.realDamage((int) (owner.getAttack() + val),
+							.realDamage((int) (owner.getAttack() + getVal()),
 									object.getDefend()) / 2) >= owner
 							.getMaxHp() // 转移生命至自己
 					? owner.getMaxHp()
 							: (int) (owner.getCurrentHp() + U.realDamage(
-									(int) (owner.getAttack() + val),
+									(int) (owner.getAttack() + getVal()),
 									object.getDefend()) / 2));
 					Commander.getInstance().hitedCommand(object);
 				}
@@ -220,17 +220,17 @@ public class Skill {
 			} else if (type == Skill.Type.p_atkbeat) {
 				for (Role object : objects) {
 					object.setCurrentHp((int) (object.getCurrentHp()
-							- U.realDamage((int) (owner.getAttack() * val),
+							- U.realDamage((int) (owner.getAttack() * getVal()),
 									object.getDefend()) >= 0 ? object.getCurrentHp()
-							- U.realDamage((int) (owner.getAttack() * val),
+							- U.realDamage((int) (owner.getAttack() * getVal()),
 									object.getDefend()) : 0)); // 伤害敌人
 					Commander.getInstance().heatCommand(object); // 击退
 				}
 				//冲锋伤害,单体伤害
 			}else if(type==Skill.Type.p_assault){
 				for(Role object:objects){
-					object.setCurrentHp((int)(object.getCurrentHp()-U.realDamage((int)(owner.getAttack()*val), object.getDefend()) >= 0 ? object.getCurrentHp()
-					- U.realDamage((int) (owner.getAttack() * val),
+					object.setCurrentHp((int)(object.getCurrentHp()-U.realDamage((int)(owner.getAttack()*getVal()), object.getDefend()) >= 0 ? object.getCurrentHp()
+					- U.realDamage((int) (owner.getAttack() * getVal()),
 							object.getDefend()) : 0)); // 伤害敌人
 					//进行冲锋动作
 //					Commander.getInstance().assaultCommand(owner, owner.cskill.getRange());
@@ -239,9 +239,9 @@ public class Skill {
 			} else if (type == Skill.Type.p_damage) {
 				for (Role object : objects) {
 					object.setCurrentHp((int) (object.getCurrentHp()
-							- U.realDamage((int) (owner.getAttack() * val),
+							- U.realDamage((int) (owner.getAttack() * getVal()),
 									object.getDefend()) >= 0 ? object.getCurrentHp()
-							- U.realDamage((int) (owner.getAttack() * val),
+							- U.realDamage((int) (owner.getAttack() * getVal()),
 									object.getDefend()) : 0)); // 伤害敌人
 					Commander.getInstance().hitedCommand(object);
 				}
@@ -249,7 +249,7 @@ public class Skill {
 			} else if (type == Skill.Type.pdot_damage) {
 				for (Role object : objects) {
 					object.csstate.add(new ContinuedSkillState(3, owner
-							.getAttack() * val, CSType.dot, ani_continue,
+							.getAttack() * getVal(), CSType.dot, ani_continue,
 							offset_ani_continue));
 				}
 
@@ -257,7 +257,7 @@ public class Skill {
 			} else if (type == Skill.Type.prob_blind) {
 				for (Role object : objects) {
 					// 此处增加机率代码
-					if (U.probability(val))
+					if (U.probability(getVal()))
 						object.csstate
 								.add(new ContinuedSkillState(2, 0,
 										CSType.blind, ani_continue,
@@ -272,7 +272,7 @@ public class Skill {
 							- U.realDamage((int) (owner.getAttack()),
 									object.getDefend()) : 0));
 					// 此处增加机率代码
-					if (U.probability(val)){
+					if (U.probability(getVal())){
 						object.csstate.add(new ContinuedSkillState(2, 0,
 										CSType.dizzy, ani_continue,
 										offset_ani_continue));
@@ -282,7 +282,7 @@ public class Skill {
 				// 破甲效果
 			} else if (type == Skill.Type.prob_nude) {
 				for (Role object : objects) {
-					object.csstate.add(new ContinuedSkillState(3, val,
+					object.csstate.add(new ContinuedSkillState(3, getVal(),
 							CSType.debuff_def, ani_continue,
 							offset_ani_continue));
 					Commander.getInstance().hitedCommand(object);
@@ -297,44 +297,44 @@ public class Skill {
 			// 固定治疗
 			if (type == Skill.Type.f_healing) {
 				for (Role object : objects) {
-					object.setCurrentHp((int) (object.getCurrentHp() + this.val >= object
+					object.setCurrentHp((int) (object.getCurrentHp() + this.getVal() >= object
 							.getMaxHp() ? object.getMaxHp() : object.getCurrentHp()
-							+ val));
+							+ getVal()));
 				}
 				// 百分比治疗
 			} else if (type == Skill.Type.p_healing) {
 				for (Role object : objects) {
 					object.setCurrentHp((int) (object.getCurrentHp()
-							+ object.getMaxHp() * val >= object.getMaxHp() ? object
+							+ object.getMaxHp() * getVal() >= object.getMaxHp() ? object
 							.getMaxHp() : object.getCurrentHp() + object.getMaxHp()
-							* val));
+							* getVal()));
 				}
 				// 百分比攻击力buff
 			} else if (type == Skill.Type.pbuff_atk) {
 				for (Role object : objects) {
 					object.csstate.add(new ContinuedSkillState(2, object
-							.getAttack() * val, CSType.buff_atk, ani_continue,
+							.getAttack() * getVal(), CSType.buff_atk, ani_continue,
 							offset_ani_continue));
 				}
 				// 百分比防御力buff
 			} else if (type == Skill.Type.pbuff_def) {
 				for (Role object : objects) {
 					object.csstate.add(new ContinuedSkillState(2, object
-							.getDefend() * val, CSType.buff_def, ani_continue,
+							.getDefend() * getVal(), CSType.buff_def, ani_continue,
 							offset_ani_continue));
 				}
 				// 百分比持续性治疗
 			} else if (type == Skill.Type.pbuff_healing) {
 				for (Role object : objects) {
 					object.setCurrentHp((int) (object.getCurrentHp()
-							+ object.getCurrentHp() * val >= object.getMaxHp() ? object.getCurrentHp()
-							: object.getCurrentHp() + object.getCurrentHp() * val));
+							+ object.getCurrentHp() * getVal() >= object.getMaxHp() ? object.getCurrentHp()
+							: object.getCurrentHp() + object.getCurrentHp() * getVal()));
 				}
 				// 百分比生命最大值
 			} else if (type == Skill.Type.pbuff_hp) {
 				for (Role object : objects) {
 					object.csstate.add(new ContinuedSkillState(2, object
-							.getMaxHp() * val, CSType.buff_hp, ani_continue,
+							.getMaxHp() * getVal(), CSType.buff_hp, ani_continue,
 							offset_ani_continue));
 				}
 			}

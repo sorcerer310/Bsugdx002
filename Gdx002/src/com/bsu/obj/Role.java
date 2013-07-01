@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.AttackEffect;
 import com.bsu.effect.RoleIcon;
 import com.bsu.make.WidgetFactory;
+import com.bsu.obj.data.RoleData;
+import com.bsu.obj.data.SkillData;
 import com.bsu.obj.skilltree.ContinuedSkillState;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.BsuEvent;
@@ -23,6 +25,7 @@ import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GAC;
 import com.bsu.tools.GC.FACE;
 import com.bsu.tools.GC.STATE;
+import com.bsu.tools.Saver;
 import com.bsu.tools.U;
 
 public class Role extends Actor {
@@ -866,5 +869,31 @@ public class Role extends Actor {
 		Role_logic();
 		super.act(delta);
 	}
-
+	/**
+	 * 将角色数转换为角色数据对象
+	 * @return	返回RoleData,保存Role对象中的一些基本信息
+	 */
+	public RoleData toRoleData(){
+		RoleData rdata = new RoleData();
+		rdata.name = this.name;
+		rdata.quality = this.quality;
+		rdata.classes = this.classes;
+		rdata.level = this.level;
+		rdata.roleTexture = this.roleTexture;
+		rdata.maxHp = this.maxHp;
+		rdata.extMaxHp = this.maxHp;
+		rdata.currentHp = this.currentHp;
+		rdata.attack = this.attack;
+		rdata.extAttack = this.extAttack;
+		rdata.defend = this.defend;
+		rdata.extDefend = this.extDefend;
+		rdata.exp = this.exp;
+		rdata.expUp = this.expUp;
+		for(Skill s:this.skill_tree)
+			rdata.skill_tree.add(new SkillData(s.id,s.lev));
+		for(Skill s:this.skill_array)
+			rdata.skill_array.add(new SkillData(s.id,s.lev));
+		return rdata;
+	}
+	
 }
