@@ -109,7 +109,7 @@ public class GameScreen extends CubocScreen implements Observer,
 			endBackImg = new Image(WidgetFactory.getInstance().getTextureFill(
 					GC.rect_width, GC.rect_height, Color.GRAY, 0.3f));
 			fpsLabel = WidgetFactory.getInstance().makeLabel(
-					"" + Gdx.graphics.getFramesPerSecond(), 1, 420, 30,
+					"" + Gdx.graphics.getFramesPerSecond(), 1, 100, 70,
 					Color.RED);
 			addActorListener();
 			initFlag=true;
@@ -204,8 +204,9 @@ public class GameScreen extends CubocScreen implements Observer,
 			endStage.act(Gdx.graphics.getDeltaTime());
 			endStage.draw();
 		}
-		fpsLabel.setText("fps:" + Gdx.graphics.getFramesPerSecond());
-
+		fpsLabel.setText("fps:" + Gdx.graphics.getFramesPerSecond()+"@@"+ ((Gdx.app.getJavaHeap() * 10) >> 20) / 10f + " MB"
+				+ "--N:" + ((Gdx.app.getNativeHeap() * 10) >> 20) / 10f
+				+ " MB");
 	}
 
 	@Override
