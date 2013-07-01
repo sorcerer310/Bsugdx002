@@ -75,7 +75,7 @@ public class HeadScreen extends CubocScreen implements Observer {
 		if (assetLoadFlag) {
 			if (am.update()) {
 				assetLoadFlag = false;
-				GTC.getInstance().setAssets();
+				GTC.getInstance().setAssets();			
 			}
 			int pl=(int)(am.getProgress() * 100);
 			font.setColor(Color.GRAY);
@@ -84,10 +84,6 @@ public class HeadScreen extends CubocScreen implements Observer {
 					200);
 			batch.draw(loadBackImg, lx, ly, lw, lh);
 			batch.draw(loadFrontImg, lx, ly, pl*lw/100, lh);
-		}else{
-			setChanged();
-			notifyObservers(this);
-			return;
 		}
 		batch.end();
 		Gdx.app.debug("HeadScreen", "render");
