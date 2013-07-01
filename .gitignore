@@ -41,3 +41,7 @@ Gdx002-android/assets/data/.DS_Store
 Gdx002-android/assets/data/map/teaching.tmx
 
 *.bin
+
+Gdx002-desktop/save.bin
+
+*.bin
