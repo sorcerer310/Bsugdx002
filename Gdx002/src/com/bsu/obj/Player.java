@@ -66,11 +66,11 @@ public class Player {
 		if (playerRole.size == 0) {
 			RoleFactory rf = RoleFactory.getInstance();
 			playerRole.add(rf.getFighter("fc", Role.Type.HERO, QUALITY.green,
-					GTC.getInstance().fc_photo));
+					"fc_photo"));
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
-					GTC.getInstance().zyc_photo,new int[]{1,2}));
+					"zyc_photo",new int[]{1,2}));
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
-					GTC.getInstance().zyc_photo,new int[]{1,2}));
+					"zyc_photo",new int[]{1,2}));
 		}
 		resetRoleArray(playerRole);
 		return playerRole;
@@ -231,64 +231,64 @@ public class Player {
 			money++;					//金币
 			break;
 		case 101://绿色战士卡片
-			this.playerIdelRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.green, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.green, "zyc_photo"));
 			break; 
 		case 102://蓝色战士卡片
-			this.playerIdelRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.blue, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.blue, "zyc_photo"));
 			break;
 		case 103://紫色战士卡片
-			this.playerIdelRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.purple, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.purple, "zyc_photo"));
 			break;
 		case 104://橙色战士卡片
-			this.playerIdelRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.orange, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.orange, "zyc_photo"));
 			break;
 		case 105:
-			this.playerIdelRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.green, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.green, "zyc_photo"));
 			break;
 		case 106:
-			this.playerIdelRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.blue, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.blue, "zyc_photo"));
 			break;
 		case 107:
-			this.playerIdelRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.purple, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.purple, "zyc_photo"));
 			break;
 		case 108:
-			this.playerIdelRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.orange, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.orange, "zyc_photo"));
 			break;
 		case 109:
-			this.playerIdelRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.green, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.green, "zyc_photo"));
 			break;
 		case 110:
-			this.playerIdelRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.blue, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.blue, "zyc_photo"));
 			break;
 		case 111:
-			this.playerIdelRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.purple, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.purple, "zyc_photo"));
 			break;
 		case 112:
-			this.playerIdelRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.orange, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.orange, "zyc_photo"));
 			break;
 		case 113:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.green, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.green, "zyc_photo"));
 			break;
 		case 114:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.blue, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.blue, "zyc_photo"));
 			break;
 		case 115:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.purple, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.purple, "zyc_photo"));
 			break;
 		case 116:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.orange, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.orange, "zyc_photo"));
 			break;
 		case 117:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.green, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.green, "zyc_photo"));
 			break;
 		case 118:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.blue, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.blue, "zyc_photo"));
 			break;
 		case 119:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.purple, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.purple, "zyc_photo"));
 			break;
 		case 120:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.orange, GTC.getInstance().zyc_photo));
+			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.orange, "zyc_photo"));
 			break;
 		}
 	}

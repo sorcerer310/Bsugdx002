@@ -1,5 +1,6 @@
 package com.bsu.obj;
 
+import java.util.Collection;
 import java.util.Observable;
 
 import com.badlogic.gdx.Gdx;
@@ -25,6 +26,7 @@ import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GAC;
 import com.bsu.tools.GC.FACE;
 import com.bsu.tools.GC.STATE;
+import com.bsu.tools.GTC;
 import com.bsu.tools.Saver;
 import com.bsu.tools.U;
 
@@ -46,7 +48,8 @@ public class Role extends Actor {
 	public Type type = null; // ָ指定当前角色是英雄还是 NPC
 	public CLASSES classes = null;// 指定当前人物的职业
 	public int level;// 等级
-	public TextureRegion roleTexture;
+	public String roleTextureName;			//使用的纹理的名称 
+	private TextureRegion roleTexture;		//使用的纹理对象
 	public int maxHp = 100; // 总血量
 	public int extMaxHp = 0; // 额外的血量上限
 	private int currentHp = 30; // 当前血量
@@ -93,7 +96,7 @@ public class Role extends Actor {
 	 *            该角色的名字
 	 */
 	public Role(Type t, QUALITY q, CLASSES c, String n, int mhp, int av,
-			int dv, Equip w, Equip a, Array<Skill> as, TextureRegion tr) {
+			int dv, Equip w, Equip a, Array<Skill> as, String tr) {
 		name = n; // 名称
 		type = t; // 类型，英雄还是敌人
 		quality = q;
@@ -107,10 +110,13 @@ public class Role extends Actor {
 		armor = a;
 		roleColor=new Color(getColor());
 		skill_tree = as;
-		roleTexture = new TextureRegion(tr);
-		cskill = skill_tree.get(0);
-		skill_array.add(skill_tree.get(0));
-		skill_array.add(skill_tree.get(0));
+		roleTextureName = tr;
+		roleTexture = GTC.getInstance().hm_roleIcon.get(tr);
+		if(skill_tree.size>0){
+			cskill = skill_tree.get(0);
+			skill_array.add(skill_tree.get(0));
+			skill_array.add(skill_tree.get(0));
+		}
 		exp = baseExp();
 		isDead = false;
 		this.setVisible(false);
@@ -879,7 +885,8 @@ public class Role extends Actor {
 		rdata.quality = this.quality;
 		rdata.classes = this.classes;
 		rdata.level = this.level;
-		rdata.roleTexture = this.roleTexture;
+//		rdata.roleTexture = U.getKeyByValue(GTC.getInstance().hm_roleIcon, this.roleTexture);
+		rdata.roleTexture = this.roleTextureName;
 		rdata.maxHp = this.maxHp;
 		rdata.extMaxHp = this.maxHp;
 		rdata.currentHp = this.currentHp;
@@ -890,9 +897,11 @@ public class Role extends Actor {
 		rdata.exp = this.exp;
 		rdata.expUp = this.expUp;
 		for(Skill s:this.skill_tree)
-			rdata.skill_tree.add(new SkillData(s.id,s.lev));
+			rdata.skill_tree.add(s.toSkillData());
+
 		for(Skill s:this.skill_array)
-			rdata.skill_array.add(new SkillData(s.id,s.lev));
+			rdata.skill_array.add(s.toSkillData());
+
 		return rdata;
 	}
 	

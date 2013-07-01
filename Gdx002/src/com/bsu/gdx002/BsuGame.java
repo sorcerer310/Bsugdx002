@@ -104,11 +104,11 @@ public class BsuGame extends Game {
 			public void update(Observable o, Object arg) {
 
 				//当转换到主菜单界面前，加载游戏数据
-//				File file = new File("save.bin");
-//				if(file.exists()){
-//					Saver saver = Saver.getInstance();
-//					saver.load();
-//				}
+				File file = new File("save.bin");
+				if(file.exists()){
+					Saver saver = Saver.getInstance();
+					saver.load();
+				}
 				
 				BsuGame.this.setScreen(this);
 				this.initScreen();

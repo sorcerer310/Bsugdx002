@@ -1,5 +1,7 @@
 package com.bsu.tools;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
@@ -52,6 +54,8 @@ public class GTC {
 	public TextureRegion start_zero, start_one, start_two, start_three,
 			start_four;
 	public AssetManager assetManager;
+	
+	public HashMap<String,TextureRegion> hm_roleIcon = new HashMap<String,TextureRegion>(); 
 
 	private GTC() {
 		if (assetManager == null) {
@@ -86,6 +90,12 @@ public class GTC {
 
 	public void setAssets() {
 		role = assetManager.get("data/game/hero/Actor1.png");
+		fc_photo = new TextureRegion(role, 0, 0, 96, 96);
+		zyc_photo = new TextureRegion(role, 96, 0, 96, 96);
+		hm_roleIcon.put("fc_photo", fc_photo);
+		hm_roleIcon.put("zyc_photo", zyc_photo);
+		
+		
 		effect = assetManager.get("data/game/hero/effect.png");
 		mPanel = assetManager.get("data/menu/mpanel.png");
 		fightPanel = assetManager.get("data/menu/fightpanel.png");
@@ -102,8 +112,6 @@ public class GTC {
 		archer_texture = role_classes.findRegion("archer");
 		atlas_mbutton = assetManager.get("data/menu/mbutton.txt");
 		atlas_button = assetManager.get("data/button/pack");
-		fc_photo = new TextureRegion(role, 0, 0, 96, 96);
-		zyc_photo = new TextureRegion(role, 96, 0, 96, 96);
 		role_effect = assetManager.get("data/game/effect/othereffect.txt");
 		start_zero = role_effect.findRegion("star", 1);
 		start_one = role_effect.findRegion("star", 2);

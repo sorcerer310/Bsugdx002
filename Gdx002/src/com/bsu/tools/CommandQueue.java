@@ -2,7 +2,6 @@ package com.bsu.tools;
 
 import java.util.LinkedList;
 import java.util.Queue;
-
 import com.bsu.obj.CommandTask;
 
 public class CommandQueue {

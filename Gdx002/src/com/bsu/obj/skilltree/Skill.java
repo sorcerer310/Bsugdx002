@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.SkillIcon;
 import com.bsu.obj.Commander;
 import com.bsu.obj.Role;
+import com.bsu.obj.data.SkillData;
 import com.bsu.obj.skilltree.ContinuedSkillState.CSType;
 import com.bsu.tools.GAC;
 import com.bsu.tools.GTC;
@@ -374,6 +375,17 @@ public class Skill {
 	 */
 	public float getVal() {
 		return val+lev*uval;
+	}
+	/**
+	 * 将Skill对象转换为SkillData数据
+	 * @return
+	 */
+	public SkillData toSkillData(){
+		SkillData sd = new SkillData();
+		sd.id = id;
+		sd.lev = lev;
+		sd.enable = enable;
+		return sd;
 	}
 
 }

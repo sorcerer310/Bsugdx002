@@ -1,6 +1,10 @@
 package com.bsu.tools;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -387,5 +391,25 @@ public class U {
 	 */
 	public static Vector2 realPost2BoxPos(int x,int y){
 		return new Vector2(x/GC.map_box_value,y/GC.map_box_value);
+	}
+	/**
+	 * 通过value获得key，由于一个value可能对应多个key，所以只返回最先查到的key即可
+	 * @param <T1>	hashmap key类型
+	 * @param <T2>	hashmap value类型
+	 * @return		返回通过value查到的key
+	 */
+	public static <T1, T2> T1 getKeyByValue(HashMap<T1,T2> hm,T2 v){
+		if(!hm.containsValue(v))
+			return null;
+		Set<Map.Entry<T1,T2>> set =  hm.entrySet();
+		Iterator<Map.Entry<T1,T2>> it= set.iterator();
+		while(it.hasNext()){
+			Map.Entry<T1, T2> e = it.next();
+			if(e.getValue()==v)
+				return e.getKey();
+			if(e.getValue().equals(v))
+				return e.getKey();
+		}
+		return null;
 	}
 }

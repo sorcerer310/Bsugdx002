@@ -50,6 +50,7 @@ import com.bsu.obj.UITopAnimation;
 import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.GameMap;
+import com.bsu.tools.Saver;
 import com.bsu.tools.U;
 import com.bsu.tools.GC.QUALITY;
 import com.esotericsoftware.kryo.Kryo;
@@ -80,6 +81,8 @@ public class GameScreen extends CubocScreen implements Observer,
 	public Array<Vector2> heroArisePos = new Array<Vector2>(); // 英雄出生地
 	public Array<Vector2> npcArisePos = new Array<Vector2>(); // 敌人出生地
 	private boolean initFlag;
+	public enum BattleState{DOING,VICTORY,DEFEAT};
+	public BattleState bstate = BattleState.DOING;
 
 	public GameScreen(Game mxg) {
 		super(mxg);
@@ -205,7 +208,17 @@ public class GameScreen extends CubocScreen implements Observer,
 			endStage.draw();
 		}
 		fpsLabel.setText("fps:" + Gdx.graphics.getFramesPerSecond());
-
+		
+		//判断战斗是否胜利，如果为DOING不做任何操作
+		if(bstate==BattleState.VICTORY){
+			battleEnd(true);
+			Saver.getInstance().save();
+			bstate=BattleState.DOING;
+		}else if(bstate==BattleState.DEFEAT){
+			battleEnd(false);
+			Saver.getInstance().save();
+			bstate=BattleState.DOING;
+		}
 	}
 
 	@Override
@@ -269,27 +282,6 @@ public class GameScreen extends CubocScreen implements Observer,
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// 通知切换到主界面
-				if (itemArray.size > 0) {
-					Array<Role> roles = new Array<Role>();
-					for (Item item : itemArray) {
-						if (item.type == Item.Type.rolecard) {
-							Role r = RoleFactory.getInstance().getRole(item);
-							roles.add(r);
-						}
-						if (item.type == Item.Type.skillpart) {
-							if (item.q == QUALITY.blue) {
-								Player.getInstance().crystal_blue++;
-							}
-							if (item.q == QUALITY.purple) {
-								Player.getInstance().crystal_purple++;
-							}
-							if (item.q == QUALITY.orange) {
-								Player.getInstance().crystal_orange++;
-							}
-						}
-					}
-					Player.getInstance().addRole(roles);
-				}
 				setChanged();
 				notifyObservers(GC.screen_mpanel);
 			}
@@ -385,7 +377,9 @@ public class GameScreen extends CubocScreen implements Observer,
 		endStage.clear();
 		endStage.addActor(endBackImg);
 		endStage.addActor(img);
+		//如果战斗胜利
 		if (victflag) {
+			
 			Table tableRole = new Table();
 			ScrollPane spRole = new ScrollPane(tableRole, U.get_skin().get(
 					ScrollPaneStyle.class));
@@ -421,6 +415,30 @@ public class GameScreen extends CubocScreen implements Observer,
 					itemArray.add(r.item);
 				}
 			}
+			//将奖励数据增加到player上
+			if (itemArray.size > 0) {
+				Array<Role> roles = new Array<Role>();
+				for (Item item : itemArray) {
+					if (item.type == Item.Type.rolecard) {
+						Role r = RoleFactory.getInstance().getRole(item);
+						roles.add(r);
+					}
+					if (item.type == Item.Type.skillpart) {
+						if (item.q == QUALITY.blue) {
+							Player.getInstance().crystal_blue++;
+						}
+						if (item.q == QUALITY.purple) {
+							Player.getInstance().crystal_purple++;
+						}
+						if (item.q == QUALITY.orange) {
+							Player.getInstance().crystal_orange++;
+						}
+					}
+				}
+				Player.getInstance().addRole(roles);
+			}
+			
+			
 			endStage.addActor(spRole);
 			endStage.addActor(sp);
 		}

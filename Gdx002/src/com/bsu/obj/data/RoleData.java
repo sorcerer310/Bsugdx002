@@ -13,7 +13,7 @@ public class RoleData{
 	public QUALITY quality;						//人物品质
 	public CLASSES classes;						//人物职业
 	public int level;							//等级
-	public TextureRegion roleTexture;			//人物纹理
+	public String roleTexture;					//人物纹理
 	public int maxHp;							//最大血量
 	public int extMaxHp;						//额外最大血量
 	public int currentHp;						//当前血量

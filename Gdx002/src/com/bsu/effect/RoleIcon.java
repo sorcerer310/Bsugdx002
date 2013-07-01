@@ -38,7 +38,7 @@ public class RoleIcon extends WidgetGroup {
 	public MyParticle particle;
 
 	public RoleIcon(Role r, boolean b) {
-		img_head = new Image(r.roleTexture); // 头像图片
+		img_head = new Image(GTC.getInstance().hm_roleIcon.get(r.roleTextureName)); // 头像图片
 		img_head.setScale(0.5f);
 		img_frame = GTC.getInstance().getImageFrame(r.quality);
 		img_classes = GTC.getInstance().getClassesIconImg(r.classes);
@@ -118,8 +118,6 @@ public class RoleIcon extends WidgetGroup {
 			reffect[i].setPosition(offsetX, offsetY);
 			MoveByAction mba = moveBy(0, 0, moveDura / 5 * i);
 			RepeatAction ra = Actions.repeat(RepeatAction.FOREVER, seq);
-//			ra.setAction(seq);
-//			ra.setCount(RepeatAction.FOREVER);
 			reffect[i].addAction(sequence(mba, ra));
 		}
 	}

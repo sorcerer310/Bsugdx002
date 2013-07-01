@@ -1,9 +1,5 @@
 package com.bsu.obj;
 
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -15,6 +11,7 @@ import com.bsu.obj.skilltree.ContinuedSkillState.CSType;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.obj.skilltree.Skill.ObjectType;
 import com.bsu.screen.GameScreen;
+import com.bsu.screen.GameScreen.BattleState;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.CommandQueue;
 import com.bsu.tools.GC;
@@ -23,8 +20,6 @@ import com.bsu.tools.U;
 import com.bsu.tools.GC.FACE;
 import com.bsu.tools.GC.DIRECTION;
 import com.bsu.tools.GC.STATE;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.Output;
 
 /**
  * 指挥官对象，用来指挥stage上所有的角色
@@ -100,6 +95,7 @@ public class Commander {
 		new Thread() {
 			@Override
 			public void run() {
+//				Commander
 				try {
 					while (true) {
 						Thread.sleep(200);
@@ -611,8 +607,9 @@ public class Commander {
 				heroRemainCount ++;
 		//如果地图上没有英雄,战斗失败		
 		if(heroRemainCount==0){
-			gamescreen.battleEnd(false);
-			saveGame();
+			gamescreen.bstate=BattleState.DEFEAT;
+//			gamescreen.battleEnd(false);
+//			saveGame();
 			return;
 		}
 
@@ -623,8 +620,9 @@ public class Commander {
 				//如果某个敌人没死且在地图上显示，并且位置与英雄的某个出生点重合，游戏失败
 				Vector2 bv = U.realPost2BoxPos((int)v.x, (int)v.y);
 				if(!r.isDead && r.isVisible() && r.getBoxX()==bv.x && r.getBoxY()==bv.y){
-					gamescreen.battleEnd(false);
-					saveGame();
+					gamescreen.bstate=BattleState.DEFEAT;
+//					gamescreen.battleEnd(false);
+//					saveGame();
 					return;
 				}
 			}
@@ -636,8 +634,9 @@ public class Commander {
 		}
 		//如果剩余的npc为0，游戏胜利
 		if(npcRemainCount==0){
-			gamescreen.battleEnd(true);
-			saveGame();
+			gamescreen.bstate=BattleState.VICTORY;
+//			gamescreen.battleEnd(true);
+//			saveGame();
 			return;
 		}
 		//否则剩余npc数量不为0，
