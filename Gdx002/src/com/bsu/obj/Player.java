@@ -1,14 +1,10 @@
 package com.bsu.obj;
 
 import com.badlogic.gdx.utils.Array;
-import com.bsu.make.EquipFactory;
 import com.bsu.make.RoleFactory;
+import com.bsu.obj.Role.BATLESTATE;
 import com.bsu.obj.Role.Type;
-import com.bsu.obj.skilltree.SkillTree;
-import com.bsu.tools.GC.CLASSES;
 import com.bsu.tools.GC.QUALITY;
-import com.bsu.tools.GTC;
-import com.bsu.tools.U;
 
 /**
  * 玩家类，封装了玩家的所有信息
@@ -36,17 +32,18 @@ public class Player {
 	
 	private int money;// 玩家金钱
 	public Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
-	public Array<Role> playerFightRole = new Array<Role>();// 玩家拥有的出战英雄
-	public Array<Role> playerIdelRole = new Array<Role>();// 玩家背�
+//	public Array<Role> playerFightRole = new Array<Role>();// 玩家拥有的出战英雄
+//	public Array<Role> playerIdelRole = new Array<Role>();// 玩家背�
 	public int crystal_blue = 30;//蓝色技能碎片(普通)
 	public int crystal_purple = 30;// 紫色技能碎片数量（高级）
 	public int crystal_orange = 30;// 橙色技能碎片数量（史诗）
 
 	private Player() {
 		// TODO Auto-generated constructor stub
-		getPlayerRole();
-		getPlayerFightRole();
-		getPlayerPackageRole();
+//		getPlayerRole();
+//		getPlayerFightRole();
+//		getPlayerPackageRole();
+		initPlayerRole();
 	}
 
 	public int getMoney() {
@@ -62,33 +59,44 @@ public class Player {
 	 * 
 	 * @return
 	 */
-	private Array<Role> getPlayerRole() {
+	private Array<Role> initPlayerRole() {
 		if (playerRole.size == 0) {
 			RoleFactory rf = RoleFactory.getInstance();
-			playerRole.add(rf.getFighter("fc", Role.Type.HERO, QUALITY.green,
-					"fc_photo"));
+			Role r = rf.getFighter("fc", Role.Type.HERO, QUALITY.green,"fc_photo");
+			r.bstate = BATLESTATE.FIGHT;
+			playerRole.add(r);
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
 					"zyc_photo",new int[]{1,2}));
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
 					"zyc_photo",new int[]{1,2}));
 		}
-		resetRoleArray(playerRole);
+		orderRoleArray(playerRole);
 		return playerRole;
 	}
 
 	/**
-	 * 取得出战role数组
-	 * 
+	 * 获得出战role数组
 	 * @return
 	 */
-	private Array<Role> getPlayerFightRole() {
-		if (playerFightRole.size == 0){
-			playerFightRole.add(playerRole.get(0));
-			//playerFightRole.add(playerRole.get(1));
-		}
-		return playerFightRole;
+	public Array<Role> getPlayerFightRole() {
+		Array<Role> fightRole = new Array<Role>();
+		for(Role r:playerRole)
+			if(r.bstate==BATLESTATE.FIGHT)
+				fightRole.add(r);
+		return fightRole;
 	}
-
+	/**
+	 * 获得闲置的role数组
+	 * @return
+	 */
+	public Array<Role> getPlayerIdelRole(){
+		Array<Role> idleRole = new Array<Role>();
+		for(Role r:playerRole)
+			if(r.bstate==BATLESTATE.IDLE)
+				idleRole.add(r);
+		return idleRole;
+	}
+	
 	/**
 	 * 添加新Role
 	 * @param r
@@ -99,30 +107,19 @@ public class Player {
 			playerRole.add(r);
 			System.out.println("add a new role");
 		}
-		resetRoleArray(playerRole);
+		orderRoleArray(playerRole);
 		getPlayerPackageRole();
 	}
 
 	/**
 	 * 取得背包中的卡片
-	 * 
 	 * @return
 	 */
 	public Array<Role> getPlayerPackageRole() {
-		playerIdelRole.clear();
-		for (Role r : playerRole) {
-			boolean flag = false;
-			for (Role e : playerFightRole) {
-				if (e.equals(r)) {
-					flag = true;
-					break;
-				}
-			}
-			if (!flag) {
-				playerIdelRole.add(r);
-			}
-		}
-		return playerIdelRole;
+		Array<Role> roles = new Array<Role>();
+		for(Role r:playerRole)
+			roles.add(r);
+		return roles;
 	}
 
 	/**
@@ -132,18 +129,18 @@ public class Player {
 	 * @param r
 	 * @param index
 	 */
-	public void addRoleToFIght(Role r, int index) {
-		for (Role e : playerFightRole) {
-			if (e.equals(r)) {
-				return;
-			}
-		}
-		if (index > playerFightRole.size) {
-			playerFightRole.add(r);
-		} else {
-			playerFightRole.insert(index, r);
-		}
-	}
+//	public void addRoleToFIght(Role r, int index) {
+//		for (Role e : playerFightRole) {
+//			if (e.equals(r)) {
+//				return;
+//			}
+//		}
+//		if (index > playerFightRole.size) {
+//			playerFightRole.add(r);
+//		} else {
+//			playerFightRole.insert(index, r);
+//		}
+//	}
 
 	/**
 	 * 取得某一个数组中的某一品质的  card
@@ -168,7 +165,7 @@ public class Player {
 	 * @param roles
 	 *            带入的角色数组
 	 */
-	public void resetRoleArray(Array<Role> roles) {
+	public void orderRoleArray(Array<Role> roles) {
 		int i, j;
 		// n个元素的数组进行n-1轮排序
 		for (i = 0; i < roles.size - 1; i++) {
@@ -231,64 +228,64 @@ public class Player {
 			money++;					//金币
 			break;
 		case 101://绿色战士卡片
-			this.playerIdelRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.green, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.green, "zyc_photo"));
 			break; 
 		case 102://蓝色战士卡片
-			this.playerIdelRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.blue, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.blue, "zyc_photo"));
 			break;
 		case 103://紫色战士卡片
-			this.playerIdelRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.purple, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.purple, "zyc_photo"));
 			break;
 		case 104://橙色战士卡片
-			this.playerIdelRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.orange, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getFighter("战士", Type.HERO, QUALITY.orange, "zyc_photo"));
 			break;
 		case 105:
-			this.playerIdelRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.green, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.green, "zyc_photo"));
 			break;
 		case 106:
-			this.playerIdelRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.blue, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.blue, "zyc_photo"));
 			break;
 		case 107:
-			this.playerIdelRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.purple, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.purple, "zyc_photo"));
 			break;
 		case 108:
-			this.playerIdelRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.orange, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getArcher("射手", Type.HERO, QUALITY.orange, "zyc_photo"));
 			break;
 		case 109:
-			this.playerIdelRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.green, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.green, "zyc_photo"));
 			break;
 		case 110:
-			this.playerIdelRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.blue, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.blue, "zyc_photo"));
 			break;
 		case 111:
-			this.playerIdelRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.purple, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.purple, "zyc_photo"));
 			break;
 		case 112:
-			this.playerIdelRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.orange, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getWizard("元素法师", Type.HERO, QUALITY.orange, "zyc_photo"));
 			break;
 		case 113:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.green, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.green, "zyc_photo"));
 			break;
 		case 114:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.blue, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.blue, "zyc_photo"));
 			break;
 		case 115:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.purple, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.purple, "zyc_photo"));
 			break;
 		case 116:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.orange, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getSorcerer("黑暗法师", Type.HERO, QUALITY.orange, "zyc_photo"));
 			break;
 		case 117:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.green, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.green, "zyc_photo"));
 			break;
 		case 118:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.blue, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.blue, "zyc_photo"));
 			break;
 		case 119:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.purple, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.purple, "zyc_photo"));
 			break;
 		case 120:
-			this.playerIdelRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.orange, "zyc_photo"));
+			this.playerRole.add(RoleFactory.getInstance().getSorcerer("牧师", Type.HERO, QUALITY.orange, "zyc_photo"));
 			break;
 		}
 	}

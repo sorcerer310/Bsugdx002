@@ -2,8 +2,10 @@ package com.bsu.make;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.obj.Equip;
 import com.bsu.obj.Item;
 import com.bsu.obj.Role;
+import com.bsu.obj.Role.BATLESTATE;
 import com.bsu.obj.Role.Type;
 import com.bsu.obj.data.RoleData;
 import com.bsu.obj.data.SkillData;
@@ -35,13 +37,13 @@ public class RoleFactory {
 	 * @return
 	 */
 	public Role getFighter(String n,Type t,QUALITY q,String tr){
-		return new Role(t,q,CLASSES.fighter,n,U.getRandom(100, -6, 6),8,10
+		return new Role(t,q,CLASSES.fighter,BATLESTATE.IDLE,n,U.getRandom(100, -6, 6),8,10
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.fighter),tr);
 	}
 	
 	public Role getFighter(String n,Type t,QUALITY q,String tr,int sklidx){
-		return new Role(t,q,CLASSES.fighter,n,U.getRandom(100, -6, 6),8,10
+		return new Role(t,q,CLASSES.fighter,BATLESTATE.IDLE,n,U.getRandom(100, -6, 6),8,10
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getSkillTreeFixedSkill(sklidx),tr);
 	}
@@ -55,7 +57,7 @@ public class RoleFactory {
 	 * @return
 	 */
 	public Role getFighter(String n,Type t,QUALITY q,String tr,int[] sklidx){
-		return new Role(t,q,CLASSES.fighter,n,U.getRandom(100, -6, 6),8,10
+		return new Role(t,q,CLASSES.fighter,BATLESTATE.IDLE,n,U.getRandom(100, -6, 6),8,10
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getSkillTreeFixedSkill(sklidx),tr);
 	}
@@ -68,7 +70,7 @@ public class RoleFactory {
 	 * @return
 	 */
 	public Role getWizard(String n,Type t,QUALITY q,String tr){
-		return new Role(t,q,CLASSES.wizard,n,U.getRandom(50, -3, 6),10,3
+		return new Role(t,q,CLASSES.wizard,BATLESTATE.IDLE,n,U.getRandom(50, -3, 6),10,3
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.wizard),tr);
 	}
@@ -80,7 +82,7 @@ public class RoleFactory {
 	 * @return
 	 */
 	public Role getCleric(String n,Type t,QUALITY q,String tr){
-		return new Role(t,q,CLASSES.cleric,n,U.getRandom(70, -4, 4),3,5
+		return new Role(t,q,CLASSES.cleric,BATLESTATE.IDLE,n,U.getRandom(70, -4, 4),3,5
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.cleric),tr);
 	}
@@ -92,7 +94,7 @@ public class RoleFactory {
 	 * @return
 	 */
 	public Role getSorcerer(String n,Type t,QUALITY q,String tr){
-		return new Role(t,q,CLASSES.sorcerer,n,U.getRandom(70, -6, 3),5,5
+		return new Role(t,q,CLASSES.sorcerer,BATLESTATE.IDLE,n,U.getRandom(70, -6, 3),5,5
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.sorcerer),tr);
 	}
@@ -104,7 +106,7 @@ public class RoleFactory {
 	 * @return
 	 */
 	public Role getArcher(String n,Type t,QUALITY q,String tr){
-		return new Role(t,q,CLASSES.archer,n,U.getRandom(80, -2, 2),10,16
+		return new Role(t,q,CLASSES.archer,BATLESTATE.IDLE,n,U.getRandom(80, -2, 2),10,16
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.archer),tr);
 	}
@@ -165,10 +167,9 @@ public class RoleFactory {
 			sks_tree.add(sk);
 		}
 		
-		r = new Role(Type.HERO,rd.quality,rd.classes,rd.name,rd.maxHp,8,10
+		r = new Role(Type.HERO,rd.quality,rd.classes,rd.bstate,rd.name,rd.maxHp,8,10
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				sks_array,rd.roleTexture);
-		
 		r.skill_array = sks_array;
 		r.skill_tree = sks_tree;
 		return r;

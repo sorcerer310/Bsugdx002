@@ -112,28 +112,29 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		selectRole = null;
 		Image simg = null;
 		quality = q;
+		Array<Role> idleRole = Player.getInstance().getPlayerIdelRole();
 		if (q == QUALITY.green) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerIdelRole, QUALITY.green));
+					idleRole, QUALITY.green));
 			simg = greenImg;
 		}
 		if (q == QUALITY.blue) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerIdelRole, QUALITY.blue));
+					idleRole, QUALITY.blue));
 			simg = blueImg;
 		}
 		if (q == QUALITY.purple) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerIdelRole, QUALITY.purple));
+					idleRole, QUALITY.purple));
 			simg = purpleImg;
 		}
 		if (q == QUALITY.orange) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerIdelRole, QUALITY.orange));
+					idleRole, QUALITY.orange));
 			simg = orangeImg;
 		}
 		if (q == QUALITY.all) {
-			showQualityRole(Player.getInstance().playerIdelRole);
+			showQualityRole(idleRole);
 			simg = allImg;
 		}
 		U.setSelectImg(bImg, simg);
@@ -183,28 +184,14 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
+					Array<Role> idelRole = Player.getInstance().getPlayerIdelRole();
 					if (selectRole != r) {
 						selectRole = r;// 选定人物。。
-						TipsWindows.getInstance()
-								.showRoleInfo(r, v, sRoleStage);
-						U.showRoleSelect(Player.getInstance().playerIdelRole, r);
+						TipsWindows.getInstance().showRoleInfo(r, v, sRoleStage);
+						U.showRoleSelect(idelRole, r);
 						return;
 					}
-					if (changeRole != null) {
-						int index = 0;
-						for (int i = 0; i < Player.getInstance().playerFightRole.size; i++) {
-							if (Player.getInstance().playerFightRole.get(i) == changeRole) {
-								index = i;
-								break;
-							}
-						}
-						Player.getInstance().playerFightRole.removeValue(
-								changeRole, false);
-						Player.getInstance().addRoleToFIght(r, index);
-					} else {
-						Player.getInstance().addRoleToFIght(r, 100);
-					}
-					Player.getInstance().getPlayerPackageRole();
+					r.bstate = Role.BATLESTATE.FIGHT;
 					setChanged();
 					notifyObservers(GC.button_back);
 					ib_back.setScale(1f);

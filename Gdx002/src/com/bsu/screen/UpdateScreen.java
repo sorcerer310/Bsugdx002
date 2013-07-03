@@ -114,11 +114,11 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	private void getRoles() {
 		eatRoles.clear();
 		upRoleStage.clear();
-		final Array<Role> playerRoles = Player.getInstance().playerFightRole;
-		suRole = playerRoles.get(0);
-		U.showRoleSelect(playerRoles, suRole);	
-		for (int i = 0; i < playerRoles.size; i++) {
-			final Role r = playerRoles.get(i);
+		final Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
+		suRole = fightRole.get(0);
+		U.showRoleSelect(fightRole, suRole);	
+		for (int i = 0; i < fightRole.size; i++) {
+			final Role r = fightRole.get(i);
 			Vector2 v = new Vector2(48, 246 - 55 * i);
 			RoleIcon photo = new RoleIcon(r, false);
 			photo.setPosition(v.x, v.y);
@@ -128,7 +128,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
-					U.showRoleSelect(playerRoles, r);
+					U.showRoleSelect(fightRole, r);
 					suRole = r;
 					showUpRoleInfo();
 					return super.touchDown(event, x, y, pointer, button);
@@ -161,28 +161,29 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	private void addRoleToStage(QUALITY q) {
 		quality = q;
 		Image simg = null;
+		Array<Role> idleRole = Player.getInstance().getPlayerIdelRole();
 		if (quality == QUALITY.all) {
-			showQualityRole(Player.getInstance().playerIdelRole);
+			showQualityRole(idleRole);
 			simg = allImg;
 		}
 		if (quality == QUALITY.green) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerIdelRole, QUALITY.green));
+					idleRole, QUALITY.green));
 			simg = greenImg;
 		}
 		if (quality == QUALITY.blue) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerIdelRole, QUALITY.blue));
+					idleRole, QUALITY.blue));
 			simg = blueImg;
 		}
 		if (quality == QUALITY.purple) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerIdelRole, QUALITY.purple));
+					idleRole, QUALITY.purple));
 			simg = purpleImg;
 		}
 		if (quality == QUALITY.orange) {
 			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerIdelRole, QUALITY.orange));
+					idleRole, QUALITY.orange));
 			simg = orangeImg;
 		}
 		U.setSelectImg(bImg, simg);
@@ -251,25 +252,26 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	 */
 	private void eatRolesUpdate(boolean flag) {
 		if (flag) {
+			Array<Role> idleRole = Player.getInstance().getPlayerIdelRole();
 			eatRoles.clear();
 			if (quality == QUALITY.all) {
-				eatRoles = new Array<Role>(Player.getInstance().playerIdelRole);
+				eatRoles = new Array<Role>(idleRole);
 			}
 			if (quality == QUALITY.green) {
 				eatRoles = new Array<Role>(Player.getInstance().getQualityRole(
-						Player.getInstance().playerIdelRole, QUALITY.green));
+						idleRole, QUALITY.green));
 			}
 			if (quality == QUALITY.blue) {
 				eatRoles = new Array<Role>(Player.getInstance().getQualityRole(
-						Player.getInstance().playerIdelRole, QUALITY.blue));
+						idleRole, QUALITY.blue));
 			}
 			if (quality == QUALITY.purple) {
 				eatRoles = new Array<Role>(Player.getInstance().getQualityRole(
-						Player.getInstance().playerIdelRole, QUALITY.purple));
+						idleRole, QUALITY.purple));
 			}
 			if (quality == QUALITY.orange) {
 				eatRoles = new Array<Role>(Player.getInstance().getQualityRole(
-						Player.getInstance().playerIdelRole, QUALITY.orange));
+						idleRole, QUALITY.orange));
 			}
 		}
 		for (Role e : eatRoles) {
@@ -299,7 +301,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		} else {
 			eatRoles.add(r);
 		}
-		U.showRolesSelect(Player.getInstance().playerIdelRole, eatRoles);
+		U.showRolesSelect(Player.getInstance().getPlayerIdelRole(), eatRoles);
 	}
 
 	@Override

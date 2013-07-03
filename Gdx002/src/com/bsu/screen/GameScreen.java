@@ -1,8 +1,5 @@
 package com.bsu.screen;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -34,7 +31,6 @@ import com.bsu.effect.AttackEffect;
 import com.bsu.effect.ItemIcon;
 import com.bsu.effect.UIRoleEffect;
 import com.bsu.head.CubocScreen;
-import com.bsu.make.ItemFactory;
 import com.bsu.make.RoleFactory;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Commander;

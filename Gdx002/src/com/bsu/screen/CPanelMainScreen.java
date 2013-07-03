@@ -92,12 +92,12 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 
 	private void setFightRoles() {
 		roleStage.clear();
-		int frlength = 0,max=5;
+		int frlenght = 0,max=5;
 		int x = 48, y = 248, w = 56;
-		Array<Role> playerRols = Player.getInstance().playerFightRole;
-		frlength = playerRols.size;
-		for (int i = 0; i < playerRols.size; i++) {
-			final Role r = playerRols.get(i);
+		Array<Role> playerRole = Player.getInstance().getPlayerFightRole();
+		frlenght = playerRole.size;
+		for (int i = 0; i < frlenght; i++) {
+			final Role r = playerRole.get(i);
 			Vector2 v = new Vector2(x, y - w * i);
 			RoleIcon photo = new RoleIcon(r, true);
 			roleStage.addActor(photo);
@@ -112,8 +112,8 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 				}
 			});
 		}
-		if (frlength < max) {
-			for (int i = frlength; i < max; i++) {
+		if (frlenght < max) {
+			for (int i = frlenght; i < max; i++) {
 				Vector2 v = new Vector2(x, y - w * i);
 				Image img_frame = GTC.getInstance().getImageFrame(null);
 				img_frame.setPosition(v.x, v.y);

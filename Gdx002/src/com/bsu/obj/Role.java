@@ -1,6 +1,5 @@
 package com.bsu.obj;
 
-import java.util.Collection;
 import java.util.Observable;
 
 import com.badlogic.gdx.Gdx;
@@ -16,7 +15,6 @@ import com.bsu.effect.AttackEffect;
 import com.bsu.effect.RoleIcon;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.data.RoleData;
-import com.bsu.obj.data.SkillData;
 import com.bsu.obj.skilltree.ContinuedSkillState;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.BsuEvent;
@@ -27,25 +25,24 @@ import com.bsu.tools.GAC;
 import com.bsu.tools.GC.FACE;
 import com.bsu.tools.GC.STATE;
 import com.bsu.tools.GTC;
-import com.bsu.tools.Saver;
 import com.bsu.tools.U;
 
 public class Role extends Actor {
 	private RoleObservable ro = new RoleObservable();
 
-	public static enum Type {
-		HERO, ENEMY
-	}; // 英雄还是NPC
+	public static enum Type {HERO, ENEMY}; 				// 英雄还是NPC
+	public static enum BATLESTATE {FIGHT,IDLE};		//英雄是否上场状态
+	public Type type = null; 							// ָ指定当前角色是英雄还是 NPC
+	public BATLESTATE bstate = BATLESTATE.IDLE;		// 默认为闲置状态
 	private Color roleColor;
 	public RoleIcon roleIcon;
-	public Equip weapon;// 人物武器
-	public Equip armor;// 人物护甲
+	public Equip weapon;								// 人物武器
+	public Equip armor;									// 人物护甲
 
 	public boolean isDead = false; // 角色死亡标识
 	private BsuEvent bevent = null; // 用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
 	public QUALITY quality;// 品质
-	public Type type = null; // ָ指定当前角色是英雄还是 NPC
 	public CLASSES classes = null;// 指定当前人物的职业
 	public int level;// 等级
 	public String roleTextureName;			//使用的纹理的名称 
@@ -95,12 +92,13 @@ public class Role extends Actor {
 	 * @param n
 	 *            该角色的名字
 	 */
-	public Role(Type t, QUALITY q, CLASSES c, String n, int mhp, int av,
+	public Role(Type t, QUALITY q, CLASSES c,BATLESTATE bs, String n, int mhp, int av,
 			int dv, Equip w, Equip a, Array<Skill> as, String tr) {
 		name = n; // 名称
 		type = t; // 类型，英雄还是敌人
 		quality = q;
 		classes = c;
+		bstate = bs;
 		time_state = 0;
 		maxHp = mhp;
 		currentHp = mhp;
@@ -111,7 +109,7 @@ public class Role extends Actor {
 		roleColor=new Color(getColor());
 		skill_tree = as;
 		roleTextureName = tr;
-		roleTexture = GTC.getInstance().hm_roleIcon.get(tr);
+		roleTexture = new TextureRegion(GTC.getInstance().hm_roleIcon.get(tr));
 		if(skill_tree.size>0){
 			cskill = skill_tree.get(0);
 			skill_array.add(skill_tree.get(0));
@@ -150,7 +148,7 @@ public class Role extends Actor {
 			face = FACE.right;
 		} else {
 			face = FACE.left;
-			roleTexture.flip(true, false);
+			 roleTexture.flip(true, false);
 		}
 		ani_idle = GAC.getInstance().getRoleAnimation(roleTexture);
 		ani_move = GAC.getInstance().getRoleAnimation(roleTexture);
@@ -884,6 +882,7 @@ public class Role extends Actor {
 		rdata.name = this.name;
 		rdata.quality = this.quality;
 		rdata.classes = this.classes;
+		rdata.bstate = this.bstate;
 		rdata.level = this.level;
 //		rdata.roleTexture = U.getKeyByValue(GTC.getInstance().hm_roleIcon, this.roleTexture);
 		rdata.roleTexture = this.roleTextureName;

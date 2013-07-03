@@ -51,7 +51,8 @@ public class GameScreenFactory {
 		gsd.setId(0);
 		gsd.setMapName("teaching");
 		// 加入玩家的上场英雄
-		for (Role r : Player.getInstance().playerFightRole)
+		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
+		for (Role r : fightRole)
 			gsd.getHeroRoles().add(r);
 		// 加入敌人
 		gsd.getNpcRoles().add(
@@ -76,7 +77,8 @@ public class GameScreenFactory {
 		gsd.setId(lv + 1);
 		gsd.setMapName("" + (lv + 1));
 		// 加入玩家的上场英雄
-		for (Role r : Player.getInstance().playerFightRole)
+		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
+		for (Role r : fightRole)
 			gsd.getHeroRoles().add(r);
 		if (lv == 2)
 			setLv(gsd, reward, rf, fy, new int[] { 3, 0, 0, 0 }, null, null,

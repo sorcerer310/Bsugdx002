@@ -2,6 +2,7 @@ package com.bsu.obj.data;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.obj.Role.BATLESTATE;
 import com.bsu.tools.GC.CLASSES;
 import com.bsu.tools.GC.QUALITY;
 
@@ -12,6 +13,7 @@ public class RoleData{
 	public String name;							//人物名称
 	public QUALITY quality;						//人物品质
 	public CLASSES classes;						//人物职业
+	public BATLESTATE bstate;					//是否加入战斗阵容
 	public int level;							//等级
 	public String roleTexture;					//人物纹理
 	public int maxHp;							//最大血量

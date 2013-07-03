@@ -11,7 +11,6 @@ import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.obj.data.RoleData;
 import com.bsu.obj.data.SkillData;
-import com.bsu.obj.skilltree.Skill;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
@@ -28,7 +27,6 @@ public class Saver {
 	private Saver(){
 		kryo.register(PlayerData.class);
 		kryo.register(Saver.class);
-//		kryo.register(Skill.class);
 		kryo.register(SkillData.class);
 	}
 
@@ -61,16 +59,9 @@ public class Saver {
 	private void savePlayer(){
 		Player player = Player.getInstance();
 		
-		playerData.playerFightRole.clear();
-		playerData.playerIdelRole.clear();
 		playerData.playerRole.clear();
-		//转换上场战斗角色数据为存档数据
-		for(Role r:player.playerFightRole)
-			playerData.playerFightRole.add(r.toRoleData());
-//		//转换闲置角色数据为存档数据
-		for(Role r:player.playerIdelRole)
-			playerData.playerIdelRole.add(r.toRoleData());
-//		//转换所有角色数据为存档数据
+
+		//转换所有角色数据为存档数据
 		for(Role r:player.playerRole)
 			playerData.playerRole.add(r.toRoleData());
 		
@@ -86,14 +77,7 @@ public class Saver {
 		player.crystal_orange = playerData.crystal_orange;
 		player.crystal_purple = playerData.crystal_purple;
 		
-		player.playerFightRole.clear();
-		player.playerIdelRole.clear();
 		player.playerRole.clear();
-		
-		for(RoleData rd:playerData.playerFightRole)
-			player.playerFightRole.add(RoleFactory.getInstance().getHeroRole(rd));
-		for(RoleData rd:playerData.playerIdelRole)
-			player.playerIdelRole.add(RoleFactory.getInstance().getHeroRole(rd));
 		for(RoleData rd:playerData.playerRole)
 			player.playerRole.add(RoleFactory.getInstance().getHeroRole(rd));
 	}
@@ -103,8 +87,6 @@ public class Saver {
 
 class PlayerData{
 	public Array<RoleData> playerRole = new Array<RoleData>();
-	public Array<RoleData> playerFightRole = new Array<RoleData>();
-	public Array<RoleData> playerIdelRole = new Array<RoleData>();
 	public int crystal_blue=0;
 	public int crystal_purple=0;
 	public int crystal_orange=0;

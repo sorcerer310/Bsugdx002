@@ -28,9 +28,7 @@ import com.bsu.tools.U;
 
 /**
  * GAME游戏战斗场景UI
- * 
  * @author zhangyongchen
- * 
  */
 public class UIRoleEffect implements Observer {
 
@@ -68,10 +66,11 @@ public class UIRoleEffect implements Observer {
 				c.roundEnd();
 			}
 		});
-		for (int i = 0; i < Player.getInstance().playerFightRole.size; i++) {
+		Array<Role> fightPlayer = Player.getInstance().getPlayerFightRole();
+		for (int i = 0; i < fightPlayer.size; i++) {
 			int x = 10 + i * 95;
 			int y = 10;
-			final Role r = Player.getInstance().playerFightRole.get(i);
+			final Role r = fightPlayer.get(i);
 			Vector2 v = new Vector2(x, y);
 			RoleIcon photo = new RoleIcon(r, false);
 			stage.addActor(photo);
@@ -134,7 +133,8 @@ public class UIRoleEffect implements Observer {
 	 * @param r
 	 */
 	public void actingRole(Role r) {
-		for (Role e : Player.getInstance().playerFightRole) {
+		Array<Role> fightPlayer =  Player.getInstance().getPlayerFightRole();
+		for (Role e : fightPlayer) {
 			e.roleIcon.showEffect(false);
 		}
 		if (r != null && r.type == Type.HERO) {
@@ -148,8 +148,9 @@ public class UIRoleEffect implements Observer {
 	 * @param r
 	 */
 	public void changeRoleHp(Role r) {
-		for (int i = 0; i < Player.getInstance().playerFightRole.size; i++) {
-			if (Player.getInstance().playerFightRole.get(i).equals(r)) {
+		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
+		for (int i = 0; i < fightRole.size; i++) {
+			if (fightRole.get(i).equals(r)) {
 				roleUIInfo rui = hpArray.get(i);
 				if (r.getCurrentHp() > 0) {
 					rui.hpImg.setScaleY((float) (r.getCurrentHp())
