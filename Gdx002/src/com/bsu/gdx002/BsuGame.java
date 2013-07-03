@@ -11,7 +11,7 @@ import com.bsu.head.HeadScreen;
 import com.bsu.make.GameScreenFactory;
 import com.bsu.obj.Player;
 import com.bsu.screen.CPanelMainScreen;
-import com.bsu.screen.FightScreen;
+import com.bsu.screen.BattleScreen;
 import com.bsu.screen.GameScreen;
 import com.bsu.screen.MenuScreen;
 import com.bsu.screen.RoleScreen;
@@ -137,7 +137,7 @@ public class BsuGame extends Game {
 			}
 		};
 		// 战斗选择副本界面
-		FightScreen fs = new FightScreen(this) {
+		BattleScreen fs = new BattleScreen(this) {
 			@Override
 			public void update(Observable o, Object arg) {
 				MessageObject mo = (MessageObject) arg;

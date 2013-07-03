@@ -23,7 +23,7 @@ import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 import com.bsu.tools.GC.LEVELYTPE;
 
-public class FightScreen extends CubocScreen implements Observer {
+public class BattleScreen extends CubocScreen implements Observer {
 	private Image background;
 	private Stage stage;
 	private Image ib_back;
@@ -35,7 +35,7 @@ public class FightScreen extends CubocScreen implements Observer {
 	private LEVELYTPE state;
 	private boolean initFlag;
 
-	public FightScreen(Game game) {
+	public BattleScreen(Game game) {
 		super(game);
 		stage = new Stage(GC.rect_width, GC.rect_height, false);
 	}

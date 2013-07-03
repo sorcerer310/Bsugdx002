@@ -11,6 +11,7 @@ import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.obj.data.RoleData;
 import com.bsu.obj.data.SkillData;
+import com.bsu.screen.GameScreen;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
@@ -68,7 +69,7 @@ public class Saver {
 		playerData.crystal_blue = player.crystal_blue;
 		playerData.crystal_orange = player.crystal_orange;
 		playerData.crystal_purple = player.crystal_purple;
-		
+		playerData.levelIndex = GameScreen.LvMax;
 	}
 	
 	public void loadPlayer(){
@@ -76,13 +77,11 @@ public class Saver {
 		player.crystal_blue = playerData.crystal_blue;
 		player.crystal_orange = playerData.crystal_orange;
 		player.crystal_purple = playerData.crystal_purple;
-		
+		GameScreen.LvMax  = playerData.levelIndex;
 		player.playerRole.clear();
 		for(RoleData rd:playerData.playerRole)
 			player.playerRole.add(RoleFactory.getInstance().getHeroRole(rd));
 	}
-	
-
 }
 
 class PlayerData{
@@ -90,6 +89,7 @@ class PlayerData{
 	public int crystal_blue=0;
 	public int crystal_purple=0;
 	public int crystal_orange=0;
+	public int levelIndex = 0;						//关卡开发到的索引
 }
 
 

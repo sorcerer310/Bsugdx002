@@ -362,9 +362,8 @@ public class GameScreen extends CubocScreen implements Observer,
 		String endname = "victory";
 		if (victflag) {
 			endname = "victory";
-			if (lv == LvMax) {
+			if (lv == LvMax) 
 				LvMax++;
-			}
 		} else {
 			endname = "defeat";
 		}
