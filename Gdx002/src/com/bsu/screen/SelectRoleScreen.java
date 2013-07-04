@@ -191,7 +191,11 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 						U.showRoleSelect(idelRole, r);
 						return;
 					}
+					//如果要替换的人物不为空，将其置空 
+					if(changeRole !=null)
+						changeRole.bstate = Role.BATLESTATE.IDLE;
 					r.bstate = Role.BATLESTATE.FIGHT;
+
 					setChanged();
 					notifyObservers(GC.button_back);
 					ib_back.setScale(1f);
