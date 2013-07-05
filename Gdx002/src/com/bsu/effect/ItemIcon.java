@@ -11,7 +11,7 @@ public class ItemIcon extends WidgetGroup{
 	public Image img_class=null;			//职业图标
 	
 	public ItemIcon(Item i){
-		img_item = new Image(i.tr_item);	//物品图片
+		img_item = new Image(GTC.getInstance().hm_headItemIcon.get(i.tr_item));	//物品图片
 		img_item.setScale(0.5f);
 		img_frame = GTC.getInstance().getImageFrame(i.q);	//边框图片
 		img_class=GTC.getInstance().getClassesIconImg(i.classes);

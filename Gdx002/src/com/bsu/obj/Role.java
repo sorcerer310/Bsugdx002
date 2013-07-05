@@ -109,7 +109,7 @@ public class Role extends Actor {
 		roleColor=new Color(getColor());
 		skill_tree = as;
 		roleTextureName = tr;
-		roleTexture = new TextureRegion(GTC.getInstance().hm_roleIcon.get(tr));
+		roleTexture = new TextureRegion(GTC.getInstance().hm_headItemIcon.get(tr));
 		if(skill_tree.size>0){
 			cskill = skill_tree.get(0);
 			skill_array.add(skill_tree.get(0));

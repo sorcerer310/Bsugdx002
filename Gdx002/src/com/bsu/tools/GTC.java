@@ -55,7 +55,7 @@ public class GTC {
 			start_four;
 	public AssetManager assetManager;
 	
-	public HashMap<String,TextureRegion> hm_roleIcon = new HashMap<String,TextureRegion>(); 
+	public HashMap<String,TextureRegion> hm_headItemIcon = new HashMap<String,TextureRegion>(); 
 
 	private GTC() {
 		if (assetManager == null) {
@@ -89,12 +89,6 @@ public class GTC {
 	}
 
 	public void setAssets() {
-		role = assetManager.get("data/game/hero/Actor1.png");
-		fc_photo = new TextureRegion(role, 0, 0, 96, 96);
-		zyc_photo = new TextureRegion(role, 96, 0, 96, 96);
-		hm_roleIcon.put("fc_photo", fc_photo);
-		hm_roleIcon.put("zyc_photo", zyc_photo);
-		
 		
 		effect = assetManager.get("data/game/hero/effect.png");
 		mPanel = assetManager.get("data/menu/mpanel.png");
@@ -122,6 +116,14 @@ public class GTC {
 		skills_icon = assetManager.get("data/game/icon/skillicon.txt");
 		battle_end = assetManager.get("data/game/effect/battleend.txt");
 		role_head_frame = assetManager.get("data/game/hero/frame.txt");
+		
+		role = assetManager.get("data/game/hero/Actor1.png");
+		fc_photo = new TextureRegion(role, 0, 0, 96, 96);
+		zyc_photo = new TextureRegion(role, 96, 0, 96, 96);
+		hm_headItemIcon.put("fc_photo", fc_photo);
+		hm_headItemIcon.put("zyc_photo", zyc_photo);
+		hm_headItemIcon.put("skill_question", skills_icon.findRegion("siq-"));
+		
 	}
 
 	/**

@@ -409,7 +409,7 @@ public class GameScreen extends CubocScreen implements Observer,
 				if (r.item.type == com.bsu.obj.Item.Type.skillpart) {
 					table.defaults().padRight(10);
 					table.defaults().padTop(10);
-					table.add(new Image(r.item.tr_item));
+					table.add(new Image(GTC.getInstance().hm_headItemIcon.get(r.item.tr_item)));
 					itemArray.add(r.item);
 				}
 			}

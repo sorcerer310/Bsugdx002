@@ -252,7 +252,7 @@ public class TipsWindows extends WidgetGroup {
 		tipsWindows.clear();
 		tipsWindows.defaults().align(Align.center);
 		tipsWindows.setPosition(200, 140);
-		Image icon = new Image(ItemFactory.getInstance().getItemById(1).tr_item);
+		Image icon = new Image(GTC.getInstance().hm_headItemIcon.get(ItemFactory.getInstance().getItemById(1).tr_item));
 		tipsWindows.add(icon);
 		tipsWindows.pack();
 		tipsWindows.addListener(new ClickListener() {

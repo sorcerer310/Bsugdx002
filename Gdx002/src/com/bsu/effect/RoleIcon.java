@@ -38,7 +38,7 @@ public class RoleIcon extends WidgetGroup {
 	public MyParticle particle;
 
 	public RoleIcon(Role r, boolean b) {
-		img_head = new Image(GTC.getInstance().hm_roleIcon.get(r.roleTextureName)); // 头像图片
+		img_head = new Image(GTC.getInstance().hm_headItemIcon.get(r.roleTextureName)); // 头像图片
 		img_head.setScale(0.5f);
 		img_frame = GTC.getInstance().getImageFrame(r.quality);
 		img_classes = GTC.getInstance().getClassesIconImg(r.classes);

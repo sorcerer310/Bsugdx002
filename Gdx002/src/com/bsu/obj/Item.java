@@ -19,18 +19,19 @@ public class Item {
 	}; // 道具类型 技能碎片 人物卡片
 
 	public Type type;
-	public TextureRegion tr_item; // 物品图片
+//	public TextureRegion tr_item; // 物品图片
+	public String tr_item;
 	public QUALITY q; // 如果是卡片，则为卡片品质，如果为技能碎片，则为碎片品质
 	public CLASSES classes;
 
-	public Item(String n, Type t,QUALITY q, TextureRegion tr_i) {
+	public Item(String n, Type t,QUALITY q, String tr_i) {
 		name = n;
 		type = t;
 		this.q=q;
 		tr_item = tr_i;
 	}
 
-	public Item(String n, Type t, TextureRegion tr_i, QUALITY q, CLASSES es) {
+	public Item(String n, Type t, String tr_i, QUALITY q, CLASSES es) {
 		name = n;
 		type = t;
 		tr_item = tr_i;
