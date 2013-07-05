@@ -1,15 +1,11 @@
 package com.bsu.gdx002;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.Observable;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Rectangle;
 import com.bsu.head.HeadScreen;
 import com.bsu.make.GameScreenFactory;
-import com.bsu.obj.Player;
 import com.bsu.screen.CPanelMainScreen;
 import com.bsu.screen.BattleScreen;
 import com.bsu.screen.GameScreen;
@@ -19,14 +15,9 @@ import com.bsu.screen.SelectRoleScreen;
 import com.bsu.screen.SettingScreen;
 import com.bsu.screen.ShopScreen;
 import com.bsu.screen.UpdateScreen;
-import com.bsu.test.TestObject;
 import com.bsu.tools.GC;
-import com.bsu.tools.GTC;
 import com.bsu.tools.MessageObject;
 import com.bsu.tools.Saver;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.Input;
-import com.esotericsoftware.kryo.io.Output;
 
 public class BsuGame extends Game {
 	@Override
@@ -200,5 +191,12 @@ public class BsuGame extends Game {
 		cpms.addObserver(srs);
 		srs.addObserver(cpms);
 		gs.addObserver(cpms);
+	}
+
+	@Override
+	public void dispose() {
+		//程序退出销毁时存档
+		Saver.getInstance().save();
+		super.dispose();
 	}
 }
