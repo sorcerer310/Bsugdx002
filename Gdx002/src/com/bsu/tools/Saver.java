@@ -29,6 +29,7 @@ public class Saver {
 		kryo.register(PlayerData.class);
 		kryo.register(Saver.class);
 		kryo.register(SkillData.class);
+		kryo.register(Array.class);
 	}
 
 	public void save(){
