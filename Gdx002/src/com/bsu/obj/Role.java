@@ -386,11 +386,9 @@ public class Role extends Actor {
 				px = 0;
 				py = 0;
 				// 如果event对象不为空，执行函数通知完成
-				if (bevent != null) {
-					System.out.println(this.name
-							+ "beattacked_effect_completed");
+				if (bevent != null) 
 					bevent.notify(this, "ani_beattacked_finished");
-				}
+
 			}
 		}
 

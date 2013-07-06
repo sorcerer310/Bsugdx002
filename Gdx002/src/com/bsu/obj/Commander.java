@@ -399,19 +399,26 @@ public class Commander {
 						skill_logic = true;
 						// 判断攻击动画是否完成
 						if (msg.equals("ani_attack_finished")
-								|| r.getCskill().ani_self == null)
+								|| r.getCskill().ani_self == null){
 							ani_attack_finished = true;
+							System.out.println("ani_attack_finished");
+						}
 
 						// 判断被攻击动画是否完成
 						if (msg.equals("ani_beattacked_finished")
-								|| r.getCskill().ani_object == null)
+								|| r.getCskill().ani_object == null){
 							ani_beattacked_finished = true;
+							System.out.println("ani_beattacked_finished");
+						}
 						
 						//判断位移动画是否完成
-						if(msg.equals("assaultAcion_finished"))
+						if(msg.equals("assaultAcion_finished")){
 							ani_assault_finished = true;
-						
+							System.out.println("assaultAcion_finished");
+						}
+
 						//技能两处动画都完成进行下步任务
+//						System.out.println(ani_attack_finished+" "+ani_beattacked_finished+" "+ani_assault_finished);
 						if(ani_attack_finished && ani_beattacked_finished && ani_assault_finished){
 							currTaskComFlag = true;
 						}
@@ -609,8 +616,6 @@ public class Commander {
 		//如果地图上没有英雄,战斗失败		
 		if(heroRemainCount==0){
 			gamescreen.bstate=BattleState.DEFEAT;
-//			gamescreen.battleEnd(false);
-//			saveGame();
 			return;
 		}
 
@@ -622,8 +627,6 @@ public class Commander {
 				Vector2 bv = U.realPost2BoxPos((int)v.x, (int)v.y);
 				if(!r.isDead && r.isVisible() && r.getBoxX()==bv.x && r.getBoxY()==bv.y){
 					gamescreen.bstate=BattleState.DEFEAT;
-//					gamescreen.battleEnd(false);
-//					saveGame();
 					return;
 				}
 			}
@@ -636,22 +639,17 @@ public class Commander {
 		//如果剩余的npc为0，游戏胜利
 		if(npcRemainCount==0){
 			gamescreen.bstate=BattleState.VICTORY;
-//			gamescreen.battleEnd(true);
-//			saveGame();
 			return;
 		}
 		//否则剩余npc数量不为0，
 		else{
 			
 			//npcVisibleCount为0了，命令加入其他的敌人
-			if(npcVisibleCount==0)
+			if(npcVisibleCount<=0)
 				commandNpcArise(gamescreen.npcArisePos,npcs);
 		}
 	}
 	
-	private void saveGame(){
-		Saver.getInstance().save();
-	}
 	
 	/**
 	 * 敌人出现函数
@@ -666,7 +664,7 @@ public class Commander {
 				npcsIsLived.add(r);
 		}
 		
-		for(int i=0;i<(npcsIsLived.size<v.size?npcsIsLived.size:v.size);i++){
+		for(int i=0;i<(npcsIsLived.size<=v.size?npcsIsLived.size:v.size);i++){
 			Role r = npcsIsLived.get(i);
 			r.setPosition(v.get(i).x, v.get(i).y);
 //			r.set_ani_from_state(STATE.idle);			
