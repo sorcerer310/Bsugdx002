@@ -80,55 +80,68 @@ public class GameScreenFactory {
 		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
 		for (Role r : fightRole)
 			gsd.getHeroRoles().add(r);
-		if (lv == 2)
+		switch (lv) {
+		case 2:
 			setLv(gsd, reward, rf, fy, new int[] { 3, 0, 0, 0 }, null, null,
 					null, null, new int[] { 2, 0, 0, 0 }, null, null, null,
 					null, 2, 0, 0);
-		if (lv == 3)
+			break;
+		case 3:
 			setLv(gsd, reward, rf, fy, new int[] { 4, 0, 0, 0 }, null, null,
 					null, null, new int[] { 3, 0, 0, 0 }, null, null, null,
 					null, 3, 0, 0);
-		if (lv == 4)
+			break;
+		case 4:
 			setLv(gsd, reward, rf, fy, new int[] { 5, 0, 0, 0 }, null, null,
 					null, null, new int[] { 3, 0, 0, 0 }, null, null, null,
 					null, 3, 0, 0);
-		if (lv == 5)
+			break;
+		case 5:
 			setLv(gsd, reward, rf, fy, new int[] { 10, 0, 0, 0 }, null, null,
 					null, null, new int[] { 5, 0, 0, 0 }, null, null, null,
 					null, 3, 0, 0);
-		if (lv == 6)
+			break;
+		case 6:
 			setLv(gsd, reward, rf, fy, new int[] { 10, 0, 0, 0 }, new int[] {
 					2, 0, 0, 0 }, null, null, null, new int[] { 5, 0, 0, 0 },
 					new int[] { 1, 0, 0, 0 }, null, null, null, 4, 0, 0);
-		if (lv == 7)
+			break;
+		case 7:
 			setLv(gsd, reward, rf, fy, new int[] { 5, 0, 0, 0 }, new int[] { 2,
 					0, 0, 0 }, new int[] { 3, 0, 0, 0 }, null, null, new int[] {
 					5, 0, 0, 0 }, new int[] { 1, 0, 0, 0 }, new int[] { 2, 0,
 					0, 0 }, null, null, 6, 0, 0);
-		if (lv == 8)
+			break;
+		case 8:
 			setLv(gsd, reward, rf, fy, new int[] { 5, 0, 0, 0 }, new int[] { 2,
 					0, 0, 0 }, new int[] { 2, 0, 0, 0 },
 					new int[] { 2, 0, 0, 0 }, null, new int[] { 2, 0, 0, 0 },
 					new int[] { 1, 0, 0, 0 }, new int[] { 1, 0, 0, 0 },
 					new int[] { 1, 0, 0, 0 }, null, 8, 0, 0);
-		if (lv == 9)
+			break;
+		case 9:
 			setLv(gsd, reward, rf, fy, new int[] { 5, 0, 0, 0 }, new int[] { 2,
 					0, 0, 0 }, new int[] { 2, 0, 0, 0 },
 					new int[] { 2, 0, 0, 0 }, new int[] { 2, 0, 0, 0 },
 					new int[] { 2, 0, 0, 0 }, new int[] { 1, 0, 0, 0 },
 					new int[] { 1, 0, 0, 0 }, new int[] { 1, 0, 0, 0 },
 					new int[] { 1, 0, 0, 0 }, 10, 0, 0);
-		if (lv == 10)
+			break;
+		case 10:
 			setLv(gsd, reward, rf, fy, new int[] { 10, 0, 0, 0 }, new int[] {
 					5, 0, 0, 0 }, new int[] { 5, 0, 0, 0 }, new int[] { 5, 0,
 					0, 0 }, new int[] { 5, 0, 0, 0 }, new int[] { 5, 0, 0, 0 },
 					new int[] { 2, 0, 0, 0 }, new int[] { 2, 0, 0, 0 },
 					new int[] { 2, 0, 0, 0 }, new int[] { 2, 0, 0, 0 }, 15, 0,
 					0);
-		if (lv == 11)
-			setLv(gsd, reward, rf, fy, new int[] { 5, 2, 0, 0 }, new int[] {
-					5, 2, 0, 0 }, null, null, null, new int[] { 3, 1, 0, 0 },
+			break;
+		case 11:
+		default:
+			setLv(gsd, reward, rf, fy, new int[] { 5, 2, 0, 0 }, new int[] { 5,
+					2, 0, 0 }, null, null, null, new int[] { 3, 1, 0, 0 },
 					new int[] { 3, 1, 0, 0 }, null, null, null, 15, 2, 0);
+			break;
+		}
 		gsd.setReward(reward);
 		return gsd;
 	}
