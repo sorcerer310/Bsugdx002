@@ -262,8 +262,9 @@ public class Commander {
 	 *            持续技能操作完成事件
 	 */
 	private void roleContinuedSkillState(BsuEvent be) {
-		for (Role r : allRoles) {
-			// for(int i=0;i<allRoles.size)
+//		for (Role r : allRoles) {
+		for(int i=0;i<allRoles.size;i++){
+			Role r = allRoles.get(i);
 			if (r.csstate.size == 0)
 				continue;
 			r.clearExtValue();
