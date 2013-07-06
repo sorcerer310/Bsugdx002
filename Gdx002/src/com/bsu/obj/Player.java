@@ -80,9 +80,12 @@ public class Player {
 	 */
 	public Array<Role> getPlayerFightRole() {
 		Array<Role> fightRole = new Array<Role>();
-		for(Role r:playerRole)
+//		for(Role r:playerRole)
+		for(int i=0;i<playerRole.size;i++){
+			Role r = playerRole.get(i);
 			if(r.bstate==BATLESTATE.FIGHT)
 				fightRole.add(r);
+		}
 		return fightRole;
 	}
 	/**

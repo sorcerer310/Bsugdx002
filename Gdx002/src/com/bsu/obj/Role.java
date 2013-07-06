@@ -244,8 +244,9 @@ public class Role extends Actor {
 					skl.offset_ani_self);
 		}
 		// 目标动画效果
-		for (Role e : enemys)
+		for (Role e : enemys){
 			e.ani_role_isAttacked(skl.ani_object, skl.offset_ani_object, be);
+		}
 		// 位移效果
 		if (skl.type == Skill.Type.p_assault) {
 			Commander.getInstance().assaultCommand(this, be);
