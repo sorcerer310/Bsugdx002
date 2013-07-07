@@ -15,7 +15,6 @@ import com.bsu.screen.GameScreen.BattleState;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.CommandQueue;
 import com.bsu.tools.GC;
-import com.bsu.tools.Saver;
 import com.bsu.tools.U;
 import com.bsu.tools.GC.FACE;
 import com.bsu.tools.GC.DIRECTION;
