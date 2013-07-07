@@ -74,7 +74,7 @@ public class Commander {
 //				((Role)act).isDead = false;
 				if (((Role) act).getType() == Type.HERO) {
 					Role r = (Role)act;
-					r.gsstartinit();						//重置人物的动态数据
+					//r.gsstartinit();						//重置人物的动态数据
 					heros.add(r);
 				} else if (((Role) act).getType() == Type.ENEMY)
 					npcs.add((Role) act);
