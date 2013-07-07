@@ -29,6 +29,7 @@ import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
+import com.bsu.obj.SkillObsever;
 import com.bsu.obj.TipsWindows;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.GC;
@@ -60,7 +61,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private Label skillPartBlue, skillPartPurple, skillPartOrange;// 普通，高级，史诗精华文本
 	private TextButton up, use;
 	private Array<SkillIcon> skillIconArray = new Array<SkillIcon>();
-
+	private Array<SkillObsever> skillObArray=new Array<SkillObsever>();
 	public RoleScreen(Game game) {
 		super(game);
 		stage = new Stage(GC.rect_width, GC.rect_height, false);
@@ -202,6 +203,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private void showRoleInfo(final Role r) {
 		RoleInfoStage.clear();
 		skillIconArray.clear();
+		skillObArray.clear();
 		selectRole = r;
 		up.remove();
 		use.remove();
@@ -219,6 +221,10 @@ public class RoleScreen extends CubocScreen implements Observer,
 			SkillIcon se = new SkillIcon(s, RoleInfoStage, new Vector2(
 					40 + index * 60, 160), true);
 			skillIconArray.add(se);
+			final SkillObsever so = new SkillObsever(s);
+			so.addObserver(TipsWindows.getInstance());
+			so.addObserver(this);
+			skillObArray.add(so);
 			final Image img = se.skillImg;
 			skillImg.add(img);
 			final Vector2 v = new Vector2(img.getX(), img.getY());
@@ -229,9 +235,10 @@ public class RoleScreen extends CubocScreen implements Observer,
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
-
-					TipsWindows.getInstance()
-							.showSkillInfo(s, v, RoleInfoStage);
+					if (so.enable) {
+						TipsWindows.getInstance().showSkillInfo(so.name,
+								so.info, so.q, v, RoleInfoStage);
+					}
 					U.setCurrentSkillImg(skillImg, img);
 					return true;
 				}
@@ -346,8 +353,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 					if (s.enable) {
-						TipsWindows.getInstance().showSkillInfo(s, vs,
-								RoleInfoStage);
+						TipsWindows.getInstance().showSkillInfo(s.name, s.info,
+								s.quality, vs, RoleInfoStage);
 						U.setSelectImg(skillImg, skill_img);
 					}
 					return true;
@@ -436,28 +443,25 @@ public class RoleScreen extends CubocScreen implements Observer,
 		String tipsString = "";
 		showEnabledSkill(selectSkill);
 		if (!b) {
-			selectSkill.skillEffect.skillImg
-					.setDrawable(selectSkill.skillEffect.enableImg
-							.getDrawable());
+			selectSkill.skillIcon.skillImg
+					.setDrawable(selectSkill.skillIcon.enableImg.getDrawable());
 			tipsString = "开启新技能" + selectSkill.name;
 		} else {
 			tipsString = "技能" + selectSkill.name + "升级";
 			selectSkill.levUp();
-//			selectSkill.lev++;
-//			selectSkill.val+=selectSkill.uval;
 		}
 		MyParticle mpe = new MyParticle(GTC.getInstance().particleEffect, 1,
 				particleVec, RoleInfoStage, tipsString,
 				U.getQualityColor(selectSkill.quality));
 		RoleInfoStage.addActor(mpe);
-		selectSkill.skillEffect.lv.setText(selectSkill.lev + "");
+		selectSkill.skillIcon.lv.setText(selectSkill.lev + "");
 		for (int i = 0; i < selectRole.skill_array.size; i++) {
 			if (selectRole.skill_array.get(i).equals(selectSkill)) {
 				skillIconArray.get(i).skillImg
-						.setDrawable(selectSkill.skillEffect.skillImg
+						.setDrawable(selectSkill.skillIcon.skillImg
 								.getDrawable());
 				skillIconArray.get(i).skillImgEffect
-						.setDrawable(selectSkill.skillEffect.skillImgEffect
+						.setDrawable(selectSkill.skillIcon.skillImgEffect
 								.getDrawable());
 				skillIconArray.get(i).lv.setText(selectSkill.lev + "");
 			}
@@ -471,25 +475,25 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private void showEnabledSkill(Skill ss) {
 		for (Skill s : selectRole.skill_tree) {
 			if (s != ss) {
-				U.setAlpha(s.skillEffect.skillImg, 0.5f);
+				U.setAlpha(s.skillIcon.skillImg, 0.5f);
 			} else {
-				U.setAlpha(ss.skillEffect.skillImg, 1);
+				U.setAlpha(ss.skillIcon.skillImg, 1);
 			}
 		}
 	}
 
 	/**
 	 * 重新给指定技能更换新技能
-	 * 
 	 * @param s
 	 * @param img
 	 */
 	private void setAnotherSkill(Role r, int index, Skill s) {
-		skillIconArray.get(index).skillImg.setDrawable(s.skillEffect.skillImg
+		skillIconArray.get(index).skillImg.setDrawable(s.skillIcon.skillImg
 				.getDrawable());
 		skillIconArray.get(index).skillImgEffect
-				.setDrawable(s.skillEffect.skillImgEffect.getDrawable());
+				.setDrawable(s.skillIcon.skillImgEffect.getDrawable());
 		skillIconArray.get(index).lv.setText(s.lev + "");
+		skillObArray.get(index).changeSkill(s);
 		r.skill_array.set(index, s);
 		r.cskill = r.skill_array.get(0);
 	}

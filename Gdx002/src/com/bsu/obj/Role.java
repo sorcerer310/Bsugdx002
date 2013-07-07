@@ -113,7 +113,7 @@ public class Role extends Actor {
 		if(skill_tree.size>0){
 			cskill = skill_tree.get(0);
 			skill_array.add(skill_tree.get(0));
-			skill_array.add(skill_tree.get(0));
+			skill_array.add(skill_tree.get(1));
 		}
 		exp = baseExp();
 		isDead = false;

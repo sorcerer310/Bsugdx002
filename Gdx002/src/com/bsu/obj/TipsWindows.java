@@ -1,5 +1,8 @@
 package com.bsu.obj;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -22,7 +25,7 @@ import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
-public class TipsWindows extends WidgetGroup {
+public class TipsWindows extends WidgetGroup implements Observer{
 
 	private static TipsWindows instance = null;
 	private Skin skin;
@@ -96,20 +99,20 @@ public class TipsWindows extends WidgetGroup {
 	 * 
 	 * @param s
 	 */
-	public void showSkillInfo(Skill s, Vector2 v, Stage stage) {
+	public void showSkillInfo(String name,String info,QUALITY q, Vector2 v, Stage stage) {
 		removeFromStage();
 		tipsWindows.defaults().align(Align.center);
 		tipsWindows.padTop(10);
 		tipsWindows.padBottom(10);
 		tipsWindows.defaults().padLeft(10);
 		tipsWindows.defaults().padRight(10);
-		Label nameLabel = new Label(s.name, U.get_sytle());
-		nameLabel.setColor(U.getQualityColor(s.quality));
+		Label nameLabel = new Label(name, U.get_sytle());
+		nameLabel.setColor(U.getQualityColor(q));
 		tipsWindows.add(nameLabel);
 		tipsWindows.defaults().align(Align.left);
 		Array<String> infoArray = new Array<String>();
 		float scaleValue = 0.6f;
-		infoArray = U.getMuLabel(s.info, scaleValue, windowWidth);
+		infoArray = U.getMuLabel(info, scaleValue, windowWidth);
 		for (int i = 0; i < infoArray.size; i++) {
 			tipsWindows.row();
 			Label label = new Label(infoArray.get(i), U.get_sytle());
@@ -319,5 +322,11 @@ public class TipsWindows extends WidgetGroup {
 				removeFromStage();
 			}
 		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 }

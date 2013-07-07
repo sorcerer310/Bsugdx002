@@ -57,7 +57,7 @@ public class Skill {
 	public Vector2 offset_ani_continue = null; // 持续技能承受者动画偏移量
 
 	public boolean enable = false; // 该技能是否开启使用
-	public SkillIcon skillEffect;//技能图标相关
+	public SkillIcon skillIcon;//技能图标相关
 	/**
 	 * 技能初始化构造函数，
 	 * 

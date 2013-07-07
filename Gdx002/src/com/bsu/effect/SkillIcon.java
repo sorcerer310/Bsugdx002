@@ -53,6 +53,6 @@ public class SkillIcon {
 		skillImg.setScale(1.2f);
 		skillImg.setPosition(v.x, v.y);
 		U.setAlpha(skillImg, 0.5f);
-		skill.skillEffect=this;
+		skill.skillIcon=this;
 	}
 }
