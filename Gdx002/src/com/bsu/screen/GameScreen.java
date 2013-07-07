@@ -133,7 +133,7 @@ public class GameScreen extends CubocScreen implements Observer,
 			stage.addActor(r);
 		stage.addActor(uita);
 		commander = Commander.initInstance(stage, this);
-		commander.resetRoles();
+		commander.battleInit();
 		fightUI.initUI(UIStage, this);
 		setBornPosition(GameMap.map, Type.HERO, GC.object_layer_hero);
 		setBornPosition(GameMap.map, Type.ENEMY, GC.object_layer_enemy);
@@ -169,10 +169,14 @@ public class GameScreen extends CubocScreen implements Observer,
 				}
 			}
 		}
-		if (p == Type.HERO)
+		if (p == Type.HERO){
+			heroArisePos.clear();
 			heroArisePos.addAll(v);
-		else
+		}
+		else if(p==Type.ENEMY){
+			npcArisePos.clear();
 			npcArisePos.addAll(v);
+		}
 
 		Array<Role> rs = p == Type.HERO ? heros : npcs;
 		for (int i = 0; i < (rs.size < v.size ? rs.size : v.size); i++) {

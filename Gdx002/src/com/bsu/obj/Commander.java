@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.make.MapNpcsFactory;
 import com.bsu.obj.Role.Type;
 import com.bsu.obj.skilltree.ContinuedSkillState;
 import com.bsu.obj.skilltree.ContinuedSkillState.CSType;
@@ -47,6 +48,7 @@ public class Commander {
 	public Array<Role> heros = new Array<Role>();
 	public Array<Role> npcs = new Array<Role>();
 	public Array<Role> allRoles = new Array<Role>();
+	private int currRoundCount = 1;
 
 	private Commander(Stage s, GameScreen gs) {
 		gamescreen = gs;
@@ -61,8 +63,19 @@ public class Commander {
 		
 		commanderStart();
 	}
-
-	public void resetRoles() {
+	/**
+	 * 战场初始化函数，每个战场开始之前执行此函数
+	 */
+	public void battleInit(){
+		resetRoles();
+//		MapNpcsFactory.getInstance().currRoundCount = 1;		//设置战场回合为1
+		currRoundCount = 1;
+	}
+	
+	/**
+	 * 没回合结束后执行此函数，重新获得英雄与npc
+	 */
+	private void resetRoles() {
 		lactor = stage.getActors();
 		heros.clear();
 		npcs.clear();
@@ -172,7 +185,7 @@ public class Commander {
 				roundEndCompleted = true;
 				gamescreen.newRound();
 				decideGameEnd();							//判断游戏是否结束
-
+				currRoundCount++;							//回合数增加1
 			}
 		});
 	}
@@ -379,7 +392,6 @@ public class Commander {
 			//处理技能逻辑，处理技能逻辑时会对攻击的对象进行数值运算，处理结束后返回boolean值，指示是否继续移动			
 			boolean isMove = r.cskill.skillLogic(r, atkrs);
 			//1:执行技能命令
-//			if(atkrs.size!=0){
 			//如果拥有释放目标，释放技能
 			if(atkrs.size!=0){
 
@@ -591,7 +603,6 @@ public class Commander {
 		// 后续处理
 //		System.out.println(r.name+"说:啊啊啊啊啊，我死了！！！");
 		r.isDead = true;					//设置人物死亡
-
 		r.deadAction(new BsuEvent(){
 			@Override
 			public void notify(Object obj,String msg){
@@ -643,8 +654,8 @@ public class Commander {
 		else{
 			
 			//npcVisibleCount为0了，命令加入其他的敌人
-			if(npcVisibleCount<=0)
-				commandNpcArise(gamescreen.npcArisePos,npcs);
+//			if(npcVisibleCount<=0)
+			commandNpcArise(gamescreen.npcArisePos,npcs,currRoundCount);
 		}
 	}
 	
@@ -655,19 +666,25 @@ public class Commander {
 	 * @param npcs	所有敌人
 	 */
 //	private Random rnd = new Random();
-	private void commandNpcArise(Array<Vector2> v,Array<Role> rs){
-		Array<Role> npcsIsLived = new Array<Role>();		//要加入的敌人
-		for(Role r:rs){
-			if(!r.isDead && !r.isVisible())
-				npcsIsLived.add(r);
-		}
+	private void commandNpcArise(Array<Vector2> v,Array<Role> rs,int rc){
+		MapNpcsFactory.getInstance().refreshNpcs(v, rs, rc);
 		
-		for(int i=0;i<(npcsIsLived.size<=v.size?npcsIsLived.size:v.size);i++){
-			Role r = npcsIsLived.get(i);
-			r.setPosition(v.get(i).x, v.get(i).y);
-//			r.set_ani_from_state(STATE.idle);			
-			r.setVisible(true);
-		}
+//		Array<Role> npcsIsLived = new Array<Role>();		//要加入的敌人
+//		for(Role r:rs){
+//			if(!r.isDead && !r.isVisible())
+//				npcsIsLived.add(r);
+//		}
+		
+		
+		
+//		MapNpcsFactory.getInstance().
+		
+//		for(int i=0;i<(npcsIsLived.size<=v.size?npcsIsLived.size:v.size);i++){
+//			Role r = npcsIsLived.get(i);
+//			r.setPosition(v.get(i).x, v.get(i).y);
+////			r.set_ani_from_state(STATE.idle);			
+//			r.setVisible(true);
+//		}
 		
 		
 //		Vector2 pos = ppos.get(rnd.nextInt(ppos.size));				//获得一个随机位置
