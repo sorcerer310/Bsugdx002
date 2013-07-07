@@ -74,7 +74,7 @@ public class Commander {
 //				((Role)act).isDead = false;
 				if (((Role) act).getType() == Type.HERO) {
 					Role r = (Role)act;
-					r.gsstartinit();						//重置人物的动态数据
+//					r.gsstartinit();						//重置人物的动态数据
 					heros.add(r);
 				} else if (((Role) act).getType() == Type.ENEMY)
 					npcs.add((Role) act);
@@ -122,7 +122,7 @@ public class Commander {
 		roundEndCompleted = false; // 回合操作开始设置完成标示为false
 		gamescreen.setAction_start(true);
 		resetRoles();
-		resetHeroValue();
+		resetHeroMapBox();
 
 		// 增加对站在特殊地图块上的英雄进行处理的任务
 		CommandQueue.getInstance().put(new CommandTask() {
@@ -569,7 +569,7 @@ public class Commander {
 	/**
 	 * 每轮操作结束后，清空角色方可移动数组
 	 */
-	private void resetHeroValue() {
+	private void resetHeroMapBox() {
 		for (Role r : heros) {
 			if (r.getType() == Type.HERO) {
 				r.setSelected(false);
