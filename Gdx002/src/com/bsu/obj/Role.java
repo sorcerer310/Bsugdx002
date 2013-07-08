@@ -64,8 +64,6 @@ public class Role extends Actor {
 	public STATE state; // 英雄的当前状态
 	public Skill cskill; // 英雄当前的攻击技能
 	public Array<Skill> skill_tree = new Array<Skill>(); // 英雄的技能树
-	public Array<Skill> skill_array = new Array<Skill>(); // 英雄此关卡携带的技能
-
 	private Animation ani_idle; // 站立动画
 	private Animation ani_move; // 移动动画
 	private Animation ani_disapper;// 角色消失
@@ -110,11 +108,6 @@ public class Role extends Actor {
 		skill_tree = as;
 		roleTextureName = tr;
 		roleTexture = new TextureRegion(GTC.getInstance().hm_headItemIcon.get(tr));
-		if(skill_tree.size>0){
-			cskill = skill_tree.get(0);
-			skill_array.add(skill_tree.get(0));
-			skill_array.add(skill_tree.get(1));
-		}
 		exp = baseExp();
 		isDead = false;
 		this.setVisible(false);
@@ -133,7 +126,7 @@ public class Role extends Actor {
 		getPass_array().clear();
 		getAttack_array().clear();
 		clearActions();
-		cskill = skill_array.get(0);
+		cskill=getUseSkill().get(0);
 		isDead = false;
 	}
 
@@ -504,10 +497,10 @@ public class Role extends Actor {
 
 	public void setPass_array(Array<Vector2> array) {
 		this.pass_array.clear();
-		for (Vector2 v : array) {
+		for (int i=0;i<array.size;i++) {
 			Vector2 tempV = new Vector2();
-			tempV.x = v.x;
-			tempV.y = v.y;
+			tempV.x = array.get(i).x;
+			tempV.y = array.get(i).y;
 			this.pass_array.add(tempV);
 		}
 	}
@@ -721,45 +714,6 @@ public class Role extends Actor {
 				be.notify(this, "dead");
 			}
 		})));
-		// if (face == FACE.right) {
-		// this.setOrigin(0, 0);
-			// addAction(sequence(
-			// parallel(rotateBy(45f, 0.3f), moveBy(-5f, 0f, 0.3f),
-			// moveBy(0f, 10f, 0.3f)),
-			// parallel(rotateBy(45f, 0.3f), moveBy(-5f, 0f, 0.3f),
-			// moveBy(0f, -10f, 0.3f)),
-			// alpha(0.0f, 0.5f),
-			// // fadeOut(0f),
-			// // 让头像回到初始位置
-			// parallel(rotateTo(0, .0f), moveBy(10f, 0f, 0f)),
-			// run(new Runnable() {
-			// @Override
-			// public void run() {
-			// // Role.this.isDead = true;
-			// // Role.this.setVisible(false);
-			// be.notify(this, "dead");
-			//
-			// }
-			// })));
-//		} else if (face == FACE.left) {
-//			this.setOrigin(32, 0);
-			// addAction(sequence(
-			// parallel(rotateBy(-45f, 0.3f), moveBy(5f, 0f, 0.3f),
-			// moveBy(0f, -10f, 0.3f)),
-			// parallel(rotateBy(-45f, 0.3f), moveBy(5f, 0f, 0.3f),
-			// moveBy(0f, 10f, 0.3f)),
-			// alpha(0.0f, 0.5f),
-			// // fadeOut(0f),
-			// // 让头像回到初始位置
-			// parallel(rotateTo(0, .0f), moveBy(-10f, 0f, 0f)),
-			// run(new Runnable() {
-			// @Override
-			// public void run() {
-			// be.notify(this, "dead");
-			//
-			// }
-			// })));
-//		}
 	}
 
 	/**
@@ -872,6 +826,18 @@ public class Role extends Actor {
 		Role_logic();
 		super.act(delta);
 	}
+	//根据技能树索引skill_index返回一个role使用的技能数组
+	public Array<Skill> getUseSkill(){
+		Array<Skill> array=new Array<Skill>();
+		array.add(null);
+		array.add(null);
+		for(Skill s:skill_tree){
+			if(s.skill_index>=0){
+				array.set(s.skill_index, s);
+			}
+		}
+		return array;
+	}
 	/**
 	 * 将角色数转换为角色数据对象
 	 * @return	返回RoleData,保存Role对象中的一些基本信息
@@ -883,7 +849,6 @@ public class Role extends Actor {
 		rdata.classes = this.classes;
 		rdata.bstate = this.bstate;
 		rdata.level = this.level;
-//		rdata.roleTexture = U.getKeyByValue(GTC.getInstance().hm_roleIcon, this.roleTexture);
 		rdata.roleTexture = this.roleTextureName;
 		rdata.maxHp = this.maxHp;
 		rdata.extMaxHp = this.maxHp;
@@ -896,10 +861,6 @@ public class Role extends Actor {
 		rdata.expUp = this.expUp;
 		for(Skill s:this.skill_tree)
 			rdata.skill_tree.add(s.toSkillData());
-
-		for(Skill s:this.skill_array)
-			rdata.skill_array.add(s.toSkillData());
-
 		return rdata;
 	}
 	

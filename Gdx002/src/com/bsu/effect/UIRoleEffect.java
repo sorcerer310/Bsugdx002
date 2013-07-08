@@ -94,8 +94,9 @@ public class UIRoleEffect implements Observer {
 				}
 			});
 			final Array<Image> imgArray = new Array<Image>();
-			for (int j = 0; j < r.skill_array.size; j++) {
-				Skill skill = r.skill_array.get(j);
+			final Array<Skill> skillArray=r.getUseSkill();
+			for (int j = 0; j < skillArray.size; j++) {
+				Skill skill = skillArray.get(j);
 				final int tempIndex = j;
 				SkillIcon se = new SkillIcon(skill, stage, new Vector2(x + 50,
 						y + 32 - j * 33), false);
@@ -104,7 +105,7 @@ public class UIRoleEffect implements Observer {
 				if (j == 0) {
 					U.setAlpha(skillImg, 1);
 				}
-				if (r.skill_array.get(tempIndex).enable) {
+				if (skillArray.get(tempIndex).enable) {
 					skillImg.addListener(new InputListener() {
 						@Override
 						public boolean touchDown(InputEvent event, float x,
@@ -116,7 +117,7 @@ public class UIRoleEffect implements Observer {
 						public void touchUp(InputEvent event, float x, float y,
 								int pointer, int button) {
 							if (!g.isAction_start()) {
-								r.cskill = r.skill_array.get(tempIndex);
+								r.cskill = skillArray.get(tempIndex);
 								U.setSelectImg(imgArray, skillImg);
 							}
 							super.touchUp(event, x, y, pointer, button);

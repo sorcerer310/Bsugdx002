@@ -279,7 +279,8 @@ public class Commander {
 			if (r.csstate.size == 0)
 				continue;
 			r.clearExtValue();
-			for (ContinuedSkillState css : r.csstate) {
+			for (int j=0;j<r.csstate.size;j++) {
+				ContinuedSkillState css=r.csstate.get(j);
 				if (css.ani != null)
 					r.ani_role_continue(css); // 播放持续技能效果动画
 				if (css.cstype == CSType.buff_atk) {

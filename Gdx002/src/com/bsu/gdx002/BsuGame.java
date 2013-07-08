@@ -24,42 +24,6 @@ import com.bsu.tools.Saver;
 public class BsuGame extends Game {
 	@Override
 	public void create() {
-		
-//		Preferences prefs = Gdx.app.getPreferences("gdx002");
-//		prefs.putString("col1","value1");
-//		prefs.flush();
-		
-		//数据序列化测试代码
-//		try {
-//			TestObject to = new TestObject();
-//			to.intvar = 9999;
-//			to.doublevar = 9999.99;
-//			to.strvar = "hahaha";
-//			
-//			Kryo kryo = new Kryo();
-//			Output output = new Output(new FileOutputStream("save.bin"));
-//			kryo.writeObject(output, to);
-//			output.close();
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		
-//		File file = new File("save.bin");
-//		if(file.exists()){
-//			System.out.println("save.bin is exists");
-//			try {
-//				Kryo kryo = new Kryo();
-//				Input input = new Input(new FileInputStream("save.bin"));
-//				TestObject to = kryo.readObject(input,TestObject.class);
-//				System.out.println(to.toString());
-//			} catch (FileNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-
 		Rectangle rect = new Rectangle(0, 0, GC.rect_width, GC.rect_height);
 		// logo1界面
 		HeadScreen hs_logo1 = new HeadScreen(this, GC.logo_0_texture_string,
@@ -152,6 +116,14 @@ public class BsuGame extends Game {
 					BsuGame.this.setScreen(this);
 					this.initScreen();
 				}
+				if(mo.message.equals("changeSkill")){
+					this.showRoleSkill(mo.o);
+				}
+				if(mo.message.equals("updateSkill")){
+					this.showRoleSkill(mo.o);
+					this.showCrystal();
+					this.showSkillTree(mo.o);
+				}
 			}
 		};
 		// 商店界面
@@ -175,7 +147,6 @@ public class BsuGame extends Game {
 					this.setChangeRole(mo.o);
 					this.initScreen();
 				}
-
 			}
 		};
 		setScreen(hs_logo1);
