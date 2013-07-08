@@ -58,6 +58,7 @@ public class Skill {
 
 	public boolean enable = false; // 该技能是否开启使用
 	public SkillIcon skillIcon;//技能图标相关
+	public int skill_index=-1;//-1未使用，0 第一个携带的技能，1第2个携带的技能
 	/**
 	 * 技能初始化构造函数，
 	 * 
@@ -385,6 +386,7 @@ public class Skill {
 		sd.id = id;
 		sd.lev = lev;
 		sd.enable = enable;
+		sd.skill_index=skill_index;
 		return sd;
 	}
 

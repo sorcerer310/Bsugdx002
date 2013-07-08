@@ -62,12 +62,13 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private Array<Label> skillCysLabelArray = new Array<Label>();// 玩家技能碎片文本数组
 	private Array<Image> skillCysImgArray = new Array<Image>();// 玩家技能碎片图像数组
 	private RoleObsever ro;;
+
 	public RoleScreen(Game game) {
 		super(game);
 		stage = new Stage(GC.rect_width, GC.rect_height, false);
 		sRoleStage = new Stage(GC.rect_width, GC.rect_height, false);
 		RoleInfoStage = new Stage(GC.rect_width, GC.rect_height, false);
-		ro=new RoleObsever();
+		ro = new RoleObsever();
 		ro.addObserver(this);
 	}
 
@@ -212,6 +213,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		}
 		U.showRoleSelect(Player.getInstance().playerRole, r);
 		skillIndex = 0;
+		selectSkill=null;
 		showRoleBaseInfo(r);
 		showRoleSkill(r);
 		showSkillTree(r);
@@ -228,8 +230,11 @@ public class RoleScreen extends CubocScreen implements Observer,
 		skillIconArray.clear();
 		int sindex = 0;
 		final Array<Image> skillImg = new Array<Image>();
-		for (final Skill s : r.skill_array) {
+		Array<Skill> skillArray=r.getUseSkill();
+		for (int i=0;i<skillArray.size;i++) {
 			final int index = sindex;
+			final Skill s=skillArray.get(i);
+			
 			sindex++;
 			SkillIcon se = new SkillIcon(s, RoleInfoStage, new Vector2(
 					40 + index * 60, 160), true);
@@ -288,7 +293,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * 设置显示技能树
 	 */
 	public void showSkillTree(final Role r) {
-		for(SkillIcon si:skillTreeIconArray){
+		for (SkillIcon si : skillTreeIconArray) {
 			si.remove();
 		}
 		skillTreeIconArray.clear();
@@ -343,7 +348,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 						selectSkill = s;
 						isReadyToUp(s);
 					} else {
-						if ((selectSkill == null) || selectSkill != s) {
+						if ((selectSkill == null) || (selectSkill != s)||(selectSkill.skill_index>=0)) {
 							selectSkill = s;
 						} else {
 							setAnotherSkill(r, skillIndex, s);
@@ -356,13 +361,13 @@ public class RoleScreen extends CubocScreen implements Observer,
 				}
 			});
 		}
-		if(selectSkill!=null)
-		U.setSelectImg(skillImg, selectSkill.skillIcon.skillImg);
+		if (selectSkill != null)
+			U.setSelectImg(skillImg, selectSkill.skillIcon.skillImg);
 	}
 
 	// 绘制玩家拥有的碎片
 	public void showCrystal() {
-		for(int j=0;j<skillCysLabelArray.size;j++){
+		for (int j = 0; j < skillCysLabelArray.size; j++) {
 			skillCysLabelArray.get(j).remove();
 			skillCysImgArray.get(j).remove();
 		}
@@ -404,10 +409,11 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private void isReadyToUp(Skill s) {
 		up.remove();
 		use.remove();
-		if ((s.quality == QUALITY.green || s.quality == QUALITY.blue)
+		if (((s.quality == QUALITY.green || s.quality == QUALITY.blue)
 				&& (Player.getInstance().crystal_blue >= 6)
 				|| (s.quality == QUALITY.purple && Player.getInstance().crystal_purple >= 6)
-				|| (s.quality == QUALITY.orange && Player.getInstance().crystal_orange >= 6)) {
+				|| (s.quality == QUALITY.orange && Player.getInstance().crystal_orange >= 6))
+				&& s.lev < 6) {
 			if (s.enable) {
 				RoleInfoStage.addActor(up);
 			} else {
@@ -470,8 +476,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param img
 	 */
 	private void setAnotherSkill(Role r, int index, Skill s) {
-		r.skill_array.set(index, s);
-		r.cskill = r.skill_array.get(0);
+		r.getUseSkill().get(index).skill_index=-1;
+		s.skill_index=index;
+		r.cskill =r.getUseSkill().get(0);
 		ro.changeSkill(r);
 	}
 

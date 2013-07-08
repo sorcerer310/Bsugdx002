@@ -439,8 +439,6 @@ public class GameScreen extends CubocScreen implements Observer,
 				}
 				Player.getInstance().addRole(roles);
 			}
-			
-			
 			endStage.addActor(spRole);
 			endStage.addActor(sp);
 		}

@@ -45,6 +45,7 @@ public class SkillIcon extends WidgetGroup{
 			addActor(lv);
 		}
 		if (!skill.enable) {
+			if(lvFlag)
 			lv.setText("");
 			skillImg=notEnabledImg;
 		}else{

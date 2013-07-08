@@ -9,7 +9,6 @@ public class RoleObsever extends Observable{
 	}
 	
 	public void changeSkill(Role r){
-		System.out.println("cccSkill");
 		setChanged();
 		notifyObservers(new MessageObject(r, "changeSkill"));
 	}

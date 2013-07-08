@@ -115,11 +115,9 @@ public class BsuGame extends Game {
 					this.initScreen();
 				}
 				if(mo.message.equals("changeSkill")){
-					System.out.println("chanSkill");
 					this.showRoleSkill(mo.o);
 				}
 				if(mo.message.equals("updateSkill")){
-					System.out.println("upSkill");
 					this.showRoleSkill(mo.o);
 					this.showCrystal();
 					this.showSkillTree(mo.o);

@@ -72,7 +72,7 @@ public class TipsWindows extends WidgetGroup implements Observer{
 		tipsWindows.add(new Label("" + r.exp + "/" + r.expUp, U.get_sytle()));
 		tipsWindows.row();
 		Table t = new Table();
-		for (Skill skill : r.skill_array) {
+		for (Skill skill : r.getUseSkill()) {
 			t.defaults().align(Align.center);
 			t.add(new Image(skill.enable ? skill.icon : GTC.getInstance()
 					.getSkillIcon(0)));

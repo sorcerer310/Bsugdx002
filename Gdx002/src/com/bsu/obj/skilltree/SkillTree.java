@@ -126,6 +126,8 @@ public class SkillTree {
 		for (int i = 0; i < st.size; i++)
 			skills.add(sf.getSkillByIdx(st.get(i).getId()));
 		skills.get(0).enable = true; // 设置生成好的技能树的第一个技能默认开启
+		skills.get(0).skill_index = 0;// 设置技能树第一个技能为角色初始携带的第一个技能
+		skills.get(1).skill_index = 1;// 设置技能树第一个技能为角色初始携带的第一个技能
 		return skills;
 	}
 
@@ -169,8 +171,12 @@ public class SkillTree {
 	 */
 	public Array<Skill> getSkillTreeFixedSkill(int idx) {
 		Array<Skill> skills = new Array<Skill>();
-		skills.add(SkillFactory.getInstance().getSkillByIdx(idx));
-		skills.add(SkillFactory.getInstance().getSkillByIdx(idx));
+		Skill skl1 = SkillFactory.getInstance().getSkillByIdx(idx);
+		skl1.skill_index = 0;
+		Skill skl2 = SkillFactory.getInstance().getSkillByIdx(idx);
+		skl2.skill_index = 1;
+		skills.add(skl1);
+		skills.add(skl2);
 		return skills;
 	}
 
@@ -182,13 +188,19 @@ public class SkillTree {
 	 * @return 返回指定技能的技能树
 	 */
 	public Array<Skill> getSkillTreeFixedSkill(int[] idx) {
+		int index=0;
 		Array<Skill> skills = new Array<Skill>();
-		for (int i : idx)
-			skills.add(SkillFactory.getInstance().getSkillByIdx(i));
+		for (int i : idx){
+			Skill skill=SkillFactory.getInstance().getSkillByIdx(i);
+			skills.add(skill);
+			if(index<2){
+				skill.skill_index=index;
+			}
+			index++;
+		}
 		for (Skill s : skills) {// 开启指定的role的所有技能
 			s.enable = true;
 		}
 		return skills;
 	}
-
 }
