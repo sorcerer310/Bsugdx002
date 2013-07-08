@@ -32,17 +32,11 @@ public class Player {
 	
 	private int money;// 玩家金钱
 	public Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
-//	public Array<Role> playerFightRole = new Array<Role>();// 玩家拥有的出战英雄
-//	public Array<Role> playerIdelRole = new Array<Role>();// 玩家背�
 	public int crystal_blue = 30;//蓝色技能碎片(普通)
 	public int crystal_purple = 30;// 紫色技能碎片数量（高级）
 	public int crystal_orange = 30;// 橙色技能碎片数量（史诗）
 
 	private Player() {
-		// TODO Auto-generated constructor stub
-//		getPlayerRole();
-//		getPlayerFightRole();
-//		getPlayerPackageRole();
 		initPlayerRole();
 	}
 

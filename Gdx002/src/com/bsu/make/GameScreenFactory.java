@@ -36,6 +36,7 @@ public class GameScreenFactory {
 				gsd.setId(map.getInt("id"));//地图ID
 				gsd.setMapName(map.getAttribute("name"));					//地图名称
 				gsd.setNplan(map.getAttribute("plan"));						//刷怪方案
+				
 				Array<Element> npcs = map.getChildrenByName("npcs");		//敌人
 				for(int ni=0;ni<npcs.size;ni++){
 					Element npc = npcs.get(ni);
@@ -81,7 +82,13 @@ public class GameScreenFactory {
 	 * @return
 	 */
 	public GameScreenData makeGameScreen(int id) {
-		return hm_gsd.get(id);
+		GameScreenData gsd = hm_gsd.get(id);
+		
+		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
+		for (Role r : fightRole)
+			gsd.getHeroRoles().add(r);
+		
+		return gsd;
 //		switch (id) {
 //		case 0:
 //			gsd = makeGameScreenTeaching();

@@ -73,6 +73,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	private Image endBackImg;
 	public Array<Role> heros = new Array<Role>(); // 该图所有英雄
 	public Array<Role> npcs = new Array<Role>(); // 该图所有npc
+	private Array<Reward> rewards = new Array<Reward>();	//该图的奖励
 	private Array<Role> roles = new Array<Role>(); // 所有的角色
 	public Array<Vector2> heroArisePos = new Array<Vector2>(); // 英雄出生地
 	public Array<Vector2> npcArisePos = new Array<Vector2>(); // 敌人出生地
@@ -390,7 +391,7 @@ public class GameScreen extends CubocScreen implements Observer,
 			spRole.setPosition(20, 150);
 			spRole.setScrollingDisabled(false, true);
 			spRole.setupFadeScrollBars(0, 0);
-			for (Reward r : GameScreenFactory.getInstance().gsd.getReward()) {
+			for (Reward r : rewards) {
 				if (r.item.type == com.bsu.obj.Item.Type.rolecard) {
 					ItemIcon icon = new ItemIcon(r.item);
 					tableRole.add(icon).width(icon.img_frame.getWidth())
@@ -409,7 +410,7 @@ public class GameScreen extends CubocScreen implements Observer,
 			sp.setPosition(20, 90);
 			sp.setScrollingDisabled(false, true);
 			sp.setupFadeScrollBars(0, 0);
-			for (Reward r : GameScreenFactory.getInstance().gsd.getReward()) {
+			for (Reward r : rewards) {
 				if (r.item.type == com.bsu.obj.Item.Type.skillpart) {
 					table.defaults().padRight(10);
 					table.defaults().padTop(10);
