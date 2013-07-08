@@ -109,6 +109,7 @@ public class Role extends Actor {
 		roleTextureName = tr;
 		roleTexture = new TextureRegion(GTC.getInstance().hm_headItemIcon.get(tr));
 		exp = baseExp();
+		cskill=getUseSkill().get(0);
 		isDead = false;
 		this.setVisible(false);
 		set_actor_base(type);
@@ -126,7 +127,6 @@ public class Role extends Actor {
 		getPass_array().clear();
 		getAttack_array().clear();
 		clearActions();
-		cskill=getUseSkill().get(0);
 		isDead = false;
 	}
 
