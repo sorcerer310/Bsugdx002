@@ -1,9 +1,14 @@
 package com.bsu.make;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map.Entry;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.XmlReader.Element;
 import com.bsu.make.MapNpcsFactory.NpcsPlan;
 import com.bsu.obj.Player;
 import com.bsu.obj.Reward;
@@ -11,12 +16,56 @@ import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
+import com.bsu.tools.U;
 import com.bsu.obj.GameScreenData;
 
 public class GameScreenFactory {
 	private static GameScreenFactory instance = null;
-
+	private Element xroot = null;						//xml文件的根结点
+	private HashMap<Integer,GameScreenData> hm_gsd = new HashMap<Integer,GameScreenData>(); 
 	private GameScreenFactory() {
+		XmlReader reader = new XmlReader();
+		try {
+			//解析xml文件获得根节点
+			xroot = reader.parse(Gdx.files.internal("data/game/battle.xml"));
+			//将xml解析为关卡数据
+			Array<Element> maps = xroot.getChildrenByName("map");
+			for(int i=0;i<maps.size;i++){
+				GameScreenData gsd = new GameScreenData();
+				Element map = maps.get(i);
+				gsd.setId(map.getInt("id"));//地图ID
+				gsd.setMapName(map.getAttribute("name"));					//地图名称
+				gsd.setNplan(map.getAttribute("plan"));						//刷怪方案
+				Array<Element> npcs = map.getChildrenByName("npcs");		//敌人
+				for(int ni=0;ni<npcs.size;ni++){
+					Element npc = npcs.get(ni);
+					//获得该npc是否有count属性，如果有则增加该数量的该npc，否则默认增加1个
+					int count = npc.getInt("count", 1);
+					for(int c=0;c<count;c++)
+						gsd.getNpcRoles().add(RoleFactory.getInstance().getRole(
+							npc.getAttribute("classes"),
+							npc.getAttribute("name"),
+							Type.ENEMY,
+							U.str2Quality(npc.getAttribute("quality")),
+							npc.getAttribute("icon"), 
+							npc.getInt("skill")
+							));
+				}
+				
+				Array<Element> rewards = map.getChildrenByName("reward");	//通关后的奖励
+				for(int ri=0;ri<rewards.size;ri++){
+					Element reward = rewards.get(ri);
+					int count = reward.getInt("count", 1);
+					for(int c=0;c<count;c++)
+						gsd.getReward().add(new Reward(reward.getInt("itemid"),
+							reward.getFloat("prob")
+							));
+				}
+				hm_gsd.put(gsd.getId(), gsd);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static GameScreenFactory getInstance() {
@@ -25,8 +74,6 @@ public class GameScreenFactory {
 		return instance;
 	}
 
-	public GameScreenData gsd = null;
-
 	/**
 	 * 根据索引生成一个关卡
 	 * 
@@ -34,15 +81,16 @@ public class GameScreenFactory {
 	 * @return
 	 */
 	public GameScreenData makeGameScreen(int id) {
-		switch (id) {
-		case 0:
-			gsd = makeGameScreenTeaching();
-			break;
-		default:
-			gsd = makeGameScreenLv(id + 1);
-			break;
-		}
-		return gsd;
+		return hm_gsd.get(id);
+//		switch (id) {
+//		case 0:
+//			gsd = makeGameScreenTeaching();
+//			break;
+//		default:
+//			gsd = makeGameScreenLv(id + 1);
+//			break;
+//		}
+//		return gsd;
 	}
 
 	/**

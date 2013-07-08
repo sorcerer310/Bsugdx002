@@ -82,5 +82,18 @@ public class GameScreenData{
 	public void setNplan(MapNpcsFactory.NpcsPlan nplan) {
 		this.nplan = nplan;
 	}
+	
+	public void setNplan(String nplan){
+		if(nplan.equals("plan1"))
+			this.nplan = NpcsPlan.PLAN1;
+		else if(nplan.equals("plan2"))
+			this.nplan = NpcsPlan.PLAN2;
+		else if(nplan.equals("plan3"))
+			this.nplan = NpcsPlan.PLAN3;
+		else if(nplan.equals("plan4"))
+			this.nplan = NpcsPlan.PLAN4;
+		else 
+			this.nplan = NpcsPlan.PLAN1;
+	}
 }
 

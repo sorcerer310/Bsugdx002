@@ -412,4 +412,21 @@ public class U {
 		}
 		return null;
 	}
+	/**
+	 * 将字符串品质数据转为QUALITY类型值,默认返回green
+	 * @param q	带入的字符串品质
+	 * @return	
+	 */
+	public static QUALITY str2Quality(String q){
+		if(q.equals("green"))
+			return QUALITY.green;
+		else if(q.equals("blue"))
+			return QUALITY.blue;
+		else if(q.equals("orange"))
+			return QUALITY.orange;
+		else if(q.equals("purple"))
+			return QUALITY.purple;
+		else 
+			return QUALITY.green;
+	}
 }

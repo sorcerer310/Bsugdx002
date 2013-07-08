@@ -74,6 +74,13 @@ public class RoleFactory {
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.wizard),tr);
 	}
+	
+	public Role getWizard(String n,Type t,QUALITY q,String tr,int sklidx){
+		return new Role(t,q,CLASSES.wizard,BATLESTATE.IDLE,n,U.getRandom(50, -3, 6),10,3
+				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
+				new SkillTree().getSkillTreeFixedSkill(sklidx),tr);
+	}
+	
 	/**
 	 * 获得一个牧师
 	 * @param n
@@ -85,6 +92,12 @@ public class RoleFactory {
 		return new Role(t,q,CLASSES.cleric,BATLESTATE.IDLE,n,U.getRandom(70, -4, 4),3,5
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.cleric),tr);
+	}
+	
+	public Role getCleric(String n,Type t,QUALITY q,String tr,int sklidx){
+		return new Role(t,q,CLASSES.cleric,BATLESTATE.IDLE,n,U.getRandom(70, -4, 4),3,5
+				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
+				new SkillTree().getSkillTreeFixedSkill(sklidx),tr);
 	}
 	/**
 	 * 获得一个黑暗法师
@@ -98,6 +111,12 @@ public class RoleFactory {
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.sorcerer),tr);
 	}
+	
+	public Role getSorcerer(String n,Type t,QUALITY q,String tr,int sklidx){
+		return new Role(t,q,CLASSES.sorcerer,BATLESTATE.IDLE,n,U.getRandom(70, -6, 3),5,5
+				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
+				new SkillTree().getSkillTreeFixedSkill(sklidx),tr);
+	}
 	/**
 	 * 获得一个射手
 	 * @param n
@@ -109,6 +128,12 @@ public class RoleFactory {
 		return new Role(t,q,CLASSES.archer,BATLESTATE.IDLE,n,U.getRandom(80, -2, 2),10,16
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				new SkillTree().getRandomSkillTree(q, CLASSES.archer),tr);
+	}
+	
+	public Role getArcher(String n,Type t,QUALITY q,String tr,int sklidx){
+		return new Role(t,q,CLASSES.archer,BATLESTATE.IDLE,n,U.getRandom(80, -2, 2),10,16
+				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
+				new SkillTree().getSkillTreeFixedSkill(sklidx),tr);
 	}
 	
 	/**
@@ -124,23 +149,39 @@ public class RoleFactory {
 		Role r = null;
 		switch(c){
 		case fighter:
-			this.getFighter(n, t, q, tr);
+			r = this.getFighter(n, t, q, tr);
 			break;
 		case wizard:
-			this.getWizard(n, t, q, tr);
+			r = this.getWizard(n, t, q, tr);
 			break;
 		case cleric:
-			this.getCleric(n, t, q, tr);
+			r = this.getCleric(n, t, q, tr);
 			break;
 		case sorcerer:
-			this.getSorcerer(n, t, q, tr);
+			r = this.getSorcerer(n, t, q, tr);
 			break;
 		case archer:
-			this.getArcher(n, t, q, tr);
+			r  = this.getArcher(n, t, q, tr);
 			break;
 		}
 		return r;
 	}
+	
+	public Role getRole(String c,String n,Type t,QUALITY q,String tr,int idx){
+		Role r = null;
+		if(c.equals("fight"))
+			r = this.getFighter(n, t, q, tr,idx);
+		else if(c.equals("wizard"))
+			r = this.getWizard(n, t, q, tr,idx);
+		else if(c.equals("cleric"))
+			r = this.getCleric(n, t, q, tr,idx);
+		else if(c.equals("sorcerer"))
+			r = this.getSorcerer(n, t, q, tr,idx);
+		else if(c.equals("archer"))
+			r = this.getArcher(n, t, q, tr,idx);
+		return r;
+	}
+	
 	/**
 	 * 获得一个指定参数的英雄Role,一般用于加载存档使用
 	 * @param c			英雄职业
