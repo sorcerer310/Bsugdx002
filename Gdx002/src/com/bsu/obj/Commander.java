@@ -650,11 +650,8 @@ public class Commander {
 			gamescreen.bstate=BattleState.VICTORY;
 			return;
 		}
-		//否则剩余npc数量不为0，
+		//否则剩余npc数量不为0，执行刷怪函数
 		else{
-			
-			//npcVisibleCount为0了，命令加入其他的敌人
-//			if(npcVisibleCount<=0)
 			commandNpcArise(gamescreen.npcArisePos,npcs,currRoundCount);
 		}
 	}
@@ -668,31 +665,6 @@ public class Commander {
 //	private Random rnd = new Random();
 	private void commandNpcArise(Array<Vector2> v,Array<Role> rs,int rc){
 		MapNpcsFactory.getInstance().refreshNpcs(v, rs, rc);
-		
-//		Array<Role> npcsIsLived = new Array<Role>();		//要加入的敌人
-//		for(Role r:rs){
-//			if(!r.isDead && !r.isVisible())
-//				npcsIsLived.add(r);
-//		}
-		
-		
-		
-//		MapNpcsFactory.getInstance().
-		
-//		for(int i=0;i<(npcsIsLived.size<=v.size?npcsIsLived.size:v.size);i++){
-//			Role r = npcsIsLived.get(i);
-//			r.setPosition(v.get(i).x, v.get(i).y);
-////			r.set_ani_from_state(STATE.idle);			
-//			r.setVisible(true);
-//		}
-		
-		
-//		Vector2 pos = ppos.get(rnd.nextInt(ppos.size));				//获得一个随机位置
-//		if(npcs.size<ppos.size){
-//			Role r = pnpcs.pop();
-//			r.setPosition(pos.x*GC.rect_box_width, pos.y*GC.rect_box_height);
-//			r.setVisible(true);
-//		}
 	}
 	
 	

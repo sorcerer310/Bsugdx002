@@ -18,7 +18,7 @@ public class MapNpcsFactory {
 	}
 	private MapNpcsFactory(){}
 	
-	public static enum NpcsPlan{PLAN1,PLAN2,PLAN3,PLAN4};
+	public static enum NpcsPlan {PLAN1,PLAN2,PLAN3,PLAN4};
 	public NpcsPlan nplan = NpcsPlan.PLAN1;							//指定的当前使用哪个方案
 	/**
 	 * 设置方案1
@@ -73,9 +73,9 @@ public class MapNpcsFactory {
 		if(this.nplan==NpcsPlan.PLAN1){
 			plan1(v,rs,rc);
 		}else if(this.nplan==NpcsPlan.PLAN2){
-			
+			plan2(v,rs,rc);
 		}else if(this.nplan==NpcsPlan.PLAN3){
-			
+			plan3(v,rs,rc);
 		}else if(this.nplan==NpcsPlan.PLAN4){
 			
 		}

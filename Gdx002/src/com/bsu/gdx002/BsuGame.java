@@ -3,6 +3,8 @@ package com.bsu.gdx002;
 import java.io.File;
 import java.util.Observable;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.Rectangle;
 import com.bsu.head.HeadScreen;
 import com.bsu.make.GameScreenFactory;
@@ -23,6 +25,9 @@ public class BsuGame extends Game {
 	@Override
 	public void create() {
 		
+//		Preferences prefs = Gdx.app.getPreferences("gdx002");
+//		prefs.putString("col1","value1");
+//		prefs.flush();
 		
 		//数据序列化测试代码
 //		try {
@@ -196,7 +201,11 @@ public class BsuGame extends Game {
 	@Override
 	public void dispose() {
 		//程序退出销毁时存档
-		Saver.getInstance().save();
+		try{
+			Saver.getInstance().save();
+		}catch(Exception e){
+			System.out.println("保存游戏失败:"+e.toString());
+		}
 		super.dispose();
 	}
 }

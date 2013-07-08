@@ -1,6 +1,10 @@
 package com.bsu.make;
 
+import java.util.ArrayList;
+import java.util.Map.Entry;
+
 import com.badlogic.gdx.utils.Array;
+import com.bsu.make.MapNpcsFactory.NpcsPlan;
 import com.bsu.obj.Player;
 import com.bsu.obj.Reward;
 import com.bsu.obj.Role;
@@ -50,22 +54,20 @@ public class GameScreenFactory {
 		GameScreenData gsd = new GameScreenData();
 		gsd.setId(0);
 		gsd.setMapName("teaching");
-		// 加入玩家的上场英雄
-		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
-		for (Role r : fightRole)
-			gsd.getHeroRoles().add(r);
+		
 		// 加入敌人
-		gsd.getNpcRoles().add(
-				RoleFactory.getInstance().getFighter("NPC", Type.ENEMY,
-						QUALITY.green, "zyc_photo", 3));
-		gsd.getNpcRoles().add(
-				RoleFactory.getInstance().getFighter("NPC", Type.ENEMY,
-						QUALITY.green, "zyc_photo", 5));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("NPC", Type.ENEMY,QUALITY.green, "zyc_photo", 3));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("NPC", Type.ENEMY,QUALITY.green, "zyc_photo", 5));
+		
+		//设置奖励物品及出现机率
 		Array<Reward> reward = new Array<Reward>();
-		reward.add(new Reward(ItemFactory.getInstance().getItemById(1), 1.0f));
-		reward.add(new Reward(ItemFactory.getInstance().getItemById(1), 1.0f));
-		reward.add(new Reward(ItemFactory.getInstance().getItemById(101), 1.0f));
+		reward.add(new Reward(1, 1.0f));
+		reward.add(new Reward(1, 1.0f));
+		reward.add(new Reward(101, 1.0f));
 		gsd.setReward(reward);
+		
+		//设置敌人出现的方式
+		gsd.setNplan(NpcsPlan.PLAN1);
 		return gsd;
 	}
 
