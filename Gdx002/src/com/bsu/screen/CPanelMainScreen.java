@@ -72,22 +72,6 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		stage.addActor(ib_mb_role);
 		stage.addActor(ib_mb_fight);
 		stage.addActor(ib_mb_shop);
-		
-		
-		//初始化Player对象
-//		File file = new File("save.bin");
-//		if(file.exists()){
-//			System.out.println("save.bin is exists");
-//			try {
-//				Kryo kryo = new Kryo();
-//				Input input = new Input(new FileInputStream("save.bin"));
-//				Player.loadPlayer(kryo.readObject(input,Player.class));
-//			} catch (FileNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-		
 	}
 
 	private void setFightRoles() {

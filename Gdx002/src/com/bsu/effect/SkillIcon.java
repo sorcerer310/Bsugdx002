@@ -6,13 +6,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
-public class SkillIcon {
+public class SkillIcon extends WidgetGroup{
 	private TextureRegion quality_frame;
 	public Image skillImgEffect;
 	public Image skillImg;
@@ -36,12 +37,12 @@ public class SkillIcon {
 				U.getQualityColor(skill.quality), Color.BLACK, 1);
 		skillImgEffect = new Image(quality_frame);
 		skillImgEffect.setScale(1.2f);
-		s.addActor(skillImgEffect);
+		addActor(skillImgEffect);
 		skillImgEffect.setPosition(v.x - 1, v.y - 1);
 		if (lvFlag){
 			lv= WidgetFactory.getInstance().makeLabel("" + skill.lev, 0.5f,
 					(int) (v.x) + 34, (int) (v.y) - 7);
-			s.addActor(lv);
+			addActor(lv);
 		}
 		if (!skill.enable) {
 			lv.setText("");
@@ -49,10 +50,11 @@ public class SkillIcon {
 		}else{
 			skillImg=enableImg;
 		}
-		s.addActor(skillImg);	
+		addActor(skillImg);	
 		skillImg.setScale(1.2f);
 		skillImg.setPosition(v.x, v.y);
 		U.setAlpha(skillImg, 0.5f);
 		skill.skillIcon=this;
+		s.addActor(this);
 	}
 }
