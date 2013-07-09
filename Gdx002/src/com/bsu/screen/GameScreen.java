@@ -49,8 +49,6 @@ import com.bsu.tools.GameMap;
 import com.bsu.tools.Saver;
 import com.bsu.tools.U;
 import com.bsu.tools.GC.QUALITY;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.Input;
 
 public class GameScreen extends CubocScreen implements Observer,
 		GestureListener {
@@ -116,6 +114,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		}
 		this.heros = gsd.getHeroRoles();
 		this.npcs = gsd.getNpcRoles();
+		this.rewards = gsd.getReward();
 		// 将所有role放入同一Role中便于操作
 		roles.clear();
 		roles.addAll(heros);

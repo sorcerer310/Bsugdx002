@@ -1,9 +1,7 @@
 package com.bsu.make;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
@@ -15,7 +13,6 @@ import com.bsu.obj.Reward;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.tools.GC.QUALITY;
-import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 import com.bsu.obj.GameScreenData;
 
