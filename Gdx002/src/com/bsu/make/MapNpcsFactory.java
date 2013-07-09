@@ -75,6 +75,9 @@ public class MapNpcsFactory {
 		int lnsize = livednpc.size; // 活着但没上场npc的数量
 		int bvsize = v.size; // 出生地数量
 		for (int i = 0; i < (lnsize <= bvsize ? lnsize : bvsize); i++) {
+			if(hasNpc(v.get(i),rs)){//此处有NPC 存在  则不添加。防止重叠
+				break;
+			}
 			Role r = livednpc.get(i);
 			r.setPosition(v.get(i).x, v.get(i).y);
 			r.setVisible(true);
@@ -106,8 +109,16 @@ public class MapNpcsFactory {
 		}else if(this.nplan==NpcsPlan.PLAN3){
 			plan3(v,rs,rc);
 		}else if(this.nplan==NpcsPlan.PLAN4){
-			
-
+		
 		}
+	}
+	//某个点是否有NPC存在
+	private boolean hasNpc(Vector2 v,Array<Role> rs){
+		for(Role e:rs){
+			if((e.getX()==v.x)&&(e.getY()==v.y)){
+				return true;
+			}
+		}
+		return false;
 	}
 }
