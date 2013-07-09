@@ -477,7 +477,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	public boolean isOtherHero(int inputX, int inputY) {
 		for (Role r : commander.allRoles) {
 			if (r.isDead) {
-				return false;
+				break;
 			}
 			Vector2 hv = new Vector2(r.getBoxX(), r.getBoxY());
 			if ((inputX == hv.x) && (inputY == hv.y)) {
@@ -507,10 +507,11 @@ public class GameScreen extends CubocScreen implements Observer,
 	 */
 	public void set_map_value(Role r) {
 		MapBox.pass_array.clear();
-		for (Vector2 v : r.getPass_array()) {
+		for (int i=0;i<r.getPass_array().size;i++) {
+			
 			Vector2 tempV = new Vector2();
-			tempV.x = v.x;
-			tempV.y = v.y;
+			tempV.x = r.getPass_array().get(i).x;
+			tempV.y = r.getPass_array().get(i).y;
 			MapBox.pass_array.add(tempV);
 		}
 	}
