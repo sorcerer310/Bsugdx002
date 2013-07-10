@@ -13,6 +13,7 @@ import com.bsu.obj.Reward;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.obj.data.GameScreenData;
+import com.bsu.tools.GC.CLASSES;
 import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.U;
 
@@ -110,7 +111,7 @@ public class GameScreenFactory {
 		// 加入敌人
 		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("NPC", Type.ENEMY,QUALITY.green, "zyc_photo", 3));
 		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("NPC", Type.ENEMY,QUALITY.green, "zyc_photo", 5));
-		
+
 		//设置奖励物品及出现机率
 		Array<Reward> reward = new Array<Reward>();
 		reward.add(new Reward(1, 1.0f));
