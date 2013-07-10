@@ -345,7 +345,9 @@ public class GameScreen extends CubocScreen implements Observer,
 	 */
 	public void newRound() {
 		setAction_start(false);
-		for (Role r : commander.heros) {
+//		for (Role r : commander.heros) {
+		for(int i=0;i<commander.heros.size;i++){
+			Role r = commander.heros.get(i);
 			if (!r.isDead) {
 				heroSelected(r);
 				heroControllor(r);
