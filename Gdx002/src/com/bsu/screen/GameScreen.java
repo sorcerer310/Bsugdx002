@@ -112,7 +112,7 @@ public class GameScreen extends CubocScreen implements Observer,
 			addActorListener();
 			initFlag=true;
 		}
-		this.heros = gsd.getHeroRoles();System.out.println("读档角色数量"+heros.size);
+		this.heros = gsd.getHeroRoles();
 		this.npcs = gsd.getNpcRoles();
 		this.rewards = gsd.getReward();
 		// 将所有role放入同一Role中便于操作
@@ -177,7 +177,6 @@ public class GameScreen extends CubocScreen implements Observer,
 		}
 
 		Array<Role> rs = p == Type.HERO ? heros : npcs;
-		System.out.println("出战role数量"+rs.size);
 		for (int i = 0; i < (rs.size < v.size ? rs.size : v.size); i++) {
 			Role r = rs.get(i);
 			r.setVisible(true);
