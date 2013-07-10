@@ -63,6 +63,7 @@ public class RoleIcon extends WidgetGroup {
 				this.addActor(role_effect4[i]);
 		}
 		r.roleIcon = this;
+		showEffect(false);
 	}
 	/**
 	 * 显示被选中效果
