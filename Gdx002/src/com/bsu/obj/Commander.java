@@ -495,8 +495,12 @@ public class Commander {
 		//如果没有指定检查Role直接返回retrs
 		if(checkrs == null)
 			return retrs;
-		for (Vector2 v : vs) {
-			for (Role r : checkrs) {
+//		for (Vector2 v : vs) {
+//			for (Role r : checkrs) {
+		for(int i=0;i<vs.size;i++){
+			for(int j=0;j<checkrs.size;j++){
+				Role r = checkrs.get(j);
+				Vector2 v = vs.get(i);
 				if(r.isDead || !r.isVisible()) continue;	//如果单位死亡或未启用跳过检查
 				// 如果技能为全图技能，加入作用单位继续循环
 				if (s.otype == ObjectType.all) {

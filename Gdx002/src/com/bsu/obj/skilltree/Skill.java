@@ -153,8 +153,8 @@ public class Skill {
 	 */
 	public Array<Vector2> flipRange() {
 		Array<Vector2> retv = new Array<Vector2>();
-		for (Vector2 v : range)
-			retv.add(new Vector2(-v.x, v.y));
+		for(int i=0;i<range.size;i++)
+			retv.add(new Vector2(-range.get(i).x,range.get(i).y));
 		return retv;
 	}
 
