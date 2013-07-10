@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Role;
+import com.bsu.obj.Role.BATLESTATE;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 import com.bsu.tools.GC.QUALITY;
@@ -47,6 +48,10 @@ public class RoleIcon extends WidgetGroup {
 		this.addActor(img_head);
 		this.addActor(img_classes);
 		this.addActor(img_frame);
+		if(r.bstate==BATLESTATE.FIGHT){
+			Image img_fight=new Image(img_classes.getDrawable());
+			this.addActor(img_fight);
+		}
 		for (int i = 0; i < role_effect1.length; i++) {
 			if (role_effect1[i] != null)
 				this.addActor(role_effect1[i]);
