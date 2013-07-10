@@ -469,7 +469,9 @@ public class Role extends Actor {
 	 */
 	public boolean hasAnatherRole(Array<Role> rs) {
 		int num = 0;
-		for (Role r : rs) {
+//		for (Role r : rs) {
+		for(int i=0;i<rs.size;i++){
+			Role r = rs.get(i);
 			if (this != r) {
 				num = face == FACE.right ? 1 : -1;
 				// 如果这个单位不是自己，并且在地图上存在，且没有死亡，返回true
