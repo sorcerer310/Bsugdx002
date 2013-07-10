@@ -113,7 +113,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 		stage.addActor(orangeImg);
 		stage.addActor(greenImg);
 		addRoleToStage(QUALITY.all);
-		showRoleInfo(Player.getInstance().playerRole.get(0));
 	}
 
 	/**
@@ -195,10 +194,12 @@ public class RoleScreen extends CubocScreen implements Observer,
 				}
 			});
 		}
-		if (roleArray.size < 0) {
+		if (roleArray.size <= 0) {
 			RoleInfoStage.clear();
 			TipsWindows.getInstance().showTips("没有相应品质卡片，通过可收集", RoleInfoStage,
 					Color.GRAY);
+		}else{
+			showRoleInfo(roleArray.get(0));
 		}
 	}
 
@@ -508,7 +509,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private void setAnotherSkill(Role r, int index, Skill s) {
 		r.getUseSkill().get(index).skill_index = -1;
 		s.skill_index = index;
-		r.cskill = r.getUseSkill().get(0);
 		ro.changeSkill(r);
 	}
 
