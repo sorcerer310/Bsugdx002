@@ -124,6 +124,9 @@ public class BsuGame extends Game {
 					this.showCrystal();
 					this.showSkillTree(mo.o);
 				}
+				if(mo.message.equals("lockRole")){
+					changeLockState(mo.o, mo.o.locked);
+				}
 			}
 		};
 		// 商店界面

@@ -163,7 +163,7 @@ public class SelectRoleScreen extends CubocScreen implements Observer,
 		table.align(Align.top);
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			RoleIcon photo = new RoleIcon(r, false);
+			RoleIcon photo = new RoleIcon(r, false,false);
 			if (i % value == 0 && i > 0) {
 				table.row();
 			}

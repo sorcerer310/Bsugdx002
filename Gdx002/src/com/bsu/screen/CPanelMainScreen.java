@@ -83,7 +83,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < frlenght; i++) {
 			final Role r = playerRole.get(i);
 			Vector2 v = new Vector2(x, y - w * i);
-			RoleIcon photo = new RoleIcon(r, true);
+			RoleIcon photo = new RoleIcon(r, true,false);
 			roleStage.addActor(photo);
 			photo.setPosition(v.x, v.y);
 			photo.addListener(new InputListener() {

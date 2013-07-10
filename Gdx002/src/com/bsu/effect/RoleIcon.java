@@ -38,7 +38,7 @@ public class RoleIcon extends WidgetGroup {
 	public Image img_classes = null;
 	public MyParticle particle;
 
-	public RoleIcon(Role r, boolean b) {
+	public RoleIcon(Role r, boolean b,boolean flag) {
 		img_head = new Image(GTC.getInstance().hm_headItemIcon.get(r.roleTextureName)); // 头像图片
 		img_head.setScale(0.5f);
 		img_frame = GTC.getInstance().getImageFrame(r.quality);
@@ -48,7 +48,7 @@ public class RoleIcon extends WidgetGroup {
 		this.addActor(img_head);
 		this.addActor(img_classes);
 		this.addActor(img_frame);
-		if(r.bstate==BATLESTATE.FIGHT){
+		if((r.bstate==BATLESTATE.FIGHT)&&flag){
 			Image img_fight=new Image(img_classes.getDrawable());
 			this.addActor(img_fight);
 		}

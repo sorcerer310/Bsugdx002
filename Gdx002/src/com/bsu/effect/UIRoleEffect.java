@@ -72,7 +72,7 @@ public class UIRoleEffect implements Observer {
 			int y = 10;
 			final Role r = fightPlayer.get(i);
 			Vector2 v = new Vector2(x, y);
-			RoleIcon photo = new RoleIcon(r, false);
+			RoleIcon photo = new RoleIcon(r, false,false);
 			stage.addActor(photo);
 			photo.setPosition(v.x, v.y);
 			roleUIInfo rui = new roleUIInfo(r, stage, x, y);

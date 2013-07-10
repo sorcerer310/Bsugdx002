@@ -19,7 +19,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.MyParticle;
 import com.bsu.effect.RoleIcon;
@@ -61,6 +63,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private Array<SkillIcon> skillIconArray = new Array<SkillIcon>();// 人物头像Icon数组
 	private Array<Label> skillCysLabelArray = new Array<Label>();// 玩家技能碎片文本数组
 	private Array<Image> skillCysImgArray = new Array<Image>();// 玩家技能碎片图像数组
+	private WidgetGroup infoGroup=new WidgetGroup();//角色基本信息容器，其他数组也可以使用widgetGroup容器
 	private RoleObsever ro;;
 
 	public RoleScreen(Game game) {
@@ -172,7 +175,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		sRoleStage.addActor(sp);
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			final RoleIcon photo = new RoleIcon(r, false);
+			final RoleIcon photo = new RoleIcon(r, false, true);
 			table.add(photo).width(photo.img_frame.getWidth())
 					.height(photo.img_frame.getHeight()) // 设置photo宽度和高度
 					.padTop(2f).align(Align.top)// 没起作用。。。
@@ -213,9 +216,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 		}
 		U.showRoleSelect(Player.getInstance().playerRole, r);
 		skillIndex = 0;
-		selectSkill=null;
-		showRoleBaseInfo(r);
+		selectSkill = null;
 		showRoleSkill(r);
+		showRoleBaseInfo(r);
 		showSkillTree(r);
 		showCrystal();
 		// wfy.makeImg(r.weapon.texture, RoleInfoStage, 1f, 40, 100);
@@ -230,11 +233,11 @@ public class RoleScreen extends CubocScreen implements Observer,
 		skillIconArray.clear();
 		int sindex = 0;
 		final Array<Image> skillImg = new Array<Image>();
-		Array<Skill> skillArray=r.getUseSkill();
-		for (int i=0;i<skillArray.size;i++) {
+		Array<Skill> skillArray = r.getUseSkill();
+		for (int i = 0; i < skillArray.size; i++) {
 			final int index = sindex;
-			final Skill s=skillArray.get(i);
-			
+			final Skill s = skillArray.get(i);
+
 			sindex++;
 			SkillIcon se = new SkillIcon(s, RoleInfoStage, new Vector2(
 					40 + index * 60, 160), true);
@@ -272,7 +275,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * 
 	 * @param r
 	 */
-	private void showRoleBaseInfo(Role r) {
+	private void showRoleBaseInfo(final Role r) {
+		infoGroup.clear();
 		Label name = wfy.makeLabel(r.name, 1f, 40, 240,
 				U.getQualityColor(r.quality));
 		Label lv = wfy.makeLabel("等级:" + r.level, 0.5f, 100, 240);
@@ -281,14 +285,40 @@ public class RoleScreen extends CubocScreen implements Observer,
 				.makeLabel("经验:" + r.exp + "/" + r.expUp, 0.5f, 100, 220);
 		Label attack = wfy.makeLabel("攻击:" + r.getAttack(), 0.5f, 40, 200);
 		Label defend = wfy.makeLabel("防御:" + r.getDefend(), 0.5f, 100, 200);
-		RoleInfoStage.addActor(name);
-		RoleInfoStage.addActor(lv);
-		RoleInfoStage.addActor(hp);
-		RoleInfoStage.addActor(exp);
-		RoleInfoStage.addActor(attack);
-		RoleInfoStage.addActor(defend);
+		final Image unLockImg= new Image(GTC.getInstance().getSkillIcon(0));
+		final Image lockImg= GTC.getInstance().getClassesIconImg(
+				r.classes);
+		final Image lockedImg = r.locked ?lockImg :unLockImg;
+		lockedImg.setPosition(40, 120);
+		infoGroup.addActor(lockedImg);
+		infoGroup.addActor(name);
+		infoGroup.addActor(lv);
+		infoGroup.addActor(hp);
+		infoGroup.addActor(exp);
+		infoGroup.addActor(attack);
+		infoGroup.addActor(defend);
+		RoleInfoStage.addActor(infoGroup);
+		lockedImg.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				return true;
+			}
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+					ro.lockRole(r);
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
 	}
-
+	//改变锁定状态
+	public void changeLockState(Role r,boolean flag){
+		r.locked=!flag;
+		String s=r.locked?"锁定卡片":"解锁卡片";
+		TipsWindows.getInstance().showTips(s, RoleInfoStage, Color.GREEN);
+		showRoleBaseInfo(r);
+	}
 	/**
 	 * 设置显示技能树
 	 */
@@ -348,7 +378,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 						selectSkill = s;
 						isReadyToUp(s);
 					} else {
-						if ((selectSkill == null) || (selectSkill != s)||(selectSkill.skill_index>=0)) {
+						if ((selectSkill == null) || (selectSkill != s)
+								|| (selectSkill.skill_index >= 0)) {
 							selectSkill = s;
 						} else {
 							setAnotherSkill(r, skillIndex, s);
@@ -411,9 +442,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 		use.remove();
 		if (((s.quality == QUALITY.green || s.quality == QUALITY.blue)
 				&& (Player.getInstance().crystal_blue >= 6)
-				|| (s.quality == QUALITY.purple && Player.getInstance().crystal_purple >= 6)
-				|| (s.quality == QUALITY.orange && Player.getInstance().crystal_orange >= 6))
-				&& s.lev < 6) {
+				|| (s.quality == QUALITY.purple && Player.getInstance().crystal_purple >= 6) || (s.quality == QUALITY.orange && Player
+				.getInstance().crystal_orange >= 6)) && s.lev < 6) {
 			if (s.enable) {
 				RoleInfoStage.addActor(up);
 			} else {
@@ -476,9 +506,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * @param img
 	 */
 	private void setAnotherSkill(Role r, int index, Skill s) {
-		r.getUseSkill().get(index).skill_index=-1;
-		s.skill_index=index;
-		r.cskill =r.getUseSkill().get(0);
+		r.getUseSkill().get(index).skill_index = -1;
+		s.skill_index = index;
+		r.cskill = r.getUseSkill().get(0);
 		ro.changeSkill(r);
 	}
 

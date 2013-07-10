@@ -25,6 +25,7 @@ public class RoleData{
 	public int extDefend;						//额外的防御力
 	public int exp;								//经验值
 	public int expUp;							//下级升级的经验值
+	public boolean locked;						//是否被锁定
 	public Array<SkillData> skill_tree=new Array<SkillData>();			//英雄的技能树
 	public Array<SkillData> skill_array=new Array<SkillData>();			//英雄本关卡携带的技能
 }

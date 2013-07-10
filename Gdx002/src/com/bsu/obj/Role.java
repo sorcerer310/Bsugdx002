@@ -38,7 +38,7 @@ public class Role extends Actor {
 	public RoleIcon roleIcon;
 	public Equip weapon;								// 人物武器
 	public Equip armor;									// 人物护甲
-
+	public boolean locked=false;//是否被锁定
 	public boolean isDead = false; // 角色死亡标识
 	private BsuEvent bevent = null; // 用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
@@ -859,6 +859,7 @@ public class Role extends Actor {
 		rdata.extDefend = this.extDefend;
 		rdata.exp = this.exp;
 		rdata.expUp = this.expUp;
+		rdata.locked=this.locked;
 		for(Skill s:this.skill_tree)
 			rdata.skill_tree.add(s.toSkillData());
 		return rdata;
