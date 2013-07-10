@@ -36,12 +36,12 @@ import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Commander;
 import com.bsu.obj.Item;
 import com.bsu.make.*;
-import com.bsu.obj.GameScreenData;
 import com.bsu.obj.MapBox;
 import com.bsu.obj.Player;
 import com.bsu.obj.Reward;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
+import com.bsu.obj.data.GameScreenData;
 import com.bsu.obj.UITopAnimation;
 import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
@@ -359,6 +359,7 @@ public class GameScreen extends CubocScreen implements Observer,
 
 	/**
 	 * 战斗结束
+	 * @param victflag	标记战斗胜利还是战斗失败
 	 */
 	public void battleEnd(boolean victflag) {
 		String endname = "victory";
@@ -389,7 +390,7 @@ public class GameScreen extends CubocScreen implements Observer,
 			spRole.setScrollingDisabled(false, true);
 			spRole.setupFadeScrollBars(0, 0);
 			for (Reward r : rewards) {
-				if (r.item.type == com.bsu.obj.Item.Type.rolecard) {
+				if (r.item.type == com.bsu.obj.Item.Type.rolecard && U.probability(r.probability)) {
 					ItemIcon icon = new ItemIcon(r.item);
 					tableRole.add(icon).width(icon.img_frame.getWidth())
 							.height(icon.img_frame.getHeight())
@@ -408,7 +409,7 @@ public class GameScreen extends CubocScreen implements Observer,
 			sp.setScrollingDisabled(false, true);
 			sp.setupFadeScrollBars(0, 0);
 			for (Reward r : rewards) {
-				if (r.item.type == com.bsu.obj.Item.Type.skillpart) {
+				if (r.item.type == com.bsu.obj.Item.Type.skillpart && U.probability(r.probability)) {
 					table.defaults().padRight(10);
 					table.defaults().padTop(10);
 					table.add(new Image(GTC.getInstance().hm_headItemIcon.get(r.item.tr_item)));

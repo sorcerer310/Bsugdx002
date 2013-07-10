@@ -1,4 +1,4 @@
-package com.bsu.obj;
+package com.bsu.obj.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.make.ItemFactory;
 import com.bsu.make.MapNpcsFactory;
 import com.bsu.make.MapNpcsFactory.NpcsPlan;
+import com.bsu.obj.Reward;
+import com.bsu.obj.Role;
 
 /**
  * 关卡的数据 
@@ -26,9 +28,9 @@ public class GameScreenData{
 	
 	public GameScreenData(){
 		//构造函数中加入玩家上场的英雄
-		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
-		for (Role r : fightRole)
-			heroRoles.add(r);
+//		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
+//		for (Role r : fightRole)
+//			heroRoles.add(r);
 	}
 	
 	public Array<Role> getRols() {

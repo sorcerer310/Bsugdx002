@@ -9,7 +9,7 @@ import com.bsu.make.ItemFactory;
  */
 public class Reward {
 	public Item item = null;			//奖励物品
-	private float probability = .0f;	//出现机率
+	public float probability = .0f;	//出现机率
 	
 	public Reward(Item i,float p){
 		item = i;

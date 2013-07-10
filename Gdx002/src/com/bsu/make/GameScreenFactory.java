@@ -12,9 +12,9 @@ import com.bsu.obj.Player;
 import com.bsu.obj.Reward;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
+import com.bsu.obj.data.GameScreenData;
 import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.U;
-import com.bsu.obj.GameScreenData;
 
 public class GameScreenFactory {
 	private static GameScreenFactory instance = null;
