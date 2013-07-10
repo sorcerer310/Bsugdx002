@@ -112,7 +112,7 @@ public class UIRoleEffect implements Observer {
 						y + 32 - j * 33));
 				final Image skillImg = se.skillImg;
 				imgArray.add(skillImg);
-				if (j == 0) {
+				if (r.cskill==skill) {
 					U.setAlpha(skillImg, 1);
 				}
 				if (skillArray.get(tempIndex).enable) {
@@ -171,7 +171,7 @@ public class UIRoleEffect implements Observer {
 					rui.hpImg.setScaleX(0);
 					U.setAlpha(rui.photoImg, 0.2f);
 					U.setAlpha(rui.role_classes, 0.2f);
-					U.setAlpha(rui.nameLabel, 0.2f);
+					U.setAlpha(rui.nameLabel, 0.5f);
 				}
 			}
 		}

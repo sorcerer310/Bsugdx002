@@ -109,6 +109,7 @@ public class Role extends Actor {
 		roleTextureName = tr;
 		roleTexture = new TextureRegion(GTC.getInstance().hm_headItemIcon.get(tr));
 		exp = baseExp();
+		if(cskill==null)
 		cskill=getUseSkill().get(0);
 		isDead = false;
 		this.setVisible(false);

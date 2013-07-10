@@ -508,7 +508,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private void setAnotherSkill(Role r, int index, Skill s) {
 		r.getUseSkill().get(index).skill_index = -1;
 		s.skill_index = index;
-		r.cskill = r.getUseSkill().get(0);
 		ro.changeSkill(r);
 	}
 
