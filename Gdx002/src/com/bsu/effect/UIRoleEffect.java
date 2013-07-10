@@ -67,12 +67,22 @@ public class UIRoleEffect implements Observer {
 			}
 		});
 		Array<Role> fightPlayer = Player.getInstance().getPlayerFightRole();
-		for (int i = 0; i < fightPlayer.size; i++) {
-			int x = 10 + i * 95;
+		for (int i = 0; i < 5; i++) {
+			int x = 4+i * 96;
 			int y = 10;
-			final Role r = fightPlayer.get(i);
 			Vector2 v = new Vector2(x, y);
-			RoleIcon photo = new RoleIcon(r, false,false);
+			if(i>=fightPlayer.size){
+				RoleIcon icon=new RoleIcon();
+				icon.setPosition(x, y);
+				stage.addActor(icon);
+				for(int sj=0;sj<2;sj++){
+					new SkillIcon(stage, new Vector2(x+50, y+32-sj*33));
+				}
+				continue;
+			}
+			
+			final Role r = fightPlayer.get(i);
+			RoleIcon photo = new RoleIcon(r,false);
 			stage.addActor(photo);
 			photo.setPosition(v.x, v.y);
 			roleUIInfo rui = new roleUIInfo(r, stage, x, y);
@@ -99,7 +109,7 @@ public class UIRoleEffect implements Observer {
 				Skill skill = skillArray.get(j);
 				final int tempIndex = j;
 				SkillIcon se = new SkillIcon(skill, stage, new Vector2(x + 50,
-						y + 32 - j * 33), false);
+						y + 32 - j * 33));
 				final Image skillImg = se.skillImg;
 				imgArray.add(skillImg);
 				if (j == 0) {
@@ -154,11 +164,11 @@ public class UIRoleEffect implements Observer {
 			if (fightRole.get(i).equals(r)) {
 				roleUIInfo rui = hpArray.get(i);
 				if (r.getCurrentHp() > 0) {
-					rui.hpImg.setScaleY((float) (r.getCurrentHp())
+					rui.hpImg.setScaleX((float) (r.getCurrentHp())
 							/ (float) (r.maxHp));
 				} else {
 					// 头像变暗
-					rui.hpImg.setScaleY(0);
+					rui.hpImg.setScaleX(0);
 					U.setAlpha(rui.photoImg, 0.2f);
 					U.setAlpha(rui.role_classes, 0.2f);
 					U.setAlpha(rui.nameLabel, 0.2f);
@@ -179,12 +189,12 @@ class roleUIInfo {
 	Label nameLabel;
 
 	public roleUIInfo(Role r, Stage stage, int x, int y) {
-		TextureRegion hpBack = WidgetFactory.getInstance().getTextureFill(4,
-				48, Color.BLACK, 1);
-		TextureRegion hp = WidgetFactory.getInstance().getTextureFill(4, 48,
+		TextureRegion hpBack = WidgetFactory.getInstance().getTextureFill(48,
+				4, Color.BLACK, 1);
+		TextureRegion hp = WidgetFactory.getInstance().getTextureFill(48, 4,
 				new Color(255, 0, 0, 1), 1);
-		Image img = WidgetFactory.getInstance().makeImg(hpBack, 1, x - 10, y);
-		hpImg = WidgetFactory.getInstance().makeImg(hp, 1, x - 6, y);
+		Image img = WidgetFactory.getInstance().makeImg(hpBack, 1, x, y+49);
+		hpImg = WidgetFactory.getInstance().makeImg(hp, 1, x, y+49);
 		nameLabel = WidgetFactory.getInstance().makeLabel(r.name, 0.5f, x,
 				y + 50);
 		stage.addActor(img);

@@ -175,7 +175,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		sRoleStage.addActor(sp);
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			final RoleIcon photo = new RoleIcon(r, false, true);
+			final RoleIcon photo = new RoleIcon(r, true);
 			table.add(photo).width(photo.img_frame.getWidth())
 					.height(photo.img_frame.getHeight()) // 设置photo宽度和高度
 					.padTop(2f).align(Align.top)// 没起作用。。。
@@ -240,7 +240,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 
 			sindex++;
 			SkillIcon se = new SkillIcon(s, RoleInfoStage, new Vector2(
-					40 + index * 60, 160), true);
+					40 + index * 60, 160));
 			skillIconArray.add(se);
 			final Image img = se.skillImg;
 			skillImg.add(img);
@@ -337,22 +337,22 @@ public class RoleScreen extends CubocScreen implements Observer,
 			SkillIcon se = null;
 			if (s.quality == QUALITY.green) {
 				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsGreen
-						* sw, iy), true);
+						* sw, iy));
 				numsGreen++;
 			}
 			if (s.quality == QUALITY.blue) {
 				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsBlue
-						* sw, iy + height), true);
+						* sw, iy + height));
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
 				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsPur
-						* sw, iy + height * 2), true);
+						* sw, iy + height * 2));
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
 				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsOra
-						* sw, iy + height * 3), true);
+						* sw, iy + height * 3));
 				numsOra++;
 			}
 			skillTreeIconArray.add(se);

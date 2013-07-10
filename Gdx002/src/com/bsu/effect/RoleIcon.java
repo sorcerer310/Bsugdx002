@@ -38,7 +38,7 @@ public class RoleIcon extends WidgetGroup {
 	public Image img_classes = null;
 	public MyParticle particle;
 
-	public RoleIcon(Role r, boolean b,boolean flag) {
+	public RoleIcon(Role r,boolean flag) {
 		img_head = new Image(GTC.getInstance().hm_headItemIcon.get(r.roleTextureName)); // 头像图片
 		img_head.setScale(0.5f);
 		img_frame = GTC.getInstance().getImageFrame(r.quality);
@@ -48,7 +48,7 @@ public class RoleIcon extends WidgetGroup {
 		this.addActor(img_head);
 		this.addActor(img_classes);
 		this.addActor(img_frame);
-		if((r.bstate==BATLESTATE.FIGHT)&&flag){
+		if((r.bstate==BATLESTATE.FIGHT)&&flag){//是否显示锁定图标
 			Image img_fight=new Image(img_classes.getDrawable());
 			this.addActor(img_fight);
 		}
@@ -63,7 +63,6 @@ public class RoleIcon extends WidgetGroup {
 				this.addActor(role_effect4[i]);
 		}
 		r.roleIcon = this;
-		showEffect(b);
 	}
 	/**
 	 * 显示被选中效果
@@ -125,5 +124,10 @@ public class RoleIcon extends WidgetGroup {
 			RepeatAction ra = Actions.repeat(RepeatAction.FOREVER, seq);
 			reffect[i].addAction(sequence(mba, ra));
 		}
+	}
+	//获得一个空头像，跟空技能一样
+	public RoleIcon(){
+		Image emptyImg = GTC.getInstance().getImageFrame(QUALITY.green);
+		this.addActor(emptyImg);
 	}
 }
