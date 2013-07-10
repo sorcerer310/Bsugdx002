@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.make.ItemFactory;
 import com.bsu.make.MapNpcsFactory;
 import com.bsu.make.MapNpcsFactory.NpcsPlan;
+import com.bsu.obj.Player;
 import com.bsu.obj.Reward;
 import com.bsu.obj.Role;
 
@@ -27,10 +28,6 @@ public class GameScreenData{
 	private MapNpcsFactory.NpcsPlan nplan = NpcsPlan.PLAN1;		//出兵计划使用plan1
 	
 	public GameScreenData(){
-		//构造函数中加入玩家上场的英雄
-//		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
-//		for (Role r : fightRole)
-//			heroRoles.add(r);
 	}
 	
 	public Array<Role> getRols() {
@@ -41,6 +38,14 @@ public class GameScreenData{
 	}
 
 	public Array<Role> getHeroRoles() {
+//		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
+//		for (Role r : fightRole)
+//			heroRoles.add(r);
+		heroRoles.clear();
+		//构造函数中加入玩家上场的英雄
+		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
+		for (Role r : fightRole)
+			heroRoles.add(r);
 		return heroRoles;
 	}
 

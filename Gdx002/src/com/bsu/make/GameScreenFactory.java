@@ -81,10 +81,10 @@ public class GameScreenFactory {
 	 */
 	public GameScreenData makeGameScreen(int id) {
 		GameScreenData gsd = hm_gsd.get(id);
-		
-		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
-		for (Role r : fightRole)
-			gsd.getHeroRoles().add(r);
+//		
+//		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
+//		for (Role r : fightRole)
+//			gsd.getHeroRoles().add(r);
 		
 		return gsd;
 //		switch (id) {
