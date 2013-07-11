@@ -149,6 +149,10 @@ public class Player {
 	public Array<Role> getQualityRole(Array<Role> ar, QUALITY q) {
 		Array<Role> qa = new Array<Role>();
 		for (Role r : ar) {
+			if(q==QUALITY.all){
+				qa.add(r);
+				continue;
+			}
 			if (r.quality == q) {
 				qa.add(r);
 			}

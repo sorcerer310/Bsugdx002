@@ -124,8 +124,11 @@ public class BsuGame extends Game {
 					this.showCrystal();
 					this.showSkillTree(mo.o);
 				}
-				if(mo.message.equals("lockRole")){
-					changeLockState(mo.o, mo.o.locked);
+				if(mo.message.equals("changeLock")){
+					changeLockState(mo.o);
+				}
+				if(mo.message.equals("changeFight")){
+					this.changeFightState(mo.o);
 				}
 			}
 		};

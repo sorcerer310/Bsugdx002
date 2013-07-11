@@ -18,8 +18,13 @@ public class RoleObsever extends Observable{
 		notifyObservers(new MessageObject(r, "updateSkill"));
 	}
 	//是否锁定
-	public void lockRole(Role r){
+	public void changeLock(Role r){
 		setChanged();
-		notifyObservers(new MessageObject(r, "lockRole"));
+		notifyObservers(new MessageObject(r, "changeLock"));
+	}
+	//设置出战
+	public void changeFight(Role r){
+		setChanged();
+		notifyObservers(new MessageObject(r, "changeFight"));
 	}
 }

@@ -1,5 +1,6 @@
 package com.bsu.screen;
 
+import java.awt.Component.BaselineResizeBehavior;
 import java.util.Observable;
 import java.util.Observer;
 import com.badlogic.gdx.Game;
@@ -30,6 +31,7 @@ import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.obj.Role;
+import com.bsu.obj.Role.BATLESTATE;
 import com.bsu.obj.RoleObsever;
 import com.bsu.obj.TipsWindows;
 import com.bsu.obj.skilltree.Skill;
@@ -63,7 +65,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private Array<SkillIcon> skillIconArray = new Array<SkillIcon>();// 人物头像Icon数组
 	private Array<Label> skillCysLabelArray = new Array<Label>();// 玩家技能碎片文本数组
 	private Array<Image> skillCysImgArray = new Array<Image>();// 玩家技能碎片图像数组
-	private WidgetGroup infoGroup=new WidgetGroup();//角色基本信息容器，其他数组也可以使用widgetGroup容器
+	private WidgetGroup infoGroup = new WidgetGroup();// 角色基本信息容器，其他数组也可以使用widgetGroup容器
 	private RoleObsever ro;;
 
 	public RoleScreen(Game game) {
@@ -122,32 +124,26 @@ public class RoleScreen extends CubocScreen implements Observer,
 		if (quality == q) {
 			return;
 		}
+		selectRole=null;
 		Image simg = null;
 		quality = q;
 		if (q == QUALITY.all) {
-			showQualityRole(Player.getInstance().playerRole);
 			simg = allImg;
 		}
 		if (q == QUALITY.green) {
-			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerRole, QUALITY.green));
 			simg = greenImg;
 		}
 		if (q == QUALITY.blue) {
-			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerRole, QUALITY.blue));
 			simg = blueImg;
 		}
 		if (q == QUALITY.purple) {
-			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerRole, QUALITY.purple));
 			simg = purpleImg;
 		}
 		if (q == QUALITY.orange) {
-			showQualityRole(Player.getInstance().getQualityRole(
-					Player.getInstance().playerRole, QUALITY.orange));
 			simg = orangeImg;
 		}
+		showQualityRole(Player.getInstance().getQualityRole(
+				Player.getInstance().playerRole, quality));
 		U.setSelectImg(bImg, simg);
 	}
 
@@ -159,7 +155,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 */
 	private void showQualityRole(Array<Role> roleArray) {
 		sRoleStage.clear();
-		RoleInfoStage.clear();
 		/*
 		 * 滑动容器
 		 */
@@ -198,23 +193,23 @@ public class RoleScreen extends CubocScreen implements Observer,
 			RoleInfoStage.clear();
 			TipsWindows.getInstance().showTips("没有相应品质卡片，通过可收集", RoleInfoStage,
 					Color.GRAY);
-		}else{
-			showRoleInfo(roleArray.get(0));
+		} else {
+			showRoleInfo(selectRole==null?roleArray.get(0):selectRole);
 		}
 	}
 
 	/**
-	 * 显示人物信息
+	 * 显示人物信息,人物为空，或者与之前相同不处理
 	 */
 	public void showRoleInfo(final Role r) {
+		if ((r == null)||(selectRole==r)) {
+			return;
+		}
 		RoleInfoStage.clear();
 		skillIconArray.clear();
 		selectRole = r;
 		up.remove();
 		use.remove();
-		if (selectRole == null) {
-			return;
-		}
 		U.showRoleSelect(Player.getInstance().playerRole, r);
 		skillIndex = 0;
 		selectSkill = null;
@@ -222,8 +217,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 		showRoleBaseInfo(r);
 		showSkillTree(r);
 		showCrystal();
-		// wfy.makeImg(r.weapon.texture, RoleInfoStage, 1f, 40, 100);
-		// wfy.makeImg(r.armor.texture, RoleInfoStage, 1f, 100, 100);
 	}
 
 	// 绘制角色当前携带的2个技能
@@ -238,7 +231,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < skillArray.size; i++) {
 			final int index = sindex;
 			final Skill s = skillArray.get(i);
-
 			sindex++;
 			SkillIcon se = new SkillIcon(s, RoleInfoStage, new Vector2(
 					40 + index * 60, 160));
@@ -253,17 +245,17 @@ public class RoleScreen extends CubocScreen implements Observer,
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
-					if (s.enable) {
-						TipsWindows.getInstance().showSkillInfo(s.name, s.info,
-								s.quality, v, RoleInfoStage);
-					}
-					U.setCurrentSkillImg(skillImg, img);
 					return true;
 				}
 
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
+					if (s.enable) {
+						TipsWindows.getInstance().showSkillInfo(s.name, s.info,
+								s.quality, v, RoleInfoStage);
+					}
+					U.setCurrentSkillImg(skillImg, img);
 					skillIndex = index;
 					super.touchUp(event, x, y, pointer, button);
 				}
@@ -278,6 +270,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 */
 	private void showRoleBaseInfo(final Role r) {
 		infoGroup.clear();
+		infoGroup.remove();
 		Label name = wfy.makeLabel(r.name, 1f, 40, 240,
 				U.getQualityColor(r.quality));
 		Label lv = wfy.makeLabel("等级:" + r.level, 0.5f, 100, 240);
@@ -286,11 +279,15 @@ public class RoleScreen extends CubocScreen implements Observer,
 				.makeLabel("经验:" + r.exp + "/" + r.expUp, 0.5f, 100, 220);
 		Label attack = wfy.makeLabel("攻击:" + r.getAttack(), 0.5f, 40, 200);
 		Label defend = wfy.makeLabel("防御:" + r.getDefend(), 0.5f, 100, 200);
-		final Image unLockImg= new Image(GTC.getInstance().getSkillIcon(0));
-		final Image lockImg= GTC.getInstance().getClassesIconImg(
-				r.classes);
-		final Image lockedImg = r.locked ?lockImg :unLockImg;
+		Image unLockImg = new Image(GTC.getInstance().getSkillIcon(0));
+		Image lockImg = GTC.getInstance().getClassesIconImg(r.classes);
+		Image lockedImg = r.locked ? lockImg : unLockImg;
 		lockedImg.setPosition(40, 120);
+		Image unFightImg = new Image(GTC.getInstance().getSkillIcon(0));
+		Image fightImg = GTC.getInstance().getClassesIconImg(r.classes);
+		Image battleImg = r.bstate==BATLESTATE.FIGHT ? fightImg : unFightImg;
+		battleImg.setPosition(70, 120);
+		infoGroup.addActor(battleImg);
 		infoGroup.addActor(lockedImg);
 		infoGroup.addActor(name);
 		infoGroup.addActor(lv);
@@ -305,21 +302,58 @@ public class RoleScreen extends CubocScreen implements Observer,
 					int pointer, int button) {
 				return true;
 			}
+
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-					ro.lockRole(r);
+				ro.changeLock(r);
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+		battleImg.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				ro.changeFight(r);
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
 	}
-	//改变锁定状态
-	public void changeLockState(Role r,boolean flag){
-		r.locked=!flag;
-		String s=r.locked?"锁定卡片":"解锁卡片";
+
+	// 设置出战与休整
+	public void changeFightState(Role r) {
+		if (r.bstate == BATLESTATE.FIGHT) {
+			r.bstate = BATLESTATE.IDLE;
+			showQualityRole(Player.getInstance().getQualityRole(
+					Player.getInstance().playerRole, quality));
+			showRoleBaseInfo(r);
+		} else {
+			if (Player.getInstance().getPlayerFightRole().size >= 5) {// 出战人员已满
+				TipsWindows.getInstance().showTips("队伍人员已满", RoleInfoStage,
+						Color.GREEN);
+			}else{
+				r.bstate=BATLESTATE.FIGHT;
+				showQualityRole(Player.getInstance().getQualityRole(
+						Player.getInstance().playerRole, QUALITY.green));
+				showRoleBaseInfo(r);
+			}
+		}
+	}
+
+	// 改变锁定状态
+	public void changeLockState(Role r) {
+		r.locked = !r.locked;
+		String s = r.locked ? "锁定卡片" : "解锁卡片";
 		TipsWindows.getInstance().showTips(s, RoleInfoStage, Color.GREEN);
 		showRoleBaseInfo(r);
 	}
+
 	/**
 	 * 设置显示技能树
 	 */
@@ -364,11 +398,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
-					if (s.enable) {
-						TipsWindows.getInstance().showSkillInfo(s.name, s.info,
-								s.quality, vs, RoleInfoStage);
-						U.setSelectImg(skillImg, skill_img);
-					}
 					return true;
 				}
 
@@ -379,6 +408,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 						selectSkill = s;
 						isReadyToUp(s);
 					} else {
+						TipsWindows.getInstance().showSkillInfo(s.name, s.info,
+								s.quality, vs, RoleInfoStage);
+						U.setSelectImg(skillImg, skill_img);
 						if ((selectSkill == null) || (selectSkill != s)
 								|| (selectSkill.skill_index >= 0)) {
 							selectSkill = s;
