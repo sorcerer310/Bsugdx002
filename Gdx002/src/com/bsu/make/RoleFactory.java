@@ -203,10 +203,10 @@ public class RoleFactory {
 		r = new Role(Type.HERO,rd.quality,rd.classes,rd.bstate,rd.name,rd.maxHp,8,10
 				,EquipFactory.getInstance().getWeaponByIdx(1),EquipFactory.getInstance().getArmorByIdx(1),
 				sks_tree,rd.roleTexture);
-		r.level = rd.level;
 		r.exp = rd.exp;
 		r.expUp = rd.expUp;
 		r.locked=rd.locked;
+		r.setLvValue(rd.level);//设置role等级及相应等级属性
 		return r;
 	}
 	

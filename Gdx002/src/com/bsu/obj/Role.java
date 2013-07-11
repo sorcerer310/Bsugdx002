@@ -44,7 +44,7 @@ public class Role extends Actor {
 	public String name = ""; // 记录这个角色的名字
 	public QUALITY quality;// 品质
 	public CLASSES classes = null;// 指定当前人物的职业
-	public int level;// 等级
+	public int level=1;// 等级
 	public String roleTextureName;			//使用的纹理的名称 
 	private TextureRegion roleTexture;		//使用的纹理对象
 	public int maxHp = 100; // 总血量
@@ -114,7 +114,7 @@ public class Role extends Actor {
 		isDead = false;
 		this.setVisible(false);
 		set_actor_base(type);
-		levelUp();
+		setLvValue(level);
 	}
 	/**
 	 * 每局开始之前的初始化工作
@@ -546,13 +546,17 @@ public class Role extends Actor {
 	/**
 	 * 返回英雄升级后数据
 	 */
-	public void levelUp() {
+	public void levelUp(){
 		level++;
-		exp -= expUp;
-		maxHp = U.hpLevel(this);
-		attack = U.attackLevel(this);
-		defend = U.defendLevel(this);
-		expUp = U.expLevel(this);
+		exp-=expUp;
+		setLvValue(level);
+	}
+	public void setLvValue(int lv) {
+		level=lv;
+		maxHp = U.hpLevel(this,level);
+		attack = U.attackLevel(this,level);
+		defend = U.defendLevel(this,level);
+		expUp = U.expLevel(this,level);
 	}
 
 	/**

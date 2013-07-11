@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -124,7 +125,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		if (quality == q) {
 			return;
 		}
-		selectRole=null;
+		selectRole = null;
 		Image simg = null;
 		quality = q;
 		if (q == QUALITY.all) {
@@ -174,27 +175,14 @@ public class RoleScreen extends CubocScreen implements Observer,
 					.height(photo.img_frame.getHeight()) // 设置photo宽度和高度
 					.padTop(2f).align(Align.top)// 没起作用。。。
 					.spaceLeft(10f).spaceRight(10f); // 设置各photo之间的边距
-			photo.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
-					return true;
-				}
-
-				@Override
-				public void touchUp(InputEvent event, float x, float y,
-						int pointer, int button) {
-					showRoleInfo(r);
-					super.touchUp(event, x, y, pointer, button);
-				}
-			});
+			addListenerForActor(2, r, null, photo, null, "role_info");
 		}
 		if (roleArray.size <= 0) {
 			RoleInfoStage.clear();
 			TipsWindows.getInstance().showTips("没有相应品质卡片，通过可收集", RoleInfoStage,
 					Color.GRAY);
 		} else {
-			showRoleInfo(selectRole==null?roleArray.get(0):selectRole);
+			showRoleInfo(selectRole == null ? roleArray.get(0) : selectRole);
 		}
 	}
 
@@ -202,7 +190,11 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * 显示人物信息,人物为空，或者与之前相同不处理
 	 */
 	public void showRoleInfo(final Role r) {
-		if ((r == null)||(selectRole==r)) {
+		if (r == null) {
+			return;
+		}
+		if (selectRole == r) {
+			selectRole.roleIcon.showEffect(true);
 			return;
 		}
 		RoleInfoStage.clear();
@@ -226,40 +218,19 @@ public class RoleScreen extends CubocScreen implements Observer,
 		}
 		skillIconArray.clear();
 		int sindex = 0;
-		final Array<Image> skillImg = new Array<Image>();
+		Vector2 v = null;
 		Array<Skill> skillArray = r.getUseSkill();
 		for (int i = 0; i < skillArray.size; i++) {
 			final int index = sindex;
 			final Skill s = skillArray.get(i);
 			sindex++;
-			SkillIcon se = new SkillIcon(s, RoleInfoStage, new Vector2(
-					40 + index * 60, 160));
+			v = new Vector2(40 + index * 60, 160);
+			SkillIcon se = new SkillIcon(s, RoleInfoStage, v);
 			skillIconArray.add(se);
-			final Image img = se.skillImg;
-			skillImg.add(img);
-			final Vector2 v = new Vector2(img.getX(), img.getY());
 			if (index == skillIndex) {
-				U.setAlpha(img, 1);
+				U.setAlpha(s.skillIcon.skillImg, 1);
 			}
-			img.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
-					return true;
-				}
-
-				@Override
-				public void touchUp(InputEvent event, float x, float y,
-						int pointer, int button) {
-					if (s.enable) {
-						TipsWindows.getInstance().showSkillInfo(s.name, s.info,
-								s.quality, v, RoleInfoStage);
-					}
-					U.setCurrentSkillImg(skillImg, img);
-					skillIndex = index;
-					super.touchUp(event, x, y, pointer, button);
-				}
-			});
+			addListenerForActor(1, r, s, se.skillImg, v, "current_skill");
 		}
 	}
 
@@ -268,7 +239,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	 * 
 	 * @param r
 	 */
-	private void showRoleBaseInfo(final Role r) {
+	private void showRoleBaseInfo(Role r) {
 		infoGroup.clear();
 		infoGroup.remove();
 		Label name = wfy.makeLabel(r.name, 1f, 40, 240,
@@ -285,8 +256,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 		lockedImg.setPosition(40, 120);
 		Image unFightImg = new Image(GTC.getInstance().getSkillIcon(0));
 		Image fightImg = GTC.getInstance().getClassesIconImg(r.classes);
-		Image battleImg = r.bstate==BATLESTATE.FIGHT ? fightImg : unFightImg;
-		battleImg.setPosition(70, 120);
+		Image battleImg = r.bstate == BATLESTATE.FIGHT ? fightImg : unFightImg;
+		battleImg.setPosition(80, 120);
 		infoGroup.addActor(battleImg);
 		infoGroup.addActor(lockedImg);
 		infoGroup.addActor(name);
@@ -296,34 +267,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 		infoGroup.addActor(attack);
 		infoGroup.addActor(defend);
 		RoleInfoStage.addActor(infoGroup);
-		lockedImg.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				ro.changeLock(r);
-				super.touchUp(event, x, y, pointer, button);
-			}
-		});
-		battleImg.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				ro.changeFight(r);
-				super.touchUp(event, x, y, pointer, button);
-			}
-		});
+		addListenerForActor(0, null, null, battleImg, null, "fight");
+		addListenerForActor(0, null, null, lockedImg, null, "locked");
 	}
 
 	// 设置出战与休整
@@ -337,8 +282,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 			if (Player.getInstance().getPlayerFightRole().size >= 5) {// 出战人员已满
 				TipsWindows.getInstance().showTips("队伍人员已满", RoleInfoStage,
 						Color.GREEN);
-			}else{
-				r.bstate=BATLESTATE.FIGHT;
+			} else {
+				r.bstate = BATLESTATE.FIGHT;
 				showQualityRole(Player.getInstance().getQualityRole(
 						Player.getInstance().playerRole, QUALITY.green));
 				showRoleBaseInfo(r);
@@ -367,66 +312,52 @@ public class RoleScreen extends CubocScreen implements Observer,
 		int numsPur = 0;
 		int numsOra = 0;
 		int ix = 200, iy = 125, height = 40, sw = 45;
-		final Array<Image> skillImg = new Array<Image>();
+		Vector2 vs = null;
 		for (final Skill s : r.skill_tree) {
 			SkillIcon se = null;
 			if (s.quality == QUALITY.green) {
-				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsGreen
-						* sw, iy));
+				vs = new Vector2(ix + numsGreen * sw, iy);
 				numsGreen++;
 			}
 			if (s.quality == QUALITY.blue) {
-				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsBlue
-						* sw, iy + height));
+				vs = new Vector2(ix + numsBlue * sw, iy + height);
 				numsBlue++;
 			}
 			if (s.quality == QUALITY.purple) {
-				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsPur
-						* sw, iy + height * 2));
+				vs = new Vector2(ix + numsPur * sw, iy + height * 2);
 				numsPur++;
 			}
 			if (s.quality == QUALITY.orange) {
-				se = new SkillIcon(s, RoleInfoStage, new Vector2(ix + numsOra
-						* sw, iy + height * 3));
+				vs = new Vector2(ix + numsOra * sw, iy + height * 3);
 				numsOra++;
 			}
+			se = new SkillIcon(s, RoleInfoStage, vs);
 			skillTreeIconArray.add(se);
-			final Image skill_img = se.skillImg;
-			skillImg.add(skill_img);
-			final Vector2 vs = new Vector2(skill_img.getX(), skill_img.getY());
-			skill_img.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
-					return true;
-				}
-
-				@Override
-				public void touchUp(InputEvent event, float x, float y,
-						int pointer, int button) {
-					if (!s.enable) {
-						selectSkill = s;
-						isReadyToUp(s);
-					} else {
-						TipsWindows.getInstance().showSkillInfo(s.name, s.info,
-								s.quality, vs, RoleInfoStage);
-						U.setSelectImg(skillImg, skill_img);
-						if ((selectSkill == null) || (selectSkill != s)
-								|| (selectSkill.skill_index >= 0)) {
-							selectSkill = s;
-						} else {
-							setAnotherSkill(r, skillIndex, s);
-						}
-						isReadyToUp(s);
-					}
-					particleVec.x = vs.x + skill_img.getWidth() / 2;
-					particleVec.y = vs.y + skill_img.getHeight() / 2;
-					super.touchUp(event, x, y, pointer, button);
-				}
-			});
+			addListenerForActor(1, r, s, se.skillImg, vs, "tree_skill");
 		}
 		if (selectSkill != null)
-			U.setSelectImg(skillImg, selectSkill.skillIcon.skillImg);
+			showRoleTreeSkill(r, selectSkill);
+	}
+
+	// 选择技能树上某一技能
+	public void selectTreeSkill(Skill s, Role r, Vector2 vs) {
+		if (!s.enable) {
+			selectSkill = s;
+			isReadyToUp(s);
+		} else {
+			showRoleTreeSkill(r, s);
+			TipsWindows.getInstance().showSkillInfo(s, vs, RoleInfoStage);
+			if ((selectSkill == null) || (selectSkill != s)
+					|| (selectSkill.skill_index >= 0)) {
+				selectSkill = s;
+			} else {
+				setAnotherSkill(r, skillIndex, s);
+			}
+			isReadyToUp(s);
+		}
+		particleVec.x = vs.x + s.skillIcon.skillImg.getWidth() / 2;
+		particleVec.y = vs.y + s.skillIcon.skillImg.getWidth() / 2;
+		showSkillTree(r);
 	}
 
 	// 绘制玩家拥有的碎片
@@ -511,11 +442,12 @@ public class RoleScreen extends CubocScreen implements Observer,
 			tipsString = "技能" + selectSkill.name + "升级";
 			selectSkill.levUp();
 		}
-		MyParticle mpe = new MyParticle(GTC.getInstance().particleEffect, 1,
-				particleVec, RoleInfoStage, tipsString,
-				U.getQualityColor(selectSkill.quality));
-		RoleInfoStage.addActor(mpe);
+		MyParticle mpe = new MyParticle(GTC.getInstance().particleEffect,
+				particleVec);
 		ro.updateSkill(selectRole);
+		RoleInfoStage.addActor(mpe);
+		TipsWindows.getInstance().showTips(tipsString, RoleInfoStage,
+				U.getQualityColor(selectSkill.quality));
 		isReadyToUp(selectSkill);
 	}
 
@@ -580,139 +512,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 
 	}
 
-	private void setListener() {
-		up.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				upSkill(true);
-				super.touchUp(event, x, y, pointer, button);
-			}
-		});
-		use.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				upSkill(false);
-				super.touchUp(event, x, y, pointer, button);
-			}
-		});
-		ib_back.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				ib_back.setScale(0.95f);
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				setChanged();
-				notifyObservers(GC.button_back);
-				ib_back.setScale(1f);
-				super.touchUp(event, x, y, pointer, button);
-			}
-		});
-		purpleImg.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				for (Image img : bImg)
-					U.setAlpha(img, 0.5f);
-				U.setAlpha(event.getListenerActor(), 1.0f);
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				addRoleToStage(QUALITY.purple);
-				super.touchUp(event, x, y, pointer, button);
-			}
-		});
-		orangeImg.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				for (Image img : bImg)
-					U.setAlpha(img, 0.5f);
-				U.setAlpha(event.getListenerActor(), 1.0f);
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				addRoleToStage(QUALITY.orange);
-				super.touchUp(event, x, y, pointer, button);
-			}
-		});
-		blueImg.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				for (Image img : bImg)
-					U.setAlpha(img, 0.5f);
-				U.setAlpha(event.getListenerActor(), 1.0f);
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				addRoleToStage(QUALITY.blue);
-				super.touchUp(event, x, y, pointer, button);
-			}
-		});
-		greenImg.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				for (Image img : bImg)
-					U.setAlpha(img, 0.5f);
-				U.setAlpha(event.getListenerActor(), 1.0f);
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				addRoleToStage(QUALITY.green);
-				super.touchUp(event, x, y, pointer, button);
-			}
-		});
-		allImg.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				for (Image img : bImg)
-					U.setAlpha(img, 0.5f);
-				U.setAlpha(event.getListenerActor(), 1.0f);
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				addRoleToStage(QUALITY.all);
-				super.touchUp(event, x, y, pointer, button);
-			}
-		});
-	}
-
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) {
 		// TODO Auto-generated method stub
@@ -754,5 +553,119 @@ public class RoleScreen extends CubocScreen implements Observer,
 			Vector2 pointer1, Vector2 pointer2) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	// 添加按钮监听
+	private void setListener() {
+		addListenerForActor(0, null, null, up, null, "up_skill");
+		addListenerForActor(0, null, null, use, null, "enable_skill");
+		addListenerForActor(0, null, null, ib_back, null, "back");
+		addListenerForActor(0, null, null, allImg, null, "all");
+		addListenerForActor(0, null, null, greenImg, null, "green");
+		addListenerForActor(0, null, null, blueImg, null, "blue");
+		addListenerForActor(0, null, null, purpleImg, null, "purple");
+		addListenerForActor(0, null, null, orangeImg, null, "orange");
+	}
+
+	/**
+	 * 添加一个监听 无role参数等。基本按钮监听
+	 * 
+	 * @param actor
+	 *            被监听者
+	 * @param s
+	 *            信息，根据信息调用相应函数（函数无法直接当参数使用）
+	 */
+	public void addListenerForActor(int index, final Role r, final Skill skill,
+			Actor actor, final Vector2 v, final String s) {
+		final String as = s;
+		Actor a = null;
+		if (index == 0) {// 基本按钮，品质按钮，返回按钮
+			a = actor;
+		}
+		if (index == 1) {// 技能按钮
+			a = skill.skillIcon;
+		}
+		if (index == 2) {// 卡片头像按钮
+			a = r.roleIcon;
+		}
+		a.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				if (as == "all" || as == "green" || as == "blue_"
+						|| as == "purple" || as == "orange") {
+					for (Image img : bImg)
+						U.setAlpha(img, 0.5f);
+					U.setAlpha(event.getListenerActor(), 1.0f);
+				}
+				if (as == "back") {
+					ib_back.setScale(0.95f);
+				}
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				if (as == "all") {
+					addRoleToStage(QUALITY.all);
+				}
+				if (as == "green") {
+					addRoleToStage(QUALITY.green);
+				}
+				if (as == "blue") {
+					addRoleToStage(QUALITY.blue);
+				}
+				if (as == "purple") {
+					addRoleToStage(QUALITY.purple);
+				}
+				if (as == "orange") {
+					addRoleToStage(QUALITY.orange);
+				}
+				if (as == "up_skill") {
+					upSkill(true);
+				}
+				if (as == "enable_skill") {
+					upSkill(false);
+				}
+				if (as == "fight") {
+					ro.changeFight(selectRole);
+				}
+				if (as == "locked") {
+					ro.changeLock(selectRole);
+				}
+				if (as == "back") {
+					setChanged();
+					notifyObservers(GC.button_back);
+					ib_back.setScale(1f);
+				}
+				if (as == "tree_skill") {
+					selectTreeSkill(skill, r, v);
+				}
+				if (as == "current_skill") {
+					if (skill.enable) {
+						TipsWindows.getInstance().showSkillInfo(skill, v,
+								RoleInfoStage);
+					}
+					skillIndex = skill.skill_index;
+					showRoleSkill(r);
+				}
+				if (as == "role_info") {
+					showRoleInfo(r);
+				}
+				super.touchUp(event, x, y, pointer, button);
+			}
+		});
+	}
+
+	// 显示当前选择的技能树技能，使其高亮，其他暗淡
+	public void showRoleTreeSkill(Role r, Skill s) {
+		for (Skill skill : r.skill_tree) {
+			if (skill != s) {
+				U.setAlpha(skill.skillIcon.skillImg, 0.5f);
+			} else {
+				U.setAlpha(skill.skillIcon.skillImg, 1);
+			}
+		}
 	}
 }

@@ -25,7 +25,7 @@ import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
-public class TipsWindows extends WidgetGroup implements Observer{
+public class TipsWindows extends WidgetGroup implements Observer {
 
 	private static TipsWindows instance = null;
 	private Skin skin;
@@ -40,14 +40,41 @@ public class TipsWindows extends WidgetGroup implements Observer{
 
 	private TipsWindows() {
 		skin = new Skin();
-		skin.add("draw", new TextureRegion(GTC.getInstance().tipsPanel,
-				40, 40));
+		skin.add("draw", new TextureRegion(GTC.getInstance().tipsPanel, 40, 40));
 		Window.WindowStyle ws = new WindowStyle(U.get_font(), Color.BLACK,
 				skin.getDrawable("draw"));
 		tipsWindows = new Window("", ws);
 		tipsWindows.align(Align.left);
 		tipsWindows.setWidth(500);
 		this.addActor(tipsWindows);
+	}
+
+	/**
+	 * 显示角色升级详细信息
+	 * 
+	 * @param r
+	 */
+	public void showRoleLevelUp(Role r, Stage stage) {
+		removeFromStage();
+		tipsWindows.clear();
+		tipsWindows.defaults().align(Align.center);
+		tipsWindows.padTop(10);
+		tipsWindows.padBottom(10);
+		tipsWindows.defaults().padLeft(10);
+		tipsWindows.defaults().padRight(10);
+		tipsWindows.setPosition(170, 100);
+		showUpInfo(r,"hp");
+		showUpInfo(r,"attack");
+		showUpInfo(r,"defend");
+		showUpInfo(r,"exp");
+		tipsWindows.pack();
+		tipsWindows.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				removeFromStage();
+			}
+		});
+		addToStage(stage, 5);
 	}
 
 	/**
@@ -99,20 +126,20 @@ public class TipsWindows extends WidgetGroup implements Observer{
 	 * 
 	 * @param s
 	 */
-	public void showSkillInfo(String name,String info,QUALITY q, Vector2 v, Stage stage) {
+	public void showSkillInfo(Skill s, Vector2 v, Stage stage) {
 		removeFromStage();
 		tipsWindows.defaults().align(Align.center);
 		tipsWindows.padTop(10);
 		tipsWindows.padBottom(10);
 		tipsWindows.defaults().padLeft(10);
 		tipsWindows.defaults().padRight(10);
-		Label nameLabel = new Label(name, U.get_sytle());
-		nameLabel.setColor(U.getQualityColor(q));
+		Label nameLabel = new Label(s.name, U.get_sytle());
+		nameLabel.setColor(U.getQualityColor(s.quality));
 		tipsWindows.add(nameLabel);
 		tipsWindows.defaults().align(Align.left);
 		Array<String> infoArray = new Array<String>();
 		float scaleValue = 0.6f;
-		infoArray = U.getMuLabel(info, scaleValue, windowWidth);
+		infoArray = U.getMuLabel(s.info, scaleValue, windowWidth);
 		for (int i = 0; i < infoArray.size; i++) {
 			tipsWindows.row();
 			Label label = new Label(infoArray.get(i), U.get_sytle());
@@ -128,15 +155,6 @@ public class TipsWindows extends WidgetGroup implements Observer{
 			}
 		});
 		addToStage(stage, 5);
-	}
-
-	/**
-	 * 显示装备信息 位置动态
-	 * 
-	 * @param e
-	 */
-	private void showEquipInfo(Equip e, Stage stage) {
-
 	}
 
 	/**
@@ -244,7 +262,40 @@ public class TipsWindows extends WidgetGroup implements Observer{
 			}
 		});
 	}
-
+	private void showUpInfo(Role r,String s){
+		Label name=null;
+		Label a=null;
+		Label b=null;
+		Label con=new Label("---",U.get_sytle());
+		String sn=null;
+		if(s=="hp"){
+			sn="生命";
+			a=new Label(U.hpLevel(r, r.level)+"",U.get_sytle());
+			b=new Label(U.hpLevel(r, r.level+1)+"",U.get_sytle());
+		}
+		if(s=="attack"){
+			sn="攻击";
+			a=new Label(U.attackLevel(r, r.level)+"",U.get_sytle());
+			b=new Label(U.attackLevel(r, r.level+1)+"",U.get_sytle());
+		}
+		if(s=="defend"){
+			sn="防御";
+			a=new Label(U.defendLevel(r, r.level)+"",U.get_sytle());
+			b=new Label(U.defendLevel(r, r.level+1)+"",U.get_sytle());
+		}
+		if(s=="exp"){
+			sn="经验";
+			a=new Label(U.expLevel(r, r.level)+"",U.get_sytle());
+			b=new Label(U.expLevel(r, r.level+1)+"",U.get_sytle());
+		}
+		name=new Label(sn,U.get_sytle());
+		name.setColor(Color.ORANGE);
+		tipsWindows.add(name);
+		tipsWindows.add(a);
+		tipsWindows.add(con);
+		tipsWindows.add(b);
+		tipsWindows.row();
+	}
 	/**
 	 * 显示宝箱内道具
 	 * 
@@ -255,7 +306,9 @@ public class TipsWindows extends WidgetGroup implements Observer{
 		tipsWindows.clear();
 		tipsWindows.defaults().align(Align.center);
 		tipsWindows.setPosition(200, 140);
-		Image icon = new Image(GTC.getInstance().hm_headItemIcon.get(ItemFactory.getInstance().getItemById(1).tr_item));
+		Image icon = new Image(
+				GTC.getInstance().hm_headItemIcon.get(ItemFactory.getInstance()
+						.getItemById(1).tr_item));
 		tipsWindows.add(icon);
 		tipsWindows.pack();
 		tipsWindows.addListener(new ClickListener() {
@@ -295,7 +348,7 @@ public class TipsWindows extends WidgetGroup implements Observer{
 		tips_flag = false;
 		start_time = 0;
 		remove();
-		
+
 	}
 
 	/**
@@ -327,6 +380,6 @@ public class TipsWindows extends WidgetGroup implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

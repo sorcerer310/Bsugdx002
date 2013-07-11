@@ -99,11 +99,11 @@ public class U {
 	/**
 	 * 角色升级后返回新的hp上限
 	 * 
-	 * @param r
-	 *            角色
+	 * @param r角色
+	 * @param lv 等级           
 	 * @return 新的等级生命上限
 	 */
-	public static int hpLevel(Role r) {
+	public static int hpLevel(Role r,int lv) {
 		int maxhp = 0;
 		int basehp = 0;
 		if (r.quality == QUALITY.green)
@@ -114,17 +114,17 @@ public class U {
 			basehp = GC.baseHpPurple;
 		if (r.quality == QUALITY.orange)
 			basehp = GC.baseHpOrange;
-		maxhp = basehp * r.level;
+		maxhp = basehp * lv;
 		return maxhp;
 	}
 
 	/**
 	 * 返回升级后的角色基本攻击力
-	 * 
 	 * @param r
+	 * @param lv
 	 * @return
 	 */
-	public static int attackLevel(Role r) {
+	public static int attackLevel(Role r,int lv) {
 		int maxattack = 0;
 		int base = 0;
 		if (r.quality == QUALITY.green)
@@ -135,17 +135,17 @@ public class U {
 			base = GC.baseAttackPurple;
 		if (r.quality == QUALITY.orange)
 			base = GC.baseAttackOrange;
-		maxattack = base * r.level;
+		maxattack = base * lv;
 		return maxattack;
 	}
 
 	/**
 	 * 返回升级后的角色基本防御力
-	 * 
 	 * @param r
+	 * @param lv
 	 * @return
 	 */
-	public static int defendLevel(Role r) {
+	public static int defendLevel(Role r,int lv) {
 		int defend = 0;
 		int base = 0;
 		if (r.quality == QUALITY.green)
@@ -156,17 +156,17 @@ public class U {
 			base = GC.baseDefendPurple;
 		if (r.quality == QUALITY.orange)
 			base = GC.baseDefendOrange;
-		defend = base * r.level;
+		defend = base * lv;
 		return defend;
 	}
 
 	/**
 	 * 返回升级后的角色下级所需经验
-	 * 
 	 * @param r
+	 * @param lv
 	 * @return
 	 */
-	public static int expLevel(Role r) {
+	public static int expLevel(Role r,int lv) {
 		int exp = 0;
 		int base = 0;
 		if (r.quality == QUALITY.green)
@@ -177,7 +177,7 @@ public class U {
 			base = GC.baseExpUpPurple;
 		if (r.quality == QUALITY.orange)
 			base = GC.baseExpUpOrange;
-		exp = base * r.level;
+		exp = base * lv;
 		return exp;
 	}
 

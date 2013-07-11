@@ -125,7 +125,7 @@ public class BsuGame extends Game {
 					this.showSkillTree(mo.o);
 				}
 				if(mo.message.equals("changeLock")){
-					changeLockState(mo.o);
+					this.changeLockState(mo.o);
 				}
 				if(mo.message.equals("changeFight")){
 					this.changeFightState(mo.o);

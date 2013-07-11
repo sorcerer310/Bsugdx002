@@ -80,22 +80,8 @@ public class GameScreenFactory {
 	 * @return
 	 */
 	public GameScreenData makeGameScreen(int id) {
-		GameScreenData gsd = hm_gsd.get(id);
-//		
-//		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
-//		for (Role r : fightRole)
-//			gsd.getHeroRoles().add(r);
-		
+		GameScreenData gsd = hm_gsd.get(id);		
 		return gsd;
-//		switch (id) {
-//		case 0:
-//			gsd = makeGameScreenTeaching();
-//			break;
-//		default:
-//			gsd = makeGameScreenLv(id + 1);
-//			break;
-//		}
-//		return gsd;
 	}
 
 	/**

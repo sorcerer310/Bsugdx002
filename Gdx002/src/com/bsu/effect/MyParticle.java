@@ -15,26 +15,19 @@ import com.bsu.tools.U;
  */
 public class MyParticle extends Actor {
 	public ParticleEffect particle;
-	private float dua_time;
+	private float dua_time=2;
 	private float start_time = 0;
 	public boolean start_flag;
-	private Stage stage;
-	private String info;
-	private Color color;
 /**
  * 粒子类构造函数
  * @param pe 粒子
  * @param t 粒子存在时间
  * @param v 粒子位置
  */
-	public MyParticle(ParticleEffect pe, float t,Vector2 v,Stage s,String str,Color c) {
+	public MyParticle(ParticleEffect pe,Vector2 v) {
 		particle = pe;
-		dua_time = t;
 		setPosition(v.x, v.y);
 		start_flag = true;
-		stage=s;
-		info=str;
-		color=c;
 	}
 
 	@Override
@@ -54,8 +47,6 @@ public class MyParticle extends Actor {
 			start_time += delta;
 			if (start_time >= dua_time) {
 				start_flag=false;
-				TipsWindows.getInstance().showTips(info,
-						stage, color);
 				remove();
 			}
 		}

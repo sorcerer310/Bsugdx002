@@ -102,7 +102,6 @@ public class Player {
 	public void addRole(Array<Role> roles) {
 		for(Role r:roles){
 			playerRole.add(r);
-			System.out.println("add a new role");
 		}
 		orderRoleArray(playerRole);
 		getPlayerPackageRole();
@@ -118,27 +117,6 @@ public class Player {
 			roles.add(r);
 		return roles;
 	}
-
-	/**
-	 * 更换出战数组中元素
-	 * 
-	 * @param roles
-	 * @param r
-	 * @param index
-	 */
-//	public void addRoleToFIght(Role r, int index) {
-//		for (Role e : playerFightRole) {
-//			if (e.equals(r)) {
-//				return;
-//			}
-//		}
-//		if (index > playerFightRole.size) {
-//			playerFightRole.add(r);
-//		} else {
-//			playerFightRole.insert(index, r);
-//		}
-//	}
-
 	/**
 	 * 取得某一个数组中的某一品质的  card
 	 * 

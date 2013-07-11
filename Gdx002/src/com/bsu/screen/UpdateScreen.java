@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.effect.MyParticle;
 import com.bsu.effect.RoleIcon;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
@@ -148,11 +149,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				+ suRole.expUp);
 		upButton.setColor(upButton.getColor().r, upButton.getColor().g,
 				upButton.getColor().b,
-				(suRole.exp > suRole.expUp ? 1 : 0f));
-		if (suRole.exp >= suRole.expUp) {
-			TipsWindows.getInstance().showTips(GC.roleUp, sRoleStage,
-					Color.ORANGE);
-		}
+				(suRole.exp >= suRole.expUp ? 1 : 0f));
 	}
 
 	/**
@@ -476,9 +473,12 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				if (suRole.exp > suRole.expUp) {
+				if (suRole.exp >= suRole.expUp) {
+					MyParticle mpe = new MyParticle(GTC.getInstance().particleEffect,
+							new Vector2(suRole.roleIcon.getX()+20,suRole.roleIcon.getY()+20));
+					upRoleStage.addActor(mpe);
+					TipsWindows.getInstance().showRoleLevelUp(suRole, upRoleStage);
 					suRole.levelUp();
-					TipsWindows.getInstance().removeFromStage();
 					showUpRoleInfo();
 				}
 				super.touchUp(event, x, y, pointer, button);
