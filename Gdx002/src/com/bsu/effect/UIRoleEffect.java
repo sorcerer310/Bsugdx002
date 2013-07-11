@@ -106,7 +106,7 @@ public class UIRoleEffect implements Observer {
 			final Array<Image> imgArray = new Array<Image>();
 			final Array<Skill> skillArray=r.getUseSkill();
 			for (int j = 0; j < skillArray.size; j++) {
-				Skill skill = skillArray.get(j);
+				final Skill skill = skillArray.get(j);
 				final int tempIndex = j;
 				SkillIcon se = new SkillIcon(skill, stage, new Vector2(x + 50,
 						y + 32 - j * 33));
@@ -126,7 +126,7 @@ public class UIRoleEffect implements Observer {
 						@Override
 						public void touchUp(InputEvent event, float x, float y,
 								int pointer, int button) {
-							if (!g.isAction_start()) {
+							if (!g.isAction_start() && !(skill.ani_self==null && skill.ani_object==null && skill.ani_continue==null)) {
 								r.cskill = skillArray.get(tempIndex);
 								U.setSelectImg(imgArray, skillImg);
 							}
