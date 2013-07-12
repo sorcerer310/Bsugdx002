@@ -32,7 +32,7 @@ public class Player {
 	
 	private int money;// 玩家金钱
 	public Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
-	public int crystal_blue = 30;//蓝色技能碎片(普通)
+	public int crystal_blue = 300;//蓝色技能碎片(普通)
 	public int crystal_purple = 30;// 紫色技能碎片数量（高级）
 	public int crystal_orange = 30;// 橙色技能碎片数量（史诗）
 
@@ -60,7 +60,7 @@ public class Player {
 			r.bstate = BATLESTATE.FIGHT;
 			playerRole.add(r);
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
-					"zyc_photo",new int[]{1,2}));
+					"zyc_photo",new int[]{33,2}));
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
 					"zyc_photo",new int[]{1,2}));
 		}

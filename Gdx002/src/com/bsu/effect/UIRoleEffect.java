@@ -24,10 +24,12 @@ import com.bsu.obj.Role.Type;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.screen.GameScreen;
 import com.bsu.tools.GC;
+import com.bsu.tools.MessageObject;
 import com.bsu.tools.U;
 
 /**
  * GAME游戏战斗场景UI
+ * 
  * @author zhangyongchen
  */
 public class UIRoleEffect implements Observer {
@@ -40,15 +42,17 @@ public class UIRoleEffect implements Observer {
 
 	public UIRoleEffect() {
 		// TODO Auto-generated constructor stub
-		
+
 	}
-	public void initUI(Stage s, GameScreen game){
+
+	public void initUI(Stage s, GameScreen game) {
 		stage = s;
 		stage.clear();
 		c = Commander.getInstance();
 		g = game;
 		show_hero_state();
 	}
+
 	/**
 	 * 绘画每个角色状态
 	 * 
@@ -68,21 +72,22 @@ public class UIRoleEffect implements Observer {
 		});
 		Array<Role> fightPlayer = Player.getInstance().getPlayerFightRole();
 		for (int i = 0; i < 5; i++) {
-			int x = 4+i * 96;
+			int x = 4 + i * 96;
 			int y = 10;
 			Vector2 v = new Vector2(x, y);
-			if(i>=fightPlayer.size){
-				RoleIcon icon=new RoleIcon();
+			if (i >= fightPlayer.size) {
+				RoleIcon icon = new RoleIcon();
 				icon.setPosition(x, y);
 				stage.addActor(icon);
-				for(int sj=0;sj<2;sj++){
-					new SkillIcon(stage, new Vector2(x+50, y+32-sj*33));
+				for (int sj = 0; sj < 2; sj++) {
+					stage.addActor(new SkillIcon(new Vector2(x + 50, y + 32
+							- sj * 33)));
 				}
 				continue;
 			}
-			
+
 			final Role r = fightPlayer.get(i);
-			RoleIcon photo = new RoleIcon(r,false);
+			RoleIcon photo = new RoleIcon(r, false);
 			stage.addActor(photo);
 			photo.setPosition(v.x, v.y);
 			roleUIInfo rui = new roleUIInfo(r, stage, x, y);
@@ -104,15 +109,16 @@ public class UIRoleEffect implements Observer {
 				}
 			});
 			final Array<Image> imgArray = new Array<Image>();
-			final Array<Skill> skillArray=r.getUseSkill();
+			final Array<Skill> skillArray = r.getUseSkill();
 			for (int j = 0; j < skillArray.size; j++) {
 				final Skill skill = skillArray.get(j);
 				final int tempIndex = j;
-				SkillIcon se = new SkillIcon(skill, stage, new Vector2(x + 50,
-						y + 32 - j * 33));
+				SkillIcon se = new SkillIcon(skill, new Vector2(x + 50, y + 32
+						- j * 33));
 				final Image skillImg = se.skillImg;
+				stage.addActor(se);
 				imgArray.add(skillImg);
-				if (r.cskill==skill) {
+				if (r.cskill == skill) {
 					U.setAlpha(skillImg, 1);
 				}
 				if (skillArray.get(tempIndex).enable) {
@@ -126,7 +132,9 @@ public class UIRoleEffect implements Observer {
 						@Override
 						public void touchUp(InputEvent event, float x, float y,
 								int pointer, int button) {
-							if (!g.isAction_start() && !(skill.ani_self==null && skill.ani_object==null && skill.ani_continue==null)) {
+							if (!g.isAction_start()
+									&& !(skill.ani_self == null
+											&& skill.ani_object == null && skill.ani_continue == null)) {
 								r.cskill = skillArray.get(tempIndex);
 								U.setSelectImg(imgArray, skillImg);
 							}
@@ -144,7 +152,7 @@ public class UIRoleEffect implements Observer {
 	 * @param r
 	 */
 	public void actingRole(Role r) {
-		Array<Role> fightPlayer =  Player.getInstance().getPlayerFightRole();
+		Array<Role> fightPlayer = Player.getInstance().getPlayerFightRole();
 		for (Role e : fightPlayer) {
 			e.roleIcon.showEffect(false);
 		}
@@ -179,7 +187,10 @@ public class UIRoleEffect implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		changeRoleHp((Role) arg);
+		MessageObject mo = (MessageObject) arg;
+		if (mo.message.equals(mo.o.changeHp)) {
+			changeRoleHp(mo.o);
+		}
 	}
 }
 
@@ -193,8 +204,8 @@ class roleUIInfo {
 				4, Color.BLACK, 1);
 		TextureRegion hp = WidgetFactory.getInstance().getTextureFill(48, 4,
 				new Color(255, 0, 0, 1), 1);
-		Image img = WidgetFactory.getInstance().makeImg(hpBack, 1, x, y+49);
-		hpImg = WidgetFactory.getInstance().makeImg(hp, 1, x, y+49);
+		Image img = WidgetFactory.getInstance().makeImg(hpBack, 1, x, y + 49);
+		hpImg = WidgetFactory.getInstance().makeImg(hp, 1, x, y + 49);
 		nameLabel = WidgetFactory.getInstance().makeLabel(r.name, 0.5f, x,
 				y + 50);
 		stage.addActor(img);

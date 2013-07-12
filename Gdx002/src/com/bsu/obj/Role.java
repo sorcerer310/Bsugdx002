@@ -19,6 +19,7 @@ import com.bsu.obj.skilltree.ContinuedSkillState;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.GC;
+import com.bsu.tools.MessageObject;
 import com.bsu.tools.GC.CLASSES;
 import com.bsu.tools.GC.QUALITY;
 import com.bsu.tools.GAC;
@@ -28,8 +29,7 @@ import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
 public class Role extends Actor {
-	private RoleObservable ro = new RoleObservable();
-
+	public RoleObservable ro = new RoleObservable();
 	public static enum Type {HERO, ENEMY}; 				// 英雄还是NPC
 	public static enum BATLESTATE {FIGHT,IDLE};		//英雄是否上场状态
 	public Type type = null; 							// ָ指定当前角色是英雄还是 NPC
@@ -50,9 +50,9 @@ public class Role extends Actor {
 	public int maxHp = 100; // 总血量
 	public int extMaxHp = 0; // 额外的血量上限
 	private int currentHp = 30; // 当前血量
-	private int attack; // 自身攻击力
+	public int attack; // 自身攻击力
 	public int extAttack = 0; // 额外的攻击力
-	private int defend;// 自身防御力
+	public int defend;// 自身防御力
 	public int extDefend = 0; // 额外的防御力
 	public int exp = 0; // 经验值
 	public int expUp = 0;
@@ -790,7 +790,7 @@ public class Role extends Actor {
 		extDefend = 0;
 		isRoundMove = true;
 	}
-
+	public String changeHp="hp";
 	/**
 	 * 设置当前血量
 	 * 
@@ -801,7 +801,7 @@ public class Role extends Actor {
 		if (this.currentHp <= 0)
 			// 命令commander 执行死亡命令
 			Commander.getInstance().commandRoleDead(this);
-		ro.notifyRoleObservers(this);
+		ro.notifyRoleObservers(new MessageObject(this,changeHp));
 
 	}
 

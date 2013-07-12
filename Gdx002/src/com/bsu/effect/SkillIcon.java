@@ -31,7 +31,7 @@ public class SkillIcon extends WidgetGroup {
 	 * @param v
 	 *            坐标
 	 */
-	public SkillIcon(Skill skill, Stage s, Vector2 v) {
+	public SkillIcon(Skill skill, Vector2 v) {
 		enableImg = new Image(skill.icon);
 		notEnabledImg = new Image(GTC.getInstance().getSkillIcon(0));
 		quality_frame = WidgetFactory.getInstance().getPixmapFrame(26, 26,
@@ -54,17 +54,15 @@ public class SkillIcon extends WidgetGroup {
 		skillImg.setPosition(v.x, v.y);
 		U.setAlpha(skillImg, 0.5f);
 		skill.skillIcon = this;
-		s.addActor(this);
 	}
 
 	/*
 	 * 空技能，不同于上个构造函数，虽然上面也有空的技能显示，但是他只是显示为空， 其他都存在，这个就是一个空技能图片
 	 */
-	public SkillIcon(Stage s, Vector2 v) {
+	public SkillIcon(Vector2 v) {
 		Image emptyImg = new Image(GTC.getInstance().getSkillIcon(0));
 		U.setAlpha(emptyImg, 0.5f);
 		addActor(emptyImg);
 		emptyImg.setPosition(v.x, v.y);
-		s.addActor(this);
 	}
 }

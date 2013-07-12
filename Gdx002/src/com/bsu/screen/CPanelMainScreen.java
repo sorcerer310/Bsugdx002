@@ -91,8 +91,8 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
-					setChanged();
-					notifyObservers(new MessageObject(r, GC.screen_selectRole));
+					//setChanged();
+					//notifyObservers(new MessageObject(r, GC.screen_selectRole));
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
@@ -103,16 +103,16 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 				Image img_frame = GTC.getInstance().getImageFrame(null);
 				img_frame.setPosition(v.x, v.y);
 				roleStage.addActor(img_frame);
-				img_frame.addListener(new InputListener() {
-					@Override
-					public boolean touchDown(InputEvent event, float x,
-							float y, int pointer, int button) {
-						setChanged();
-						notifyObservers(new MessageObject(null,
-								GC.screen_selectRole));
-						return super.touchDown(event, x, y, pointer, button);
-					}
-				});
+//				img_frame.addListener(new InputListener() {
+//					@Override
+//					public boolean touchDown(InputEvent event, float x,
+//							float y, int pointer, int button) {
+//						setChanged();
+//						notifyObservers(new MessageObject(null,
+//								GC.screen_selectRole));
+//						return super.touchDown(event, x, y, pointer, button);
+//					}
+//				});
 			}
 		}
 	}

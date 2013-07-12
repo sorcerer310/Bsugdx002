@@ -6,6 +6,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.Rectangle;
+import com.bsu.effect.MyParticle;
 import com.bsu.head.HeadScreen;
 import com.bsu.make.GameScreenFactory;
 import com.bsu.screen.CPanelMainScreen;
@@ -18,6 +19,7 @@ import com.bsu.screen.SettingScreen;
 import com.bsu.screen.ShopScreen;
 import com.bsu.screen.UpdateScreen;
 import com.bsu.tools.GC;
+import com.bsu.tools.GTC;
 import com.bsu.tools.MessageObject;
 import com.bsu.tools.Saver;
 
@@ -63,13 +65,13 @@ public class BsuGame extends Game {
 			@Override
 			public void update(Observable o, Object arg) {
 
-				//当转换到主菜单界面前，加载游戏数据
+				// 当转换到主菜单界面前，加载游戏数据
 				File file = new File("save.bin");
-				if(file.exists()){
+				if (file.exists()) {
 					Saver saver = Saver.getInstance();
 					saver.load();
 				}
-				
+
 				BsuGame.this.setScreen(this);
 				this.initScreen();
 			}
@@ -114,21 +116,27 @@ public class BsuGame extends Game {
 				MessageObject mo = (MessageObject) arg;
 				if (mo.message.equals(GC.screen_role)) {
 					BsuGame.this.setScreen(this);
-					this.initScreen();
+					initScreen();
 				}
-				if(mo.message.equals("changeSkill")){
-					this.showRoleSkill(mo.o);
+				if (mo.message.equals(role_fight)
+						|| mo.message.equals(role_idle)) {
+					showQualityRole(quality);
+					set_role_batle(mo.o);
 				}
-				if(mo.message.equals("updateSkill")){
-					this.showRoleSkill(mo.o);
-					this.showCrystal();
-					this.showSkillTree(mo.o);
+				if (mo.message.equals(role_locked)
+						|| mo.message.equals(role_unlock)) {
+					set_role_lock(mo.o);
 				}
-				if(mo.message.equals("changeLock")){
-					this.changeLockState(mo.o);
+				if (mo.message.equals(role_enable_skill)
+						|| mo.message.equals(role_level_skill)) {
+					set_role_info(mo.o);
+					set_role_skill_use(mo.o);
+					set_role_skill_tree(mo.o);
+					set_player_crystal();
 				}
-				if(mo.message.equals("changeFight")){
-					this.changeFightState(mo.o);
+				if (mo.message.equals(role_change_skill)) {
+					set_role_info(mo.o);
+					set_role_skill_use(mo.o);
 				}
 			}
 		};
@@ -177,11 +185,11 @@ public class BsuGame extends Game {
 
 	@Override
 	public void dispose() {
-		//程序退出销毁时存档
-		try{
+		// 程序退出销毁时存档
+		try {
 			Saver.getInstance().save();
-		}catch(Exception e){
-			System.out.println("保存游戏失败:"+e.toString());
+		} catch (Exception e) {
+			System.out.println("保存游戏失败:" + e.toString());
 		}
 		super.dispose();
 	}

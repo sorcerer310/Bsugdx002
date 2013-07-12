@@ -375,7 +375,7 @@ public class Skill {
 	 * @return	返回计算后的值
 	 */
 	public float getVal() {
-		return val+lev*uval;
+		return val+(lev-1)*uval;
 	}
 	/**
 	 * 将Skill对象转换为SkillData数据
