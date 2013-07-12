@@ -403,11 +403,6 @@ public class Commander {
 //					boolean skill_logic = false;					//判断技能逻辑函数返回值，返回true为自身释放技能，返回false为对其他单位释放技能
 					@Override
 					public void notify(Object obj, String msg) {
-//						if (!skill_logic && r.cskill.skillLogic(r, atkrs))
-//							atkrs.clear();
-//						if(!skill_logic)
-//							atkrs.clear();
-//						skill_logic = true;
 						// 判断攻击动画是否完成
 						if (msg.equals("ani_attack_finished")
 								|| r.getCskill().ani_self == null){
