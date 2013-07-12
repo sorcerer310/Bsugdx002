@@ -67,7 +67,7 @@ public class SkillFactory {
 			skl.otype = ObjectType.multi;
 			break;
 		case 6:
-			skl = new Skill(i,"马步",QUALITY.green,Type.p_healing,0.05f,0.01f,new CLASSES[]{CLASSES.all},"一回合内恢复自身少量生命",
+			skl = new Skill(i,"马步",QUALITY.green,Type.p_healing,0.05f,0.02f,new CLASSES[]{CLASSES.all},"一回合内恢复自身少量生命",
 					new Vector2[] {new Vector2(0,0)});
 			break;
 		case 7:
