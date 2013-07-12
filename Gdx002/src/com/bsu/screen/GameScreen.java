@@ -391,7 +391,8 @@ public class GameScreen extends CubocScreen implements Observer,
 			spRole.setScrollingDisabled(false, true);
 			spRole.setupFadeScrollBars(0, 0);
 			for (Reward r : rewards) {
-				if (r.item.type == com.bsu.obj.Item.Type.rolecard && U.probability(r.probability)) {
+				if (r.item.type == com.bsu.obj.Item.Type.rolecard && 
+						U.probability(r.probability*U.getRewardFromFightRole(Player.getInstance().getPlayerFightRole()))) {
 					ItemIcon icon = new ItemIcon(r.item);
 					tableRole.add(icon).width(icon.img_frame.getWidth())
 							.height(icon.img_frame.getHeight())
@@ -410,7 +411,8 @@ public class GameScreen extends CubocScreen implements Observer,
 			sp.setScrollingDisabled(false, true);
 			sp.setupFadeScrollBars(0, 0);
 			for (Reward r : rewards) {
-				if (r.item.type == com.bsu.obj.Item.Type.skillpart && U.probability(r.probability)) {
+				if (r.item.type == com.bsu.obj.Item.Type.skillpart && 
+						U.probability(r.probability*U.getRewardFromFightRole(Player.getInstance().getPlayerFightRole()))) {
 					table.defaults().padRight(10);
 					table.defaults().padTop(10);
 					table.add(new Image(GTC.getInstance().hm_headItemIcon.get(r.item.tr_item)));

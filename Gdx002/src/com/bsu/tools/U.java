@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Array;
+import com.bsu.obj.Player;
 import com.bsu.obj.Role;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.tools.GC.CLASSES;
@@ -428,5 +429,22 @@ public class U {
 			return QUALITY.purple;
 		else 
 			return QUALITY.green;
+	}
+	
+	/**
+	 * 通过上场的英雄判断是否有增加奖励技能，如果有计算增加多少百分比
+	 * @param froles	带入的战斗队伍
+	 * @return 返回增加的成功率百分比
+	 */
+	public static float getRewardFromFightRole(Array<Role> froles){
+		for(int i=0;i<froles.size;i++){
+			Role r = froles.get(i);
+			for(int j=0;j<r.skill_tree.size;j++){
+				Skill skl = r.skill_tree.get(j);
+				if(skl.id==72)
+					return skl.getVal();
+			}
+		}
+		return 1.0f;
 	}
 }
