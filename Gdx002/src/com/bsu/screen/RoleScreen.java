@@ -208,7 +208,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 		if (!s.enable) {
 			selectSkill = s;
 		} else {
-			 TipsWindows.getInstance().showSkillInfo(s,vs, RoleInfoStage);
 			if ((selectSkill == null) || (selectSkill != s)
 					|| (selectSkill.skill_index >= 0)) {
 				selectSkill = s;
@@ -220,6 +219,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 		 particleVec.x = vs.x + s.skillIcon.getWidth() / 2;
 		 particleVec.y = vs.y + s.skillIcon.getWidth() / 2;
 		selectRole.ro.notifyRoleObservers(new MessageObject(selectRole, role_enable_skill));
+		if(s.enable)
+			 TipsWindows.getInstance().showSkillInfo(s,vs, RoleInfoStage);
 	}
 
 	/**

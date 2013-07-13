@@ -228,10 +228,7 @@ public class U {
 			e.roleIcon.showEffect(true);
 		}
 	}
-	//返回一个字符串长度
-	public static int getStringLength(String s,float sv){
-		return (int) (s.length()*sv*12);
-	}
+	
 	/**
 	 * 将一个字符串分成几行
 	 * 

@@ -60,9 +60,9 @@ public class Player {
 			r.bstate = BATLESTATE.FIGHT;
 			playerRole.add(r);
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
-					"zyc_photo",new int[]{33,2}));
+					"zyc_photo",new int[]{99,102}));
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
-					"zyc_photo",new int[]{1,2}));
+					"zyc_photo",new int[]{100,74}));
 		}
 		orderRoleArray(playerRole);
 		return playerRole;
