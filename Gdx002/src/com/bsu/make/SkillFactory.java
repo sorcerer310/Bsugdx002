@@ -268,7 +268,7 @@ public class SkillFactory {
 			skl.otype = ObjectType.multi;
 			break;
 		case 102:
-			skl = new Skill(i,"法术折磨",QUALITY.orange,Type.prob_blind,0.2f,0.1f,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"用法术折磨敌人，使其防御大幅度降低",
+			skl = new Skill(i,"法术折磨",QUALITY.orange,Type.prob_nude,0.2f,0.1f,new CLASSES[]{CLASSES.wizard,CLASSES.cleric,CLASSES.sorcerer},"用法术折磨敌人，使其防御大幅度降低",
 					new Vector2[] {new Vector2(1,0),new Vector2(2,0),new Vector2(3,0),new Vector2(4,0),new Vector2(5,0)});
 			skl.offset_ani_object = new Vector2(-20,-16);
 			skl.offset_ani_continue = new Vector2(-20,-16);
