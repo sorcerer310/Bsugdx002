@@ -28,6 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.AttackEffect;
+import com.bsu.effect.EffectTool;
 import com.bsu.effect.ItemIcon;
 import com.bsu.effect.UIRoleEffect;
 import com.bsu.head.CubocScreen;
@@ -78,7 +79,8 @@ public class GameScreen extends CubocScreen implements Observer,
 	private boolean initFlag;
 	public enum BattleState{DOING,VICTORY,DEFEAT};
 	public BattleState bstate = BattleState.DOING;
-
+	private EffectTool et = new EffectTool();
+	
 	public GameScreen(Game mxg) {
 		super(mxg);
 		U.get_skin();
@@ -143,6 +145,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		initRoles(roles);
 		stage.addActor(fpsLabel);
 		stage.addActor(attack_effect);
+		stage.addActor(et);
 	}
 
 	/**

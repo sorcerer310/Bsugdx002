@@ -67,6 +67,7 @@ public class UIRoleEffect implements Observer {
 		bt_endround.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				EffectTool.shockScreen(g.getStage());
 				c.roundEnd();
 			}
 		});
