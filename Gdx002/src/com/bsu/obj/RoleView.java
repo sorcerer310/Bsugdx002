@@ -1,5 +1,7 @@
 package com.bsu.obj;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -35,13 +37,13 @@ public class RoleView {
 		Label classes = WidgetFactory.getInstance().makeLabel(U.getClasses(r),
 				scale, 140, 240);
 		Label lv = WidgetFactory.getInstance().makeLabel("等级:" + r.level,
-				scale, 20, 218);
+				scale, 140, 218);
 		Label exp = WidgetFactory.getInstance().makeLabel(
-				"经验:" + r.exp + "/" + r.expUp, scale, 140, 218);
-		Table hpTable = showInfoValue(r, ViewType.hp, 20, 210);
-		Table attackTable = showInfoValue(r, ViewType.attack, 140, 210);
-		Table healingTable = showInfoValue(r, ViewType.defend, 140, 190);
-		Table defendTable = showInfoValue(r, ViewType.healing, 20, 190);
+				"经验:" + r.exp + "/" + r.getUpExp(), scale, 140, 198);
+		Table hpTable = showInfoValue(r, ViewType.hp, 20, 230);
+		Table attackTable = showInfoValue(r, ViewType.attack, 20, 210);
+		Table healingTable = showInfoValue(r, ViewType.defend, 20, 190);
+		Table defendTable = showInfoValue(r, ViewType.healing, 140, 190);
 		Table effectTable = showSkillEffect(r, 20, 170);
 		infoGroup.addActor(name);
 		infoGroup.addActor(classes);
@@ -137,68 +139,88 @@ public class RoleView {
 	// 显示角色各项信息（包含携带技能）
 	private static Table showInfoValue(Role r, ViewType p, int x, int y) {
 		float scale = 0.6f;
-		String sn = "";
 		int value = 0;
 		String sa = "";
+		String sn="";
+		Color c=Color.GREEN;
 		Array<Type> skillp = new Array<Type>();
 		float n = 0;
 		Table valueTable = new Table();
+		valueTable.defaults().padRight(1);
 		valueTable.align(Align.left);
 		valueTable.setPosition(x, y);
 		if (p == ViewType.hp) {
-			value = r.maxHp;
+			value = r.getCurrentBaseHp();
 			skillp.add(Type.pbuff_hp);
 			sa = "生命";
+			sn=":"+value;
+			c=U.getColorFromTalent(r, "hp");
 		}
 		if (p == ViewType.attack) {
-			value = r.attack;
+			value = r.getCurrentBaseAttack();
 			skillp.add(Type.p_damage);
 			skillp.add(Type.f_damage);
 			skillp.add(Type.pbuff_atk);
 			skillp.add(Type.p_atkbeat);
 			skillp.add(Type.pdot_damage);
+			skillp.add(Type.p_assault);
 			sa = "攻击";
+			sn=":"+value;
+			c=U.getColorFromTalent(r, "attack");
 		}
 		if (p == ViewType.defend) {
-			value = r.defend;
+			value = r.getCurrentBaseDefend();
 			skillp.add(Type.pbuff_def);
 			sa = "防御";
+			sn=":"+value;
+			c=U.getColorFromTalent(r, "defend");
 		}
 		if (p == ViewType.healing) {
-			value = r.maxHp;
+			value = 1;
 			sa = "回复";
+			sn=":"+value;
 			skillp.add(Type.p_healing);// 百分比恢复
 			skillp.add(Type.f_healing);// 固定恢复
 			skillp.add(Type.pbuff_healing);// 持续恢复
+			c=new Color(0,255,0,1);
 		}
-		sn += sa + ":" + value;
-		Label title = new Label(sn, U.get_sytle());
+		Label title = new Label(sa, U.get_sytle());
 		title.setFontScale(scale);
+		title.setColor(c);
+		Label tn=new Label(sn,U.get_sytle());
+		tn.setFontScale(scale);
 		valueTable.add(title);
+		valueTable.add(tn);
 		for (Skill s : r.getUseSkill()) {
 			String hs = "";
 			boolean hasType = false;
 			for (Type sp : skillp) {
 				if (s.type == sp) {
 					if (s.type == Type.p_damage || s.type == Type.p_atkbeat
-							|| s.type == Type.pdot_damage) {
+							|| s.type == Type.pdot_damage||s.type==Type.p_assault) {
 						n = 1;
 					}
-					if (s.type == Type.f_damage || s.type == Type.f_healing
-							|| s.type == Type.pbuff_healing) {
+					if (s.type == Type.f_damage) {
 						n = s.getVal() - s.getVal() / value + 1;
 					}
-					if (s.type == Type.pbuff_atk || s.type == Type.p_healing
-							|| s.type == Type.pbuff_def
+					if (s.type == Type.pbuff_atk || s.type == Type.pbuff_def
+							|| s.type == Type.f_healing
 							|| s.type == Type.pbuff_hp) {
 						n = 0;
+					}
+					if (s.type == Type.p_healing) {
+						n = 0;
+						value = r.getCurrentBaseHp();
+					}
+					if (s.type == Type.pbuff_healing) {
+						n = s.getVal() - s.getVal() / value;
 					}
 					hasType = true;
 				}
 			}
 			if (s.enable)
 				if (hasType) {
-					hs += (int) ((s.getVal() - n) * value);
+					hs += MathUtils.round((s.getVal() - n) * value);
 				} else {
 					hs += 0;
 				}
@@ -208,7 +230,6 @@ public class RoleView {
 			Label a = new Label("(", U.get_sytle());
 			a.setFontScale(scale);
 			a.setColor(U.getQualityColor(s.quality));
-			sn += hs;
 			Label hp_string = new Label(hs, U.get_sytle());
 			hp_string.setFontScale(scale);
 			hp_string.setColor(U.getQualityColor(s.quality));
@@ -227,9 +248,11 @@ public class RoleView {
 		String sa = "特效:";
 		Table valueTable = new Table();
 		valueTable.align(Align.left);
+		valueTable.defaults().padRight(1);
 		valueTable.setPosition(x, y);
 		Label title = new Label(sa, U.get_sytle());
 		title.setFontScale(scale);
+		title.setColor(Color.ORANGE);
 		valueTable.add(title);
 		for (Skill s : r.getUseSkill()) {
 			String hs = "-";

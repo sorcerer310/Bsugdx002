@@ -173,7 +173,7 @@ public class UIRoleEffect implements Observer {
 				roleUIInfo rui = hpArray.get(i);
 				if (r.getCurrentHp() > 0) {
 					rui.hpImg.setScaleX((float) (r.getCurrentHp())
-							/ (float) (r.maxHp));
+							/ (float) (r.getCurrentBaseHp()));
 				} else {
 					// 头像变暗
 					rui.hpImg.setScaleX(0);

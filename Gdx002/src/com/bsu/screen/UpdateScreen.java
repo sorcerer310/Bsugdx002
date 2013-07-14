@@ -146,10 +146,10 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		infos.setFontScale(0.7f);
 		infos.setText(suRole.name + "  lv:" + suRole.level
 				+ "  exp:" + suRole.exp + "/"
-				+ suRole.expUp);
+				+ suRole.getUpExp());
 		upButton.setColor(upButton.getColor().r, upButton.getColor().g,
 				upButton.getColor().b,
-				(suRole.exp >= suRole.expUp ? 1 : 0f));
+				(suRole.exp >= suRole.getUpExp() ? 1 : 0f));
 	}
 
 	/**
@@ -276,10 +276,10 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		}
 		for (Role e : eatRoles) {
 			suRole.exp += e.classes.equals(suRole.classes)?e.exp*1.2f:e.exp;
-			Player.getInstance().playerRole.removeValue(e, false);
+			Player.getInstance().getRole().removeValue(e, false);
 		}
 		eatRoles.clear();
-		Player.getInstance().getPlayerPackageRole();
+		Player.getInstance().getPlayerIdelRole();
 		addRoleToStage(quality);
 	}
 
@@ -473,7 +473,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				if (suRole.exp >= suRole.expUp) {
+				if (suRole.exp >= suRole.getUpExp()) {
 					MyParticle mpe = new MyParticle(GTC.getInstance().particleEffect,
 							new Vector2(suRole.roleIcon.getX()+20,suRole.roleIcon.getY()+20));
 					upRoleStage.addActor(mpe);

@@ -96,7 +96,7 @@ public class TipsWindows extends WidgetGroup implements Observer {
 		tipsWindows.row();
 		tipsWindows.add(new Label("lv:" + r.level, U.get_sytle()));
 		tipsWindows.row();
-		tipsWindows.add(new Label("" + r.exp + "/" + r.expUp, U.get_sytle()));
+		tipsWindows.add(new Label("" + r.exp + "/" + r.getUpExp(), U.get_sytle()));
 		tipsWindows.row();
 		Table t = new Table();
 		for (Skill skill : r.getUseSkill()) {

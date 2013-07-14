@@ -32,32 +32,40 @@ import com.bsu.tools.U;
 
 public class Role extends Actor {
 	public RoleObservable ro = new RoleObservable();
-	public static enum Type {HERO, ENEMY}; 				// 英雄还是NPC
-	public static enum BATLESTATE {FIGHT,IDLE};		//英雄是否上场状态
-	public Type type = null; 							// ָ指定当前角色是英雄还是 NPC
-	public BATLESTATE bstate = BATLESTATE.IDLE;		// 默认为闲置状态
+
+	public static enum Type {
+		HERO, ENEMY
+	}; // 英雄还是NPC
+
+	public static enum BATLESTATE {
+		FIGHT, IDLE
+	}; // 英雄是否上场状态
+
+	public Type type = null; // ָ指定当前角色是英雄还是 NPC
+	public BATLESTATE bstate = BATLESTATE.IDLE; // 默认为闲置状态
 	private Color roleColor;
 	public RoleIcon roleIcon;
-	public Equip weapon;								// 人物武器
-	public Equip armor;									// 人物护甲
-	public boolean locked=false;//是否被锁定
+	public Equip weapon; // 人物武器
+	public Equip armor; // 人物护甲
+	public boolean locked = false;// 是否被锁定
 	public boolean isDead = false; // 角色死亡标识
 	private BsuEvent bevent = null; // 用来通知一些消息
 	public String name = ""; // 记录这个角色的名字
 	public QUALITY quality;// 品质
+	public float hp_talent = 1, attack_talent = 1, defend_talent = 1;// (生命，攻击，防御)资质
 	public CLASSES classes = null;// 指定当前人物的职业
-	public int level=1;// 等级
-	public String roleTextureName;			//使用的纹理的名称 
-	private TextureRegion roleTexture;		//使用的纹理对象
-	public int maxHp = 100; // 总血量
+	public int level = 1;// 等级
+	public String roleTextureName; // 使用的纹理的名称
+	private TextureRegion roleTexture; // 使用的纹理对象
+	private int maxHp = 100; // 总血量
 	public int extMaxHp = 0; // 额外的血量上限
 	private int currentHp = 30; // 当前血量
-	public int attack; // 自身攻击力
+	// public int attack; // 自身攻击力
 	public int extAttack = 0; // 额外的攻击力
-	public int defend;// 自身防御力
+	// public int defend;// 自身防御力
 	public int extDefend = 0; // 额外的防御力
 	public int exp = 0; // 经验值
-	public int expUp = 0;
+//	private int expUp = 0;
 	public Array<ContinuedSkillState> csstate = new Array<ContinuedSkillState>(); // 当前在人物身上的各种持续效果
 	public boolean isRoundMove = true; // 本回合是否移动
 	private float time_state; // 行动状态时间
@@ -65,7 +73,7 @@ public class Role extends Actor {
 	private float px, py;// 动画偏移量
 	public STATE state; // 英雄的当前状态
 	public Skill cskill; // 英雄当前的攻击技能
-	public Array<Skill> skill_tree = new Array<Skill>(); // 英雄的技能树
+	public Array<Skill> skill_tree = new Array<Skill>(); // 英雄的技能�
 	private Animation ani_idle; // 站立动画
 	private Animation ani_move; // 移动动画
 	public Animation ani_disapper;// 角色消失
@@ -79,7 +87,7 @@ public class Role extends Actor {
 	private Animation beAttack_effect; // 被攻击效果动画
 	private TextureRegion current_beattack_frame; // 当前被攻击效果动画对应的某一帧
 	private TextureRegion hp_back, hp;
-	private boolean selected; // 被选中等待操作？
+	private boolean selected; // 被选中等待
 	private boolean controlled;// 此轮是否被操作过
 	private Array<Vector2> pass_array = new Array<Vector2>(); // 人物可以移动的格子数组
 	private Array<Vector2> attack_array = new Array<Vector2>();// 人物可以攻击的格子
@@ -92,38 +100,40 @@ public class Role extends Actor {
 	 * @param n
 	 *            该角色的名字
 	 */
-	public Role(Type t, QUALITY q, CLASSES c,BATLESTATE bs, String n, int mhp, int av,
-			int dv, Equip w, Equip a, Array<Skill> as, String tr) {
+	public Role(Type t, QUALITY q, CLASSES c, BATLESTATE bs, String n, Equip w,
+			Equip a, Array<Skill> as, String tr) {
 		name = n; // 名称
 		type = t; // 类型，英雄还是敌人
 		quality = q;
 		classes = c;
 		bstate = bs;
 		time_state = 0;
-		maxHp = mhp;
-		currentHp = mhp;
-		attack = av;
-		defend = dv;
+		hp_talent = U.getRandom(1, 0.6f, 1.6f);
+		attack_talent = U.getRandom(1, 0.6f, 1.6f);
+		defend_talent = U.getRandom(1, 0.6f, 1.6f);
+		currentHp = getCurrentBaseHp();
 		weapon = w;
 		armor = a;
-		roleColor=new Color(getColor());
+		roleColor = new Color(getColor());
 		skill_tree = as;
 		roleTextureName = tr;
-		roleTexture = new TextureRegion(GTC.getInstance().hm_headItemIcon.get(tr));
-		exp = baseExp();
-		if(cskill==null)
-			cskill=getUseSkill().get(0);
+		roleTexture = new TextureRegion(
+				GTC.getInstance().hm_headItemIcon.get(tr));
+		exp = GC.baseExp * U.QualityInde(this);
+		if (cskill == null)
+			cskill = getUseSkill().get(0);
 		isDead = false;
-		this.setVisible(false);
+		setVisible(false);
 		set_actor_base(type);
-		setLvValue(level);
 	}
+
 	/**
 	 * 每局开始之前的初始化工作
 	 */
 	public void gsstartinit() {
 		setSelected(false);
 		setControlled(false);
+		maxHp = getCurrentBaseHp();
 		setCurrentHp(maxHp);
 		setColor(roleColor);
 		clearExtValue();
@@ -144,7 +154,7 @@ public class Role extends Actor {
 			face = FACE.right;
 		} else {
 			face = FACE.left;
-			 roleTexture.flip(true, false);
+			roleTexture.flip(true, false);
 		}
 		ani_idle = GAC.getInstance().getRoleAnimation(roleTexture);
 		ani_move = GAC.getInstance().getRoleAnimation(roleTexture);
@@ -340,6 +350,7 @@ public class Role extends Actor {
 	private void Role_logic() {
 		time_state += Gdx.graphics.getDeltaTime();
 		time_effect += Gdx.graphics.getDeltaTime();
+
 		current_action_frame = ani_current.getKeyFrame(time_state, loop_flag);
 		if (ani_current.isAnimationFinished(time_state)) {
 			if (ani_current == ani_move) {
@@ -381,7 +392,7 @@ public class Role extends Actor {
 				px = 0;
 				py = 0;
 				// 如果event对象不为空，执行函数通知完成
-				if (bevent != null) 
+				if (bevent != null)
 					bevent.notify(this, "ani_beattacked_finished");
 			}
 		}
@@ -496,7 +507,7 @@ public class Role extends Actor {
 
 	public void setPass_array(Array<Vector2> array) {
 		this.pass_array.clear();
-		for (int i=0;i<array.size;i++) {
+		for (int i = 0; i < array.size; i++) {
 			Vector2 tempV = new Vector2();
 			tempV.x = array.get(i).x;
 			tempV.y = array.get(i).y;
@@ -522,39 +533,12 @@ public class Role extends Actor {
 	}
 
 	/**
-	 * 返回角色基本exp
-	 * 
-	 * @return
-	 */
-	public int baseExp() {
-		int exp = 0;
-		if (quality == QUALITY.green)
-			exp = GC.baseExpGreen;
-		if (quality == QUALITY.blue)
-			exp = GC.baseExpBlue;
-		if (quality == QUALITY.purple)
-			exp = GC.baseExpPurple;
-		if (quality == QUALITY.orange)
-			exp = GC.baseExpOrange;
-		return exp;
-	}
-
-	/**
 	 * 返回英雄升级后数据
 	 */
-	public void levelUp(){
+	public void levelUp() {
 		level++;
-		exp-=expUp;
-		setLvValue(level);
 	}
-	public void setLvValue(int lv) {
-		level=lv;
-		maxHp = U.hpLevel(this,level);
-		attack = U.attackLevel(this,level);
-		defend = U.defendLevel(this,level);
-		expUp = U.expLevel(this,level);
-	}
-
+	
 	/**
 	 * 移动函数，指定当前的role移动到x y 位置，移动完成后通过BsuEvent通知调用者
 	 * 
@@ -750,12 +734,52 @@ public class Role extends Actor {
 	}
 
 	/**
+	 * 获得角色的当前基本HP
+	 * 
+	 * @return
+	 */
+	public int getCurrentBaseHp() {
+		return (int) (U.getRoleBaseHp(this) * hp_talent * level * U
+				.QualityInde(this));
+	}
+
+	/**
+	 * 获得角色的当前基本攻击力
+	 * 
+	 * @return
+	 */
+	public int getCurrentBaseAttack() {
+		return (int) (U.getRoleBaseAttack(this) * attack_talent * level * U
+				.QualityInde(this));
+	}
+
+	/**
+	 * 获得角色的当前基本防御
+	 * 
+	 * @return
+	 */
+	public int getCurrentBaseDefend() {
+		return (int) (U.getRoleBaseDefend(this) * defend_talent * level * U
+				.QualityInde(this));
+	}
+	/**
+	 * 获得升级所需经验
+	 * @return
+	 */
+	public int getUpExp(){
+		int value=0;
+		for(int i=1;i<=level;i++){
+			value+=i;
+		}
+		return GC.baseExpUp*value/2*U.QualityInde(this);
+	}
+	/**
 	 * 返回人物总攻击力
 	 * 
 	 * @return
 	 */
 	public int getAttack() {
-		return attack + extAttack;
+		return getCurrentBaseAttack() + extAttack;
 	}
 
 	/**
@@ -764,7 +788,7 @@ public class Role extends Actor {
 	 * @return
 	 */
 	public int getDefend() {
-		return defend + extDefend;
+		return getCurrentBaseDefend() + extDefend;
 	}
 
 	/**
@@ -773,7 +797,7 @@ public class Role extends Actor {
 	 * @return
 	 */
 	public int getMaxHp() {
-		return maxHp + extMaxHp;
+		return getCurrentBaseHp() + extMaxHp;
 	}
 
 	/**
@@ -785,7 +809,9 @@ public class Role extends Actor {
 		extDefend = 0;
 		isRoundMove = true;
 	}
-	public String changeHp="hp";
+
+	public String changeHp = "hp";
+
 	/**
 	 * 设置当前血量
 	 * 
@@ -796,7 +822,7 @@ public class Role extends Actor {
 		if (this.currentHp <= 0)
 			// 命令commander 执行死亡命令
 			Commander.getInstance().commandRoleDead(this);
-		ro.notifyRoleObservers(new MessageObject(this,changeHp));
+		ro.notifyRoleObservers(new MessageObject(this, changeHp));
 
 	}
 
@@ -829,43 +855,41 @@ public class Role extends Actor {
 		Role_logic();
 		super.act(delta);
 	}
-	//根据技能树索引skill_index返回一个role使用的技能数组
-	public Array<Skill> getUseSkill(){
-		Array<Skill> array=new Array<Skill>();
+
+	// 根据技能树索引skill_index返回一个role使用的技能数组
+	public Array<Skill> getUseSkill() {
+		Array<Skill> array = new Array<Skill>();
 		array.add(null);
 		array.add(null);
-		for(Skill s:skill_tree){
-			if(s.skill_index>=0){
+		for (Skill s : skill_tree) {
+			if (s.skill_index >= 0) {
 				array.set(s.skill_index, s);
 			}
 		}
 		return array;
 	}
+
 	/**
 	 * 将角色数转换为角色数据对象
-	 * @return	返回RoleData,保存Role对象中的一些基本信息
+	 * 
+	 * @return 返回RoleData,保存Role对象中的一些基本信息
 	 */
-	public RoleData toRoleData(){
+	public RoleData toRoleData() {
 		RoleData rdata = new RoleData();
 		rdata.name = this.name;
 		rdata.quality = this.quality;
 		rdata.classes = this.classes;
 		rdata.bstate = this.bstate;
 		rdata.level = this.level;
+		rdata.hp_talent=this.hp_talent;
+		rdata.attack_talent=this.attack_talent;
+		rdata.defend_talent=this.defend_talent;
 		rdata.roleTexture = this.roleTextureName;
-		rdata.maxHp = this.maxHp;
-		rdata.extMaxHp = this.maxHp;
-		rdata.currentHp = this.currentHp;
-		rdata.attack = this.attack;
-		rdata.extAttack = this.extAttack;
-		rdata.defend = this.defend;
-		rdata.extDefend = this.extDefend;
 		rdata.exp = this.exp;
-		rdata.expUp = this.expUp;
-		rdata.locked=this.locked;
-		for(Skill s:this.skill_tree)
+		rdata.locked = this.locked;
+		for (Skill s : this.skill_tree)
 			rdata.skill_tree.add(s.toSkillData());
 		return rdata;
 	}
-	
+
 }

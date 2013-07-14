@@ -133,7 +133,7 @@ public class SkillFactory {
 			skl.offset_ani_object = new Vector2(10,0);
 			break;
 		case 40:
-			skl = new Skill(i,"蛮力",QUALITY.blue,Type.pbuff_atk,0.05f,0.02f,new CLASSES[]{CLASSES.all},"提升自己的攻击力",
+			skl = new Skill(i,"蛮力",QUALITY.blue,Type.pbuff_atk,0.05f,0.05f,new CLASSES[]{CLASSES.all},"提升自己的攻击力",
 					new Vector2[] {new Vector2(0,0)});
 			skl.drivingpassive = Skill.DrivingPassive.passive;
 			break;
@@ -143,7 +143,7 @@ public class SkillFactory {
 			skl.drivingpassive = Skill.DrivingPassive.passive;
 			break;
 		case 42:
-			skl = new Skill(i,"致盲",QUALITY.blue,Type.prob_blind,0.2f,0.05f,new CLASSES[]{CLASSES.sorcerer,CLASSES.cleric},"对敌人产生致盲效果，导致敌人下回合不能攻击",
+			skl = new Skill(i,"致盲",QUALITY.blue,Type.prob_blind,0.2f,0.05f,new CLASSES[]{CLASSES.sorcerer,CLASSES.cleric},"对敌人产生致盲效果，导致敌人下回合不能进行攻击",
 					new Vector2[]{new Vector2(1,0),new Vector2(2,0),new Vector2(3,0)});
 			skl.offset_ani_self = new Vector2(16,5);
 			break;

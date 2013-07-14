@@ -115,7 +115,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	public void showQualityRole(QUALITY q) {
 		sRoleStage.clear();
 		Array<Role> roleArray = Player.getInstance().getQualityRole(
-				Player.getInstance().playerRole, q);
+				Player.getInstance().getRole(), q);
 		/*
 		 * 滑动容器
 		 */
@@ -171,7 +171,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		set_role_skill_use(selectRole);
 		set_role_skill_tree(selectRole);
 		set_player_crystal();
-		U.showRoleSelect(Player.getInstance().playerRole, selectRole);
+		U.showRoleSelect(Player.getInstance().getRole(), selectRole);
 	}
 
 	// 设置出战与休整
