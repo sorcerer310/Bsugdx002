@@ -62,9 +62,9 @@ public class Saver {
 		Player player = Player.getInstance();
 		playerData.playerRole.clear();
 		//转换所有角色数据为存档数据
-		int size = player.playerRole.size;
+		int size = player.getRole().size;
 		for(int i=0;i<size;i++)
-			playerData.playerRole.add(player.playerRole.get(i).toRoleData());
+			playerData.playerRole.add(player.getRole().get(i).toRoleData());
 		
 		playerData.crystal_blue = player.crystal_blue;
 		playerData.crystal_orange = player.crystal_orange;
@@ -78,11 +78,11 @@ public class Saver {
 		player.crystal_orange = playerData.crystal_orange;
 		player.crystal_purple = playerData.crystal_purple;
 		GameScreen.LvMax  = playerData.levelIndex;
-		player.playerRole.clear();
+		player.getRole().clear();
 		
 		int size = playerData.playerRole.size;
 		for(int i=0;i<size;i++)
-			player.playerRole.add(RoleFactory.getInstance().getHeroRole(playerData.playerRole.get(i)));
+			player.getRole().add(RoleFactory.getInstance().getHeroRole(playerData.playerRole.get(i)));
 	}
 }
 

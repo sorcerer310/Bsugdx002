@@ -16,15 +16,18 @@ public class RoleData{
 	public BATLESTATE bstate;					//是否加入战斗阵容
 	public int level;							//等级
 	public String roleTexture;					//人物纹理
-	public int maxHp;							//最大血量
-	public int extMaxHp;						//额外最大血量
-	public int currentHp;						//当前血量
-	public int attack;							//攻击力
-	public int extAttack;						//额外的攻击力
-	public int defend;							//防御力
-	public int extDefend;						//额外的防御力
+	public float hp_talent;						//生命资质
+	public float attack_talent;					//攻击资质
+	public float defend_talent;					//防御资质
+//	public int maxHp;							//最大血量
+//	public int extMaxHp;						//额外最大血量
+//	public int currentHp;						//当前血量
+//	public int attack;							//攻击力
+//	public int extAttack;						//额外的攻击力
+//	public int defend;							//防御力
+//	public int extDefend;						//额外的防御力
 	public int exp;								//经验值
-	public int expUp;							//下级升级的经验值
+//	public int expUp;							//下级升级的经验值
 	public boolean locked;						//是否被锁定
 	public Array<SkillData> skill_tree=new Array<SkillData>();			//英雄的技能树
 	public Array<SkillData> skill_array=new Array<SkillData>();			//英雄本关卡携带的技能

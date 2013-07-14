@@ -63,9 +63,8 @@ public class BattleScreen extends CubocScreen implements Observer {
 		lvArray_three.clear();
 		lvArray_four.clear();
 		// 滑动容器
-		Skin skin = new Skin(Gdx.files.internal("data/skin/bsuuiskin.json"));
 		Table table = new Table();
-		ScrollPane sp = new ScrollPane(table, skin.get(ScrollPaneStyle.class));
+		ScrollPane sp = new ScrollPane(table, U.get_skin().get(ScrollPaneStyle.class));
 		sp.setWidth(102);
 		sp.setHeight(280);
 		sp.setPosition(20, 20);
@@ -85,16 +84,16 @@ public class BattleScreen extends CubocScreen implements Observer {
 				U.setAlpha(chapterImg, 0.7f);
 			}
 			TextButtonStyle textButtonStyle = new TextButtonStyle();
-			textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
-			textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-			textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
-			textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
+			textButtonStyle.up = U.get_skin().newDrawable("white", Color.DARK_GRAY);
+			textButtonStyle.down = U.get_skin().newDrawable("white", Color.DARK_GRAY);
+			textButtonStyle.checked = U.get_skin().newDrawable("white", Color.BLUE);
+			textButtonStyle.over = U.get_skin().newDrawable("white", Color.LIGHT_GRAY);
 			textButtonStyle.font = U.get_font();
-			textButtonStyle.font.setScale(0.8f);
-			skin.add("bsutoggle", textButtonStyle);
-			TextButton button = new TextButton("第一关", skin.get("bsutoggle",
+			U.get_skin().add("bsutoggle", textButtonStyle);
+			TextButton button = new TextButton("第一关", U.get_skin().get("bsutoggle",
 					TextButtonStyle.class));
 			button.setWidth(50f);
+			button.getLabel().setFontScale(0.8f);
 			table.add(button).width(button.getWidth())
 					.height(button.getHeight()).pad(10.0f);
 			table.row();

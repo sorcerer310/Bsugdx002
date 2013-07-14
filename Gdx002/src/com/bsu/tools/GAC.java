@@ -36,6 +36,7 @@ public class GAC {
 		effect_split = TextureRegion.split(effect_texture, 32, 32);
 		texture_effect_skills = GTC.getInstance().skills_effect;
 	}
+
 	public Animation getRoleAnimation(TextureRegion tr){
 		TextureRegion[] region_idle = new TextureRegion[1];
 		region_idle[0] = tr;

@@ -5,6 +5,7 @@ import com.bsu.make.RoleFactory;
 import com.bsu.obj.Role.BATLESTATE;
 import com.bsu.obj.Role.Type;
 import com.bsu.tools.GC.QUALITY;
+import com.bsu.tools.U;
 
 /**
  * 玩家类，封装了玩家的所有信息
@@ -31,10 +32,10 @@ public class Player {
 	}
 	
 	private int money;// 玩家金钱
-	public Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
+	private Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
 	public int crystal_blue = 300;//蓝色技能碎片(普通)
-	public int crystal_purple = 30;// 紫色技能碎片数量（高级）
-	public int crystal_orange = 30;// 橙色技能碎片数量（史诗）
+	public int crystal_purple = 300;// 紫色技能碎片数量（高级）
+	public int crystal_orange = 300;// 橙色技能碎片数量（史诗）
 
 	private Player() {
 		initPlayerRole();
@@ -56,27 +57,31 @@ public class Player {
 	private Array<Role> initPlayerRole() {
 		if (playerRole.size == 0) {
 			RoleFactory rf = RoleFactory.getInstance();
-			Role r = rf.getFighter("fc", Role.Type.HERO, QUALITY.green,"fc_photo");
-			r.bstate = BATLESTATE.FIGHT;
-			playerRole.add(r);
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
-					"zyc_photo",new int[]{99,102}));
+					"zyc_photo",new int[]{2,1}));
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
-					"zyc_photo",new int[]{100,74}));
+					"zyc_photo",new int[]{101,102}));
+			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
+					"zyc_photo",new int[]{1,40}));
+			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
+					"zyc_photo",new int[]{1,40}));
 		}
+		return playerRole;
+	}
+	//取得总卡片
+	public Array<Role> getRole(){
 		orderRoleArray(playerRole);
 		return playerRole;
 	}
-
 	/**
 	 * 获得出战role数组
 	 * @return
 	 */
 	public Array<Role> getPlayerFightRole() {
 		Array<Role> fightRole = new Array<Role>();
-//		for(Role r:playerRole)
-		for(int i=0;i<playerRole.size;i++){
-			Role r = playerRole.get(i);
+		Array<Role> arr=getRole();
+		for(int i=0;i<arr.size;i++){
+			Role r = arr.get(i);
 			if(r.bstate==BATLESTATE.FIGHT)
 				fightRole.add(r);
 		}
@@ -88,9 +93,12 @@ public class Player {
 	 */
 	public Array<Role> getPlayerIdelRole(){
 		Array<Role> idleRole = new Array<Role>();
-		for(Role r:playerRole)
+		Array<Role> arr=getRole();
+		for(int i=0;i<arr.size;i++){
+			Role r = arr.get(i);
 			if(r.bstate==BATLESTATE.IDLE)
 				idleRole.add(r);
+		}
 		return idleRole;
 	}
 	
@@ -103,20 +111,8 @@ public class Player {
 		for(Role r:roles){
 			playerRole.add(r);
 		}
-		orderRoleArray(playerRole);
-		getPlayerPackageRole();
 	}
 
-	/**
-	 * 取得背包中的卡片
-	 * @return
-	 */
-	public Array<Role> getPlayerPackageRole() {
-		Array<Role> roles = new Array<Role>();
-		for(Role r:playerRole)
-			roles.add(r);
-		return roles;
-	}
 	/**
 	 * 取得某一个数组中的某一品质的  card
 	 * 
@@ -151,11 +147,11 @@ public class Player {
 			// 因为每一轮循环将确定一个数组元素的位置,
 			// 所以每一轮的比较次数将会递减
 			for (j = 0; j < roles.size - i - 1; j++) {
-				if (QualityInde(roles.get(j)) < QualityInde(roles.get(j + 1))) {
+				if (U.QualityInde(roles.get(j)) < U.QualityInde(roles.get(j + 1))) {
 					// 如果第j个元素比它后面的相邻的元素小的话就交换
 					roles.swap(j, j + 1);
 				} else {
-					if (QualityInde(roles.get(j)) == QualityInde(roles
+					if (U.QualityInde(roles.get(j)) == U.QualityInde(roles
 							.get(j + 1))) {
 						if (roles.get(j).level < roles.get(j + 1).level) {
 							roles.swap(j, j + 1);
@@ -164,29 +160,6 @@ public class Player {
 				}
 			}
 		}
-	}
-
-	/**
-	 * 根据role品质返回一个int,品质越高，int 越高
-	 * 
-	 * @return
-	 */
-	private int QualityInde(Role r) {
-		int index = 0;
-		if (r.quality == QUALITY.green) {
-			index = 0;
-		}
-		if (r.quality == QUALITY.blue) {
-			index = 1;
-		}
-		if (r.quality == QUALITY.purple) {
-			index = 2;
-		}
-		if (r.quality == QUALITY.orange) {
-			index = 3;
-		}
-
-		return index;
 	}
 	/**
 	 * 给玩家增加一个物品

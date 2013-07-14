@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import javax.jws.soap.SOAPBinding.Style;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -40,10 +42,11 @@ public class U {
 	 *            浮动值下限
 	 * @return
 	 */
-	public static int getRandom(int fix_val, int floatval_bottom,
-			int floatval_top) {
-		int rndval = rnd.nextInt(floatval_top - floatval_bottom);
-		return fix_val + (rndval - floatval_bottom);
+	public static float getRandom(int fix_val, float floatval_bottom,
+			float floatval_top) {
+		int rndval = rnd
+				.nextInt((int) ((floatval_top - floatval_bottom) * 10 + 1));
+		return (fix_val + (rndval + floatval_bottom*10)) / 10;
 	}
 
 	/**
@@ -97,87 +100,217 @@ public class U {
 			return false;
 	}
 
+	public static Color getColorFromTalent(Role r, String s) {
+		Color c = Color.WHITE;;
+		float value = 0;
+		if (s.equals("hp")) {
+			value = r.hp_talent;
+		}
+		if (s.equals("attack")) {
+			value = r.attack_talent;
+		}
+		if (s.equals("defend")) {
+			value = r.defend_talent;
+		}
+		if(value<1){
+			c=new Color(0,255,0,1);
+		}
+		if(value>=1&&value<1.3f){
+			c=new Color(0, 0, 255, 1); 
+		}
+		if(value>=1.3f&&value<1.5f){
+			c=new Color(255, 0, 255, 1); 
+		}
+		if(value>=1.5f){
+			c=Color.ORANGE;
+		}
+		return c;
+	}
+
+	/**
+	 * 根据role品质返回一个int,品质越高，int 越高
+	 * 
+	 * @return
+	 */
+	public static int QualityInde(Role r) {
+		int index = 0;
+		if (r.quality == QUALITY.green) {
+			index = 1;
+		}
+		if (r.quality == QUALITY.blue) {
+			index = 2;
+		}
+		if (r.quality == QUALITY.purple) {
+			index = 3;
+		}
+		if (r.quality == QUALITY.orange) {
+			index = 4;
+		}
+		return index;
+	}
+
+	// 取得角色基本的生命值
+	public static int getRoleBaseHp(Role r) {
+		int value = 0;
+		if (r.classes == CLASSES.fighter) {
+			value = GC.baseHpFight;
+		}
+		if (r.classes == CLASSES.cleric) {
+			value = GC.baseHpCleric;
+		}
+		if (r.classes == CLASSES.wizard) {
+			value = GC.baseHpWizard;
+		}
+		if (r.classes == CLASSES.sorcerer) {
+			value = GC.baseHpSorcerer;
+		}
+		if (r.classes == CLASSES.archer) {
+			value = GC.baseHpArcher;
+		}
+		return value;
+	}
+
+	// 取得角色基本攻击值
+	public static int getRoleBaseAttack(Role r) {
+		int value = 0;
+		if (r.classes == CLASSES.fighter) {
+			value = GC.baseAttackFight;
+		}
+		if (r.classes == CLASSES.cleric) {
+			value = GC.baseAttackCleric;
+		}
+		if (r.classes == CLASSES.wizard) {
+			value = GC.baseAttackWizard;
+		}
+		if (r.classes == CLASSES.sorcerer) {
+			value = GC.baseAttackSorcerer;
+		}
+		if (r.classes == CLASSES.archer) {
+			value = GC.baseAttackArcher;
+		}
+		return value;
+	}
+
+	// 取得角色基本防御值
+	public static int getRoleBaseDefend(Role r) {
+		int value = 0;
+		if (r.classes == CLASSES.fighter) {
+			value = GC.baseDefendFight;
+		}
+		if (r.classes == CLASSES.cleric) {
+			value = GC.baseDefendCleric;
+		}
+		if (r.classes == CLASSES.wizard) {
+			value = GC.baseDefendWizard;
+		}
+		if (r.classes == CLASSES.sorcerer) {
+			value = GC.baseDefendSorcerer;
+		}
+		if (r.classes == CLASSES.archer) {
+			value = GC.baseDefendArcher;
+		}
+		return value;
+	}
+
 	/**
 	 * 角色升级后返回新的hp上限
 	 * 
 	 * @param r角色
-	 * @param lv 等级           
+	 * @param lv
+	 *            等级
 	 * @return 新的等级生命上限
 	 */
-	public static int hpLevel(Role r,int lv) {
+	public static int hpLevel(Role r, int lv) {
 		int maxhp = 0;
-		int basehp = 0;
-		if (r.quality == QUALITY.green)
-			basehp = GC.baseHpGreen;
-		if (r.quality == QUALITY.blue)
-			basehp = GC.baseHpBlue;
-		if (r.quality == QUALITY.purple)
-			basehp = GC.baseHpPurple;
-		if (r.quality == QUALITY.orange)
-			basehp = GC.baseHpOrange;
-		maxhp = basehp * lv;
+		int baseValue = 0;
+		if (r.classes == CLASSES.fighter) {
+			baseValue = GC.baseHpFight * QualityInde(r);
+		}
+		if (r.classes == CLASSES.cleric) {
+			baseValue = GC.baseHpCleric * QualityInde(r);
+		}
+		if (r.classes == CLASSES.wizard) {
+			baseValue = GC.baseHpWizard * QualityInde(r);
+		}
+		if (r.classes == CLASSES.sorcerer) {
+			baseValue = GC.baseHpSorcerer * QualityInde(r);
+		}
+		if (r.classes == CLASSES.archer) {
+			baseValue = GC.baseHpArcher * QualityInde(r);
+		}
+		maxhp = baseValue * lv;
 		return maxhp;
 	}
 
 	/**
 	 * 返回升级后的角色基本攻击力
+	 * 
 	 * @param r
 	 * @param lv
 	 * @return
 	 */
-	public static int attackLevel(Role r,int lv) {
+	public static int attackLevel(Role r, int lv) {
 		int maxattack = 0;
-		int base = 0;
-		if (r.quality == QUALITY.green)
-			base = GC.baseAttackGreen;
-		if (r.quality == QUALITY.blue)
-			base = GC.baseAttackBlue;
-		if (r.quality == QUALITY.purple)
-			base = GC.baseAttackPurple;
-		if (r.quality == QUALITY.orange)
-			base = GC.baseAttackOrange;
-		maxattack = base * lv;
+		int baseValue = 0;
+		if (r.classes == CLASSES.fighter) {
+			baseValue = GC.baseAttackFight * QualityInde(r);
+		}
+		if (r.classes == CLASSES.cleric) {
+			baseValue = GC.baseAttackCleric * QualityInde(r);
+		}
+		if (r.classes == CLASSES.wizard) {
+			baseValue = GC.baseAttackWizard * QualityInde(r);
+		}
+		if (r.classes == CLASSES.sorcerer) {
+			baseValue = GC.baseAttackSorcerer * QualityInde(r);
+		}
+		if (r.classes == CLASSES.archer) {
+			baseValue = GC.baseAttackArcher * QualityInde(r);
+		}
+		maxattack = baseValue * lv;
 		return maxattack;
 	}
 
 	/**
 	 * 返回升级后的角色基本防御力
+	 * 
 	 * @param r
 	 * @param lv
 	 * @return
 	 */
-	public static int defendLevel(Role r,int lv) {
+	public static int defendLevel(Role r, int lv) {
 		int defend = 0;
-		int base = 0;
-		if (r.quality == QUALITY.green)
-			base = GC.baseDefendGreen;
-		if (r.quality == QUALITY.blue)
-			base = GC.baseDefendBlue;
-		if (r.quality == QUALITY.purple)
-			base = GC.baseDefendPurple;
-		if (r.quality == QUALITY.orange)
-			base = GC.baseDefendOrange;
-		defend = base * lv;
+		int baseValue = 0;
+		if (r.classes == CLASSES.fighter) {
+			baseValue = GC.baseDefendFight * QualityInde(r);
+		}
+		if (r.classes == CLASSES.cleric) {
+			baseValue = GC.baseDefendCleric * QualityInde(r);
+		}
+		if (r.classes == CLASSES.wizard) {
+			baseValue = GC.baseDefendWizard * QualityInde(r);
+		}
+		if (r.classes == CLASSES.sorcerer) {
+			baseValue = GC.baseDefendSorcerer * QualityInde(r);
+		}
+		if (r.classes == CLASSES.archer) {
+			baseValue = GC.baseDefendArcher * QualityInde(r);
+		}
+		defend = baseValue * lv;
 		return defend;
 	}
 
 	/**
 	 * 返回升级后的角色下级所需经验
+	 * 
 	 * @param r
 	 * @param lv
 	 * @return
 	 */
-	public static int expLevel(Role r,int lv) {
+	public static int expLevel(Role r, int lv) {
 		int exp = 0;
 		int base = 0;
-		if (r.quality == QUALITY.green)
-			base = GC.baseExpUpGreen;
-		if (r.quality == QUALITY.blue)
-			base = GC.baseExpUpBlue;
-		if (r.quality == QUALITY.purple)
-			base = GC.baseExpUpPurple;
-		if (r.quality == QUALITY.orange)
-			base = GC.baseExpUpOrange;
+		base = GC.baseExpUp;
 		exp = base * lv;
 		return exp;
 	}
@@ -214,10 +347,12 @@ public class U {
 	public static void showRoleSelect(Array<Role> roleArray, Role r) {
 		for (Role e : roleArray) {
 			e.roleIcon.showEffect(false);
-			if(e.roleIcon!=null)e.roleIcon.showEffect(false);
+			if (e.roleIcon != null)
+				e.roleIcon.showEffect(false);
 		}
 		r.roleIcon.showEffect(true);
-		if(r.roleIcon!=null)r.roleIcon.showEffect(true);
+		if (r.roleIcon != null)
+			r.roleIcon.showEffect(true);
 	}
 
 	public static void showRolesSelect(Array<Role> roleArray, Array<Role> r) {
@@ -228,7 +363,7 @@ public class U {
 			e.roleIcon.showEffect(true);
 		}
 	}
-	
+
 	/**
 	 * 将一个字符串分成几行
 	 * 
@@ -280,14 +415,17 @@ public class U {
 		}
 		setAlpha(s, 1);
 	}
+
 	/**
 	 * 当前技能
+	 * 
 	 * @param allArray
 	 * @param s
-	 * @param b 是否含有边框
+	 * @param b
+	 *            是否含有边框
 	 */
 	public static void setCurrentSkillImg(Array<Image> allArray, Image s) {
-		for (int i=0;i<allArray.size;i+=2) {
+		for (int i = 0; i < allArray.size; i += 2) {
 			setAlpha(allArray.get(i), 0.5f);
 		}
 		setAlpha(s, 1);
@@ -300,11 +438,11 @@ public class U {
 	 * @param a
 	 */
 
-	public static void setAlpha(Actor actor,float a){
+	public static void setAlpha(Actor actor, float a) {
 		Color c = actor.getColor();
-		actor.setColor(c.r,c.g,c.b,a);
+		actor.setColor(c.r, c.g, c.b, a);
 	}
-	
+
 	/**
 	 * 取得品质对应文字颜色
 	 * 
@@ -352,96 +490,117 @@ public class U {
 		}
 		return font;
 	}
+
 	static LabelStyle style;
+
 	/**
 	 * 取得目标色label样式
 	 * 
 	 * @return
 	 */
 	public static LabelStyle get_sytle() {
-		if (style==null) {
+		if (style == null) {
 			BitmapFont f = get_font();
-			style = new LabelStyle(f, f.getColor());	
+			style = new LabelStyle(f, f.getColor());
 		}
 		return style;
 	}
+
 	static Skin skin;
-	public static Skin get_skin(){
-		if (skin==null) {
-			skin = new Skin(Gdx.files.internal("data/skin/bsuuiskin.json"));	
+
+	public static Skin get_skin() {
+		if (skin == null) {
+			skin = new Skin(Gdx.files.internal("data/skin/bsuuiskin.json"));
 		}
 		return skin;
 	}
+
 	/**
 	 * 将TiledMap中的坐标转换为gdx中的块坐标
-	 * @param x	TiledMap中的坐标x
-	 * @param y	TiledMap中的坐标y
-	 * @return	返回转换为box的坐标
+	 * 
+	 * @param x
+	 *            TiledMap中的坐标x
+	 * @param y
+	 *            TiledMap中的坐标y
+	 * @return 返回转换为box的坐标
 	 */
-	public static Vector2 TiledPos2GdxBoxPos(int x,int y){
-		int retx = x/GC.map_box_value;
-		
-		int rety = (GC.rect_height - y)/GC.map_box_value; 
-		return new Vector2(retx,rety);
+	public static Vector2 TiledPos2GdxBoxPos(int x, int y) {
+		int retx = x / GC.map_box_value;
+
+		int rety = (GC.rect_height - y) / GC.map_box_value;
+		return new Vector2(retx, rety);
 	}
+
 	/**
 	 * 将真实坐标转为格子坐标
-	 * @param x		真实坐标
-	 * @param y		真实坐标
-	 * @return		返回对应的格子坐标
+	 * 
+	 * @param x
+	 *            真实坐标
+	 * @param y
+	 *            真实坐标
+	 * @return 返回对应的格子坐标
 	 */
-	public static Vector2 realPost2BoxPos(int x,int y){
-		return new Vector2(x/GC.map_box_value,y/GC.map_box_value);
+	public static Vector2 realPost2BoxPos(int x, int y) {
+		return new Vector2(x / GC.map_box_value, y / GC.map_box_value);
 	}
+
 	/**
 	 * 通过value获得key，由于一个value可能对应多个key，所以只返回最先查到的key即可
-	 * @param <T1>	hashmap key类型
-	 * @param <T2>	hashmap value类型
-	 * @return		返回通过value查到的key
+	 * 
+	 * @param <T1>
+	 *            hashmap key类型
+	 * @param <T2>
+	 *            hashmap value类型
+	 * @return 返回通过value查到的key
 	 */
-	public static <T1, T2> T1 getKeyByValue(HashMap<T1,T2> hm,T2 v){
-		if(!hm.containsValue(v))
+	public static <T1, T2> T1 getKeyByValue(HashMap<T1, T2> hm, T2 v) {
+		if (!hm.containsValue(v))
 			return null;
-		Set<Map.Entry<T1,T2>> set =  hm.entrySet();
-		Iterator<Map.Entry<T1,T2>> it= set.iterator();
-		while(it.hasNext()){
+		Set<Map.Entry<T1, T2>> set = hm.entrySet();
+		Iterator<Map.Entry<T1, T2>> it = set.iterator();
+		while (it.hasNext()) {
 			Map.Entry<T1, T2> e = it.next();
-			if(e.getValue()==v)
+			if (e.getValue() == v)
 				return e.getKey();
-			if(e.getValue().equals(v))
+			if (e.getValue().equals(v))
 				return e.getKey();
 		}
 		return null;
 	}
+
 	/**
 	 * 将字符串品质数据转为QUALITY类型值,默认返回green
-	 * @param q	带入的字符串品质
-	 * @return	
+	 * 
+	 * @param q
+	 *            带入的字符串品质
+	 * @return
 	 */
-	public static QUALITY str2Quality(String q){
-		if(q.equals("green"))
+	public static QUALITY str2Quality(String q) {
+		if (q.equals("green"))
 			return QUALITY.green;
-		else if(q.equals("blue"))
+		else if (q.equals("blue"))
 			return QUALITY.blue;
-		else if(q.equals("orange"))
+		else if (q.equals("orange"))
 			return QUALITY.orange;
-		else if(q.equals("purple"))
+		else if (q.equals("purple"))
 			return QUALITY.purple;
-		else 
+		else
 			return QUALITY.green;
 	}
-	
+
 	/**
 	 * 通过上场的英雄判断是否有增加奖励技能，如果有计算增加多少百分比
-	 * @param froles	带入的战斗队伍
+	 * 
+	 * @param froles
+	 *            带入的战斗队伍
 	 * @return 返回增加的成功率百分比
 	 */
-	public static float getRewardFromFightRole(Array<Role> froles){
-		for(int i=0;i<froles.size;i++){
+	public static float getRewardFromFightRole(Array<Role> froles) {
+		for (int i = 0; i < froles.size; i++) {
 			Role r = froles.get(i);
-			for(int j=0;j<r.skill_tree.size;j++){
+			for (int j = 0; j < r.skill_tree.size; j++) {
 				Skill skl = r.skill_tree.get(j);
-				if(skl.id==72)
+				if (skl.id == 72)
 					return skl.getVal();
 			}
 		}

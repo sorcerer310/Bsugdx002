@@ -70,31 +70,13 @@ public class GC {
 	public static String map_type_hero_home = "hero_home"; // 地图对象层类型-->角色基地
 	public static String map_type_enemy_home = "enemy_home"; // 地图对象层类型-->NPC基地
 
-	public static int baseHpGreen = 100;// 绿色品质卡片初始基本生命
-	public static int baseHpBlue = 200;// 蓝色品质卡片初始生命
-	public static int baseHpPurple = 300;
-	public static int baseHpOrange = 400;
-
-	public static int baseAttackGreen = 10;// 绿色卡片初始基本攻击力
-	public static int baseAttackBlue = 20;
-	public static int baseAttackPurple = 30;
-	public static int baseAttackOrange = 40;
-
-	public static int baseDefendGreen = 5;// 绿色卡片初始基本防御力
-	public static int baseDefendBlue = 10;
-	public static int baseDefendPurple = 15;
-	public static int baseDefendOrange = 20;
-
-	public static int baseExpGreen = 10;// 绿色卡片初始经验
-	public static int baseExpBlue = 50;
-	public static int baseExpPurple = 200;
-	public static int baseExpOrange = 500;
-
-	public static int baseExpUpGreen = 50;// 绿色卡片升级所需基本经验
-	public static int baseExpUpBlue = 200;
-	public static int baseExpUpPurple = 500;
-	public static int baseExpUpOrange = 1000;
-
+	public static int baseHpFight = 100,baseHpCleric=120,baseHpWizard=50,baseHpSorcerer=70,baseHpArcher=80;// 绿色品质卡片初始基本生命
+	public static int baseAttackFight = 10, baseAttackCleric = 8
+			,baseAttackWizard=15,baseAttackSorcerer=12,baseAttackArcher = 15;// 绿色卡片初始基本攻击力
+	public static int baseDefendFight = 10, baseDefendCleric = 8
+			,baseDefendWizard=6,baseDefendSorcerer=6,baseDefendArcher = 5;// 绿色卡片初始基本防御力
+	public static int baseExp = 10;// 绿色卡片初始经验
+	public static int baseExpUp = 50;// 绿色卡片升级所需基本经验
 	public static String noCard = "没有相应品质卡片，请通关进行收集";
 	public static String noOpen = "功能暂未开放";
 	public static String roleUp = "可以升级了，增加属性";
