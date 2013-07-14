@@ -78,11 +78,10 @@ public class Saver {
 		player.crystal_orange = playerData.crystal_orange;
 		player.crystal_purple = playerData.crystal_purple;
 		GameScreen.LvMax  = playerData.levelIndex;
-		player.getRole().clear();
-		
+		player.getRole().clear();	
 		int size = playerData.playerRole.size;
 		for(int i=0;i<size;i++)
-			player.getRole().add(RoleFactory.getInstance().getHeroRole(playerData.playerRole.get(i)));
+		player.getRole().add(RoleFactory.getInstance().getHeroRole(playerData.playerRole.get(i)));
 	}
 }
 

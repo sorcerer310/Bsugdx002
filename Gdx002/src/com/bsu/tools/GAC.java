@@ -40,7 +40,7 @@ public class GAC {
 	public Animation getRoleAnimation(TextureRegion tr){
 		TextureRegion[] region_idle = new TextureRegion[1];
 		region_idle[0] = tr;
-		Animation ani_role_idle = new Animation(0.1f, region_idle);
+		Animation ani_role_idle = new Animation(GC.duration_ani, region_idle);
 		return ani_role_idle;
 	}
 	public Animation getEffectApper(){
@@ -49,7 +49,7 @@ public class GAC {
 		region_effect_apper[1] = effect_split[5][6];
 		region_effect_apper[2] = effect_split[6][6];
 		region_effect_apper[3] = effect_split[7][6];
-		Animation ani_effect_apper = new Animation(0.1f, region_effect_apper);
+		Animation ani_effect_apper = new Animation(GC.duration_ani, region_effect_apper);
 		return ani_effect_apper;
 	}
 	public Animation getEffectDisapper(){
@@ -58,7 +58,7 @@ public class GAC {
 		region_effect_disapper[1] = effect_split[6][6];
 		region_effect_disapper[2] = effect_split[5][6];
 		region_effect_disapper[3] = effect_split[4][6];
-		Animation ani_effect_disapper = new Animation(0.1f, region_effect_disapper);
+		Animation ani_effect_disapper = new Animation(GC.duration_ani, region_effect_disapper);
 		return ani_effect_disapper;
 	}
 	/**
@@ -76,7 +76,7 @@ public class GAC {
 		tr.add(texture_effect_skills.findRegion("box",3));
 		tr.add(texture_effect_skills.findRegion("box",4));
 		tr.add(texture_effect_skills.findRegion("box",5));
-		Animation ani = new Animation(0.1f,tr);
+		Animation ani = new Animation(GC.duration_ani,tr);
 		return ani;
 	}
 	
@@ -496,6 +496,7 @@ public class GAC {
 			retani = new Animation(GC.duration_skill_effect,tr);
 		return retani;
 	}
+	
 	/**
 	 * 返回持续性状态动画
 	 * @param idx	对应的技能ID

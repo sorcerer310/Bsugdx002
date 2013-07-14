@@ -1,5 +1,7 @@
 package com.bsu.obj.skilltree;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -34,11 +36,14 @@ public class Skill {
 		single, multi, all
 	}; // 技能作用对象类型，单体，群体，全图
 
+	public static enum SpecialEffect {shock,dark,none};	//特殊的大型技能效果 shock:震动 dark:全屏黑暗 none:无
+	
 	public int id = 0; // 技能索引
 	public String name = ""; // 技能名称唯一索引
 	public QUALITY quality = QUALITY.green; // 技能品质，默认为绿色
 	public Type type = Type.f_damage; // 设置默认类型为攻击类型
 	public ObjectType otype = ObjectType.single; // 指定技能为单体还是群体
+	public HashMap<Integer,SpecialEffect> specialEffect = new HashMap<Integer,SpecialEffect>();		//指定当前技能哪些帧有特殊效果,默认没有
 	private float val = 0; // 技能效果值ֵ
 	private float uval = 0; // 下级升级递增值
 	public int lev = 1; // 技能级别，默认为1级，满级6级
@@ -59,33 +64,23 @@ public class Skill {
 	public boolean enable = false; // 该技能是否开启使用
 	public SkillIcon skillIcon;//技能图标相关
 	public int skill_index=-1;//-1未使用，0 第一个携带的技能，1第2个携带的技能
+	
+	
 	/**
 	 * 技能初始化构造函数，
 	 * 
-	 * @param n
-	 *            技能名字
-	 * @param q
-	 *            技能品质
-	 * @param t
-	 *            技能类型
-	 * @param v
-	 *            技能值
-	 * @param uv
-	 *            技能值下级升级递增值
-	 * @param ac
-	 *            技能适用职业
-	 * @param i
-	 *            技能描述信息
-	 * @param tr
-	 *            技能图标
-	 * @param as
-	 *            技能自身动画
-	 * @param ao
-	 *            技能目标动画
-	 * @param anic
-	 *            技能持续效果动画
-	 * @param r
-	 *            技能攻击范围
+	 * @param n   技能名字
+	 * @param q   技能品质
+	 * @param t   技能类型
+	 * @param v   技能值
+	 * @param uv  技能值下级升级递增值
+	 * @param ac  技能适用职业
+	 * @param i   技能描述信息
+	 * @param tr  技能图标
+	 * @param as  技能自身动画
+	 * @param ao  技能目标动画
+	 * @param anic技能持续效果动画
+	 * @param r   技能攻击范围
 	 */
 	public Skill(int pi, String n, QUALITY q, Type t, float v, float uv,
 			CLASSES[] ac, String i, TextureRegion tr, Animation as,

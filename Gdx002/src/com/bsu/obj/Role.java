@@ -12,11 +12,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.AttackEffect;
+import com.bsu.effect.EffectTool;
 import com.bsu.effect.RoleIcon;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.data.RoleData;
 import com.bsu.obj.skilltree.ContinuedSkillState;
 import com.bsu.obj.skilltree.Skill;
+import com.bsu.obj.skilltree.Skill.SpecialEffect;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.GC;
 import com.bsu.tools.MessageObject;
@@ -71,12 +73,13 @@ public class Role extends Actor {
 	private float px, py;// 动画偏移量
 	public STATE state; // 英雄的当前状态
 	public Skill cskill; // 英雄当前的攻击技能
-	public Array<Skill> skill_tree = new Array<Skill>(); // 英雄的技能树
-	private Animation ani_disapper;// 角色消失
-	private Animation ani_apper;// 角色出现
-	private boolean loop_flag = false;
+	public Array<Skill> skill_tree = new Array<Skill>(); // 英雄的技能�
 	private Animation ani_idle; // 站立动画
 	private Animation ani_move; // 移动动画
+	public Animation ani_disapper;// 角色消失
+	public Animation ani_apper;// 角色出现
+	private boolean loop_flag;
+
 	private Animation ani_current; // 当前人物动画
 	private TextureRegion current_action_frame;// 当前人物动画所对应的TextureRegion
 	private Animation attack_effect; // 攻击效果动画
@@ -84,7 +87,7 @@ public class Role extends Actor {
 	private Animation beAttack_effect; // 被攻击效果动画
 	private TextureRegion current_beattack_frame; // 当前被攻击效果动画对应的某一帧
 	private TextureRegion hp_back, hp;
-	private boolean selected; // 被选中等待操作？
+	private boolean selected; // 被选中等待
 	private boolean controlled;// 此轮是否被操作过
 	private Array<Vector2> pass_array = new Array<Vector2>(); // 人物可以移动的格子数组
 	private Array<Vector2> attack_array = new Array<Vector2>();// 人物可以攻击的格子
@@ -223,12 +226,9 @@ public class Role extends Actor {
 	/**
 	 * 技能攻击群体敌人。用来处理群体技能。
 	 * 
-	 * @param enemys
-	 *            攻击范围内的所有敌人
-	 * @param skl
-	 *            释放的技能
-	 * @param be
-	 *            事件对象
+	 * @param enemys	攻击范围内的所有敌人
+	 * @param skl       释放的技能
+	 * @param be        事件对象
 	 */
 	public void ani_role_attack(Array<Role> enemys, Skill skl, BsuEvent be) {
 		if (enemys.size <= 0)
@@ -247,11 +247,9 @@ public class Role extends Actor {
 					skl.offset_ani_self);
 		}
 		// 目标动画效果
-		// for (Role e : enemys){
-		for (int i = 0; i < enemys.size; i++)
-			enemys.get(i).ani_role_isAttacked(skl.ani_object,
-					skl.offset_ani_object, be);
-
+		for(int i=0;i<enemys.size;i++)
+			enemys.get(i).ani_role_isAttacked(skl.ani_object, skl.offset_ani_object, be);
+		
 		// 位移效果
 		if (skl.type == Skill.Type.p_assault) {
 			Commander.getInstance().assaultCommand(this, be);
@@ -346,7 +344,7 @@ public class Role extends Actor {
 		return state;
 	}
 
-	/*
+	/**
 	 * Role 逻辑判断
 	 */
 	private void Role_logic() {
@@ -387,6 +385,7 @@ public class Role extends Actor {
 			if (type == Type.HERO) {
 				current_beattack_frame.flip(true, false);
 			}
+				
 			if (beAttack_effect.isAnimationFinished(time_effect)) {
 				current_beattack_frame = null;
 				beAttack_effect = null;
@@ -395,7 +394,6 @@ public class Role extends Actor {
 				// 如果event对象不为空，执行函数通知完成
 				if (bevent != null)
 					bevent.notify(this, "ani_beattacked_finished");
-
 			}
 		}
 
@@ -475,15 +473,12 @@ public class Role extends Actor {
 
 	/**
 	 * 判断移动路径上是否有自己人阻挡
-	 * 
-	 * @param rs
-	 *            每次调用需要重新检测生成RS... ROLE数组
+	 * @param rs  每次调用需要重新检测生成RS... ROLE数组
 	 * @return
 	 */
 	public boolean hasAnatherRole(Array<Role> rs) {
 		int num = 0;
-		// for (Role r : rs) {
-		for (int i = 0; i < rs.size; i++) {
+		for(int i=0;i<rs.size;i++){
 			Role r = rs.get(i);
 			if (this != r) {
 				num = face == FACE.right ? 1 : -1;

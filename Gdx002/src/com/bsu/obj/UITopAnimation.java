@@ -46,4 +46,8 @@ public class UITopAnimation extends Actor{
 				TipsWindows.getInstance().showBoxItem(getStage());
 		}
 	}
+
+	public void setAni_treasure(Animation ani_treasure) {
+		this.ani_treasure = ani_treasure;
+	}
 }

@@ -43,7 +43,9 @@ import com.bsu.obj.Reward;
 import com.bsu.obj.Role;
 import com.bsu.obj.Role.Type;
 import com.bsu.obj.data.GameScreenData;
+import com.bsu.obj.skilltree.Skill;
 import com.bsu.obj.UITopAnimation;
+import com.bsu.tools.GAC;
 import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.GameMap;
@@ -79,7 +81,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	private boolean initFlag;
 	public enum BattleState{DOING,VICTORY,DEFEAT};
 	public BattleState bstate = BattleState.DOING;
-	private EffectTool et = new EffectTool();
+	private EffectTool et = null;
 	
 	public GameScreen(Game mxg) {
 		super(mxg);
@@ -143,8 +145,11 @@ public class GameScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < roles.size; i++)
 			roles.get(i).getRoleObserable().addObserver(fightUI);
 		initRoles(roles);
+		//根据英雄携带的技能初始化游戏速度
+		setGameSpeed(roles);
 		stage.addActor(fpsLabel);
 		stage.addActor(attack_effect);
+		et = new EffectTool(this);
 		stage.addActor(et);
 	}
 
@@ -330,6 +335,57 @@ public class GameScreen extends CubocScreen implements Observer,
 		}
 	}
 
+	/**
+	 * 判断英雄身上是否携带了游戏加速技能，如果携带就增加游戏速度。
+	 * 多个英雄携带无加倍效果,以最高数值的效果为准
+	 * @param roles		//所有角色
+	 */
+	private void setGameSpeed(Array<Role> roles){
+		float gamespeed = GC.game_speed;					//获得当前游戏速度
+		boolean gschanged = false;							//指示游戏速度是否被改变
+//		GC.setGameSpeed(gamespeed);
+		for(int i=0;i<roles.size;i++){
+			Role r = roles.get(i);
+			//判断是否携带了技能加速技能
+			if(r.type==Type.HERO){
+				Array<Skill> skls = r.skill_tree;
+				for(int j=0;j<skls.size;j++){
+					//如果技能为100号 游戏加速技能
+					if(skls.get(j).id==100){
+						float val = skls.get(j).getVal();
+						if(val>gamespeed){
+							gamespeed= val;
+							gschanged = true;
+						}
+					}
+				}
+			}
+		}
+		//如果速度改变了
+		if(gschanged){		
+			//设置游戏速度
+			GC.setGameSpeed(gamespeed);
+		
+			//如果游戏速度被改变重新定义所有人物使用的技能动画
+			for(int i=0;i<roles.size;i++){
+				Role r = roles.get(i);
+				r.ani_apper = GAC.getInstance().getEffectApper();
+				r.ani_disapper = GAC.getInstance().getEffectDisapper();
+				
+				Array<Skill> skls = r.skill_tree;
+				for(int j=0;j<skls.size;j++){
+					Skill skl = skls.get(j);
+					skl.ani_continue = GAC.getInstance().getContinuedEffect(skl.id);
+					skl.ani_object = GAC.getInstance().getSkillObjectEffect(skl.id);
+					skl.ani_self = GAC.getInstance().getSkillOwnerEffect(skl.id);
+				}
+			}
+			//所有的顶层动画也都全部重新定义
+			Commander.getInstance().getUita().setAni_treasure(GAC.getInstance().getTreasure());
+		}
+		
+	}
+	
 	/**
 	 * 初始化role
 	 */

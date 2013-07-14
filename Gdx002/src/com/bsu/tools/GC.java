@@ -2,6 +2,9 @@ package com.bsu.tools;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Array;
+import com.bsu.make.SkillFactory;
+import com.bsu.obj.skilltree.Skill;
 
 /**
  * 
@@ -16,9 +19,10 @@ public class GC {
 	public static int rect_box_height = 7;// 屏幕高格子数
 
 	public static int map_box_value = 32;
-	public static float duration_move_box = 0.5f; // 移动一格需要的时间
-	public static float duration_ani = 0.1f; // 标准动画时间
-	public static float duration_skill_effect = 0.08f; // 技能效果释放时间
+	public static float game_speed = 1.0f;
+	public static float duration_move_box = 0.5f/game_speed; // 移动一格需要的时间
+	public static float duration_ani = 0.1f/game_speed; // 标准动画时间
+	public static float duration_skill_effect = 0.08f/game_speed; // 技能效果释放时间
 	public static int extra_value = 10; // 根据坐标判断人物所在格子的额外数值，以免出现格子错误，因为太接近了。
 
 	public static int enemy_birth_pos_count = 5;	//一方出生点的最大值，暂定为5个出生点
@@ -104,4 +108,14 @@ public class GC {
 	public static enum LEVELYTPE {
 		 chapter1, chapter2, chapter3, chapter4
 	};// 关卡类别，第一章，第二章。。。。。
+	/**
+	 * 设置游戏速度
+	 * @param gs
+	 */
+	public static void setGameSpeed(float gs){
+		GC.game_speed = gs;
+		GC.duration_ani = duration_ani/GC.game_speed;
+		GC.duration_move_box = duration_move_box/GC.game_speed;
+		GC.duration_skill_effect = duration_skill_effect/GC.game_speed;
+	}
 }

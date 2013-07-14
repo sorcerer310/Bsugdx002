@@ -8,10 +8,14 @@ import java.util.Map.Entry;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.make.ItemFactory;
 import com.bsu.make.MapNpcsFactory;
+import com.bsu.make.RoleFactory;
 import com.bsu.make.MapNpcsFactory.NpcsPlan;
 import com.bsu.obj.Player;
 import com.bsu.obj.Reward;
 import com.bsu.obj.Role;
+import com.bsu.obj.Role.Type;
+import com.bsu.tools.GC.QUALITY;
+import com.bsu.tools.GTC;
 
 /**
  * 关卡的数据 
@@ -46,6 +50,7 @@ public class GameScreenData{
 		Array<Role> fightRole = Player.getInstance().getPlayerFightRole();
 		for (Role r : fightRole)
 			heroRoles.add(r);
+		
 		return heroRoles;
 	}
 
