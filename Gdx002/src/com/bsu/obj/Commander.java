@@ -49,7 +49,8 @@ public class Commander {
 	public Array<Role> npcs = new Array<Role>();
 	public Array<Role> allRoles = new Array<Role>();
 	private int currRoundCount = 1;
-
+	
+	
 	private Commander(Stage s, GameScreen gs) {
 		gamescreen = gs;
 		stage = s;
@@ -670,5 +671,9 @@ public class Commander {
 	
 	public Array<Role> getHeros() {
 		return heros;
+	}
+	
+	public UITopAnimation getUita() {
+		return uita;
 	}
 }

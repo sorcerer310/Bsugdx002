@@ -83,6 +83,10 @@ public class Saver {
 		int size = playerData.playerRole.size;
 		for(int i=0;i<size;i++)
 			player.playerRole.add(RoleFactory.getInstance().getHeroRole(playerData.playerRole.get(i)));
+		//测试数据，用来测试英雄
+//		Array<Role> idelRole = Player.getInstance().playerRole;
+//		idelRole.add(RoleFactory.getInstance().getFighter("测试英雄", Role.Type.HERO, GC.QUALITY.purple, "fc_photo", 100));
+
 	}
 }
 

@@ -12,11 +12,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.AttackEffect;
+import com.bsu.effect.EffectTool;
 import com.bsu.effect.RoleIcon;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.data.RoleData;
 import com.bsu.obj.skilltree.ContinuedSkillState;
 import com.bsu.obj.skilltree.Skill;
+import com.bsu.obj.skilltree.Skill.SpecialEffect;
 import com.bsu.tools.BsuEvent;
 import com.bsu.tools.GC;
 import com.bsu.tools.MessageObject;
@@ -110,7 +112,7 @@ public class Role extends Actor {
 		roleTexture = new TextureRegion(GTC.getInstance().hm_headItemIcon.get(tr));
 		exp = baseExp();
 		if(cskill==null)
-		cskill=getUseSkill().get(0);
+			cskill=getUseSkill().get(0);
 		isDead = false;
 		this.setVisible(false);
 		set_actor_base(type);
@@ -238,7 +240,6 @@ public class Role extends Actor {
 					skl.offset_ani_self);
 		}
 		// 目标动画效果
-//		for (Role e : enemys){
 		for(int i=0;i<enemys.size;i++)
 			enemys.get(i).ani_role_isAttacked(skl.ani_object, skl.offset_ani_object, be);
 		
@@ -376,6 +377,7 @@ public class Role extends Actor {
 			if (type == Type.HERO) {
 				current_beattack_frame.flip(true, false);
 			}
+				
 			if (beAttack_effect.isAnimationFinished(time_effect)) {
 				current_beattack_frame = null;
 				beAttack_effect = null;
@@ -384,7 +386,6 @@ public class Role extends Actor {
 				// 如果event对象不为空，执行函数通知完成
 				if (bevent != null) 
 					bevent.notify(this, "ani_beattacked_finished");
-
 			}
 		}
 

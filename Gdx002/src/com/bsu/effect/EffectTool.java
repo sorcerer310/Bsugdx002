@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.bsu.screen.GameScreen;
 import com.bsu.tools.U;
 
 /**
@@ -16,13 +17,19 @@ import com.bsu.tools.U;
  */
 public class EffectTool extends Actor {
 
+	private static GameScreen gs = null;	
 	private static Camera camera = null; // 要操作的摄像机对象
+	
+	public EffectTool(GameScreen pgs){
+		gs = pgs;
+	}
+	
 	private static int currShockCount = 0; // 当前震动次数
 	private static int shockCount = 10; // 震动次数
 	private static boolean startShock = false; // 开始震动
 	private static Vector2 cameraSourcePos = new Vector2();
-	public static void shockScreen(Stage s) {
-		camera = s.getCamera();
+	public static void shockScreen() {
+		camera = gs.getStage().getCamera();
 		cameraSourcePos.x = camera.position.x;
 		cameraSourcePos.y = camera.position.y;
 		// shockCount = 10;

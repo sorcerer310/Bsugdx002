@@ -3,13 +3,12 @@ package com.bsu.make;
 import java.util.HashMap;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.bsu.obj.skilltree.Skill;
 import com.bsu.obj.skilltree.Skill.ObjectType;
 import com.bsu.obj.skilltree.Skill.Type;
 import com.bsu.tools.GC.CLASSES;
 import com.bsu.tools.GC.QUALITY;
-import com.bsu.tools.GAC;
-import com.bsu.tools.GTC;
 
 /**
  * 技能工厂，用来初始化所有技能，并保存在hashmap中
@@ -27,15 +26,15 @@ public class SkillFactory {
 	}
 
 	private HashMap<String, Skill> store = new HashMap<String, Skill>(); // 保存所有的技能对象
-
+//	private Array<Skill> usedSkills = new Array<Skill>();					//收集已经实例化过的技能，用与技能加速
 	/**
 	 * 初始化所有技能，并保存到hashmap中，此处数据全部为配置数据，不能再改变
 	 */
 	private SkillFactory() {}
 
-	public Skill getSkillByName(String k){
-		return store.get(k);
-	}
+//	public Skill getSkillByName(String k){
+//		return store.get(k);
+//	}
 	/**
 	 * 通过索引获得技能
 	 * @param i		技能索引
@@ -243,6 +242,9 @@ public class SkillFactory {
 					new Vector2[]{new Vector2(0,0)});
 			skl.offset_ani_object  = new Vector2(-42,-16);
 			skl.otype = ObjectType.all;
+			skl.specialEffect.put(4, Skill.SpecialEffect.shock);
+			skl.specialEffect.put(8, Skill.SpecialEffect.shock);
+			skl.specialEffect.put(12, Skill.SpecialEffect.shock);
 			break;
 		case 97:
 			skl = new Skill(i,"圣光术",QUALITY.orange,Type.p_healing,0.15f,0.04f,new CLASSES[]{CLASSES.cleric},"可以对己方全体队友大量回血",
@@ -284,4 +286,8 @@ public class SkillFactory {
 		return skl;
 		//return store.get(k);
 	}
+
+//	public Array<Skill> getUsedSkills() {
+//		return usedSkills;
+//	}
 }
