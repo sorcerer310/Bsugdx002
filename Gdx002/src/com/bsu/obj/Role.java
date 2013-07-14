@@ -68,8 +68,8 @@ public class Role extends Actor {
 	public Array<Skill> skill_tree = new Array<Skill>(); // 英雄的技能树
 	private Animation ani_idle; // 站立动画
 	private Animation ani_move; // 移动动画
-	private Animation ani_disapper;// 角色消失
-	private Animation ani_apper;// 角色出现
+	public Animation ani_disapper;// 角色消失
+	public Animation ani_apper;// 角色出现
 	private boolean loop_flag;
 
 	private Animation ani_current; // 当前人物动画
@@ -216,12 +216,9 @@ public class Role extends Actor {
 	/**
 	 * 技能攻击群体敌人。用来处理群体技能。
 	 * 
-	 * @param enemys
-	 *            攻击范围内的所有敌人
-	 * @param skl
-	 *            释放的技能
-	 * @param be
-	 *            事件对象
+	 * @param enemys	攻击范围内的所有敌人
+	 * @param skl       释放的技能
+	 * @param be        事件对象
 	 */
 	public void ani_role_attack(Array<Role> enemys, Skill skl, BsuEvent be) {
 		if (enemys.size <= 0)
@@ -337,7 +334,7 @@ public class Role extends Actor {
 		return state;
 	}
 
-	/*
+	/**
 	 * Role 逻辑判断
 	 */
 	private void Role_logic() {
@@ -465,14 +462,11 @@ public class Role extends Actor {
 
 	/**
 	 * 判断移动路径上是否有自己人阻挡
-	 * 
-	 * @param rs
-	 *            每次调用需要重新检测生成RS... ROLE数组
+	 * @param rs  每次调用需要重新检测生成RS... ROLE数组
 	 * @return
 	 */
 	public boolean hasAnatherRole(Array<Role> rs) {
 		int num = 0;
-//		for (Role r : rs) {
 		for(int i=0;i<rs.size;i++){
 			Role r = rs.get(i);
 			if (this != r) {

@@ -369,6 +369,9 @@ public class GameScreen extends CubocScreen implements Observer,
 			//如果游戏速度被改变重新定义所有人物使用的技能动画
 			for(int i=0;i<roles.size;i++){
 				Role r = roles.get(i);
+				r.ani_apper = GAC.getInstance().getEffectApper();
+				r.ani_disapper = GAC.getInstance().getEffectDisapper();
+				
 				Array<Skill> skls = r.skill_tree;
 				for(int j=0;j<skls.size;j++){
 					Skill skl = skls.get(j);
