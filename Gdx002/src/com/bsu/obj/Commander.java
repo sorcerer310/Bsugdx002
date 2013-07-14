@@ -392,11 +392,10 @@ public class Commander {
 			final Array<Role> atkrs = getRolesInSkillRange(r);
 			
 			//处理技能逻辑，处理技能逻辑时会对攻击的对象进行数值运算，处理结束后返回boolean值，指示是否继续移动			
-			boolean isMove = r.cskill.skillLogic(r, atkrs);
+			boolean isMove = r.cskill.isMove(r, atkrs);
 			//1:执行技能命令
 			//如果拥有释放目标，释放技能
 			if(atkrs.size!=0){
-
 				r.ani_role_attack(atkrs,r.cskill,new BsuEvent(){
 					boolean ani_attack_finished = false;			//判断攻击动画是否完成
 					boolean ani_beattacked_finished = false;		//判断被攻击动画是否完成
@@ -428,6 +427,7 @@ public class Commander {
 //						System.out.println(ani_attack_finished+" "+ani_beattacked_finished+" "+ani_assault_finished);
 						if(ani_attack_finished && ani_beattacked_finished && ani_assault_finished){
 							currTaskComFlag = true;
+							r.cskill.skillLogic(r, atkrs);					//播放完动画计算数据
 						}
 					}
 				});
@@ -439,6 +439,7 @@ public class Commander {
 				System.out.println("currTaskComFlag");
 				Thread.sleep(200);
 			}
+			
 			//2:执行移动命令
 			if(isMove){
 				if(!r.hasAnatherRole(allRoles)){
@@ -491,8 +492,6 @@ public class Commander {
 		//如果没有指定检查Role直接返回retrs
 		if(checkrs == null)
 			return retrs;
-//		for (Vector2 v : vs) {
-//			for (Role r : checkrs) {
 		for(int i=0;i<vs.size;i++){
 			for(int j=0;j<checkrs.size;j++){
 				Role r = checkrs.get(j);

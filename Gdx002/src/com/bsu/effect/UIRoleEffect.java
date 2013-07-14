@@ -134,8 +134,7 @@ public class UIRoleEffect implements Observer {
 						public void touchUp(InputEvent event, float x, float y,
 								int pointer, int button) {
 							if (!g.isAction_start()
-									&& !(skill.ani_self == null
-											&& skill.ani_object == null && skill.ani_continue == null)) {
+									&& skill.drivingpassive==Skill.DrivingPassive.driving) {
 								r.cskill = skillArray.get(tempIndex);
 								U.setSelectImg(imgArray, skillImg);
 							}

@@ -74,9 +74,9 @@ public class Saver {
 	
 	public void loadPlayer(){
 		Player player = Player.getInstance();
-		player.crystal_blue = playerData.crystal_blue;
-		player.crystal_orange = playerData.crystal_orange;
-		player.crystal_purple = playerData.crystal_purple;
+		player.crystal_blue = playerData.crystal_blue+10000;
+		player.crystal_orange = playerData.crystal_orange+10000;
+		player.crystal_purple = playerData.crystal_purple+10000;
 		GameScreen.LvMax  = playerData.levelIndex;
 		player.playerRole.clear();
 		
@@ -85,7 +85,8 @@ public class Saver {
 			player.playerRole.add(RoleFactory.getInstance().getHeroRole(playerData.playerRole.get(i)));
 		//测试数据，用来测试英雄
 //		Array<Role> idelRole = Player.getInstance().playerRole;
-//		idelRole.add(RoleFactory.getInstance().getFighter("测试英雄", Role.Type.HERO, GC.QUALITY.purple, "fc_photo", 100));
+//		idelRole.add(RoleFactory.getInstance().getFighter("测试英雄", Role.Type.HERO, GC.QUALITY.purple, "fc_photo", 103));
+		
 
 	}
 }

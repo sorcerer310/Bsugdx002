@@ -36,6 +36,8 @@ public class Skill {
 		single, multi, all
 	}; // 技能作用对象类型，单体，群体，全图
 
+	public static enum DrivingPassive {driving,passive};	//指示主动技能还是被动技能
+	
 	public static enum SpecialEffect {shock,dark,none};	//特殊的大型技能效果 shock:震动 dark:全屏黑暗 none:无
 	
 	public int id = 0; // 技能索引
@@ -44,6 +46,7 @@ public class Skill {
 	public Type type = Type.f_damage; // 设置默认类型为攻击类型
 	public ObjectType otype = ObjectType.single; // 指定技能为单体还是群体
 	public HashMap<Integer,SpecialEffect> specialEffect = new HashMap<Integer,SpecialEffect>();		//指定当前技能哪些帧有特殊效果,默认没有
+	public DrivingPassive drivingpassive = DrivingPassive.driving;
 	private float val = 0; // 技能效果值ֵ
 	private float uval = 0; // 下级升级递增值
 	public int lev = 1; // 技能级别，默认为1级，满级6级
@@ -152,20 +155,46 @@ public class Skill {
 			retv.add(new Vector2(-range.get(i).x,range.get(i).y));
 		return retv;
 	}
-
+	/**
+	 * 判断接下来移动还是不移动 
+	 * @param owner		技能的拥有者
+	 * @param objects	作用对象
+	 * @return			返回是否移动
+	 */
+	public boolean isMove(Role owner ,Array<Role> objects){
+		if(objects.size==0)
+			return true;
+		if (type == Skill.Type.f_damage || type == Skill.Type.f_shifhp
+				|| type == Skill.Type.f_box 
+				|| type == Skill.Type.p_atkbeat
+				|| type == Skill.Type.p_assault
+				|| type == Skill.Type.p_damage
+				|| type == Skill.Type.pdot_damage
+				|| type == Skill.Type.prob_blind
+				|| type == Skill.Type.prob_dizzy
+				|| type == Skill.Type.prob_nude) {
+			return false;
+		}else if (type == Skill.Type.f_healing || type == Skill.Type.p_healing
+				|| type == Skill.Type.pbuff_atk || type == Skill.Type.pbuff_def
+				|| type == Skill.Type.pbuff_healing
+				|| type == Skill.Type.pbuff_hp) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	/**
 	 * 技能对目标的逻辑处理
 	 * 
-	 * @param owen
-	 *            技能释放者
-	 * @param object
-	 *            技能目标
+	 * @param owen    技能释放者
+	 * @param object  技能目标
 	 * @return 返回一个布尔值，表示owner是否还继续向前移动
 	 */
-	public boolean skillLogic(Role owner, Array<Role> objects) {
+	public void skillLogic(Role owner, Array<Role> objects) {
 		//如果攻击范围内没有敌人，返回true前进
 		if(objects.size==0)
-			return true;
+			return;
 		if (type == Skill.Type.f_damage || type == Skill.Type.f_shifhp
 				|| type == Skill.Type.f_box 
 				|| type == Skill.Type.p_atkbeat
@@ -286,7 +315,6 @@ public class Skill {
 				}
 			}
 
-			return false;
 		} else if (type == Skill.Type.f_healing || type == Skill.Type.p_healing
 				|| type == Skill.Type.pbuff_atk || type == Skill.Type.pbuff_def
 				|| type == Skill.Type.pbuff_healing
@@ -335,13 +363,7 @@ public class Skill {
 							offset_ani_continue));
 				}
 			}
-			return true;
-//			if (owner == objects.get(0))
-//				return true;
-//			else
-//				return false;
-		} else
-			return false;
+		} 
 	}
 	/**
 	 * 升级函数，如果级别大于6返回false
