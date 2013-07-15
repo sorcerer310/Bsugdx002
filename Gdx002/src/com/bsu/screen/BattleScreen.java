@@ -27,13 +27,8 @@ public class BattleScreen extends CubocScreen implements Observer {
 	private Image background;
 	private Stage stage;
 	private Image ib_back;
-	private Array<LevelState> lvArray_one = new Array<LevelState>();
-	private Array<LevelState> lvArray_two = new Array<LevelState>();
-	private Array<LevelState> lvArray_three = new Array<LevelState>();
-	private Array<LevelState> lvArray_four = new Array<LevelState>();
-	private Array<Image> lvArray_chapter = new Array<Image>();
-	private LEVELYTPE state;
 	private boolean initFlag;
+	private WidgetGroup lvButtonGroup;
 
 	public BattleScreen(Game game) {
 		super(game);
@@ -47,24 +42,21 @@ public class BattleScreen extends CubocScreen implements Observer {
 
 			ib_back = WidgetFactory.getInstance().makeImageButton(
 					GC.button_back, 360, 262, 1);
+			lvButtonGroup = new WidgetGroup();
 			setListener();
 			initFlag = true;
 		}
 		stage.addActor(background);
 		stage.addActor(ib_back);
 		initFight();
-		show_chapter_info(LEVELYTPE.chapter1);
+		show_chapter_level(0);
 	}
 
 	public void initFight() {
-		lvArray_chapter.clear();
-		lvArray_one.clear();
-		lvArray_two.clear();
-		lvArray_three.clear();
-		lvArray_four.clear();
 		// 滑动容器
 		Table table = new Table();
-		ScrollPane sp = new ScrollPane(table, U.get_skin().get(ScrollPaneStyle.class));
+		ScrollPane sp = new ScrollPane(table, U.get_skin().get(
+				ScrollPaneStyle.class));
 		sp.setWidth(102);
 		sp.setHeight(280);
 		sp.setPosition(20, 20);
@@ -72,36 +64,17 @@ public class BattleScreen extends CubocScreen implements Observer {
 		sp.setupFadeScrollBars(0f, 0f);
 		stage.addActor(sp);
 		ButtonGroup bg = new ButtonGroup();
-		int x = 35, y = 250, h = 50, max = 16;// 4大章位置
-		for (int i = 0; i < 20; i++) {
-			final int index = i;
-			final Image chapterImg = new Image(
-					GTC.getInstance().atlas_button.findRegion("level"));
-			lvArray_chapter.add(chapterImg);
-			if (i == 0) {
-				U.setAlpha(chapterImg, 1);
-			} else {
-				U.setAlpha(chapterImg, 0.7f);
-			}
-			TextButtonStyle textButtonStyle = new TextButtonStyle();
-			textButtonStyle.up = U.get_skin().newDrawable("white", Color.DARK_GRAY);
-			textButtonStyle.down = U.get_skin().newDrawable("white", Color.DARK_GRAY);
-			textButtonStyle.checked = U.get_skin().newDrawable("white", Color.BLUE);
-			textButtonStyle.over = U.get_skin().newDrawable("white", Color.LIGHT_GRAY);
-			textButtonStyle.font = U.get_font();
-			U.get_skin().add("bsutoggle", textButtonStyle);
-			TextButton button = new TextButton("第一关", U.get_skin().get("bsutoggle",
-					TextButtonStyle.class));
+		for (int i = 0; i < 10; i++) {
+			final int index=i;
+			TextButton button = new TextButton("第" + (i + 1) + "章",
+					U.get_text_button_style());
 			button.setWidth(50f);
 			button.getLabel().setFontScale(0.8f);
 			table.add(button).width(button.getWidth())
 					.height(button.getHeight()).pad(10.0f);
 			table.row();
 			bg.add(button);
-			bg.setChecked("bar1");
-
-			chapterImg.setPosition(x, y - i * h);
-			chapterImg.addListener(new InputListener() {
+			button.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
@@ -111,76 +84,30 @@ public class BattleScreen extends CubocScreen implements Observer {
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
-					U.setSelectImg(lvArray_chapter, chapterImg);
-					show_chapter_info(getType(index));
+						show_chapter_level(index);
 					super.touchUp(event, x, y, pointer, button);
 				}
 			});
-		}
-		for (int i = 0; i < max; i++) {
-			lvArray_one.add(new LevelState(LEVELYTPE.chapter1, i, false));
-			lvArray_two.add(new LevelState(LEVELYTPE.chapter2, i + max, false));
-			lvArray_three.add(new LevelState(LEVELYTPE.chapter3, i + max * 2,
-					false));
-			lvArray_four.add(new LevelState(LEVELYTPE.chapter4, i + max * 3,
-					false));
+
+			bg.setChecked("bar1");
 		}
 	}
 
-	/**
-	 * 返回目标的类型
-	 * 
-	 * @param index
-	 *            索引
-	 * @return 关卡类型（第几章）
-	 */
-	private LEVELYTPE getType(int index) {
-		LEVELYTPE lt = null;
-		if (index == 0) {
-			lt = LEVELYTPE.chapter1;
+	private void show_chapter_level(int index) {
+		if (lvButtonGroup != null) {
+			lvButtonGroup.remove();
+			lvButtonGroup.clear();
 		}
-		if (index == 1) {
-			lt = LEVELYTPE.chapter2;
-		}
-		if (index == 2) {
-			lt = LEVELYTPE.chapter3;
-		}
-		if (index == 3) {
-			lt = LEVELYTPE.chapter4;
-		}
-		return lt;
-	}
-
-	private void show_chapter_info(LEVELYTPE type) {
-		if (state == type) {
-			return;
-		}
-		clearAllImg();
-		TipsWindows.getInstance().removeFromStage();
-		state = type;
-		Array<LevelState> ls = null;
-		if (type == LEVELYTPE.chapter1) {
-			ls = lvArray_one;
-		}
-		if (type == LEVELYTPE.chapter2) {
-			ls = lvArray_two;
-		}
-		if (type == LEVELYTPE.chapter3) {
-			ls = lvArray_three;
-		}
-		if (type == LEVELYTPE.chapter4) {
-			ls = lvArray_four;
-		}
-		int index = 0;
+		int lv_index=index*20;
 		int x = 140, y = 220, w = 80, h = 45;
-		for (final LevelState l : ls) {
-			stage.addActor(l.icon);
-			if (l.level <= GameScreen.LvMax) {
-				l.enableLevel();
+		for (int i = 0; i < 20; i++) {
+			final LevelState ls = new LevelState(lv_index+i, false);
+			if (ls.level <= GameScreen.LvMax) {
+				ls.enableLevel();
 			}
-			l.icon.setPosition(x + index % 4 * w, y - index / 4 * h);
-			index++;
-			l.icon.addListener(new InputListener() {
+			lvButtonGroup.addActor(ls.icon);
+			ls.icon.setPosition(x + i % 4 * w, y - i / 4 * h);
+			ls.icon.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
@@ -190,45 +117,19 @@ public class BattleScreen extends CubocScreen implements Observer {
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
-					if (l.enable) {
-						GameScreen.lv = l.level;
+					if (ls.enable) {
+						GameScreen.lv = ls.level;
 						setChanged();
 						notifyObservers(GC.screen_game);
 					} else {
-						TipsWindows.getInstance().showTips("关卡未开启，请通关上一关卡",
+						TipsWindows.getInstance().showTips("此关卡未开启，请先通关上一关卡",
 								stage, Color.RED);
 					}
 					super.touchUp(event, x, y, pointer, button);
 				}
 			});
-
 		}
-	}
-
-	/**
-	 * 更改章节时情况所有章节关卡
-	 */
-	private void clearAllImg() {
-		for (LevelState l : lvArray_one) {
-			if (l.icon.getParent() != null) {
-				l.icon.getParent().removeActor(l.icon);
-			}
-		}
-		for (LevelState l : lvArray_two) {
-			if (l.icon.getParent() != null) {
-				l.icon.getParent().removeActor(l.icon);
-			}
-		}
-		for (LevelState l : lvArray_three) {
-			if (l.icon.getParent() != null) {
-				l.icon.getParent().removeActor(l.icon);
-			}
-		}
-		for (LevelState l : lvArray_four) {
-			if (l.icon.getParent() != null) {
-				l.icon.getParent().removeActor(l.icon);
-			}
-		}
+		stage.addActor(lvButtonGroup);
 	}
 
 	@Override
@@ -247,7 +148,6 @@ public class BattleScreen extends CubocScreen implements Observer {
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
-		state = null;
 	}
 
 	@Override

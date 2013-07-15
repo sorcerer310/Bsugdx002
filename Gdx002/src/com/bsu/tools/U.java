@@ -18,6 +18,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Array;
@@ -46,7 +48,7 @@ public class U {
 			float floatval_top) {
 		int rndval = rnd
 				.nextInt((int) ((floatval_top - floatval_bottom) * 10 + 1));
-		return (fix_val + (rndval + floatval_bottom*10)) / 10;
+		return (fix_val + (rndval + floatval_bottom * 10)) / 10;
 	}
 
 	/**
@@ -101,7 +103,8 @@ public class U {
 	}
 
 	public static Color getColorFromTalent(Role r, String s) {
-		Color c = Color.WHITE;;
+		Color c = Color.WHITE;
+		;
 		float value = 0;
 		if (s.equals("hp")) {
 			value = r.hp_talent;
@@ -112,17 +115,17 @@ public class U {
 		if (s.equals("defend")) {
 			value = r.defend_talent;
 		}
-		if(value<1){
-			c=new Color(0,255,0,1);
+		if (value < 1) {
+			c = new Color(0, 255, 0, 1);
 		}
-		if(value>=1&&value<1.3f){
-			c=new Color(0, 0, 255, 1); 
+		if (value >= 1 && value < 1.3f) {
+			c = new Color(0, 0, 255, 1);
 		}
-		if(value>=1.3f&&value<1.5f){
-			c=new Color(255, 0, 255, 1); 
+		if (value >= 1.3f && value < 1.5f) {
+			c = new Color(255, 0, 255, 1);
 		}
-		if(value>=1.5f){
-			c=Color.ORANGE;
+		if (value >= 1.5f) {
+			c = Color.ORANGE;
 		}
 		return c;
 	}
@@ -130,21 +133,21 @@ public class U {
 	/**
 	 * 根据role品质返回一个int,品质越高，int 越高
 	 * 
-	 * @return
+	 * @return 绿色1.0，蓝色1.2，紫色1.4，橙色1.6
 	 */
-	public static int QualityInde(Role r) {
-		int index = 0;
+	public static float QualityInde(Role r) {
+		float index = 0;
 		if (r.quality == QUALITY.green) {
 			index = 1;
 		}
 		if (r.quality == QUALITY.blue) {
-			index = 2;
+			index = 1.2f;
 		}
 		if (r.quality == QUALITY.purple) {
-			index = 3;
+			index = 1.4f;
 		}
 		if (r.quality == QUALITY.orange) {
-			index = 4;
+			index = 1.6f;
 		}
 		return index;
 	}
@@ -224,19 +227,19 @@ public class U {
 		int maxhp = 0;
 		int baseValue = 0;
 		if (r.classes == CLASSES.fighter) {
-			baseValue = GC.baseHpFight * QualityInde(r);
+			baseValue = (int) (GC.baseHpFight * QualityInde(r));
 		}
 		if (r.classes == CLASSES.cleric) {
-			baseValue = GC.baseHpCleric * QualityInde(r);
+			baseValue = (int) (GC.baseHpCleric * QualityInde(r));
 		}
 		if (r.classes == CLASSES.wizard) {
-			baseValue = GC.baseHpWizard * QualityInde(r);
+			baseValue = (int) (GC.baseHpWizard * QualityInde(r));
 		}
 		if (r.classes == CLASSES.sorcerer) {
-			baseValue = GC.baseHpSorcerer * QualityInde(r);
+			baseValue = (int) (GC.baseHpSorcerer * QualityInde(r));
 		}
 		if (r.classes == CLASSES.archer) {
-			baseValue = GC.baseHpArcher * QualityInde(r);
+			baseValue = (int) (GC.baseHpArcher * QualityInde(r));
 		}
 		maxhp = baseValue * lv;
 		return maxhp;
@@ -253,19 +256,19 @@ public class U {
 		int maxattack = 0;
 		int baseValue = 0;
 		if (r.classes == CLASSES.fighter) {
-			baseValue = GC.baseAttackFight * QualityInde(r);
+			baseValue = (int) (GC.baseAttackFight * QualityInde(r));
 		}
 		if (r.classes == CLASSES.cleric) {
-			baseValue = GC.baseAttackCleric * QualityInde(r);
+			baseValue = (int) (GC.baseAttackCleric * QualityInde(r));
 		}
 		if (r.classes == CLASSES.wizard) {
-			baseValue = GC.baseAttackWizard * QualityInde(r);
+			baseValue = (int) (GC.baseAttackWizard * QualityInde(r));
 		}
 		if (r.classes == CLASSES.sorcerer) {
-			baseValue = GC.baseAttackSorcerer * QualityInde(r);
+			baseValue = (int) (GC.baseAttackSorcerer * QualityInde(r));
 		}
 		if (r.classes == CLASSES.archer) {
-			baseValue = GC.baseAttackArcher * QualityInde(r);
+			baseValue = (int) (GC.baseAttackArcher * QualityInde(r));
 		}
 		maxattack = baseValue * lv;
 		return maxattack;
@@ -282,19 +285,19 @@ public class U {
 		int defend = 0;
 		int baseValue = 0;
 		if (r.classes == CLASSES.fighter) {
-			baseValue = GC.baseDefendFight * QualityInde(r);
+			baseValue = (int) (GC.baseDefendFight * QualityInde(r));
 		}
 		if (r.classes == CLASSES.cleric) {
-			baseValue = GC.baseDefendCleric * QualityInde(r);
+			baseValue = (int) (GC.baseDefendCleric * QualityInde(r));
 		}
 		if (r.classes == CLASSES.wizard) {
-			baseValue = GC.baseDefendWizard * QualityInde(r);
+			baseValue = (int) (GC.baseDefendWizard * QualityInde(r));
 		}
 		if (r.classes == CLASSES.sorcerer) {
-			baseValue = GC.baseDefendSorcerer * QualityInde(r);
+			baseValue = (int) (GC.baseDefendSorcerer * QualityInde(r));
 		}
 		if (r.classes == CLASSES.archer) {
-			baseValue = GC.baseDefendArcher * QualityInde(r);
+			baseValue = (int) (GC.baseDefendArcher * QualityInde(r));
 		}
 		defend = baseValue * lv;
 		return defend;
@@ -491,19 +494,39 @@ public class U {
 		return font;
 	}
 
-	static LabelStyle style;
+	static LabelStyle label_style;
 
 	/**
 	 * 取得目标色label样式
 	 * 
 	 * @return
 	 */
-	public static LabelStyle get_sytle() {
-		if (style == null) {
+	public static LabelStyle get_Label_sytle() {
+		if (label_style == null) {
 			BitmapFont f = get_font();
-			style = new LabelStyle(f, f.getColor());
+			label_style = new LabelStyle(f, f.getColor());
 		}
-		return style;
+		return label_style;
+	}
+
+	static TextButtonStyle text_button_style;
+
+	// 取得目标按钮样式
+	public static TextButtonStyle get_text_button_style() {
+		if (text_button_style == null) {
+			TextButtonStyle textButtonStyle = new TextButtonStyle();
+			textButtonStyle.up = U.get_skin().newDrawable("white",
+					Color.DARK_GRAY);
+			textButtonStyle.down = U.get_skin().newDrawable("white",
+					Color.DARK_GRAY);
+			textButtonStyle.checked = U.get_skin().newDrawable("white",
+					Color.BLUE);
+			textButtonStyle.over = U.get_skin().newDrawable("white",
+					Color.LIGHT_GRAY);
+			textButtonStyle.font = U.get_font();
+			text_button_style=textButtonStyle;
+		}
+		return text_button_style;
 	}
 
 	static Skin skin;

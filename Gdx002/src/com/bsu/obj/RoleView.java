@@ -178,16 +178,16 @@ public class RoleView {
 		if (p == ViewType.healing) {
 			value = 1;
 			sa = "回复";
-			sn=":"+value;
+			sn=":0";
 			skillp.add(Type.p_healing);// 百分比恢复
 			skillp.add(Type.f_healing);// 固定恢复
 			skillp.add(Type.pbuff_healing);// 持续恢复
 			c=new Color(0,255,0,1);
 		}
-		Label title = new Label(sa, U.get_sytle());
+		Label title = new Label(sa, U.get_Label_sytle());
 		title.setFontScale(scale);
 		title.setColor(c);
-		Label tn=new Label(sn,U.get_sytle());
+		Label tn=new Label(sn,U.get_Label_sytle());
 		tn.setFontScale(scale);
 		valueTable.add(title);
 		valueTable.add(tn);
@@ -227,13 +227,13 @@ public class RoleView {
 			else {
 				hs += "-";
 			}
-			Label a = new Label("(", U.get_sytle());
+			Label a = new Label("(", U.get_Label_sytle());
 			a.setFontScale(scale);
 			a.setColor(U.getQualityColor(s.quality));
-			Label hp_string = new Label(hs, U.get_sytle());
+			Label hp_string = new Label(hs, U.get_Label_sytle());
 			hp_string.setFontScale(scale);
 			hp_string.setColor(U.getQualityColor(s.quality));
-			Label b = new Label(")", U.get_sytle());
+			Label b = new Label(")", U.get_Label_sytle());
 			b.setFontScale(scale);
 			b.setColor(U.getQualityColor(s.quality));
 			valueTable.add(a);
@@ -250,7 +250,7 @@ public class RoleView {
 		valueTable.align(Align.left);
 		valueTable.defaults().padRight(1);
 		valueTable.setPosition(x, y);
-		Label title = new Label(sa, U.get_sytle());
+		Label title = new Label(sa, U.get_Label_sytle());
 		title.setFontScale(scale);
 		title.setColor(Color.ORANGE);
 		valueTable.add(title);
@@ -283,13 +283,13 @@ public class RoleView {
 			if (!s.enable) {
 				hs = "-";
 			}
-			Label a = new Label("(", U.get_sytle());
+			Label a = new Label("(", U.get_Label_sytle());
 			a.setFontScale(scale);
 			a.setColor(U.getQualityColor(s.quality));
-			Label hp_string = new Label(hs, U.get_sytle());
+			Label hp_string = new Label(hs, U.get_Label_sytle());
 			hp_string.setFontScale(scale);
 			hp_string.setColor(U.getQualityColor(s.quality));
-			Label b = new Label(")", U.get_sytle());
+			Label b = new Label(")", U.get_Label_sytle());
 			b.setFontScale(scale);
 			b.setColor(U.getQualityColor(s.quality));
 			valueTable.add(a);

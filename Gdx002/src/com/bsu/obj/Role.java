@@ -73,7 +73,7 @@ public class Role extends Actor {
 	private float px, py;// 动画偏移量
 	public STATE state; // 英雄的当前状态
 	public Skill cskill; // 英雄当前的攻击技能
-	public Array<Skill> skill_tree = new Array<Skill>(); // 英雄的技能�
+	public Array<Skill> skill_tree = new Array<Skill>(); // 英雄的技能�
 	private Animation ani_idle; // 站立动画
 	private Animation ani_move; // 移动动画
 	public Animation ani_disapper;// 角色消失
@@ -119,7 +119,7 @@ public class Role extends Actor {
 		roleTextureName = tr;
 		roleTexture = new TextureRegion(
 				GTC.getInstance().hm_headItemIcon.get(tr));
-		exp = GC.baseExp * U.QualityInde(this);
+		exp = (int) (GC.baseExp * U.QualityInde(this));
 		if (cskill == null)
 			cskill = getUseSkill().get(0);
 		isDead = false;
@@ -771,7 +771,7 @@ public class Role extends Actor {
 		for(int i=1;i<=level;i++){
 			value+=i;
 		}
-		return GC.baseExpUp*value/2*U.QualityInde(this);
+		return (int) (GC.baseExpUp*value/2*U.QualityInde(this));
 	}
 	/**
 	 * 返回人物总攻击力

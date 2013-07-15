@@ -90,13 +90,13 @@ public class TipsWindows extends WidgetGroup implements Observer {
 		tipsWindows.padBottom(10);
 		tipsWindows.defaults().padLeft(10);
 		tipsWindows.defaults().padRight(10);
-		tipsWindows.add(new Label("" + r.name, U.get_sytle()));
+		tipsWindows.add(new Label("" + r.name, U.get_Label_sytle()));
 		tipsWindows.row();
-		tipsWindows.add(new Label("" + U.getClasses(r), U.get_sytle()));
+		tipsWindows.add(new Label("" + U.getClasses(r), U.get_Label_sytle()));
 		tipsWindows.row();
-		tipsWindows.add(new Label("lv:" + r.level, U.get_sytle()));
+		tipsWindows.add(new Label("lv:" + r.level, U.get_Label_sytle()));
 		tipsWindows.row();
-		tipsWindows.add(new Label("" + r.exp + "/" + r.getUpExp(), U.get_sytle()));
+		tipsWindows.add(new Label("" + r.exp + "/" + r.getUpExp(), U.get_Label_sytle()));
 		tipsWindows.row();
 		Table t = new Table();
 		for (Skill skill : r.getUseSkill()) {
@@ -104,7 +104,7 @@ public class TipsWindows extends WidgetGroup implements Observer {
 			t.add(new Image(skill.enable ? skill.icon : GTC.getInstance()
 					.getSkillIcon(0)));
 			String lvs = skill.enable ? skill.lev + "" : "  ";
-			Label l = new Label(lvs, U.get_sytle());
+			Label l = new Label(lvs, U.get_Label_sytle());
 			l.setFontScale(0.5f);
 			t.defaults().align(Align.bottom);
 			t.add(l);
@@ -133,7 +133,7 @@ public class TipsWindows extends WidgetGroup implements Observer {
 		tipsWindows.padBottom(10);
 		tipsWindows.defaults().padLeft(10);
 		tipsWindows.defaults().padRight(10);
-		Label nameLabel = new Label(s.name, U.get_sytle());
+		Label nameLabel = new Label(s.name, U.get_Label_sytle());
 		nameLabel.setColor(U.getQualityColor(s.quality));
 		tipsWindows.add(nameLabel);
 		tipsWindows.defaults().align(Align.left);
@@ -142,7 +142,7 @@ public class TipsWindows extends WidgetGroup implements Observer {
 		infoArray = U.getMuLabel(s.info, scaleValue, windowWidth);
 		for (int i = 0; i < infoArray.size; i++) {
 			tipsWindows.row();
-			Label label = new Label(infoArray.get(i), U.get_sytle());
+			Label label = new Label(infoArray.get(i), U.get_Label_sytle());
 			label.setFontScale(scaleValue);
 			tipsWindows.add(label);
 		}
@@ -174,7 +174,7 @@ public class TipsWindows extends WidgetGroup implements Observer {
 		tipsArray = U.getMuLabel(s, scaleValue, windowWidth);
 		for (String as : tipsArray) {
 			tipsWindows.row();
-			Label l = new Label(as, U.get_sytle());
+			Label l = new Label(as, U.get_Label_sytle());
 			l.setFontScale(scaleValue);
 			l.setColor(r);
 			tipsWindows.add(l);
@@ -235,15 +235,15 @@ public class TipsWindows extends WidgetGroup implements Observer {
 				t = to;
 			}
 			String lvs = s.enable ? s.lev + "" : "  ";
-			Label l = new Label(lvs, U.get_sytle());
+			Label l = new Label(lvs, U.get_Label_sytle());
 			l.setFontScale(fonts);
 			t.add(skill_img);
 			t.defaults().align(Align.bottom);
 			t.add(l);
 		}
-		tipsWindows.add(new Label("lv:" + r.level, U.get_sytle()));
+		tipsWindows.add(new Label("lv:" + r.level, U.get_Label_sytle()));
 		tipsWindows.row();
-		tipsWindows.add(new Label("exp:" + r.exp, U.get_sytle()));
+		tipsWindows.add(new Label("exp:" + r.exp, U.get_Label_sytle()));
 		tipsWindows.row();
 		tipsWindows.add(to);
 		tipsWindows.row();
@@ -266,29 +266,29 @@ public class TipsWindows extends WidgetGroup implements Observer {
 		Label name=null;
 		Label a=null;
 		Label b=null;
-		Label con=new Label("---",U.get_sytle());
+		Label con=new Label("---",U.get_Label_sytle());
 		String sn=null;
 		if(s=="hp"){
 			sn="生命";
-			a=new Label(U.hpLevel(r, r.level)+"",U.get_sytle());
-			b=new Label(U.hpLevel(r, r.level+1)+"",U.get_sytle());
+			a=new Label(U.hpLevel(r, r.level)+"",U.get_Label_sytle());
+			b=new Label(U.hpLevel(r, r.level+1)+"",U.get_Label_sytle());
 		}
 		if(s=="attack"){
 			sn="攻击";
-			a=new Label(U.attackLevel(r, r.level)+"",U.get_sytle());
-			b=new Label(U.attackLevel(r, r.level+1)+"",U.get_sytle());
+			a=new Label(U.attackLevel(r, r.level)+"",U.get_Label_sytle());
+			b=new Label(U.attackLevel(r, r.level+1)+"",U.get_Label_sytle());
 		}
 		if(s=="defend"){
 			sn="防御";
-			a=new Label(U.defendLevel(r, r.level)+"",U.get_sytle());
-			b=new Label(U.defendLevel(r, r.level+1)+"",U.get_sytle());
+			a=new Label(U.defendLevel(r, r.level)+"",U.get_Label_sytle());
+			b=new Label(U.defendLevel(r, r.level+1)+"",U.get_Label_sytle());
 		}
 		if(s=="exp"){
 			sn="经验";
-			a=new Label(U.expLevel(r, r.level)+"",U.get_sytle());
-			b=new Label(U.expLevel(r, r.level+1)+"",U.get_sytle());
+			a=new Label(U.expLevel(r, r.level)+"",U.get_Label_sytle());
+			b=new Label(U.expLevel(r, r.level+1)+"",U.get_Label_sytle());
 		}
-		name=new Label(sn,U.get_sytle());
+		name=new Label(sn,U.get_Label_sytle());
 		name.setColor(Color.ORANGE);
 		tipsWindows.add(name);
 		tipsWindows.add(a);

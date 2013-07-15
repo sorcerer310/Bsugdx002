@@ -1,6 +1,7 @@
 package com.bsu.obj;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.bsu.make.WidgetFactory;
 import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
@@ -9,8 +10,8 @@ import com.bsu.tools.GC.LEVELYTPE;
 
 public class LevelState {
 	public int level;// 关卡
-	public Image icon;
-	public LEVELYTPE state;
+	//public Image icon;
+	public TextButton icon;
 	public boolean enable;
 
 	/**
@@ -27,12 +28,12 @@ public class LevelState {
 	 * @param a
 	 *            透明度，代表关卡是否开启
 	 */
-	public LevelState(LEVELYTPE s, int lv, boolean b) {
-		state = s;
-		level = lv;
-		icon = new Image(GTC.getInstance().atlas_button.findRegion("level"));
+	public LevelState(int lv, boolean b) {
+		level = lv+1;
+		icon=new TextButton("第"+(level)+"关", U.get_text_button_style());
+		icon.getLabel().setFontScale(0.5f);
 		enable = b;
-		U.setAlpha(icon, 0.4f);
+		U.setAlpha(icon, 0.6f);
 	}
 
 	/**
@@ -40,6 +41,7 @@ public class LevelState {
 	 */
 	public void enableLevel() {
 		enable = true;
-		U.setAlpha(icon, 1);
+		icon.getLabel().setColor(255, 0, 255, 1);//开启的关卡设置颜色。。
+		//U.setAlpha(icon, 1);
 	}
 }

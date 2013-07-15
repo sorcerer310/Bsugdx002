@@ -67,7 +67,7 @@ public class GameScreen extends CubocScreen implements Observer,
 	private boolean controlled;
 	private boolean battleEndFlag = false; // 用来标识当前战役是否结束
 	public static int lv;// 关卡索引
-	public static int LvMax;// 开启的最大关卡
+	public static int LvMax=1;// 开启的最大关卡
 	private int clingX;// 地图移动位移
 	private AttackEffect attack_effect;
 	private Label fpsLabel;
@@ -87,7 +87,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		super(mxg);
 		U.get_skin();
 		U.get_font();
-		U.get_sytle();
+		U.get_Label_sytle();
 		stage = new Stage(GC.rect_width, GC.rect_height, false);
 		UIStage = new Stage(GC.rect_width, GC.rect_height, false);
 		endStage = new Stage(GC.rect_width, GC.rect_height, false);

@@ -278,8 +278,10 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			suRole.exp += e.classes.equals(suRole.classes)?e.exp*1.2f:e.exp;
 			Player.getInstance().getRole().removeValue(e, false);
 		}
+		if(suRole.exp>=suRole.getUpExp()){
+			TipsWindows.getInstance().showTips("可以进行等级提升", sRoleStage, Color.ORANGE);
+		}
 		eatRoles.clear();
-		Player.getInstance().getPlayerIdelRole();
 		addRoleToStage(quality);
 	}
 
