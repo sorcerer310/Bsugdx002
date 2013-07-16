@@ -33,9 +33,9 @@ public class Player {
 	
 	private int money;// 玩家金钱
 	public Array<Role> playerRole = new Array<Role>();// 玩家拥有的role
-	public int crystal_blue = 300;//蓝色技能碎片(普通)
-	public int crystal_purple = 300;// 紫色技能碎片数量（高级）
-	public int crystal_orange = 300;// 橙色技能碎片数量（史诗）
+	public int crystal_blue = 6;//蓝色技能碎片(普通)
+	public int crystal_purple =0;// 紫色技能碎片数量（高级）
+	public int crystal_orange =0;// 橙色技能碎片数量（史诗）
 
 	private Player() {
 		initPlayerRole();

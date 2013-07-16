@@ -74,9 +74,9 @@ public class Saver {
 	
 	public void loadPlayer(){
 		Player player = Player.getInstance();
-		player.crystal_blue = playerData.crystal_blue+10000;
-		player.crystal_orange = playerData.crystal_orange+10000;
-		player.crystal_purple = playerData.crystal_purple+10000;
+		player.crystal_blue = playerData.crystal_blue;
+		player.crystal_orange = playerData.crystal_orange;
+		player.crystal_purple = playerData.crystal_purple;
 		GameScreen.LvMax  = playerData.levelIndex;
 		player.getRole().clear();	
 		int size = playerData.playerRole.size;
