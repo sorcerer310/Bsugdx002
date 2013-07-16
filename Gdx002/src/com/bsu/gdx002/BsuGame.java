@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.bsu.effect.MyParticle;
 import com.bsu.head.HeadScreen;
 import com.bsu.make.GameScreenFactory;
+import com.bsu.make.UIScreenManager;
 import com.bsu.screen.CPanelMainScreen;
 import com.bsu.screen.BattleScreen;
 import com.bsu.screen.GameScreen;
@@ -26,10 +27,16 @@ import com.bsu.tools.Saver;
 public class BsuGame extends Game {
 	@Override
 	public void create() {
-		Rectangle rect = new Rectangle(0, 0, GC.rect_width, GC.rect_height);
+		UIScreenManager uism = UIScreenManager.getInstance();
+		uism.setBsugame(this);
+		HeadScreen hs_logo1 = uism.getLogo1Screen();
+		setScreen(hs_logo1);
+		
+		/*Rectangle rect = new Rectangle(0, 0, GC.rect_width, GC.rect_height);
 		// logo1界面
 		HeadScreen hs_logo1 = new HeadScreen(this, GC.logo_0_texture_string,
 				GC.logo_0_sound_string, rect);
+
 		// logo2界面
 		HeadScreen hs_logo2 = new HeadScreen(this, GC.logo_1_texture_string,
 				GC.logo_1_sound_string, rect) {
@@ -180,7 +187,7 @@ public class BsuGame extends Game {
 		shops.addObserver(cpms);
 		cpms.addObserver(srs);
 		srs.addObserver(cpms);
-		gs.addObserver(cpms);
+		gs.addObserver(cpms);*/
 	}
 
 	@Override

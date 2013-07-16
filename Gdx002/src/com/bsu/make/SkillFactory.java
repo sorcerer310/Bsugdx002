@@ -268,7 +268,7 @@ public class SkillFactory {
 		case 100:
 			skl = new Skill(i,"游戏加速",QUALITY.orange,Type.p_speed,2f,0.15f,new CLASSES[]{CLASSES.all},"提高游戏速度",
 					new Vector2[] {});
-			skl.drivingpassive = Skill.DrivingPassive.passive;
+			skl.drivingpassive = Skill.DrivingPassive.passive;  
 			break;
 		case 101:
 			skl = new Skill(i,"贯穿",QUALITY.orange,Type.p_damage,2f,0.05f,new CLASSES[]{CLASSES.archer},"攻击前面所有敌人，贯穿很长一段距离",
