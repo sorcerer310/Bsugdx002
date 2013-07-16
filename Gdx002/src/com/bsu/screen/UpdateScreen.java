@@ -146,10 +146,10 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		infos.setFontScale(0.7f);
 		infos.setText(suRole.name + "  lv:" + suRole.level
 				+ "  exp:" + suRole.exp + "/"
-				+ suRole.getUpExp());
+				+ U.getUpExp(suRole,suRole.level));
 		upButton.setColor(upButton.getColor().r, upButton.getColor().g,
 				upButton.getColor().b,
-				(suRole.exp >= suRole.getUpExp() ? 1 : 0f));
+				(suRole.exp >= U.getUpExp(suRole,suRole.level) ? 1 : 0f));
 	}
 
 	/**
@@ -278,7 +278,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			suRole.exp += e.classes.equals(suRole.classes)?e.exp*1.2f:e.exp;
 			Player.getInstance().getRole().removeValue(e, false);
 		}
-		if(suRole.exp>=suRole.getUpExp()){
+		if(suRole.exp>=U.getUpExp(suRole,suRole.level)){
 			TipsWindows.getInstance().showTips("可以进行等级提升", sRoleStage, Color.ORANGE);
 		}
 		eatRoles.clear();
@@ -475,7 +475,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				if (suRole.exp >= suRole.getUpExp()) {
+				if (suRole.exp >= U.getUpExp(suRole,suRole.level)) {
 					MyParticle mpe = new MyParticle(GTC.getInstance().particleEffect,
 							new Vector2(suRole.roleIcon.getX()+20,suRole.roleIcon.getY()+20));
 					upRoleStage.addActor(mpe);

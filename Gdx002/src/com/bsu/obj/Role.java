@@ -111,7 +111,7 @@ public class Role extends Actor {
 		hp_talent = U.getRandom(1, 0.6f, 1.6f);
 		attack_talent = U.getRandom(1, 0.6f, 1.6f);
 		defend_talent = U.getRandom(1, 0.6f, 1.6f);
-		currentHp = getCurrentBaseHp();
+		currentHp = U.getCurrentBaseHp(this,level);
 		weapon = w;
 		armor = a;
 		roleColor = new Color(getColor());
@@ -133,7 +133,7 @@ public class Role extends Actor {
 	public void gsstartinit() {
 		setSelected(false);
 		setControlled(false);
-		maxHp = getCurrentBaseHp();
+		maxHp = U.getCurrentBaseHp(this,level);
 		setCurrentHp(maxHp);
 		setColor(roleColor);
 		clearExtValue();
@@ -734,52 +734,12 @@ public class Role extends Actor {
 	}
 
 	/**
-	 * 获得角色的当前基本HP
-	 * 
-	 * @return
-	 */
-	public int getCurrentBaseHp() {
-		return (int) (U.getRoleBaseHp(this) * hp_talent * level * U
-				.QualityInde(this));
-	}
-
-	/**
-	 * 获得角色的当前基本攻击力
-	 * 
-	 * @return
-	 */
-	public int getCurrentBaseAttack() {
-		return (int) (U.getRoleBaseAttack(this) * attack_talent * level * U
-				.QualityInde(this));
-	}
-
-	/**
-	 * 获得角色的当前基本防御
-	 * 
-	 * @return
-	 */
-	public int getCurrentBaseDefend() {
-		return (int) (U.getRoleBaseDefend(this) * defend_talent * level * U
-				.QualityInde(this));
-	}
-	/**
-	 * 获得升级所需经验
-	 * @return
-	 */
-	public int getUpExp(){
-		int value=0;
-		for(int i=1;i<=level;i++){
-			value+=i;
-		}
-		return (int) (GC.baseExpUp*value/2*U.QualityInde(this));
-	}
-	/**
 	 * 返回人物总攻击力
 	 * 
 	 * @return
 	 */
 	public int getAttack() {
-		return getCurrentBaseAttack() + extAttack;
+		return U.getCurrentBaseAttack(this,level) + extAttack;
 	}
 
 	/**
@@ -788,7 +748,7 @@ public class Role extends Actor {
 	 * @return
 	 */
 	public int getDefend() {
-		return getCurrentBaseDefend() + extDefend;
+		return U.getCurrentBaseDefend(this,level) + extDefend;
 	}
 
 	/**
@@ -797,7 +757,7 @@ public class Role extends Actor {
 	 * @return
 	 */
 	public int getMaxHp() {
-		return getCurrentBaseHp() + extMaxHp;
+		return U.getCurrentBaseHp(this,level) + extMaxHp;
 	}
 
 	/**

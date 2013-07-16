@@ -88,7 +88,6 @@ public class BattleScreen extends CubocScreen implements Observer {
 					super.touchUp(event, x, y, pointer, button);
 				}
 			});
-
 			bg.setChecked("bar1");
 		}
 	}
@@ -122,7 +121,7 @@ public class BattleScreen extends CubocScreen implements Observer {
 						setChanged();
 						notifyObservers(GC.screen_game);
 					} else {
-						TipsWindows.getInstance().showTips("此关卡未开启，请先通关上一关卡",
+						TipsWindows.getInstance().showTips("关卡未开启，请通关上一关卡",
 								stage, Color.RED);
 					}
 					super.touchUp(event, x, y, pointer, button);

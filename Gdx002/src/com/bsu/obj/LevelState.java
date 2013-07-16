@@ -30,8 +30,8 @@ public class LevelState {
 	 */
 	public LevelState(int lv, boolean b) {
 		level = lv+1;
-		icon=new TextButton("第"+(level)+"关", U.get_text_button_style());
-		icon.getLabel().setFontScale(0.5f);
+		icon=new TextButton("第"+(level)+"关", U.get_normal_button_style());
+		icon.getLabel().setFontScale(0.8f);
 		enable = b;
 		U.setAlpha(icon, 0.6f);
 	}

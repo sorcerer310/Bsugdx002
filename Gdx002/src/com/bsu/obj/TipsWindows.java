@@ -96,7 +96,7 @@ public class TipsWindows extends WidgetGroup implements Observer {
 		tipsWindows.row();
 		tipsWindows.add(new Label("lv:" + r.level, U.get_Label_sytle()));
 		tipsWindows.row();
-		tipsWindows.add(new Label("" + r.exp + "/" + r.getUpExp(), U.get_Label_sytle()));
+		tipsWindows.add(new Label("" + r.exp + "/" + U.getUpExp(r,r.level), U.get_Label_sytle()));
 		tipsWindows.row();
 		Table t = new Table();
 		for (Skill skill : r.getUseSkill()) {
@@ -166,18 +166,18 @@ public class TipsWindows extends WidgetGroup implements Observer {
 		tipsWindows.defaults().align(Align.center);
 		tipsWindows.padTop(10);
 		tipsWindows.padBottom(10);
-		tipsWindows.defaults().padLeft(10);
-		tipsWindows.defaults().padRight(10);
 		tipsWindows.setPosition(200, 140);
 		Array<String> tipsArray = new Array<String>();
 		float scaleValue = 1f;
-		tipsArray = U.getMuLabel(s, scaleValue, windowWidth);
+		tipsArray = U.getMuLabel(s, scaleValue, windowWidth-20);
 		for (String as : tipsArray) {
-			tipsWindows.row();
+			tipsWindows.padLeft(10);
+			tipsWindows.padRight(10);
 			Label l = new Label(as, U.get_Label_sytle());
 			l.setFontScale(scaleValue);
 			l.setColor(r);
 			tipsWindows.add(l);
+			tipsWindows.row();
 		}
 		tipsWindows.pack();
 		tipsWindows.addListener(new ClickListener() {
@@ -270,23 +270,23 @@ public class TipsWindows extends WidgetGroup implements Observer {
 		String sn=null;
 		if(s=="hp"){
 			sn="生命";
-			a=new Label(U.hpLevel(r, r.level)+"",U.get_Label_sytle());
-			b=new Label(U.hpLevel(r, r.level+1)+"",U.get_Label_sytle());
+			a=new Label(U.getCurrentBaseHp(r,r.level)+"",U.get_Label_sytle());
+			b=new Label(U.getCurrentBaseHp(r,r.level+1)+"",U.get_Label_sytle());
 		}
 		if(s=="attack"){
 			sn="攻击";
-			a=new Label(U.attackLevel(r, r.level)+"",U.get_Label_sytle());
-			b=new Label(U.attackLevel(r, r.level+1)+"",U.get_Label_sytle());
+			a=new Label(U.getCurrentBaseAttack(r,r.level)+"",U.get_Label_sytle());
+			b=new Label(U.getCurrentBaseAttack(r,r.level+1)+"",U.get_Label_sytle());
 		}
 		if(s=="defend"){
 			sn="防御";
-			a=new Label(U.defendLevel(r, r.level)+"",U.get_Label_sytle());
-			b=new Label(U.defendLevel(r, r.level+1)+"",U.get_Label_sytle());
+			a=new Label(U.getCurrentBaseDefend(r,r.level)+"",U.get_Label_sytle());
+			b=new Label(U.getCurrentBaseDefend(r,r.level+1)+"",U.get_Label_sytle());
 		}
 		if(s=="exp"){
 			sn="经验";
-			a=new Label(U.expLevel(r, r.level)+"",U.get_Label_sytle());
-			b=new Label(U.expLevel(r, r.level+1)+"",U.get_Label_sytle());
+			a=new Label(U.getUpExp(r,r.level)+"",U.get_Label_sytle());
+			b=new Label(U.getUpExp(r,r.level+1)+"",U.get_Label_sytle());
 		}
 		name=new Label(sn,U.get_Label_sytle());
 		name.setColor(Color.ORANGE);

@@ -60,11 +60,7 @@ public class Player {
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
 					"zyc_photo",new int[]{2,1}));
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
-					"zyc_photo",new int[]{101,102}));
-			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
-					"zyc_photo",new int[]{1,40}));
-			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
-					"zyc_photo",new int[]{1,40}));
+					"zyc_photo",new int[]{1,4}));
 		}
 		return playerRole;
 	}

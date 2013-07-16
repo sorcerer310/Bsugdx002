@@ -1,4 +1,4 @@
-package com.bsu.obj;
+								package com.bsu.obj;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
@@ -39,7 +39,7 @@ public class RoleView {
 		Label lv = WidgetFactory.getInstance().makeLabel("等级:" + r.level,
 				scale, 140, 218);
 		Label exp = WidgetFactory.getInstance().makeLabel(
-				"经验:" + r.exp + "/" + r.getUpExp(), scale, 140, 198);
+				"经验:" + r.exp + "/" + U.getUpExp(r,r.level), scale, 140, 198);
 		Table hpTable = showInfoValue(r, ViewType.hp, 20, 230);
 		Table attackTable = showInfoValue(r, ViewType.attack, 20, 210);
 		Table healingTable = showInfoValue(r, ViewType.defend, 20, 190);
@@ -150,14 +150,14 @@ public class RoleView {
 		valueTable.align(Align.left);
 		valueTable.setPosition(x, y);
 		if (p == ViewType.hp) {
-			value = r.getCurrentBaseHp();
+			value = U.getCurrentBaseHp(r,r.level);
 			skillp.add(Type.pbuff_hp);
 			sa = "生命";
 			sn=":"+value;
 			c=U.getColorFromTalent(r, "hp");
 		}
 		if (p == ViewType.attack) {
-			value = r.getCurrentBaseAttack();
+			value = U.getCurrentBaseAttack(r,r.level);
 			skillp.add(Type.p_damage);
 			skillp.add(Type.f_damage);
 			skillp.add(Type.pbuff_atk);
@@ -169,7 +169,7 @@ public class RoleView {
 			c=U.getColorFromTalent(r, "attack");
 		}
 		if (p == ViewType.defend) {
-			value = r.getCurrentBaseDefend();
+			value = U.getCurrentBaseDefend(r,r.level);
 			skillp.add(Type.pbuff_def);
 			sa = "防御";
 			sn=":"+value;
@@ -210,7 +210,7 @@ public class RoleView {
 					}
 					if (s.type == Type.p_healing) {
 						n = 0;
-						value = r.getCurrentBaseHp();
+						value = U.getCurrentBaseHp(r,r.level);
 					}
 					if (s.type == Type.pbuff_healing) {
 						n = s.getVal() - s.getVal() / value;

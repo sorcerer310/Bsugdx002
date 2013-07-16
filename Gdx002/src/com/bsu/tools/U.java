@@ -216,106 +216,43 @@ public class U {
 	}
 
 	/**
-	 * 角色升级后返回新的hp上限
+	 * 获得角色的当前等级基本HP
 	 * 
-	 * @param r角色
-	 * @param lv
-	 *            等级
-	 * @return 新的等级生命上限
+	 * @return
 	 */
-	public static int hpLevel(Role r, int lv) {
-		int maxhp = 0;
-		int baseValue = 0;
-		if (r.classes == CLASSES.fighter) {
-			baseValue = (int) (GC.baseHpFight * QualityInde(r));
-		}
-		if (r.classes == CLASSES.cleric) {
-			baseValue = (int) (GC.baseHpCleric * QualityInde(r));
-		}
-		if (r.classes == CLASSES.wizard) {
-			baseValue = (int) (GC.baseHpWizard * QualityInde(r));
-		}
-		if (r.classes == CLASSES.sorcerer) {
-			baseValue = (int) (GC.baseHpSorcerer * QualityInde(r));
-		}
-		if (r.classes == CLASSES.archer) {
-			baseValue = (int) (GC.baseHpArcher * QualityInde(r));
-		}
-		maxhp = baseValue * lv;
-		return maxhp;
+	public static int getCurrentBaseHp(Role r, int index) {
+		return (int) (getRoleBaseHp(r) * r.hp_talent * index * QualityInde(r));
 	}
 
 	/**
-	 * 返回升级后的角色基本攻击力
+	 * 获得角色的当前等级基本攻击力
 	 * 
-	 * @param r
-	 * @param lv
 	 * @return
 	 */
-	public static int attackLevel(Role r, int lv) {
-		int maxattack = 0;
-		int baseValue = 0;
-		if (r.classes == CLASSES.fighter) {
-			baseValue = (int) (GC.baseAttackFight * QualityInde(r));
-		}
-		if (r.classes == CLASSES.cleric) {
-			baseValue = (int) (GC.baseAttackCleric * QualityInde(r));
-		}
-		if (r.classes == CLASSES.wizard) {
-			baseValue = (int) (GC.baseAttackWizard * QualityInde(r));
-		}
-		if (r.classes == CLASSES.sorcerer) {
-			baseValue = (int) (GC.baseAttackSorcerer * QualityInde(r));
-		}
-		if (r.classes == CLASSES.archer) {
-			baseValue = (int) (GC.baseAttackArcher * QualityInde(r));
-		}
-		maxattack = baseValue * lv;
-		return maxattack;
+	public static int getCurrentBaseAttack(Role r, int index) {
+		return (int) (getRoleBaseAttack(r) * r.attack_talent * index * QualityInde(r));
 	}
 
 	/**
-	 * 返回升级后的角色基本防御力
+	 * 获得角色的当前等级基本防御
 	 * 
-	 * @param r
-	 * @param lv
 	 * @return
 	 */
-	public static int defendLevel(Role r, int lv) {
-		int defend = 0;
-		int baseValue = 0;
-		if (r.classes == CLASSES.fighter) {
-			baseValue = (int) (GC.baseDefendFight * QualityInde(r));
-		}
-		if (r.classes == CLASSES.cleric) {
-			baseValue = (int) (GC.baseDefendCleric * QualityInde(r));
-		}
-		if (r.classes == CLASSES.wizard) {
-			baseValue = (int) (GC.baseDefendWizard * QualityInde(r));
-		}
-		if (r.classes == CLASSES.sorcerer) {
-			baseValue = (int) (GC.baseDefendSorcerer * QualityInde(r));
-		}
-		if (r.classes == CLASSES.archer) {
-			baseValue = (int) (GC.baseDefendArcher * QualityInde(r));
-		}
-		defend = baseValue * lv;
-		return defend;
+	public static int getCurrentBaseDefend(Role r, int index) {
+		return (int) (getRoleBaseDefend(r) * r.defend_talent * index * QualityInde(r));
 	}
 
 	/**
-	 * 返回升级后的角色下级所需经验
+	 * 获得升级所需经验
 	 * 
-	 * @param r
-	 * @param lv
 	 * @return
 	 */
-	public static int expLevel(Role r, int lv) {
-		int exp = 0;
-		int base = 0;
-		base = GC.baseExpUp;
-		exp = base * lv;
-		return exp;
+	public static int getUpExp(Role r, int index) {
+		int value = 0;
+		for (int i = 1; i <= index; i++) {
+			value += i;
+		}
+		return (int) (GC.baseExpUp * value / 2 * QualityInde(r));
 	}
 
 	/**
@@ -510,7 +447,7 @@ public class U {
 	}
 
 	static TextButtonStyle text_button_style;
-
+	static TextButtonStyle normal_button_style;
 	// 取得目标按钮样式
 	public static TextButtonStyle get_text_button_style() {
 		if (text_button_style == null) {
@@ -524,9 +461,18 @@ public class U {
 			textButtonStyle.over = U.get_skin().newDrawable("white",
 					Color.LIGHT_GRAY);
 			textButtonStyle.font = U.get_font();
-			text_button_style=textButtonStyle;
+			text_button_style = textButtonStyle;
 		}
 		return text_button_style;
+	}
+	//取得普通样式
+	public static TextButtonStyle get_normal_button_style(){
+		if(normal_button_style==null){
+			TextButtonStyle textButtonStyle = new TextButtonStyle();
+			textButtonStyle.font = U.get_font();
+			normal_button_style=textButtonStyle;
+		}
+		return normal_button_style;
 	}
 
 	static Skin skin;

@@ -56,7 +56,7 @@ public class BsuGame extends Game {
 				if (arg.toString().equals(GC.screen_game)) {
 					BsuGame.this.setScreen(this);
 					this.game_init(GameScreenFactory.getInstance()
-							.makeGameScreen(GameScreen.lv));
+							.makeGameScreen(GameScreen.lv-1));
 				}
 			}
 		};
