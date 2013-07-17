@@ -95,11 +95,6 @@ public class HeadScreen extends CubocScreen implements Observer {
 			}else{
 				font.draw(batch, "loading:" + pl + "%", 200, 200);	
 			}
-			if(myFont!=null){
-				myFont.draw(batch, "提示：出战角色能力与等级,品质,技能等级,属性品质决定", 20, 80);
-				myFont.setColor(Color.ORANGE);
-				myFont.setScale(0.6f);
-			}
 		}
 		batch.end();
 		Gdx.app.debug("HeadScreen", "render");

@@ -28,10 +28,7 @@ public class MapBox extends Actor {
 	private TextureRegion map_block; // 地图上障碍图像
 	private TextureRegion map_pass; // 人物可移动显示的图像
 	private TextureRegion map_attack;// 人物攻击显示的图像
-	private Animation ani_hero_home; // 当前人物动画
-	private TextureRegion current_hero_home_frame;// 当前人物动画所对应的TextureRegion
-	private Animation ani_enemy_home; // 效果动画
-	private TextureRegion current_enemy_home_frame; // 当前效果动画对应的某一帧
+
 	private TextureRegion current_treasure_frame; // 宝物动画当前帧
 
 	public static Array<Vector2> pass_array = new Array<Vector2>();// 选择人物后，显示地图上可移动范围
@@ -41,8 +38,6 @@ public class MapBox extends Actor {
 	public Array<Vector2> hpRaise_array = new Array<Vector2>(); // 加血格子
 	public Array<Vector2> enemy_array = new Array<Vector2>(); // 地图上所有NPC所在位置的格子数组
 	public Array<Vector2> hero_array = new Array<Vector2>(); // 角色人物所在格子数组
-	public Array<Vector2> hero_home_array = new Array<Vector2>(); // 角色基地所在格子数组
-	public Array<Vector2> enemy_home_array = new Array<Vector2>(); // NPC基地所在格子数组
 
 	private static int raw_max = 8; // 可以移动的最高格子数，应该定义在MAP TXM文件里，以下同
 	private static int raw_min = 4; // 可以移动的最低格子数，靠近屏幕下方
@@ -71,8 +66,6 @@ public class MapBox extends Actor {
 				Color.BLUE, 0.5f);
 		current_treasure_frame = GTC.getInstance().skills_effect.findRegion(
 				"box", 1);
-		ani_enemy_home = GAC.getInstance().getEffectApper();
-		ani_hero_home = GAC.getInstance().getEffectDisapper();
 	}
 
 	/**
@@ -138,7 +131,7 @@ public class MapBox extends Actor {
 		for (int i = 0; i < box_array.size; i++) {
 			if(box_array.get(i).type.equals("show")){
 			batch.draw(current_treasure_frame, box_array.get(i).x,
-					GameMap.map_render.getMapHeightUnits()-box_array.get(i).y);
+					GameMap.map_render.getMapHeightUnits()-GC.map_box_value-box_array.get(i).y);
 			}
 		}
 		// 障碍格绘制
@@ -155,22 +148,6 @@ public class MapBox extends Actor {
 		for (int i = 0; i < attack_array.size; i++) {
 			batch.draw(map_attack, attack_array.get(i).x * GC.map_box_value,
 					(attack_array.get(i).y) * GC.map_box_value);
-		}
-
-		current_hero_home_frame = ani_hero_home.getKeyFrame(time_hero_home,
-				true);
-		for (int i = 0; i < hero_home_array.size; i++) {
-			batch.draw(current_hero_home_frame, hero_home_array.get(i).x
-					* GC.map_box_value, (hero_home_array.get(i).y)
-					* GC.map_box_value);
-		}
-
-		current_enemy_home_frame = ani_enemy_home.getKeyFrame(time_enemy_home,
-				true);
-		for (int i = 0; i < enemy_home_array.size; i++) {
-			batch.draw(current_enemy_home_frame, enemy_home_array.get(i).x
-					* GC.map_box_value, (enemy_home_array.get(i).y)
-					* GC.map_box_value);
 		}
 	}
 
@@ -200,23 +177,8 @@ public class MapBox extends Actor {
 						block_array.add(v);
 					else if (object.type.equals(GC.map_type_hp_rarise))
 						hpRaise_array.add(v);
-					else if (object.type.equals(GC.map_type_value)) {
-						/*
-						 * raw_min = Integer.parseInt(object.properties
-						 * .get(Configure.map_raw_min_key)); raw_max =
-						 * Integer.parseInt(object.properties
-						 * .get(Configure.map_raw_max_key)); coll_min =
-						 * GameMap.map_render.getMapHeightUnits() -
-						 * Integer.parseInt(object.properties
-						 * .get(Configure.map_coll_max_key)) - 1; coll_max =
-						 * GameMap.map_render.getMapHeightUnits() -
-						 * Integer.parseInt(object.properties
-						 * .get(Configure.map_coll_min_key)) - 1;
-						 */
-					} else if (object.type.equals(GC.map_type_hero_home)) {
-						hero_home_array.add(v);
-					} else if (object.type.equals(GC.map_type_enemy_home)) {
-						enemy_home_array.add(v);
+					else if (object.type.equals("show")) {
+						box_array.add(object);
 					}
 				}
 			}

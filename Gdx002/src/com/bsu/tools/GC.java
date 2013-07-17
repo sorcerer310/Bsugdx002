@@ -59,11 +59,10 @@ public class GC {
 	public static String map_raw_max_key = "raw_max";
 	public static String map_coll_min_key = "coll_min";
 	public static String map_coll_max_key = "coll_max";
-	public static String object_layer_hero = "hero"; // 地图元素中对象层角色方名称
-	public static String object_layer_enemy = "enemy";
+	public static String object_layer_hero = "hero_home"; // 地图元素中对象层角色方名称
+	public static String object_layer_enemy = "enemy_home";
 
 	public static Image[] isAttackedImgGroup; // Role所有被攻击的特效图像数组
-	private static Texture isAttackedTexture; // Role被攻击特效图形
 
 	public static String map_type_block = "block"; // 地图对象层类型-->障碍
 	public static String map_type_buff = "buff"; // 地图对象层类型-->BUFF
@@ -71,8 +70,6 @@ public class GC {
 	public static String map_type_hp_reduce = "hpReduce"; // 地图对象层类型属性-->减少HP
 	public static String map_type_box = "box"; // 地图对象层类型-->宝箱
 	public static String map_type_value = "map_value"; // 地图对象层类型-->长宽属性
-	public static String map_type_hero_home = "hero_home"; // 地图对象层类型-->角色基地
-	public static String map_type_enemy_home = "enemy_home"; // 地图对象层类型-->NPC基地
 
 	public static int baseHpFight = 100,baseHpCleric=120,baseHpWizard=50,baseHpSorcerer=70,baseHpArcher=80;// 绿色品质卡片初始基本生命
 	public static int baseAttackFight = 10, baseAttackCleric = 8
