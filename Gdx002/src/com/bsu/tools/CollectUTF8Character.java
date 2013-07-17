@@ -65,13 +65,14 @@ public class CollectUTF8Character {
   
             //读取文件每一行做处理 
             while ((tempString = reader.readLine()) != null) {
-            	if(tempString.indexOf("//")!=-1)
+            	if(tempString.indexOf("//")!=-1 || tempString.indexOf("*")!=-1)
             		continue;
             	String regEx = "[\\u4e00-\\u9fa5]";
             	Pattern p = Pattern.compile(regEx);
             	Matcher m = p.matcher(tempString);
             	while (m.find()) {
 //            		for (int i = 0; i <= m.groupCount(); i++) {
+            			System.out.println(tempString);
             			csb.append(m.group());
 //            		}
             	}
