@@ -176,6 +176,7 @@ public class UIScreenManager {
 			};
 			ms.addObserver(gs);
 			bs.addObserver(gs);
+			gs.addObserver(cpms);
 		}
 	}
 	/**
