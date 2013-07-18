@@ -33,9 +33,9 @@ public class MapBox extends Actor {
 
 	public static Array<Vector2> pass_array = new Array<Vector2>();// 选择人物后，显示地图上可移动范围
 	public static Array<Vector2> attack_array = new Array<Vector2>();// 选择人物后，显示人物可攻击范围
-	public Array<Vector2> block_array = new Array<Vector2>(); // 地图上障碍格子数组
+	public Array<TiledObject> block_array = new Array<TiledObject>(); // 地图上障碍格子数组
 	public Array<TiledObject> box_array = new Array<TiledObject>(); // 宝箱格子
-	public Array<Vector2> hpRaise_array = new Array<Vector2>(); // 加血格子
+	public Array<TiledObject> hpRaise_array = new Array<TiledObject>(); // 加血格子
 	public Array<Vector2> enemy_array = new Array<Vector2>(); // 地图上所有NPC所在位置的格子数组
 	public Array<Vector2> hero_array = new Array<Vector2>(); // 角色人物所在格子数组
 
@@ -43,9 +43,6 @@ public class MapBox extends Actor {
 	private static int raw_min = 4; // 可以移动的最低格子数，靠近屏幕下方
 	private static int coll_max = 13; // 可以移动的最远格子数，屏幕右侧
 	private static int coll_min = 1; // 可以移动的最左格子数
-
-	private float time_hero_home; // 角色基地动画时间
-	private float time_enemy_home; // 角色基地动画时间
 
 	public static enum BOX {
 		PASS, BLOCK, EVENT, ATTACK
@@ -125,8 +122,6 @@ public class MapBox extends Actor {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
-		time_hero_home += Gdx.graphics.getDeltaTime();
-		time_enemy_home += Gdx.graphics.getDeltaTime();
 		// 绘制宝箱
 		for (int i = 0; i < box_array.size; i++) {
 			if(box_array.get(i).type.equals("show")){
@@ -136,9 +131,9 @@ public class MapBox extends Actor {
 		}
 		// 障碍格绘制
 		for (int i = 0; i < block_array.size; i++) {
-			batch.draw(map_block, block_array.get(i).x * GC.map_box_value,
-					(block_array.get(i).y) * GC.map_box_value);
-		}
+			batch.draw(map_block,block_array.get(i).x,
+					GameMap.map_render.getMapHeightUnits()-GC.map_box_value-block_array.get(i).y);
+			}
 		// 通过格绘制
 		for (int i = 0; i < pass_array.size; i++) {
 			batch.draw(map_pass, pass_array.get(i).x * GC.map_box_value,
@@ -157,8 +152,6 @@ public class MapBox extends Actor {
 	 * @return
 	 */
 	public void init_box_value() {
-		time_hero_home = 0;
-		time_enemy_home = 0;
 		for (TiledObjectGroup group : GameMap.map.objectGroups) {
 			if (group.name.equals("box")) {
 				// 当object组为box组时遍历改组的所有对象
@@ -168,15 +161,10 @@ public class MapBox extends Actor {
 				for (TiledObject object : group.objects) {
 					if (object.type == null)
 						continue;
-					int x = (object.x) / GC.map_box_value;
-					int y = (GameMap.map_render.getMapHeightUnits()
-							- GC.map_box_value - object.y)
-							/ GC.map_box_value;
-					Vector2 v = new Vector2(x, y);
 					if (object.type.equals(GC.map_type_block))
-						block_array.add(v);
+						block_array.add(object);
 					else if (object.type.equals(GC.map_type_hp_rarise))
-						hpRaise_array.add(v);
+						hpRaise_array.add(object);
 					else if (object.type.equals("show")) {
 						box_array.add(object);
 					}
