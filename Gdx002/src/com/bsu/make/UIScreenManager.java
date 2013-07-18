@@ -170,7 +170,7 @@ public class UIScreenManager {
 					if (arg.toString().equals(GC.screen_game)) {
 						bsugame.setScreen(this);
 						this.game_init(GameScreenFactory.getInstance()
-								.makeGameScreen(GameScreen.lv));
+								.makeGameScreen(GameScreen.lv-1));
 					}
 				}
 			};

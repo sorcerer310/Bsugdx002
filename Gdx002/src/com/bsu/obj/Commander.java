@@ -333,10 +333,10 @@ public class Commander {
 	 */
 	private void mapEvent(BsuEvent be) {
 		for(TiledObject obj:mb.box_array){
-			for(Role r :heros){
-				Vector2 v = U.TiledPos2GdxBoxPos(obj.x,obj.y);						//地图坐标转为游戏中的格子坐标
+			Vector2 v = U.TiledPos2GdxBoxPos(obj.x,obj.y);
+			for(Role r :heros){			//地图坐标转为游戏中的格子坐标
 				if(v.x==r.getBoxX() && v.y==r.getBoxY()){
-					String itemid = obj.properties.get("itemid");					//获得该位置的物品id
+					String itemid = obj.properties.get("item");					//获得该位置的物品id
 					Player.getInstance().giveItem(Integer.parseInt(itemid));		//为宝箱位置的英雄增加对应物品
 					System.out.println("add a item:"+itemid);
 					//如果宝箱类型为显式类型

@@ -172,7 +172,6 @@ public class GameScreen extends CubocScreen implements Observer,
 					Vector2 tv = new Vector2(object.x,
 							GameMap.map_render.getMapHeightUnits() - object.y-GC.map_box_value);
 					v.add(tv);
-					System.out.println(object.x+"@@"+object.y+"@@"+GameMap.map_render.getMapHeightUnits());
 				}
 			}
 		}

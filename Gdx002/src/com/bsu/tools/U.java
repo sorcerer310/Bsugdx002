@@ -497,8 +497,7 @@ public class U {
 	 */
 	public static Vector2 TiledPos2GdxBoxPos(int x, int y) {
 		int retx = x / GC.map_box_value;
-
-		int rety = (GC.rect_height - y) / GC.map_box_value;
+		int rety = (GC.rect_height - y-GC.map_box_value) / GC.map_box_value;
 		return new Vector2(retx, rety);
 	}
 
