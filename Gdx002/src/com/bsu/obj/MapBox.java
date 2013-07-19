@@ -33,7 +33,7 @@ public class MapBox extends Actor {
 
 	public static Array<Vector2> pass_array = new Array<Vector2>();// 选择人物后，显示地图上可移动范围
 	public static Array<Vector2> attack_array = new Array<Vector2>();// 选择人物后，显示人物可攻击范围
-	public Array<TiledObject> block_array = new Array<TiledObject>(); // 地图上障碍格子数组
+	private Array<TiledObject> block_array = new Array<TiledObject>(); // 地图上障碍格子数组
 	public Array<TiledObject> box_array = new Array<TiledObject>(); // 宝箱格子
 	public Array<TiledObject> hpRaise_array = new Array<TiledObject>(); // 加血格子
 	public Array<Vector2> enemy_array = new Array<Vector2>(); // 地图上所有NPC所在位置的格子数组

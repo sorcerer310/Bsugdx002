@@ -370,7 +370,7 @@ public class TipsWindows extends WidgetGroup implements Observer {
 			start_time += delta;
 			float a = (dua_time - start_time) / (dua_time / 2);
 			a = a >= 1 ? 1 : a;
-			U.setAlpha(tipsWindows, a);
+		//	U.setAlpha(tipsWindows, a);
 			if (start_time >= dua_time) {
 				removeFromStage();
 			}

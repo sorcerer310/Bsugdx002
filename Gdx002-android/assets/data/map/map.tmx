@@ -30,7 +30,7 @@
  <objectgroup height="10" name="宝箱" width="15">
   <object name="box" type="show" x="224" y="96">
    <properties>
-    <property name="item" value="1"/>
+    <property name="itemid" value="1"/>
    </properties>
   </object>
  </objectgroup>
