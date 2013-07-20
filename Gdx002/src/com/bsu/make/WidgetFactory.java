@@ -201,11 +201,11 @@ public class WidgetFactory {
 		pixmap = new Pixmap(w + 2, h + 2, Format.RGBA8888);
 		pixmap.setColor(dc);
 		pixmap.drawRectangle(0, 0, w + 2, h + 2);
-		pixmap.setColor(c);
+		pixmap.setColor(c); 
 		pixmap.fillRectangle(1, 1, w, h);
 		Texture pixmaptex = new Texture(pixmap);
 		temp_box = new TextureRegion(pixmaptex);
-		pixmap.dispose();
+//		pixmap.dispose();
 		return temp_box;
 	}
 	
@@ -226,7 +226,7 @@ public class WidgetFactory {
 		pixmap.fillRectangle(0, 0, w, h);
 		Texture pixmaptex = new Texture(pixmap);
 		temp_box = new TextureRegion(pixmaptex, w, h);
-		pixmap.dispose();
+//		pixmap.dispose();
 		return temp_box;
 	}
 }

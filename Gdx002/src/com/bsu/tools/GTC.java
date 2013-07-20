@@ -32,7 +32,8 @@ public class GTC {
 	public Texture logoCompany;
 	public Texture logoGame;
 	public Texture logo66Rpg;
-
+	public Texture start;
+	
 	public Texture effect;// 消失效果
 	public Texture role;
 	public Texture mPanel;;
@@ -76,6 +77,7 @@ public class GTC {
 		assetManager.load("data/menu/skillpanel.png", Texture.class);
 		assetManager.load("data/menu/updatepanel.png", Texture.class);
 		assetManager.load("data/menu/mbutton.txt", TextureAtlas.class);
+//		assetManager.load("data/menu/start.png",Texture.class);
 		assetManager.load("data/game/hero/Actor1.png", Texture.class);
 		assetManager.load("data/game/icon/classes.txt", TextureAtlas.class);
 		assetManager.load("data/game/effect/othereffect.txt",TextureAtlas.class);
@@ -92,6 +94,7 @@ public class GTC {
 		
 		effect = assetManager.get("data/game/hero/effect.png");
 		mPanel = assetManager.get("data/menu/mpanel.png");
+//		start = assetManager.get("data/menu/start.png");
 		fightPanel = assetManager.get("data/menu/fightpanel.png");
 		rolePanel = assetManager.get("data/menu/rolespanel.png");
 		tipsPanel = assetManager.get("data/menu/wback.png");

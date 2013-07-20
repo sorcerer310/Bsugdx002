@@ -6,6 +6,7 @@ import java.util.Observer;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -16,6 +17,7 @@ import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
 import com.bsu.tools.GC;
+import com.bsu.tools.GTC;
 import com.bsu.tools.GameMap;
 
 public class MenuScreen extends CubocScreen implements Observer {
@@ -31,8 +33,10 @@ public class MenuScreen extends CubocScreen implements Observer {
 		super(mxg);
 		stage = new Stage(GC.rect_width, GC.rect_height, false);
 		atlas = new TextureAtlas(Gdx.files.internal("data/menu/pack")); // ���pack�ļ���ȡ����ͼƬ
-		backgroundImage = new Image(atlas.findRegion("mainMenu")); // ��ȡ��ΪmainMenu��ͼƬ��������һ��Image����
-		backgroundImage.setScale(0.5f, 1);
+//		backgroundImage = new Image(atlas.findRegion("mainMenu")); // ��ȡ��ΪmainMenu��ͼƬ��������һ��Image����
+//		backgroundImage.setScale(0.5f, 1);
+//		backgroundImage = new Image(GTC.getInstance().start);
+		backgroundImage = new Image(new Texture(Gdx.files.internal("data/menu/start.png")));
 		play_image = new Image(atlas.findRegion("startButton"));
 		play_image.setPosition(100, 200);
 		set_image = new Image(atlas.findRegion("settingsButton"));
