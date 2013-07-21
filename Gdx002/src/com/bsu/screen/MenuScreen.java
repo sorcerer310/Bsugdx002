@@ -15,9 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
-import com.bsu.obj.Player;
 import com.bsu.tools.GC;
-import com.bsu.tools.GTC;
 import com.bsu.tools.GameMap;
 
 public class MenuScreen extends CubocScreen implements Observer {
