@@ -1,6 +1,7 @@
 package com.bsu.make;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -20,10 +22,11 @@ import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 
 public class WidgetFactory {
+	private Skin skin = null;
 	private static WidgetFactory instance = null;
 
 	private WidgetFactory() {
-
+		skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
 	}
 
 	public static WidgetFactory getInstance() {
@@ -31,7 +34,19 @@ public class WidgetFactory {
 			instance = new WidgetFactory();
 		return instance;
 	}
-
+	/**
+	 * 创建一个checkbox
+	 * @param text	checkbox文字标签
+	 * @param x		checkbox位置x坐标
+	 * @param y		checkbox位置y坐标
+	 * @return		返回该checkbox对象
+	 */
+	public CheckBox makeOneCheckBox(String text,float x,float y){
+		CheckBox cb = new CheckBox(text,skin);
+		cb.setPosition(x, y);
+		return cb;
+	}
+	
 	/**
 	 * 创建一个文字按钮
 	 * 
@@ -58,8 +73,7 @@ public class WidgetFactory {
 	/**
 	 * 该函数同makeImageButton类似，只不过返回的是Image对象，可以通过一个图片控制按钮的 两种微小调整状态
 	 * 
-	 * @param bname
-	 *            按钮的名字
+	 * @param bname 按钮的名字
 	 * @return 返回按钮的图片
 	 */
 	public Image makeImageButton(String bname, int x, int y, float a) {

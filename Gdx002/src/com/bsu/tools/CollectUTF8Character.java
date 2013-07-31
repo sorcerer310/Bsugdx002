@@ -55,9 +55,6 @@ public class CollectUTF8Character {
 	 */
 	public String readTxt(String fileName) {  
         BufferedReader reader = null;  
-//        String id = null;  
-//        String state = null;  
-//        String time = null;
         StringBuffer csb = new StringBuffer();
         try {  
             reader = new BufferedReader(new FileReader(fileName));  
@@ -76,28 +73,6 @@ public class CollectUTF8Character {
             			csb.append(m.group());
 //            		}
             	}
-//           	　　System.out.println("共有 " + count + "个 ");
-//            	System.out.println();
-//                if (tempString.startsWith("<clientID>")) {  
-//                    int start = tempString.indexOf(">");  
-//                    id = tempString.substring(start + 1).trim();  
-//                    tempString = reader.readLine();  
-//                }  
-//  
-//                if (tempString.startsWith("<currentTime>")) {  
-//                    int start = tempString.indexOf(">");  
-//                    time = tempString.substring(start + 1).trim();  
-//                    tempString = reader.readLine();  
-//                }  
-//  
-//                if (tempString.startsWith("<state>")) {  
-//                    int start = tempString.indexOf(">");  
-//                    state = tempString.substring(start + 1).trim();  
-//                }  
-//  
-//                String info = id + "/n" + time + "/n" + state;  
-//                System.out.println(info);  
-//                return;  
             }  
             if(csb.length()>0){
             	System.out.println(fileName);  

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -32,15 +33,16 @@ import com.bsu.tools.U;
  * 
  * @author zhangyongchen
  */
-public class UIRoleEffect implements Observer {
+public class GameScreenUIWindow implements Observer {
 
-	Stage stage;
-	TextButton bt_endround;
-	Commander c;
-	GameScreen g;
-	Array<roleUIInfo> hpArray = new Array<roleUIInfo>();
+	private Stage stage;
+	private TextButton bt_endround;
+	private CheckBox cb_auto;								//自动执行按钮
+	private Commander c;
+	private GameScreen g;
+	private Array<roleUIInfo> hpArray = new Array<roleUIInfo>();
 
-	public UIRoleEffect() {
+	public GameScreenUIWindow() {
 		// TODO Auto-generated constructor stub
 
 	}
@@ -61,9 +63,7 @@ public class UIRoleEffect implements Observer {
 	public void show_hero_state() {
 		stage.clear();
 		hpArray.clear();
-		bt_endround = WidgetFactory.getInstance().makeOneTextButton("end", 200,
-				90);
-		stage.addActor(bt_endround);
+		bt_endround = WidgetFactory.getInstance().makeOneTextButton("next", 200,90);
 		bt_endround.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -71,6 +71,19 @@ public class UIRoleEffect implements Observer {
 				c.roundEnd();
 			}
 		});
+		stage.addActor(bt_endround);
+		
+		cb_auto = WidgetFactory.getInstance().makeOneCheckBox("auto", 230, 90);
+		cb_auto.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+//				super.clicked(event, x, y);
+
+//				System.out.println(((CheckBox)event.getListenerActor()).isChecked());
+			}
+		});
+		stage.addActor(cb_auto);
+		
 		Array<Role> fightPlayer = Player.getInstance().getPlayerFightRole();
 		for (int i = 0; i < 5; i++) {
 			int x = 4 + i * 96;
@@ -191,6 +204,10 @@ public class UIRoleEffect implements Observer {
 		if (mo.message.equals(mo.o.changeHp)) {
 			changeRoleHp(mo.o);
 		}
+	}
+
+	public CheckBox getCb_auto() {
+		return cb_auto;
 	}
 }
 

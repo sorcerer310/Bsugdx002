@@ -30,7 +30,7 @@ import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.AttackEffect;
 import com.bsu.effect.EffectTool;
 import com.bsu.effect.ItemIcon;
-import com.bsu.effect.UIRoleEffect;
+import com.bsu.effect.GameScreenUIWindow;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.RoleFactory;
 import com.bsu.make.WidgetFactory;
@@ -52,25 +52,29 @@ import com.bsu.tools.GameMap;
 import com.bsu.tools.Saver;
 import com.bsu.tools.U;
 import com.bsu.tools.GC.QUALITY;
-
+/**
+ * 主游戏界面
+ * @author fengchong
+ *
+ */
 public class GameScreen extends CubocScreen implements Observer,
 		GestureListener {
-	private Stage stage; // 场景对象
-	private Stage UIStage; // UI场景对象
-	private Stage endStage;// 结束场景
-	private Commander commander; // 指挥官对象，指挥所有对象交互
-	private MapBox mb; // 地图块对象
-	private UITopAnimation uita; // 顶层的一些动画效果
-	private UIRoleEffect fightUI;
+	private Stage stage; 				// 场景对象
+	private Stage UIStage; 				// UI场景对象
+	private Stage endStage;				// 结束场景
+	private Commander commander; 		// 指挥官对象，指挥所有对象交互
+	private MapBox mb; 					// 地图块对象
+	private UITopAnimation uita; 		// 顶层的一些动画效果
+	private GameScreenUIWindow fightUI;
 	private OrthographicCamera c;
-	private boolean action_start; // 是否回合开始,未开始为人物操作阶段
+	private boolean action_start; 		// 是否回合开始,未开始为人物操作阶段
 	private boolean controlled;
 	private boolean battleEndFlag = false; // 用来标识当前战役是否结束
-	public static int lv;// 关卡索引
-	public static int LvMax=1;// 开启的最大关卡
-	private int clingX;// 地图移动位移
+	public static int lv;				// 关卡索引
+	public static int LvMax=1;			// 开启的最大关卡
+	private int clingX;					// 地图移动位移
 	private AttackEffect attack_effect;
-	private Label fpsLabel;
+	private Label fpsLabel;				// 显示一些关于游戏内存与帧数的信息
 	private Image endBackImg;
 	public Array<Role> heros = new Array<Role>(); // 该图所有英雄
 	public Array<Role> npcs = new Array<Role>(); // 该图所有npc
@@ -106,7 +110,7 @@ public class GameScreen extends CubocScreen implements Observer,
 			uita = new UITopAnimation();
 			mb = new MapBox();
 			c = (OrthographicCamera) stage.getCamera();
-			fightUI = new UIRoleEffect();
+			fightUI = new GameScreenUIWindow();
 			attack_effect = AttackEffect.getInstance();
 			endBackImg = new Image(WidgetFactory.getInstance().getTextureFill(
 					GC.rect_width, GC.rect_height, Color.GRAY, 0.3f));
@@ -155,15 +159,10 @@ public class GameScreen extends CubocScreen implements Observer,
 
 	/**
 	 * 设置出生点
-	 * 
-	 * @param map
-	 *            地图对象
-	 * @param hero
-	 *            要设置的角色对象
-	 * @param s
-	 *            地图对象层出生点名称
+	 * @param map    地图对象
+	 * @param hero   要设置的角色对象
+	 * @param s      地图对象层出生点名称
 	 */
-
 	private void setBornPosition(TiledMap map, Type p, String s) {
 		Array<Vector2> v = new Array<Vector2>();
 		for (TiledObjectGroup group : map.objectGroups) {
@@ -636,7 +635,7 @@ public class GameScreen extends CubocScreen implements Observer,
 		return false;
 	}
 
-	public UIRoleEffect getFightUI() {
+	public GameScreenUIWindow getFightUI() {
 		return fightUI;
 	}
 

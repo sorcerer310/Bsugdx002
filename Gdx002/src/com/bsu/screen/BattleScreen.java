@@ -22,7 +22,11 @@ import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 import com.bsu.tools.GC.LEVELYTPE;
-
+/**
+ * 选择战场界面
+ * @author fengchong
+ *
+ */
 public class BattleScreen extends CubocScreen implements Observer {
 	private Image background;
 	private Stage stage;

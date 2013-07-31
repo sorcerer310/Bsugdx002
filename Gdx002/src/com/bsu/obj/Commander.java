@@ -186,7 +186,12 @@ public class Commander {
 				be.notify(this, "roundEndCompleted");
 				roundEndCompleted = true;
 				gamescreen.newRound();
-				decideGameEnd();							//判断游戏是否结束
+				//如果返回false游戏继续，否则游戏结束
+				if(!decideGameEnd()){
+					//如果自动战斗的标识被选中 
+					if(gamescreen.getFightUI().getCb_auto().isChecked())
+						roundEnd();
+				}
 				currRoundCount++;							//回合数增加1
 			}
 		});
@@ -613,8 +618,9 @@ public class Commander {
 	
 	/**
 	 * 回合结束后判断战斗是否结束，胜利或失败
+	 * @return	返回true表示游戏结束，返回false表示游戏继续下一回合
 	 */
-	private void decideGameEnd(){
+	private boolean decideGameEnd(){
 		int heroRemainCount = 0;						//英雄剩余数量
 		int npcRemainCount = 0;							//敌人剩余数量
 		int npcVisibleCount = 0;						//敌人上场数量
@@ -625,7 +631,7 @@ public class Commander {
 		//如果地图上没有英雄,战斗失败		
 		if(heroRemainCount==0){
 			gamescreen.bstate=BattleState.DEFEAT;
-			return;
+			return true;
 		}
 
 		Array<Vector2> hap = gamescreen.heroArisePos;
@@ -636,7 +642,7 @@ public class Commander {
 				Vector2 bv = U.realPost2BoxPos((int)v.x, (int)v.y);
 				if(!r.isDead && r.isVisible() && r.getBoxX()==bv.x && r.getBoxY()==bv.y){
 					gamescreen.bstate=BattleState.DEFEAT;
-					return;
+					return true;
 				}
 			}
 			
@@ -648,12 +654,13 @@ public class Commander {
 		//如果剩余的npc为0，游戏胜利
 		if(npcRemainCount==0){
 			gamescreen.bstate=BattleState.VICTORY;
-			return;
+			return true;
 		}
 		//否则剩余npc数量不为0，执行刷怪函数
 		else{
 			commandNpcArise(gamescreen.npcArisePos,npcs,currRoundCount);
 		}
+		return false;
 	}
 	
 	
