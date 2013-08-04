@@ -95,8 +95,8 @@ public class GameScreenFactory {
 		gsd.setMapName("teaching");
 		
 		// 加入敌人
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("NPC", Type.ENEMY,QUALITY.green, "zyc_photo", 3));
-		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("NPC", Type.ENEMY,QUALITY.green, "zyc_photo", 5));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("NPC", Type.ENEMY,QUALITY.green, "p_fighter", 3));
+		gsd.getNpcRoles().add(RoleFactory.getInstance().getFighter("NPC", Type.ENEMY,QUALITY.green, "p_fighter", 5));
 
 		//设置奖励物品及出现机率
 		Array<Reward> reward = new Array<Reward>();
@@ -229,27 +229,27 @@ public class GameScreenFactory {
 			for (int k = 0; k < fe[i]; k++) {
 				gsd.getNpcRoles().add(
 						rf.getFighter("NPC", Type.ENEMY, getQuality(i),
-								"zyc_photo"));
+								"p_fighter"));
 			}
 			for (int k = 0; k < we[i]; k++) {
 				gsd.getNpcRoles().add(
 						rf.getWizard("NPC", Type.ENEMY, getQuality(i),
-								"zyc_photo"));
+								"p_wizard"));
 			}
 			for (int k = 0; k < se[i]; k++) {
 				gsd.getNpcRoles().add(
 						rf.getSorcerer("NPC", Type.ENEMY, getQuality(i),
-								"zyc_photo"));
+								"p_sorcerer"));
 			}
 			for (int k = 0; k < ae[i]; k++) {
 				gsd.getNpcRoles().add(
 						rf.getArcher("NPC", Type.ENEMY, getQuality(i),
-								"zyc_photo"));
+								"p_archer"));
 			}
 			for (int k = 0; k < ce[i]; k++) {
 				gsd.getNpcRoles().add(
 						rf.getCleric("NPC", Type.ENEMY, getQuality(i),
-								"zyc_photo"));
+								"p_cleric"));
 			}
 		}
 	}

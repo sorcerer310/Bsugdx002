@@ -260,19 +260,19 @@ public class RoleFactory {
 	public Role getRole(Item item) {
 		Role e = null;
 		if (item.classes == CLASSES.fighter) {
-			e = getFighter(item.name, Type.HERO, item.q, "fc_photo");
+			e = getFighter(item.name, Type.HERO, item.q, "p_fighter");
 		}
 		if (item.classes == CLASSES.archer) {
-			e = getArcher(item.name, Type.HERO, item.q, "fc_photo");
+			e = getArcher(item.name, Type.HERO, item.q, "p_archer");
 		}
 		if (item.classes == CLASSES.cleric) {
-			e = getCleric(item.name, Type.HERO, item.q, "fc_photo");
+			e = getCleric(item.name, Type.HERO, item.q, "p_cleric");
 		}
 		if (item.classes == CLASSES.sorcerer) {
-			e = getSorcerer(item.name, Type.HERO, item.q, "fc_photo");
+			e = getSorcerer(item.name, Type.HERO, item.q, "p_sorcerer");
 		}
 		if (item.classes == CLASSES.wizard) {
-			e = getWizard(item.name, Type.HERO, item.q, "fc_photo");
+			e = getWizard(item.name, Type.HERO, item.q, "p_wizard");
 		}
 		return e;
 	}

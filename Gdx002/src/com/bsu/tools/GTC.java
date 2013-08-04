@@ -29,14 +29,15 @@ public class GTC {
 		return instance;
 	}
 	public ParticleEffect particleEffect;
-	public Texture logoCompany;
-	public Texture logoGame;
-	public Texture logo66Rpg;
-	public Texture start;
 	
-	public Texture effect;// 消失效果
-	public Texture role;
-	public Texture mPanel;;
+	public Texture logoCompany;																			//公司logo
+	public Texture logoGame;																				//游戏logo
+	public TextureAtlas head;																				//头像
+	public TextureRegion p_fighter, p_archer,p_cleric,p_sorcerer,p_wizard;				//头像切割
+	
+	
+	public Texture effect;																	// 消失效果
+	public Texture mPanel;
 	public Texture fightPanel, rolePanel, selectRolePanel, shopPanel,
 			updatePanel;
 	public TextureAtlas atlas_mbutton;
@@ -44,7 +45,7 @@ public class GTC {
 	public TextureAtlas skills_icon; // 技能图标纹理
 	public TextureAtlas atlas_button;
 
-	public TextureRegion fc_photo, zyc_photo;
+
 	public Texture tipsPanel;
 	public TextureAtlas role_effect;// 人物头像效果
 	private TextureAtlas role_classes;// 人物职业图像
@@ -63,8 +64,15 @@ public class GTC {
 			assetManager = new AssetManager();
 		}
 	}
-
+	/**
+	 * 加载图片资源
+	 */
 	public void loadAssets() {
+		assetManager.load("data/game/head/head.txt",TextureAtlas.class);						//头像
+		assetManager.load("data/game/ui/ui.txt",TextureAtlas.class);									//界面UI
+		
+		
+		
 		assetManager.load("data/game/hero/effect.png", Texture.class);
 		assetManager.load("data/menu/mpanel.png", Texture.class);
 		assetManager.load("data/menu/equippanel.png", Texture.class);
@@ -89,8 +97,20 @@ public class GTC {
 		particleEffect=new ParticleEffect();
 		particleEffect.load(Gdx.files.internal("data/particle/particle"), Gdx.files.internal("data/particle/"));
 	}
-
+	/**
+	 * 设置各资源变量
+	 */
 	public void setAssets() {
+		head = assetManager.get("data/game/head/head.txt");								//头像
+		p_fighter =head.findRegion("fighter");
+		p_archer =head.findRegion("archer");
+		p_cleric =head.findRegion("cleric");
+		p_sorcerer =head.findRegion("sorcerer");
+		p_wizard =head.findRegion("wizard");
+		
+//		p_fighter = new TextureRegion(head, 0, 0, 96, 96);
+//		p_archer = new TextureRegion(head, 96, 0, 96, 96);
+		
 		
 		effect = assetManager.get("data/game/hero/effect.png");
 		mPanel = assetManager.get("data/menu/mpanel.png");
@@ -120,11 +140,13 @@ public class GTC {
 		battle_end = assetManager.get("data/game/effect/battleend.txt");
 		role_head_frame = assetManager.get("data/game/hero/frame.txt");
 		
-		role = assetManager.get("data/game/hero/Actor1.png");
-		fc_photo = new TextureRegion(role, 0, 0, 96, 96);
-		zyc_photo = new TextureRegion(role, 96, 0, 96, 96);
-		hm_headItemIcon.put("fc_photo", fc_photo);
-		hm_headItemIcon.put("zyc_photo", zyc_photo);
+
+
+		hm_headItemIcon.put("p_fighter", p_fighter);
+		hm_headItemIcon.put("p_archer", p_archer);
+		hm_headItemIcon.put("p_cleric", p_cleric);
+		hm_headItemIcon.put("p_wizard", p_wizard);
+		hm_headItemIcon.put("p_sorcerer", p_sorcerer);
 		hm_headItemIcon.put("skill_question", skills_icon.findRegion("siq-"));
 		
 	}

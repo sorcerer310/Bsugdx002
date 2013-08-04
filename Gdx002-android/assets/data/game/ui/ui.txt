@@ -1,0 +1,39 @@
+ui.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+mbg
+  rotate: false
+  xy: 1, 1
+  size: 480, 320
+  orig: 480, 320
+  offset: 0, 0
+  index: -1
+bt_rd
+  rotate: true
+  xy: 1, 322
+  size: 160, 57
+  orig: 160, 57
+  offset: 0, 0
+  index: -1
+bt_role
+  rotate: true
+  xy: 177, 322
+  size: 144, 64
+  orig: 144, 64
+  offset: 0, 0
+  index: -1
+bt_upgrade
+  rotate: true
+  xy: 59, 322
+  size: 157, 63
+  orig: 157, 63
+  offset: 0, 0
+  index: -1
+bt_shop
+  rotate: true
+  xy: 123, 322
+  size: 154, 53
+  orig: 154, 53
+  offset: 0, 0
+  index: -1

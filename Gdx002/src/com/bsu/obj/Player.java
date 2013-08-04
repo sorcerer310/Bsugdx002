@@ -58,9 +58,9 @@ public class Player {
 		if (playerRole.size == 0) {
 			RoleFactory rf = RoleFactory.getInstance();
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
-					"zyc_photo",new int[]{2,1}));
+					"p_fighter",new int[]{2,1}));
 			playerRole.add(rf.getFighter("很好", Type.HERO, QUALITY.green,
-					"zyc_photo",new int[]{1,4}));
+					"p_fighter",new int[]{1,4}));
 		}
 		return playerRole;
 	}

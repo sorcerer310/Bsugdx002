@@ -1,0 +1,39 @@
+head.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cleric
+  rotate: false
+  xy: 0, 288
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+sorcerer
+  rotate: false
+  xy: 0, 192
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+fighter
+  rotate: false
+  xy: 0, 0
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+wizard
+  rotate: false
+  xy: 0, 96
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+archer
+  rotate: false
+  xy: 0, 384
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1

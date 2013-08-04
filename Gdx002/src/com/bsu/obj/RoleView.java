@@ -17,7 +17,7 @@ import com.bsu.obj.skilltree.Skill.Type;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
 import com.bsu.tools.GC.QUALITY;
-import com.sun.tools.hat.internal.parser.HprofReader;
+//import com.sun.tools.hat.internal.parser.HprofReader;
 
 public class RoleView {
 	public static enum ViewType {

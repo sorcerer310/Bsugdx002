@@ -38,6 +38,8 @@ public class MakeSkillTreeConfigInfo {
 		blueskill.add(new SimpleSkill(38,QUALITY.blue,new CLASSES[]{CLASSES.archer,CLASSES.wizard},12));
 		blueskill.add(new SimpleSkill(39,QUALITY.blue,new CLASSES[]{CLASSES.sorcerer},10));
 		blueskill.add(new SimpleSkill(40,QUALITY.blue,new CLASSES[]{CLASSES.all},13));
+		blueskill.add(new SimpleSkill(41,QUALITY.blue,new CLASSES[]{CLASSES.fighter,CLASSES.cleric},8));
+		blueskill.add(new SimpleSkill(41,QUALITY.blue,new CLASSES[]{CLASSES.sorcerer,CLASSES.cleric},8));
 		purpleskill.add(new SimpleSkill(61,QUALITY.purple,new CLASSES[]{CLASSES.fighter,CLASSES.archer},25));
 		purpleskill.add(new SimpleSkill(62,QUALITY.purple,new CLASSES[]{CLASSES.fighter},16));
 		purpleskill.add(new SimpleSkill(63,QUALITY.purple,new CLASSES[]{CLASSES.fighter,CLASSES.wizard,CLASSES.sorcerer},17));

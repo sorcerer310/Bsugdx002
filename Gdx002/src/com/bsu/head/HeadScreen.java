@@ -3,7 +3,7 @@ package com.bsu.head;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.apple.dnssd.TXTRecord;
+//import com.apple.dnssd.TXTRecord;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
