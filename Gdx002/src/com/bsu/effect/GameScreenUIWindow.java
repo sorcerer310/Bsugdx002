@@ -77,9 +77,7 @@ public class GameScreenUIWindow implements Observer {
 		cb_auto.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-//				super.clicked(event, x, y);
-
-//				System.out.println(((CheckBox)event.getListenerActor()).isChecked());
+ 				super.clicked(event, x, y);
 			}
 		});
 		stage.addActor(cb_auto);
