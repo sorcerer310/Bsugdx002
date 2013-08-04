@@ -34,10 +34,12 @@ public class GTC {
 	public Texture logoGame;																				//游戏logo
 	public TextureAtlas head;																				//头像
 	public TextureRegion p_fighter, p_archer,p_cleric,p_sorcerer,p_wizard;				//头像切割
+	public TextureAtlas ui;																					//UI对象
+	public TextureRegion mPanel;																			//UI界面背景图片	
+
 	
 	
 	public Texture effect;																	// 消失效果
-	public Texture mPanel;
 	public Texture fightPanel, rolePanel, selectRolePanel, shopPanel,
 			updatePanel;
 	public TextureAtlas atlas_mbutton;
@@ -72,9 +74,7 @@ public class GTC {
 		assetManager.load("data/game/ui/ui.txt",TextureAtlas.class);									//界面UI
 		
 		
-		
 		assetManager.load("data/game/hero/effect.png", Texture.class);
-		assetManager.load("data/menu/mpanel.png", Texture.class);
 		assetManager.load("data/menu/equippanel.png", Texture.class);
 		assetManager.load("data/menu/fightpanel.png", Texture.class);
 		assetManager.load("data/menu/fightpanel.png", Texture.class);
@@ -107,13 +107,15 @@ public class GTC {
 		p_cleric =head.findRegion("cleric");
 		p_sorcerer =head.findRegion("sorcerer");
 		p_wizard =head.findRegion("wizard");
+		ui = assetManager.get("data/game/ui/ui.txt");												//UI资源
+		mPanel = ui.findRegion("mbg");																	//UI主背景
 		
 //		p_fighter = new TextureRegion(head, 0, 0, 96, 96);
 //		p_archer = new TextureRegion(head, 96, 0, 96, 96);
 		
 		
 		effect = assetManager.get("data/game/hero/effect.png");
-		mPanel = assetManager.get("data/menu/mpanel.png");
+//		mPanel = assetManager.get("data/menu/mpanel.png");
 //		start = assetManager.get("data/menu/start.png");
 		fightPanel = assetManager.get("data/menu/fightpanel.png");
 		rolePanel = assetManager.get("data/menu/rolespanel.png");

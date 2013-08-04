@@ -21,7 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.MyParticle;
-import com.bsu.effect.RoleIcon;
+import com.bsu.effect.RoleHead;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
@@ -119,7 +119,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < fightRole.size; i++) {
 			final Role r = fightRole.get(i);
 			Vector2 v = new Vector2(48, 246 - 55 * i);
-			RoleIcon photo = new RoleIcon(r,false);
+			RoleHead photo = new RoleHead(r,false);
 			photo.setPosition(v.x, v.y);
 			upRoleStage.addActor(photo);
 			r.roleIcon=photo;
@@ -211,7 +211,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			if(r.locked){
 				continue;
 			}
-			RoleIcon photo = new RoleIcon(r,false);
+			RoleHead photo = new RoleHead(r,false);
 			r.roleIcon = photo;
 			if(i%value==0&&i>0){
 				table.row();

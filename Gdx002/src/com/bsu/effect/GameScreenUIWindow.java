@@ -88,7 +88,7 @@ public class GameScreenUIWindow implements Observer {
 			int y = 10;
 			Vector2 v = new Vector2(x, y);
 			if (i >= fightPlayer.size) {
-				RoleIcon icon = new RoleIcon();
+				RoleHead icon = new RoleHead();
 				icon.setPosition(x, y);
 				stage.addActor(icon);
 				for (int sj = 0; sj < 2; sj++) {
@@ -99,7 +99,7 @@ public class GameScreenUIWindow implements Observer {
 			}
 
 			final Role r = fightPlayer.get(i);
-			RoleIcon photo = new RoleIcon(r, false);
+			RoleHead photo = new RoleHead(r, false);
 			stage.addActor(photo);
 			photo.setPosition(v.x, v.y);
 			roleUIInfo rui = new roleUIInfo(r, stage, x, y);

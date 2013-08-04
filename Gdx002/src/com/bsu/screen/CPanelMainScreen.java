@@ -11,6 +11,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
@@ -19,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
-import com.bsu.effect.RoleIcon;
+import com.bsu.effect.RoleHead;
 import com.bsu.head.CubocScreen;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.Player;
@@ -34,7 +35,7 @@ import com.esotericsoftware.kryo.io.Input;
 
 public class CPanelMainScreen extends CubocScreen implements Observer,
 		GestureListener {
-	private Texture timg;
+	private TextureRegion timg;
 	private Image background;
 	private Stage stage;
 	private Stage roleStage;// 双舞台，画出战人物头像
@@ -84,7 +85,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 		for (int i = 0; i < frlenght; i++) {
 			final Role r = playerRole.get(i);
 			Vector2 v = new Vector2(x, y - w * i);
-			RoleIcon photo = new RoleIcon(r, false);
+			RoleHead photo = new RoleHead(r, false);
 			r.roleIcon.showEffect(true);
 			roleStage.addActor(photo);
 			photo.setPosition(v.x, v.y);

@@ -13,7 +13,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.AttackEffect;
 import com.bsu.effect.EffectTool;
-import com.bsu.effect.RoleIcon;
+import com.bsu.effect.RoleHead;
 import com.bsu.make.WidgetFactory;
 import com.bsu.obj.data.RoleData;
 import com.bsu.obj.skilltree.ContinuedSkillState;
@@ -44,7 +44,7 @@ public class Role extends Actor {
 	public Type type = null; // ָ指定当前角色是英雄还是 NPC
 	public BATLESTATE bstate = BATLESTATE.IDLE; // 默认为闲置状态
 	private Color roleColor;
-	public RoleIcon roleIcon;
+	public RoleHead roleIcon;
 	public Equip weapon; // 人物武器
 	public Equip armor; // 人物护甲
 	public boolean locked = false;// 是否被锁定

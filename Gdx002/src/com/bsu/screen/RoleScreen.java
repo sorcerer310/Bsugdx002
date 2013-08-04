@@ -24,7 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.MyParticle;
-import com.bsu.effect.RoleIcon;
+import com.bsu.effect.RoleHead;
 import com.bsu.effect.SkillIcon;
 import com.bsu.gdx002.BsuGame;
 import com.bsu.head.CubocScreen;
@@ -129,7 +129,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		sp.setupFadeScrollBars(0f, 0f);
 		for (int i = 0; i < roleArray.size; i++) {
 			final Role r = roleArray.get(i);
-			final RoleIcon photo = new RoleIcon(r, true);
+			final RoleHead photo = new RoleHead(r, true);
 			table.add(photo).width(photo.img_frame.getWidth())
 					.height(photo.img_frame.getHeight()) // 设置photo宽度和高度
 					.padTop(2f).align(Align.top)// 没起作用。。。
