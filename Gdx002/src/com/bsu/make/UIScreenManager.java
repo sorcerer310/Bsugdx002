@@ -209,7 +209,7 @@ public class UIScreenManager {
 				@Override
 				public void update(Observable o, Object arg) {
 					MessageObject mo = (MessageObject) arg;
-					if (mo.message.equals(GC.screen_fight)) {
+					if (mo.message.equals(GC.screen_rd)) {
 						bsugame.setScreen(this);
 						this.initScreen();
 						

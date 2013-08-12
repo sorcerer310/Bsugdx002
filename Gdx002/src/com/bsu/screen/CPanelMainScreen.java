@@ -57,13 +57,13 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 			timg = GTC.getInstance().mPanel;
 			background = new Image(timg);
 			ib_mb_update = WidgetFactory.getInstance().makeImageButton(
-					GC.screen_update, 135, 225, 1);
+					GC.screen_update, 46, 124, 1);
 			ib_mb_role = WidgetFactory.getInstance().makeImageButton(
-					GC.screen_role, 300, 225, 1);
+					GC.screen_role, 270, 116, 1);
 			ib_mb_fight = WidgetFactory.getInstance().makeImageButton(
-					GC.screen_fight, 135, 50, 1);
+					GC.screen_rd, 52, 50, 1);
 			ib_mb_shop = WidgetFactory.getInstance().makeImageButton(
-					GC.screen_shop, 300, 50, 1);
+					GC.screen_shop, 270, 52, 1);
 			initFLag = true;
 			setListener();
 		}
@@ -78,45 +78,36 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 
 	private void setFightRoles() {
 		roleStage.clear();
-		int frlenght = 0, max = 5;
-		int x = 48, y = 248, w = 56;
-		Array<Role> playerRole = Player.getInstance().getPlayerFightRole();
-		frlenght = playerRole.size;
-		for (int i = 0; i < frlenght; i++) {
-			final Role r = playerRole.get(i);
-			Vector2 v = new Vector2(x, y - w * i);
-			RoleHead photo = new RoleHead(r, false);
-			r.roleIcon.showEffect(true);
+		int frlength = 0, max = 5;																		//上场参加战斗人物的数量,最多显示人物数量
+		int x = 48, y = 230, w = 76;																		
+		Array<Role> playerRole = Player.getInstance().getPlayerFightRole();			
+		frlength = playerRole.size;
+		for (int i = 0; i < max; i++) {
+			Vector2 v = new Vector2(x+w*i, y);
+			RoleHead photo = null;
+			//如果当前索引小于上场参加战斗的人物数量,绘制正常头象
+			if(i<frlength){
+				final Role r = playerRole.get(i);
+				photo = new RoleHead(r, false);
+				photo.addListener(new InputListener() {
+					@Override
+					public boolean touchDown(InputEvent event, float x, float y,
+							int pointer, int button) {
+						// setChanged();
+						// notifyObservers(new MessageObject(r,
+						// GC.screen_selectRole));
+						return super.touchDown(event, x, y, pointer, button);
+					}
+				});
+			}
+			//否则绘制空头像框
+			else
+				photo = new RoleHead();
+			photo.setScale(1.5f);
+//			r.roleIcon.showEffect(true);
 			roleStage.addActor(photo);
 			photo.setPosition(v.x, v.y);
-			photo.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
-					// setChanged();
-					// notifyObservers(new MessageObject(r,
-					// GC.screen_selectRole));
-					return super.touchDown(event, x, y, pointer, button);
-				}
-			});
-		}
-		if (frlenght < max) {
-			for (int i = frlenght; i < max; i++) {
-				Vector2 v = new Vector2(x, y - w * i);
-				Image img_frame = GTC.getInstance().getImageFrame(null);
-				img_frame.setPosition(v.x, v.y);
-				roleStage.addActor(img_frame);
-				// img_frame.addListener(new InputListener() {
-				// @Override
-				// public boolean touchDown(InputEvent event, float x,
-				// float y, int pointer, int button) {
-				// setChanged();
-				// notifyObservers(new MessageObject(null,
-				// GC.screen_selectRole));
-				// return super.touchDown(event, x, y, pointer, button);
-				// }
-				// });
-			}
+
 		}
 	}
 
@@ -183,7 +174,7 @@ public class CPanelMainScreen extends CubocScreen implements Observer,
 					int pointer, int button) {
 				if (Player.getInstance().getPlayerFightRole().size > 0) {
 					setChanged();
-					notifyObservers(new MessageObject(null, GC.screen_fight));
+					notifyObservers(new MessageObject(null, GC.screen_rd));
 				} else {
 					TipsWindows.getInstance().showTips("请选择出战卡片", roleStage,
 							Color.GRAY);

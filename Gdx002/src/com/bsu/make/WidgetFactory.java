@@ -26,7 +26,7 @@ public class WidgetFactory {
 	private static WidgetFactory instance = null;
 
 	private WidgetFactory() {
-		skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
+		skin = new Skin(Gdx.files.internal("data/skin/bsuuiskin.json"));
 	}
 
 	public static WidgetFactory getInstance() {
@@ -78,52 +78,35 @@ public class WidgetFactory {
 	 */
 	public Image makeImageButton(String bname, int x, int y, float a) {
 		Image img_nomal = null;
-		if (bname.equals(GC.screen_fight))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_mbutton
-							.findRegion("mb_fight"));
+		if (bname.equals(GC.screen_rd))
+			img_nomal = new Image(GTC.getInstance().ui.findRegion("bt_rd"));
 		else if (bname.equals(GC.screen_role))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_mbutton
-							.findRegion("mb_role"));
+			img_nomal = new Image(GTC.getInstance().ui.findRegion("bt_role"));
 		else if (bname.equals(GC.screen_update))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_mbutton
-							.findRegion("mb_update"));
+			img_nomal = new Image(GTC.getInstance().ui.findRegion("bt_upgrade"));
 		else if (bname.equals(GC.screen_shop))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_mbutton
-							.findRegion("mb_shop"));
+			img_nomal = new Image(GTC.getInstance().ui.findRegion("bt_shop"));
 		else if (bname.equals(GC.button_back))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_mbutton.findRegion("back"));
+			img_nomal = new Image(GTC.getInstance().ui.findRegion("bt_back"));
 		else if (bname.equals(GC.button_green))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("green"));
+			img_nomal = new Image(GTC.getInstance().ui.findRegion("bt_green"));
 		else if (bname.equals(GC.button_blue))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("blue"));
+			img_nomal = new Image(GTC.getInstance().ui.findRegion("bt_blue"));
 		else if (bname.equals(GC.button_purple))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("purple"));
+			img_nomal = new Image(GTC.getInstance().ui.findRegion("bt_purple"));
 		else if (bname.equals(GC.button_orange))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("orange"));
-		else if (bname.equals(GC.button_eat))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("eat"));
-		else if (bname.equals(GC.button_eatall))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("eatall"));
-		else if (bname.equals(GC.button_level))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("level"));
-		else if (bname.equals(GC.button_up))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("up"));
+			img_nomal = new Image(GTC.getInstance().ui.findRegion("bt_orange"));
 		else if (bname.equals(GC.button_all))
-			img_nomal = new Image(
-					GTC.getInstance().atlas_button.findRegion("all"));
+			img_nomal = new Image(GTC.getInstance().ui.findRegion("bt_all"));
+		else if (bname.equals(GC.button_eat))
+			img_nomal = new Image(GTC.getInstance().ui.findRegion("bt_eat"));
+		else if (bname.equals(GC.button_eatall))
+			img_nomal = new Image(GTC.getInstance().ui.findRegion("bt_eatall"));
+		else if (bname.equals(GC.button_level))
+			img_nomal = new Image(GTC.getInstance().ui.findRegion("bt_eat"));
+		else if (bname.equals(GC.button_up))
+			img_nomal = new Image(GTC.getInstance().ui.findRegion("bt_roleupgrade"));
+
 		img_nomal.setOrigin(img_nomal.getWidth() / 2, img_nomal.getHeight() / 2);	//设置原点为中心
 		img_nomal.setPosition(x, y);												//设置位置
 		img_nomal.addListener(new InputListener(){									//设置监听器，按下时候缩小按钮0.95倍，抬起时还原为1倍 

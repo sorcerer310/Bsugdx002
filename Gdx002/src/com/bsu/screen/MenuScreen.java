@@ -49,7 +49,7 @@ public class MenuScreen extends CubocScreen implements Observer {
 		stage.addActor(set_image);
 		if(fight_button==null)
 		fight_button = WidgetFactory.getInstance().makeImageButton(
-				GC.screen_fight, 100, 50,1);
+				GC.screen_rd, 100, 50,1);
 		stage.addActor(fight_button);
 		play_image.addListener(new InputListener() {
 			@Override

@@ -10,14 +10,17 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.bsu.effect.MyParticle;
@@ -39,18 +42,20 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	private Stage sRoleStage;
 	private Stage upRoleStage;
 	private Image background;
-	private Image ib_back;
+	private	WidgetGroup wg_window = new WidgetGroup();								//窗口控件组
+	private Image window_background;															//窗口背景
+	private Image bt_back;																				//返回按钮
 	private Image allImg;
 	private Image greenImg;
 	private Image blueImg;
 	private Image purpleImg;
 	private Image orangeImg;
 	private Image eatImg;
-	private Image eatAllImg;// 一键吞噬所有某种品质
-	private Image upButton;// 升级按钮
+	private Image eatAllImg;																			// 一键吞噬所有某种品质
+	private Image bt_upgrade;																			// 升级按钮
 	private Role suRole;
 	private Array<Role> eatRoles = new Array<Role>();
-	private QUALITY quality;// 当前选择显示的品质
+	private QUALITY quality;																				// 当前选择显示的品质
 	private Array<Image> bImg = new Array<Image>();
 	private Label infos;
 	private boolean initFlag;
@@ -65,49 +70,46 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	}
 	public void initScreen(){
 		if(!initFlag){
-			background = new Image(GTC.getInstance().updatePanel);
-			infos = WidgetFactory.getInstance().makeLabel("", 1, 135, 280);
-			upButton = WidgetFactory.getInstance().makeImageButton(
-						GC.button_up, 300, 274, 1);
-			ib_back = WidgetFactory.getInstance().makeImageButton(
-						GC.button_back, 366, 267, 1f);
-			allImg = WidgetFactory.getInstance().makeImageButton(
-						GC.button_all, 135, 50, 0.5f);
-			greenImg = WidgetFactory.getInstance().makeImageButton(
-						GC.button_green, 198, 50, 0.5f);
-			blueImg = WidgetFactory.getInstance().makeImageButton(
-						GC.button_blue,  261, 50, 0.5f);
-			purpleImg = WidgetFactory.getInstance().makeImageButton(
-						GC.button_purple,324, 50, 0.5f);
-			orangeImg = WidgetFactory.getInstance().makeImageButton(
-						GC.button_orange, 387, 50, 0.5f);
-			eatImg = WidgetFactory.getInstance().makeImageButton(
-						GC.button_eat, 250, 20, 1f);
-			eatAllImg = WidgetFactory.getInstance().makeImageButton(
-						GC.button_eatall,  350, 15, 1);
+			background = new Image(GTC.getInstance().mPanel);
+			window_background = new Image(GTC.getInstance().upgrade_window);
+			window_background.setPosition(80, 10);
+			wg_window.addActor(window_background);
+			
+			infos = WidgetFactory.getInstance().makeLabel("", 1, 100, 275);														//信息
+			wg_window.addActor(infos);
+			bt_upgrade = WidgetFactory.getInstance().makeImageButton(GC.button_up, 350, 265, 1);				//升级按钮
+			wg_window.addActor(bt_upgrade);
+			bt_back = WidgetFactory.getInstance().makeImageButton(GC.button_back, 420, 267, 1f);					//返回
+			wg_window.addActor(bt_back);
+			allImg = WidgetFactory.getInstance().makeImageButton(GC.button_all, 105, 23, 0.5f);						//全部
+			wg_window.addActor(allImg);
+			greenImg = WidgetFactory.getInstance().makeImageButton(GC.button_green, 168, 23, 0.5f);			//绿色
+			wg_window.addActor(greenImg);
+			blueImg = WidgetFactory.getInstance().makeImageButton(GC.button_blue,  231, 23, 0.5f);				//蓝色
+			wg_window.addActor(blueImg);
+			purpleImg = WidgetFactory.getInstance().makeImageButton(GC.button_purple,294, 23, 0.5f);			//紫色
+			wg_window.addActor(purpleImg);
+			orangeImg = WidgetFactory.getInstance().makeImageButton(GC.button_orange, 357, 23, 0.5f);		//橙色
+			wg_window.addActor(orangeImg);
+			eatImg = WidgetFactory.getInstance().makeImageButton(	GC.button_eat, 407, 160, 1f);						//吞噬
+			wg_window.addActor(eatImg);
+			eatAllImg = WidgetFactory.getInstance().makeImageButton(GC.button_eatall,  407, 120, 1);				//吞噬所有
+			wg_window.addActor(eatAllImg);
 			setListener();												
 			initFlag=true;
 		}
 		stage.clear();
 		bImg.clear();
 		stage.addActor(background);
-		stage.addActor(infos);
-		stage.addActor(upButton);
-		stage.addActor(ib_back);
-		stage.addActor(allImg);
-		stage.addActor(greenImg);
-		stage.addActor(blueImg);
-		stage.addActor(purpleImg);
-		stage.addActor(orangeImg);
-		stage.addActor(eatImg);
-		stage.addActor(eatAllImg);
+		stage.addActor(wg_window);
+
 		bImg.add(allImg);
 		bImg.add(greenImg);
 		bImg.add(blueImg);
 		bImg.add(purpleImg);
 		bImg.add(orangeImg);
 		getRoles();
-		addRoleToStage(QUALITY.all);
+//		addRoleToStage(QUALITY.all);
 	}
 	/**
 	 * 显示要强化角色列表
@@ -116,23 +118,29 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		eatRoles.clear();
 		upRoleStage.clear();
 		final Array<Role> fightRole = Player.getInstance().getPlayerFightRole();	
-		for (int i = 0; i < fightRole.size; i++) {
-			final Role r = fightRole.get(i);
-			Vector2 v = new Vector2(48, 246 - 55 * i);
-			RoleHead photo = new RoleHead(r,false);
-			photo.setPosition(v.x, v.y);
+		for (int i = 0; i < 5; i++) {
+			Vector2 v = new Vector2(10, 252 - 61 * i);
+			RoleHead photo = null;
+			if(i<fightRole.size){
+				final Role r = fightRole.get(i);
+				photo = new RoleHead(r,false);
+				photo.addListener(new InputListener() {
+					@Override
+					public boolean touchDown(InputEvent event, float x, float y,
+							int pointer, int button) {
+						U.showRoleSelect(fightRole, r);
+						suRole = r;
+						showUpRoleInfo();
+						return super.touchDown(event, x, y, pointer, button);
+					}
+				});
+			}else
+				photo = new RoleHead();
+			
+			photo.setScale(1.2f);
 			upRoleStage.addActor(photo);
-			r.roleIcon=photo;
-			photo.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
-					U.showRoleSelect(fightRole, r);
-					suRole = r;
-					showUpRoleInfo();
-					return super.touchDown(event, x, y, pointer, button);
-				}
-			});
+			photo.setPosition(v.x, v.y);
+//			r.roleIcon=photo;
 		}
 		suRole = fightRole.get(0);
 		U.showRoleSelect(fightRole, suRole);
@@ -143,12 +151,12 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	 * 显示要强化角色信息
 	 */
 	private void showUpRoleInfo() {
-		infos.setFontScale(0.7f);
+		infos.setFontScale(1.0f);
 		infos.setText(suRole.name + "  lv:" + suRole.level
 				+ "  exp:" + suRole.exp + "/"
 				+ U.getUpExp(suRole,suRole.level));
-		upButton.setColor(upButton.getColor().r, upButton.getColor().g,
-				upButton.getColor().b,
+		bt_upgrade.setColor(bt_upgrade.getColor().r, bt_upgrade.getColor().g,
+				bt_upgrade.getColor().b,
 				(suRole.exp >= U.getUpExp(suRole,suRole.level) ? 1 : 0f));
 	}
 
@@ -188,9 +196,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 
 	/**
 	 * 显示某一品质的role
-	 * 
-	 * @param imgArray
-	 *            某一品质的role Image数组
+	 * @param imgArray 	某一品质的role Image数组
 	 */
 	private void showQualityRole(Array<Role> roleArray) {
 		sRoleStage.clear();
@@ -199,6 +205,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		int value=5;
 		Table table = new Table();
 		ScrollPane sp = new ScrollPane(table, U.get_skin().get(ScrollPaneStyle.class));
+//		ScrollPane sp = new ScrollPane(table, new Skin());
 		sp.setWidth(300);
 		sp.setHeight(180);
 		sp.setPosition(x, y);
@@ -287,7 +294,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 
 	/**
 	 * 设置被吞噬或者取消吞噬
-	 * 
 	 * @param r
 	 */
 	private void resetEatRole(Role r) {
@@ -340,11 +346,11 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	}
 
 	private void setListener() {
-		ib_back.addListener(new InputListener() {
+		bt_back.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				ib_back.setScale(0.95f);
+				bt_back.setScale(0.95f);
 				return true;
 			}
 
@@ -353,7 +359,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 					int pointer, int button) {
 				setChanged();
 				notifyObservers(GC.button_back);
-				ib_back.setScale(1f);
+				bt_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
@@ -361,7 +367,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				ib_back.setScale(0.95f);
 				return true;
 			}
 
@@ -369,7 +374,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QUALITY.purple);
-				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
@@ -377,7 +381,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				ib_back.setScale(0.95f);
 				return true;
 			}
 
@@ -385,7 +388,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QUALITY.orange);
-				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
@@ -393,7 +395,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				ib_back.setScale(0.95f);
 				return true;
 			}
 
@@ -401,7 +402,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QUALITY.blue);
-				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
@@ -409,7 +409,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				ib_back.setScale(0.95f);
 				return true;
 			}
 
@@ -417,7 +416,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QUALITY.green);
-				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
@@ -425,7 +423,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				ib_back.setScale(0.95f);
 				return true;
 			}
 
@@ -433,7 +430,6 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				addRoleToStage(QUALITY.all);
-				ib_back.setScale(1f);
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
@@ -465,7 +461,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 				super.touchUp(event, x, y, pointer, button);
 			}
 		});
-		upButton.addListener(new InputListener() {
+		bt_upgrade.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {

@@ -37,7 +37,7 @@ public class GC {
 	public static String screen_menu = "menu";
 	public static String screen_game = "game";
 	public static String screen_mpanel = "mpanel";
-	public static String screen_fight = "mfight";
+	public static String screen_rd = "mfight";
 	public static String screen_role = "mrole";
 	public static String screen_update = "msupdate";
 	public static String screen_shop = "mshop";

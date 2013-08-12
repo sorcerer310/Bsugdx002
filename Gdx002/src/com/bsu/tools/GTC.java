@@ -36,16 +36,16 @@ public class GTC {
 	public TextureRegion p_fighter, p_archer,p_cleric,p_sorcerer,p_wizard;				//头像切割
 	public TextureAtlas ui;																					//UI对象
 	public TextureRegion mPanel;																			//UI界面背景图片	
-
+	public TextureRegion upgrade_window;															//升级界面的窗口
 	
 	
 	public Texture effect;																	// 消失效果
 	public Texture fightPanel, rolePanel, selectRolePanel, shopPanel,
 			updatePanel;
-	public TextureAtlas atlas_mbutton;
+//	public TextureAtlas atlas_mbutton;
 	public TextureAtlas skills_effect; // 技能效果纹理
 	public TextureAtlas skills_icon; // 技能图标纹理
-	public TextureAtlas atlas_button;
+//	public TextureAtlas atlas_button;
 
 
 	public Texture tipsPanel;
@@ -109,6 +109,7 @@ public class GTC {
 		p_wizard =head.findRegion("wizard");
 		ui = assetManager.get("data/game/ui/ui.txt");												//UI资源
 		mPanel = ui.findRegion("mbg");																	//UI主背景
+		upgrade_window = ui.findRegion("window_upgrade");									//升级界面的窗口
 		
 //		p_fighter = new TextureRegion(head, 0, 0, 96, 96);
 //		p_archer = new TextureRegion(head, 96, 0, 96, 96);
@@ -129,8 +130,8 @@ public class GTC {
 		wizard_texture = role_classes.findRegion("wizard");
 		sorcerer_texture = role_classes.findRegion("sorcerer");
 		archer_texture = role_classes.findRegion("archer");
-		atlas_mbutton = assetManager.get("data/menu/mbutton.txt");
-		atlas_button = assetManager.get("data/button/pack");
+//		atlas_mbutton = assetManager.get("data/menu/mbutton.txt");
+//		atlas_button = assetManager.get("data/button/pack");
 		role_effect = assetManager.get("data/game/effect/othereffect.txt");
 		start_zero = role_effect.findRegion("star", 1);
 		start_one = role_effect.findRegion("star", 2);

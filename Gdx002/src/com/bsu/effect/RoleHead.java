@@ -37,10 +37,15 @@ public class RoleHead extends WidgetGroup {
 	public Image img_frame = null;							//边框图片
 	public Image img_classes = null;						//职业图片
 	public MyParticle particle;
-
+	/**
+	 * 是否显示锁定图标
+	 * @param r
+	 * @param flag
+	 */
 	public RoleHead(Role r,boolean flag) {
 		img_head = new Image(GTC.getInstance().hm_headItemIcon.get(r.roleTextureName)); 			// 头像图片
-		img_head.setScale(0.5f);																										//头像图片缩小一倍
+//		img_head.setScale(0.78f);																									//头像图片缩小0.78倍
+		img_head.setScale(0.5f);
 		img_frame = GTC.getInstance().getImageFrame(r.quality);														//绘制头像边框
 		img_classes = GTC.getInstance().getClassesIconImg(r.classes);												//获得职业图片
 		img_classes.setPosition(img_head.getWidth() / 2 - img_classes.getWidth() - 2, 2);					//设置职业图片位置
@@ -67,6 +72,8 @@ public class RoleHead extends WidgetGroup {
 		r.roleIcon = this;
 		showEffect(false);
 	}
+
+	
 	/**
 	 * 显示被选中效果
 	 * 
@@ -130,7 +137,7 @@ public class RoleHead extends WidgetGroup {
 	}
 	//获得一个空头像，跟空技能一样
 	public RoleHead(){
-		Image emptyImg = GTC.getInstance().getImageFrame(QUALITY.green);
+		Image emptyImg = GTC.getInstance().getImageFrame(null);
 		this.addActor(emptyImg);
 	}
 }
