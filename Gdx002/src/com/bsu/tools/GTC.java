@@ -39,7 +39,7 @@ public class GTC {
 	public TextureRegion upgrade_window;															//升级界面的窗口
 	public TextureRegion role_window;																	//人物界面的窗口
 	public TextureRegion battle_window;																//战场界面窗口
-	public TextureRegion bt_zone,bt_level;															//大区按钮,关卡按钮
+	public TextureRegion bt_zone1,bt_zone2,bt_level;												//大区按钮,关卡按钮
 
 	
 	public Texture effect;																						// 消失效果
@@ -112,7 +112,8 @@ public class GTC {
 		upgrade_window = ui.findRegion("window_upgrade");									//升级界面的窗口
 		role_window = ui.findRegion("window_role");												//角色窗口
 		battle_window = ui.findRegion("window_battle");											//战场窗口
-		bt_zone = ui.findRegion("bt_zone");																//副本区域按钮
+		bt_zone1 = ui.findRegion("bt_zone",1);															//副本区按钮抬起
+		bt_zone2 = ui.findRegion("bt_zone",2);															//副本区按钮按下
 		bt_level = ui.findRegion("bt_level");																//副本关卡按钮
 //		p_fighter = new TextureRegion(head, 0, 0, 96, 96);
 //		p_archer = new TextureRegion(head, 96, 0, 96, 96);

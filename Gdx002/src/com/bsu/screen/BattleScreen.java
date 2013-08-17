@@ -82,21 +82,11 @@ public class BattleScreen extends CubocScreen implements Observer {
 
 		for (int i = 0; i < 10; i++) {
 			final int index=i;
-			Image bt_background = new Image(GTC.getInstance().bt_level);
-			TextButton button = new TextButton("第" + (i + 1) + "章",U.get_text_button_style());
-			button.setWidth(50f);
-			button.getLabel().setFontScale(0.8f);
-			
-			WidgetGroup wg = new WidgetGroup();
-			wg.addActor(bt_background);
-			wg.addActor(button);
-			
-
-			table.add(button).width(button.getWidth())
-					.height(button.getHeight()).pad(10.0f);
+			CheckBox cb = WidgetFactory.getInstance().makeZoneCheckBox("第" + (i + 1) + "章");
+			bg.add(cb);
+			table.add(cb).width(cb.getWidth()).height(cb.getHeight()).pad(10.0f);
 			table.row();
-//			bg.add(button);
-			button.addListener(new InputListener() {
+			cb.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {

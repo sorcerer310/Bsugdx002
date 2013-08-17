@@ -122,7 +122,6 @@ public class U {
 
 	/**
 	 * 根据role品质返回一个int,品质越高，int 越高
-	 * 
 	 * @return 绿色1.0，蓝色1.2，紫色1.4，橙色1.6
 	 */
 	public static float QualityInde(Role r) {
@@ -163,7 +162,11 @@ public class U {
 		return value;
 	}
 
-	// 取得角色基本攻击值
+	/**
+	 * 取得角色基本攻击值
+	 * @param r	带入角色对象
+	 * @return		 返回攻击值
+	 */
 	public static int getRoleBaseAttack(Role r) {
 		int value = 0;
 		if (r.classes == CLASSES.fighter) {
@@ -234,7 +237,6 @@ public class U {
 
 	/**
 	 * 获得升级所需经验
-	 * 
 	 * @return
 	 */
 	public static int getUpExp(Role r, int index) {
@@ -247,22 +249,21 @@ public class U {
 
 	/**
 	 * 返回角色的职业字符串
-	 * 
 	 * @param r
 	 * @return
 	 */
 	public static String getClasses(Role r) {
 		String n = null;
 		if (r.classes == CLASSES.fighter)
-			n = "战士";// 战士
+			n = "战士";
 		if (r.classes == CLASSES.cleric)
-			n = "牧师";// 牧师
+			n = "牧师";
 		if (r.classes == CLASSES.wizard)
-			n = "元素";// 元素
+			n = "元素";
 		if (r.classes == CLASSES.sorcerer)
-			n = "黑暗";// 黑暗
+			n = "黑暗";
 		if (r.classes == CLASSES.archer)
-			n = "弓手";// 弓手
+			n = "弓手";
 		return n;
 	}
 
@@ -564,4 +565,5 @@ public class U {
 		}
 		return 1.0f;
 	}
+	
 }

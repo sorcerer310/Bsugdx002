@@ -7,16 +7,23 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.bsu.tools.GC;
 import com.bsu.tools.GTC;
 import com.bsu.tools.U;
@@ -181,14 +188,10 @@ public class WidgetFactory {
 	/**
 	 * 返回一个pixMap绘制的矩形图像，用于头像技能边框及其填充。
 	 * 
-	 * @param maxValue
-	 *            宽高
-	 * @param dc
-	 *            背景色
-	 * @param c
-	 *            边框色
-	 * @param a
-	 *            透明度
+	 * @param maxValue		宽高
+	 * @param dc				背景色
+	 * @param c					边框色
+	 * @param a					透明度
 	 * @return
 	 */
 	public TextureRegion getPixmapFrame(int w, int h, Color dc, Color c, float a) {
@@ -226,4 +229,22 @@ public class WidgetFactory {
 //		pixmap.dispose();
 		return temp_box;
 	}
+	/**
+	 * 返回一个图片章节按钮
+	 * @param text		按钮文字
+	 * @return
+	 */
+	public CheckBox makeZoneCheckBox(String text){
+		TextureRegion t1 = GTC.getInstance().bt_zone1;
+		TextureRegion t2 = GTC.getInstance().bt_zone2;
+		
+		CheckBoxStyle style = new CheckBoxStyle(new SpriteDrawable(new Sprite(t1)),new SpriteDrawable(new Sprite(t2)),U.get_font(),new Color(1,1,1,1.0f));
+		CheckBox cb = new CheckBox("",style);
+		
+		Label label = new Label(text, new LabelStyle(style.font, style.fontColor));
+		label.setPosition((cb.getWidth()-label.getWidth())/2, 0);
+		cb.addActor(label);
+		return cb;
+	}
+
 }

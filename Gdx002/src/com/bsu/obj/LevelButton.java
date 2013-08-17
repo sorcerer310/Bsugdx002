@@ -31,7 +31,7 @@ public class LevelButton {
 		bt_background = new Image(GTC.getInstance().bt_level);
 		bt_text=new TextButton("第"+(level)+"关", U.get_normal_button_style());
 		bt_text.getLabel().setFontScale(0.8f);
-		bt_text.setPosition(2, 16);
+		bt_text.setPosition((bt_background.getWidth()-bt_text.getWidth())/2, 16);
 		wg.addActor(bt_background);
 		wg.addActor(bt_text);
 		enable = b;
