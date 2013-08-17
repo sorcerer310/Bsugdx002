@@ -37,26 +37,26 @@ public class GTC {
 	public TextureAtlas ui;																					//UI对象
 	public TextureRegion mPanel;																			//UI界面背景图片	
 	public TextureRegion upgrade_window;															//升级界面的窗口
+	public TextureRegion role_window;																	//人物界面的窗口
+	public TextureRegion battle_window;																//战场界面窗口
+	public TextureRegion bt_zone,bt_level;															//大区按钮,关卡按钮
+
 	
-	
-	public Texture effect;																	// 消失效果
-	public Texture fightPanel, rolePanel, selectRolePanel, shopPanel,
-			updatePanel;
+	public Texture effect;																						// 消失效果
+	public Texture fightPanel, rolePanel, selectRolePanel, shopPanel,updatePanel;
 //	public TextureAtlas atlas_mbutton;
-	public TextureAtlas skills_effect; // 技能效果纹理
-	public TextureAtlas skills_icon; // 技能图标纹理
+	public TextureAtlas skills_effect; 																		// 技能效果纹理
+	public TextureAtlas skills_icon; 																		// 技能图标纹理
 //	public TextureAtlas atlas_button;
 
 
 	public Texture tipsPanel;
-	public TextureAtlas role_effect;// 人物头像效果
-	private TextureAtlas role_classes;// 人物职业图像
-	public TextureAtlas role_head_frame; // 人物头像边框
-	public TextureAtlas battle_end; // 战场结束使用图片效果
-	public TextureRegion fight_texture, cleric_texture, wizard_texture,
-			sorcerer_texture, archer_texture;
-	public TextureRegion start_zero, start_one, start_two, start_three,
-			start_four;
+	public TextureAtlas role_effect;																		// 人物头像效果
+	private TextureAtlas role_classes;																	// 人物职业图像
+	public TextureAtlas role_head_frame; 																// 人物头像边框
+	public TextureAtlas battle_end; 																		// 战场结束使用图片效果
+	public TextureRegion fight_texture, cleric_texture, wizard_texture,sorcerer_texture, archer_texture;
+	public TextureRegion start_zero, start_one, start_two, start_three,start_four;
 	public AssetManager assetManager;
 	
 	public HashMap<String,TextureRegion> hm_headItemIcon = new HashMap<String,TextureRegion>(); 
@@ -110,7 +110,10 @@ public class GTC {
 		ui = assetManager.get("data/game/ui/ui.txt");												//UI资源
 		mPanel = ui.findRegion("mbg");																	//UI主背景
 		upgrade_window = ui.findRegion("window_upgrade");									//升级界面的窗口
-		
+		role_window = ui.findRegion("window_role");												//角色窗口
+		battle_window = ui.findRegion("window_battle");											//战场窗口
+		bt_zone = ui.findRegion("bt_zone");																//副本区域按钮
+		bt_level = ui.findRegion("bt_level");																//副本关卡按钮
 //		p_fighter = new TextureRegion(head, 0, 0, 96, 96);
 //		p_archer = new TextureRegion(head, 96, 0, 96, 96);
 		

@@ -32,19 +32,19 @@ public class RoleView {
 	public static WidgetGroup showRoleBaseInfo(Role r) {
 		float scale = 0.6f;
 		WidgetGroup infoGroup = new WidgetGroup();// 角色基本信息容器
-		Label name = WidgetFactory.getInstance().makeLabel(r.name, scale, 20,
-				240, U.getQualityColor(r.quality));
-		Label classes = WidgetFactory.getInstance().makeLabel(U.getClasses(r),
-				scale, 140, 240);
-		Label lv = WidgetFactory.getInstance().makeLabel("等级:" + r.level,
-				scale, 140, 218);
-		Label exp = WidgetFactory.getInstance().makeLabel(
-				"经验:" + r.exp + "/" + U.getUpExp(r,r.level), scale, 140, 198);
-		Table hpTable = showInfoValue(r, ViewType.hp, 20, 230);
-		Table attackTable = showInfoValue(r, ViewType.attack, 20, 210);
-		Table healingTable = showInfoValue(r, ViewType.defend, 20, 190);
-		Table defendTable = showInfoValue(r, ViewType.healing, 140, 190);
-		Table effectTable = showSkillEffect(r, 20, 170);
+		Label name = WidgetFactory.getInstance().makeLabel(r.name, scale, 62,238, U.getQualityColor(r.quality));
+		Label classes = WidgetFactory.getInstance().makeLabel(U.getClasses(r),	scale, 180, 238);
+		
+		Table hpTable = showInfoValue(r, ViewType.hp, 62, 232);
+		Label lv = WidgetFactory.getInstance().makeLabel("等级:" + r.level,scale, 180, 218);
+
+		Table attackTable = showInfoValue(r, ViewType.attack, 62, 212);
+		Label exp = WidgetFactory.getInstance().makeLabel("经验:" + r.exp + "/" + U.getUpExp(r,r.level), scale, 180, 198);
+		
+		Table healingTable = showInfoValue(r, ViewType.defend, 62, 191);
+		Table defendTable = showInfoValue(r, ViewType.healing, 180, 191);
+		
+		Table effectTable = showSkillEffect(r, 62, 170);
 		infoGroup.addActor(name);
 		infoGroup.addActor(classes);
 		infoGroup.addActor(lv);
@@ -63,7 +63,7 @@ public class RoleView {
 		Image unLockImg = new Image(GTC.getInstance().getSkillIcon(0));
 		Image lockImg = GTC.getInstance().getClassesIconImg(r.classes);
 		Image lockedImg = r.locked ? lockImg : unLockImg;
-		lockedImg.setPosition(160, 120);
+		lockedImg.setPosition(215, 120);
 		lockGroup.addActor(lockedImg);
 		return lockGroup;
 	}
@@ -74,7 +74,7 @@ public class RoleView {
 		Image unFightImg = new Image(GTC.getInstance().getSkillIcon(0));
 		Image fightImg = GTC.getInstance().getClassesIconImg(r.classes);
 		Image battleImg = r.bstate == BATLESTATE.FIGHT ? fightImg : unFightImg;
-		battleImg.setPosition(120, 120);
+		battleImg.setPosition(180, 120);
 		batleGroup.addActor(battleImg);
 		return batleGroup;
 	}
@@ -85,7 +85,7 @@ public class RoleView {
 		Array<Skill> skillArray = r.getUseSkill();
 		for (int i = 0; i < skillArray.size; i++) {
 			Skill s = skillArray.get(i);
-			Vector2 v = new Vector2(40 + i * 40, 120);
+			Vector2 v = new Vector2(60 + i * 45, 120);
 			SkillIcon se = new SkillIcon(s, v);
 			s.skillIcon = se;
 			if (i == skill_index) {
@@ -105,7 +105,7 @@ public class RoleView {
 		int numsBlue = 0;
 		int numsPur = 0;
 		int numsOra = 0;
-		int ix = 240, iy = 125, height = 35, sw = 45;
+		int ix = 300, iy = 120, height = 35, sw = 45;
 		Vector2 vs = null;
 		for (Skill s : r.skill_tree) {
 			SkillIcon se = null;

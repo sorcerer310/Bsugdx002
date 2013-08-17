@@ -46,13 +46,15 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private Stage stage;// 基本舞台
 	private Stage sRoleStage;// Role舞台
 	private Stage RoleInfoStage;// Role信息舞台
-	private Image background;
-	private Image ib_back;
-	private Image allImg;
-	private Image greenImg;
-	private Image blueImg;
-	private Image purpleImg;
-	private Image orangeImg;
+	private Image background;																//背景
+	private WidgetGroup wg_window = new WidgetGroup();						//控件容器
+	private Image window_background;													//窗口背景
+	private Image bt_back;																		//返回按钮
+	private Image allImg;																			//所有按钮
+	private Image greenImg;																	//绿色按钮
+	private Image blueImg;																		//蓝色按钮
+	private Image purpleImg;																	//紫色按钮
+	private Image orangeImg;																	//橙色按钮
 	private Role selectRole;// 选择显示的Role
 	private Skill selectSkill;// 选择要更换的skill
 	private int skillIndex;// 希望改变的技能
@@ -72,7 +74,49 @@ public class RoleScreen extends CubocScreen implements Observer,
 	}
 
 	public void initScreen() {
-		addBaseToStage();
+//		addBaseToStage();
+		if (!initFlag) {
+			background = new Image(GTC.getInstance().mPanel);								//背景
+			window_background = new Image(GTC.getInstance().role_window);	//窗口背景
+			window_background.setPosition(15, 5);
+//			window_background.setWidth(460);
+			wg_window.addActor(window_background);
+			bt_back = WidgetFactory.getInstance().makeImageButton(
+					GC.button_back, 420, 267, 1);
+			wg_window.addActor(bt_back);
+			allImg = WidgetFactory.getInstance().makeImageButton(GC.button_all,90, 20, 0.5f);
+			wg_window.addActor(allImg);
+			greenImg = WidgetFactory.getInstance().makeImageButton(	GC.button_green, 153, 20, 0.5f);
+			wg_window.addActor(greenImg);
+			blueImg = WidgetFactory.getInstance().makeImageButton(GC.button_blue, 216, 20, 0.5f);
+			wg_window.addActor(blueImg);
+			purpleImg = WidgetFactory.getInstance().makeImageButton(GC.button_purple, 279, 20, 0.5f);
+			wg_window.addActor(purpleImg);
+			orangeImg = WidgetFactory.getInstance().makeImageButton(GC.button_orange, 342, 20, 0.5f);
+			wg_window.addActor(orangeImg);
+			bImg.add(allImg);
+			bImg.add(greenImg);
+			bImg.add(blueImg);
+			bImg.add(purpleImg);
+			bImg.add(orangeImg);
+
+			
+			
+			up = WidgetFactory.getInstance().makeOneTextButton("update..", 400,
+					120);
+			use = WidgetFactory.getInstance().makeOneTextButton("used..", 400,
+					120);
+			
+
+			stage.addActor(background);
+			stage.addActor(wg_window);
+
+			
+			setListener();
+			initFlag = true;
+		}
+		
+		
 		quality = null;
 		addRoleToStage(QUALITY.all);
 	}
@@ -122,9 +166,9 @@ public class RoleScreen extends CubocScreen implements Observer,
 		Table table = new Table();
 		ScrollPane sp = new ScrollPane(table, U.get_skin().get(
 				ScrollPaneStyle.class));
-		sp.setWidth(441);
+		sp.setWidth(420);
 		sp.setHeight(65);
-		sp.setPosition(20, 45);
+		sp.setPosition(45, 40);
 		sp.setScrollingDisabled(false, true);
 		sp.setupFadeScrollBars(0f, 0f);
 		for (int i = 0; i < roleArray.size; i++) {
@@ -328,7 +372,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	private void setListener() {
 		addListenerForActor(0, null, null, up, null, "up_skill");
 		addListenerForActor(0, null, null, use, null, "enable_skill");
-		addListenerForActor(0, null, null, ib_back, null, "back");
+		addListenerForActor(0, null, null, bt_back, null, "back");
 		addListenerForActor(0, null, null, allImg, null, "all");
 		addListenerForActor(0, null, null, greenImg, null, "green");
 		addListenerForActor(0, null, null, blueImg, null, "blue");
@@ -368,7 +412,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 					U.setAlpha(event.getListenerActor(), 1.0f);
 				}
 				if (as == "back") {
-					ib_back.setScale(0.95f);
+					bt_back.setScale(0.95f);
 				}
 				return true;
 			}
@@ -406,7 +450,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 				if (as == "back") {
 					setChanged();
 					notifyObservers(GC.button_back);
-					ib_back.setScale(1f);
+					bt_back.setScale(1f);
 				}
 				if (as == "tree_skill") {
 					selectTreeSkill(skill);
@@ -458,50 +502,35 @@ public class RoleScreen extends CubocScreen implements Observer,
 		RoleInfoStage.clear();
 	}
 
-	// 添加基本ACTOR到舞台
-	private void addBaseToStage() {
-		if (!initFlag) {
-			up = WidgetFactory.getInstance().makeOneTextButton("update..", 400,
-					120);
-			use = WidgetFactory.getInstance().makeOneTextButton("used..", 400,
-					120);
-			background = new Image(GTC.getInstance().rolePanel);
-			ib_back = WidgetFactory.getInstance().makeImageButton(
-					GC.button_back, 375, 272, 1);
-			allImg = WidgetFactory.getInstance().makeImageButton(GC.button_all,
-					20, 20, 0.5f);
-			greenImg = WidgetFactory.getInstance().makeImageButton(
-					GC.button_green, 83, 20, 0.5f);
-			blueImg = WidgetFactory.getInstance().makeImageButton(
-					GC.button_blue, 146, 20, 0.5f);
-			purpleImg = WidgetFactory.getInstance().makeImageButton(
-					GC.button_purple, 209, 20, 0.5f);
-			orangeImg = WidgetFactory.getInstance().makeImageButton(
-					GC.button_orange, 272, 20, 0.5f);
-			bImg.add(allImg);
-			bImg.add(greenImg);
-			bImg.add(blueImg);
-			bImg.add(purpleImg);
-			bImg.add(orangeImg);
-			stage.addActor(background);
-			stage.addActor(ib_back);
-			stage.addActor(allImg);
-			stage.addActor(purpleImg);
-			stage.addActor(blueImg);
-			stage.addActor(orangeImg);
-			stage.addActor(greenImg);
-			setListener();
-			initFlag = true;
-		}
-	}
-	//设置人物基本信息
+	/**
+	 * 设置人物基本信息
+	 * @param r	带入角色对象
+	 */
 	public void set_role_info(Role r){
 		if(roleInfoGroup!=null)
 		roleInfoGroup.remove();
 		roleInfoGroup = RoleView.showRoleBaseInfo(r);
 		RoleInfoStage.addActor(roleInfoGroup);
 	}
-	//设置出战状态
+	
+	/**
+	 * 设置当前携带技能
+	 * @param r	带入角色对象
+	 */
+	public void set_role_skill_use(Role r){
+		if(roleCurrentSkillGroup!=null)
+		roleCurrentSkillGroup.remove();
+		roleCurrentSkillGroup = RoleView.showRoleSkill(r,skillIndex);
+		RoleInfoStage.addActor(roleCurrentSkillGroup);
+		for (Skill skill:r.getUseSkill()) {
+			addListenerForActor(1, r, skill,	skill.skillIcon, new Vector2(skill.skillIcon.skillImg.getX(),skill.skillIcon.skillImg.getY()), "current_skill");
+		}
+	}
+	
+	/**
+	 * 设置出战状态
+	 * @param r	带入出战斗状态
+	 */
 	public void set_role_batle(Role r){
 		if(roleBatleGroup!=null)
 		roleBatleGroup.remove();
@@ -530,18 +559,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 					skill.skillIcon, new Vector2(skill.skillIcon.skillImg.getX(),skill.skillIcon.skillImg.getY()), "tree_skill");
 		}
 	}
-	//设置当前携带技能
-	public void set_role_skill_use(Role r){
-		if(roleCurrentSkillGroup!=null)
-		roleCurrentSkillGroup.remove();
-		roleCurrentSkillGroup = RoleView.showRoleSkill(r,
-				skillIndex);
-		RoleInfoStage.addActor(roleCurrentSkillGroup);
-		for (Skill skill:r.getUseSkill()) {
-			addListenerForActor(1, r, skill,
-					skill.skillIcon, new Vector2(skill.skillIcon.skillImg.getX(),skill.skillIcon.skillImg.getY()), "current_skill");
-		}
-	}
+
 	//设置玩家的技能碎片
 	public void set_player_crystal(){	
 		if(crystalGroup!=null)

@@ -200,8 +200,8 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	 */
 	private void showQualityRole(Array<Role> roleArray) {
 		sRoleStage.clear();
-		int x = 150;
-		int y = 70;
+		int x = 100;
+		int y = 50;
 		int value=5;
 		Table table = new Table();
 		ScrollPane sp = new ScrollPane(table, U.get_skin().get(ScrollPaneStyle.class));

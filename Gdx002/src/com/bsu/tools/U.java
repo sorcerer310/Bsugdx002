@@ -36,12 +36,9 @@ public class U {
 	/**
 	 * 为一个固定值增加一部分浮动值
 	 * 
-	 * @param fix_val
-	 *            固定的数值
-	 * @param floatval_top
-	 *            浮动值上限
-	 * @param floatval_bottom
-	 *            浮动值下限
+	 * @param fix_val					固定的数值
+	 * @param floatval_top			浮动值上限
+	 * @param floatval_bottom		浮动值下限
 	 * @return
 	 */
 	public static float getRandom(int fix_val, float floatval_bottom,
@@ -54,10 +51,8 @@ public class U {
 	/**
 	 * 计算攻击后产生的实际伤害
 	 * 
-	 * @param atkval
-	 *            攻击方的攻击值
-	 * @param defval
-	 *            防御方的防御值
+	 * @param atkval	 攻击方的攻击值
+	 * @param defval    防御方的防御值
 	 * @return 得出实际伤害
 	 */
 	public static int realDamage(int atkval, int defval) {
@@ -66,11 +61,8 @@ public class U {
 
 	/**
 	 * 判断rs中是否有Role在p坐标上
-	 * 
-	 * @param rs
-	 *            所有的Role
-	 * @param p
-	 *            指定的box坐标
+	 * @param rs		所有的Role
+	 * @param p		指定的box坐标
 	 * @return
 	 */
 	public static boolean hasRoleInPos(Array<Role> rs, Vector2 p) {
@@ -82,9 +74,7 @@ public class U {
 
 	/**
 	 * 给定一个机率参数，返回是否在机率之内
-	 * 
-	 * @param p
-	 *            机率参数
+	 * @param p	  机率参数
 	 * @return 返回机率为true或false
 	 */
 	public static boolean probability(float p) {
@@ -305,10 +295,8 @@ public class U {
 	}
 
 	/**
-	 * 将一个字符串分成几行
-	 * 
-	 * @param sv
-	 *            缩放比
+	 * 将一个字符串分成几行 
+	 * @param sv       缩放比
 	 * @param s
 	 * @return 字符串数组
 	 */
