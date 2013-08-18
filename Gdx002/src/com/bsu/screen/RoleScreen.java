@@ -78,21 +78,20 @@ public class RoleScreen extends CubocScreen implements Observer,
 		if (!initFlag) {
 			background = new Image(GTC.getInstance().mPanel);								//背景
 			window_background = new Image(GTC.getInstance().role_window);	//窗口背景
-			window_background.setPosition(15, 5);
+			window_background.setPosition(15, 8);
 //			window_background.setWidth(460);
 			wg_window.addActor(window_background);
-			bt_back = WidgetFactory.getInstance().makeImageButton(
-					GC.button_back, 420, 267, 1);
+			bt_back = WidgetFactory.getInstance().makeImageButton(GC.button_back, 410, 262, 1);
 			wg_window.addActor(bt_back);
-			allImg = WidgetFactory.getInstance().makeImageButton(GC.button_all,90, 20, 0.5f);
+			allImg = WidgetFactory.getInstance().makeImageButton(GC.button_all,80, 20, 0.5f);
 			wg_window.addActor(allImg);
-			greenImg = WidgetFactory.getInstance().makeImageButton(	GC.button_green, 153, 20, 0.5f);
+			greenImg = WidgetFactory.getInstance().makeImageButton(	GC.button_green, 143, 20, 0.5f);
 			wg_window.addActor(greenImg);
-			blueImg = WidgetFactory.getInstance().makeImageButton(GC.button_blue, 216, 20, 0.5f);
+			blueImg = WidgetFactory.getInstance().makeImageButton(GC.button_blue, 206, 20, 0.5f);
 			wg_window.addActor(blueImg);
-			purpleImg = WidgetFactory.getInstance().makeImageButton(GC.button_purple, 279, 20, 0.5f);
+			purpleImg = WidgetFactory.getInstance().makeImageButton(GC.button_purple, 269, 20, 0.5f);
 			wg_window.addActor(purpleImg);
-			orangeImg = WidgetFactory.getInstance().makeImageButton(GC.button_orange, 342, 20, 0.5f);
+			orangeImg = WidgetFactory.getInstance().makeImageButton(GC.button_orange, 332, 20, 0.5f);
 			wg_window.addActor(orangeImg);
 			bImg.add(allImg);
 			bImg.add(greenImg);
@@ -100,22 +99,17 @@ public class RoleScreen extends CubocScreen implements Observer,
 			bImg.add(purpleImg);
 			bImg.add(orangeImg);
 
-			
-			
-			up = WidgetFactory.getInstance().makeOneTextButton("update..", 400,
-					120);
-			use = WidgetFactory.getInstance().makeOneTextButton("used..", 400,
-					120);
-			
+			up = WidgetFactory.getInstance().makeOneTextButton("升级技能", 370,110);
+//			up.getLabel().setFontScale(0.7f);
+			use = WidgetFactory.getInstance().makeOneTextButton("开启技能", 370,110);
+//			use.getLabel().setFontScale(0.7f);
 
 			stage.addActor(background);
 			stage.addActor(wg_window);
-
 			
 			setListener();
 			initFlag = true;
 		}
-		
 		
 		quality = null;
 		addRoleToStage(QUALITY.all);
@@ -152,9 +146,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 
 	/**
 	 * 显示某一品质的role
-	 * 
-	 * @param imgArray
-	 *            某一品质的role Image数组
+	 * @param imgArray      某一品质的role Image数组
 	 */
 	public void showQualityRole(QUALITY q) {
 		sRoleStage.clear();
@@ -164,11 +156,10 @@ public class RoleScreen extends CubocScreen implements Observer,
 		 * 滑动容器
 		 */
 		Table table = new Table();
-		ScrollPane sp = new ScrollPane(table, U.get_skin().get(
-				ScrollPaneStyle.class));
+		ScrollPane sp = new ScrollPane(table, U.get_skin().get(ScrollPaneStyle.class));
 		sp.setWidth(420);
 		sp.setHeight(65);
-		sp.setPosition(45, 40);
+		sp.setPosition(30, 40);
 		sp.setScrollingDisabled(false, true);
 		sp.setupFadeScrollBars(0f, 0f);
 		for (int i = 0; i < roleArray.size; i++) {
@@ -218,7 +209,10 @@ public class RoleScreen extends CubocScreen implements Observer,
 		U.showRoleSelect(Player.getInstance().getRole(), selectRole);
 	}
 
-	// 设置出战与休整
+	/**
+	 * 设置出战与休整
+	 * @param r
+	 */
 	public void changeFightState(Role r) {
 		if (r.bstate == BATLESTATE.FIGHT) {
 			r.bstate = BATLESTATE.IDLE;
@@ -232,8 +226,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			} else {
 				r.bstate = BATLESTATE.FIGHT;
 				r.ro.notifyRoleObservers(new MessageObject(r, role_fight));
-				TipsWindows.getInstance().showTips("角色出战", RoleInfoStage,
-						Color.GREEN);
+				TipsWindows.getInstance().showTips("角色出战", RoleInfoStage,	Color.GREEN);
 			}
 		}
 	}
@@ -241,8 +234,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	// 改变锁定状态
 	public void changeLockState(Role r) {
 		r.locked = !r.locked;
-		TipsWindows.getInstance().showTips(r.locked ? "锁定卡片" : "解锁卡片",
-				RoleInfoStage, Color.GREEN);
+		TipsWindows.getInstance().showTips(r.locked ? "锁定卡片" : "解锁卡片",RoleInfoStage, Color.GREEN);
 		r.ro.notifyRoleObservers(new MessageObject(r, r.locked ? role_locked : role_unlock));
 	}
 
@@ -252,8 +244,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 		if (!s.enable) {
 			selectSkill = s;
 		} else {
-			if ((selectSkill == null) || (selectSkill != s)
-					|| (selectSkill.skill_index >= 0)) {
+			if ((selectSkill == null) || (selectSkill != s)	|| (selectSkill.skill_index >= 0)) {
 				selectSkill = s;
 			} else {
 				setAnotherSkill(skillIndex, s);
@@ -269,7 +260,6 @@ public class RoleScreen extends CubocScreen implements Observer,
 
 	/**
 	 * 检测是否可以开启或者升级
-	 * 
 	 * @param s
 	 */
 	private void isReadyToUp(Skill s) {
@@ -289,13 +279,10 @@ public class RoleScreen extends CubocScreen implements Observer,
 
 	/**
 	 * 开启或者升级技能
-	 * 
-	 * @param b
-	 *            是否升级
+	 * @param b          是否升级
 	 */
 	private void upSkill(boolean b) {
-		if ((selectSkill.quality == QUALITY.green)
-				|| (selectSkill.quality == QUALITY.blue)) {
+		if ((selectSkill.quality == QUALITY.green)	|| (selectSkill.quality == QUALITY.blue)) {
 			Player.getInstance().crystal_blue -= 6;
 		}
 		if (selectSkill.quality == QUALITY.purple) {
@@ -313,10 +300,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 			selectSkill.levUp();
 		}
 		// 开启或者升级了一个技能，通知观察者
-		selectRole.ro.notifyRoleObservers(new MessageObject(selectRole, !b ? role_enable_skill
-				: role_level_skill));
-		TipsWindows.getInstance().showTips(tipsString, RoleInfoStage,
-				U.getQualityColor(selectSkill.quality));
+		selectRole.ro.notifyRoleObservers(new MessageObject(selectRole, !b ? role_enable_skill	: role_level_skill));
+		TipsWindows.getInstance().showTips(tipsString, RoleInfoStage,	U.getQualityColor(selectSkill.quality));
 		add_particle();
 		isReadyToUp(selectSkill);
 	}
@@ -336,7 +321,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 	// 绘制玩家拥有的碎片
 	private WidgetGroup showCrystal() {
 		WidgetGroup crystalGroup = new WidgetGroup();
-		int spx = 400, spy = 220, sph = 30, spw = 40;
+		int spx = 380, spy = 215, sph = 30, spw = 40;
 		for (int i = 0; i < 3; i++) {
 			Image spImg = new Image(GTC.getInstance().getSkillIcon(0));
 			spImg.setPosition(spx, spy - i * sph);
@@ -382,11 +367,8 @@ public class RoleScreen extends CubocScreen implements Observer,
 
 	/**
 	 * 添加一个监听 无role参数等。基本按钮监听
-	 * 
-	 * @param actor
-	 *            被监听者
-	 * @param s
-	 *            信息，根据信息调用相应函数（函数无法直接当参数使用）
+	 * @param actor	被监听者
+	 * @param s          信息，根据信息调用相应函数（函数无法直接当参数使用）
 	 */
 	public void addListenerForActor(int index, final Role r, final Skill skill,
 			Actor actor, final Vector2 v, final String s) {
@@ -405,8 +387,7 @@ public class RoleScreen extends CubocScreen implements Observer,
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				if (as == "all" || as == "green" || as == "blue_"
-						|| as == "purple" || as == "orange") {
+				if (as == "all" || as == "green" || as == "blue_"	|| as == "purple" || as == "orange") {
 					for (Image img : bImg)
 						U.setAlpha(img, 0.5f);
 					U.setAlpha(event.getListenerActor(), 1.0f);
@@ -539,7 +520,10 @@ public class RoleScreen extends CubocScreen implements Observer,
 		addListenerForActor(0, null, null, roleBatleGroup, null, "fight");
 	
 	}
-	//设置锁定状态
+	/**
+	 * 设置锁定状态
+	 * @param r
+	 */
 	public void set_role_lock(Role r){
 		if(roleLockGroup!=null)
 		roleLockGroup.remove();
@@ -547,7 +531,10 @@ public class RoleScreen extends CubocScreen implements Observer,
 		RoleInfoStage.addActor(roleLockGroup);
 		addListenerForActor(0, null, null, roleLockGroup, null, "locked");
 	}
-	//设置技能树
+	/**
+	 * 设置技能树
+	 * @param r
+	 */
 	public void set_role_skill_tree(Role r){
 		if(roleSkillTreeGroup!=null)
 		roleSkillTreeGroup.remove();
@@ -555,12 +542,13 @@ public class RoleScreen extends CubocScreen implements Observer,
 				.showSkillTree(selectRole, selectSkill);
 		RoleInfoStage.addActor(roleSkillTreeGroup);
 		for (Skill skill:selectRole.skill_tree) {
-			addListenerForActor(1, r, skill,
-					skill.skillIcon, new Vector2(skill.skillIcon.skillImg.getX(),skill.skillIcon.skillImg.getY()), "tree_skill");
+			addListenerForActor(1, r, skill,	skill.skillIcon, new Vector2(skill.skillIcon.skillImg.getX(),skill.skillIcon.skillImg.getY()), "tree_skill");
 		}
 	}
 
-	//设置玩家的技能碎片
+	/**
+	 * 设置玩家的技能碎片
+	 */
 	public void set_player_crystal(){	
 		if(crystalGroup!=null)
 		crystalGroup.remove();

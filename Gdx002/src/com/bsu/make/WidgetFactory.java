@@ -56,7 +56,6 @@ public class WidgetFactory {
 	
 	/**
 	 * 创建一个文字按钮
-	 * 
 	 * @return
 	 */
 	public TextButton makeOneTextButton(String text, float x, float y) {
@@ -70,16 +69,17 @@ public class WidgetFactory {
 		tbs.up = skin.newDrawable("white", Color.DARK_GRAY);
 		tbs.down = skin.newDrawable("white", Color.DARK_GRAY);
 		tbs.over = skin.newDrawable("white", Color.LIGHT_GRAY);
-		tbs.font = skin.getFont("default");
+//		tbs.font = skin.getFont("default");
+		tbs.font  = U.get_font();
 		skin.add("default", tbs);
 		TextButton tb = new TextButton(text, skin);
+		tb.scale(0.8f);
 		tb.setPosition(x, y);
 		return tb;
 	}
 
 	/**
 	 * 该函数同makeImageButton类似，只不过返回的是Image对象，可以通过一个图片控制按钮的 两种微小调整状态
-	 * 
 	 * @param bname 按钮的名字
 	 * @return 返回按钮的图片
 	 */
@@ -164,7 +164,6 @@ public class WidgetFactory {
 
 	/**
 	 * 将一个image初始化
-	 * 
 	 * @param tr
 	 * @param s
 	 * @param scaleValue
@@ -187,7 +186,6 @@ public class WidgetFactory {
 
 	/**
 	 * 返回一个pixMap绘制的矩形图像，用于头像技能边框及其填充。
-	 * 
 	 * @param maxValue		宽高
 	 * @param dc				背景色
 	 * @param c					边框色

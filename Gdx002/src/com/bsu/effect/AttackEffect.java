@@ -31,7 +31,6 @@ public class AttackEffect extends Actor {
 
 	/**
 	 * 开始攻击动画
-	 * 
 	 * @param tr
 	 * @param r
 	 */

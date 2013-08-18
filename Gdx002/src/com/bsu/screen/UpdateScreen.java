@@ -91,7 +91,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			wg_window.addActor(purpleImg);
 			orangeImg = WidgetFactory.getInstance().makeImageButton(GC.button_orange, 357, 23, 0.5f);		//橙色
 			wg_window.addActor(orangeImg);
-			eatImg = WidgetFactory.getInstance().makeImageButton(	GC.button_eat, 407, 160, 1f);						//吞噬
+			eatImg = WidgetFactory.getInstance().makeImageButton(	GC.button_eat, 407, 160, 1f);					//吞噬
 			wg_window.addActor(eatImg);
 			eatAllImg = WidgetFactory.getInstance().makeImageButton(GC.button_eatall,  407, 120, 1);				//吞噬所有
 			wg_window.addActor(eatAllImg);
@@ -109,7 +109,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 		bImg.add(purpleImg);
 		bImg.add(orangeImg);
 		getRoles();
-//		addRoleToStage(QUALITY.all);
+		addRoleToStage(QUALITY.all);
 	}
 	/**
 	 * 显示要强化角色列表
@@ -148,16 +148,12 @@ public class UpdateScreen extends CubocScreen implements Observer,
 	}
 
 	/**
-	 * 显示要强化角色信息
+	 * 显示要升级角色信息
 	 */
 	private void showUpRoleInfo() {
 		infos.setFontScale(1.0f);
-		infos.setText(suRole.name + "  lv:" + suRole.level
-				+ "  exp:" + suRole.exp + "/"
-				+ U.getUpExp(suRole,suRole.level));
-		bt_upgrade.setColor(bt_upgrade.getColor().r, bt_upgrade.getColor().g,
-				bt_upgrade.getColor().b,
-				(suRole.exp >= U.getUpExp(suRole,suRole.level) ? 1 : 0f));
+		infos.setText(suRole.name + "  lv:" + suRole.level + "  exp:" + suRole.exp + "/" + U.getUpExp(suRole,suRole.level));
+		bt_upgrade.setColor(bt_upgrade.getColor().r, bt_upgrade.getColor().g,bt_upgrade.getColor().b,(suRole.exp >= U.getUpExp(suRole,suRole.level) ? 1 : 0f));
 	}
 
 	/**
@@ -253,9 +249,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 
 	/**
 	 * 吞噬卡片升级
-	 * 
-	 * @param flag
-	 *            是否一键吞噬
+	 * @param flag	是否一键吞噬
 	 */
 	private void eatRolesUpdate(boolean flag) {
 		if (flag) {
@@ -472,8 +466,7 @@ public class UpdateScreen extends CubocScreen implements Observer,
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				if (suRole.exp >= U.getUpExp(suRole,suRole.level)) {
-					MyParticle mpe = new MyParticle(GTC.getInstance().particleEffect,
-							new Vector2(suRole.roleIcon.getX()+20,suRole.roleIcon.getY()+20));
+					MyParticle mpe = new MyParticle(GTC.getInstance().particleEffect,	new Vector2(suRole.roleIcon.getX()+20,suRole.roleIcon.getY()+20));
 					upRoleStage.addActor(mpe);
 					TipsWindows.getInstance().showRoleLevelUp(suRole, upRoleStage);
 					suRole.levelUp();

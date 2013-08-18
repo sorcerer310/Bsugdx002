@@ -40,6 +40,7 @@ public class GTC {
 	public TextureRegion role_window;																	//人物界面的窗口
 	public TextureRegion battle_window;																//战场界面窗口
 	public TextureRegion bt_zone1,bt_zone2,bt_level;												//大区按钮,关卡按钮
+	public TextureRegion frame_mapbox1,frame_mapbox2,frame_mapbox3,frame_mapbox4,frame_mapbox5;				//地图上的虚线框
 
 	
 	public Texture effect;																						// 消失效果
@@ -115,6 +116,11 @@ public class GTC {
 		bt_zone1 = ui.findRegion("bt_zone",1);															//副本区按钮抬起
 		bt_zone2 = ui.findRegion("bt_zone",2);															//副本区按钮按下
 		bt_level = ui.findRegion("bt_level");																//副本关卡按钮
+		frame_mapbox1 = ui.findRegion("frame_mapbox",1);									//地图上的虚线框
+		frame_mapbox2 = ui.findRegion("frame_mapbox",2);									//地图上的虚线框
+		frame_mapbox3 = ui.findRegion("frame_mapbox",3);									//地图上的虚线框
+		frame_mapbox4 = ui.findRegion("frame_mapbox",4);									//地图上的虚线框
+		frame_mapbox5 = ui.findRegion("frame_mapbox",5);									//地图上的虚线框
 //		p_fighter = new TextureRegion(head, 0, 0, 96, 96);
 //		p_archer = new TextureRegion(head, 96, 0, 96, 96);
 		

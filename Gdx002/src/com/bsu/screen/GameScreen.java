@@ -548,16 +548,14 @@ public class GameScreen extends CubocScreen implements Observer,
 
 	/**
 	 * 用来检查角色是否被本轮选择操作，如果第一次选择，则计算可移动范围
-	 * 
-	 * @author 张永臣
+	 * @param r	角色对象
 	 */
 	public void heroControllor(Role r) {
-		if (r.isDead) {
+		if (r.isDead) 
 			return;
-		}
-		r.setControlled(true);
-		if (r.getType() == Type.HERO) {
-			r.setPass_array(mb.set_hero_pass_box(r, commander.npcs));
+		r.setControlled(true);																	//设置角色当前被控制
+		if (r.getType() == Type.HERO){
+			r.setPass_array(mb.get_hero_pass_box(r, commander.npcs));
 		}
 	}
 

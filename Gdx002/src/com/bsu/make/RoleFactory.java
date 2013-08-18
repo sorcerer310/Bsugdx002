@@ -246,9 +246,9 @@ public class RoleFactory {
 			sks_tree.add(sk);
 		}
 		r = new Role(Type.HERO, rd.quality, rd.classes, rd.bstate, rd.name,
-				EquipFactory.getInstance().getWeaponByIdx(1), EquipFactory
-						.getInstance().getArmorByIdx(1), sks_tree,
+				EquipFactory.getInstance().getWeaponByIdx(1), EquipFactory.getInstance().getArmorByIdx(1), sks_tree,
 				rd.roleTexture);
+		r.level = rd.level;
 		r.exp = rd.exp;
 		r.hp_talent=rd.hp_talent;
 		r.attack_talent=rd.attack_talent;

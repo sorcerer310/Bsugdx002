@@ -82,7 +82,7 @@ public class Role extends Actor {
 
 	private Animation ani_current; // 当前人物动画
 	private TextureRegion current_action_frame;// 当前人物动画所对应的TextureRegion
-	private Animation attack_effect; // 攻击效果动画
+	private Animation attack_effect; 						// 攻击效果动画
 	private TextureRegion current_attack_frame; // 当前攻击效果动画对应的某一帧
 	private Animation beAttack_effect; // 被攻击效果动画
 	private TextureRegion current_beattack_frame; // 当前被攻击效果动画对应的某一帧
@@ -160,10 +160,8 @@ public class Role extends Actor {
 		ani_move = GAC.getInstance().getRoleAnimation(roleTexture);
 		ani_disapper = GAC.getInstance().getEffectDisapper();
 		ani_apper = GAC.getInstance().getEffectApper();
-		hp_back = WidgetFactory.getInstance().getTextureFill(GC.map_box_value,
-				2, Color.BLACK, 1);
-		hp = WidgetFactory.getInstance().getTextureFill(GC.map_box_value, 2,
-				Color.RED, 1);
+		hp_back = WidgetFactory.getInstance().getTextureFill(GC.map_box_value,2, Color.BLACK, 1);
+		hp = WidgetFactory.getInstance().getTextureFill(GC.map_box_value, 2,Color.RED, 1);
 		set_ani_from_state(STATE.idle);
 	}
 
@@ -172,28 +170,33 @@ public class Role extends Actor {
 		// TODO Auto-generated method stub
 		batch.setColor(getColor());
 		if (current_action_frame != null) {
-			batch.draw(current_action_frame, getX(), getY(), getOriginX(),
-					getOriginY(), GC.map_box_value, GC.map_box_value,
+			batch.draw(current_action_frame, getX(), getY(), getOriginX(),getOriginY(), GC.map_box_value, GC.map_box_value,
 					getScaleX(), getScaleY(), getRotation());
 		}
 		if (current_beattack_frame != null) {
 			batch.draw(current_beattack_frame, getX() + px, getY() + py);
 		}
 		if (currentHp > 0) {
-			batch.draw(hp_back, getX(), getY() + GC.map_box_value - 2,
-					getOriginX(), getOriginY(), GC.map_box_value, 2,
+			batch.draw(hp_back, getX(), getY() + GC.map_box_value - 2,getOriginX(), getOriginY(), GC.map_box_value, 2,
 					getScaleX(), getScaleY(), getRotation());
-			batch.draw(hp, getX(), getY() + GC.map_box_value - 2, getOriginX(),
-					getOriginY(), GC.map_box_value * currentHp / maxHp, 2,
+			batch.draw(hp, getX(), getY() + GC.map_box_value - 2, getOriginX(),getOriginY(), GC.map_box_value * currentHp / maxHp, 2,
 					getScaleX(), getScaleY(), getRotation());
 		}
 	}
-
+	/**
+	 * 英雄消失动画
+	 * @param be
+	 */
 	public void hero_disapper(BsuEvent be) {
 		set_ani_from_state(STATE.disapper);
 		bevent = be;
 	}
-
+	/**
+	 * 英雄出现动画
+	 * @param mx
+	 * @param my
+	 * @param be
+	 */
 	public void hero_apper(int mx, int my, BsuEvent be) {
 		set_ani_from_state(STATE.apper);
 		setPosition(mx * GC.map_box_value, my * GC.map_box_value);
@@ -201,8 +204,8 @@ public class Role extends Actor {
 	}
 
 	/**
-	 * @param enemy
-	 *            攻击动作的角色
+	 * 角色攻击动画
+	 * @param enemy     攻击动作的角色
 	 */
 	public void ani_role_attack(Role enemy, Skill skl, BsuEvent be) {
 		if (enemy == null)
@@ -215,10 +218,8 @@ public class Role extends Actor {
 				bevent.notify(this, this.name);
 		} else {
 			attack_effect = skl.ani_self;
-			current_attack_frame = attack_effect
-					.getKeyFrame(time_effect, false);
-			AttackEffect.getInstance().startEffect(current_attack_frame, this,
-					skl.offset_ani_self);
+			current_attack_frame = attack_effect.getKeyFrame(time_effect, false);
+			AttackEffect.getInstance().startEffect(current_attack_frame, this,skl.offset_ani_self);
 		}
 		enemy.ani_role_isAttacked(skl.ani_object, skl.offset_ani_object, be);
 	}
@@ -261,9 +262,7 @@ public class Role extends Actor {
 
 	/**
 	 * 英雄被攻击播放动画
-	 * 
-	 * @param ani
-	 *            要播放的动画
+	 * @param ani            要播放的动画
 	 */
 	private void ani_role_isAttacked(Animation ani, Vector2 v, BsuEvent be) {
 		time_effect = 0;
@@ -291,9 +290,7 @@ public class Role extends Actor {
 
 	/**
 	 * 播放人物持续动画
-	 * 
-	 * @param ani
-	 *            要播放的动画参数
+	 * @param ani         要播放的动画参数
 	 */
 	public void ani_role_continue(ContinuedSkillState css) {
 		/**
@@ -364,8 +361,7 @@ public class Role extends Actor {
 			}
 		}
 		if (attack_effect != null) {
-			current_attack_frame = attack_effect
-					.getKeyFrame(time_effect, false);
+			current_attack_frame = attack_effect.getKeyFrame(time_effect, false);
 			AttackEffect.getInstance().setFrame(current_attack_frame);
 			if (attack_effect.isAnimationFinished(time_effect)) {
 				current_attack_frame = null;
@@ -533,7 +529,7 @@ public class Role extends Actor {
 	}
 
 	/**
-	 * 返回英雄升级后数据
+	 * 英雄升级操作
 	 */
 	public void levelUp() {
 		level++;
@@ -541,13 +537,9 @@ public class Role extends Actor {
 	
 	/**
 	 * 移动函数，指定当前的role移动到x y 位置，移动完成后通过BsuEvent通知调用者
-	 * 
-	 * @param x
-	 *            要移动位置的x坐标
-	 * @param y
-	 *            要移动位置的y坐标
-	 * @param be
-	 *            事件对象
+	 * @param x           要移动位置的x坐标
+	 * @param y           要移动位置的y坐标
+	 * @param be         事件对象
 	 */
 	public void moveAction(int x, int y, final BsuEvent be) {
 		float dur = GC.duration_ani / 2;
@@ -831,7 +823,6 @@ public class Role extends Actor {
 
 	/**
 	 * 将角色数转换为角色数据对象
-	 * 
 	 * @return 返回RoleData,保存Role对象中的一些基本信息
 	 */
 	public RoleData toRoleData() {
